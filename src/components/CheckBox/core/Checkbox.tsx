@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import CheckboxBase from "../CheckboxBase";
-import "./CheckBox.scss";
+import "./Checkbox.scss";
 import { CheckBoxProps } from "../Checkbox.types";
 
 const classes = {

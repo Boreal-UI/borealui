@@ -1,6 +1,6 @@
 import React from "react";
 import ScrollToTopBase from "../ScrollToTopBase";
-import "./STT.scss";
+import "./ScrollToTop.scss";
 import { ArrowUpIcon } from "@/Icons";
 import { ScrollToTopProps } from "../ScrollToTop.types";
 

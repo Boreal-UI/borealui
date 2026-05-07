@@ -47,14 +47,17 @@ const classMap = {
 
 describe("BadgeBase", () => {
   const renderBadge = (
-    props: Partial<BadgeBaseProps> = {},
+    props: Omit<BadgeBaseProps, "classMap" | "children"> = {},
     children: React.ReactNode = "Active",
-  ) =>
-    render(
-      <BadgeBase classMap={classMap} data-testid="badge" {...props}>
-        {children}
-      </BadgeBase>,
-    );
+  ) => {
+    const badgeProps = {
+      classMap,
+      "data-testid": "badge",
+      ...props,
+    } as BadgeBaseProps;
+
+    return render(<BadgeBase {...badgeProps}>{children}</BadgeBase>);
+  };
 
   afterEach(() => {
     jest.clearAllMocks();

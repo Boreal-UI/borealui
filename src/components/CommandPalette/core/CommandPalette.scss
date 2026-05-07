@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .command_palette_overlay {
@@ -198,6 +199,10 @@
 @each $name, $values in theme.$themes {
   .command_palette_#{$name} {
     border: 2px solid map.get($values, border);
+    --command-palette-glass-bg: #{map.get($values, glass-bg)};
+    --command-palette-glass-hover-bg: #{map.get($values, glass-hover)};
+    --command-palette-glass-border: #{map.get($values, glass-border)};
+    --command-palette-glass-text: #{map.get($values, text)};
   }
 
   @include bp.down(sm) {
@@ -223,6 +228,10 @@
 @each $name, $values in theme.$states {
   .command_palette_#{$name} {
     border: 2px solid map.get($values, border);
+    --command-palette-glass-bg: #{map.get($values, glass-bg)};
+    --command-palette-glass-hover-bg: #{map.get($values, glass-hover)};
+    --command-palette-glass-border: #{map.get($values, glass-border)};
+    --command-palette-glass-text: #{map.get($values, text)};
   }
 
   @include bp.down(sm) {
@@ -239,6 +248,24 @@
   .command_palette_item.command_palette_#{$name}:hover {
     background-color: map.get($values, hover);
   }
+}
+
+.command_palette_glass {
+  @include mixins.glass-surface(
+    var(--command-palette-glass-bg, rgba(255, 255, 255, 0.16)),
+    var(--command-palette-glass-border, rgba(255, 255, 255, 0.28)),
+    18px
+  );
+  color: var(--command-palette-glass-text, var(--text-color-primary));
+}
+
+.command_palette_glass .command_palette_item:hover,
+.command_palette_glass .command_palette_active {
+  background-color: var(
+    --command-palette-glass-hover-bg,
+    rgba(255, 255, 255, 0.22)
+  );
+  color: var(--command-palette-glass-text, var(--text-color-primary));
 }
 
 .command_palette_clear {
@@ -269,6 +296,12 @@
     background: Canvas;
     color: CanvasText;
     outline-color: Highlight;
+  }
+
+  .command_palette_glass {
+    background: Canvas;
+    border-color: ButtonText;
+    box-shadow: none;
   }
 
   .command_palette_primary,

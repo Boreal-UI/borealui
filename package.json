@@ -5,7 +5,7 @@
   "author": "Davin Chiupka",
   "license": "ISC",
   "main": "./dist/core/index.cjs.js",
-  "module": "./dist/core/index.esm.js",
+  "module": "./dist/core/index.js",
   "types": "./dist/types/index.core.d.ts",
   "type": "module",
   "files": [
@@ -15,6 +15,13 @@
     "LICENSE"
   ],
   "scripts": {
+    "audit:types": "tsc --noEmit",
+    "audit:lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "audit:styles": "stylelint \"src/**/*.{scss,css}\"",
+    "audit:test": "jest --coverage",
+    "audit:build": "npm run build",
+    "audit:package": "npm pack --dry-run",
+    "audit": "npm run audit:types && npm run audit:lint && npm run audit:styles && npm run audit:test && npm run audit:build && npm run audit:package",
     "dev": "vite",
     "clean": "rimraf dist",
     "boreal": "ts-node ./scripts/boreal.cjs",
@@ -96,6 +103,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.5.2",
     "eslint-plugin-storybook": "10.3.4",
     "fast-glob": "^3.3.3",
     "identity-obj-proxy": "^3.0.0",
@@ -147,6 +155,7 @@
       "default": "./dist/types/public.types.d.ts"
     },
     "./core/globals.css": {
+      "style": "./dist/core/globals.css",
       "default": "./dist/core/globals.css"
     },
     "./next": {
@@ -158,6 +167,7 @@
       "default": "./dist/types/public.types.d.ts"
     },
     "./next/globals.css": {
+      "style": "./dist/next/globals.css",
       "default": "./dist/next/globals.css"
     },
     "./docs": {

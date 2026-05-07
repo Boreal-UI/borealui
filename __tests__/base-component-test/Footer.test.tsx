@@ -13,6 +13,7 @@ expect.extend(toHaveNoViolations);
 
 const classNames = {
   footer: "footerRoot",
+  glass: "footerGlass",
 
   primary: "themePrimary",
   secondary: "themeSecondary",
@@ -200,12 +201,13 @@ describe("FooterBase", () => {
     });
 
     it("applies footer, theme, and inline layout classes", () => {
-      renderFooter();
+      renderFooter({ glass: true });
 
       const footer = screen.getByTestId("footer");
 
       expect(footer).toHaveClass("footerRoot");
       expect(footer).toHaveClass("themePrimary");
+      expect(footer).toHaveClass("footerGlass");
       expect(footer).not.toHaveClass("layoutColumns");
 
       expect(screen.getByTestId("footer-left")).toHaveClass("footerLeft");
@@ -361,6 +363,7 @@ describe("FooterBase", () => {
 
       expect(github).toHaveAttribute("href", "https://github.com");
       expect(github).toHaveAttribute("title", "GitHub");
+      expect(github).toHaveAttribute("data-glass", "false");
 
       expect(twitter).toHaveAttribute("href", "https://twitter.com");
       expect(twitter).toHaveAttribute("title", "Twitter");
@@ -379,6 +382,7 @@ describe("FooterBase", () => {
 
     it("passes social link accessibility props through to IconButton", () => {
       renderFooter({
+        glass: true,
         socialLinks: [
           {
             icon: FaGithub,
@@ -399,6 +403,7 @@ describe("FooterBase", () => {
       expect(github).toHaveAttribute("title", "GitHub profile");
       expect(github).toHaveAttribute("target", "_blank");
       expect(github).toHaveAttribute("rel", "noreferrer");
+      expect(github).toHaveAttribute("data-glass", "true");
     });
 
     it("renders theme select only when showThemeSelect is true", () => {

@@ -17,6 +17,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       onChange,
       name,
       theme = getDefaultTheme(),
+      glass = false,
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       state = "",
@@ -50,20 +51,22 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
           classMap.wrapper,
           classMap[theme],
           classMap[state],
+          glass && classMap.glass,
           disabled && classMap.disabled,
           className,
         ),
-      [classMap, theme, state, disabled, className],
+      [classMap, theme, state, glass, disabled, className],
     );
 
     const radioClasses = useMemo(
       () =>
         combineClassNames(
           classMap.circle,
+          glass && classMap.glassCircle,
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
         ),
-      [classMap, rounding, shadow],
+      [classMap, glass, rounding, shadow],
     );
 
     const resolvedAriaLabelledBy =

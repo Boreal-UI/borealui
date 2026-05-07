@@ -19,6 +19,7 @@ const mockStyles = {
   helperText: "helperText",
   errorMessage: "errorMessage",
   outline: "outline",
+  glass: "glass",
   disabled: "disabled",
   primary: "primary",
   secondary: "secondary",
@@ -427,6 +428,7 @@ describe("TextAreaBase", () => {
         theme="primary"
         state="error"
         outline
+        glass
         rounding="medium"
         shadow="light"
         className="customClass"
@@ -438,6 +440,7 @@ describe("TextAreaBase", () => {
       "primary",
       "error",
       "outline",
+      "glass",
       "roundMedium",
       "shadowLight",
       "customClass",

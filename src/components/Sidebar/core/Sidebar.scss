@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .sidebar {
@@ -43,6 +44,13 @@
   }
 
   @each $themeName, $values in theme.$themes {
+    &_#{$themeName} {
+      --sidebar-glass-bg: #{map.get($values, glass-bg)};
+      --sidebar-glass-hover-bg: #{map.get($values, glass-hover)};
+      --sidebar-glass-border: #{map.get($values, glass-border)};
+      --sidebar-glass-text: #{map.get($values, text)};
+    }
+
     &_#{$themeName} .sidebar_active {
       background-color: map.get($values, bg);
       color: map.get($values, text);
@@ -64,6 +72,13 @@
   }
 
   @each $stateName, $values in theme.$states {
+    &_#{$stateName} {
+      --sidebar-glass-bg: #{map.get($values, glass-bg)};
+      --sidebar-glass-hover-bg: #{map.get($values, glass-hover)};
+      --sidebar-glass-border: #{map.get($values, glass-border)};
+      --sidebar-glass-text: #{map.get($values, text)};
+    }
+
     &_#{$stateName} .sidebar_active {
       background-color: map.get($values, bg);
       color: map.get($values, text);
@@ -86,6 +101,24 @@
         border-width: 1.5px;
       }
     }
+  }
+
+  &_glass {
+    @include mixins.glass-surface(
+      var(--sidebar-glass-bg, rgba(255, 255, 255, 0.16)),
+      var(--sidebar-glass-border, rgba(255, 255, 255, 0.28)),
+      18px
+    );
+    color: var(--sidebar-glass-text, var(--text-color-primary));
+  }
+
+  &_glass .sidebar_link:hover,
+  &_glass .sidebar_active {
+    background-color: var(
+      --sidebar-glass-hover-bg,
+      rgba(255, 255, 255, 0.22)
+    );
+    color: var(--sidebar-glass-text, var(--text-color-primary));
   }
 }
 
@@ -283,6 +316,12 @@
     background: Canvas;
     color: CanvasText;
     border-color: ButtonFace;
+  }
+
+  .sidebar_glass {
+    background: Canvas;
+    border-color: ButtonText;
+    box-shadow: none;
   }
 
   .sidebar_link {

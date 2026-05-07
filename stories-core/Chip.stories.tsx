@@ -11,7 +11,7 @@ import {
 } from "../src/types/types";
 import { ChipBaseProps } from "../src/components/Chip/Chip.types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -19,7 +19,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const positions: PositionType[] = [
   "topLeft",
@@ -82,7 +82,7 @@ export const WithIcon: Story = {
           icon={FaCheckCircle}
           visible={visible}
           onClose={() => setVisible(false)}
-          theme="success"
+          state="success"
           autoClose={false}
         />
       </>
@@ -187,22 +187,22 @@ export const States: Story = {
     return (
       <>
         <div className="grid grid-cols-6 gap-2">
-          {stateOptions.map((theme) => (
+          {stateOptions.map((state) => (
             <button
-              key={theme}
-              onClick={() => setVisibleState(theme as StateType)}
+              key={state}
+              onClick={() => setVisibleState(state as StateType)}
               className="p-2 border rounded"
             >
-              {theme}
+              {state}
             </button>
           ))}
         </div>
 
         {visibleState && (
           <Chip
-            id="theme-chip"
+            id="state-chip"
             message={`State: ${visibleState}`}
-            theme={visibleState}
+            state={visibleState}
             position="topRight"
             visible={true}
             onClose={() => setVisibleState(null)}

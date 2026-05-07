@@ -141,6 +141,77 @@ export const StateVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: () => {
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {themeOptions.map((theme) => (
+          <MetricBox
+            key={`glass-${theme}`}
+            title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
+            value="3,210"
+            theme={theme}
+            glass
+            icon={FaChartLine}
+            subtext="Live dashboard metric"
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: () => {
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {stateOptions.map((state) => (
+          <MetricBox
+            key={`glass-${state}`}
+            title={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
+            value="3,210"
+            state={state}
+            glass
+            icon={FaChartLine}
+            subtext="State-aware metric"
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassOutlineVariants: Story = {
+  render: () => {
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {themeOptions.map((theme) => (
+          <MetricBox
+            key={`outline-${theme}`}
+            title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
+            value="999"
+            outline
+            glass
+            theme={theme}
+            icon={FaChartLine}
+          />
+        ))}
+        {stateOptions.map((state) => (
+          <MetricBox
+            key={`outline-${state}`}
+            title={`${state.charAt(0).toUpperCase() + state.slice(1)} Outline`}
+            value="999"
+            outline
+            glass
+            state={state}
+            icon={FaChartLine}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const OutlineVariants: Story = {
   render: () => {
     return (

@@ -32,6 +32,11 @@ export interface EmptyStateProps extends Omit<
   theme?: ThemeType;
 
   /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
+  /**
    * The EmptyState state
    * ('success' | 'error' | 'warning' | 'disabled' | '').
    */

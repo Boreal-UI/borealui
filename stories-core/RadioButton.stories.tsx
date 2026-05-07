@@ -1,9 +1,15 @@
 import React, { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { RadioButton } from "../src/index.core";
+import {
+  RadioButton,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.core";
 import type { RadioButtonProps } from "../src/components/RadioButton/RadioButton.types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -11,10 +17,16 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<RadioButtonProps> = {
   title: "Components/RadioButton",
@@ -98,19 +110,63 @@ export const ThemeVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: () => {
+    const [selected, setSelected] = useState("primary");
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => (
+          <RadioButton
+            key={`glass-${theme}`}
+            label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
+            value={theme}
+            theme={theme}
+            glass
+            checked={selected === theme}
+            onChange={setSelected}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const StateVariants: Story = {
   render: () => {
     const [selected, setSelected] = useState("primary");
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {stateOptions.map((theme) => (
+        {stateOptions.map((state) => (
           <RadioButton
-            key={theme}
-            label={theme.charAt(0).toUpperCase() + theme.slice(1)}
-            value={theme}
-            theme={theme}
-            checked={selected === theme}
+            key={state}
+            label={state.charAt(0).toUpperCase() + state.slice(1)}
+            value={state}
+            state={state}
+            checked={selected === state}
+            onChange={setSelected}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: () => {
+    const [selected, setSelected] = useState("success");
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <RadioButton
+            key={`glass-${state}`}
+            label={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
+            value={state}
+            state={state}
+            glass
+            checked={selected === state}
             onChange={setSelected}
           />
         ))}

@@ -98,6 +98,27 @@ export const ThemedVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => (
+          <Toolbar
+            key={`glass-${theme}`}
+            {...args}
+            theme={theme}
+            glass
+            title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
+            left={leftIcon}
+            right={rightIcon}
+            avatar={{ name: "Davin Chiupka" }}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const AttachmentVariants: Story = {
   render: (args) => {
     return (

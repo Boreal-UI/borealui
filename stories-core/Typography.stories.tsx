@@ -1,7 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { Typography } from "../src/index.core";
+import { TypographyVariant } from "@/core/Typography";
 
-const variantOptions = [
+const variantOptions: TypographyVariant[] = [
   "display",
   "h1",
   "h2",
@@ -33,12 +34,13 @@ const defaultArgs = {
   variant: "body",
   align: "inherit",
   weight: "inherit",
+  theme: "inherit",
   italic: false,
   underline: false,
   truncate: false,
   noWrap: false,
   srOnly: false,
-};
+} satisfies React.ComponentProps<typeof Typography>;
 
 export const Default: Story = {
   args: {
@@ -91,7 +93,6 @@ export const CodeText: Story = {
 export const Themed: Story = {
   render: (args) => (
     <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-      <Typography {...args}>Default text</Typography>
       <Typography {...args} theme="primary">
         Primary themed text
       </Typography>

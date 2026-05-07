@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/**/*",
+    "__tests__/**/*",
+    "stories-core/**/*",
+    "stories-next/**/*",
+    ".storybook/**/*",
+    ".storybook-core/**/*",
+    ".storybook-next/**/*",
+    "vite.config.ts",
+    "vite.config.core.ts",
+    "vite.config.next.ts",
+    "global.d.ts",
+    "vite-env.d.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "coverage",
+    "storybook-static",
+    ".storybook-static"
+  ]
+}

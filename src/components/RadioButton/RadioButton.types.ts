@@ -34,6 +34,11 @@ export interface RadioButtonProps extends Omit<
   theme?: ThemeType;
 
   /**
+   * Applies a translucent frosted-glass treatment to the visible radio control.
+   */
+  glass?: boolean;
+
+  /**
    * State of the radio button.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    */

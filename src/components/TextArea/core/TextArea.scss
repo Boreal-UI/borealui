@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .container {
@@ -134,6 +135,10 @@
 
   @each $themeName, $props in theme.$themes {
     &_#{$themeName} {
+      --textArea-glass-bg: #{map.get($props, glass-bg)};
+      --textArea-glass-hover-bg: #{map.get($props, glass-hover)};
+      --textArea-glass-border: #{map.get($props, glass-border)};
+      --textArea-glass-text: #{map.get($props, text)};
       background-color: map.get($props, bg);
       color: map.get($props, text);
       box-shadow: if(
@@ -174,6 +179,10 @@
 
   @each $stateName, $props in theme.$states {
     &_#{$stateName} {
+      --textArea-glass-bg: #{map.get($props, glass-bg)};
+      --textArea-glass-hover-bg: #{map.get($props, glass-hover)};
+      --textArea-glass-border: #{map.get($props, glass-border)};
+      --textArea-glass-text: #{map.get($props, text)};
       border: 2px solid map.get($props, border);
       color: map.get($props, text);
       box-shadow: if(
@@ -186,6 +195,24 @@
 
   &_clear {
     box-shadow: none;
+  }
+
+  &_glass {
+    @include mixins.glass-surface(
+      var(--textArea-glass-bg, rgba(255, 255, 255, 0.18)),
+      var(--textArea-glass-border, rgba(255, 255, 255, 0.34)),
+      16px
+    );
+    color: var(--textArea-glass-text, var(--text-color-primary));
+    box-shadow: var(--box-shadow-sm);
+  }
+
+  &_glass:hover {
+    background: var(--textArea-glass-hover-bg, rgba(255, 255, 255, 0.24));
+  }
+
+  &_glass.textArea_outline {
+    background: var(--textArea-glass-bg, rgba(255, 255, 255, 0.14));
   }
 
   &_disabled {
@@ -214,6 +241,14 @@
 }
 
 @media (forced-colors: active) {
+  .textArea_glass {
+    background: Canvas !important;
+    color: CanvasText !important;
+    border-color: ButtonText !important;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .textArea {
     background: Canvas !important;
     color: CanvasText !important;

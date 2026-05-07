@@ -7,6 +7,8 @@ const classes = {
   wrapper: "radio_wrapper",
   input: "radio_input",
   circle: "radio_circle",
+  glass: "radio_glass",
+  glassCircle: "radio_glassCircle",
   label: "radio_label",
   disabled: "radio_disabled",
 

@@ -6,6 +6,7 @@ import { ToolbarProps } from "../Toolbar.types";
 
 const classes = {
   toolbar: "toolbar",
+  glass: "toolbar_glass",
 
   fixed: "toolbar_fixed",
   sticky: "toolbar_sticky",

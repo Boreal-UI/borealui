@@ -36,6 +36,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   debounceMs = 300,
   placeholder = "Add a tag...",
   theme = getDefaultTheme(),
+  glass = false,
   state = "",
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
@@ -100,17 +101,19 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
       return;
     }
 
-    debounceRef.current = setTimeout(async () => {
-      try {
-        const result = await fetchSuggestions(query);
-        setSuggestions(result || []);
-        setOpen((result?.length ?? 0) > 0);
-        setActiveIndex((result?.length ?? 0) > 0 ? 0 : -1);
-      } catch {
-        setSuggestions([]);
-        setOpen(false);
-        setActiveIndex(-1);
-      }
+    debounceRef.current = setTimeout(() => {
+      void (async () => {
+        try {
+          const result = await fetchSuggestions(query);
+          setSuggestions(result || []);
+          setOpen((result?.length ?? 0) > 0);
+          setActiveIndex((result?.length ?? 0) > 0 ? 0 : -1);
+        } catch {
+          setSuggestions([]);
+          setOpen(false);
+          setActiveIndex(-1);
+        }
+      })();
     }, debounceMs);
 
     return () => {
@@ -200,8 +203,9 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
         classMap[theme],
         classMap[state],
         classMap[size],
+        glass && classMap.glass,
       ),
-    [classMap, theme, state, size],
+    [classMap, theme, state, size, glass],
   );
 
   const tagClass = useMemo(
@@ -269,8 +273,10 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
               onClick={() => removeTag(tag)}
               data-testid={`${testId}-remove-${index}`}
               icon={CloseIcon}
+              rounding="full"
               size="xs"
-              theme="clear"
+              state="error"
+              glass={glass}
               shadow="none"
               iconClassName={classMap.removeButtonIcon}
               disabled={false}
@@ -284,6 +290,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
           id={inputId}
           type="text"
           theme={theme}
+          glass={glass}
           state={state}
           rounding={rounding}
           shadow={shadow}
@@ -319,7 +326,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
               id={`${listboxId}-opt-${index}`}
               className={combineClassNames(
                 classMap.suggestionItem,
-                index === activeIndex && (classMap.active || ""),
+                index === activeIndex && classMap.active,
               )}
               role="option"
               aria-selected={index === activeIndex}

@@ -151,6 +151,46 @@ export const StateVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => (
+          <div key={`glass-${theme}`}>
+            <Progressbar
+              {...args}
+              value={20 + themeOptions.indexOf(theme) * 15}
+              theme={theme}
+              glass
+              label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <div key={`glass-${state}`}>
+            <Progressbar
+              {...args}
+              value={20 + stateOptions.indexOf(state) * 15}
+              state={state}
+              glass
+              label={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
 export const LiveProgress: Story = {
   render: (args) => {
     const [progress, setProgress] = useState(0);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Pager } from "../src/index.core";
+import { Pager, RoundingType, ShadowType, StateType } from "../src/index.core";
 import type { PaginationProps } from "../src/components/Pager/Pager.types";
 
 const meta: Meta<PaginationProps> = {
@@ -15,8 +15,19 @@ const meta: Meta<PaginationProps> = {
   },
 };
 
-const roundingOptions = ["none", "small", "medium", "large"] as const;
-const shadowOptions = ["none", "light", "medium", "strong", "intense"] as const;
+const roundingOptions: RoundingType[] = [
+  "none",
+  "small",
+  "medium",
+  "large",
+] as const;
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+] as const;
 
 export default meta;
 
@@ -120,9 +131,39 @@ export const ThemeVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    const themes = [
+      "primary",
+      "secondary",
+      "tertiary",
+      "quaternary",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {themes.map((theme) => {
+          const [page, setPage] = useState(1);
+          return (
+            <Pager
+              key={`glass-${theme}`}
+              {...args}
+              theme={theme}
+              glass
+              currentPage={page}
+              onPageChange={setPage}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
 export const StateVariants: Story = {
   render: (args) => {
-    const states = ["success", "error", "warning"];
+    const states: StateType[] = ["success", "error", "warning"];
 
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
@@ -132,7 +173,31 @@ export const StateVariants: Story = {
             <Pager
               key={state}
               {...args}
-              theme={state}
+              state={state}
+              currentPage={page}
+              onPageChange={setPage}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    const states: StateType[] = ["success", "error", "warning"];
+
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {states.map((state) => {
+          const [page, setPage] = useState(1);
+          return (
+            <Pager
+              key={`glass-${state}`}
+              {...args}
+              state={state}
+              glass
               currentPage={page}
               onPageChange={setPage}
             />

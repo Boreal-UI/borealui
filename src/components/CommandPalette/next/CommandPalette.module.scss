@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .overlay {
@@ -198,6 +199,10 @@
 @each $name, $values in theme.$themes {
   .#{$name} {
     border: 2px solid map.get($values, border);
+    --command-palette-glass-bg: #{map.get($values, glass-bg)};
+    --command-palette-glass-hover-bg: #{map.get($values, glass-hover)};
+    --command-palette-glass-border: #{map.get($values, glass-border)};
+    --command-palette-glass-text: #{map.get($values, text)};
 
     @include bp.down(sm) {
       border-width: 1.5px;
@@ -221,6 +226,10 @@
 @each $name, $values in theme.$states {
   .#{$name} {
     border: 2px solid map.get($values, border);
+    --command-palette-glass-bg: #{map.get($values, glass-bg)};
+    --command-palette-glass-hover-bg: #{map.get($values, glass-hover)};
+    --command-palette-glass-border: #{map.get($values, glass-border)};
+    --command-palette-glass-text: #{map.get($values, text)};
 
     @include bp.down(sm) {
       border-width: 1.5px;
@@ -235,6 +244,24 @@
   .item.#{$name}:hover {
     background-color: map.get($values, hover);
   }
+}
+
+.glass {
+  @include mixins.glass-surface(
+    var(--command-palette-glass-bg, rgba(255, 255, 255, 0.16)),
+    var(--command-palette-glass-border, rgba(255, 255, 255, 0.28)),
+    18px
+  );
+  color: var(--command-palette-glass-text, var(--text-color-primary));
+}
+
+.glass .item:hover,
+.glass .active {
+  background-color: var(
+    --command-palette-glass-hover-bg,
+    rgba(255, 255, 255, 0.22)
+  );
+  color: var(--command-palette-glass-text, var(--text-color-primary));
 }
 
 .clear {
@@ -265,6 +292,12 @@
     background: Canvas;
     color: CanvasText;
     outline-color: Highlight;
+  }
+
+  .glass {
+    background: Canvas;
+    border-color: ButtonText;
+    box-shadow: none;
   }
 
   .item {

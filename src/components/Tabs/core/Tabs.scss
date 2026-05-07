@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 $sizes: (
@@ -131,6 +132,11 @@ $sizes: (
 
   @each $themeName, $color in theme.$themes {
     &_#{$themeName} {
+      --tabs-glass-bg: #{map.get($color, glass-bg)};
+      --tabs-glass-hover-bg: #{map.get($color, glass-hover)};
+      --tabs-glass-border: #{map.get($color, glass-border)};
+      --tabs-glass-text: #{map.get($color, text)};
+
       .tabs_tab.tabs_active {
         background-color: map.get($color, bg);
         border-bottom-color: map.get($color, border);
@@ -145,6 +151,11 @@ $sizes: (
 
   @each $stateName, $color in theme.$states {
     &_#{$stateName} {
+      --tabs-glass-bg: #{map.get($color, glass-bg)};
+      --tabs-glass-hover-bg: #{map.get($color, glass-hover)};
+      --tabs-glass-border: #{map.get($color, glass-border)};
+      --tabs-glass-text: #{map.get($color, text)};
+
       .tabs_tab.tabs_active {
         background-color: map.get($color, bg);
         border-bottom-color: map.get($color, border);
@@ -160,6 +171,26 @@ $sizes: (
   &_secondary .tabs_tab.active {
     color: var(--text-color-secondary);
   }
+}
+
+.tabs_glass .tabs_tab {
+  @include mixins.glass-surface(
+    var(--tabs-glass-bg, rgba(255, 255, 255, 0.16)),
+    var(--tabs-glass-border, rgba(255, 255, 255, 0.32)),
+    14px
+  );
+  color: var(--tabs-glass-text, var(--text-color-primary));
+  border-right-color: var(--tabs-glass-border, rgba(255, 255, 255, 0.32));
+  box-shadow: var(--box-shadow-sm);
+}
+
+.tabs_glass .tabs_tab:hover {
+  background: var(--tabs-glass-hover-bg, rgba(255, 255, 255, 0.24));
+}
+
+.tabs_glass .tabs_tab.tabs_active {
+  background: var(--tabs-glass-hover-bg, rgba(255, 255, 255, 0.26));
+  border-color: var(--tabs-glass-border, rgba(255, 255, 255, 0.36));
 }
 
 @each $key, $value in theme.$rounding {
@@ -199,6 +230,14 @@ $sizes: (
 @media (forced-colors: active) {
   .tabs {
     border-bottom-color: ButtonText;
+  }
+
+  .tabs_glass .tabs_tab {
+    background: ButtonFace;
+    border-color: ButtonText;
+    color: ButtonText;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .tabs_tab {

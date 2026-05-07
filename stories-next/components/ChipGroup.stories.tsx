@@ -38,8 +38,6 @@ const createChip = (
   ...overrides,
 });
 
-const allThemes: ChipProps["theme"][] = ["primary", "secondary", "clear"];
-
 const positions: ChipGroupProps["position"][] = [
   "topLeft",
   "topCenter",

@@ -147,6 +147,54 @@ export const States: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: () => {
+    return (
+      <StoryGrid title="Glass Theme Variants">
+        {themeOptions.map((theme) => (
+          <div key={theme} style={{ textAlign: "center" }}>
+            <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+              {theme}
+            </p>
+            <Dropdown
+              triggerIcon={FaEllipsisV}
+              theme={theme}
+              glass
+              items={[{ label: `Glass item (${theme})`, onClick: () => {} }]}
+              aria-label={`Glass ${theme} actions`}
+            />
+          </div>
+        ))}
+      </StoryGrid>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: () => {
+    const stateOptions: StateType[] = ["success", "error", "warning"];
+
+    return (
+      <StoryGrid title="Glass State Variants">
+        {stateOptions.map((state) => (
+          <div key={state} style={{ textAlign: "center" }}>
+            <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+              {state}
+            </p>
+            <Dropdown
+              triggerIcon={FaEllipsisV}
+              state={state}
+              glass
+              items={[{ label: `Glass item (${state})`, onClick: () => {} }]}
+              aria-label={`Glass ${state} actions`}
+            />
+          </div>
+        ))}
+      </StoryGrid>
+    );
+  },
+};
+
 export const MenuRoundingVariants = () => (
   <StoryGrid title="Menu Rounding Variants">
     {roundingOptions.map((rounding) => (

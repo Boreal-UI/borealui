@@ -21,6 +21,7 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   classMap,
   isItemActive,
   theme = getDefaultTheme(),
+  glass = false,
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   className = "",
@@ -32,8 +33,14 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   getItemAriaLabel,
 }) => {
   const wrapperClass = useMemo(
-    () => combineClassNames(classMap.container, classMap[theme], className),
-    [classMap, theme, className],
+    () =>
+      combineClassNames(
+        classMap.container,
+        classMap[theme],
+        glass && classMap.glass,
+        className,
+      ),
+    [classMap, theme, glass, className],
   );
 
   const itemClass = useMemo(

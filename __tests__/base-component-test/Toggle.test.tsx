@@ -7,6 +7,8 @@ expect.extend(toHaveNoViolations);
 const mockStyles = {
   container: "container",
   toggle: "toggle",
+  glass: "glass",
+  glassTrack: "glassTrack",
   active: "active",
   slider: "slider",
   label: "label",
@@ -418,13 +420,14 @@ describe("ToggleBase", () => {
     ).not.toHaveClass("active");
   });
 
-  it("applies theme, size, disabled, className, rounding, and shadow classes", () => {
+  it("applies theme, glass, size, disabled, className, rounding, and shadow classes", () => {
     render(
       <ToggleBase
         checked={false}
         onChange={() => {}}
         label="Styled toggle"
         theme="primary"
+        glass
         size="medium"
         rounding="medium"
         shadow="light"
@@ -437,6 +440,7 @@ describe("ToggleBase", () => {
     expect(screen.getByTestId("toggle-wrapper")).toHaveClass(
       "container",
       "primary",
+      "glass",
       "medium",
       "disabled",
       "customClass",
@@ -444,6 +448,7 @@ describe("ToggleBase", () => {
 
     expect(screen.getByRole("switch", { name: "Styled toggle" })).toHaveClass(
       "toggle",
+      "glassTrack",
       "shadowLight",
       "roundMedium",
     );

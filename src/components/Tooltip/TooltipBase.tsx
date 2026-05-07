@@ -34,6 +34,7 @@ const TooltipBase = forwardRef<
     content,
     position = "top",
     theme = getDefaultTheme(),
+    glass = false,
     rounding = getDefaultRounding(),
     shadow = getDefaultShadow(),
     state = "",
@@ -79,11 +80,12 @@ const TooltipBase = forwardRef<
         classMap[position],
         classMap[theme],
         classMap[state],
+        glass && classMap.glass,
         visible && classMap.visible,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
       ),
-    [classMap, position, theme, state, visible, shadow, rounding],
+    [classMap, position, theme, state, glass, visible, shadow, rounding],
   );
 
   let trigger: React.ReactNode;

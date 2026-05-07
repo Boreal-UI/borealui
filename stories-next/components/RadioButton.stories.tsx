@@ -110,6 +110,28 @@ export const ThemeVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: () => {
+    const [selected, setSelected] = useState("primary");
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => (
+          <RadioButton
+            key={`glass-${theme}`}
+            label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
+            value={theme}
+            theme={theme}
+            glass
+            checked={selected === theme}
+            onChange={setSelected}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const StateVariants: Story = {
   render: () => {
     const [selected, setSelected] = useState("primary");
@@ -122,6 +144,28 @@ export const StateVariants: Story = {
             label={state.charAt(0).toUpperCase() + state.slice(1)}
             value={state}
             state={state}
+            checked={selected === state}
+            onChange={setSelected}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: () => {
+    const [selected, setSelected] = useState("success");
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <RadioButton
+            key={`glass-${state}`}
+            label={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
+            value={state}
+            state={state}
+            glass
             checked={selected === state}
             onChange={setSelected}
           />

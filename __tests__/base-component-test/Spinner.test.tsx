@@ -7,6 +7,8 @@ expect.extend(toHaveNoViolations);
 const mockStyles = {
   wrapper: "spinner-wrapper",
   spinner: "spinner-base",
+  glass: "spinner-glass",
+  glassRing: "spinner-glass-ring",
   shadowElement: "spinner-shadow",
   label: "spinner-label",
   primary: "theme-primary",
@@ -60,6 +62,32 @@ describe("SpinnerBase", () => {
     expect(ring).toHaveClass("spinner-base");
     expect(ring).toHaveClass("theme-primary");
     expect(ring).toHaveClass("state-success");
+  });
+
+  it("applies theme, state, and glass classes to the ring", () => {
+    render(
+      <SpinnerBase
+        theme="secondary"
+        state="success"
+        glass
+        classMap={mockStyles}
+      />,
+    );
+
+    const spinner = screen.getByTestId("spinner");
+    const ring = screen.getByTestId("spinner-ring");
+
+    expect(spinner).toHaveClass("spinner-wrapper");
+    expect(spinner).not.toHaveClass("theme-secondary");
+    expect(spinner).not.toHaveClass("state-success");
+    expect(spinner).not.toHaveClass("spinner-glass");
+
+    expect(ring).toHaveClass(
+      "spinner-base",
+      "theme-secondary",
+      "state-success",
+      "spinner-glass",
+    );
   });
 
   it("applies wrapper className to the outer container", () => {

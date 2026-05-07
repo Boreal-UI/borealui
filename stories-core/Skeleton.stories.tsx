@@ -63,12 +63,12 @@ export const MultipleLines: Story = {
   ),
 };
 
-export const RoundingVariants = (args) =>
+export const RoundingVariants = (args: React.ComponentProps<typeof Skeleton>) =>
   withVariants(Skeleton, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof Skeleton>) =>
   withVariants(Skeleton, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);

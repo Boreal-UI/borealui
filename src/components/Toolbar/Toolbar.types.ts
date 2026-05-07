@@ -104,6 +104,12 @@ export interface ToolbarProps {
     outline?: boolean;
 
     /**
+     * Whether the avatar should use its own glass styling.
+     * Defaults to the toolbar glass setting when omitted.
+     */
+    glass?: boolean;
+
+    /**
      * Optional click handler for the avatar.
      */
     onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
@@ -126,6 +132,11 @@ export interface ToolbarProps {
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
    */
   theme?: ThemeType;
+
+  /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
 
   /**
    * How the toolbar attaches to the viewport or page layout.

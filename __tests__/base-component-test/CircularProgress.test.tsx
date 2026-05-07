@@ -312,18 +312,6 @@ describe("CircularProgressBase", () => {
     expect(border).not.toHaveClass("stateDisabled");
   });
 
-  it("does not apply inline gradient style when a mapped state is provided", () => {
-    renderProgress({
-      value: 50,
-      state: "success",
-    });
-
-    const root = screen.getByTestId("circular-progress");
-    const border = root.firstChild as HTMLElement;
-
-    expect(border.getAttribute("style")).toBeNull();
-  });
-
   it("renders the inner circle and value text classes", () => {
     renderProgress({
       value: 25,

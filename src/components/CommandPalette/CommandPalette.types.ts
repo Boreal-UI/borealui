@@ -1,5 +1,3 @@
-//TODO add glass styles
-
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import type { AriaAttributes, HTMLAttributes, ReactNode } from "react";
 
@@ -61,6 +59,12 @@ export interface CommandPaletteProps
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
    */
   theme?: ThemeType;
+
+  /**
+   * If true, applies a translucent glass surface using the selected theme/state.
+   * Defaults to `false`.
+   */
+  glass?: boolean;
 
   /**
    * Rounding style for the palette

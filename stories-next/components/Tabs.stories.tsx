@@ -174,6 +174,46 @@ export const StateVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        {themeOptions.map((theme) => (
+          <TabsWithPanel
+            key={theme}
+            {...args}
+            idBase={`tabs-glass-theme-${theme}`}
+            theme={theme}
+            glass
+            tabs={tabsWithIcons}
+            panels={panelsWithIcons}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        {stateOptions.map((state) => (
+          <TabsWithPanel
+            key={state}
+            {...args}
+            idBase={`tabs-glass-state-${state}`}
+            state={state}
+            glass
+            tabs={tabsWithIcons}
+            panels={panelsWithIcons}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const SizeVariants: Story = {
   render: (args) => {
     const sizes = ["xs", "small", "medium", "large", "xl"] as const;

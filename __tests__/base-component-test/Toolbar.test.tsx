@@ -8,6 +8,7 @@ expect.extend(toHaveNoViolations);
 
 const mockStyles = {
   toolbar: "toolbar",
+  glass: "glass",
   section: "section",
   title: "title",
   avatarWrapper: "avatarWrapper",
@@ -293,11 +294,12 @@ describe("ToolbarBase", () => {
     ).toHaveAttribute("id", "custom-toolbar-title");
   });
 
-  it("applies theme, attachment, rounding, shadow, and custom class names", () => {
+  it("applies theme, glass, attachment, rounding, shadow, and custom class names", () => {
     render(
       <ToolbarBase
         title="Styled"
         theme="secondary"
+        glass
         attachment="sticky"
         rounding="large"
         shadow="strong"
@@ -310,10 +312,41 @@ describe("ToolbarBase", () => {
     const toolbar = screen.getByTestId("toolbar");
     expect(toolbar).toHaveClass("toolbar");
     expect(toolbar).toHaveClass("secondary");
+    expect(toolbar).toHaveClass("glass");
     expect(toolbar).toHaveClass("sticky");
     expect(toolbar).toHaveClass("roundLarge");
     expect(toolbar).toHaveClass("shadowStrong");
     expect(toolbar).toHaveClass("customToolbar");
+  });
+
+  it("passes glass to the nested avatar by default and allows avatar override", () => {
+    const { rerender } = render(
+      <ToolbarBase
+        glass
+        avatar={{ name: "JD" }}
+        AvatarComponent={DummyAvatar}
+        classMap={mockStyles}
+      />,
+    );
+
+    expect(screen.getByRole("button", { name: "JD" })).toHaveAttribute(
+      "data-glass",
+      "true",
+    );
+
+    rerender(
+      <ToolbarBase
+        glass
+        avatar={{ name: "JD", glass: false }}
+        AvatarComponent={DummyAvatar}
+        classMap={mockStyles}
+      />,
+    );
+
+    expect(screen.getByRole("button", { name: "JD" })).toHaveAttribute(
+      "data-glass",
+      "false",
+    );
   });
 
   it("applies static attachment class by default", () => {

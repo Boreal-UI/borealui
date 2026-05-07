@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .metricBox {
@@ -188,6 +189,11 @@
 
 @each $theme-name, $properties in theme.$themes {
   .metricBox_#{$theme-name} {
+    --metric-box-glass-bg: #{map.get($properties, glass-bg)};
+    --metric-box-glass-hover-bg: #{map.get($properties, glass-hover)};
+    --metric-box-glass-border: #{map.get($properties, glass-border)};
+    --metric-box-glass-text: #{map.get($properties, text)};
+
     background-color: map.get($properties, bg);
     color: map.get($properties, text);
 
@@ -216,6 +222,11 @@
 
 @each $state-name, $properties in theme.$states {
   .metricBox_#{$state-name} {
+    --metric-box-glass-bg: #{map.get($properties, glass-bg)};
+    --metric-box-glass-hover-bg: #{map.get($properties, glass-hover)};
+    --metric-box-glass-border: #{map.get($properties, glass-border)};
+    --metric-box-glass-text: #{map.get($properties, text)};
+
     background-color: map.get($properties, bg);
     color: map.get($properties, text);
 
@@ -247,6 +258,25 @@
   box-shadow: none;
 }
 
+.metricBox_glass {
+  @include mixins.glass-surface(
+    var(--metric-box-glass-bg, var(--glass-background)),
+    var(--metric-box-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--metric-box-glass-text, currentcolor);
+}
+
+.metricBox_glass:hover {
+  background: var(--metric-box-glass-hover-bg, var(--glass-background));
+}
+
+.metricBox_glass.metricBox_outline {
+  background: var(--metric-box-glass-bg, var(--glass-background));
+  border-color: var(--metric-box-glass-border, var(--glass-border-color));
+}
+
 @media (prefers-reduced-motion: reduce) {
   .metricBox,
   .metricBox * {
@@ -264,5 +294,13 @@
 
   .metricBox.metricBox_outline {
     border: 1px solid ButtonText;
+  }
+
+  .metricBox.metricBox_glass {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

@@ -1,5 +1,3 @@
-//TODO add glass styles
-
 import React, {
   useEffect,
   useId,
@@ -32,6 +30,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   state = "",
+  glass = false,
   classMap,
   TextInputComponent,
   inputAriaLabel,
@@ -321,6 +320,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           classMap[state],
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
+          glass && classMap.glass,
           className,
         )}
         onClick={(e) => e.stopPropagation()}
@@ -364,6 +364,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           placeholder={placeholder}
           theme={theme}
           state={state}
+          glass={glass}
           shadow={"none"}
           rounding={rounding}
           className={classMap.input}

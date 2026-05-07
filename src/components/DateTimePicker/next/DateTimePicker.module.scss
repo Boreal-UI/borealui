@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .wrapper {
@@ -135,6 +136,11 @@
 
 @each $themeName, $values in theme.$themes {
   .#{$themeName} {
+    --datetime-picker-glass-bg: #{map.get($values, glass-bg)};
+    --datetime-picker-glass-hover-bg: #{map.get($values, glass-hover)};
+    --datetime-picker-glass-border: #{map.get($values, glass-border)};
+    --datetime-picker-glass-text: #{map.get($values, text)};
+
     .inputWrapper {
       background-color: map.get($values, bg);
       color: map.get($values, text);
@@ -166,6 +172,11 @@
 
 @each $stateName, $values in theme.$states {
   .#{$stateName} {
+    --datetime-picker-glass-bg: #{map.get($values, glass-bg)};
+    --datetime-picker-glass-hover-bg: #{map.get($values, glass-hover)};
+    --datetime-picker-glass-border: #{map.get($values, glass-border)};
+    --datetime-picker-glass-text: #{map.get($values, text)};
+
     .inputWrapper {
       background-color: map.get($values, bg);
       color: map.get($values, text);
@@ -198,6 +209,22 @@
 .outline .inputWrapper {
   background-color: transparent;
   box-shadow: none;
+}
+
+.glass .inputWrapper {
+  @include mixins.glass-surface(
+    var(--datetime-picker-glass-bg, rgba(255, 255, 255, 0.18)),
+    var(--datetime-picker-glass-border, rgba(255, 255, 255, 0.34)),
+    16px
+  );
+  color: var(--datetime-picker-glass-text, var(--text-color-primary));
+}
+
+.glass .inputWrapper:hover {
+  background: var(
+    --datetime-picker-glass-hover-bg,
+    rgba(255, 255, 255, 0.24)
+  );
 }
 
 .clear.outline .inputWrapper {
@@ -323,6 +350,14 @@ $input-sizes: (
 }
 
 @media (forced-colors: active) {
+  .glass .inputWrapper {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonText;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .inputWrapper {
     background: Canvas;
     color: CanvasText;

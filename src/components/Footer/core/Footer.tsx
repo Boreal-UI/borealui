@@ -7,6 +7,7 @@ import "./Footer.scss";
 
 const classes = {
   footer: "footer",
+  glass: "footer_glass",
 
   primary: "footer_primary",
   secondary: "footer_secondary",

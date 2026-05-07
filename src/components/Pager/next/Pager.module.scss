@@ -1,5 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
 
 $small-gap: var(--spacing-xxs);
 $medium-gap: var(--spacing-sm);
@@ -90,5 +92,13 @@ $large-gap: var(--spacing-lg);
   .button:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;
+  }
+
+  .wrapper.glass {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

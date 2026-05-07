@@ -12,6 +12,7 @@ const classes = {
   secondary: "stepper_secondary",
   tertiary: "stepper_tertiary",
   quaternary: "stepper_quaternary",
+  glass: "stepper_glass",
   success: "stepper_success",
   warning: "stepper_warning",
   error: "stepper_error",

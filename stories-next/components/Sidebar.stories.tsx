@@ -87,6 +87,22 @@ export const StateVariants = () => (
   </StoryGrid>
 );
 
+export const GlassThemeVariants = () => (
+  <StoryGrid title="Glass Theme Variants">
+    {themeOptions.map((theme) => (
+      <Sidebar key={theme} theme={theme} glass links={mockLinks} />
+    ))}
+  </StoryGrid>
+);
+
+export const GlassStateVariants = () => (
+  <StoryGrid title="Glass State Variants">
+    {stateOptions.map((state) => (
+      <Sidebar key={state} state={state} glass links={mockLinks} />
+    ))}
+  </StoryGrid>
+);
+
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (

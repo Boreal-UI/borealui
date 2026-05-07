@@ -75,6 +75,39 @@ export const StateVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+        {themeOptions.map((theme) => (
+          <div key={`glass-${theme}`} style={{ textAlign: "center" }}>
+            <Spinner
+              {...args}
+              theme={theme}
+              glass
+              label={`Glass: ${theme}`}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+        {stateOptions.map((state) => (
+          <div key={`glass-${state}`} style={{ textAlign: "center" }}>
+            <Spinner {...args} state={state} glass label={`Glass: ${state}`} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
 export const WithCustomLabel: Story = {
   args: {
     label: "Fetching data...",

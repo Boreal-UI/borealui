@@ -9,6 +9,8 @@ const mockClassNames = {
   wrapper: "radioWrapper",
   input: "radioInput",
   circle: "radioCircle",
+  glass: "radioGlass",
+  glassCircle: "radioGlassCircle",
   label: "radioLabel",
   primary: "themePrimary",
   secondary: "themeSecondary",
@@ -111,12 +113,13 @@ describe("BaseRadioButton", () => {
     );
   });
 
-  it("applies wrapper classes for theme, state, disabled, and custom className", () => {
+  it("applies wrapper classes for theme, state, glass, disabled, and custom className", () => {
     render(
       <BaseRadioButton
         {...defaultProps}
         theme="secondary"
         state="error"
+        glass
         disabled={true}
         className="customClass"
       />,
@@ -126,18 +129,25 @@ describe("BaseRadioButton", () => {
       "radioWrapper",
       "themeSecondary",
       "stateError",
+      "radioGlass",
       "radioDisabled",
       "customClass",
     );
   });
 
-  it("applies circle classes for shadow and rounding", () => {
+  it("applies circle classes for glass, shadow, and rounding", () => {
     render(
-      <BaseRadioButton {...defaultProps} shadow="medium" rounding="large" />,
+      <BaseRadioButton
+        {...defaultProps}
+        glass
+        shadow="medium"
+        rounding="large"
+      />,
     );
 
     expect(screen.getByTestId("radio-circle")).toHaveClass(
       "radioCircle",
+      "radioGlassCircle",
       "shadowMedium",
       "roundLarge",
     );

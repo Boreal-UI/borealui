@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { FaRocket, FaCalendarAlt, FaCheckCircle } from "react-icons/fa";
-import { Timeline } from "../src/index.core";
+import { ThemeType, Timeline } from "../src/index.core";
 import type { TimelineProps } from "../src/components/Timeline/Timeline.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -71,6 +71,7 @@ export const Horizontal: Story = {
 
 export const WithoutIcons: Story = {
   args: {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     items: sampleEvents.map(({ icon, ...rest }) => rest),
   },
 };
@@ -87,12 +88,30 @@ export const ThemeVariants: Story = {
   },
 };
 
-export const RoundingVariants = (args) =>
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "2rem" }}>
+        {themeOptions.map((theme) => (
+          <Timeline
+            key={`glass-${theme}`}
+            {...args}
+            theme={theme}
+            glass
+            items={sampleEvents}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const RoundingVariants = (args: React.ComponentProps<typeof Timeline>) =>
   withVariants(Timeline, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof Timeline>) =>
   withVariants(Timeline, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);

@@ -43,6 +43,11 @@ export interface PagerProps {
   theme?: ThemeType;
 
   /**
+   * Applies a translucent frosted-glass treatment to the pager and nested controls.
+   */
+  glass?: boolean;
+
+  /**
    * Optional state of the component for feedback styling.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    */
@@ -96,3 +101,5 @@ export interface BasePagerProps extends PagerProps {
   IconButton: React.ComponentType<IconButtonProps>;
   classMap: Record<string, string>;
 }
+
+export type PaginationProps = PagerProps;

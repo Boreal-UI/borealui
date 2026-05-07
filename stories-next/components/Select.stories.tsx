@@ -227,6 +227,62 @@ export const OutlineVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    const options = [
+      { label: "Alpha", value: "alpha" },
+      { label: "Beta", value: "beta" },
+      { label: "Gamma", value: "gamma" },
+    ];
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => (
+          <Select
+            key={`glass-${theme}`}
+            {...args}
+            theme={theme}
+            glass
+            value={value}
+            onChange={setValue}
+            options={options}
+            aria-label={`Glass ${theme} select`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    const options = [
+      { label: "Alpha", value: "alpha" },
+      { label: "Beta", value: "beta" },
+      { label: "Gamma", value: "gamma" },
+    ];
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <Select
+            key={`glass-${state}`}
+            {...args}
+            state={state}
+            glass
+            value={value}
+            onChange={setValue}
+            options={options}
+            aria-label={`Glass ${state} select`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const RoundingVariants = () =>
   withVariants(Select, { ...defaultArgs }, [
     { propName: "rounding", values: roundingOptions },

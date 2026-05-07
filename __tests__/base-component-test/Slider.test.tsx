@@ -10,6 +10,7 @@ const mockStyles = {
   wrapper: "sliderWrapper",
   label: "sliderLabel",
   slider: "slider",
+  glass: "glass",
   value: "sliderValue",
   small: "small",
   medium: "medium",
@@ -430,11 +431,15 @@ describe("SliderBase", () => {
       <SliderBase
         {...defaultProps}
         aria-label="Styled slider"
+        glass
         className="custom-class"
       />,
     );
 
-    expect(screen.getByTestId("slider-container")).toHaveClass("custom-class");
+    expect(screen.getByTestId("slider-container")).toHaveClass(
+      "glass",
+      "custom-class",
+    );
   });
 
   it("renders wrapper and container test ids", () => {

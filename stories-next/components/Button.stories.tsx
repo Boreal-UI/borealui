@@ -158,6 +158,10 @@ export const GlassVariants = () => (
         {state} Glass
       </Button>
     ))}
+
+    <Button key="disabled" disabled glass>
+      Disabled Glass
+    </Button>
   </StoryGrid>
 );
 

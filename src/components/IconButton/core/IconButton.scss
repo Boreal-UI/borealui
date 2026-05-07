@@ -46,6 +46,64 @@
     box-shadow: none;
   }
 
+  &_disabled,
+  &:disabled {
+    background-color: var(--disabled-color);
+    background: var(--disabled-color);
+    color: var(--text-color-primary);
+    cursor: not-allowed;
+    pointer-events: none;
+    box-shadow: none;
+    transform: none;
+  }
+
+  &_disabled:hover,
+  &:disabled:hover {
+    background-color: var(--disabled-color);
+    background: var(--disabled-color);
+    color: var(--text-color-primary);
+    transform: none;
+  }
+
+  &_disabled.icon_button_glass,
+  &:disabled.icon_button_glass {
+    background-color: var(--disabled-color);
+    background: var(--disabled-color);
+    border-color: var(--disabled-color);
+    color: var(--text-color-primary);
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  &_disabled.icon_button_glass:hover,
+  &:disabled.icon_button_glass:hover {
+    background-color: var(--disabled-color);
+    background: var(--disabled-color);
+    border-color: var(--disabled-color);
+    color: var(--text-color-primary);
+    transform: none;
+  }
+
+  &_disabled.icon_button_outline,
+  &:disabled.icon_button_outline {
+    background-color: transparent;
+    background: transparent;
+    border-color: var(--disabled-color);
+    color: var(--disabled-color);
+  }
+
+  &_disabled.icon_button_outline.icon_button_glass,
+  &:disabled.icon_button_outline.icon_button_glass {
+    background-color: transparent;
+    background: transparent;
+    border-color: var(--disabled-color);
+    color: var(--disabled-color);
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   .svg,
   svg {
     height: 20px;
@@ -60,14 +118,6 @@
       height: 22px;
       width: 22px;
     }
-  }
-
-  &_disabled {
-    background-color: var(--disabled-color);
-    color: var(--text-color-primary);
-    cursor: not-allowed;
-    pointer-events: none;
-    box-shadow: none;
   }
 
   &_loader {

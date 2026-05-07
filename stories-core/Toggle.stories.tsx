@@ -1,10 +1,16 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Toggle } from "../src/index.core";
+import {
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+  Toggle,
+} from "../src/index.core";
 import type { ToggleProps } from "../src/components/Toggle/Toggle.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -12,9 +18,15 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<ToggleProps> = {
   title: "Components/Toggle",
@@ -80,6 +92,29 @@ export const ThemeVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => {
+          const [checked, setChecked] = useState(false);
+          return (
+            <Toggle
+              key={`glass-${theme}`}
+              {...args}
+              theme={theme}
+              glass
+              label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
+              checked={checked}
+              onChange={setChecked}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
 export const StateVariants: Story = {
   render: (args) => {
     return (
@@ -92,6 +127,29 @@ export const StateVariants: Story = {
               {...args}
               state={state}
               label={`${state.charAt(0).toUpperCase() + state.slice(1)} state`}
+              checked={checked}
+              onChange={setChecked}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => {
+          const [checked, setChecked] = useState(false);
+          return (
+            <Toggle
+              key={`glass-${state}`}
+              {...args}
+              state={state}
+              glass
+              label={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
               checked={checked}
               onChange={setChecked}
             />
@@ -125,12 +183,12 @@ export const SizeVariants: Story = {
   },
 };
 
-export const RoundingVariants = (args) =>
+export const RoundingVariants = (args: React.ComponentProps<typeof Toggle>) =>
   withVariants(Toggle, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof Toggle>) =>
   withVariants(Toggle, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);

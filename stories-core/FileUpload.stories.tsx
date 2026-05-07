@@ -1,9 +1,15 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { FileUpload } from "../src/index.core";
+import {
+  FileUpload,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.core";
 import type { FileUploadProps } from "../src/components/FileUpload/FileUpload.types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -11,10 +17,16 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<FileUploadProps> = {
   title: "Components/FileUpload",
@@ -33,15 +45,15 @@ type Story = StoryObj<FileUploadProps>;
 
 export const Default: Story = {
   render: (args) => {
-    const handleSubmit = (files: FileList) => {
+    const handleSubmit = (files: File[]) => {
       alert(
-        `Uploaded ${files.length} file(s): ${Array.from(files)
+        `Uploaded ${files.length} file(s): ${files
           .map((f) => f.name)
           .join(", ")}`,
       );
     };
 
-    return <FileUpload {...args} onSubmit={() => handleSubmit} />;
+    return <FileUpload {...args} onSubmit={handleSubmit} />;
   },
 };
 
@@ -179,6 +191,49 @@ export const StateVariants: Story = {
             {...args}
             state={state}
             theme="secondary"
+            label={`Upload (${state})`}
+            onSubmit={(files) => console.log(`${state}:`, files)}
+          />
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+export const GlassThemeVariants: Story = {
+  render: (args) => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {themeOptions.map((theme) => (
+        <div key={theme}>
+          <h4 style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+            Glass {theme}
+          </h4>
+          <FileUpload
+            {...args}
+            theme={theme}
+            glass
+            label={`Upload (${theme})`}
+            onSubmit={(files) => console.log(`${theme}:`, files)}
+          />
+        </div>
+      ))}
+    </div>
+  ),
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {stateOptions.map((state) => (
+        <div key={state}>
+          <h4 style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+            Glass {state}
+          </h4>
+          <FileUpload
+            {...args}
+            state={state}
+            theme="secondary"
+            glass
             label={`Upload (${state})`}
             onSubmit={(files) => console.log(`${state}:`, files)}
           />

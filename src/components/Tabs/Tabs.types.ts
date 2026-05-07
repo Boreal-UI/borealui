@@ -65,6 +65,11 @@ export interface TabsProps {
   theme?: ThemeType;
 
   /**
+   * Adds translucent glass styling to the tab controls.
+   */
+  glass?: boolean;
+
+  /**
    * State of the tabs.
    * "success" | "error" | "warning" | "disabled" | ""
    */

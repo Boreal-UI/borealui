@@ -64,6 +64,7 @@ export const DummyButton = React.forwardRef<
       rounding,
       shadow,
       size,
+      glass,
       loading,
       isExternal,
       onClick,
@@ -77,6 +78,7 @@ export const DummyButton = React.forwardRef<
           ref={ref as React.Ref<HTMLAnchorElement>}
           data-theme={theme}
           data-outline={outline ? "true" : "false"}
+          data-glass={glass ? "true" : "false"}
           href={href}
           aria-label={ariaLabel}
           onClick={(e) => {
@@ -98,6 +100,7 @@ export const DummyButton = React.forwardRef<
         type="button"
         data-theme={theme}
         data-outline={outline ? "true" : "false"}
+        data-glass={glass ? "true" : "false"}
         aria-label={ariaLabel}
         onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
         disabled={disabled}
@@ -132,6 +135,7 @@ export const DummyIconButton = React.forwardRef<
       href,
       disabled,
       outline,
+      glass,
       theme,
       state,
       rounding,
@@ -157,6 +161,7 @@ export const DummyIconButton = React.forwardRef<
           tabIndex={disabled ? -1 : props.tabIndex}
           aria-disabled={disabled || undefined}
           rel={rel}
+          data-glass={glass ? "true" : "false"}
           onClick={(e) => {
             e.preventDefault();
             onClick?.(e as React.MouseEvent<HTMLElement>);
@@ -174,6 +179,7 @@ export const DummyIconButton = React.forwardRef<
         ref={ref as React.Ref<HTMLButtonElement>}
         type="button"
         disabled={disabled}
+        data-glass={glass ? "true" : "false"}
         onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
         {...props}
       >
@@ -289,6 +295,7 @@ export const DummyTextInput = React.forwardRef<
       "aria-label": ariaLabel,
       "aria-description": ariaDescription,
       autocomplete,
+      glass,
       onChange,
       id,
       ...props
@@ -317,6 +324,7 @@ export const DummyTextInput = React.forwardRef<
             : props.autoComplete
         }
         onChange={handleChange}
+        data-glass={glass ? "true" : "false"}
         {...props}
       />
     );
@@ -387,9 +395,15 @@ export const DummyAvatar: React.FC<AvatarProps> = ({
   name,
   onClick,
   children,
+  glass,
   ...props
 }) => (
-  <button type="button" onClick={onClick} {...props}>
+  <button
+    type="button"
+    onClick={onClick}
+    data-glass={glass ? "true" : "false"}
+    {...props}
+  >
     {children ?? name}
   </button>
 );

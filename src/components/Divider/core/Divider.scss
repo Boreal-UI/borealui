@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:color";
 @use "sass:map";
 
@@ -71,6 +72,11 @@
 
   @each $theme, $values in theme.$themes {
     &_#{$theme} {
+      --divider-glass-bg: #{map.get($values, glass-bg)};
+      --divider-glass-hover-bg: #{map.get($values, glass-hover)};
+      --divider-glass-border: #{map.get($values, glass-border)};
+      --divider-glass-text: #{map.get($values, text)};
+
       background-color: map.get($values, border);
       border-color: map.get($values, border);
     }
@@ -81,12 +87,32 @@
 
   @each $state, $values in theme.$states {
     &_#{$state} {
+      --divider-glass-bg: #{map.get($values, glass-bg)};
+      --divider-glass-hover-bg: #{map.get($values, glass-hover)};
+      --divider-glass-border: #{map.get($values, glass-border)};
+      --divider-glass-text: #{map.get($values, text)};
+
       background-color: map.get($values, border);
       border-color: map.get($values, border);
     }
     &_#{$state}.divider_dashed {
       color: map.get($values, border);
     }
+  }
+
+  &_glass {
+    @include mixins.glass-surface(
+      var(--divider-glass-bg, var(--glass-background)),
+      var(--divider-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--divider-glass-text, currentcolor);
+    box-shadow: none;
+  }
+
+  &_glass.divider_dashed {
+    color: var(--divider-glass-border, currentcolor);
   }
 }
 
@@ -113,5 +139,13 @@
 
   .divider.divider_dashed.divider_vertical {
     border-left: 1px dashed ButtonText;
+  }
+
+  .divider.divider_glass {
+    background: Canvas !important;
+    border-color: ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

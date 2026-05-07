@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .wrapper {
@@ -128,6 +129,11 @@
 
 @each $name, $vals in theme.$themes {
   .#{$name} {
+    --radio-glass-bg: #{map.get($vals, glass-bg)};
+    --radio-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --radio-glass-border: #{map.get($vals, glass-border)};
+    --radio-glass-text: #{map.get($vals, text)};
+
     color: map.get($vals, bg);
 
     .circle {
@@ -138,12 +144,31 @@
 
 @each $name, $vals in theme.$states {
   .#{$name} {
+    --radio-glass-bg: #{map.get($vals, glass-bg)};
+    --radio-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --radio-glass-border: #{map.get($vals, glass-border)};
+    --radio-glass-text: #{map.get($vals, text)};
+
     color: map.get($vals, bg);
 
     .circle {
       border-color: map.get($vals, border);
     }
   }
+}
+
+.glass .glassCircle {
+  @include mixins.glass-surface(
+    var(--radio-glass-bg, var(--glass-background)),
+    var(--radio-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--radio-glass-text, currentcolor);
+}
+
+.glass .input:checked + .glassCircle {
+  background: var(--radio-glass-hover-bg, var(--glass-background));
 }
 
 .disabled {
@@ -186,5 +211,13 @@
     background: Highlight !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .glass .glassCircle {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

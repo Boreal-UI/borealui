@@ -1,10 +1,16 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { DateTimePicker } from "../src/index.core";
+import {
+  DateTimePicker,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.core";
 import type { DateTimePickerProps } from "../src/components/DateTimePicker/DateTimePicker.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -12,10 +18,16 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<DateTimePickerProps> = {
   title: "Components/DateTimePicker",
@@ -189,6 +201,50 @@ export const StateVariants: Story = {
             value={value}
             onChange={setValue}
             label={`${state.charAt(0).toUpperCase() + state.slice(1)} State`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("2025-04-15T11:00");
+
+    return (
+      <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
+        {themeOptions.map((theme) => (
+          <DateTimePicker
+            key={`glass-${theme}`}
+            {...args}
+            theme={theme}
+            glass
+            value={value}
+            onChange={setValue}
+            label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("2025-04-15T11:00");
+
+    return (
+      <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
+        {stateOptions.map((state) => (
+          <DateTimePicker
+            key={`glass-${state}`}
+            {...args}
+            state={state}
+            glass
+            value={value}
+            onChange={setValue}
+            label={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
           />
         ))}
       </div>

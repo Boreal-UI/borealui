@@ -123,6 +123,28 @@ export const ThemeVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState(75);
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => (
+          <Slider
+            key={`glass-${theme}`}
+            {...args}
+            theme={theme}
+            glass
+            label={`Glass theme: ${theme}`}
+            value={value}
+            onChange={(e) => setValue(Number(e.target.value))}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const StateVariants: Story = {
   render: (args) => {
     const [value, setValue] = useState(75);
@@ -135,6 +157,28 @@ export const StateVariants: Story = {
             {...args}
             state={state}
             label={`State: ${state}`}
+            value={value}
+            onChange={(e) => setValue(Number(e.target.value))}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState(75);
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <Slider
+            key={`glass-${state}`}
+            {...args}
+            state={state}
+            glass
+            label={`Glass state: ${state}`}
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
           />

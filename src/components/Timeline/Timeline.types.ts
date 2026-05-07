@@ -73,6 +73,11 @@ export interface TimelineProps extends Omit<
   theme?: ThemeType;
 
   /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
+  /**
    * Rounding of the component.
    * "none" | "small" | "medium" | "large" | "full"
    */

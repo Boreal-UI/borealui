@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .data_table_wrapper {
@@ -148,6 +149,39 @@
     border-bottom: none;
   }
 
+  &.data_table_glass {
+    @include mixins.glass-surface(
+      var(--data-table-glass-bg, rgba(255, 255, 255, 0.16)),
+      var(--data-table-glass-border, rgba(255, 255, 255, 0.28)),
+      18px
+    );
+    color: var(--data-table-glass-text, var(--text-color-primary));
+
+    .data_table {
+      background: transparent;
+    }
+
+    .data_table_header_cell {
+      background-color: var(
+        --data-table-glass-hover-bg,
+        rgba(255, 255, 255, 0.22)
+      );
+      color: var(--data-table-glass-text, var(--text-color-primary));
+    }
+
+    tbody tr {
+      background-color: transparent;
+    }
+
+    .data_table_row_striped:nth-child(even),
+    .data_table_row_clickable:hover {
+      background-color: var(
+        --data-table-glass-hover-bg,
+        rgba(255, 255, 255, 0.22)
+      );
+    }
+  }
+
   &.data_table_clear {
     box-shadow: none;
 
@@ -238,6 +272,11 @@
 
 @each $name, $values in theme.$themes {
   .data_table_#{$name} {
+    --data-table-glass-bg: #{map.get($values, glass-bg)};
+    --data-table-glass-hover-bg: #{map.get($values, glass-hover)};
+    --data-table-glass-border: #{map.get($values, glass-border)};
+    --data-table-glass-text: #{map.get($values, text)};
+
     .data_table_header_cell {
       background-color: map.get($values, bg);
       color: map.get($values, text);
@@ -259,6 +298,11 @@
 
 @each $name, $values in theme.$states {
   .data_table_#{$name} {
+    --data-table-glass-bg: #{map.get($values, glass-bg)};
+    --data-table-glass-hover-bg: #{map.get($values, glass-hover)};
+    --data-table-glass-border: #{map.get($values, glass-border)};
+    --data-table-glass-text: #{map.get($values, text)};
+
     .data_table_header_cell {
       background-color: map.get($values, bg);
       color: map.get($values, text);
@@ -275,6 +319,32 @@
         border-width: 1.5px;
       }
     }
+  }
+}
+
+.data_table_wrapper.data_table_glass {
+  .data_table {
+    background: transparent;
+  }
+
+  .data_table_header_cell {
+    background-color: var(
+      --data-table-glass-hover-bg,
+      rgba(255, 255, 255, 0.22)
+    );
+    color: var(--data-table-glass-text, var(--text-color-primary));
+  }
+
+  tbody tr {
+    background-color: transparent;
+  }
+
+  .data_table_row_striped:nth-child(even),
+  .data_table_row_clickable:hover {
+    background-color: var(
+      --data-table-glass-hover-bg,
+      rgba(255, 255, 255, 0.22)
+    );
   }
 }
 
@@ -308,6 +378,12 @@
   .data_table_wrapper .data_table {
     color: CanvasText;
     background: Canvas;
+  }
+
+  .data_table_wrapper.data_table_glass {
+    background: Canvas;
+    border-color: ButtonText;
+    box-shadow: none;
   }
 
   .data_table_wrapper .data_table_header_cell,

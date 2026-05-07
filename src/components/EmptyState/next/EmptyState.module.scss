@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .empty_state {
@@ -182,6 +183,11 @@ $icon-sizes: (
 
 @each $name, $vals in theme.$themes {
   .#{$name} {
+    --empty-state-glass-bg: #{map.get($vals, glass-bg)};
+    --empty-state-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --empty-state-glass-border: #{map.get($vals, glass-border)};
+    --empty-state-glass-text: #{map.get($vals, text)};
+
     background-color: map.get($vals, bg);
     color: map.get($vals, text);
   }
@@ -199,6 +205,11 @@ $icon-sizes: (
 
 @each $name, $vals in theme.$states {
   .#{$name} {
+    --empty-state-glass-bg: #{map.get($vals, glass-bg)};
+    --empty-state-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --empty-state-glass-border: #{map.get($vals, glass-border)};
+    --empty-state-glass-text: #{map.get($vals, text)};
+
     background-color: map.get($vals, bg);
     color: map.get($vals, text);
   }
@@ -212,6 +223,25 @@ $icon-sizes: (
       border-width: 1.5px;
     }
   }
+}
+
+.glass {
+  @include mixins.glass-surface(
+    var(--empty-state-glass-bg, var(--glass-background)),
+    var(--empty-state-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--empty-state-glass-text, currentcolor);
+}
+
+.glass:hover {
+  background: var(--empty-state-glass-hover-bg, var(--glass-background));
+}
+
+.glass.outline {
+  background: transparent;
+  border-color: var(--empty-state-glass-border, var(--glass-border-color));
 }
 
 @each $k, $v in theme.$rounding {
@@ -255,5 +285,13 @@ $icon-sizes: (
 
   .outline {
     border: 1px solid ButtonText;
+  }
+
+  .empty_state.glass {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

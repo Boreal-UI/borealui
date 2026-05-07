@@ -304,6 +304,44 @@ export const OutlineVariants = () => (
   </StoryGrid>
 );
 
+export const GlassThemeVariants = () => (
+  <StoryGrid title="Glass Theme Variants">
+    {themeOptions.map((theme) => (
+      <div key={theme}>
+        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
+          {theme} Glass
+        </h4>
+        <DataTable
+          data={sampleData}
+          columns={sampleColumns}
+          theme={theme}
+          glass
+          striped
+        />
+      </div>
+    ))}
+  </StoryGrid>
+);
+
+export const GlassStateVariants = () => (
+  <StoryGrid title="Glass State Variants">
+    {stateOptions.map((state) => (
+      <div key={state}>
+        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
+          {state} Glass
+        </h4>
+        <DataTable
+          data={sampleData}
+          columns={sampleColumns}
+          state={state}
+          glass
+          striped
+        />
+      </div>
+    ))}
+  </StoryGrid>
+);
+
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (

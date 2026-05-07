@@ -163,6 +163,11 @@ export interface FooterProps extends Omit<
    */
   theme?: ThemeType;
 
+  /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
   /** Optional class name for custom styles. */
   className?: string;
 

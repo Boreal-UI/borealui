@@ -205,6 +205,82 @@ export const OutlineVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextInput
+              key={`glass-${theme}`}
+              {...args}
+              glass
+              theme={theme}
+              icon={FaInbox}
+              placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
+              value={value}
+              password
+              onChange={(value) => setValue(value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextInput
+              key={`glass-${state}`}
+              {...args}
+              glass
+              state={state}
+              icon={FaInbox}
+              placeholder={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
+              value={value}
+              password
+              onChange={(value) => setValue(value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextInput
+              key={`outline-${theme}`}
+              {...args}
+              outline
+              glass
+              theme={theme}
+              icon={FaInbox}
+              placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
+              value={value}
+              password
+              onChange={(value) => setValue(value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
 export const Disabled: Story = {
   render: (args) => {
     return (
