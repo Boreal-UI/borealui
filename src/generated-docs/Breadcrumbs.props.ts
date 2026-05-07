@@ -60,6 +60,14 @@ export const breadcrumbsPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "items",
       "type": "Breadcrumb[]",
       "description": "An array of breadcrumb items.",

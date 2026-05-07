@@ -108,6 +108,14 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "iconPosition",
       "type": "\"left\" | \"right\"",
       "description": "Position of accordion toggle icon.",

@@ -33,8 +33,8 @@ export default defineConfig({
   build: {
     outDir: "dist/core",
     emptyOutDir: true,
-    sourcemap: true,
-    minify: false,
+    sourcemap: false,
+    minify: "esbuild",
     cssCodeSplit: true,
 
     lib: {

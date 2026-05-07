@@ -124,6 +124,14 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Adds translucent glass styling to the select wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "id",
       "type": "string",
       "description": "Optional id for the underlying select element.",

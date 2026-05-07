@@ -52,6 +52,14 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "category": "testing"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Adds a translucent glass surface behind the rating stars.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "id",
       "type": "string",
       "description": "Optional unique id for the rating group.",

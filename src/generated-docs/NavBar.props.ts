@@ -60,6 +60,14 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Adds translucent glass styling to nav items.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "isItemActive",
       "type": "((item: NavItem) => boolean)",
       "description": "Optional callback used to determine whether a nav item should be styled as active.",

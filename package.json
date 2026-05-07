@@ -3,7 +3,7 @@
   "version": "0.0.886",
   "description": "A modern, customizable React/Next.js component library",
   "author": "Davin Chiupka",
-  "license": "ISC",
+  "license": "MIT",
   "main": "./dist/core/index.cjs.js",
   "module": "./dist/core/index.js",
   "types": "./dist/types/index.core.d.ts",

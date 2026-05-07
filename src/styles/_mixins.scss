@@ -49,5 +49,6 @@
 ) {
   background: $background;
   border: 1px solid $border;
+  -webkit-backdrop-filter: blur($blur) saturate(var(--glass-saturate));
   backdrop-filter: blur($blur) saturate(var(--glass-saturate));
 }

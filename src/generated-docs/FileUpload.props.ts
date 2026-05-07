@@ -124,6 +124,14 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Adds glass styling to the dropzone and nested controls.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "id",
       "type": "string",
       "description": "Optional custom id for the root/input relationship.",

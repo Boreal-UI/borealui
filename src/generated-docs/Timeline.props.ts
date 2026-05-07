@@ -52,6 +52,14 @@ export const timelinePropDocs: GeneratedComponentDoc = {
       "category": "testing"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "items",
       "type": "TimelineItem[]",
       "description": "Array of timeline items to display.",

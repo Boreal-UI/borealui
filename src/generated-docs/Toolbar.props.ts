@@ -45,7 +45,7 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "avatar",
-      "type": "{ name?: string; src?: string; size?: SizeType; shape?: \"circle\" | \"square\" | \"rounded\"; theme?: ThemeType; outline?: boolean; onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void; \"aria-label\"?: string; }",
+      "type": "{ name?: string; src?: string; size?: SizeType; shape?: \"circle\" | \"square\" | \"rounded\"; theme?: ThemeType; outline?: boolean; glass?: boolean; onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void; \"aria-label\"?: string; }",
       "description": "Optional avatar settings displayed at the far right.",
       "required": false,
       "inherited": false,
@@ -82,6 +82,14 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "testing"
+    },
+    {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "left",

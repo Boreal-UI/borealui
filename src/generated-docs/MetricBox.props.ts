@@ -84,6 +84,14 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "icon",
       "type": "IconType",
       "description": "Optional icon to visually represent the metric (from react-icons, for example).",

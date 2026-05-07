@@ -148,6 +148,14 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "If true, applies a translucent glass surface using the selected theme/state. Defaults to `false`.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "hideCaption",
       "type": "boolean",
       "description": "Whether the caption should be visually hidden. Useful when you want semantic labeling without visible UI.",

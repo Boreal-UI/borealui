@@ -132,6 +132,14 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "category": "testing"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Adds translucent glass styling to the input wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "icon",
       "type": "ComponentType<{ className?: string; \"aria-hidden\"?: boolean; }>",
       "description": "Optional icon component displayed beside the input.",

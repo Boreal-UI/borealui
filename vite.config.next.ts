@@ -36,8 +36,8 @@ export default defineConfig({
   build: {
     outDir: "dist/next",
     emptyOutDir: true,
-    sourcemap: true,
-    minify: false,
+    sourcemap: false,
+    minify: "esbuild",
     cssCodeSplit: true,
 
     lib: {

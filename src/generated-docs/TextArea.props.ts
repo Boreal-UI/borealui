@@ -76,6 +76,14 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Adds translucent glass styling to the textarea wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "height",
       "type": "string | number",
       "description": "Optional height for the textarea.",

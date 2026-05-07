@@ -76,6 +76,14 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment to the pager and nested controls.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "itemsPerPage",
       "type": "number",
       "description": "Number of items to display per page.",

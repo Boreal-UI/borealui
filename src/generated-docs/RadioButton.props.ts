@@ -84,6 +84,14 @@ export const radioButtonPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment to the visible radio control.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "label",
       "type": "string",
       "description": "The label text displayed next to the radio button.",

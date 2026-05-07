@@ -92,6 +92,14 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "indeterminate",
       "type": "boolean",
       "description": "Whether the checkbox is in an indeterminate (mixed) state.",
