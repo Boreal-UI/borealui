@@ -56,6 +56,11 @@ $label-font-sizes: (
   xl: var(--font-size-h6),
 );
 
+.checkbox,
+.checkbox_label-wrapper {
+  cursor: pointer;
+}
+
 .checkbox {
   display: inline-flex;
   flex-direction: row;

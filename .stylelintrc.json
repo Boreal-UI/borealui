@@ -13,6 +13,7 @@
       "ignorePseudoClasses": ["global"]
     }],
     "no-descending-specificity": null,
+    "property-no-vendor-prefix": null,
     "max-nesting-depth": 3,
     "selector-max-id": 0,
     "color-named": "never",

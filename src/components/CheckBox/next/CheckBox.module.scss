@@ -56,6 +56,10 @@ $label-font-sizes: (
   xl: var(--font-size-h6),
 );
 
+.checkbox,
+.labelWrapper {
+  cursor: pointer;
+}
 .checkbox {
   display: inline-flex;
   flex-direction: row;
@@ -87,9 +91,16 @@ $label-font-sizes: (
 
 .input {
   position: absolute;
-  display: none;
-  pointer-events: none;
-  left: 0;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 .glass .box {
@@ -197,11 +208,11 @@ $label-font-sizes: (
       inset: -4px;
     }
   }
+}
 
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-  }
+.input:focus-visible + .box {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 3px;
 }
 
 .box::after {

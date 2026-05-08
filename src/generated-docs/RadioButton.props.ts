@@ -100,6 +100,14 @@ export const radioButtonPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "labelPosition",
+      "type": "\"left\" | \"right\"",
+      "description": "Position of the label relative to the radio button.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "onChange",
       "type": "(value: string) => void",
       "description": "Callback triggered when the radio button's value changes.",
