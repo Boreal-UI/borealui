@@ -22,29 +22,29 @@ $checkbox-fill-sizes: (
 
 $checkmark-sizes: (
   xs: (
-    width: 0.41em,
-    height: 0.15em,
-    border-width: 0.1em,
+    width: 0.42em,
+    height: 0.22em,
+    border-width: 0.14em,
   ),
   small: (
-    width: 0.43em,
-    height: 0.2em,
-    border-width: 0.115em,
-  ),
-  medium: (
-    width: 0.505em,
-    height: 0.215em,
-    border-width: 0.125em,
-  ),
-  large: (
-    width: 0.63em,
-    height: 0.35em,
+    width: 0.46em,
+    height: 0.25em,
     border-width: 0.15em,
   ),
+  medium: (
+    width: 0.52em,
+    height: 0.28em,
+    border-width: 0.16em,
+  ),
+  large: (
+    width: 0.64em,
+    height: 0.36em,
+    border-width: 0.18em,
+  ),
   xl: (
-    width: 0.75em,
-    height: 0.4em,
-    border-width: 0.175em,
+    width: 0.76em,
+    height: 0.42em,
+    border-width: 0.2em,
   ),
 );
 
@@ -137,12 +137,16 @@ $label-font-sizes: (
   }
 
   .#{$size} .box::after {
-    width: map.get($checkbox-fill-sizes, $size);
-    height: map.get($checkbox-fill-sizes, $size);
+    width: map.get(map.get($checkmark-sizes, $size), width);
+    height: map.get(map.get($checkmark-sizes, $size), height);
+    border-width: 0
+      0
+      map.get(map.get($checkmark-sizes, $size), border-width)
+      map.get(map.get($checkmark-sizes, $size), border-width);
 
     @include bp.up(lg) {
-      width: calc(#{map.get($checkbox-fill-sizes, $size)} * 1.05);
-      height: calc(#{map.get($checkbox-fill-sizes, $size)} * 1.05);
+      width: calc(#{map.get(map.get($checkmark-sizes, $size), width)} * 1.05);
+      height: calc(#{map.get(map.get($checkmark-sizes, $size), height)} * 1.05);
     }
   }
 
@@ -203,14 +207,15 @@ $label-font-sizes: (
 .box::after {
   content: "";
   position: absolute;
-  top: 50%;
+  top: 48%;
   left: 50%;
   display: block;
   box-sizing: border-box;
-  border-radius: inherit;
-  background-color: currentcolor;
+  border: solid var(--checkbox-check-color, var(--text-color));
+  border-width: 0 0 0.16em 0.16em;
+  background-color: transparent;
   opacity: 0;
-  transform: translate(-50%, -50%) scale(0.7);
+  transform: translate(-50%, -55%) rotate(-45deg) scale(0.7);
   transform-origin: center;
   transition:
     opacity var(--transition-default),
@@ -219,12 +224,13 @@ $label-font-sizes: (
 
 .input:checked + .box::after {
   opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
+  border-color: var(--checkbox-check-color, var(--text-color));
+  transform: translate(-50%, -55%) rotate(-45deg) scale(1);
 }
 
 .box.indeterminate::after {
   opacity: 1;
-  background-color: currentcolor;
+  background-color: var(--checkbox-check-color, var(--text-color));
   border: none;
   border-radius: 999px;
   transform: translate(-50%, -50%);
@@ -258,17 +264,40 @@ $label-font-sizes: (
   .#{$name} {
     color: map.get($props, border);
 
+    --checkbox-fill-color: #{map.get($props, border)};
+    --checkbox-check-color: var(--text-color);
+
     --checkbox-glass-bg: #{map.get($props, glass-bg)};
     --checkbox-glass-hover-bg: #{map.get($props, glass-hover)};
     --checkbox-glass-border: #{map.get($props, glass-border)};
   }
 
+  .#{$name} .box,
   .box.#{$name} {
     border-color: map.get($props, border);
   }
 
-  .input:checked + .box.#{$name}::after {
+  .#{$name} .input:checked + .box,
+  .input:checked + .box.#{$name} {
     background-color: map.get($props, border);
+    border-color: map.get($props, border);
+    color: var(--text-color);
+  }
+
+  .#{$name} .input:checked + .box::after,
+  .input:checked + .box.#{$name}::after {
+    border-color: var(--text-color);
+  }
+
+  .#{$name}.glass .input:checked + .box,
+  .glass.#{$name} .input:checked + .box {
+    background-color: var(--checkbox-glass-bg);
+    border-color: var(--checkbox-glass-border);
+  }
+
+  .#{$name}.glass .input:checked + .box::after,
+  .glass.#{$name} .input:checked + .box::after {
+    border-color: var(--text-color);
   }
 }
 
@@ -276,22 +305,46 @@ $label-font-sizes: (
   .#{$state} {
     color: map.get($props, bg);
 
+    --checkbox-fill-color: #{map.get($props, bg)};
+    --checkbox-check-color: var(--text-color);
+
     --checkbox-glass-bg: #{map.get($props, glass-bg)};
     --checkbox-glass-hover-bg: #{map.get($props, glass-hover)};
     --checkbox-glass-border: #{map.get($props, glass-border)};
   }
 
+  .#{$state} .box,
   .box.#{$state} {
     border-color: map.get($props, bg);
   }
 
+  .#{$state} .input:checked + .box,
   .input:checked + .box.#{$state} {
     background-color: map.get($props, bg);
+    border-color: map.get($props, bg);
+    color: var(--text-color);
   }
 
+  .#{$state} .input:checked + .box::after,
   .input:checked + .box.#{$state}::after {
-    background-color: map.get($props, bg);
+    border-color: var(--text-color);
   }
+
+  .#{$state}.glass .input:checked + .box,
+  .glass.#{$state} .input:checked + .box {
+    background-color: var(--checkbox-glass-bg);
+    border-color: var(--checkbox-glass-border);
+  }
+
+  .#{$state}.glass .input:checked + .box::after,
+  .glass.#{$state} .input:checked + .box::after {
+    border-color: var(--text-color);
+  }
+}
+
+.clear .input:checked + .box,
+.input:checked + .box.clear {
+  background-color: transparent;
 }
 
 .disabled {
@@ -301,6 +354,10 @@ $label-font-sizes: (
 
   .box {
     box-shadow: none;
+  }
+
+  .box::before {
+    background-color: var(--disabled-color);
   }
 }
 
@@ -338,6 +395,10 @@ $label-font-sizes: (
 
   .box::after {
     border-color: ButtonText;
+    background: transparent;
+  }
+
+  .box.indeterminate::after {
     background: ButtonText;
   }
 }

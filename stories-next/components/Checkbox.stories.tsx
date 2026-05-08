@@ -44,7 +44,7 @@ const defaultArgs = {
   size: "medium" as SizeType,
   theme: "primary" as ThemeType,
   state: "" as StateType,
-  rounding: "small" as RoundingType,
+  rounding: "medium" as RoundingType,
   shadow: "none" as ShadowType,
 };
 
