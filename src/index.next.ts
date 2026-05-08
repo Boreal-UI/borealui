@@ -27,6 +27,7 @@ export { default as ThemeSelect } from "./components/Select/ThemeSelect/next/The
 export { default as FileUpload } from "./components/FileUpload/next/FileUpload";
 export { default as TagInput } from "./components/TagInput/next/TagInput";
 export { default as RadioButton } from "./components/RadioButton/next/RadioButton";
+export { default as RadioGroup } from "./components/RadioButton/next/RadioGroup";
 export { default as Slider } from "./components/Slider/next/Slider";
 export { default as Checkbox } from "./components/Checkbox/next/Checkbox";
 export { default as ColorPicker } from "./components/ColorPicker/next/ColorPicker";

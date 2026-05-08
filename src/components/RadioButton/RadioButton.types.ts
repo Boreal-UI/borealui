@@ -1,16 +1,37 @@
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
+import { FieldsetHTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
+
+export type RadioButtonOption = {
+  /** Label displayed beside the radio button. */
+  label: ReactNode;
+
+  /** Value selected when this option is chosen. */
+  value: string;
+
+  /** Whether this specific option is disabled. */
+  disabled?: boolean;
+
+  /** Optional accessible label for icon-only or custom visual labels. */
+  "aria-label"?: string;
+
+  /** Optional test ID for this option. */
+  "data-testid"?: string;
+};
 
 /**
  * Props for the RadioButton component.
  */
 export interface RadioButtonProps extends Omit<
-  React.InputHTMLAttributes<HTMLInputElement>,
-  "onChange"
+  InputHTMLAttributes<HTMLInputElement>,
+  "children" | "onChange" | "size"
 > {
   /**
    * The label text displayed next to the radio button.
    */
-  label: string;
+  label?: ReactNode;
+
+  /** Position of the label relative to the radio button. */
+  labelPosition?: "left" | "right";
 
   /**
    * The value associated with this radio button.
@@ -99,5 +120,71 @@ export interface RadioButtonProps extends Omit<
 }
 
 export interface BaseRadioButtonProps extends RadioButtonProps {
+  classMap: Record<string, string>;
+}
+
+export interface RadioGroupProps extends Omit<
+  FieldsetHTMLAttributes<HTMLFieldSetElement>,
+  "children" | "disabled" | "onChange"
+> {
+  /** Accessible group label displayed as a legend. */
+  legend?: ReactNode;
+
+  /** Name shared by all radio buttons in the group. */
+  name: string;
+
+  /** Available radio options. */
+  options: RadioButtonOption[];
+
+  /** Currently selected option value. */
+  value: string;
+
+  /** Callback triggered with the selected option value. */
+  onChange: (value: string) => void;
+
+  /** Layout direction for the radio options. */
+  orientation?: "vertical" | "horizontal";
+
+  /** Theme applied for styling. */
+  theme?: ThemeType;
+
+  /** Applies a translucent frosted-glass treatment to each radio option. */
+  glass?: boolean;
+
+  /** State of the radio group. */
+  state?: StateType;
+
+  /** Rounding of each radio control. */
+  rounding?: RoundingType;
+
+  /** Shadow style of each radio control. */
+  shadow?: ShadowType;
+
+  /** Whether every option in the group is disabled. */
+  disabled?: boolean;
+
+  /** Whether selection is required. */
+  required?: boolean;
+
+  /** Marks the radio group as invalid. */
+  invalid?: boolean;
+
+  /** Visible helper text for the radio group. */
+  description?: ReactNode;
+
+  /** Visible error message for invalid state. */
+  errorMessage?: ReactNode;
+
+  /** Custom class name for the root fieldset. */
+  className?: string;
+
+  /** Custom class name for the options wrapper. */
+  optionsClassName?: string;
+
+  /** Optional test ID for testing frameworks. */
+  "data-testid"?: string;
+}
+
+export interface BaseRadioGroupProps extends RadioGroupProps {
   classMap: Record<string, string>;
 }

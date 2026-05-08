@@ -12,6 +12,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
   (
     {
       label,
+      labelPosition = "left",
       value,
       checked,
       onChange,
@@ -73,45 +74,59 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       ariaLabelledBy ?? (label ? labelId : undefined);
 
     return (
-      <label
+      <div
         className={wrapperClasses}
-        data-testid={`${testId}-wrapper`}
-        htmlFor={inputId}
+        data-testid={testId ? `${testId}-root` : undefined}
       >
-        <input
-          ref={ref}
-          type="radio"
-          id={inputId}
-          name={name}
-          className={classMap.input}
-          value={value}
-          checked={checked}
-          onChange={handleChange}
-          disabled={disabled}
-          required={required}
-          aria-label={ariaLabel}
-          aria-labelledby={resolvedAriaLabelledBy}
-          aria-describedby={ariaDescribedBy}
-          aria-invalid={ariaInvalid}
-          aria-required={ariaRequired ?? required}
-          data-testid={testId}
-          {...props}
-        />
-        <span
-          className={radioClasses}
-          aria-hidden="true"
-          data-testid={`${testId}-circle`}
-        />
-        {label && (
+        <label
+          className={classMap.labelWrapper}
+          data-testid={testId ? `${testId}-label-wrapper` : undefined}
+          htmlFor={inputId}
+        >
+          {label && labelPosition === "left" && (
+            <span
+              className={classMap.label}
+              id={labelId}
+              data-testid={testId ? `${testId}-label` : undefined}
+            >
+              {label}
+            </span>
+          )}
+          <input
+            ref={ref}
+            type="radio"
+            id={inputId}
+            name={name}
+            className={classMap.input}
+            value={value}
+            checked={checked}
+            onChange={handleChange}
+            disabled={disabled}
+            required={required}
+            aria-label={ariaLabel}
+            aria-labelledby={resolvedAriaLabelledBy}
+            aria-describedby={ariaDescribedBy}
+            aria-invalid={ariaInvalid}
+            aria-required={ariaRequired ?? required}
+            data-testid={testId}
+            {...props}
+          />
           <span
-            id={labelId}
-            className={classMap.label}
-            data-testid={`${testId}-label`}
-          >
-            {label}
-          </span>
-        )}
-      </label>
+            className={radioClasses}
+            aria-hidden="true"
+            data-testid={`${testId}-circle`}
+          />
+          {label && labelPosition === "right" && (
+            <span
+              className={classMap.label}
+              id={labelId}
+              data-testid={testId ? `${testId}-label` : undefined}
+            >
+              {label}
+            </span>
+          )}
+        </label>
+      </div>
     );
   },
 );

@@ -322,6 +322,11 @@
       "import": "./dist/core/RadioButton.js",
       "require": "./dist/core/RadioButton.cjs.js"
     },
+    "./core/RadioGroup": {
+      "types": "./dist/types/components/RadioButton/core/RadioGroup.d.ts",
+      "import": "./dist/core/RadioGroup.js",
+      "require": "./dist/core/RadioGroup.cjs.js"
+    },
     "./core/Rating": {
       "types": "./dist/types/components/Rating/core/Rating.d.ts",
       "import": "./dist/core/Rating.js",
@@ -554,6 +559,10 @@
     "./next/RadioButton": {
       "types": "./dist/types/components/RadioButton/next/RadioButton.d.ts",
       "import": "./dist/next/RadioButton.js"
+    },
+    "./next/RadioGroup": {
+      "types": "./dist/types/components/RadioButton/next/RadioGroup.d.ts",
+      "import": "./dist/next/RadioGroup.js"
     },
     "./next/Rating": {
       "types": "./dist/types/components/Rating/next/Rating.d.ts",

@@ -3,14 +3,23 @@ import BaseRadioButton from "../RadioButtonBase";
 import "./RadioButton.scss";
 import { RadioButtonProps } from "../RadioButton.types";
 
-const classes = {
+export const classes = {
   wrapper: "radio_wrapper",
+  labelWrapper: "radio_labelWrapper",
   input: "radio_input",
   circle: "radio_circle",
+  group: "radio_group",
+  legend: "radio_legend",
+  options: "radio_options",
+  vertical: "radio_vertical",
+  horizontal: "radio_horizontal",
   glass: "radio_glass",
   glassCircle: "radio_glassCircle",
   label: "radio_label",
+  description: "radio_description",
+  errorMessage: "radio_errorMessage",
   disabled: "radio_disabled",
+  invalid: "radio_invalid",
 
   primary: "radio_primary",
   secondary: "radio_secondary",
@@ -33,10 +42,11 @@ const classes = {
   roundSmall: "radio_round-Small",
   roundMedium: "radio_round-Medium",
   roundLarge: "radio_round-Large",
+  roundFull: "radio_round-Full",
 };
 
 const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
-  (props, ref) => <BaseRadioButton {...props} ref={ref} classMap={classes} />
+  (props, ref) => <BaseRadioButton {...props} ref={ref} classMap={classes} />,
 );
 
 RadioButton.displayName = "RadioButton";

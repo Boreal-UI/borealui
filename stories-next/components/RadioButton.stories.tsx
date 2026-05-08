@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import {
   RadioButton,
+  RadioGroup,
   RoundingType,
   ShadowType,
   StateType,
   ThemeType,
 } from "../../src/index.next";
-import type { RadioButtonProps } from "../../src/components/RadioButton/RadioButton.types";
+import type {
+  RadioButtonProps,
+  RadioGroupProps,
+} from "../../src/components/RadioButton/RadioButton.types";
 
 const themeOptions: ThemeType[] = [
   "primary",
@@ -43,6 +47,13 @@ const meta: Meta<RadioButtonProps> = {
 export default meta;
 
 type Story = StoryObj<RadioButtonProps>;
+type GroupStory = StoryObj<RadioGroupProps>;
+
+const contactOptions = [
+  { label: "Email", value: "email" },
+  { label: "SMS", value: "sms" },
+  { label: "Phone", value: "phone" },
+];
 
 export const Default: Story = {
   render: (args) => {
@@ -78,6 +89,111 @@ export const Grouped: Story = {
       </div>
     );
   },
+};
+
+export const RadioGroupDefault: GroupStory = {
+  render: (args) => {
+    const [selected, setSelected] = useState("email");
+
+    return (
+      <RadioGroup
+        {...args}
+        value={selected}
+        onChange={setSelected}
+        options={contactOptions}
+      />
+    );
+  },
+  args: {
+    legend: "Preferred contact method",
+    name: "storybook-contact",
+    theme: "secondary",
+    description: "Radio groups select one option from a shared set.",
+  },
+};
+
+export const RadioGroupHorizontal: GroupStory = {
+  render: () => {
+    const [selected, setSelected] = useState("monthly");
+
+    return (
+      <RadioGroup
+        legend="Billing cycle"
+        name="storybook-billing"
+        value={selected}
+        onChange={setSelected}
+        orientation="horizontal"
+        theme="primary"
+        options={[
+          { label: "Monthly", value: "monthly" },
+          { label: "Quarterly", value: "quarterly" },
+          { label: "Annual", value: "annual" },
+        ]}
+      />
+    );
+  },
+};
+
+export const RadioGroupWithDisabledOption: GroupStory = {
+  render: () => {
+    const [selected, setSelected] = useState("standard");
+
+    return (
+      <RadioGroup
+        legend="Shipping speed"
+        name="storybook-shipping"
+        value={selected}
+        onChange={setSelected}
+        theme="tertiary"
+        options={[
+          { label: "Standard", value: "standard" },
+          { label: "Express", value: "express" },
+          { label: "Overnight", value: "overnight", disabled: true },
+        ]}
+      />
+    );
+  },
+};
+
+export const RadioGroupGlass: GroupStory = {
+  render: () => {
+    const [selected, setSelected] = useState("design");
+
+    return (
+      <RadioGroup
+        legend="Project focus"
+        name="storybook-focus"
+        value={selected}
+        onChange={setSelected}
+        theme="quaternary"
+        glass
+        options={[
+          { label: "Design", value: "design" },
+          { label: "Engineering", value: "engineering" },
+          { label: "Research", value: "research" },
+        ]}
+      />
+    );
+  },
+};
+
+export const RadioGroupInvalid: GroupStory = {
+  render: () => (
+    <RadioGroup
+      legend="Deployment target"
+      name="storybook-deployment"
+      value=""
+      onChange={() => {}}
+      state="error"
+      invalid
+      required
+      errorMessage="Choose one deployment target."
+      options={[
+        { label: "Preview", value: "preview" },
+        { label: "Production", value: "production" },
+      ]}
+    />
+  ),
 };
 
 export const Disabled: Story = {

@@ -93,9 +93,9 @@ export const radioButtonPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "label",
-      "type": "string",
+      "type": "ReactNode",
       "description": "The label text displayed next to the radio button.",
-      "required": true,
+      "required": false,
       "inherited": false,
       "category": "props"
     },
