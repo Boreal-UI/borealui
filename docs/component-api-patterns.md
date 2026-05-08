@@ -37,13 +37,16 @@ Form components should receive visible labels when possible.
 ```tsx
 import { TextInput } from "boreal-ui/core";
 
-<TextInput
-  id="email"
-  name="email"
-  label="Email"
-  helperText="Use your work email address."
-  required
-/>;
+<>
+  <TextInput
+    id="email"
+    name="email"
+    label="Email"
+    aria-describedby="email-help"
+    required
+  />
+  <p id="email-help">Use your work email address.</p>
+</>;
 ```
 
 If a visible label is not appropriate, provide `aria-label` or `aria-labelledby`.
@@ -102,7 +105,7 @@ export function ContactFields() {
 }
 ```
 
-Use `error`, `helperText`, `required`, and disabled props where supported so the component can connect labels and descriptions correctly.
+Use `helperText`, `errorMessage`, `required`, and disabled props where supported. When a component does not render helper or error text itself, connect external text with `aria-describedby`.
 
 ## DataTable
 

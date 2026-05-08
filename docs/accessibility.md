@@ -79,15 +79,18 @@ import { TextInput } from "boreal-ui/core";
 
 export function EmailField() {
   return (
-    <TextInput
-      id="email"
-      name="email"
-      type="email"
-      label="Email"
-      helperText="Use the address attached to your account."
-      autoComplete="email"
-      required
-    />
+    <>
+      <TextInput
+        id="email"
+        name="email"
+        type="email"
+        label="Email"
+        aria-describedby="email-help"
+        autoComplete="email"
+        required
+      />
+      <p id="email-help">Use the address attached to your account.</p>
+    </>
   );
 }
 ```
@@ -95,15 +98,17 @@ export function EmailField() {
 When showing validation errors, pass the component's error or invalid state props where available so assistive technology receives the same state as sighted users.
 
 ```tsx
-<TextInput
-  id="project-name"
-  name="projectName"
-  label="Project name"
-  state="error"
-  aria-invalid
-  aria-describedby="project-name-error"
-/>;
-<p id="project-name-error">Project name is required.</p>
+<>
+  <TextInput
+    id="project-name"
+    name="projectName"
+    label="Project name"
+    state="error"
+    aria-invalid
+    aria-describedby="project-name-error"
+  />
+  <p id="project-name-error">Project name is required.</p>
+</>
 ```
 
 For grouped fields, use `FormGroup`, fieldsets, headings, or helper text so related controls have context.
