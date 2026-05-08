@@ -2,6 +2,7 @@ import { forwardRef, useId, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { TextAreaProps } from "./TextArea.types";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultRounding,
   getDefaultShadow,
@@ -53,6 +54,7 @@ const TextAreaBase = forwardRef<
     },
     ref,
   ) => {
+    const resolvedLabelPosition = resolvePropAlias(labelPosition);
     const autoId = useId();
     const id = idProp || autoId;
 
@@ -114,7 +116,7 @@ const TextAreaBase = forwardRef<
       <div
         className={combineClassNames(
           classMap.container,
-          classMap[`label${capitalize(labelPosition)}`],
+          classMap[`label${capitalize(resolvedLabelPosition)}`],
         )}
         data-testid={testId}
       >

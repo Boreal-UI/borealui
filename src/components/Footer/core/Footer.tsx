@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import FooterBase from "../FooterBase";
 import { FooterProps } from "../Footer.types";
@@ -68,7 +69,7 @@ const Footer: React.FC<FooterProps> = (props) => {
       {...props}
       IconButton={IconButton}
       ThemeSelect={ThemeSelect}
-      classMap={classes}
+      classMap={expandClassMap(classes)}
     />
   );
 };

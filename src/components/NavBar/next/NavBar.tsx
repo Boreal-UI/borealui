@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseNavBar from "../NavBarBase";
 import Link from "next/link";
@@ -42,7 +43,7 @@ const NavBar: React.FC<NavBarProps & { mockPath?: string }> = ({
           {children}
         </Link>
       )}
-      classMap={styles}
+      classMap={expandClassMap(styles)}
     />
   );
 };

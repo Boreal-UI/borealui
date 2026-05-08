@@ -9,6 +9,7 @@ import {
 import { ChevronDownIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultRounding,
   getDefaultShadow,
@@ -56,6 +57,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     },
     ref,
   ) => {
+    const resolvedLabelPosition = resolvePropAlias(labelPosition);
     const generatedId = useId();
     const selectId = id || `${generatedId}-select`;
     const internalDescriptionId = ariaDescription
@@ -69,11 +71,11 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
     const layoutClasses = useMemo(() => {
       const posClass = hasLabel
-        ? classMap[`label${capitalize(labelPosition)}`]
+        ? classMap[`label${capitalize(resolvedLabelPosition)}`]
         : undefined;
 
       return combineClassNames(classMap.layout, posClass);
-    }, [classMap, hasLabel, labelPosition]);
+    }, [classMap, hasLabel, resolvedLabelPosition]);
 
     const labelClasses = useMemo(
       () => combineClassNames(classMap.label, classMap.labelOverlay),
@@ -178,7 +180,9 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
     return (
       <div className={layoutClasses} data-testid={`${testId}-layout`}>
-        {(labelPosition === "top" || labelPosition === "left") && labelNode}
+        {(resolvedLabelPosition === "top" ||
+          resolvedLabelPosition === "left") &&
+          labelNode}
 
         <div className={wrapperClasses} data-testid={testId}>
           <select
@@ -249,7 +253,9 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           )}
         </div>
 
-        {(labelPosition === "bottom" || labelPosition === "right") && labelNode}
+        {(resolvedLabelPosition === "bottom" ||
+          resolvedLabelPosition === "right") &&
+          labelNode}
       </div>
     );
   },

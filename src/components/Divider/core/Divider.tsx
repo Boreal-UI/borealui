@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import DividerBase from "../DividerBase";
 import "./Divider.scss";
@@ -20,7 +21,7 @@ const classes = {
 };
 
 const Divider = forwardRef<HTMLDivElement, DividerProps>((props, ref) => (
-  <DividerBase {...props} classMap={classes} ref={ref} />
+  <DividerBase {...props} classMap={expandClassMap(classes)} ref={ref} />
 ));
 Divider.displayName = "Divider";
 export default Divider;

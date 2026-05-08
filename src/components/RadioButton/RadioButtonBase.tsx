@@ -2,6 +2,7 @@ import React, { forwardRef, useMemo, useId } from "react";
 import { BaseRadioButtonProps } from "./RadioButton.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultRounding,
   getDefaultShadow,
@@ -38,6 +39,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
     },
     ref,
   ) => {
+    const resolvedLabelPosition = resolvePropAlias(labelPosition);
     const uid = useId();
     const inputId = id ?? `${testId}-input-${uid}`;
     const labelId = `${testId}-label-${uid}`;
@@ -84,7 +86,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
           data-testid={testId ? `${testId}-label-wrapper` : undefined}
           htmlFor={inputId}
         >
-          {label && labelPosition === "left" && (
+          {label && resolvedLabelPosition === "left" && (
             <span
               className={classMap.label}
               id={labelId}
@@ -117,7 +119,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
             aria-hidden="true"
             data-testid={`${testId}-circle`}
           />
-          {label && labelPosition === "right" && (
+          {label && resolvedLabelPosition === "right" && (
             <span
               className={classMap.label}
               id={labelId}

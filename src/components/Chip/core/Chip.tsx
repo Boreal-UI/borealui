@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import ChipBase from "../ChipBase";
 import { CloseIcon } from "@/Icons";
@@ -55,7 +56,7 @@ const classes = {
 const Chip: React.FC<ChipProps> = (props) => (
   <ChipBase
     {...props}
-    classMap={classes}
+    classMap={expandClassMap(classes)}
     IconButtonComponent={IconButton}
     closeIcon={CloseIcon}
   />

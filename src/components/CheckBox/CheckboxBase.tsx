@@ -9,6 +9,7 @@ import {
 import type { CheckboxBaseProps } from "./Checkbox.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultRounding,
   getDefaultShadow,
@@ -48,6 +49,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
     },
     ref,
   ) => {
+    const resolvedLabelPosition = resolvePropAlias(labelPosition);
     const internalId = useId();
     const checkboxId = id || internalId;
 
@@ -70,7 +72,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
           classMap.checkbox,
           classMap[theme],
           classMap[state],
-          classMap[labelPosition],
+          classMap[resolvedLabelPosition],
           classMap[size],
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
@@ -83,7 +85,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
         classMap,
         theme,
         state,
-        labelPosition,
+        resolvedLabelPosition,
         size,
         shadow,
         rounding,
@@ -109,7 +111,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
         data-testid={testId ? `${testId}-wrapper` : undefined}
       >
         <label htmlFor={checkboxId} className={classMap.labelWrapper}>
-          {label && labelPosition === "left" && (
+          {label && resolvedLabelPosition === "left" && (
             <span
               className={classMap.label}
               id={labelId}
@@ -150,7 +152,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
             data-testid={testId ? `${testId}-box` : undefined}
           />
 
-          {label && labelPosition === "right" && (
+          {label && resolvedLabelPosition === "right" && (
             <span
               className={classMap.label}
               id={labelId}

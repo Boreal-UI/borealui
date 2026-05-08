@@ -23,10 +23,15 @@ export interface ColorScheme {
  */
 export type ThemeType =
   | "primary"
+  | "p"
   | "secondary"
+  | "s"
   | "tertiary"
+  | "t"
   | "quaternary"
-  | "clear";
+  | "q"
+  | "clear"
+  | "c";
 
 /**
  * UI state indicators typically used for validation or status feedback.
@@ -46,38 +51,82 @@ export type NotificationType =
 /**
  * Predefined sizing scale for components.
  */
-export type SizeType = "xs" | "small" | "medium" | "large" | "xl";
+export type SizeType =
+  | "xs"
+  | "small"
+  | "sm"
+  | "medium"
+  | "md"
+  | "large"
+  | "lg"
+  | "xl";
 
 /**
  * Orientation of components or layout elements.
  */
-export type OrientationType = "horizontal" | "vertical";
+export type OrientationType = "horizontal" | "h" | "vertical" | "v";
 
 /**
  * Shadow depth for component elevation and emphasis.
  */
-export type ShadowType = "none" | "light" | "medium" | "strong" | "intense";
+export type ShadowType =
+  | "none"
+  | "light"
+  | "lt"
+  | "small"
+  | "sm"
+  | "medium"
+  | "md"
+  | "strong"
+  | "str"
+  | "large"
+  | "lg"
+  | "intense"
+  | "xl";
 
 /**
  * Border radius values used for rounding component corners.
  */
-export type RoundingType = "none" | "small" | "medium" | "large" | "full";
+export type RoundingType =
+  | "none"
+  | "small"
+  | "sm"
+  | "medium"
+  | "md"
+  | "large"
+  | "lg"
+  | "full";
 
 /**
  * Border width values used for component borders.
  */
-export type BorderType = "none" | "xs" | "small" | "medium" | "large" | "xl";
+export type BorderType =
+  | "none"
+  | "xs"
+  | "small"
+  | "sm"
+  | "medium"
+  | "md"
+  | "large"
+  | "lg"
+  | "xl";
 
 /**
  * Anchor position typically used for tooltips, badges, or floating elements.
  */
 export type PositionType =
   | "topLeft"
+  | "tl"
   | "topCenter"
+  | "tc"
   | "topRight"
+  | "tr"
   | "bottomLeft"
+  | "bl"
   | "bottomCenter"
-  | "bottomRight";
+  | "bc"
+  | "bottomRight"
+  | "br";
 
 /**
  * Shape type used for avatars, buttons, badges, etc.
@@ -106,17 +155,44 @@ export type StatusType =
  */
 export type StatusPositionType =
   | "topLeft"
+  | "tl"
   | "topRight"
+  | "tr"
   | "bottomLeft"
-  | "bottomRight";
+  | "bl"
+  | "bottomRight"
+  | "br";
 
 /**
  * How a component should attach to the viewport or page layout.
  */
-export type AttachmentType = "static" | "fixed" | "sticky";
+export type AttachmentType =
+  | "static"
+  | "st"
+  | "fixed"
+  | "fx"
+  | "sticky"
+  | "sk";
 
-export type TitlePositionType = "top" | "bottom" | "left" | "right" | "overlay";
-export type LabelPositionType = "top" | "bottom" | "left" | "right";
+export type TitlePositionType =
+  | "top"
+  | "t"
+  | "bottom"
+  | "b"
+  | "left"
+  | "l"
+  | "right"
+  | "r"
+  | "overlay";
+export type LabelPositionType =
+  | "top"
+  | "t"
+  | "bottom"
+  | "b"
+  | "left"
+  | "l"
+  | "right"
+  | "r";
 
 /**
  * Props for interactive components that require user input or actions.

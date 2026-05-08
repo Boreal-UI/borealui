@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import "./Toggle.scss";
 import ToggleBase from "../ToggleBase";
@@ -44,7 +45,7 @@ const classes = {
 };
 
 const Toggle = forwardRef<HTMLButtonElement, ToggleProps>((props, ref) => {
-  return <ToggleBase {...props} classMap={classes} ref={ref} />;
+  return <ToggleBase {...props} classMap={expandClassMap(classes)} ref={ref} />;
 });
 Toggle.displayName = "Toggle";
 export default Toggle;

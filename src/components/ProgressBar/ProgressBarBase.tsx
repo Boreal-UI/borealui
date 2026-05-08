@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultRounding,
   getDefaultShadow,
@@ -33,6 +34,7 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   testId = dataTestId ?? "progressbar",
   classMap,
 }) => {
+  const resolvedLabelPosition = resolvePropAlias(labelPosition);
   const numeric = Number(value);
   const clamped = Number.isFinite(numeric)
     ? Math.min(100, Math.max(0, numeric))
@@ -54,9 +56,9 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
     ariaValueText || (indeterminate ? "Loading" : `${progressValue}% complete`);
 
   const layoutClass = useMemo(() => {
-    const posClass = classMap[`label${capitalize(labelPosition)}`];
+    const posClass = classMap[`label${capitalize(resolvedLabelPosition)}`];
     return combineClassNames(classMap.layout, Boolean(label) && posClass);
-  }, [classMap, label, labelPosition]);
+  }, [classMap, label, resolvedLabelPosition]);
 
   const wrapperClass = useMemo(
     () =>
@@ -105,7 +107,9 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
 
   return (
     <div className={layoutClass}>
-      {(labelPosition === "top" || labelPosition === "left") && labelNode}
+      {(resolvedLabelPosition === "top" ||
+        resolvedLabelPosition === "left") &&
+        labelNode}
 
       <div
         className={wrapperClass}
@@ -127,7 +131,9 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
         />
       </div>
 
-      {(labelPosition === "bottom" || labelPosition === "right") && labelNode}
+      {(resolvedLabelPosition === "bottom" ||
+        resolvedLabelPosition === "right") &&
+        labelNode}
       {descriptionNode}
     </div>
   );

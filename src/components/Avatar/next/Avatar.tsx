@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,7 +14,7 @@ const Avatar = forwardRef<HTMLAnchorElement | HTMLButtonElement, AvatarProps>(
       {...props}
       ImageComponent={Image}
       LinkComponent={Link}
-      classMap={styles}
+      classMap={expandClassMap(styles)}
       ref={ref}
     />
   )

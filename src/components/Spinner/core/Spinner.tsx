@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import "./Spinner.scss";
 import SpinnerBase from "../SpinnerBase";
@@ -31,7 +32,7 @@ const classes = {
 
 const Spinner: React.FC<SpinnerProps> = (props) => {
   return (
-    <SpinnerBase {...props} className={props.className} classMap={classes} />
+    <SpinnerBase {...props} className={props.className} classMap={expandClassMap(classes)} />
   );
 };
 Spinner.displayName = "Spinner";

@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import Image, { StaticImageData } from "next/image";
 import Button from "../../Button/next/Button";
@@ -53,7 +54,7 @@ const Card: React.FC<CardProps> = (props) => {
     <CardBase
       {...props}
       actionButtons={wrappedButtons}
-      classMap={styles}
+      classMap={expandClassMap(styles)}
       SkeletonComponent={Skeleton}
       ImageComponent={NextImageWrapper}
     />

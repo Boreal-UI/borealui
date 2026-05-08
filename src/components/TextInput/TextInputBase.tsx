@@ -9,6 +9,7 @@ import { EyeIcon, EyeSlashIcon } from "../../Icons";
 import { TextInputBaseProps } from "./TextInput.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultRounding,
   getDefaultShadow,
@@ -43,6 +44,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
     },
     ref,
   ) => {
+    const resolvedLabelPosition = resolvePropAlias(labelPosition);
     const [showPassword, setShowPassword] = useState(false);
 
     const autoId = useId();
@@ -132,9 +134,9 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       () =>
         combineClassNames(
           classMap.container,
-          classMap[`label${capitalize(labelPosition)}`],
+          classMap[`label${capitalize(resolvedLabelPosition)}`],
         ),
-      [classMap, labelPosition],
+      [classMap, resolvedLabelPosition],
     );
 
     const wrapperClass = useMemo(

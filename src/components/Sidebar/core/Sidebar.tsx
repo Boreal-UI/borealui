@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React, { useState } from "react";
 import SidebarBase from "../SidebarBase";
 import "./Sidebar.scss";
@@ -88,7 +89,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <SidebarBase
       {...props}
-      classMap={classes}
+      classMap={expandClassMap(classes)}
       isLinkActive={resolvedIsLinkActive}
       hasActiveChild={resolvedHasActiveChild}
     />

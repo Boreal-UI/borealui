@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React, { useEffect, useState } from "react";
 import BaseNavBar from "../NavBarBase";
 import "./NavBar.scss";
@@ -70,7 +71,7 @@ const NavBar: React.FC<NavBarProps> = ({
           {children}
         </a>
       )}
-      classMap={classes}
+      classMap={expandClassMap(classes)}
     />
   );
 };

@@ -37,6 +37,7 @@ import {
   SizeType,
   ThemeType,
 } from "../types/types";
+import { resolveThemeAlias } from "../utils/propAliases";
 
 /**
  * Type for configuring global Boreal UI style defaults.
@@ -74,7 +75,7 @@ export const setBorealStyleConfig = (config: Partial<BorealStyleConfig>) => {
  * Gets the default theme type (e.g., "primary", "secondary").
  */
 export const getDefaultTheme = (): ThemeType =>
-  userConfig.defaultTheme ?? fallback.defaultTheme;
+  resolveThemeAlias(userConfig.defaultTheme ?? fallback.defaultTheme);
 
 /**
  * Gets the default component rounding type (e.g., "medium", "large").

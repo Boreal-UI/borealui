@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseProgressBar from "../ProgressBarBase";
 import "./ProgressBar.scss";
@@ -51,7 +52,7 @@ const classes = {
 };
 
 const ProgressBar: React.FC<ProgressBarProps> = (props) => {
-  return <BaseProgressBar {...props} classMap={classes} />;
+  return <BaseProgressBar {...props} classMap={expandClassMap(classes)} />;
 };
 ProgressBar.displayName = "ProgressBar";
 export default ProgressBar;

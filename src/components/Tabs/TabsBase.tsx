@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState, useId } from "react";
 import { BaseTabsProps } from "./Tabs.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultRounding,
   getDefaultShadow,
@@ -46,6 +47,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   testId = dataTestId ?? "tabs",
   classMap,
 }) => {
+  const resolvedOrientation = resolvePropAlias(orientation);
   const uid = useId();
 
   const baseId = useMemo<string>(() => {
@@ -150,7 +152,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   };
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-    const horiz = orientation === "horizontal";
+    const horiz = resolvedOrientation === "horizontal";
     const { key } = event;
 
     let newFocus = focusIndex;
@@ -198,7 +200,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
         aria-describedby={ariaDescribedBy}
         aria-live={ariaLive}
         role="tablist"
-        aria-orientation={orientation}
+        aria-orientation={resolvedOrientation}
         onKeyDown={onKeyDown}
         data-testid={`${testId}-tablist`}
       >

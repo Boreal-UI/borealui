@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import ChipGroupBase from "../ChipGroupBase";
 import Chip from "../../core/Chip";
@@ -20,7 +21,7 @@ const ChipGroup = forwardRef<ChipGroupRef, ChipGroupProps>((props, ref) => (
     {...props}
     ref={ref}
     ChipComponent={Chip}
-    classMap={classMap}
+    classMap={expandClassMap(classMap)}
   />
 ));
 ChipGroup.displayName = "ChipGroup";

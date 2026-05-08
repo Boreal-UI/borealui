@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import styles from "./Skeleton.module.scss";
 import SkeletonBase from "../SkeletonBase";
@@ -11,7 +12,7 @@ const SkeletonLoader: React.FC<SkeletonProps> = (props) => {
     <SkeletonBase
       {...props}
       className={combineClassNames(styles.skeletonLoader, props.className)}
-      classMap={styles}
+      classMap={expandClassMap(styles)}
     />
   );
 };

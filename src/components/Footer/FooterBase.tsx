@@ -8,6 +8,7 @@ import {
 import { combineClassNames } from "../../utils/classNames";
 import { getDefaultTheme } from "../../config/boreal-style-config";
 import { capitalize } from "@/utils/capitalize";
+import { resolvePropAlias } from "@/utils/propAliases";
 
 const slugify = (value: string) =>
   value.toLowerCase().trim().replace(/\s+/g, "-");
@@ -80,6 +81,8 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   labelId,
   ...rest
 }) => {
+  const resolvedAttachment = resolvePropAlias(attachment);
+
   const footerClass = useMemo(
     () =>
       combineClassNames(
@@ -89,10 +92,19 @@ const FooterBase: React.FC<BaseFooterProps> = ({
         layout !== "inline" && classMap[`layout${capitalize(layout)}`],
         shadow !== "none" && classMap[`shadow${capitalize(shadow)}`],
         rounding !== "none" && classMap[`round${capitalize(rounding)}`],
-        classMap[`attachment${capitalize(attachment)}`],
+        classMap[`attachment${capitalize(resolvedAttachment)}`],
         className,
       ),
-    [classMap, theme, glass, layout, shadow, rounding, attachment, className],
+    [
+      classMap,
+      theme,
+      glass,
+      layout,
+      shadow,
+      rounding,
+      resolvedAttachment,
+      className,
+    ],
   );
 
   const isLogoImage = (

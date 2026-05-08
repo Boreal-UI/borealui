@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import "./Tooltip.scss";
 import TooltipBase from "../TooltipBase";
@@ -38,7 +39,7 @@ const classes = {
 };
 
 const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props, ref) => (
-  <TooltipBase {...props} ref={ref} classMap={classes} />
+  <TooltipBase {...props} ref={ref} classMap={expandClassMap(classes)} />
 ));
 
 Tooltip.displayName = "Tooltip";

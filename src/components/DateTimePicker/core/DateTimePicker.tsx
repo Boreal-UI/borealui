@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import DateTimePickerBase from "../DateTimePickerBase";
 import "./DateTimePicker.scss";
@@ -44,7 +45,7 @@ const classes = {
 };
 
 const DateTimePicker: React.FC<DateTimePickerProps> = (props) => (
-  <DateTimePickerBase {...props} classMap={classes} />
+  <DateTimePickerBase {...props} classMap={expandClassMap(classes)} />
 );
 DateTimePicker.displayName = "DateTimePicker";
 export default DateTimePicker;
