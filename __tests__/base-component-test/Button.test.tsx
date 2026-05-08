@@ -58,7 +58,13 @@ describe("ButtonBase", () => {
     children: React.ReactNode = "Click me",
   ) =>
     render(
-      <ButtonBase classMap={classMap} data-testid="button-test" {...props}>
+      <ButtonBase
+        {...({
+          classMap,
+          "data-testid": "button-test",
+          ...props,
+        } as React.ComponentProps<typeof ButtonBase>)}
+      >
         {children}
       </ButtonBase>,
     );

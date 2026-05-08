@@ -92,6 +92,29 @@ export const ThemeVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => {
+          const [checked, setChecked] = useState(false);
+          return (
+            <Toggle
+              key={`glass-${theme}`}
+              {...args}
+              theme={theme}
+              glass
+              label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
+              checked={checked}
+              onChange={setChecked}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
 export const StateVariants: Story = {
   render: (args) => {
     return (
@@ -104,6 +127,29 @@ export const StateVariants: Story = {
               {...args}
               state={state}
               label={`${state.charAt(0).toUpperCase() + state.slice(1)} state`}
+              checked={checked}
+              onChange={setChecked}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => {
+          const [checked, setChecked] = useState(false);
+          return (
+            <Toggle
+              key={`glass-${state}`}
+              {...args}
+              state={state}
+              glass
+              label={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
               checked={checked}
               onChange={setChecked}
             />

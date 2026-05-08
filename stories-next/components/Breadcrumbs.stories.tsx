@@ -78,8 +78,18 @@ export const ThemeVariants = () =>
     { propName: "theme", values: [...themeOptions] },
   ]);
 
+export const GlassThemeVariants = () =>
+  withVariants(Breadcrumbs, { ...defaultArgs, glass: true }, [
+    { propName: "theme", values: [...themeOptions] },
+  ]);
+
 export const StateVariants = () =>
   withVariants(Breadcrumbs, { ...defaultArgs }, [
+    { propName: "state", values: stateOptions },
+  ]);
+
+export const GlassStateVariants = () =>
+  withVariants(Breadcrumbs, { ...defaultArgs, glass: true }, [
     { propName: "state", values: stateOptions },
   ]);
 
@@ -94,6 +104,17 @@ export const OutlineVariants = () =>
     {
       ...defaultArgs,
       outline: true,
+    },
+    [{ propName: "theme", values: [...themeOptions, ...stateOptions] }],
+  );
+
+export const GlassOutlineVariants = () =>
+  withVariants(
+    Breadcrumbs,
+    {
+      ...defaultArgs,
+      outline: true,
+      glass: true,
     },
     [{ propName: "theme", values: [...themeOptions, ...stateOptions] }],
   );

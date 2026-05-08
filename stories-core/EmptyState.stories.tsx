@@ -1,19 +1,32 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { EmptyState } from "../src/index.core";
+import {
+  EmptyState,
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "../src/index.core";
 import type { EmptyStateProps } from "../src/components/EmptyState/EmptyState.types";
 import { FaInbox, FaBug, FaFolderOpen } from "react-icons/fa";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
   "quaternary",
   "clear",
 ];
-const sizeOptions = ["xs", "small", "medium", "large", "xl"];
-const stateOptions = ["success", "error", "warning"];
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<EmptyStateProps> = {
   title: "Components/EmptyState",
@@ -87,6 +100,69 @@ export const StateVariants: Story = {
   ),
 };
 
+export const GlassThemeVariants: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {themeOptions.map((theme) => (
+        <EmptyState
+          key={`glass-${theme}`}
+          theme={theme}
+          glass
+          icon={FaInbox}
+          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
+          message={`This is a glass ${theme} variant.`}
+          actionLabel="Review"
+          onActionClick={() => undefined}
+        />
+      ))}
+    </div>
+  ),
+};
+
+export const GlassStateVariants: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {stateOptions.map((state) => (
+        <EmptyState
+          key={`glass-${state}`}
+          state={state}
+          glass
+          icon={FaBug}
+          title={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
+          message={`This is a glass ${state} variant.`}
+        />
+      ))}
+    </div>
+  ),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: () => (
+    <div style={{ display: "grid", gap: "1.5rem" }}>
+      {themeOptions.map((theme) => (
+        <EmptyState
+          key={`outline-${theme}`}
+          theme={theme}
+          glass
+          outline
+          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
+          message={`This is an outlined ${theme} variant.`}
+        />
+      ))}
+      {stateOptions.map((state) => (
+        <EmptyState
+          key={`outline-${state}`}
+          state={state}
+          outline
+          glass
+          title={`${state.charAt(0).toUpperCase() + state.slice(1)} Outline`}
+          message={`This is an outlined ${state} variant.`}
+        />
+      ))}
+    </div>
+  ),
+};
+
 export const OutlineVariants: Story = {
   render: () => (
     <div style={{ display: "grid", gap: "1.5rem" }}>
@@ -99,13 +175,13 @@ export const OutlineVariants: Story = {
           message={`This is an outlined ${theme} variant.`}
         />
       ))}
-      {stateOptions.map((theme) => (
+      {stateOptions.map((state) => (
         <EmptyState
-          key={`outline-${theme}`}
-          theme={theme}
+          key={`outline-${state}`}
+          state={state}
           outline
-          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
-          message={`This is an outlined ${theme} variant.`}
+          title={`${state.charAt(0).toUpperCase() + state.slice(1)} Outline`}
+          message={`This is an outlined ${state} variant.`}
         />
       ))}
     </div>

@@ -209,6 +209,58 @@ export const StateVariants = () =>
     { propName: "state", values: stateOptions },
   ]);
 
+export const GlassThemeVariants = () =>
+  withVariants(
+    Avatar,
+    {
+      ...defaultArgs,
+      name: "Glass Theme",
+      glass: true,
+      shape: "circle",
+    },
+    [
+      {
+        propName: "theme",
+        values: themeOptions,
+      },
+    ],
+  );
+
+export const GlassStateVariants = () =>
+  withVariants(
+    Avatar,
+    {
+      ...defaultArgs,
+      name: "Glass State",
+      glass: true,
+      shape: "circle",
+    },
+    [
+      {
+        propName: "state",
+        values: stateOptions,
+      },
+    ],
+  );
+
+export const GlassOutlineVariants = () =>
+  withVariants(
+    Avatar,
+    {
+      ...defaultArgs,
+      name: "Glass Outline",
+      glass: true,
+      outline: true,
+      shape: "circle",
+    },
+    [
+      {
+        propName: "theme",
+        values: themeOptions,
+      },
+    ],
+  );
+
 export const SizeVariants = () =>
   withVariants(Avatar, { ...defaultArgs }, [
     {

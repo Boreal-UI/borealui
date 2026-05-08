@@ -94,6 +94,11 @@ export interface TextAreaProps extends Omit<
   theme?: ThemeType;
 
   /**
+   * Adds translucent glass styling to the textarea wrapper.
+   */
+  glass?: boolean;
+
+  /**
    * State of the text area.
    */
   state?: StateType;

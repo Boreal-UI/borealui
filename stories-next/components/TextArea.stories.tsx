@@ -126,6 +126,54 @@ export const OutlineVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextArea
+              key={`glass-${theme}`}
+              {...args}
+              icon={FaInbox}
+              glass
+              theme={theme}
+              placeholder={`${theme} glass`}
+              value={value}
+              onChange={(value) => setValue(value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextArea
+              key={`glass-${state}`}
+              {...args}
+              icon={FaInbox}
+              glass
+              state={state}
+              placeholder={`${state} glass`}
+              value={value}
+              onChange={(value) => setValue(value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
 export const CustomHeight: Story = {
   render: (args) => {
     const [value, setValue] = useState("");

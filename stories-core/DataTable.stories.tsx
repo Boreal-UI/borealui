@@ -1,5 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { DataTable } from "../src/index.core";
+import {
+  DataTable,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.core";
 import type { DataTableProps } from "../src/components/DataTable/DataTable.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
@@ -292,6 +298,44 @@ export const OutlineVariants = () => (
           state={state}
           outline
           striped={true}
+        />
+      </div>
+    ))}
+  </StoryGrid>
+);
+
+export const GlassThemeVariants = () => (
+  <StoryGrid title="Glass Theme Variants">
+    {themeOptions.map((theme) => (
+      <div key={theme}>
+        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
+          {theme} Glass
+        </h4>
+        <DataTable
+          data={sampleData}
+          columns={sampleColumns}
+          theme={theme}
+          glass
+          striped
+        />
+      </div>
+    ))}
+  </StoryGrid>
+);
+
+export const GlassStateVariants = () => (
+  <StoryGrid title="Glass State Variants">
+    {stateOptions.map((state) => (
+      <div key={state}>
+        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
+          {state} Glass
+        </h4>
+        <DataTable
+          data={sampleData}
+          columns={sampleColumns}
+          state={state}
+          glass
+          striped
         />
       </div>
     ))}

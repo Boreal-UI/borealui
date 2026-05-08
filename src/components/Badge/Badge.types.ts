@@ -106,6 +106,11 @@ export interface BadgeProps extends BadgeAccessibilityProps {
   outline?: boolean;
 
   /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
+  /**
    * Optional icon to render inside the badge.
    */
   icon?: IconType;

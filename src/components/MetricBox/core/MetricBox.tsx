@@ -6,6 +6,7 @@ import { MetricBoxProps } from "../MetricBox.types";
 const classes = {
   wrapper: "metricBox",
   outline: "metricBox_outline",
+  glass: "metricBox_glass",
 
   primary: "metricBox_primary",
   secondary: "metricBox_secondary",

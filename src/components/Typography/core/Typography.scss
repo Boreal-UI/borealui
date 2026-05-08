@@ -1,5 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
 
 .typography {
   margin: 0;
@@ -219,5 +221,13 @@
 @media (forced-colors: active) {
   .typography {
     color: CanvasText;
+  }
+
+  .typography_glass {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

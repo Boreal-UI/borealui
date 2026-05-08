@@ -88,6 +88,24 @@ export const ThemeVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "2rem" }}>
+        {themeOptions.map((theme) => (
+          <Timeline
+            key={`glass-${theme}`}
+            {...args}
+            theme={theme}
+            glass
+            items={sampleEvents}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const RoundingVariants = (args: React.ComponentProps<typeof Timeline>) =>
   withVariants(Timeline, { ...args }, [
     { propName: "rounding", values: roundingOptions },

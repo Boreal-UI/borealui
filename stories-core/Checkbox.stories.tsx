@@ -44,7 +44,7 @@ const defaultArgs = {
   size: "medium" as SizeType,
   theme: "primary" as ThemeType,
   state: "" as StateType,
-  rounding: "small" as RoundingType,
+  rounding: "medium" as RoundingType,
   shadow: "none" as ShadowType,
 };
 
@@ -120,6 +120,24 @@ export const ThemeVariants = () =>
     ],
   );
 
+export const GlassThemeVariants = () =>
+  withVariants(
+    Checkbox,
+    {
+      label: "Themed",
+      checked: true,
+      onChange: () => {},
+      theme: "primary",
+      glass: true,
+    },
+    [
+      {
+        propName: "theme",
+        values: themeOptions,
+      },
+    ],
+  );
+
 export const StateVariants = () =>
   withVariants(
     Checkbox,
@@ -129,6 +147,25 @@ export const StateVariants = () =>
       onChange: () => {},
       theme: "primary",
       state: "success",
+    },
+    [
+      {
+        propName: "state",
+        values: stateOptions,
+      },
+    ],
+  );
+
+export const GlassStateVariants = () =>
+  withVariants(
+    Checkbox,
+    {
+      label: "With State",
+      checked: true,
+      onChange: () => {},
+      theme: "primary",
+      state: "success",
+      glass: true,
     },
     [
       {

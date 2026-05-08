@@ -196,6 +196,14 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "category": "testing"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "labelId",
       "type": "string",
       "description": "Optional heading/label ID for the footer content. Can be used with aria-labelledby.",

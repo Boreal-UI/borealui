@@ -92,6 +92,14 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Adds translucent glass styling to the floating popover content.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "id",
       "type": "string",
       "description": "Optional ID for the popover content element.",

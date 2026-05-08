@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 $progress-sizes: (
@@ -32,6 +33,7 @@ $progress-sizes: (
   align-items: center;
 
   &_circle_border {
+    position: relative;
     width: 100%;
     height: 100%;
     border-radius: var(--border-radius-round);
@@ -39,6 +41,20 @@ $progress-sizes: (
     justify-content: center;
     align-items: center;
     transition: background 0.5s ease-in-out;
+    background: transparent;
+    overflow: hidden;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--circular-progress-fill, transparent);
+      pointer-events: none;
+
+      -webkit-mask: radial-gradient(circle, transparent 0 61%, #000 62% 100%);
+      mask: radial-gradient(circle, transparent 0 61%, #000 62% 100%);
+    }
 
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
@@ -47,6 +63,8 @@ $progress-sizes: (
   }
 
   &_inner_circle {
+    position: relative;
+    z-index: 1;
     width: 80%;
     height: 80%;
     border-radius: var(--border-radius-round);
@@ -65,6 +83,18 @@ $progress-sizes: (
       width: 78%;
       height: 78%;
     }
+  }
+}
+
+.circular_progress_glass {
+  .circular_progress_inner_circle {
+    @include mixins.glass-surface(
+      var(--circular-progress-glass-bg, var(--glass-background-subtle)),
+      var(--circular-progress-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--circular-progress-glass-text, currentcolor);
   }
 }
 
@@ -120,16 +150,38 @@ $progress-sizes: (
 
 @each $name, $values in theme.$themes {
   .circular_progress_#{$name} {
+    --circular-progress-glass-bg: #{map.get($values, glass-bg)};
+    --circular-progress-glass-border: #{map.get($values, glass-border)};
+    --circular-progress-glass-text: #{map.get($values, text)};
+
     .circular_progress_inner_circle {
       background-color: map.get($values, bg);
+    }
+
+    &.circular_progress_glass .circular_progress_inner_circle,
+    .circular_progress_inner_circle.circular_progress_glass {
+      background-color: var(--circular-progress-glass-bg);
+      border: 1px solid var(--circular-progress-glass-border);
+      color: var(--circular-progress-glass-text);
     }
   }
 }
 
 @each $name, $values in theme.$states {
   .circular_progress_#{$name} {
+    --circular-progress-glass-bg: #{map.get($values, glass-bg)};
+    --circular-progress-glass-border: #{map.get($values, glass-border)};
+    --circular-progress-glass-text: #{map.get($values, text)};
+
     .circular_progress_inner_circle {
       background-color: map.get($values, bg);
+    }
+
+    &.circular_progress_glass .circular_progress_inner_circle,
+    .circular_progress_inner_circle.circular_progress_glass {
+      background-color: var(--circular-progress-glass-bg);
+      border: 1px solid var(--circular-progress-glass-border);
+      color: var(--circular-progress-glass-text);
     }
   }
 }
@@ -160,5 +212,13 @@ $progress-sizes: (
 
   .circular_progress_circle_border {
     border: 1px solid ButtonText;
+  }
+
+  .circular_progress_glass .circular_progress_inner_circle {
+    background: Canvas;
+    border: 1px solid ButtonText;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }

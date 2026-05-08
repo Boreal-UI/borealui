@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .chip {
@@ -100,16 +101,49 @@ $chip-offset: 20px;
   transform: none;
 }
 
+.chip_glass {
+  @include mixins.glass-surface(
+    var(--chip-glass-bg, var(--glass-background)),
+    var(--chip-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  border-color: var(--chip-glass-border, var(--glass-border-color));
+  color: var(--chip-glass-text, currentcolor);
+  isolation: isolate;
+}
+
+.chip_glass:focus-visible {
+  outline: 2px solid var(--chip-glass-border, var(--glass-border-color));
+  outline-offset: 3px;
+}
+
+.chip_glass:hover {
+  background: var(--chip-glass-hover-bg, var(--glass-background-strong));
+}
+
 @each $name, $values in theme.$themes {
   .chip_#{$name} {
     background-color: map.get($values, bg);
     color: map.get($values, text);
     border: 1px solid map.get($values, border);
 
+    --chip-glass-bg: #{map.get($values, glass-bg)};
+    --chip-glass-hover-bg: #{map.get($values, glass-hover)};
+    --chip-glass-border: #{map.get($values, glass-border)};
+    --chip-glass-text: #{map.get($values, text)};
+
     &:focus-visible {
       outline: 2px solid map.get($values, border);
       outline-offset: 3px;
     }
+  }
+
+  .chip_#{$name}.chip_glass {
+    background-color: var(--chip-glass-bg);
+    background: var(--chip-glass-bg);
+    border: 1px solid var(--chip-glass-border);
+    color: var(--chip-glass-text);
   }
 }
 
@@ -119,10 +153,22 @@ $chip-offset: 20px;
     color: map.get($values, text);
     border: 1px solid map.get($values, border);
 
+    --chip-glass-bg: #{map.get($values, glass-bg)};
+    --chip-glass-hover-bg: #{map.get($values, glass-hover)};
+    --chip-glass-border: #{map.get($values, glass-border)};
+    --chip-glass-text: #{map.get($values, text)};
+
     &:focus-visible {
       outline: 2px solid map.get($values, border);
       outline-offset: 3px;
     }
+  }
+
+  .chip_#{$name}.chip_glass {
+    background-color: var(--chip-glass-bg);
+    background: var(--chip-glass-bg);
+    border: 1px solid var(--chip-glass-border);
+    color: var(--chip-glass-text);
   }
 }
 
@@ -258,5 +304,13 @@ $chip-sizes: (
     color: CanvasText;
     outline-color: Highlight;
     box-shadow: none !important;
+  }
+
+  .chip_glass {
+    background: Canvas;
+    border: 1px solid ButtonText;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }

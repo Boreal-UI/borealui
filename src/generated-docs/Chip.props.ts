@@ -52,6 +52,14 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "icon",
       "type": "ElementType",
       "description": "Optional icon component to show on the left side.",
@@ -117,7 +125,7 @@ export const chipPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "role",
-      "type": "\"alert\" | \"log\" | \"none\" | \"presentation\" | \"status\"",
+      "type": "\"none\" | \"alert\" | \"log\" | \"presentation\" | \"status\"",
       "description": "ARIA role for the chip container. Defaults to \"alert\".",
       "required": false,
       "inherited": false,

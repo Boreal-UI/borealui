@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Divider } from "../src/index.core";
+import { Divider, ThemeType } from "../src/index.core";
 import type { DividerProps } from "../src/components/Divider/Divider.types";
 
 const meta: Meta<DividerProps> = {
@@ -84,12 +84,34 @@ export const Themed: Story = {
   ),
 };
 
+export const GlassThemes: Story = {
+  render: () => (
+    <div style={{ padding: "1rem", display: "grid", gap: "1rem" }}>
+      <Divider theme="primary" glass thickness="4px" />
+      <Divider theme="secondary" glass thickness="4px" />
+      <Divider theme="tertiary" glass thickness="4px" />
+      <Divider theme="quaternary" glass thickness="4px" />
+      <Divider theme="clear" glass thickness="4px" />
+    </div>
+  ),
+};
+
 export const States: Story = {
   render: () => (
     <div style={{ padding: "1rem", display: "grid", gap: "1rem" }}>
-      <Divider theme="success" />
-      <Divider theme="error" />
-      <Divider theme="warning" />
+      <Divider theme={"success" as ThemeType} />
+      <Divider theme={"error" as ThemeType} />
+      <Divider theme={"warning" as ThemeType} />
+    </div>
+  ),
+};
+
+export const GlassStates: Story = {
+  render: () => (
+    <div style={{ padding: "1rem", display: "grid", gap: "1rem" }}>
+      <Divider state="success" glass thickness="4px" />
+      <Divider state="error" glass thickness="4px" />
+      <Divider state="warning" glass thickness="4px" />
     </div>
   ),
 };

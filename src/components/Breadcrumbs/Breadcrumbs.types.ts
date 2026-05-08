@@ -122,6 +122,11 @@ export interface BreadcrumbsProps extends Omit<
   outline?: boolean;
 
   /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
+  /**
    * Maximum number of visible items before collapsing into an ellipsis.
    */
   maxVisible?: number;

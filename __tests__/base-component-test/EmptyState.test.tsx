@@ -25,6 +25,7 @@ const classMap = {
   large: "sizeLarge",
 
   outline: "outline",
+  glass: "glass",
 
   shadowNone: "shadowNone",
   shadowLight: "shadowLight",
@@ -92,7 +93,7 @@ describe("BaseEmptyState", () => {
     );
   });
 
-  it("applies theme, state, size, shadow, rounding, outline, and custom className", () => {
+  it("applies theme, state, size, shadow, rounding, outline, glass, and custom className", () => {
     renderEmptyState({
       theme: "secondary",
       state: "warning",
@@ -100,6 +101,7 @@ describe("BaseEmptyState", () => {
       shadow: "medium",
       rounding: "full",
       outline: true,
+      glass: true,
       className: "customClass",
     });
 
@@ -112,6 +114,7 @@ describe("BaseEmptyState", () => {
     expect(section).toHaveClass("shadowMedium");
     expect(section).toHaveClass("roundFull");
     expect(section).toHaveClass("outline");
+    expect(section).toHaveClass("glass");
     expect(section).toHaveClass("customClass");
   });
 
@@ -177,12 +180,14 @@ describe("BaseEmptyState", () => {
       actionLabel: "Retry",
       onActionClick: jest.fn(),
       outline: true,
+      glass: true,
     });
 
     const button = screen.getByTestId("empty-state-action");
 
     expect(button).toHaveAttribute("data-theme", "clear");
     expect(button).toHaveAttribute("data-outline", "true");
+    expect(button).toHaveAttribute("data-glass", "true");
   });
 
   it("does not render action button when actionLabel is missing", () => {

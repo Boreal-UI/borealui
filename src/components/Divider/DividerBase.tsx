@@ -12,6 +12,7 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
       className = "",
       dashed = false,
       theme = getDefaultTheme(),
+      glass = false,
       state = "",
       as = "div",
       decorative = true,
@@ -68,6 +69,7 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
           theme && classMap[theme],
           state && classMap[state],
           dashed && classMap.dashed,
+          glass && classMap.glass,
           className,
         )}
         role={computedRole}

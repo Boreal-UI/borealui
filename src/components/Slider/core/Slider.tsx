@@ -9,6 +9,7 @@ const coreStyles = {
   label: "slider_label",
   wrapper: "slider_wrapper",
   slider: "slider",
+  glass: "slider_glass",
   value: "slider_value",
 
   xs: "slider_xs",

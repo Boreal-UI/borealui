@@ -91,6 +91,11 @@ export interface ChipProps
   theme?: ThemeType;
 
   /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
+  /**
    * Rounding style for the chip
    * ('none' | 'small' | 'medium' | 'large' | 'full').
    */

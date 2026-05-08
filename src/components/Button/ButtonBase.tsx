@@ -81,6 +81,7 @@ const ButtonBase = forwardRef<
       () =>
         combineClassNames(
           classMap.button,
+          disabled && classMap.disabled,
           classMap[theme],
           classMap[state],
           classMap[size],
@@ -89,7 +90,6 @@ const ButtonBase = forwardRef<
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
           fullWidth && classMap.fullWidth,
-          disabled && classMap.disabled,
           iconPosition === "left" && classMap.iconLeft,
           iconPosition === "right" && classMap.iconRight,
           className,
@@ -158,9 +158,7 @@ const ButtonBase = forwardRef<
         (_target === "_blank" || isExternal || /^https?:\/\//i.test(href)) &&
         !disabled;
 
-      const Comp = (
-        external ? "a" : (as ?? LinkComponent ?? "a")
-      ) as React.ElementType;
+      const Comp = external ? "a" : (as ?? LinkComponent ?? "a");
 
       const target = disabled
         ? undefined
@@ -217,7 +215,7 @@ const ButtonBase = forwardRef<
       );
     }
 
-    const Comp = (as ?? "button") as React.ElementType;
+    const Comp = as ?? "button";
 
     if (Comp === "button") {
       return (

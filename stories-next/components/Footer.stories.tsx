@@ -283,6 +283,45 @@ export const ColumnThemes: Story = {
   },
 };
 
+export const GlassThemes: Story = {
+  render: (args) => (
+    <div style={{ display: "grid", gap: "2rem" }}>
+      {themeOptions.map((theme) => (
+        <Footer
+          key={`glass-${theme}`}
+          {...args}
+          theme={theme}
+          glass
+          copyright={`Â© 2025 Your Company (${theme} glass)`}
+          showThemeSelect
+        />
+      ))}
+    </div>
+  ),
+  args: {
+    ...Default.args,
+  },
+};
+
+export const GlassColumnThemes: Story = {
+  render: (args) => (
+    <div style={{ display: "grid", gap: "2rem" }}>
+      {themeOptions.map((theme) => (
+        <Footer
+          key={`glass-column-${theme}`}
+          {...args}
+          theme={theme}
+          glass
+          copyright={`Â© 2026 Boreal UI (${theme} glass)`}
+        />
+      ))}
+    </div>
+  ),
+  args: {
+    ...ColumnsLayout.args,
+  },
+};
+
 export const LinksOnly: Story = {
   args: {
     links: [

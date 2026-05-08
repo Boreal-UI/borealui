@@ -128,6 +128,44 @@ export const States: Story = {
   ),
 };
 
+export const GlassThemes: Story = {
+  name: "Tooltip Glass Themes",
+  render: (args) => (
+    <div style={{ display: "grid", gap: "5rem" }}>
+      {themeOptions.map((theme) => (
+        <Tooltip
+          key={`glass-${theme}`}
+          {...args}
+          theme={theme}
+          glass
+          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} glass`}
+        >
+          <Button>{theme.charAt(0).toUpperCase() + theme.slice(1)}</Button>
+        </Tooltip>
+      ))}
+    </div>
+  ),
+};
+
+export const GlassStates: Story = {
+  name: "Tooltip Glass States",
+  render: (args) => (
+    <div style={{ display: "grid", gap: "5rem" }}>
+      {stateOptions.map((state) => (
+        <Tooltip
+          key={`glass-${state}`}
+          {...args}
+          state={state}
+          glass
+          title={`${state.charAt(0).toUpperCase() + state.slice(1)} glass`}
+        >
+          <Button>{state.charAt(0).toUpperCase() + state.slice(1)}</Button>
+        </Tooltip>
+      ))}
+    </div>
+  ),
+};
+
 export const Rounding: Story = {
   name: "Tooltip Rounding Variants",
   render: (args) => (

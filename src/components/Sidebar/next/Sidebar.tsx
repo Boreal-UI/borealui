@@ -6,25 +6,11 @@ import { usePathname } from "next/navigation";
 import SidebarBase from "../SidebarBase";
 import styles from "./Sidebar.module.scss";
 import { SidebarLink, SidebarProps } from "../Sidebar.types";
-
-const normalizePath = (p: string) =>
-  p.endsWith("/") && p.length > 1 ? p.slice(0, -1) : p;
-
-const isDescendantPath = (parentPath: string, currentPath: string): boolean => {
-  const parent = normalizePath(parentPath);
-  const current = normalizePath(currentPath);
-
-  if (parent === "/") return current === "/";
-  return current === parent || current.startsWith(`${parent}/`);
-};
-
-const isActiveRecursive = (
-  link: SidebarLink,
-  matcher: (link: SidebarLink) => boolean,
-): boolean => {
-  if (matcher(link)) return true;
-  return !!link.children?.some((child) => isActiveRecursive(child, matcher));
-};
+import {
+  isActiveRecursive,
+  isDescendantPath,
+  normalizePath,
+} from "../Sidebar.helpers";
 
 const Sidebar: React.FC<SidebarProps> = ({
   links,

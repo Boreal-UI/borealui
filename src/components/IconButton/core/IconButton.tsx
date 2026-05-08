@@ -10,6 +10,7 @@ const classes = {
 
   disabled: "icon_button_disabled",
   outline: "icon_button_outline",
+  glass: "icon_button_glass",
 
   primary: "icon_button_primary",
   secondary: "icon_button_secondary",

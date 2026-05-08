@@ -11,6 +11,7 @@ const SpinnerBase: React.FC<
   SpinnerProps & { classMap: Record<string, string> }
 > = ({
   theme = getDefaultTheme(),
+  glass = false,
   state = "",
   size = 50,
   shadow = getDefaultShadow(),
@@ -37,8 +38,14 @@ const SpinnerBase: React.FC<
   );
 
   const spinnerClasses = useMemo(
-    () => combineClassNames(classMap.spinner, classMap[theme], classMap[state]),
-    [classMap, theme, state],
+    () =>
+      combineClassNames(
+        classMap.spinner,
+        classMap[theme],
+        classMap[state],
+        glass && classMap.glass,
+      ),
+    [classMap, theme, state, glass],
   );
 
   const shadowClass = useMemo(

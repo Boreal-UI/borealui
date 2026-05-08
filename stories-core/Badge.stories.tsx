@@ -86,8 +86,18 @@ export const ThemeVariants = () =>
     { propName: "theme", values: themeOptions },
   ]);
 
+export const GlassThemeVariants = () =>
+  withVariants(Badge, { ...defaultArgs, glass: true }, [
+    { propName: "theme", values: themeOptions },
+  ]);
+
 export const StateVariants = () =>
   withVariants(Badge, { ...defaultArgs }, [
+    { propName: "state", values: stateOptions },
+  ]);
+
+export const GlassStateVariants = () =>
+  withVariants(Badge, { ...defaultArgs, glass: true }, [
     { propName: "state", values: stateOptions },
   ]);
 
@@ -112,6 +122,17 @@ export const OutlineVariants = () =>
     {
       ...defaultArgs,
       outline: true,
+    },
+    [{ propName: "theme", values: themeOptions }],
+  );
+
+export const GlassOutlineVariants = () =>
+  withVariants(
+    Badge,
+    {
+      ...defaultArgs,
+      outline: true,
+      glass: true,
     },
     [{ propName: "theme", values: themeOptions }],
   );

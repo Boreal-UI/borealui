@@ -41,6 +41,7 @@ const classMap = {
   warning: "typography_warning",
   error: "typography_error",
   themeInherit: "typography_theme-inherit",
+  glass: "typography_glass",
   italic: "typography_italic",
   underline: "typography_underline",
   truncate: "typography_truncate",

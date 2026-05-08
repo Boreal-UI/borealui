@@ -3,6 +3,10 @@ import react from "@vitejs/plugin-react";
 import { libInjectCss } from "vite-plugin-lib-inject-css";
 import getEntryMap from "./scripts/buildEntryMap.js";
 import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const externals = [
   "react",
@@ -16,8 +20,9 @@ const externals = [
 const isExternal = (id: string) =>
   externals.includes(id) || id === "next" || id.startsWith("next/");
 
-const nextEntries = getEntryMap("./src/next");
-nextEntries["index"] = path.resolve(__dirname, "./src/index.next.ts");
+const nextEntries = getEntryMap("./src/next") as Record<string, string>;
+
+nextEntries.index = path.resolve(__dirname, "./src/index.next.ts");
 
 export default defineConfig({
   plugins: [react(), libInjectCss()],
@@ -31,8 +36,8 @@ export default defineConfig({
   build: {
     outDir: "dist/next",
     emptyOutDir: true,
-    sourcemap: true,
-    minify: false,
+    sourcemap: false,
+    minify: "esbuild",
     cssCodeSplit: true,
 
     lib: {

@@ -2,7 +2,7 @@
 
 import { forwardRef } from "react";
 import CheckboxBase from "../CheckboxBase";
-import styles from "./CheckBox.module.scss";
+import styles from "./Checkbox.module.scss";
 import { CheckBoxProps } from "../Checkbox.types";
 
 const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>((props, ref) => (

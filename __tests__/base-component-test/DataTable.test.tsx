@@ -38,6 +38,7 @@ const classMap = {
   wrapCell: "wrapCell",
   emptyCell: "emptyCell",
   outline: "outline",
+  glass: "glass",
   primary: "primary",
   success: "success",
   roundMedium: "roundMedium",
@@ -103,18 +104,24 @@ describe("DataTableBase", () => {
     expect(table.querySelector("tbody")).toHaveClass("customTbody");
   });
 
-  it("applies theme, state, and outline classes to the table", () => {
+  it("applies theme, state, outline, and glass classes to the table and wrapper", () => {
     renderTable({
       theme: "primary",
       state: "success",
       outline: true,
+      glass: true,
     });
 
     const table = screen.getByRole("table");
+    const wrapper = screen.getByTestId("data-table");
+    expect(wrapper).toHaveClass("primary");
+    expect(wrapper).toHaveClass("success");
+    expect(wrapper).toHaveClass("glass");
     expect(table).toHaveClass("table");
     expect(table).toHaveClass("primary");
     expect(table).toHaveClass("success");
     expect(table).toHaveClass("outline");
+    expect(table).toHaveClass("glass");
   });
 
   it("applies wrapCell class to headers and cells when wrapCells is true", () => {

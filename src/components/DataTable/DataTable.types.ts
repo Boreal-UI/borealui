@@ -143,6 +143,12 @@ export interface DataTableProps<T> {
   theme?: ThemeType;
 
   /**
+   * If true, applies a translucent glass surface using the selected theme/state.
+   * Defaults to `false`.
+   */
+  glass?: boolean;
+
+  /**
    * State of the table
    * ('success' | 'error' | 'warning' | 'disabled' | '').
    */

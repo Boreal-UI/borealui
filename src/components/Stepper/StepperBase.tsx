@@ -15,6 +15,7 @@ const StepperBase: React.FC<StepperBaseProps> = ({
   disableBackNavigation = false,
   orientation = "horizontal",
   theme = getDefaultTheme(),
+  glass = false,
   state = "",
   size = getDefaultSize(),
   shadow = getDefaultShadow(),
@@ -46,6 +47,7 @@ const StepperBase: React.FC<StepperBaseProps> = ({
         classMap[theme],
         classMap[state],
         classMap[size],
+        glass && classMap.glass,
         className,
       )}
       role="list"
@@ -92,6 +94,7 @@ const StepperBase: React.FC<StepperBaseProps> = ({
             <IconButtonComponent
               icon={Icon}
               theme={theme}
+              glass={glass}
               state={state}
               className={combineClassNames(
                 classMap.stepButton,

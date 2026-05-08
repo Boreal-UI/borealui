@@ -13,6 +13,17 @@ const classes = {
   alignRight: "dropdown_menu_right",
   alignLeft: "dropdown_menu_left",
 
+  primary: "dropdown_primary",
+  secondary: "dropdown_secondary",
+  tertiary: "dropdown_tertiary",
+  quaternary: "dropdown_quaternary",
+  clear: "dropdown_clear",
+  success: "dropdown_success",
+  error: "dropdown_error",
+  warning: "dropdown_warning",
+  disabled: "dropdown_disabled",
+  glass: "dropdown_glass",
+
   shadowNone: "menu_shadow-None",
   shadowLight: "menu_shadow-Light",
   shadowMedium: "menu_shadow-Medium",

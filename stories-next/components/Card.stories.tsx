@@ -121,9 +121,19 @@ export const ThemeVariants = () =>
     { propName: "theme", values: [...themeOptions] },
   ]);
 
+export const GlassThemeVariants = () =>
+  withVariants(Card, { ...defaultArgs, glass: true }, [
+    { propName: "theme", values: [...themeOptions] },
+  ]);
+
 export const StateVariants = () =>
   withVariants(Card, defaultArgs, [
-    { propName: "theme", values: [...stateOptions] },
+    { propName: "state", values: [...stateOptions] },
+  ]);
+
+export const GlassStateVariants = () =>
+  withVariants(Card, { ...defaultArgs, glass: true }, [
+    { propName: "state", values: [...stateOptions] },
   ]);
 export const OutlineThemeVariants = () =>
   withVariants(Card, { ...defaultArgs, outline: true }, [
@@ -282,6 +292,11 @@ export const RoundingVariants = () =>
 
 export const ShadowVariants = () =>
   withVariants(Card, { ...defaultArgs }, [
+    { propName: "shadow", values: shadowOptions },
+  ]);
+
+export const GlassShadowVariants = () =>
+  withVariants(Card, { ...defaultArgs, glass: true }, [
     { propName: "shadow", values: shadowOptions },
   ]);
 

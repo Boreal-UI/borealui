@@ -1,5 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .iconButton {
@@ -62,10 +64,41 @@
   box-shadow: none;
 }
 
+.glass {
+  @include mixins.glass-surface(
+    var(--icon-button-glass-bg, var(--glass-background)),
+    var(--icon-button-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--icon-button-glass-text, currentcolor);
+  isolation: isolate;
+
+  &:hover {
+    background: var(
+      --icon-button-glass-hover-bg,
+      var(--glass-background-strong)
+    );
+  }
+
+  &.outline {
+    border-color: var(--icon-button-glass-border, var(--glass-border-color));
+
+    &:hover {
+      background: var(--icon-button-glass-hover-bg, var(--glass-background));
+    }
+  }
+}
+
 @each $name, $vals in theme.$themes {
   .#{$name} {
     background-color: map.get($vals, bg);
     color: map.get($vals, text);
+
+    --icon-button-glass-bg: #{map.get($vals, glass-bg)};
+    --icon-button-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --icon-button-glass-border: #{map.get($vals, glass-border)};
+    --icon-button-glass-text: #{map.get($vals, text)};
 
     &:hover {
       background-color: map.get($vals, hover);
@@ -74,6 +107,18 @@
     &:focus-visible {
       outline: 2px solid map.get($vals, border);
       outline-offset: 2px;
+    }
+
+    &.glass {
+      background-color: transparent;
+      background: var(--icon-button-glass-bg);
+      border: 1px solid var(--icon-button-glass-border);
+      color: var(--icon-button-glass-text);
+
+      &:hover {
+        background-color: transparent;
+        background: var(--icon-button-glass-hover-bg);
+      }
     }
 
     &.outline {
@@ -89,6 +134,16 @@
         border-color: map.get($vals, hover);
         color: map.get($vals, text);
       }
+    }
+
+    &.outline.glass {
+      @include mixins.glass-surface(
+        transparent,
+        var(--icon-button-glass-border),
+        var(--glass-blur)
+      );
+
+      color: var(--icon-button-glass-text);
     }
   }
 }
@@ -98,6 +153,11 @@
     background-color: map.get($vals, bg);
     color: map.get($vals, text);
 
+    --icon-button-glass-bg: #{map.get($vals, glass-bg)};
+    --icon-button-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --icon-button-glass-border: #{map.get($vals, glass-border)};
+    --icon-button-glass-text: #{map.get($vals, text)};
+
     &:hover {
       background-color: map.get($vals, hover);
     }
@@ -105,6 +165,18 @@
     &:focus-visible {
       outline: 2px solid map.get($vals, border);
       outline-offset: 2px;
+    }
+
+    &.glass {
+      background-color: transparent;
+      background: var(--icon-button-glass-bg);
+      border: 1px solid var(--icon-button-glass-border);
+      color: var(--icon-button-glass-text);
+
+      &:hover {
+        background-color: transparent;
+        background: var(--icon-button-glass-hover-bg);
+      }
     }
 
     &.outline {
@@ -120,6 +192,16 @@
         border-color: map.get($vals, hover);
         color: map.get($vals, text);
       }
+    }
+
+    &.outline.glass {
+      @include mixins.glass-surface(
+        transparent,
+        var(--icon-button-glass-border),
+        var(--glass-blur)
+      );
+
+      color: var(--icon-button-glass-text);
     }
   }
 }
@@ -230,5 +312,13 @@ $sizes: (
 
   .outline {
     border: 1px solid ButtonText;
+  }
+
+  .glass {
+    background: Canvas;
+    border: 1px solid ButtonText;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }

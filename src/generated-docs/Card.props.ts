@@ -212,6 +212,14 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent glass style to the card.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "headerClassName",
       "type": "string",
       "description": "Custom class name for the header section.",

@@ -51,6 +51,7 @@ const classMap = {
   inner_icon: "innerIcon",
   message: "message",
   close: "close",
+  glass: "glass",
 };
 
 describe("ChipBase", () => {
@@ -559,6 +560,7 @@ describe("ChipBase", () => {
       usePortal: false,
       theme: "primary",
       state: "success",
+      glass: true,
     });
 
     const results = await axe(container);

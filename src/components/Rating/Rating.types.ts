@@ -80,6 +80,11 @@ export interface RatingProps {
   theme?: ThemeType;
 
   /**
+   * Adds a translucent glass surface behind the rating stars.
+   */
+  glass?: boolean;
+
+  /**
    * State of the rating.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    */

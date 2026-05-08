@@ -146,6 +146,42 @@ export const Themes: Story = {
   },
 };
 
+export const GlassThemes: Story = {
+  render: () => {
+    const [visibleTheme, setVisibleTheme] = useState<ThemeType | null>(null);
+
+    return (
+      <>
+        <div className="grid grid-cols-6 gap-2">
+          {themeOptions.map((theme) => (
+            <button
+              key={theme}
+              onClick={() => setVisibleTheme(theme as ThemeType)}
+              className="p-2 border rounded"
+            >
+              {theme}
+            </button>
+          ))}
+        </div>
+
+        {visibleTheme && (
+          <Chip
+            id="glass-theme-chip"
+            message={`Glass Theme: ${visibleTheme}`}
+            theme={visibleTheme}
+            glass={true}
+            position="topRight"
+            visible={true}
+            onClose={() => setVisibleTheme(null)}
+            autoClose={false}
+            icon={FaCheckCircle}
+          />
+        )}
+      </>
+    );
+  },
+};
+
 export const States: Story = {
   render: () => {
     const [visibleState, setVisibleState] = useState<StateType | null>(null);
@@ -169,6 +205,42 @@ export const States: Story = {
             id="state-chip"
             message={`State: ${visibleState}`}
             state={visibleState}
+            position="topRight"
+            visible={true}
+            onClose={() => setVisibleState(null)}
+            autoClose={false}
+            icon={FaCheckCircle}
+          />
+        )}
+      </>
+    );
+  },
+};
+
+export const GlassStates: Story = {
+  render: () => {
+    const [visibleState, setVisibleState] = useState<StateType | null>(null);
+
+    return (
+      <>
+        <div className="grid grid-cols-6 gap-2">
+          {stateOptions.map((state) => (
+            <button
+              key={state}
+              onClick={() => setVisibleState(state as StateType)}
+              className="p-2 border rounded"
+            >
+              {state}
+            </button>
+          ))}
+        </div>
+
+        {visibleState && (
+          <Chip
+            id="glass-state-chip"
+            message={`Glass State: ${visibleState}`}
+            state={visibleState}
+            glass={true}
             position="topRight"
             visible={true}
             onClose={() => setVisibleState(null)}

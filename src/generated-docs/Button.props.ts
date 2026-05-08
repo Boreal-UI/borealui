@@ -164,6 +164,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "href",
       "type": "string",
       "description": "If provided, button will render as a link pointing to this href.",
@@ -175,6 +183,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "name": "icon",
       "type": "ComponentType<{ className?: string; \"aria-hidden\"?: boolean; focusable?: boolean; }>",
       "description": "Optional icon component to render inside the button.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "iconPosition",
+      "type": "\"left\" | \"right\"",
+      "description": "Position of the icon relative to the button label.",
       "required": false,
       "inherited": false,
       "category": "props"

@@ -134,6 +134,58 @@ export const StateVariants = {
   },
 };
 
+export const GlassThemeVariants = {
+  render: () => {
+    const [openPalette, setOpenPalette] = useState<string | null>(null);
+
+    return (
+      <StoryGrid title="Glass Theme Variants">
+        {themeOptions.map((theme) => (
+          <div key={theme} style={{ paddingBottom: "1rem" }}>
+            <button onClick={() => setOpenPalette(theme)}>
+              Glass {theme} Palette
+            </button>
+            <CommandPalette
+              isOpen={openPalette === theme}
+              onClose={() => setOpenPalette(null)}
+              commands={sampleCommands}
+              placeholder={`Glass theme: ${theme}`}
+              theme={theme}
+              glass
+            />
+          </div>
+        ))}
+      </StoryGrid>
+    );
+  },
+};
+
+export const GlassStateVariants = {
+  render: () => {
+    const [openPalette, setOpenPalette] = useState<string | null>(null);
+
+    return (
+      <StoryGrid title="Glass State Variants">
+        {stateOptions.map((state) => (
+          <div key={state} style={{ paddingBottom: "1rem" }}>
+            <button onClick={() => setOpenPalette(state)}>
+              Glass {state} Palette
+            </button>
+            <CommandPalette
+              isOpen={openPalette === state}
+              onClose={() => setOpenPalette(null)}
+              commands={sampleCommands}
+              placeholder={`Glass state: ${state}`}
+              state={state}
+              glass
+            />
+          </div>
+        ))}
+      </StoryGrid>
+    );
+  },
+};
+
 export const RoundingVariants = {
   render: () => {
     const [openPalette, setOpenPalette] = useState<string | null>(null);

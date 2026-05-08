@@ -14,6 +14,7 @@ const slugify = (value: string) =>
 
 const FooterBase: React.FC<BaseFooterProps> = ({
   theme = getDefaultTheme(),
+  glass = false,
   attachment = "static",
   shadow = "none",
   rounding = "none",
@@ -83,13 +84,14 @@ const FooterBase: React.FC<BaseFooterProps> = ({
       combineClassNames(
         classMap.footer,
         classMap[theme],
+        glass && classMap.glass,
         layout !== "inline" && classMap[`layout${capitalize(layout)}`],
         shadow !== "none" && classMap[`shadow${capitalize(shadow)}`],
         rounding !== "none" && classMap[`round${capitalize(rounding)}`],
         classMap[`attachment${capitalize(attachment)}`],
         className,
       ),
-    [classMap, theme, layout, shadow, rounding, attachment, className],
+    [classMap, theme, glass, layout, shadow, rounding, attachment, className],
   );
 
   const isLogoImage = (
@@ -246,6 +248,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
             aria-label={social["aria-label"] ?? social.title}
             title={social.tooltip ?? social.title}
             theme="clear"
+            glass={glass}
             disabled={social.disabled}
             rel={social.rel}
             target={social.target}

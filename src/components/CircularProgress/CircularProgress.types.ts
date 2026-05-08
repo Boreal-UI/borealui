@@ -87,6 +87,11 @@ export interface CircularProgressProps extends Omit<
    */
   state?: StateType;
 
+  /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
   /** Optional class name for custom styling. */
   className?: string;
 

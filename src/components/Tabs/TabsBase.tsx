@@ -36,6 +36,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   shadow = getDefaultShadow(),
   className = "",
   theme = getDefaultTheme(),
+  glass = false,
   state = "",
   size = getDefaultSize(),
   orientation = "horizontal",
@@ -91,9 +92,10 @@ const TabsBase: React.FC<BaseTabsProps> = ({
       themeClass,
       stateClass,
       sizeClass,
+      glass && classMap.glass,
       className,
     );
-  }, [classMap, theme, state, size, className]);
+  }, [classMap, theme, state, size, glass, className]);
 
   const tabBaseClassNames = useMemo(() => {
     const tabClass = getClass(classMap, ["tab", "tabs_tab"]) ?? "";

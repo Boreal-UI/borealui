@@ -68,6 +68,11 @@ export interface TextInputProps extends NativeInputProps {
   theme?: ThemeType;
 
   /**
+   * Adds translucent glass styling to the input wrapper.
+   */
+  glass?: boolean;
+
+  /**
    * State of the input.
    * "success" | "error" | "warning" | "disabled" | ""
    */

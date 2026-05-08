@@ -96,6 +96,11 @@ export interface TagInputProps {
   theme?: ThemeType;
 
   /**
+   * Adds translucent glass styling to the wrapper, tags, and nested controls.
+   */
+  glass?: boolean;
+
+  /**
    * State of the input (for feedback/validation).
    * One of: "success" | "error" | "warning" | "disabled" | ""
    */

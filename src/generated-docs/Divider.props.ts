@@ -44,6 +44,14 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "label",
       "type": "string",
       "description": "Accessible label for a meaningful separator. Only used when decorative is false.",

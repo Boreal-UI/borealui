@@ -59,6 +59,11 @@ export interface SliderProps {
   theme?: ThemeType;
 
   /**
+   * Applies a translucent frosted-glass treatment to the slider track.
+   */
+  glass?: boolean;
+
+  /**
    * State of the slider.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    */

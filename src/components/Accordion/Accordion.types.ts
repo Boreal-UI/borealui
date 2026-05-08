@@ -66,6 +66,11 @@ export interface AccordionProps extends Omit<
   outline?: boolean;
 
   /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
+  /**
    * If true, disables user interaction and styles the accordion as disabled.
    */
   disabled?: boolean;

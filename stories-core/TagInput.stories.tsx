@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { TagInput } from "../src/index.core";
+import { StateType, TagInput, ThemeType } from "../src/index.core";
 import type { TagInputProps } from "../src/components/TagInput/TagInput.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -12,7 +12,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
@@ -122,6 +122,54 @@ export const StateVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        {themeOptions.map((theme) => {
+          const [tags, setTags] = useState(["react", "nextjs"]);
+
+          return (
+            <TagInput
+              key={`glass-${theme}`}
+              {...args}
+              theme={theme}
+              glass
+              tags={tags}
+              onChange={setTags}
+              placeholder={`Add ${theme} glass tag...`}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        {stateOptions.map((state) => {
+          const [tags, setTags] = useState(["react", "nextjs"]);
+
+          return (
+            <TagInput
+              key={`glass-${state}`}
+              {...args}
+              state={state}
+              glass
+              tags={tags}
+              onChange={setTags}
+              placeholder={`Add ${state} glass tag...`}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
 export const WithOnChangeAlert: Story = {
   render: (args) => {
     const [tags, setTags] = useState(["typescript"]);
@@ -138,12 +186,12 @@ export const WithOnChangeAlert: Story = {
   },
 };
 
-export const RoundingVariants = (args) =>
+export const RoundingVariants = (args: React.ComponentProps<typeof TagInput>) =>
   withVariants(TagInput, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof TagInput>) =>
   withVariants(TagInput, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);

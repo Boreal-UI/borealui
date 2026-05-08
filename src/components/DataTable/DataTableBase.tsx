@@ -18,6 +18,7 @@ function DataTableBase<T extends object>({
   shadow = getDefaultShadow(),
   state = "",
   outline = false,
+  glass = false,
   className = "",
   tableClassName,
   theadClassName,
@@ -216,21 +217,25 @@ function DataTableBase<T extends object>({
         classMap[theme],
         classMap[state],
         outline && classMap.outline,
+        glass && classMap.glass,
         tableClassName,
       ),
-    [classMap, theme, state, outline, tableClassName],
+    [classMap, theme, state, outline, glass, tableClassName],
   );
 
   const wrapperClass = useMemo(
     () =>
       combineClassNames(
         classMap.wrapper,
+        classMap[theme],
+        classMap[state],
+        glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         striped && classMap.striped,
         className,
       ),
-    [classMap, shadow, rounding, striped, className],
+    [classMap, theme, state, glass, shadow, rounding, striped, className],
   );
 
   return (

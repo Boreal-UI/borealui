@@ -317,18 +317,29 @@ $sizes: (
   }
 }
 
-.disabled {
+.disabled,
+.button:disabled {
   background-color: var(--disabled-color);
+  background: var(--disabled-color);
   color: var(--text-color-primary);
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.6;
   box-shadow: none;
+}
 
-  &.outline {
-    border-color: var(--disabled-color);
-    color: var(--disabled-color);
-  }
+.disabled.glass,
+.button:disabled.glass {
+  background-color: var(--disabled-color);
+  background: var(--disabled-color);
+  color: var(--text-color-primary);
+}
+
+.disabled.outline,
+.button:disabled.outline {
+  background-color: transparent;
+  border-color: var(--disabled-color);
+  color: var(--disabled-color);
 }
 
 @each $size, $values in $sizes {

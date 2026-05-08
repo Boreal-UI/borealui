@@ -25,6 +25,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   size = getDefaultSize(),
   theme = getDefaultTheme(),
   state = "",
+  glass = false,
   className = "",
   classMap,
   decorative = false,
@@ -46,8 +47,13 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
     setDisplayPercent(Math.round(percent));
   }, [percent]);
 
-  const progressColor =
-    state && classMap[state] ? undefined : getColor(percent);
+  const stateColorMap: Record<string, string> = {
+    success: "var(--success-color)",
+    error: "var(--error-color)",
+    warning: "var(--warning-color)",
+  };
+
+  const progressColor = stateColorMap[state] ?? getColor(percent);
 
   const angle = Math.min(360, (percent / 100) * 360);
 
@@ -58,10 +64,11 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
         classMap[theme],
         classMap[size],
         classMap[state],
+        glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         className,
       ),
-    [classMap, theme, size, state, shadow, className],
+    [classMap, theme, size, state, glass, shadow, className],
   );
 
   const valueText = showRaw ? `${clamped}/${max}` : `${displayPercent}%`;
@@ -103,17 +110,22 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
         )}
         style={
           progressColor
-            ? {
-                background: `conic-gradient(
-                  ${progressColor} 0deg,
-                  ${progressColor} ${angle}deg,
-                  transparent ${angle}deg 360deg
-                )`,
-              }
+            ? ({
+                "--circular-progress-fill": `conic-gradient(
+          ${progressColor} 0deg,
+          ${progressColor} ${angle}deg,
+          transparent ${angle}deg 360deg
+        )`,
+              } as React.CSSProperties)
             : undefined
         }
       >
-        <div className={classMap.inner_circle}>
+        <div
+          className={combineClassNames(
+            classMap.inner_circle,
+            glass && classMap.glass,
+          )}
+        >
           <span
             className={classMap.value_text}
             aria-hidden={announceInnerValue ? undefined : true}

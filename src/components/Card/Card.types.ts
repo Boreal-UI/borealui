@@ -225,6 +225,9 @@ export interface CardProps {
   /** Outlines card instead of solid fill. */
   outline?: boolean;
 
+  /** Applies a translucent glass style to the card. */
+  glass?: boolean;
+
   /**
    * Card size
    * ('xs' | 'small' | 'medium' | 'large' | 'xl').

@@ -24,6 +24,7 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       "aria-disabled": ariaDisabled,
       tabIndex,
       theme = getDefaultTheme(),
+      glass = false,
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       state = "",
@@ -82,21 +83,23 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
           classMap[theme],
           classMap[state],
           classMap[size],
+          glass && classMap.glass,
           disabled && classMap.disabled,
           className,
         ),
-      [classMap, theme, state, size, disabled, className],
+      [classMap, theme, state, size, glass, disabled, className],
     );
 
     const toggleClass = useMemo(
       () =>
         combineClassNames(
           classMap.toggle,
+          glass && classMap.glassTrack,
           checked && classMap.active,
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
         ),
-      [classMap, checked, shadow, rounding],
+      [classMap, glass, checked, shadow, rounding],
     );
 
     return (

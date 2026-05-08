@@ -17,6 +17,7 @@ const styles = {
   small: "small",
   large: "large",
   outline: "outline",
+  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   shadowSmall: "shadowSmall",
@@ -601,6 +602,7 @@ describe("AccordionBase (Jest)", () => {
       size: "medium",
       state: "success",
       outline: true,
+      glass: true,
       initiallyExpanded: true,
       disabled: false,
       className: "customClassName",
@@ -617,6 +619,7 @@ describe("AccordionBase (Jest)", () => {
     expect(wrapper).toHaveClass("accordion");
     expect(wrapper).toHaveClass("medium");
     expect(wrapper).toHaveClass("success");
+    expect(wrapper).toHaveClass("glass");
     expect(wrapper).toHaveClass("shadowMedium");
     expect(wrapper).toHaveClass("roundLarge");
     expect(wrapper).toHaveClass("expanded");
@@ -626,9 +629,13 @@ describe("AccordionBase (Jest)", () => {
     expect(toggle).toHaveClass("primary");
     expect(toggle).toHaveClass("success");
     expect(toggle).toHaveClass("outline");
+    expect(toggle).toHaveClass("glass");
     expect(toggle).toHaveClass("expanded");
 
     expect(content).toHaveClass("accordionContent");
+    expect(content).toHaveClass("primary");
+    expect(content).toHaveClass("success");
+    expect(content).toHaveClass("glass");
     expect(content).toHaveClass("expanded");
 
     expect(icon).toHaveClass("accordionIcon");

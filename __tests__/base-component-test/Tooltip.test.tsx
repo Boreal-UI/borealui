@@ -9,6 +9,7 @@ const mockStyles = {
   container: "tooltipContainer",
   triggerWrapper: "triggerWrapper",
   tooltip: "tooltip",
+  glass: "glass",
 
   top: "top",
   bottom: "bottom",
@@ -145,13 +146,14 @@ describe("TooltipBase", () => {
     expect(tooltip).not.toHaveClass("visible");
   });
 
-  it("applies custom position, theme, state, rounding, and shadow classes", () => {
+  it("applies custom position, theme, state, glass, rounding, and shadow classes", () => {
     render(
       <TooltipBase
         content="Styled tooltip"
         position="bottom"
         theme="secondary"
         state="error"
+        glass
         rounding="large"
         shadow="strong"
         classMap={mockStyles}
@@ -166,6 +168,7 @@ describe("TooltipBase", () => {
     expect(tooltip).toHaveClass("bottom");
     expect(tooltip).toHaveClass("secondary");
     expect(tooltip).toHaveClass("error");
+    expect(tooltip).toHaveClass("glass");
     expect(tooltip).toHaveClass("roundLarge");
     expect(tooltip).toHaveClass("shadowStrong");
   });

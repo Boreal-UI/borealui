@@ -89,7 +89,6 @@ export const CustomRange: Story = {
   },
 };
 
-// Variant grid
 export const SizeVariants = () =>
   withVariants(CircularProgress, defaultArgs, [
     { propName: "size", values: [...sizeOptions] },
@@ -108,6 +107,20 @@ export const ThemeVariants = () => (
   </StoryGrid>
 );
 
+export const GlassThemeVariants = () => (
+  <StoryGrid title="Theme Variants">
+    {themeOptions.map((theme) => (
+      <CircularProgress
+        key={theme}
+        value={76}
+        theme={theme}
+        glass
+        label={`Theme: ${theme}`}
+      />
+    ))}
+  </StoryGrid>
+);
+
 export const StateVariants = () => (
   <StoryGrid title="State Variants">
     {stateOptions.map((state) => (
@@ -115,6 +128,20 @@ export const StateVariants = () => (
         key={state}
         value={76}
         state={state}
+        label={`State: ${state}`}
+      />
+    ))}
+  </StoryGrid>
+);
+
+export const GlassStateVariants = () => (
+  <StoryGrid title="State Variants">
+    {stateOptions.map((state) => (
+      <CircularProgress
+        key={state}
+        value={76}
+        state={state}
+        glass
         label={`State: ${state}`}
       />
     ))}

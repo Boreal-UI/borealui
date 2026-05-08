@@ -19,6 +19,7 @@ const BasePager: React.FC<BasePagerProps> = ({
   className = "",
   size = getDefaultSize(),
   theme = getDefaultTheme(),
+  glass = false,
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   state = "",
@@ -51,7 +52,12 @@ const BasePager: React.FC<BasePagerProps> = ({
     if (clamped !== page) onPageChange(clamped);
   };
 
-  const wrapperClass = combineClassNames(classMap.wrapper, className);
+  const wrapperClass = combineClassNames(
+    classMap.wrapper,
+    classMap[theme],
+    state && classMap[state],
+    className,
+  );
 
   const buttonBaseClass = combineClassNames(
     classMap.button,
@@ -84,6 +90,7 @@ const BasePager: React.FC<BasePagerProps> = ({
           icon={ArrowLeftIcon}
           theme={theme}
           state={state}
+          glass={glass}
           size={size}
           shadow={shadow}
           rounding={rounding}
@@ -112,6 +119,7 @@ const BasePager: React.FC<BasePagerProps> = ({
             <Button
               theme={theme}
               state={state}
+              glass={glass}
               size={size}
               rounding={rounding}
               shadow={shadow}
@@ -140,6 +148,7 @@ const BasePager: React.FC<BasePagerProps> = ({
                 <Button
                   theme={theme}
                   state={state}
+                  glass={glass}
                   size={size}
                   rounding={rounding}
                   shadow={shadow}
@@ -168,6 +177,7 @@ const BasePager: React.FC<BasePagerProps> = ({
           icon={ArrowRightIcon}
           theme={theme}
           state={state}
+          glass={glass}
           rounding={rounding}
           shadow={shadow}
           size={size}

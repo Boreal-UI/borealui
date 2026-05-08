@@ -103,6 +103,48 @@ export const StateVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: () => {
+    const [value, setValue] = useState(3);
+
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {themeOptions.map((theme) => (
+          <Rating
+            key={theme}
+            theme={theme}
+            glass
+            value={value}
+            onChange={setValue}
+            label={`Glass theme: ${theme}`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: () => {
+    const [value, setValue] = useState(3);
+
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <Rating
+            key={state}
+            state={state}
+            glass
+            value={value}
+            onChange={setValue}
+            label={`Glass state: ${state}`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const TenStars: Story = {
   render: () => {
     const [value, setValue] = useState(7);

@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .breadcrumbs {
@@ -41,14 +42,57 @@
   }
 }
 
+.breadcrumbs_glass {
+  @include mixins.glass-surface(
+    var(--breadcrumbs-glass-bg, var(--glass-background)),
+    var(--breadcrumbs-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--breadcrumbs-glass-text, currentcolor);
+  isolation: isolate;
+
+  &:hover {
+    background: var(
+      --breadcrumbs-glass-hover-bg,
+      var(--glass-background-strong)
+    );
+  }
+
+  &.breadcrumbs_outline {
+    border-color: var(--breadcrumbs-glass-border, var(--glass-border-color));
+
+    &:hover {
+      background: var(--breadcrumbs-glass-hover-bg, var(--glass-background));
+    }
+  }
+}
+
 @each $name, $values in theme.$themes {
   .breadcrumbs_#{$name} {
     color: map.get($values, text);
     background-color: map.get($values, bg);
 
+    --breadcrumbs-glass-bg: #{map.get($values, glass-bg)};
+    --breadcrumbs-glass-hover-bg: #{map.get($values, glass-hover)};
+    --breadcrumbs-glass-border: #{map.get($values, glass-border)};
+    --breadcrumbs-glass-text: #{map.get($values, text)};
+
     &:focus {
       outline: 2px solid map.get($values, border);
       outline-offset: 2px;
+    }
+  }
+
+  .breadcrumbs_#{$name}.breadcrumbs_glass {
+    background-color: transparent;
+    background: var(--breadcrumbs-glass-bg);
+    border: 1px solid var(--breadcrumbs-glass-border);
+    color: var(--breadcrumbs-glass-text);
+
+    &:hover {
+      background-color: transparent;
+      background: var(--breadcrumbs-glass-hover-bg);
     }
   }
 
@@ -72,6 +116,16 @@
       outline-offset: 2px;
     }
   }
+
+  .breadcrumbs_#{$name}.breadcrumbs_outline.breadcrumbs_glass {
+    @include mixins.glass-surface(
+      transparent,
+      var(--breadcrumbs-glass-border),
+      var(--glass-blur)
+    );
+
+    color: var(--breadcrumbs-glass-text);
+  }
 }
 
 .breadcrumbs_clear {
@@ -82,6 +136,11 @@
   .breadcrumbs_#{$name} {
     color: map.get($values, text);
     background-color: map.get($values, bg);
+
+    --breadcrumbs-glass-bg: #{map.get($values, glass-bg)};
+    --breadcrumbs-glass-hover-bg: #{map.get($values, glass-hover)};
+    --breadcrumbs-glass-border: #{map.get($values, glass-border)};
+    --breadcrumbs-glass-text: #{map.get($values, text)};
 
     &:hover {
       background-color: map.get($values, hover);
@@ -97,6 +156,18 @@
     &:focus {
       outline: 2px solid map.get($values, border);
       outline-offset: 2px;
+    }
+  }
+
+  .breadcrumbs_#{$name}.breadcrumbs_glass {
+    background-color: transparent;
+    background: var(--breadcrumbs-glass-bg);
+    border: 1px solid var(--breadcrumbs-glass-border);
+    color: var(--breadcrumbs-glass-text);
+
+    &:hover {
+      background-color: transparent;
+      background: var(--breadcrumbs-glass-hover-bg);
     }
   }
 
@@ -118,6 +189,16 @@
       outline: 2px solid map.get($values, hover);
       outline-offset: 2px;
     }
+  }
+
+  .breadcrumbs_#{$name}.breadcrumbs_outline.breadcrumbs_glass {
+    @include mixins.glass-surface(
+      transparent,
+      var(--breadcrumbs-glass-border),
+      var(--glass-blur)
+    );
+
+    color: var(--breadcrumbs-glass-text);
   }
 }
 
@@ -305,5 +386,13 @@
   .breadcrumbs {
     border: 1px solid ButtonText;
     outline-color: Highlight;
+  }
+
+  .breadcrumbs_glass {
+    background: Canvas;
+    border: 1px solid ButtonText;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }

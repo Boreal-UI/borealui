@@ -78,6 +78,11 @@ export interface ToggleProps {
   theme?: ThemeType;
 
   /**
+   * Applies a translucent frosted-glass treatment to the toggle track.
+   */
+  glass?: boolean;
+
+  /**
    * State of the toggle.
    *   "" | "success" | "error" | "warning" | "disabled"
    */

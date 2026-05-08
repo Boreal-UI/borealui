@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 $progress-sizes: (
@@ -86,6 +87,11 @@ $progress-sizes: (
 
   @each $themeName, $values in theme.$themes {
     &_#{$themeName} {
+      --progress-glass-bg: #{map.get($values, glass-bg)};
+      --progress-glass-hover-bg: #{map.get($values, glass-hover)};
+      --progress-glass-border: #{map.get($values, glass-border)};
+      --progress-glass-text: #{map.get($values, text)};
+
       background-color: map.get($values, bg);
 
       .progress_bar {
@@ -96,6 +102,11 @@ $progress-sizes: (
 
   @each $stateName, $values in theme.$states {
     &_#{$stateName} {
+      --progress-glass-bg: #{map.get($values, glass-bg)};
+      --progress-glass-hover-bg: #{map.get($values, glass-hover)};
+      --progress-glass-border: #{map.get($values, glass-border)};
+      --progress-glass-text: #{map.get($values, text)};
+
       background-color: map.get($values, bg);
 
       .progress_bar {
@@ -120,6 +131,20 @@ $progress-sizes: (
 
   &_clear {
     background-color: var(--text-color-primary);
+  }
+
+  &_container.progress_glass {
+    @include mixins.glass-surface(
+      var(--progress-glass-bg, var(--glass-background)),
+      var(--progress-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--progress-glass-text, currentcolor);
+  }
+
+  &_bar_glass {
+    box-shadow: inset 0 0 0 1px var(--progress-glass-border, transparent);
   }
 }
 
@@ -155,5 +180,13 @@ $progress-sizes: (
 
   .progress_bar {
     background: Highlight;
+  }
+
+  .progress_container.progress_glass {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

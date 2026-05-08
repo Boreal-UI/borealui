@@ -100,6 +100,59 @@ export const OutlineAndDisabledVariants: Story = {
   ),
 };
 
+export const GlassThemeVariants = () =>
+  withVariants(
+    IconButton,
+    {
+      icon: FaPlus,
+      size: "medium",
+      "aria-label": "Glass Theme",
+      theme: "primary",
+      glass: true,
+    },
+    [{ propName: "theme", values: themeOptions }],
+  );
+
+export const GlassStateVariants = () =>
+  withVariants(
+    IconButton,
+    {
+      icon: FaPlus,
+      size: "medium",
+      "aria-label": "Glass State",
+      state: "" as StateType,
+      glass: true,
+    },
+    [{ propName: "state", values: stateOptions }],
+  );
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => (
+    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+      {themeOptions.map((theme) => (
+        <IconButton
+          key={`glass-theme-${theme}`}
+          {...args}
+          theme={theme}
+          outline
+          glass
+          aria-label={`Glass Theme: ${theme}`}
+        />
+      ))}
+      {stateOptions.map((state) => (
+        <IconButton
+          key={`glass-state-${state}`}
+          {...args}
+          state={state}
+          outline
+          glass
+          aria-label={`Glass State: ${state}`}
+        />
+      ))}
+    </div>
+  ),
+};
+
 export const SizeVariants = () =>
   withVariants(
     IconButton,

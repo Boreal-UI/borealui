@@ -32,6 +32,7 @@ const classes = {
   warning: "chip_warning",
 
   clear: "chip_clear",
+  glass: "chip_glass",
 
   xs: "chip_xs",
   small: "chip_small",

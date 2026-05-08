@@ -100,6 +100,14 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "If true, applies a translucent glass surface using the selected theme/state. Defaults to `false`.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "hasActiveChild",
       "type": "((link: SidebarLink) => boolean)",
       "description": "Optional callback used to determine whether a link contains an active child.",

@@ -12,6 +12,7 @@ import { BaseProgressBarProps } from "./ProgressBar.types";
 const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   value = 0,
   theme = getDefaultTheme(),
+  glass = false,
   state = "",
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
@@ -61,11 +62,14 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
       combineClassNames(
         classMap.container,
         classMap[size],
+        glass && classMap[theme],
+        glass && state && classMap[state],
+        glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         className,
       ),
-    [classMap, size, shadow, rounding, className],
+    [classMap, size, theme, state, glass, shadow, rounding, className],
   );
 
   const barClass = useMemo(
@@ -74,11 +78,12 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
         classMap.bar,
         classMap[theme],
         classMap[state],
+        glass && classMap.glassBar,
         animated && classMap.animated,
         rounding && classMap[`round${capitalize(rounding)}`],
         indeterminate && classMap.indeterminate,
       ),
-    [classMap, theme, state, rounding, indeterminate, animated],
+    [classMap, theme, state, glass, rounding, indeterminate, animated],
   );
 
   const labelNode = label ? (

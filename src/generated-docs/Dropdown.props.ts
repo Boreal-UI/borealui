@@ -76,6 +76,14 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Adds glass styling to the trigger IconButton and dropdown menu.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "items",
       "type": "DropdownItem[]",
       "description": "Array of items to render in the dropdown menu.",

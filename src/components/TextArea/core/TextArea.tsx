@@ -27,6 +27,7 @@ const classes = {
   clear: "textArea_clear",
 
   outline: "textArea_outline",
+  glass: "textArea_glass",
 
   disabled: "textArea_disabled",
 

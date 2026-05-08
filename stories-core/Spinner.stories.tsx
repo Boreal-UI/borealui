@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Spinner } from "../src/index.core";
+import { Spinner, StateType, ThemeType } from "../src/index.core";
 import type { SpinnerProps } from "../src/components/Spinner/Spinner.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -11,7 +11,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
@@ -75,13 +75,41 @@ export const StateVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+        {themeOptions.map((theme) => (
+          <div key={`glass-${theme}`} style={{ textAlign: "center" }}>
+            <Spinner {...args} theme={theme} glass label={`Glass: ${theme}`} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
+        {stateOptions.map((state) => (
+          <div key={`glass-${state}`} style={{ textAlign: "center" }}>
+            <Spinner {...args} state={state} glass label={`Glass: ${state}`} />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
 export const WithCustomLabel: Story = {
   args: {
     label: "Fetching data...",
   },
 };
 
-export const ShadowVariants = (args) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof Spinner>) =>
   withVariants(Spinner, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);

@@ -84,12 +84,34 @@ export const Themed: Story = {
   ),
 };
 
+export const GlassThemes: Story = {
+  render: () => (
+    <div style={{ padding: "1rem", display: "grid", gap: "1rem" }}>
+      <Divider theme="primary" glass thickness="4px" />
+      <Divider theme="secondary" glass thickness="4px" />
+      <Divider theme="tertiary" glass thickness="4px" />
+      <Divider theme="quaternary" glass thickness="4px" />
+      <Divider theme="clear" glass thickness="4px" />
+    </div>
+  ),
+};
+
 export const States: Story = {
   render: () => (
     <div style={{ padding: "1rem", display: "grid", gap: "1rem" }}>
       <Divider theme={"success" as ThemeType} />
       <Divider theme={"error" as ThemeType} />
       <Divider theme={"warning" as ThemeType} />
+    </div>
+  ),
+};
+
+export const GlassStates: Story = {
+  render: () => (
+    <div style={{ padding: "1rem", display: "grid", gap: "1rem" }}>
+      <Divider state="success" glass thickness="4px" />
+      <Divider state="error" glass thickness="4px" />
+      <Divider state="warning" glass thickness="4px" />
     </div>
   ),
 };

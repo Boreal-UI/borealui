@@ -42,6 +42,7 @@ const classMap = {
   shadowIntense: "shadow_intense",
 
   outline: "outline",
+  glass: "glass",
   disabled: "disabled",
 
   primary: "primary",
@@ -488,7 +489,7 @@ describe("AvatarBase (Jest)", () => {
     expect(image).toHaveAttribute("src", "/avatar.jpg");
   });
 
-  it("applies theme, state, shape, size, shadow, outline, and custom className classes", () => {
+  it("applies theme, state, shape, size, shadow, outline, glass, and custom className classes", () => {
     renderAvatar({
       name: "Styled Avatar",
       theme: "primary",
@@ -497,6 +498,7 @@ describe("AvatarBase (Jest)", () => {
       size: "medium",
       shadow: "light",
       outline: true,
+      glass: true,
       className: "custom-avatar-class",
     });
 
@@ -509,6 +511,7 @@ describe("AvatarBase (Jest)", () => {
     expect(avatar).toHaveClass("medium");
     expect(avatar).toHaveClass("shadow_light");
     expect(avatar).toHaveClass("outline");
+    expect(avatar).toHaveClass("glass");
     expect(avatar).toHaveClass("custom-avatar-class");
   });
 

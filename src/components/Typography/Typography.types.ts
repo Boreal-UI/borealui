@@ -75,6 +75,11 @@ export interface TypographyProps {
   theme?: TypographyTheme;
 
   /**
+   * Applies a compact translucent frosted-glass treatment around the text.
+   */
+  glass?: boolean;
+
+  /**
    * Whether the text should be displayed in italic style.
    */
   italic?: boolean;

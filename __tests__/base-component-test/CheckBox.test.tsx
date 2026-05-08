@@ -45,6 +45,7 @@ const classMap = {
 
   disabled: "disabled",
   indeterminate: "indeterminate",
+  glass: "glass",
 };
 
 describe("CheckboxBase", () => {
@@ -378,7 +379,7 @@ describe("CheckboxBase", () => {
     expect(label).toHaveClass("checkboxLabel");
   });
 
-  it("applies theme, state, label position, size, shadow, rounding, disabled, invalid, and custom className to wrapper", () => {
+  it("applies theme, state, label position, size, shadow, rounding, disabled, invalid, glass, and custom className to wrapper", () => {
     renderCheckbox({
       label: "Styled checkbox",
       theme: "primary",
@@ -389,6 +390,7 @@ describe("CheckboxBase", () => {
       rounding: "small",
       disabled: true,
       invalid: true,
+      glass: true,
       className: "custom-checkbox-class",
     });
 
@@ -403,6 +405,7 @@ describe("CheckboxBase", () => {
     expect(wrapper).toHaveClass("roundSmall");
     expect(wrapper).toHaveClass("disabled");
     expect(wrapper).toHaveClass("invalid");
+    expect(wrapper).toHaveClass("glass");
     expect(wrapper).toHaveClass("custom-checkbox-class");
   });
 

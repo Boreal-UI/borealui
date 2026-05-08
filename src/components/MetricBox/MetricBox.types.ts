@@ -33,6 +33,11 @@ export interface MetricBoxProps {
   theme?: ThemeType;
 
   /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
+  /**
    * Rounding style for the component.
    * One of: "none" | "small" | "medium" | "large" | "full"
    */

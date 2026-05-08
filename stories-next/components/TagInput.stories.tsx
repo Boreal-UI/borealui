@@ -122,6 +122,54 @@ export const StateVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        {themeOptions.map((theme) => {
+          const [tags, setTags] = useState(["react", "nextjs"]);
+
+          return (
+            <TagInput
+              key={`glass-${theme}`}
+              {...args}
+              theme={theme}
+              glass
+              tags={tags}
+              onChange={setTags}
+              placeholder={`Add ${theme} glass tag...`}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        {stateOptions.map((state) => {
+          const [tags, setTags] = useState(["react", "nextjs"]);
+
+          return (
+            <TagInput
+              key={`glass-${state}`}
+              {...args}
+              state={state}
+              glass
+              tags={tags}
+              onChange={setTags}
+              placeholder={`Add ${state} glass tag...`}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
 export const WithOnChangeAlert: Story = {
   render: (args) => {
     const [tags, setTags] = useState(["typescript"]);

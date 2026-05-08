@@ -129,6 +129,11 @@ export interface IconButtonProps extends InteractiveProps {
   outline?: boolean;
 
   /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
+  /**
    * Size of the button.
    * One of: "xs" | "small" | "medium" | "large" | "xl"
    */

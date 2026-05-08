@@ -19,6 +19,7 @@ const classes = {
   warning: "circular_progress_warning",
 
   clear: "circular_progress_clear",
+  glass: "circular_progress_glass",
 
   xs: "circular_progress_xs",
   small: "circular_progress_small",

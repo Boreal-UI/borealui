@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "../../../styles/_animations";
 
 @use "sass:color";
@@ -107,6 +108,10 @@
     }
   }
 
+  &_glass {
+    @include mixins.glass-surface;
+  }
+
   &_disabled {
     background-color: var(--disabled-color);
     color: var(--text-color-primary);
@@ -139,6 +144,11 @@
       background: map.get($props, bg);
       color: map.get($props, text);
 
+      --card-glass-bg: #{map.get($props, glass-bg)};
+      --card-glass-hover-bg: #{map.get($props, glass-hover)};
+      --card-glass-border: #{map.get($props, glass-border)};
+      --card-glass-text: #{map.get($props, text)};
+
       .card_icon,
       .card_description {
         color: inherit;
@@ -147,6 +157,21 @@
       .card_loading {
         background-color: transparent;
       }
+    }
+
+    &_#{$name}.card_glass {
+      @include mixins.glass-surface(
+        var(--card-glass-bg),
+        var(--card-glass-border),
+        var(--glass-blur)
+      );
+
+      color: var(--card-glass-text);
+    }
+
+    &_#{$name}.card_glass.card_clickable:hover {
+      background: var(--card-glass-hover-bg);
+      border-color: var(--card-glass-border);
     }
 
     &_#{$name}.card_outline {
@@ -159,12 +184,27 @@
         border-width: 1.5px;
       }
     }
+
+    &_#{$name}.card_outline.card_glass {
+      @include mixins.glass-surface(
+        var(--card-glass-bg),
+        var(--card-glass-border),
+        var(--glass-blur)
+      );
+
+      color: var(--card-glass-text);
+    }
   }
 
   @each $name, $props in theme.$states {
     &_#{$name} {
       background: map.get($props, bg);
       color: map.get($props, text);
+
+      --card-glass-bg: #{map.get($props, glass-bg)};
+      --card-glass-hover-bg: #{map.get($props, glass-hover)};
+      --card-glass-border: #{map.get($props, glass-border)};
+      --card-glass-text: #{map.get($props, text)};
 
       .card_icon,
       .card_description {
@@ -176,6 +216,21 @@
       }
     }
 
+    &_#{$name}.card_glass {
+      @include mixins.glass-surface(
+        var(--card-glass-bg),
+        var(--card-glass-border),
+        var(--glass-blur)
+      );
+
+      color: var(--card-glass-text);
+    }
+
+    &_#{$name}.card_glass.card_clickable:hover {
+      background: var(--card-glass-hover-bg);
+      border-color: var(--card-glass-border);
+    }
+
     &_#{$name}.card_outline {
       background: transparent;
       border: 2px solid map.get($props, border);
@@ -183,6 +238,16 @@
       @include bp.down(sm) {
         border-width: 1.5px;
       }
+    }
+
+    &_#{$name}.card_outline.card_glass {
+      @include mixins.glass-surface(
+        var(--card-glass-bg),
+        var(--card-glass-border),
+        var(--glass-blur)
+      );
+
+      color: var(--card-glass-text);
     }
   }
 
@@ -597,6 +662,14 @@
     box-shadow: none !important;
     background: Canvas;
     color: CanvasText;
+  }
+
+  .card_glass {
+    background: Canvas;
+    border: 1px solid ButtonText;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   .card_outline {

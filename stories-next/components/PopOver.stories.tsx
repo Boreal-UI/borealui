@@ -94,6 +94,68 @@ export const StateVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: () => {
+    const themes = [
+      "primary",
+      "secondary",
+      "tertiary",
+      "quaternary",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {themes.map((theme) => (
+          <PopOver
+            key={theme}
+            theme={theme}
+            glass
+            trigger={
+              <Button theme={theme} glass>
+                {theme}
+              </Button>
+            }
+            content={
+              <div style={{ padding: "0.5rem" }}>
+                Glass {theme} theme
+              </div>
+            }
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: () => {
+    const stateOptions: StateType[] = ["success", "error", "warning"];
+
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {stateOptions.map((state) => (
+          <PopOver
+            key={state}
+            state={state}
+            glass
+            trigger={
+              <Button state={state} glass>
+                {state}
+              </Button>
+            }
+            content={
+              <div style={{ padding: "0.5rem" }}>
+                Glass {state} state
+              </div>
+            }
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const PlacementVariants: Story = {
   render: () => {
     return (

@@ -14,6 +14,8 @@ const classes = {
   labelOverlay: "progress_label_overlay",
   container: "progress_container",
   bar: "progress_bar",
+  glass: "progress_glass",
+  glassBar: "progress_bar_glass",
 
   primary: "progress_primary",
   secondary: "progress_secondary",
