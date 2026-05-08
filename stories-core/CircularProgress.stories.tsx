@@ -3,10 +3,11 @@ import CircularProgress from "../src/components/CircularProgress/core/CircularPr
 import type { CircularProgressProps } from "../src/components/CircularProgress/CircularProgress.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
+import { StateType, ThemeType } from "@/types";
 
 const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -14,7 +15,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
@@ -88,7 +89,6 @@ export const CustomRange: Story = {
   },
 };
 
-// Variant grid
 export const SizeVariants = () =>
   withVariants(CircularProgress, defaultArgs, [
     { propName: "size", values: [...sizeOptions] },
@@ -107,13 +107,41 @@ export const ThemeVariants = () => (
   </StoryGrid>
 );
 
+export const GlassThemeVariants = () => (
+  <StoryGrid title="Theme Variants">
+    {themeOptions.map((theme) => (
+      <CircularProgress
+        key={theme}
+        value={76}
+        theme={theme}
+        glass
+        label={`Theme: ${theme}`}
+      />
+    ))}
+  </StoryGrid>
+);
+
 export const StateVariants = () => (
   <StoryGrid title="State Variants">
     {stateOptions.map((state) => (
       <CircularProgress
         key={state}
         value={76}
-        theme={state}
+        state={state}
+        label={`State: ${state}`}
+      />
+    ))}
+  </StoryGrid>
+);
+
+export const GlassStateVariants = () => (
+  <StoryGrid title="State Variants">
+    {stateOptions.map((state) => (
+      <CircularProgress
+        key={state}
+        value={76}
+        state={state}
+        glass
         label={`State: ${state}`}
       />
     ))}

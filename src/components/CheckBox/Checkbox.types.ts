@@ -56,6 +56,11 @@ export interface CheckBoxProps extends Omit<
    */
   shadow?: ShadowType;
 
+  /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
   /** Whether the checkbox is disabled. */
   disabled?: boolean;
 

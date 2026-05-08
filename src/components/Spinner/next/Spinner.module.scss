@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .wrapper {
@@ -67,18 +68,34 @@
 
   @each $name, $vals in theme.$themes {
     &.#{$name} {
+      --spinner-glass-border: #{map.get($vals, glass-border)};
+
       border-top-color: map.get($vals, border);
+
+      &.glass {
+        border-top-color: map.get($vals, glass-border);
+      }
     }
   }
 
   @each $name, $vals in theme.$states {
     &.#{$name} {
+      --spinner-glass-border: #{map.get($vals, glass-border)};
+
       border-top-color: map.get($vals, border);
+
+      &.glass {
+        border-top-color: map.get($vals, glass-border);
+      }
     }
   }
 
   &.clear {
     border-top-color: var(--text-color-primary);
+  }
+
+  &.glassRing {
+    border-right-color: var(--spinner-glass-border, transparent);
   }
 }
 
@@ -149,5 +166,13 @@
 
   .label {
     color: CanvasText;
+  }
+
+  .glass {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

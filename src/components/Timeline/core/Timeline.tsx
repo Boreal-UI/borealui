@@ -23,6 +23,7 @@ const classes = {
   quaternary: "timeline_quaternary",
 
   clear: "timeline_clear",
+  glass: "timeline_glass",
 
   shadowNone: "timeline_shadow-None",
   shadowLight: "timeline_shadow-Light",

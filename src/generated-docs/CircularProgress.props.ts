@@ -76,6 +76,14 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "label",
       "type": "string",
       "description": "Visible label fallback and default accessible name. Used only when no aria-label or aria-labelledby is provided.",

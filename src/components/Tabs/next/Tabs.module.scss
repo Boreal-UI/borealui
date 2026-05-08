@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 $sizes: (
@@ -140,6 +141,11 @@ $sizes: (
 
 @each $themeName, $vals in theme.$themes {
   .#{$themeName} {
+    --tabs-glass-bg: #{map.get($vals, glass-bg)};
+    --tabs-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --tabs-glass-border: #{map.get($vals, glass-border)};
+    --tabs-glass-text: #{map.get($vals, text)};
+
     .tab.active {
       background-color: map.get($vals, bg);
       border-bottom-color: map.get($vals, border);
@@ -154,6 +160,11 @@ $sizes: (
 
 @each $stateName, $vals in theme.$states {
   .#{$stateName} {
+    --tabs-glass-bg: #{map.get($vals, glass-bg)};
+    --tabs-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --tabs-glass-border: #{map.get($vals, glass-border)};
+    --tabs-glass-text: #{map.get($vals, text)};
+
     .tab.active {
       background-color: map.get($vals, bg);
       border-bottom-color: map.get($vals, border);
@@ -168,6 +179,26 @@ $sizes: (
 
 .secondary .tab.active {
   color: var(--text-color-secondary);
+}
+
+.glass .tab {
+  @include mixins.glass-surface(
+    var(--tabs-glass-bg, rgba(255, 255, 255, 0.16)),
+    var(--tabs-glass-border, rgba(255, 255, 255, 0.32)),
+    14px
+  );
+  color: var(--tabs-glass-text, var(--text-color-primary));
+  border-right-color: var(--tabs-glass-border, rgba(255, 255, 255, 0.32));
+  box-shadow: var(--box-shadow-sm);
+}
+
+.glass .tab:hover {
+  background: var(--tabs-glass-hover-bg, rgba(255, 255, 255, 0.24));
+}
+
+.glass .tab.active {
+  background: var(--tabs-glass-hover-bg, rgba(255, 255, 255, 0.26));
+  border-color: var(--tabs-glass-border, rgba(255, 255, 255, 0.36));
 }
 
 @each $key, $value in theme.$rounding {
@@ -207,6 +238,14 @@ $sizes: (
 @media (forced-colors: active) {
   .tabs {
     border-bottom-color: ButtonText;
+  }
+
+  .glass .tab {
+    background: ButtonFace;
+    border-color: ButtonText;
+    color: ButtonText;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .tab {

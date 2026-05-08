@@ -23,6 +23,7 @@ const TextAreaBase = forwardRef<
       autocomplete = false,
       onChange,
       theme = getDefaultTheme(),
+      glass = false,
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       state = "",
@@ -66,12 +67,23 @@ const TextAreaBase = forwardRef<
           classMap[theme],
           classMap[state],
           outline && classMap.outline,
+          glass && classMap.glass,
           disabled && classMap.disabled,
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
           className,
         ),
-      [classMap, theme, state, outline, disabled, shadow, rounding, className],
+      [
+        classMap,
+        theme,
+        state,
+        outline,
+        glass,
+        disabled,
+        shadow,
+        rounding,
+        className,
+      ],
     );
 
     const isError = state === "error";

@@ -1,11 +1,11 @@
 {
   "name": "boreal-ui",
-  "version": "0.0.84",
+  "version": "0.0.886",
   "description": "A modern, customizable React/Next.js component library",
   "author": "Davin Chiupka",
-  "license": "ISC",
+  "license": "MIT",
   "main": "./dist/core/index.cjs.js",
-  "module": "./dist/core/index.esm.js",
+  "module": "./dist/core/index.js",
   "types": "./dist/types/index.core.d.ts",
   "type": "module",
   "files": [
@@ -15,6 +15,13 @@
     "LICENSE"
   ],
   "scripts": {
+    "audit:types": "tsc --noEmit",
+    "audit:lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "audit:styles": "stylelint \"src/**/*.{scss,css}\"",
+    "audit:test": "jest --coverage",
+    "audit:build": "npm run build",
+    "audit:package": "npm pack --dry-run",
+    "audit": "npm run audit:types && npm run audit:lint && npm run audit:styles && npm run audit:test && npm run audit:build && npm run audit:package",
     "dev": "vite",
     "clean": "rimraf dist",
     "boreal": "ts-node ./scripts/boreal.cjs",
@@ -24,7 +31,7 @@
     "build:types": "tsc -p tsconfig.build.json",
     "build:types:public": "tsc -p tsconfig.build.json && node scripts/generateTypesBarrel.cjs",
     "build:css-next": "sass --load-path=node_modules src/styles/globals.scss src/styles/style.css --no-source-map",
-    "build": "npm run clean && npm run build:core && npm run build:next && npm run build:docs && npm run build:types && npm run build:types:public",
+    "build": "npm run clean && npm run build:core && npm run build:next && npm run patch:useClient && npm run build:docs && npm run build:types && npm run build:types:public",
     "lint:styles": "stylelint '**/*.{css,scss}'",
     "lint:styles:fix": "stylelint '**/*.{css,scss}' --fix",
     "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
@@ -32,6 +39,7 @@
     "generate:entrypoints": "node scripts/generateEntryPoints.cjs",
     "generate:exports": "node scripts/generateExports.cjs",
     "generate:docs": "ts-node scripts/generate-component-docs.cjs",
+    "patch:useClient": "node scripts/patchUseClient.cjs",
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
@@ -95,6 +103,7 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-refresh": "^0.5.2",
     "eslint-plugin-storybook": "10.3.4",
     "fast-glob": "^3.3.3",
     "identity-obj-proxy": "^3.0.0",
@@ -109,6 +118,7 @@
     "react-icons": "^5.5.0",
     "rimraf": "^6.1.3",
     "rollup-plugin-copy": "^3.5.0",
+    "rollup-plugin-preserve-directives": "^0.4.0",
     "sass": "^1.94.2",
     "sass-embedded": "^1.86.3",
     "sass-loader": "^16.0.5",
@@ -145,18 +155,19 @@
       "default": "./dist/types/public.types.d.ts"
     },
     "./core/globals.css": {
+      "style": "./dist/core/globals.css",
       "default": "./dist/core/globals.css"
     },
     "./next": {
       "types": "./dist/types/index.next.d.ts",
-      "import": "./dist/next/index.js",
-      "require": "./dist/next/index.cjs.js"
+      "import": "./dist/next/index.js"
     },
     "./next/types": {
       "types": "./dist/types/public.types.d.ts",
       "default": "./dist/types/public.types.d.ts"
     },
     "./next/globals.css": {
+      "style": "./dist/next/globals.css",
       "default": "./dist/next/globals.css"
     },
     "./docs": {
@@ -311,6 +322,11 @@
       "import": "./dist/core/RadioButton.js",
       "require": "./dist/core/RadioButton.cjs.js"
     },
+    "./core/RadioGroup": {
+      "types": "./dist/types/components/RadioButton/core/RadioGroup.d.ts",
+      "import": "./dist/core/RadioGroup.js",
+      "require": "./dist/core/RadioGroup.cjs.js"
+    },
     "./core/Rating": {
       "types": "./dist/types/components/Rating/core/Rating.d.ts",
       "import": "./dist/core/Rating.js",
@@ -394,272 +410,233 @@
       "import": "./dist/core/Tooltip.js",
       "require": "./dist/core/Tooltip.cjs.js"
     },
-    "./next/Accordion": {
-      "types": "./dist/types/components/Accordion/next/Accordion.d.ts",
-      "import": "./dist/next/Accordion.js",
-      "require": "./dist/next/Accordion.cjs.js"
+    "./core/CheckBox": {
+      "types": "./dist/types/components/CheckBox/core/CheckBox.d.ts",
+      "import": "./dist/core/CheckBox.js",
+      "require": "./dist/core/CheckBox.cjs.js"
     },
-    "./next/Avatar": {
-      "types": "./dist/types/components/Avatar/next/Avatar.d.ts",
-      "import": "./dist/next/Avatar.js",
-      "require": "./dist/next/Avatar.cjs.js"
+    "./core/globals": {
+      "import": "./dist/core/globals.js",
+      "require": "./dist/core/globals.cjs.js"
     },
-    "./next/Badge": {
-      "types": "./dist/types/components/Badge/next/Badge.d.ts",
-      "import": "./dist/next/Badge.js",
-      "require": "./dist/next/Badge.cjs.js"
-    },
-    "./next/Breadcrumbs": {
-      "types": "./dist/types/components/Breadcrumbs/next/Breadcrumbs.d.ts",
-      "import": "./dist/next/Breadcrumbs.js",
-      "require": "./dist/next/Breadcrumbs.cjs.js"
-    },
-    "./next/Button": {
-      "types": "./dist/types/components/Button/next/Button.d.ts",
-      "import": "./dist/next/Button.js",
-      "require": "./dist/next/Button.cjs.js"
-    },
-    "./next/Card": {
-      "types": "./dist/types/components/Card/next/Card.d.ts",
-      "import": "./dist/next/Card.js",
-      "require": "./dist/next/Card.cjs.js"
-    },
-    "./next/Chip": {
-      "types": "./dist/types/components/Chip/next/Chip.d.ts",
-      "import": "./dist/next/Chip.js",
-      "require": "./dist/next/Chip.cjs.js"
-    },
-    "./next/CircularProgress": {
-      "types": "./dist/types/components/CircularProgress/next/CircularProgress.d.ts",
-      "import": "./dist/next/CircularProgress.js",
-      "require": "./dist/next/CircularProgress.cjs.js"
-    },
-    "./next/ColorPicker": {
-      "types": "./dist/types/components/ColorPicker/next/ColorPicker.d.ts",
-      "import": "./dist/next/ColorPicker.js",
-      "require": "./dist/next/ColorPicker.cjs.js"
-    },
-    "./next/colorSchemes": {
-      "import": "./dist/next/colorSchemes.js",
-      "require": "./dist/next/colorSchemes.cjs.js"
-    },
-    "./next/CommandPalette": {
-      "types": "./dist/types/components/CommandPalette/next/CommandPalette.d.ts",
-      "import": "./dist/next/CommandPalette.js",
-      "require": "./dist/next/CommandPalette.cjs.js"
-    },
-    "./next/DataTable": {
-      "types": "./dist/types/components/DataTable/next/DataTable.d.ts",
-      "import": "./dist/next/DataTable.js",
-      "require": "./dist/next/DataTable.cjs.js"
-    },
-    "./next/DateTimePicker": {
-      "types": "./dist/types/components/DateTimePicker/next/DateTimePicker.d.ts",
-      "import": "./dist/next/DateTimePicker.js",
-      "require": "./dist/next/DateTimePicker.cjs.js"
-    },
-    "./next/Divider": {
-      "types": "./dist/types/components/Divider/next/Divider.d.ts",
-      "import": "./dist/next/Divider.js",
-      "require": "./dist/next/Divider.cjs.js"
-    },
-    "./next/Dropdown": {
-      "types": "./dist/types/components/Dropdown/next/Dropdown.d.ts",
-      "import": "./dist/next/Dropdown.js",
-      "require": "./dist/next/Dropdown.cjs.js"
-    },
-    "./next/EmptyState": {
-      "types": "./dist/types/components/EmptyState/next/EmptyState.d.ts",
-      "import": "./dist/next/EmptyState.js",
-      "require": "./dist/next/EmptyState.cjs.js"
-    },
-    "./next/FileUpload": {
-      "types": "./dist/types/components/FileUpload/next/FileUpload.d.ts",
-      "import": "./dist/next/FileUpload.js",
-      "require": "./dist/next/FileUpload.cjs.js"
-    },
-    "./next/Footer": {
-      "types": "./dist/types/components/Footer/next/Footer.d.ts",
-      "import": "./dist/next/Footer.js",
-      "require": "./dist/next/Footer.cjs.js"
-    },
-    "./next/FormGroup": {
-      "types": "./dist/types/components/FormGroup/next/FormGroup.d.ts",
-      "import": "./dist/next/FormGroup.js",
-      "require": "./dist/next/FormGroup.cjs.js"
-    },
-    "./next/IconButton": {
-      "types": "./dist/types/components/IconButton/next/IconButton.d.ts",
-      "import": "./dist/next/IconButton.js",
-      "require": "./dist/next/IconButton.cjs.js"
-    },
-    "./next/MarkdownRenderer": {
-      "types": "./dist/types/components/MarkdownRenderer/next/MarkdownRenderer.d.ts",
-      "import": "./dist/next/MarkdownRenderer.js",
-      "require": "./dist/next/MarkdownRenderer.cjs.js"
-    },
-    "./next/MetricBox": {
-      "types": "./dist/types/components/MetricBox/next/MetricBox.d.ts",
-      "import": "./dist/next/MetricBox.js",
-      "require": "./dist/next/MetricBox.cjs.js"
-    },
-    "./next/Modal": {
-      "types": "./dist/types/components/Modal/next/Modal.d.ts",
-      "import": "./dist/next/Modal.js",
-      "require": "./dist/next/Modal.cjs.js"
-    },
-    "./next/NavBar": {
-      "types": "./dist/types/components/NavBar/next/NavBar.d.ts",
-      "import": "./dist/next/NavBar.js",
-      "require": "./dist/next/NavBar.cjs.js"
-    },
-    "./next/NotificationCenter": {
-      "types": "./dist/types/components/NotificationCenter/next/NotificationCenter.d.ts",
-      "import": "./dist/next/NotificationCenter.js",
-      "require": "./dist/next/NotificationCenter.cjs.js"
-    },
-    "./next/Pager": {
-      "types": "./dist/types/components/Pager/next/Pager.d.ts",
-      "import": "./dist/next/Pager.js",
-      "require": "./dist/next/Pager.cjs.js"
-    },
-    "./next/PopOver": {
-      "types": "./dist/types/components/PopOver/next/PopOver.d.ts",
-      "import": "./dist/next/PopOver.js",
-      "require": "./dist/next/PopOver.cjs.js"
-    },
-    "./next/ProgressBar": {
-      "types": "./dist/types/components/ProgressBar/next/ProgressBar.d.ts",
-      "import": "./dist/next/ProgressBar.js",
-      "require": "./dist/next/ProgressBar.cjs.js"
-    },
-    "./next/RadioButton": {
-      "types": "./dist/types/components/RadioButton/next/RadioButton.d.ts",
-      "import": "./dist/next/RadioButton.js",
-      "require": "./dist/next/RadioButton.cjs.js"
-    },
-    "./next/Rating": {
-      "types": "./dist/types/components/Rating/next/Rating.d.ts",
-      "import": "./dist/next/Rating.js",
-      "require": "./dist/next/Rating.cjs.js"
-    },
-    "./next/registerColorSheme": {
-      "import": "./dist/next/registerColorSheme.js",
-      "require": "./dist/next/registerColorSheme.cjs.js"
-    },
-    "./next/ScrollToTop": {
-      "types": "./dist/types/components/ScrollToTop/next/ScrollToTop.d.ts",
-      "import": "./dist/next/ScrollToTop.js",
-      "require": "./dist/next/ScrollToTop.cjs.js"
-    },
-    "./next/Select": {
-      "types": "./dist/types/components/Select/next/Select.d.ts",
-      "import": "./dist/next/Select.js",
-      "require": "./dist/next/Select.cjs.js"
-    },
-    "./next/Skeleton": {
-      "types": "./dist/types/components/Skeleton/next/Skeleton.d.ts",
-      "import": "./dist/next/Skeleton.js",
-      "require": "./dist/next/Skeleton.cjs.js"
-    },
-    "./next/Slider": {
-      "types": "./dist/types/components/Slider/next/Slider.d.ts",
-      "import": "./dist/next/Slider.js",
-      "require": "./dist/next/Slider.cjs.js"
-    },
-    "./next/Spinner": {
-      "types": "./dist/types/components/Spinner/next/Spinner.d.ts",
-      "import": "./dist/next/Spinner.js",
-      "require": "./dist/next/Spinner.cjs.js"
-    },
-    "./next/Stepper": {
-      "types": "./dist/types/components/Stepper/next/Stepper.d.ts",
-      "import": "./dist/next/Stepper.js",
-      "require": "./dist/next/Stepper.cjs.js"
-    },
-    "./next/Tabs": {
-      "types": "./dist/types/components/Tabs/next/Tabs.d.ts",
-      "import": "./dist/next/Tabs.js",
-      "require": "./dist/next/Tabs.cjs.js"
-    },
-    "./next/TagInput": {
-      "types": "./dist/types/components/TagInput/next/TagInput.d.ts",
-      "import": "./dist/next/TagInput.js",
-      "require": "./dist/next/TagInput.cjs.js"
-    },
-    "./next/TextArea": {
-      "types": "./dist/types/components/TextArea/next/TextArea.d.ts",
-      "import": "./dist/next/TextArea.js",
-      "require": "./dist/next/TextArea.cjs.js"
-    },
-    "./next/TextInput": {
-      "types": "./dist/types/components/TextInput/next/TextInput.d.ts",
-      "import": "./dist/next/TextInput.js",
-      "require": "./dist/next/TextInput.cjs.js"
-    },
-    "./next/ThemeProvider": {
-      "import": "./dist/next/ThemeProvider.js",
-      "require": "./dist/next/ThemeProvider.cjs.js"
-    },
-    "./next/Timeline": {
-      "types": "./dist/types/components/Timeline/next/Timeline.d.ts",
-      "import": "./dist/next/Timeline.js",
-      "require": "./dist/next/Timeline.cjs.js"
-    },
-    "./next/Toggle": {
-      "types": "./dist/types/components/Toggle/next/Toggle.d.ts",
-      "import": "./dist/next/Toggle.js",
-      "require": "./dist/next/Toggle.cjs.js"
-    },
-    "./next/Toolbar": {
-      "types": "./dist/types/components/Toolbar/next/Toolbar.d.ts",
-      "import": "./dist/next/Toolbar.js",
-      "require": "./dist/next/Toolbar.cjs.js"
-    },
-    "./next/Tooltip": {
-      "types": "./dist/types/components/Tooltip/next/Tooltip.d.ts",
-      "import": "./dist/next/Tooltip.js",
-      "require": "./dist/next/Tooltip.cjs.js"
+    "./core/MessagePopUp": {
+      "types": "./dist/types/components/MessagePopUp/core/MessagePopUp.d.ts",
+      "import": "./dist/core/MessagePopUp.js",
+      "require": "./dist/core/MessagePopUp.cjs.js"
     },
     "./core/Sidebar": {
       "types": "./dist/types/components/Sidebar/core/Sidebar.d.ts",
       "import": "./dist/core/Sidebar.js",
       "require": "./dist/core/Sidebar.cjs.js"
     },
-    "./next/Sidebar": {
-      "types": "./dist/types/components/Sidebar/next/Sidebar.d.ts",
-      "import": "./dist/next/Sidebar.js",
-      "require": "./dist/next/Sidebar.cjs.js"
-    },
-    "./core/Checkbox": {
-      "types": "./dist/types/components/Checkbox/core/Checkbox.d.ts",
-      "import": "./dist/core/Checkbox.js",
-      "require": "./dist/core/Checkbox.cjs.js"
-    },
-    "./next/Checkbox": {
-      "types": "./dist/types/components/Checkbox/next/Checkbox.d.ts",
-      "import": "./dist/next/Checkbox.js",
-      "require": "./dist/next/Checkbox.cjs.js"
-    },
-    "./core/MessagePopup": {
-      "types": "./dist/types/components/MessagePopup/core/MessagePopup.d.ts",
-      "import": "./dist/core/MessagePopup.js",
-      "require": "./dist/core/MessagePopup.cjs.js"
-    },
-    "./next/MessagePopup": {
-      "types": "./dist/types/components/MessagePopup/next/MessagePopup.d.ts",
-      "import": "./dist/next/MessagePopup.js",
-      "require": "./dist/next/MessagePopup.cjs.js"
-    },
     "./core/Typography": {
       "types": "./dist/types/components/Typography/core/Typography.d.ts",
       "import": "./dist/core/Typography.js",
       "require": "./dist/core/Typography.cjs.js"
     },
+    "./next/Accordion": {
+      "types": "./dist/types/components/Accordion/next/Accordion.d.ts",
+      "import": "./dist/next/Accordion.js"
+    },
+    "./next/Avatar": {
+      "types": "./dist/types/components/Avatar/next/Avatar.d.ts",
+      "import": "./dist/next/Avatar.js"
+    },
+    "./next/Badge": {
+      "types": "./dist/types/components/Badge/next/Badge.d.ts",
+      "import": "./dist/next/Badge.js"
+    },
+    "./next/Breadcrumbs": {
+      "types": "./dist/types/components/Breadcrumbs/next/Breadcrumbs.d.ts",
+      "import": "./dist/next/Breadcrumbs.js"
+    },
+    "./next/Button": {
+      "types": "./dist/types/components/Button/next/Button.d.ts",
+      "import": "./dist/next/Button.js"
+    },
+    "./next/Card": {
+      "types": "./dist/types/components/Card/next/Card.d.ts",
+      "import": "./dist/next/Card.js"
+    },
+    "./next/CheckBox": {
+      "types": "./dist/types/components/CheckBox/next/CheckBox.d.ts",
+      "import": "./dist/next/CheckBox.js"
+    },
+    "./next/Chip": {
+      "types": "./dist/types/components/Chip/next/Chip.d.ts",
+      "import": "./dist/next/Chip.js"
+    },
+    "./next/CircularProgress": {
+      "types": "./dist/types/components/CircularProgress/next/CircularProgress.d.ts",
+      "import": "./dist/next/CircularProgress.js"
+    },
+    "./next/ColorPicker": {
+      "types": "./dist/types/components/ColorPicker/next/ColorPicker.d.ts",
+      "import": "./dist/next/ColorPicker.js"
+    },
+    "./next/colorSchemes": {
+      "import": "./dist/next/colorSchemes.js"
+    },
+    "./next/CommandPalette": {
+      "types": "./dist/types/components/CommandPalette/next/CommandPalette.d.ts",
+      "import": "./dist/next/CommandPalette.js"
+    },
+    "./next/DataTable": {
+      "types": "./dist/types/components/DataTable/next/DataTable.d.ts",
+      "import": "./dist/next/DataTable.js"
+    },
+    "./next/DateTimePicker": {
+      "types": "./dist/types/components/DateTimePicker/next/DateTimePicker.d.ts",
+      "import": "./dist/next/DateTimePicker.js"
+    },
+    "./next/Divider": {
+      "types": "./dist/types/components/Divider/next/Divider.d.ts",
+      "import": "./dist/next/Divider.js"
+    },
+    "./next/Dropdown": {
+      "types": "./dist/types/components/Dropdown/next/Dropdown.d.ts",
+      "import": "./dist/next/Dropdown.js"
+    },
+    "./next/EmptyState": {
+      "types": "./dist/types/components/EmptyState/next/EmptyState.d.ts",
+      "import": "./dist/next/EmptyState.js"
+    },
+    "./next/FileUpload": {
+      "types": "./dist/types/components/FileUpload/next/FileUpload.d.ts",
+      "import": "./dist/next/FileUpload.js"
+    },
+    "./next/Footer": {
+      "types": "./dist/types/components/Footer/next/Footer.d.ts",
+      "import": "./dist/next/Footer.js"
+    },
+    "./next/FormGroup": {
+      "types": "./dist/types/components/FormGroup/next/FormGroup.d.ts",
+      "import": "./dist/next/FormGroup.js"
+    },
+    "./next/globals": {
+      "import": "./dist/next/globals.js"
+    },
+    "./next/IconButton": {
+      "types": "./dist/types/components/IconButton/next/IconButton.d.ts",
+      "import": "./dist/next/IconButton.js"
+    },
+    "./next/MarkdownRenderer": {
+      "types": "./dist/types/components/MarkdownRenderer/next/MarkdownRenderer.d.ts",
+      "import": "./dist/next/MarkdownRenderer.js"
+    },
+    "./next/MessagePopUp": {
+      "types": "./dist/types/components/MessagePopUp/next/MessagePopUp.d.ts",
+      "import": "./dist/next/MessagePopUp.js"
+    },
+    "./next/MetricBox": {
+      "types": "./dist/types/components/MetricBox/next/MetricBox.d.ts",
+      "import": "./dist/next/MetricBox.js"
+    },
+    "./next/Modal": {
+      "types": "./dist/types/components/Modal/next/Modal.d.ts",
+      "import": "./dist/next/Modal.js"
+    },
+    "./next/NavBar": {
+      "types": "./dist/types/components/NavBar/next/NavBar.d.ts",
+      "import": "./dist/next/NavBar.js"
+    },
+    "./next/NotificationCenter": {
+      "types": "./dist/types/components/NotificationCenter/next/NotificationCenter.d.ts",
+      "import": "./dist/next/NotificationCenter.js"
+    },
+    "./next/Pager": {
+      "types": "./dist/types/components/Pager/next/Pager.d.ts",
+      "import": "./dist/next/Pager.js"
+    },
+    "./next/PopOver": {
+      "types": "./dist/types/components/PopOver/next/PopOver.d.ts",
+      "import": "./dist/next/PopOver.js"
+    },
+    "./next/ProgressBar": {
+      "types": "./dist/types/components/ProgressBar/next/ProgressBar.d.ts",
+      "import": "./dist/next/ProgressBar.js"
+    },
+    "./next/RadioButton": {
+      "types": "./dist/types/components/RadioButton/next/RadioButton.d.ts",
+      "import": "./dist/next/RadioButton.js"
+    },
+    "./next/RadioGroup": {
+      "types": "./dist/types/components/RadioButton/next/RadioGroup.d.ts",
+      "import": "./dist/next/RadioGroup.js"
+    },
+    "./next/Rating": {
+      "types": "./dist/types/components/Rating/next/Rating.d.ts",
+      "import": "./dist/next/Rating.js"
+    },
+    "./next/registerColorSheme": {
+      "import": "./dist/next/registerColorSheme.js"
+    },
+    "./next/ScrollToTop": {
+      "types": "./dist/types/components/ScrollToTop/next/ScrollToTop.d.ts",
+      "import": "./dist/next/ScrollToTop.js"
+    },
+    "./next/Select": {
+      "types": "./dist/types/components/Select/next/Select.d.ts",
+      "import": "./dist/next/Select.js"
+    },
+    "./next/Sidebar": {
+      "types": "./dist/types/components/Sidebar/next/Sidebar.d.ts",
+      "import": "./dist/next/Sidebar.js"
+    },
+    "./next/Skeleton": {
+      "types": "./dist/types/components/Skeleton/next/Skeleton.d.ts",
+      "import": "./dist/next/Skeleton.js"
+    },
+    "./next/Slider": {
+      "types": "./dist/types/components/Slider/next/Slider.d.ts",
+      "import": "./dist/next/Slider.js"
+    },
+    "./next/Spinner": {
+      "types": "./dist/types/components/Spinner/next/Spinner.d.ts",
+      "import": "./dist/next/Spinner.js"
+    },
+    "./next/Stepper": {
+      "types": "./dist/types/components/Stepper/next/Stepper.d.ts",
+      "import": "./dist/next/Stepper.js"
+    },
+    "./next/Tabs": {
+      "types": "./dist/types/components/Tabs/next/Tabs.d.ts",
+      "import": "./dist/next/Tabs.js"
+    },
+    "./next/TagInput": {
+      "types": "./dist/types/components/TagInput/next/TagInput.d.ts",
+      "import": "./dist/next/TagInput.js"
+    },
+    "./next/TextArea": {
+      "types": "./dist/types/components/TextArea/next/TextArea.d.ts",
+      "import": "./dist/next/TextArea.js"
+    },
+    "./next/TextInput": {
+      "types": "./dist/types/components/TextInput/next/TextInput.d.ts",
+      "import": "./dist/next/TextInput.js"
+    },
+    "./next/ThemeProvider": {
+      "import": "./dist/next/ThemeProvider.js"
+    },
+    "./next/Timeline": {
+      "types": "./dist/types/components/Timeline/next/Timeline.d.ts",
+      "import": "./dist/next/Timeline.js"
+    },
+    "./next/Toggle": {
+      "types": "./dist/types/components/Toggle/next/Toggle.d.ts",
+      "import": "./dist/next/Toggle.js"
+    },
+    "./next/Toolbar": {
+      "types": "./dist/types/components/Toolbar/next/Toolbar.d.ts",
+      "import": "./dist/next/Toolbar.js"
+    },
+    "./next/Tooltip": {
+      "types": "./dist/types/components/Tooltip/next/Tooltip.d.ts",
+      "import": "./dist/next/Tooltip.js"
+    },
     "./next/Typography": {
       "types": "./dist/types/components/Typography/next/Typography.d.ts",
-      "import": "./dist/next/Typography.js",
-      "require": "./dist/next/Typography.cjs.js"
+      "import": "./dist/next/Typography.js"
     }
   },
   "overrides": {

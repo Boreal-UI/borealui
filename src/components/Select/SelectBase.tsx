@@ -20,6 +20,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
   (
     {
       theme = getDefaultTheme(),
+      glass = false,
       state = "",
       outline = false,
       rounding = getDefaultRounding(),
@@ -110,10 +111,12 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         }
       };
 
-      load();
+      void load();
 
       if (pollInterval > 0) {
-        const intervalId = setInterval(load, pollInterval);
+        const intervalId = setInterval(() => {
+          void load();
+        }, pollInterval);
         return () => {
           clearInterval(intervalId);
           isMounted = false;
@@ -135,13 +138,24 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           classMap.wrapper,
           classMap[theme],
           classMap[state],
+          glass && classMap.glass,
           className,
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
           outline && classMap.outline,
           disabled && classMap.disabled,
         ),
-      [classMap, theme, state, className, shadow, rounding, outline, disabled],
+      [
+        classMap,
+        theme,
+        state,
+        glass,
+        className,
+        shadow,
+        rounding,
+        outline,
+        disabled,
+      ],
     );
 
     const selectClasses = useMemo(

@@ -105,6 +105,12 @@ export interface SidebarProps {
   theme?: ThemeType;
 
   /**
+   * If true, applies a translucent glass surface using the selected theme/state.
+   * Defaults to `false`.
+   */
+  glass?: boolean;
+
+  /**
    * State variant for styling.
    * Typically used to apply semantic states to the component.
    * - "success" | "error" | "warning" | "disabled" | ""

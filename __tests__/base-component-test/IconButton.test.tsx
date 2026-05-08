@@ -15,6 +15,7 @@ const classMap = {
   small: "small",
   large: "large",
   outline: "outline",
+  glass: "glass",
   disabled: "disabled",
   buttonLabel: "button-label",
   loader: "loader",

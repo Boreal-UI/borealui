@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 $input-sizes: (
@@ -116,6 +117,11 @@ $icon-sizes: (
 
   @each $themeName, $values in theme.$themes {
     &_#{$themeName} {
+      --empty-state-glass-bg: #{map.get($values, glass-bg)};
+      --empty-state-glass-hover-bg: #{map.get($values, glass-hover)};
+      --empty-state-glass-border: #{map.get($values, glass-border)};
+      --empty-state-glass-text: #{map.get($values, text)};
+
       background-color: map.get($values, bg);
       color: map.get($values, text);
     }
@@ -133,6 +139,11 @@ $icon-sizes: (
 
   @each $stateName, $values in theme.$states {
     &_#{$stateName} {
+      --empty-state-glass-bg: #{map.get($values, glass-bg)};
+      --empty-state-glass-hover-bg: #{map.get($values, glass-hover)};
+      --empty-state-glass-border: #{map.get($values, glass-border)};
+      --empty-state-glass-text: #{map.get($values, text)};
+
       background-color: map.get($values, bg);
       color: map.get($values, text);
     }
@@ -155,6 +166,25 @@ $icon-sizes: (
 
   &_clear {
     box-shadow: none;
+  }
+
+  &_glass {
+    @include mixins.glass-surface(
+      var(--empty-state-glass-bg, var(--glass-background)),
+      var(--empty-state-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--empty-state-glass-text, currentcolor);
+  }
+
+  &_glass:hover {
+    background: var(--empty-state-glass-hover-bg, var(--glass-background));
+  }
+
+  &_glass.empty_state_outline {
+    background: transparent;
+    border-color: var(--empty-state-glass-border, var(--glass-border-color));
   }
 
   &_clear.empty_state_outline {
@@ -250,5 +280,13 @@ $icon-sizes: (
 
   .empty_state.empty_state_outline {
     border: 1px solid ButtonText;
+  }
+
+  .empty_state.empty_state_glass {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

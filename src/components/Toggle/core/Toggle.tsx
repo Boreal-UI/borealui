@@ -6,6 +6,8 @@ import { ToggleProps } from "../Toggle.types";
 const classes = {
   container: "container",
   toggle: "toggle",
+  glass: "toggle_glass",
+  glassTrack: "toggle_glassTrack",
   active: "toggle_active",
   slider: "toggle_slider",
   label: "toggle_label",

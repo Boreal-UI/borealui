@@ -7,9 +7,9 @@ import "./styles/globals.scss";
 export * from "./generated-docs/index";
 
 ///Theme Context and utils
-export { default as ThemeProvider, ThemeContext } from "./context/ThemeContext";
+export { default as ThemeProvider } from "./context/NextThemeProvider";
 export { registerColorScheme } from "./styles/colorSchemeRegistry";
-export { colorSchemes } from "./styles/Themes";
+export { defaultColorSchemes } from "./styles/Themes";
 export { setBorealStyleConfig } from "./config/boreal-style-config";
 
 export { default as Typography } from "./components/Typography/next/Typography";
@@ -27,6 +27,7 @@ export { default as ThemeSelect } from "./components/Select/ThemeSelect/next/The
 export { default as FileUpload } from "./components/FileUpload/next/FileUpload";
 export { default as TagInput } from "./components/TagInput/next/TagInput";
 export { default as RadioButton } from "./components/RadioButton/next/RadioButton";
+export { default as RadioGroup } from "./components/RadioButton/next/RadioGroup";
 export { default as Slider } from "./components/Slider/next/Slider";
 export { default as Checkbox } from "./components/Checkbox/next/Checkbox";
 export { default as ColorPicker } from "./components/ColorPicker/next/ColorPicker";

@@ -1,8 +1,15 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Tooltip, Button } from "../src/index.core";
+import {
+  Tooltip,
+  Button,
+  ThemeType,
+  StateType,
+  RoundingType,
+  ShadowType,
+} from "../src/index.core";
 import type { TooltipProps } from "../src/components/Tooltip/Tooltip.types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -10,9 +17,15 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<TooltipProps> = {
   title: "Components/Tooltip",
@@ -34,13 +47,20 @@ const meta: Meta<TooltipProps> = {
   },
 };
 
+const defaultArgs: Partial<React.ComponentProps<typeof Tooltip>> = {
+  theme: "primary",
+  state: "success",
+  content: "Tooltip text",
+  children: <button>Hover me</button>,
+};
+
 export default meta;
 type Story = StoryObj<TooltipProps>;
 
 export const Default: Story = {
   name: "Default Tooltip",
   args: {
-    children: <Button>Hover me</Button>,
+    ...defaultArgs,
   },
 };
 
@@ -100,6 +120,44 @@ export const States: Story = {
           {...args}
           state={state}
           title={`${state.charAt(0).toUpperCase() + state.slice(1)} state`}
+        >
+          <Button>{state.charAt(0).toUpperCase() + state.slice(1)}</Button>
+        </Tooltip>
+      ))}
+    </div>
+  ),
+};
+
+export const GlassThemes: Story = {
+  name: "Tooltip Glass Themes",
+  render: (args) => (
+    <div style={{ display: "grid", gap: "5rem" }}>
+      {themeOptions.map((theme) => (
+        <Tooltip
+          key={`glass-${theme}`}
+          {...args}
+          theme={theme}
+          glass
+          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} glass`}
+        >
+          <Button>{theme.charAt(0).toUpperCase() + theme.slice(1)}</Button>
+        </Tooltip>
+      ))}
+    </div>
+  ),
+};
+
+export const GlassStates: Story = {
+  name: "Tooltip Glass States",
+  render: (args) => (
+    <div style={{ display: "grid", gap: "5rem" }}>
+      {stateOptions.map((state) => (
+        <Tooltip
+          key={`glass-${state}`}
+          {...args}
+          state={state}
+          glass
+          title={`${state.charAt(0).toUpperCase() + state.slice(1)} glass`}
         >
           <Button>{state.charAt(0).toUpperCase() + state.slice(1)}</Button>
         </Tooltip>

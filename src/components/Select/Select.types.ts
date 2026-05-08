@@ -32,6 +32,11 @@ export interface SelectProps {
   theme?: ThemeType;
 
   /**
+   * Adds translucent glass styling to the select wrapper.
+   */
+  glass?: boolean;
+
+  /**
    * State variant for styling.
    * "success" | "error" | "warning" | "disabled" | ""
    */
@@ -193,6 +198,7 @@ export interface BaseSelectProps extends SelectProps {
 
 export interface ThemeSelectProps {
   theme?: ThemeType;
+  glass?: boolean;
   shadow?: ShadowType;
   rounding?: RoundingType;
   state?: StateType;

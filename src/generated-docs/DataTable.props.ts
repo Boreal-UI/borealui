@@ -44,6 +44,14 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "cellClassName",
+      "type": "((value: unknown, row: T, column: Column<T>, rowIndex: number) => string)",
+      "description": "Optional dynamic class name for each cell.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
       "name": "className",
       "type": "string",
       "description": "Optional class name for the table wrapper.",
@@ -140,6 +148,14 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "If true, applies a translucent glass surface using the selected theme/state. Defaults to `false`.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "hideCaption",
       "type": "boolean",
       "description": "Whether the caption should be visually hidden. Useful when you want semantic labeling without visible UI.",
@@ -196,6 +212,14 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "category": "styling"
     },
     {
+      "name": "rowClassName",
+      "type": "string | ((row: T, index: number) => string)",
+      "description": "Optional static or dynamic class name for each row.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "rowCount",
       "type": "number",
       "description": "Total row count override. Helpful for virtualized or server-paginated tables.",
@@ -244,12 +268,44 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "tableClassName",
+      "type": "string",
+      "description": "Optional class name applied directly to the table element.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "tbodyClassName",
+      "type": "string",
+      "description": "Optional class name applied to the table body.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "theadClassName",
+      "type": "string",
+      "description": "Optional class name applied to the table head.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "theme",
       "type": "ThemeType",
       "description": "Theme used for styling the table ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
       "category": "styling"
+    },
+    {
+      "name": "wrapCells",
+      "type": "boolean",
+      "description": "Allows table cells to wrap onto multiple lines. Can be overridden per column with column.wrap.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     }
   ]
 };

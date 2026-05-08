@@ -35,6 +35,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   focusFirstItemOnOpen = true,
   closeOnSelect = true,
   theme = getDefaultTheme(),
+  glass = false,
   toggleRounding = getDefaultRounding(),
   menuRounding = getDefaultRounding(),
   toggleShadow = getDefaultShadow(),
@@ -228,6 +229,9 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       combineClassNames(
         classMap.menu,
         align === "right" ? classMap.alignRight : classMap.alignLeft,
+        classMap[theme],
+        classMap[state],
+        glass && classMap.glass,
         menuShadow && classMap[`shadow${capitalize(menuShadow)}`],
         menuRounding && classMap[`round${capitalize(menuRounding)}`],
         menuClassName,
@@ -236,6 +240,9 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     [
       classMap,
       align,
+      theme,
+      state,
+      glass,
       menuShadow,
       menuRounding,
       menuClassName,
@@ -264,6 +271,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
         rounding={toggleRounding}
         shadow={toggleShadow}
         outline={toggleOutline}
+        glass={glass}
         theme={theme}
         state={state}
         onClick={toggleDropdown}

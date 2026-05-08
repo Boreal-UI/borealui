@@ -100,6 +100,14 @@ export const typographyPropDocs: GeneratedComponentDoc = {
       "category": "styling"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a compact translucent frosted-glass treatment around the text.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "id",
       "type": "string",
       "description": "Optional unique id for the root element.",

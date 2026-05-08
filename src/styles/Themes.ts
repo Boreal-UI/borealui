@@ -1,6 +1,6 @@
 /**
  * ---------------------------------------------------------------------
- * colorSchemes.ts
+ * Themes.ts
  * ---------------------------------------------------------------------
  * A curated list of predefined color schemes used for theming
  * in the Boreal UI system. Each scheme follows the `ColorScheme`
@@ -15,16 +15,14 @@
  * These schemes are typically used in theme switchers,
  * brand customization, or design system previews.
  *
- * New schemes can be registered dynamically at runtime using
- * `registerColorScheme()` from the color scheme registry.
  *
  * Example usage:
- *   const currentTheme = colorSchemes.find(t => t.name === "Ocean Breeze");
+ *   const currentTheme = defaultColorSchemes.find(t => t.name === "Ocean Breeze");
  */
 
 import { ColorScheme } from "@/types/types";
 
-export const colorSchemes: ColorScheme[] = [
+export const defaultColorSchemes: readonly ColorScheme[] = [
   {
     name: "Autumn Glow",
     primaryColor: "#c58686",

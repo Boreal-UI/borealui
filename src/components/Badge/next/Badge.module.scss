@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .badge {
@@ -105,6 +106,29 @@
   }
 }
 
+.glass {
+  @include mixins.glass-surface(
+    var(--badge-glass-bg, var(--glass-background)),
+    var(--badge-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--badge-glass-text, currentcolor);
+  isolation: isolate;
+
+  &.clickable:hover {
+    background: var(--badge-glass-hover-bg, var(--glass-background-strong));
+  }
+
+  &.outline {
+    border-color: var(--badge-glass-border, var(--glass-border-color));
+
+    &.clickable:hover {
+      background: var(--badge-glass-hover-bg, var(--glass-background));
+    }
+  }
+}
+
 @each $key, $value in theme.$shadow {
   .shadow#{$key} {
     box-shadow: $value;
@@ -122,6 +146,11 @@
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
+    --badge-glass-bg: #{map.get($values, glass-bg)};
+    --badge-glass-hover-bg: #{map.get($values, glass-hover)};
+    --badge-glass-border: #{map.get($values, glass-border)};
+    --badge-glass-text: #{map.get($values, text)};
+
     &.clickable:hover {
       background-color: map.get($values, hover);
       transform: translateY(-2px);
@@ -143,6 +172,18 @@
     }
   }
 
+  .#{$name}.glass {
+    background-color: transparent;
+    background: var(--badge-glass-bg);
+    border: 1px solid var(--badge-glass-border);
+    color: var(--badge-glass-text);
+
+    &.clickable:hover {
+      background-color: transparent;
+      background: var(--badge-glass-hover-bg);
+    }
+  }
+
   .#{$name}.outline {
     background-color: transparent;
     color: map.get($values, text);
@@ -157,6 +198,16 @@
       border-color: map.get($values, hover);
       color: map.get($values, text-hover);
     }
+  }
+
+  .#{$name}.outline.glass {
+    @include mixins.glass-surface(
+      transparent,
+      var(--badge-glass-border),
+      var(--glass-blur)
+    );
+
+    color: var(--badge-glass-text);
   }
 }
 
@@ -165,6 +216,11 @@
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
+    --badge-glass-bg: #{map.get($values, glass-bg)};
+    --badge-glass-hover-bg: #{map.get($values, glass-hover)};
+    --badge-glass-border: #{map.get($values, glass-border)};
+    --badge-glass-text: #{map.get($values, text)};
+
     &.clickable:hover {
       background-color: map.get($values, hover);
       transform: translateY(-2px);
@@ -186,6 +242,18 @@
     }
   }
 
+  .#{$name}.glass {
+    background-color: transparent;
+    background: var(--badge-glass-bg);
+    border: 1px solid var(--badge-glass-border);
+    color: var(--badge-glass-text);
+
+    &.clickable:hover {
+      background-color: transparent;
+      background: var(--badge-glass-hover-bg);
+    }
+  }
+
   .#{$name}.outline {
     background-color: transparent;
     color: map.get($values, text);
@@ -200,6 +268,16 @@
       border-color: map.get($values, hover);
       color: map.get($values, text-hover);
     }
+  }
+
+  .#{$name}.outline.glass {
+    @include mixins.glass-surface(
+      transparent,
+      var(--badge-glass-border),
+      var(--glass-blur)
+    );
+
+    color: var(--badge-glass-text);
   }
 }
 
@@ -297,5 +375,13 @@
   .badge {
     border: 1px solid ButtonText;
     outline-color: Highlight;
+  }
+
+  .glass {
+    background: Canvas;
+    border: 1px solid ButtonText;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }

@@ -24,6 +24,11 @@ export interface ProgressBarProps {
   theme?: ThemeType;
 
   /**
+   * Applies a translucent frosted-glass treatment to the progress track.
+   */
+  glass?: boolean;
+
+  /**
    * State of the progress bar.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    */

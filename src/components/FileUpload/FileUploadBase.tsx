@@ -15,6 +15,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   error,
   required = false,
   theme = getDefaultTheme(),
+  glass = false,
   controlRounding = getDefaultRounding(),
   controlShadow = getDefaultShadow(),
   outline = false,
@@ -268,6 +269,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
         classMap.fileUpload,
         classMap[state],
         classMap[theme],
+        glass && classMap.glass,
         outlineShadow && classMap[`shadow${capitalize(outlineShadow)}`],
         outlineRounding && classMap[`round${capitalize(outlineRounding)}`],
         error && classMap.error,
@@ -279,6 +281,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       classMap,
       theme,
       state,
+      glass,
       outlineShadow,
       outlineRounding,
       error,
@@ -362,6 +365,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             icon={FileIcon}
             size={selectButtonProps?.size ?? "small"}
             theme={theme}
+            glass={glass}
             state={error ? "error" : state}
             className={combineClassNames(
               classMap.fileInput,
@@ -427,6 +431,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
                   <IconButton
                     {...removeButtonProps}
                     icon={TrashIcon}
+                    glass={glass}
                     state="error"
                     size={removeButtonProps?.size ?? "small"}
                     type="button"
@@ -449,6 +454,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
               <ProgressBar
                 {...progressBarProps}
                 theme={theme}
+                glass={glass}
                 className={combineClassNames(
                   classMap.uploadProgress,
                   progressBarProps?.className,
@@ -465,6 +471,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
               <Button
                 {...uploadButtonProps}
                 theme={theme}
+                glass={glass}
                 state={error ? "error" : state}
                 disabled={disabled || files.length === 0}
                 onClick={() => {

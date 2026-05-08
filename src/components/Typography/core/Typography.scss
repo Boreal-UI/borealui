@@ -1,9 +1,11 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
 
 .typography {
   margin: 0;
-  color: var(--text-color-primary);
+  color: var(--text-color);
 }
 
 .typography_display {
@@ -189,9 +191,12 @@
   color: var(--error-color);
 }
 
-.typography_clear,
-.typography_theme-inherit {
+.typography_clear {
   color: inherit;
+}
+
+.typography_theme-inherit {
+  color: var(--text-color);
 }
 
 .typography_italic {
@@ -216,5 +221,13 @@
 @media (forced-colors: active) {
   .typography {
     color: CanvasText;
+  }
+
+  .typography_glass {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

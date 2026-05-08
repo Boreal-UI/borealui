@@ -23,6 +23,7 @@ const classes = {
   error: "card_error",
 
   clear: "card_clear",
+  glass: "card_glass",
 
   outline: "card_outline",
   loading: "card_loading",

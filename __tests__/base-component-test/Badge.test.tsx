@@ -27,6 +27,7 @@ const classMap = {
   xl: "xl",
 
   outline: "outline",
+  glass: "glass",
   disabled: "disabled",
   clickable: "clickable",
   badge_icon: "badge_icon",
@@ -46,14 +47,17 @@ const classMap = {
 
 describe("BadgeBase", () => {
   const renderBadge = (
-    props: Partial<BadgeBaseProps> = {},
+    props: Omit<BadgeBaseProps, "classMap" | "children"> = {},
     children: React.ReactNode = "Active",
-  ) =>
-    render(
-      <BadgeBase classMap={classMap} data-testid="badge" {...props}>
-        {children}
-      </BadgeBase>,
-    );
+  ) => {
+    const badgeProps = {
+      classMap,
+      "data-testid": "badge",
+      ...props,
+    } as BadgeBaseProps;
+
+    return render(<BadgeBase {...badgeProps}>{children}</BadgeBase>);
+  };
 
   afterEach(() => {
     jest.clearAllMocks();
@@ -249,7 +253,7 @@ describe("BadgeBase", () => {
     expect(handleClick).toHaveBeenCalledTimes(1);
   });
 
-  it("applies theme, state, size, shadow, rounding, outline, and custom className", () => {
+  it("applies theme, state, size, shadow, rounding, outline, glass, and custom className", () => {
     renderBadge(
       {
         theme: "primary",
@@ -258,6 +262,7 @@ describe("BadgeBase", () => {
         shadow: "light",
         rounding: "small",
         outline: true,
+        glass: true,
         className: "custom-badge-class",
       },
       "Styled Badge",
@@ -272,6 +277,7 @@ describe("BadgeBase", () => {
     expect(badge).toHaveClass("shadowLight");
     expect(badge).toHaveClass("roundSmall");
     expect(badge).toHaveClass("outline");
+    expect(badge).toHaveClass("glass");
     expect(badge).toHaveClass("custom-badge-class");
   });
 

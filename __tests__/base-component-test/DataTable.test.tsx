@@ -35,8 +35,10 @@ const classMap = {
   sortButton: "sortButton",
   clickable: "clickable",
   cell: "cell",
+  wrapCell: "wrapCell",
   emptyCell: "emptyCell",
   outline: "outline",
+  glass: "glass",
   primary: "primary",
   success: "success",
   roundMedium: "roundMedium",
@@ -86,18 +88,282 @@ describe("DataTableBase", () => {
     expect(screen.getByTestId("data-table")).toHaveClass("customWrapper");
   });
 
-  it("applies theme, state, and outline classes to the table", () => {
+  it("applies table, thead, and tbody class names", () => {
+    renderTable({
+      tableClassName: "customTable",
+      theadClassName: "customThead",
+      tbodyClassName: "customTbody",
+    });
+
+    const table = screen.getByRole("table");
+
+    expect(table).toHaveClass("table");
+    expect(table).toHaveClass("customTable");
+
+    expect(table.querySelector("thead")).toHaveClass("customThead");
+    expect(table.querySelector("tbody")).toHaveClass("customTbody");
+  });
+
+  it("applies theme, state, outline, and glass classes to the table and wrapper", () => {
     renderTable({
       theme: "primary",
       state: "success",
       outline: true,
+      glass: true,
     });
 
     const table = screen.getByRole("table");
+    const wrapper = screen.getByTestId("data-table");
+    expect(wrapper).toHaveClass("primary");
+    expect(wrapper).toHaveClass("success");
+    expect(wrapper).toHaveClass("glass");
     expect(table).toHaveClass("table");
     expect(table).toHaveClass("primary");
     expect(table).toHaveClass("success");
     expect(table).toHaveClass("outline");
+    expect(table).toHaveClass("glass");
+  });
+
+  it("applies wrapCell class to headers and cells when wrapCells is true", () => {
+    renderTable({
+      wrapCells: true,
+    });
+
+    const headers = screen.getAllByRole("columnheader");
+    const cells = screen.getAllByRole("cell");
+
+    headers.forEach((header) => {
+      expect(header).toHaveClass("wrapCell");
+    });
+
+    cells.forEach((cell) => {
+      expect(cell).toHaveClass("wrapCell");
+    });
+  });
+
+  it("applies column-level header, cell, row header, and sort button class names", () => {
+    renderTable({
+      columns: [
+        {
+          key: "name",
+          label: "Name",
+          sortable: true,
+          isRowHeader: true,
+          headerClassName: "customNameHeader",
+          cellClassName: "customNameCell",
+          rowHeaderClassName: "customRowHeader",
+          sortButtonClassName: "customSortButton",
+        },
+        {
+          key: "age",
+          label: "Age",
+          sortable: true,
+          headerClassName: "customAgeHeader",
+          cellClassName: "customAgeCell",
+        },
+      ],
+    });
+
+    const nameHeader = screen.getByRole("columnheader", { name: /name/i });
+    const ageHeader = screen.getByRole("columnheader", { name: /age/i });
+
+    expect(nameHeader).toHaveClass("customNameHeader");
+    expect(ageHeader).toHaveClass("customAgeHeader");
+
+    const nameSortButton = within(nameHeader).getByRole("button");
+    expect(nameSortButton).toHaveClass("customSortButton");
+
+    const rowHeaders = screen.getAllByRole("rowheader");
+
+    expect(rowHeaders[0]).toHaveClass("cell");
+    expect(rowHeaders[0]).toHaveClass("customNameCell");
+    expect(rowHeaders[0]).toHaveClass("customRowHeader");
+    expect(rowHeaders[0]).toHaveTextContent("Alice");
+
+    const ageCell = screen.getByText("28");
+    expect(ageCell).toHaveClass("customAgeCell");
+  });
+
+  it("applies a static rowClassName to every data row", () => {
+    renderTable({
+      rowClassName: "customRow",
+    });
+
+    const firstRow = screen.getByTestId("data-table-row-0");
+    const secondRow = screen.getByTestId("data-table-row-1");
+
+    expect(firstRow).toHaveClass("customRow");
+    expect(secondRow).toHaveClass("customRow");
+  });
+
+  it("applies a dynamic cellClassName callback based on value, row, column, and row index", () => {
+    renderTable({
+      cellClassName: (value, row, column, rowIndex) => {
+        if (column.key === "age" && value === 34) {
+          return "seniorAgeCell";
+        }
+
+        if (column.key === "name" && row.name === "Alice" && rowIndex === 0) {
+          return "aliceNameCell";
+        }
+
+        return undefined;
+      },
+    });
+
+    const aliceCell = screen.getByText("Alice");
+    const bobAgeCell = screen.getByText("34");
+
+    expect(aliceCell).toHaveClass("aliceNameCell");
+    expect(bobAgeCell).toHaveClass("seniorAgeCell");
+  });
+
+  it("combines column cellClassName with the table-level cellClassName callback", () => {
+    renderTable({
+      columns: [
+        {
+          key: "name",
+          label: "Name",
+          cellClassName: "columnNameCell",
+        },
+        {
+          key: "age",
+          label: "Age",
+          cellClassName: "columnAgeCell",
+        },
+      ],
+      cellClassName: (_, __, column) =>
+        column.key === "name" ? "dynamicNameCell" : undefined,
+    });
+
+    const aliceCell = screen.getByText("Alice");
+    const ageCell = screen.getByText("28");
+
+    expect(aliceCell).toHaveClass("cell");
+    expect(aliceCell).toHaveClass("columnNameCell");
+    expect(aliceCell).toHaveClass("dynamicNameCell");
+
+    expect(ageCell).toHaveClass("cell");
+    expect(ageCell).toHaveClass("columnAgeCell");
+    expect(ageCell).not.toHaveClass("dynamicNameCell");
+  });
+
+  it("applies data-label attributes to regular cells and row header cells", () => {
+    renderTable({
+      columns: [
+        {
+          key: "name",
+          label: "Name",
+          isRowHeader: true,
+        },
+        {
+          key: "age",
+          label: "Age",
+        },
+      ],
+    });
+
+    const rowHeader = screen.getByRole("rowheader", { name: "Alice" });
+    const ageCell = screen.getByText("28");
+
+    expect(rowHeader).toHaveAttribute("data-label", "Name");
+    expect(ageCell).toHaveAttribute("data-label", "Age");
+  });
+
+  it("applies a dynamic rowClassName callback based on row data and index", () => {
+    renderTable({
+      rowClassName: (row, index) => {
+        if (row.name === "Alice") return "aliceRow";
+        if (index === 1) return "secondRow";
+        return undefined;
+      },
+    });
+
+    const firstRow = screen.getByTestId("data-table-row-0");
+    const secondRow = screen.getByTestId("data-table-row-1");
+
+    expect(firstRow).toHaveClass("aliceRow");
+    expect(secondRow).toHaveClass("secondRow");
+  });
+
+  it("allows column wrap to override global wrapCells", () => {
+    renderTable({
+      wrapCells: true,
+      columns: [
+        {
+          key: "name",
+          label: "Name",
+          sortable: true,
+          wrap: false,
+        },
+        {
+          key: "age",
+          label: "Age",
+          sortable: true,
+          wrap: true,
+        },
+      ],
+    });
+
+    const nameHeader = screen.getByRole("columnheader", { name: /name/i });
+    const ageHeader = screen.getByRole("columnheader", { name: /age/i });
+
+    expect(nameHeader).not.toHaveClass("wrapCell");
+    expect(ageHeader).toHaveClass("wrapCell");
+
+    const rows = screen.getAllByRole("row");
+    const firstBodyRow = rows[1];
+
+    const nameCell = within(firstBodyRow).getByText("Alice");
+    const ageCell = within(firstBodyRow).getByText("28");
+
+    expect(nameCell).not.toHaveClass("wrapCell");
+    expect(ageCell).toHaveClass("wrapCell");
+  });
+
+  it("applies column width, minWidth, and maxWidth styles to headers and body cells", () => {
+    renderTable({
+      columns: [
+        {
+          key: "name",
+          label: "Name",
+          width: "12rem",
+          minWidth: "10rem",
+          maxWidth: "20rem",
+        },
+        {
+          key: "age",
+          label: "Age",
+          width: "8rem",
+        },
+      ],
+    });
+
+    const nameHeader = screen.getByRole("columnheader", { name: /name/i });
+    const ageHeader = screen.getByRole("columnheader", { name: /age/i });
+
+    expect(nameHeader).toHaveStyle({
+      width: "12rem",
+      minWidth: "10rem",
+      maxWidth: "20rem",
+    });
+
+    expect(ageHeader).toHaveStyle({
+      width: "8rem",
+    });
+
+    const aliceCell = screen.getByText("Alice");
+    const ageCell = screen.getByText("28");
+
+    expect(aliceCell).toHaveStyle({
+      width: "12rem",
+      minWidth: "10rem",
+      maxWidth: "20rem",
+    });
+
+    expect(ageCell).toHaveStyle({
+      width: "8rem",
+    });
   });
 
   it("uses the provided aria-label on the table", () => {

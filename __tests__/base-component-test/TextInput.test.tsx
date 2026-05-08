@@ -19,6 +19,7 @@ const mockStyles = {
   togglePassword: "togglePassword",
   srOnly: "srOnly",
   outline: "outline",
+  glass: "glass",
   primary: "primary",
   secondary: "secondary",
   error: "error",
@@ -409,6 +410,7 @@ describe("TextInputBase", () => {
         classMap={mockStyles}
         IconButton={IconButton}
         outline
+        glass
         theme="primary"
         rounding="medium"
         shadow="light"
@@ -420,6 +422,7 @@ describe("TextInputBase", () => {
 
     expect(wrapper).toHaveClass("textInput");
     expect(wrapper).toHaveClass("primary");
+    expect(wrapper).toHaveClass("glass");
     expect(wrapper).toHaveClass("outline");
     expect(wrapper).toHaveClass("disabled");
     expect(wrapper).toHaveClass("roundMedium");

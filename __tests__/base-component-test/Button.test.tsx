@@ -26,6 +26,7 @@ const classMap = {
   xl: "btn-xl",
 
   outline: "btn-outline",
+  glass: "btn-glass",
   disabled: "btn-disabled",
   fullWidth: "btn-full",
   link: "btn-link",
@@ -34,6 +35,9 @@ const classMap = {
   buttonLabel: "btn-label",
   loader: "btn-loader",
   icon: "icon-style",
+
+  iconLeft: "btn-icon-left",
+  iconRight: "btn-icon-right",
 
   shadowNone: "btn-shadow-none",
   shadowLight: "btn-shadow-light",
@@ -54,7 +58,13 @@ describe("ButtonBase", () => {
     children: React.ReactNode = "Click me",
   ) =>
     render(
-      <ButtonBase classMap={classMap} data-testid="button-test" {...props}>
+      <ButtonBase
+        {...({
+          classMap,
+          "data-testid": "button-test",
+          ...props,
+        } as React.ComponentProps<typeof ButtonBase>)}
+      >
         {children}
       </ButtonBase>,
     );
@@ -96,6 +106,192 @@ describe("ButtonBase", () => {
     expect(svg).toHaveClass("icon-style");
     expect(svg).toHaveAttribute("aria-hidden", "true");
     expect(svg).toHaveAttribute("focusable", "false");
+  });
+
+  it("defaults iconPosition to left when an icon is provided", () => {
+    renderButton(
+      {
+        icon: FaStar,
+      },
+      "Favorite",
+    );
+
+    const button = screen.getByTestId("button-test");
+    const icon = screen.getByTestId("button-test-icon");
+    const label = screen.getByTestId("button-test-loading");
+
+    expect(button).toHaveClass("btn-icon-left");
+    expect(button).not.toHaveClass("btn-icon-right");
+
+    expect(icon.compareDocumentPosition(label)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+  });
+
+  it("renders the icon before the label when iconPosition is left", () => {
+    renderButton(
+      {
+        icon: FaStar,
+        iconPosition: "left",
+      },
+      "Favorite",
+    );
+
+    const button = screen.getByTestId("button-test");
+    const icon = screen.getByTestId("button-test-icon");
+    const label = screen.getByTestId("button-test-loading");
+
+    expect(button).toHaveClass("btn-icon-left");
+    expect(button).not.toHaveClass("btn-icon-right");
+
+    expect(icon.compareDocumentPosition(label)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+  });
+
+  it("renders the icon after the label when iconPosition is right", () => {
+    renderButton(
+      {
+        icon: FaStar,
+        iconPosition: "right",
+      },
+      "Favorite",
+    );
+
+    const button = screen.getByTestId("button-test");
+    const icon = screen.getByTestId("button-test-icon");
+    const label = screen.getByTestId("button-test-loading");
+
+    expect(button).toHaveClass("btn-icon-right");
+    expect(button).not.toHaveClass("btn-icon-left");
+
+    expect(label.compareDocumentPosition(icon)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+  });
+
+  it("does not apply the glass class by default", () => {
+    renderButton({}, "Default Button");
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn");
+    expect(button).not.toHaveClass("btn-glass");
+  });
+
+  it("applies the glass class when glass is true", () => {
+    renderButton(
+      {
+        glass: true,
+      },
+      "Glass Button",
+    );
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn");
+    expect(button).toHaveClass("btn-glass");
+  });
+
+  it("applies glass with a theme class", () => {
+    renderButton(
+      {
+        theme: "primary",
+        glass: true,
+      },
+      "Primary Glass",
+    );
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn");
+    expect(button).toHaveClass("btn-primary");
+    expect(button).toHaveClass("btn-glass");
+  });
+
+  it("applies glass with a state class", () => {
+    renderButton(
+      {
+        state: "success",
+        glass: true,
+      },
+      "Success Glass",
+    );
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn");
+    expect(button).toHaveClass("btn-success");
+    expect(button).toHaveClass("btn-glass");
+  });
+
+  it("applies glass with outline styling", () => {
+    renderButton(
+      {
+        theme: "secondary",
+        outline: true,
+        glass: true,
+      },
+      "Outlined Glass",
+    );
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn");
+    expect(button).toHaveClass("btn-secondary");
+    expect(button).toHaveClass("btn-outline");
+    expect(button).toHaveClass("btn-glass");
+  });
+
+  it("applies glass to link buttons", () => {
+    renderButton(
+      {
+        href: "/docs",
+        glass: true,
+      },
+      "Glass Link",
+    );
+
+    const link = screen.getByTestId("button-test");
+
+    expect(link.tagName).toBe("A");
+    expect(link).toHaveClass("btn");
+    expect(link).toHaveClass("btn-link");
+    expect(link).toHaveClass("btn-glass");
+  });
+
+  it("applies theme, state, size, outline, glass, shadow, rounding, fullWidth, disabled, icon position, and custom className", () => {
+    renderButton(
+      {
+        theme: "primary",
+        state: "success",
+        size: "medium",
+        outline: true,
+        glass: true,
+        shadow: "light",
+        rounding: "small",
+        fullWidth: true,
+        disabled: true,
+        iconPosition: "right",
+        className: "custom-class",
+      },
+      "Styled",
+    );
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn");
+    expect(button).toHaveClass("btn-primary");
+    expect(button).toHaveClass("btn-success");
+    expect(button).toHaveClass("btn-md");
+    expect(button).toHaveClass("btn-outline");
+    expect(button).toHaveClass("btn-glass");
+    expect(button).toHaveClass("btn-shadow-light");
+    expect(button).toHaveClass("btn-round-small");
+    expect(button).toHaveClass("btn-full");
+    expect(button).toHaveClass("btn-disabled");
+    expect(button).toHaveClass("btn-icon-right");
+    expect(button).toHaveClass("custom-class");
   });
 
   it("renders children inside the label container", () => {
@@ -582,6 +778,149 @@ describe("ButtonBase", () => {
 
     const link = screen.getByTestId("button-test");
     expect(link).toHaveAttribute("aria-disabled", "true");
+  });
+
+  it("applies a custom _target value to anchor links", () => {
+    renderButton(
+      {
+        href: "https://example.com",
+        _target: "_blank",
+      },
+      "Open Example",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link.tagName).toBe("A");
+    expect(link).toHaveAttribute("href", "https://example.com");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "noopener noreferrer");
+  });
+
+  it("applies a non-blank _target value without rel", () => {
+    renderButton(
+      {
+        href: "/docs",
+        _target: "_self",
+      },
+      "Docs",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link).toHaveAttribute("target", "_self");
+    expect(link).not.toHaveAttribute("rel");
+  });
+
+  it("shows new-tab text when _target is _blank", () => {
+    renderButton(
+      {
+        href: "/external-docs",
+        _target: "_blank",
+      },
+      "External Docs",
+    );
+
+    expect(screen.getByText("(opens in a new tab)")).toBeInTheDocument();
+  });
+
+  it("renders as a custom element when as is provided without href", () => {
+    renderButton(
+      {
+        as: "div",
+      },
+      "Div Button",
+    );
+
+    const element = screen.getByTestId("button-test");
+    expect(element.tagName).toBe("DIV");
+    expect(element).toHaveAttribute("role", "button");
+    expect(element).toHaveTextContent("Div Button");
+  });
+
+  it("renders as a custom anchor element when as='a' and href is provided", () => {
+    renderButton(
+      {
+        as: "a",
+        href: "/about",
+      },
+      "About",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link.tagName).toBe("A");
+    expect(link).toHaveAttribute("href", "/about");
+  });
+
+  it("renders href links using the as prop instead of LinkComponent when as is provided", () => {
+    const CustomAnchor = React.forwardRef<
+      HTMLAnchorElement,
+      React.AnchorHTMLAttributes<HTMLAnchorElement>
+    >(function CustomAnchor(props, ref) {
+      return <a ref={ref} data-as-link="true" {...props} />;
+    });
+
+    render(
+      <ButtonBase
+        href="/custom-as"
+        as={CustomAnchor}
+        classMap={classMap}
+        data-testid="button-test"
+      >
+        Custom As Link
+      </ButtonBase>,
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link.tagName).toBe("A");
+    expect(link).toHaveAttribute("href", "/custom-as");
+    expect(link).toHaveAttribute("data-as-link", "true");
+  });
+
+  it("renders non-button custom components with button semantics when as is provided", () => {
+    const CustomDiv = React.forwardRef<
+      HTMLDivElement,
+      React.HTMLAttributes<HTMLDivElement>
+    >(function CustomDiv(props, ref) {
+      return <div ref={ref} data-custom-div="true" {...props} />;
+    });
+
+    render(
+      <ButtonBase as={CustomDiv} classMap={classMap} data-testid="button-test">
+        Custom Div Button
+      </ButtonBase>,
+    );
+
+    const element = screen.getByTestId("button-test");
+    expect(element.tagName).toBe("DIV");
+    expect(element).toHaveAttribute("data-custom-div", "true");
+    expect(element).toHaveAttribute("role", "button");
+  });
+
+  it("prevents href navigation and removes target when disabled even if _target is provided", () => {
+    renderButton(
+      {
+        href: "https://example.com",
+        _target: "_blank",
+        disabled: true,
+      },
+      "Disabled External",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link).not.toHaveAttribute("href");
+    expect(link).not.toHaveAttribute("target");
+    expect(link).not.toHaveAttribute("rel");
+    expect(link).toHaveAttribute("aria-disabled", "true");
+  });
+
+  it("has no accessibility violations for custom as rendering", async () => {
+    const { container } = render(
+      <ButtonBase as="div" classMap={classMap} data-testid="button-test">
+        Custom Div Button
+      </ButtonBase>,
+    );
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
   });
 
   it("has no accessibility violations for standard button", async () => {

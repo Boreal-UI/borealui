@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .timeline {
@@ -231,6 +232,11 @@
 
 @each $themeName, $vals in theme.$themes {
   .timeline_#{$themeName} {
+    --timeline-glass-bg: #{map.get($vals, glass-bg)};
+    --timeline-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --timeline-glass-border: #{map.get($vals, glass-border)};
+    --timeline-glass-text: #{map.get($vals, text)};
+
     .timeline_item:not(:last-child)::after {
       background-color: map.get($vals, border);
     }
@@ -244,6 +250,11 @@
 
 @each $stateName, $vals in theme.$states {
   .timeline_#{$stateName} {
+    --timeline-glass-bg: #{map.get($vals, glass-bg)};
+    --timeline-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --timeline-glass-border: #{map.get($vals, glass-border)};
+    --timeline-glass-text: #{map.get($vals, text)};
+
     .timeline_item:not(:last-child)::after {
       background-color: map.get($vals, border);
     }
@@ -253,6 +264,17 @@
       color: map.get($vals, text);
     }
   }
+}
+
+.timeline_glass.timeline_content,
+.timeline_glass.timeline_marker {
+  @include mixins.glass-surface(
+    var(--timeline-glass-bg, var(--glass-background)),
+    var(--timeline-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--timeline-glass-text, currentcolor);
 }
 
 @each $key, $value in theme.$rounding {
@@ -300,5 +322,14 @@
     background: ButtonFace !important;
     color: ButtonText !important;
     border: 1px solid ButtonText !important;
+  }
+
+  .timeline_glass.timeline_content,
+  .timeline_glass.timeline_marker {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

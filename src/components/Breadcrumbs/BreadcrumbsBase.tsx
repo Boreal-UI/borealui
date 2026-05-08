@@ -26,6 +26,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   disabled = false,
   size = getDefaultSize(),
   outline = false,
+  glass = false,
   className = "",
   maxVisible,
   LinkComponent = "a",
@@ -61,6 +62,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
         rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
         outline && classMap.outline,
+        glass && classMap.glass,
         className,
       ),
     [
@@ -71,6 +73,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
       rounding,
       disabled,
       outline,
+      glass,
       className,
       classMap,
     ],

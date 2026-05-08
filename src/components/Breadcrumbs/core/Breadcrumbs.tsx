@@ -19,6 +19,7 @@ const classes = {
   clear: "breadcrumbs_clear",
 
   outline: "breadcrumbs_outline",
+  glass: "breadcrumbs_glass",
   disabled: "breadcrumbs_disabled",
 
   shadowNone: "breadcrumbs_shadow-None",

@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, within } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import "@testing-library/jest-dom";
-import BaseFooter from "@/components/Footer/FooterBase";
+import FooterBase from "@/components/Footer/FooterBase";
 import { FaGithub, FaTwitter } from "react-icons/fa";
 import {
   DummyIconButton,
@@ -13,8 +13,16 @@ expect.extend(toHaveNoViolations);
 
 const classNames = {
   footer: "footerRoot",
+  glass: "footerGlass",
+
   primary: "themePrimary",
   secondary: "themeSecondary",
+  tertiary: "themeTertiary",
+  quaternary: "themeQuaternary",
+  clear: "themeClear",
+
+  layoutColumns: "layoutColumns",
+
   content: "footerContent",
   left: "footerLeft",
   links: "footerLinks",
@@ -23,9 +31,38 @@ const classNames = {
   themeToggle: "footerThemeToggle",
   logo: "footerLogo",
   copyright: "footerCopyright",
+
+  shadowNone: "shadowNone",
+  shadowLight: "shadowLight",
   shadowMedium: "shadowMedium",
+  shadowStrong: "shadowStrong",
+  shadowIntense: "shadowIntense",
+
+  roundNone: "roundNone",
+  roundSmall: "roundSmall",
+  roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+
+  attachmentStatic: "attachmentStatic",
   attachmentFixed: "attachmentFixed",
+  attachmentSticky: "attachmentSticky",
+
+  brand: "footerBrand",
+  brandLink: "footerBrandLink",
+  brandTitle: "footerBrandTitle",
+  brandDescription: "footerBrandDescription",
+
+  sections: "footerSections",
+  section: "footerSection",
+  sectionTitle: "footerSectionTitle",
+  sectionList: "footerSectionList",
+
+  actions: "footerActions",
+  actionGroup: "footerActionGroup",
+
+  bottom: "footerBottom",
+  bottomCopyright: "footerBottomCopyright",
+  bottomEnd: "footerBottomEnd",
 };
 
 type DummyLinkWrapperProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
@@ -42,14 +79,43 @@ const DummyLinkWrapper: React.FC<DummyLinkWrapperProps> = ({
     {children}
   </a>
 );
+
 DummyLinkWrapper.displayName = "DummyLinkWrapper";
 
 type CustomImageProps = React.ImgHTMLAttributes<HTMLImageElement>;
 
 const CustomImage: React.FC<CustomImageProps> = (props) => (
-  <img {...props} data-custom-image="true" />
+  <img {...props} data-custom-image="true" alt={props.alt ?? ""} />
 );
+
 CustomImage.displayName = "CustomImage";
+
+const defaultLinks = [
+  { label: "Home", href: "/" },
+  { label: "About Us", href: "/about" },
+];
+
+const defaultSocialLinks = [
+  { icon: FaGithub, title: "GitHub", href: "https://github.com" },
+  { icon: FaTwitter, title: "Twitter", href: "https://twitter.com" },
+];
+
+const defaultSections = [
+  {
+    title: "Resources",
+    links: [
+      { label: "Docs", href: "/docs" },
+      { label: "Components", href: "/docs/components" },
+    ],
+  },
+  {
+    title: "Legal",
+    links: [
+      { label: "Privacy", href: "/privacy" },
+      { label: "Terms", href: "/terms" },
+    ],
+  },
+];
 
 const defaultProps = {
   theme: "primary" as const,
@@ -58,486 +124,817 @@ const defaultProps = {
   ThemeSelect: DummyThemeSelect,
   LinkWrapper: DummyLinkWrapper,
   showThemeSelect: true,
-  links: [
-    { label: "Home", href: "/" },
-    { label: "About Us", href: "/about" },
-  ],
-  socialLinks: [
-    { icon: FaGithub, title: "GitHub", href: "https://github.com" },
-    { icon: FaTwitter, title: "Twitter", href: "https://twitter.com" },
-  ],
+  links: defaultLinks,
+  socialLinks: defaultSocialLinks,
   copyright: "© 2025 MyCompany",
 };
 
 const renderFooter = (
-  props: Partial<React.ComponentProps<typeof BaseFooter>> = {},
-) => render(<BaseFooter {...defaultProps} {...props} />);
+  props: Partial<React.ComponentProps<typeof FooterBase>> = {},
+) => render(<FooterBase {...defaultProps} {...props} />);
 
-describe("BaseFooter", () => {
-  it("renders the footer landmark and core regions", () => {
-    renderFooter();
+describe("FooterBase", () => {
+  describe("inline layout", () => {
+    it("applies custom class names to inline layout regions", () => {
+      renderFooter({
+        logo: <svg data-testid="inline-logo-svg" />,
+        contentClassName: "customContent",
+        leftClassName: "customLeft",
+        linksClassName: "customLinks",
+        linkClassName: "customInlineLink",
+        logoClassName: "customLogo",
+        socialClassName: "customSocial",
+        themeToggleClassName: "customThemeToggle",
+        copyrightClassName: "customCopyright",
+      });
 
-    const footer = screen.getByRole("contentinfo");
-    expect(footer).toBeInTheDocument();
-    expect(footer).toHaveAttribute("data-testid", "footer");
+      const footer = screen.getByTestId("footer");
+      const content = footer.firstElementChild;
 
-    expect(screen.getByTestId("footer-left")).toBeInTheDocument();
-    expect(screen.getByTestId("footer-nav")).toBeInTheDocument();
-    expect(screen.getByTestId("footer-social")).toBeInTheDocument();
-    expect(screen.getByTestId("footer-theme-select")).toBeInTheDocument();
-    expect(screen.getByTestId("footer-copyright")).toBeInTheDocument();
-  });
+      expect(content).toHaveClass("footerContent");
+      expect(content).toHaveClass("customContent");
 
-  it("applies footer, theme, and layout classes", () => {
-    renderFooter();
+      expect(screen.getByTestId("footer-left")).toHaveClass("footerLeft");
+      expect(screen.getByTestId("footer-left")).toHaveClass("customLeft");
 
-    const footer = screen.getByTestId("footer");
-    expect(footer).toHaveClass("footerRoot");
-    expect(footer).toHaveClass("themePrimary");
+      expect(screen.getByTestId("footer-nav")).toHaveClass("footerLinks");
+      expect(screen.getByTestId("footer-nav")).toHaveClass("customLinks");
 
-    expect(screen.getByTestId("footer-left")).toHaveClass("footerLeft");
-    expect(screen.getByTestId("footer-nav")).toHaveClass("footerLinks");
-    expect(screen.getByTestId("footer-social")).toHaveClass("footerSocial");
-    expect(screen.getByTestId("footer-theme-select")).toHaveClass(
-      "footerThemeToggle",
-    );
-  });
+      expect(screen.getByTestId("footer-link-home")).toHaveClass("footerLink");
+      expect(screen.getByTestId("footer-link-home")).toHaveClass(
+        "customInlineLink",
+      );
 
-  it("applies optional shadow, rounding, attachment, and custom className", () => {
-    renderFooter({
-      shadow: "medium",
-      rounding: "large",
-      attachment: "fixed",
-      className: "customFooterClass",
+      expect(screen.getByTestId("footer-logo")).toHaveClass("footerLogo");
+      expect(screen.getByTestId("footer-logo")).toHaveClass("customLogo");
+
+      expect(screen.getByTestId("footer-social")).toHaveClass("footerSocial");
+      expect(screen.getByTestId("footer-social")).toHaveClass("customSocial");
+
+      expect(screen.getByTestId("footer-theme-select")).toHaveClass(
+        "footerThemeToggle",
+      );
+      expect(screen.getByTestId("footer-theme-select")).toHaveClass(
+        "customThemeToggle",
+      );
+
+      expect(screen.getByTestId("footer-copyright")).toHaveClass(
+        "footerCopyright",
+      );
+      expect(screen.getByTestId("footer-copyright")).toHaveClass(
+        "customCopyright",
+      );
     });
 
-    const footer = screen.getByTestId("footer");
-    expect(footer).toHaveClass("footerRoot");
-    expect(footer).toHaveClass("themePrimary");
-    expect(footer).toHaveClass("shadowMedium");
-    expect(footer).toHaveClass("roundLarge");
-    expect(footer).toHaveClass("attachmentFixed");
-    expect(footer).toHaveClass("customFooterClass");
-  });
+    it("renders the footer landmark and core regions", () => {
+      renderFooter();
 
-  it("applies footer aria attributes", () => {
-    renderFooter({
-      "aria-label": "Site footer",
-      "aria-describedby": "footer-description",
+      const footer = screen.getByRole("contentinfo");
+      expect(footer).toBeInTheDocument();
+      expect(footer).toHaveAttribute("data-testid", "footer");
+
+      expect(screen.getByTestId("footer-left")).toBeInTheDocument();
+      expect(screen.getByTestId("footer-nav")).toBeInTheDocument();
+      expect(screen.getByTestId("footer-social")).toBeInTheDocument();
+      expect(screen.getByTestId("footer-theme-select")).toBeInTheDocument();
+      expect(screen.getByTestId("footer-copyright")).toBeInTheDocument();
     });
 
-    const footer = screen.getByRole("contentinfo", { name: "Site footer" });
-    expect(footer).toHaveAttribute("aria-describedby", "footer-description");
-  });
+    it("applies footer, theme, and inline layout classes", () => {
+      renderFooter({ glass: true });
 
-  it("uses labelId as aria-labelledby when provided", () => {
-    renderFooter({ labelId: "footer-label" });
+      const footer = screen.getByTestId("footer");
 
-    const footer = screen.getByRole("contentinfo");
-    expect(footer).toHaveAttribute("aria-labelledby", "footer-label");
+      expect(footer).toHaveClass("footerRoot");
+      expect(footer).toHaveClass("themePrimary");
+      expect(footer).toHaveClass("footerGlass");
+      expect(footer).not.toHaveClass("layoutColumns");
 
-    const copyrightText = screen.getByText("© 2025 MyCompany");
-    expect(copyrightText).toHaveAttribute("id", "footer-label");
-  });
-
-  it("prefers explicit aria-labelledby over labelId", () => {
-    renderFooter({
-      labelId: "footer-label",
-      "aria-labelledby": "external-footer-label",
+      expect(screen.getByTestId("footer-left")).toHaveClass("footerLeft");
+      expect(screen.getByTestId("footer-nav")).toHaveClass("footerLinks");
+      expect(screen.getByTestId("footer-social")).toHaveClass("footerSocial");
+      expect(screen.getByTestId("footer-theme-select")).toHaveClass(
+        "footerThemeToggle",
+      );
     });
 
-    const footer = screen.getByRole("contentinfo");
-    expect(footer).toHaveAttribute("aria-labelledby", "external-footer-label");
-  });
+    it("applies optional shadow, rounding, attachment, and custom className", () => {
+      renderFooter({
+        shadow: "medium",
+        rounding: "large",
+        attachment: "fixed",
+        className: "customFooterClass",
+      });
 
-  it("renders footer site links with expected hrefs and classes", () => {
-    renderFooter();
+      const footer = screen.getByTestId("footer");
 
-    const nav = screen.getByRole("navigation", { name: /footer site links/i });
-    expect(nav).toBeInTheDocument();
+      expect(footer).toHaveClass("footerRoot");
+      expect(footer).toHaveClass("themePrimary");
+      expect(footer).toHaveClass("shadowMedium");
+      expect(footer).toHaveClass("roundLarge");
+      expect(footer).toHaveClass("attachmentFixed");
+      expect(footer).toHaveClass("customFooterClass");
+    });
 
-    const homeLink = screen.getByTestId("footer-link-home");
-    const aboutLink = screen.getByTestId("footer-link-about-us");
+    it("applies footer aria attributes", () => {
+      renderFooter({
+        "aria-label": "Site footer",
+        "aria-describedby": "footer-description",
+      });
 
-    expect(homeLink).toHaveTextContent("Home");
-    expect(homeLink).toHaveAttribute("href", "/");
-    expect(homeLink).toHaveClass("footerLink");
+      const footer = screen.getByRole("contentinfo", { name: "Site footer" });
+      expect(footer).toHaveAttribute("aria-describedby", "footer-description");
+    });
 
-    expect(aboutLink).toHaveTextContent("About Us");
-    expect(aboutLink).toHaveAttribute("href", "/about");
-    expect(aboutLink).toHaveClass("footerLink");
+    it("uses labelId as aria-labelledby when provided", () => {
+      renderFooter({ labelId: "footer-label" });
 
-    const listItems = within(nav).getAllByRole("listitem");
-    expect(listItems).toHaveLength(2);
-  });
+      const footer = screen.getByRole("contentinfo");
+      expect(footer).toHaveAttribute("aria-labelledby", "footer-label");
 
-  it("uses a custom nav aria label when provided", () => {
-    renderFooter({ navAriaLabel: "Footer navigation links" });
+      const copyrightText = screen.getByText("© 2025 MyCompany");
+      expect(copyrightText).toHaveAttribute("id", "footer-label");
+    });
 
-    expect(
-      screen.getByRole("navigation", { name: "Footer navigation links" }),
-    ).toBeInTheDocument();
+    it("prefers explicit aria-labelledby over labelId", () => {
+      renderFooter({
+        labelId: "footer-label",
+        "aria-labelledby": "external-footer-label",
+      });
 
-    expect(
-      screen.queryByRole("navigation", { name: /footer site links/i }),
-    ).not.toBeInTheDocument();
-  });
+      const footer = screen.getByRole("contentinfo");
+      expect(footer).toHaveAttribute(
+        "aria-labelledby",
+        "external-footer-label",
+      );
+    });
 
-  it("passes link accessibility props through to the link wrapper", () => {
-    renderFooter({
-      links: [
-        {
-          label: "Docs",
-          href: "/docs",
-          "aria-label": "Documentation",
-          "aria-current": "page",
-          title: "View docs",
-          target: "_blank",
-          rel: "noreferrer",
+    it("renders footer site links with expected hrefs and classes", () => {
+      renderFooter();
+
+      const nav = screen.getByRole("navigation", {
+        name: /footer site links/i,
+      });
+
+      expect(nav).toBeInTheDocument();
+
+      const homeLink = screen.getByTestId("footer-link-home");
+      const aboutLink = screen.getByTestId("footer-link-about-us");
+
+      expect(homeLink).toHaveTextContent("Home");
+      expect(homeLink).toHaveAttribute("href", "/");
+      expect(homeLink).toHaveClass("footerLink");
+
+      expect(aboutLink).toHaveTextContent("About Us");
+      expect(aboutLink).toHaveAttribute("href", "/about");
+      expect(aboutLink).toHaveClass("footerLink");
+
+      const listItems = within(nav).getAllByRole("listitem");
+      expect(listItems).toHaveLength(2);
+    });
+
+    it("uses a custom nav aria label when provided", () => {
+      renderFooter({ navAriaLabel: "Footer navigation links" });
+
+      expect(
+        screen.getByRole("navigation", { name: "Footer navigation links" }),
+      ).toBeInTheDocument();
+
+      expect(
+        screen.queryByRole("navigation", { name: /footer site links/i }),
+      ).not.toBeInTheDocument();
+    });
+
+    it("passes link accessibility props through to the link wrapper", () => {
+      renderFooter({
+        links: [
+          {
+            label: "Docs",
+            href: "/docs",
+            "aria-label": "Documentation",
+            "aria-current": "page",
+            title: "View docs",
+            target: "_blank",
+            rel: "noreferrer",
+          },
+        ],
+      });
+
+      const link = screen.getByTestId("footer-link-docs");
+
+      expect(link).toHaveAttribute("href", "/docs");
+      expect(link).toHaveAttribute("aria-label", "Documentation");
+      expect(link).toHaveAttribute("aria-current", "page");
+      expect(link).toHaveAttribute("title", "View docs");
+      expect(link).toHaveAttribute("target", "_blank");
+      expect(link).toHaveAttribute("rel", "noreferrer");
+    });
+
+    it("renders disabled footer links as non-interactive text", () => {
+      renderFooter({
+        links: [
+          {
+            label: "Unavailable",
+            href: "/unavailable",
+            disabled: true,
+          },
+        ],
+      });
+
+      const disabledItem = screen.getByTestId("footer-link-unavailable");
+
+      expect(disabledItem.tagName).toBe("SPAN");
+      expect(disabledItem).toHaveTextContent("Unavailable");
+      expect(disabledItem).toHaveAttribute("aria-disabled", "true");
+      expect(disabledItem).not.toHaveAttribute("href");
+    });
+
+    it("renders social navigation with accessible icon links", () => {
+      renderFooter();
+
+      const socialNav = screen.getByRole("navigation", {
+        name: /social media/i,
+      });
+
+      expect(socialNav).toBeInTheDocument();
+
+      const github = screen.getByLabelText("GitHub");
+      const twitter = screen.getByLabelText("Twitter");
+
+      expect(github).toHaveAttribute("href", "https://github.com");
+      expect(github).toHaveAttribute("title", "GitHub");
+      expect(github).toHaveAttribute("data-glass", "false");
+
+      expect(twitter).toHaveAttribute("href", "https://twitter.com");
+      expect(twitter).toHaveAttribute("title", "Twitter");
+
+      expect(screen.getByTestId("footer-social-github")).toBeInTheDocument();
+      expect(screen.getByTestId("footer-social-twitter")).toBeInTheDocument();
+    });
+
+    it("uses custom social nav aria label", () => {
+      renderFooter({ socialNavAriaLabel: "Footer social links" });
+
+      expect(
+        screen.getByRole("navigation", { name: "Footer social links" }),
+      ).toBeInTheDocument();
+    });
+
+    it("passes social link accessibility props through to IconButton", () => {
+      renderFooter({
+        glass: true,
+        socialLinks: [
+          {
+            icon: FaGithub,
+            title: "GitHub",
+            href: "https://github.com",
+            "aria-label": "Open GitHub",
+            tooltip: "GitHub profile",
+            target: "_blank",
+            rel: "noreferrer",
+            disabled: false,
+          },
+        ],
+      });
+
+      const github = screen.getByLabelText("Open GitHub");
+
+      expect(github).toHaveAttribute("href", "https://github.com");
+      expect(github).toHaveAttribute("title", "GitHub profile");
+      expect(github).toHaveAttribute("target", "_blank");
+      expect(github).toHaveAttribute("rel", "noreferrer");
+      expect(github).toHaveAttribute("data-glass", "true");
+    });
+
+    it("renders theme select only when showThemeSelect is true", () => {
+      const { rerender } = render(
+        <FooterBase {...defaultProps} showThemeSelect={false} />,
+      );
+
+      expect(
+        screen.queryByTestId("footer-theme-select"),
+      ).not.toBeInTheDocument();
+
+      rerender(<FooterBase {...defaultProps} showThemeSelect />);
+
+      expect(screen.getByTestId("footer-theme-select")).toBeInTheDocument();
+    });
+
+    it("uses custom theme select aria label", () => {
+      renderFooter({ themeSelectAriaLabel: "Choose footer theme" });
+
+      expect(screen.getByTestId("footer-theme-select")).toHaveAttribute(
+        "aria-label",
+        "Choose footer theme",
+      );
+    });
+
+    it("renders no nav when there are no links", () => {
+      renderFooter({ links: [] });
+
+      expect(screen.queryByTestId("footer-nav")).not.toBeInTheDocument();
+    });
+
+    it("renders no social nav when there are no social links", () => {
+      renderFooter({ socialLinks: [] });
+
+      expect(screen.queryByTestId("footer-social")).not.toBeInTheDocument();
+    });
+
+    it("renders a string logo with the default img element", () => {
+      renderFooter({
+        logo: "/logo.svg",
+        logoAriaLabel: "Company logo",
+      });
+
+      const logo = screen.getByTestId("footer-logo");
+
+      expect(logo.tagName).toBe("IMG");
+      expect(logo).toHaveAttribute("src", "/logo.svg");
+      expect(logo).toHaveAttribute("alt", "Company logo");
+    });
+
+    it("renders an object logo with a custom image component", () => {
+      renderFooter({
+        logo: {
+          src: "/logo.svg",
+          width: 40,
+          height: 40,
         },
-      ],
+        logoAriaLabel: "Company logo",
+        ImageComponent: CustomImage,
+      });
+
+      const logo = screen.getByTestId("footer-logo");
+
+      expect(logo.tagName).toBe("IMG");
+      expect(logo).toHaveAttribute("data-custom-image", "true");
+      expect(logo).toHaveAttribute("src", "/logo.svg");
+      expect(logo).toHaveAttribute("width", "40");
+      expect(logo).toHaveAttribute("height", "40");
+      expect(logo).toHaveAttribute("alt", "Company logo");
     });
 
-    const link = screen.getByTestId("footer-link-docs");
-    expect(link).toHaveAttribute("href", "/docs");
-    expect(link).toHaveAttribute("aria-label", "Documentation");
-    expect(link).toHaveAttribute("aria-current", "page");
-    expect(link).toHaveAttribute("title", "View docs");
-    expect(link).toHaveAttribute("target", "_blank");
-    expect(link).toHaveAttribute("rel", "noreferrer");
-  });
+    it("renders a ReactNode logo with img role by default", () => {
+      renderFooter({
+        logo: <svg data-testid="custom-logo-svg" />,
+        logoAriaLabel: "Custom logo",
+      });
 
-  it("renders disabled footer links as non-interactive text", () => {
-    renderFooter({
-      links: [{ label: "Unavailable", href: "/unavailable", disabled: true }],
+      const logo = screen.getByTestId("footer-logo");
+
+      expect(logo).toHaveAttribute("role", "img");
+      expect(logo).toHaveAttribute("aria-label", "Custom logo");
+      expect(screen.getByTestId("custom-logo-svg")).toBeInTheDocument();
     });
 
-    const disabledItem = screen.getByTestId("footer-link-unavailable");
-    expect(disabledItem.tagName).toBe("SPAN");
-    expect(disabledItem).toHaveTextContent("Unavailable");
-    expect(disabledItem).toHaveAttribute("aria-disabled", "true");
-    expect(disabledItem).not.toHaveAttribute("href");
+    it("can render a decorative logo", () => {
+      renderFooter({
+        logo: <svg data-testid="decorative-logo-svg" />,
+        logoDecorative: true,
+      });
+
+      const logo = screen.getByTestId("footer-logo");
+
+      expect(logo).toHaveAttribute("aria-hidden", "true");
+      expect(logo).not.toHaveAttribute("role");
+      expect(logo).not.toHaveAttribute("aria-label");
+    });
   });
 
-  it("renders social navigation with accessible icon links", () => {
-    renderFooter();
+  describe("columns layout", () => {
+    it("applies custom class names to column layout regions", () => {
+      renderFooter({
+        layout: "columns",
+        logo: <svg data-testid="columns-logo-svg" />,
+        brandTitle: "Boreal UI",
+        brandDescription: "Accessible components for modern interfaces.",
+        brandHref: "/",
+        sections: defaultSections,
+        socialLinks: defaultSocialLinks,
+        showThemeSelect: true,
+        bottomEnd: "Secure Environment",
 
-    const socialNav = screen.getByRole("navigation", { name: /social media/i });
-    expect(socialNav).toBeInTheDocument();
+        contentClassName: "customColumnsContent",
+        logoClassName: "customColumnsLogo",
+        brandClassName: "customBrand",
+        brandLinkClassName: "customBrandLink",
+        brandTitleClassName: "customBrandTitle",
+        brandDescriptionClassName: "customBrandDescription",
+        sectionsClassName: "customSections",
+        actionsClassName: "customActions",
+        actionGroupClassName: "customActionGroup",
+        socialClassName: "customColumnsSocial",
+        themeToggleClassName: "customColumnsThemeToggle",
+        bottomClassName: "customBottom",
+        bottomCopyrightClassName: "customBottomCopyright",
+        bottomEndClassName: "customBottomEnd",
+      });
 
-    const github = screen.getByLabelText("GitHub");
-    const twitter = screen.getByLabelText("Twitter");
+      const footer = screen.getByTestId("footer");
+      const content = footer.firstElementChild;
 
-    expect(github).toHaveAttribute("href", "https://github.com");
-    expect(github).toHaveAttribute("title", "GitHub");
+      expect(content).toHaveClass("footerContent");
+      expect(content).toHaveClass("customColumnsContent");
 
-    expect(twitter).toHaveAttribute("href", "https://twitter.com");
-    expect(twitter).toHaveAttribute("title", "Twitter");
+      expect(screen.getByTestId("footer-logo")).toHaveClass("footerLogo");
+      expect(screen.getByTestId("footer-logo")).toHaveClass(
+        "customColumnsLogo",
+      );
 
-    expect(screen.getByTestId("footer-social-github")).toBeInTheDocument();
-    expect(screen.getByTestId("footer-social-twitter")).toBeInTheDocument();
-  });
+      expect(screen.getByTestId("footer-brand")).toHaveClass("footerBrand");
+      expect(screen.getByTestId("footer-brand")).toHaveClass("customBrand");
 
-  it("uses a custom social nav aria label when provided", () => {
-    renderFooter({ socialNavAriaLabel: "Footer social links" });
+      const brandLink = screen.getByRole("link", { name: "Boreal UI" });
+      expect(brandLink).toHaveClass("footerBrandLink");
+      expect(brandLink).toHaveClass("customBrandLink");
 
-    expect(
-      screen.getByRole("navigation", { name: "Footer social links" }),
-    ).toBeInTheDocument();
+      expect(screen.getByTestId("footer-brand-title")).toHaveClass(
+        "footerBrandTitle",
+      );
+      expect(screen.getByTestId("footer-brand-title")).toHaveClass(
+        "customBrandTitle",
+      );
 
-    expect(
-      screen.queryByRole("navigation", { name: /social media/i }),
-    ).not.toBeInTheDocument();
-  });
+      expect(screen.getByTestId("footer-brand-description")).toHaveClass(
+        "footerBrandDescription",
+      );
+      expect(screen.getByTestId("footer-brand-description")).toHaveClass(
+        "customBrandDescription",
+      );
 
-  it("uses custom social accessibility props when provided", () => {
-    renderFooter({
-      socialLinks: [
-        {
-          icon: FaGithub,
-          title: "GitHub",
-          href: "https://github.com",
-          "aria-label": "Visit our GitHub profile",
-          tooltip: "Open GitHub",
-          target: "_blank",
-          rel: "noopener noreferrer",
-        },
-      ],
+      expect(screen.getByTestId("footer-sections")).toHaveClass(
+        "footerSections",
+      );
+      expect(screen.getByTestId("footer-sections")).toHaveClass(
+        "customSections",
+      );
+
+      expect(screen.getByTestId("footer-actions")).toHaveClass("footerActions");
+      expect(screen.getByTestId("footer-actions")).toHaveClass("customActions");
+
+      const actionGroup = screen.getByText("Connect").closest("div");
+      expect(actionGroup).toHaveClass("footerActionGroup");
+      expect(actionGroup).toHaveClass("customActionGroup");
+
+      expect(screen.getByTestId("footer-social")).toHaveClass("footerSocial");
+      expect(screen.getByTestId("footer-social")).toHaveClass(
+        "customColumnsSocial",
+      );
+
+      expect(screen.getByTestId("footer-theme-select")).toHaveClass(
+        "footerThemeToggle",
+      );
+      expect(screen.getByTestId("footer-theme-select")).toHaveClass(
+        "customColumnsThemeToggle",
+      );
+
+      expect(screen.getByTestId("footer-bottom")).toHaveClass("footerBottom");
+      expect(screen.getByTestId("footer-bottom")).toHaveClass("customBottom");
+
+      expect(screen.getByTestId("footer-copyright")).toHaveClass(
+        "footerBottomCopyright",
+      );
+      expect(screen.getByTestId("footer-copyright")).toHaveClass(
+        "customBottomCopyright",
+      );
+
+      expect(screen.getByTestId("footer-bottom-end")).toHaveClass(
+        "footerBottomEnd",
+      );
+      expect(screen.getByTestId("footer-bottom-end")).toHaveClass(
+        "customBottomEnd",
+      );
     });
 
-    const socialLink = screen.getByLabelText("Visit our GitHub profile");
-    expect(socialLink).toHaveAttribute("href", "https://github.com");
-    expect(socialLink).toHaveAttribute("title", "Open GitHub");
-    expect(socialLink).toHaveAttribute("target", "_blank");
-    expect(socialLink).toHaveAttribute("rel", "noopener noreferrer");
-  });
+    it("applies global sectionTitleClassName to section titles and action group title", () => {
+      renderFooter({
+        layout: "columns",
+        sections: defaultSections,
+        socialLinks: defaultSocialLinks,
+        showThemeSelect: false,
+        sectionTitleClassName: "customGlobalSectionTitle",
+      });
 
-  it("passes disabled state to social icon buttons", () => {
-    renderFooter({
-      socialLinks: [
-        {
-          icon: FaGithub,
-          title: "GitHub",
-          href: "https://github.com",
-          disabled: true,
-        },
-      ],
+      expect(screen.getByText("Resources")).toHaveClass("footerSectionTitle");
+      expect(screen.getByText("Resources")).toHaveClass(
+        "customGlobalSectionTitle",
+      );
+
+      expect(screen.getByText("Legal")).toHaveClass("footerSectionTitle");
+      expect(screen.getByText("Legal")).toHaveClass("customGlobalSectionTitle");
+
+      expect(screen.getByText("Connect")).toHaveClass("footerSectionTitle");
+      expect(screen.getByText("Connect")).toHaveClass(
+        "customGlobalSectionTitle",
+      );
     });
 
-    const socialLink = screen.getByTestId("footer-social-github");
-    expect(socialLink).toHaveAttribute("aria-disabled", "true");
-  });
+    it("renders the column layout root, brand, sections, actions, and bottom bar", () => {
+      renderFooter({
+        layout: "columns",
+        theme: "clear",
+        logo: <svg data-testid="brand-logo-svg" />,
+        logoDecorative: true,
+        brandTitle: "Boreal UI",
+        brandDescription:
+          "Engineered for precision. Built for accessible interfaces.",
+        brandHref: "/",
+        sections: defaultSections,
+        bottomEnd: "Secure Environment",
+      });
 
-  it("renders the theme select with the custom aria label when provided", () => {
-    renderFooter({ themeSelectAriaLabel: "Choose theme" });
+      const footer = screen.getByTestId("footer");
 
-    const wrapper = screen.getByTestId("footer-theme-select");
-    const themeSelect = within(wrapper).getByRole("combobox", {
-      name: "Choose theme",
+      expect(footer).toHaveClass("footerRoot");
+      expect(footer).toHaveClass("themeClear");
+      expect(footer).toHaveClass("layoutColumns");
+
+      expect(screen.getByTestId("footer-brand")).toHaveClass("footerBrand");
+      expect(screen.getByTestId("footer-brand-title")).toHaveClass(
+        "footerBrandTitle",
+      );
+      expect(screen.getByTestId("footer-brand-description")).toHaveClass(
+        "footerBrandDescription",
+      );
+
+      expect(screen.getByText("Boreal UI")).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          "Engineered for precision. Built for accessible interfaces.",
+        ),
+      ).toBeInTheDocument();
+
+      expect(screen.getByTestId("footer-sections")).toHaveClass(
+        "footerSections",
+      );
+      expect(screen.getByTestId("footer-actions")).toHaveClass("footerActions");
+      expect(screen.getByTestId("footer-bottom")).toHaveClass("footerBottom");
+      expect(screen.getByTestId("footer-bottom-end")).toHaveTextContent(
+        "Secure Environment",
+      );
     });
 
-    expect(themeSelect).toBeInTheDocument();
-    expect(themeSelect.tagName).toBe("SELECT");
-    expect(wrapper).toHaveAttribute("aria-label", "Choose theme");
-  });
+    it("renders brand as a link when brandHref is provided", () => {
+      renderFooter({
+        layout: "columns",
+        logo: <svg />,
+        brandTitle: "Boreal UI",
+        brandHref: "/",
+        sections: [],
+        socialLinks: [],
+        showThemeSelect: false,
+      });
 
-  it("renders the theme select when showThemeSelect is true", () => {
-    renderFooter();
+      const brandLink = screen.getByRole("link", { name: "Boreal UI" });
 
-    const wrapper = screen.getByTestId("footer-theme-select");
-    const themeSelect = within(wrapper).getByRole("combobox", {
-      name: "Theme selector",
+      expect(brandLink).toHaveAttribute("href", "/");
+      expect(brandLink).toHaveClass("footerBrandLink");
     });
 
-    expect(themeSelect).toBeInTheDocument();
-    expect(themeSelect.tagName).toBe("SELECT");
-  });
+    it("renders brand as non-link content when brandHref is omitted", () => {
+      renderFooter({
+        layout: "columns",
+        logo: <svg />,
+        brandTitle: "Boreal UI",
+        sections: [],
+        socialLinks: [],
+        showThemeSelect: false,
+      });
 
-  it("does not render the theme select when showThemeSelect is false", () => {
-    renderFooter({ showThemeSelect: false });
+      expect(
+        screen.queryByRole("link", { name: "Boreal UI" }),
+      ).not.toBeInTheDocument();
 
-    expect(screen.queryByTestId("footer-theme-select")).not.toBeInTheDocument();
-    expect(screen.queryByLabelText("Theme selector")).not.toBeInTheDocument();
-  });
-
-  it("renders copyright text when provided", () => {
-    renderFooter();
-
-    const copyright = screen.getByTestId("footer-copyright");
-    expect(copyright).toBeInTheDocument();
-    expect(copyright).toHaveTextContent("© 2025 MyCompany");
-    expect(copyright).toHaveClass("footerCopyright");
-  });
-
-  it("does not render copyright block when copyright is not provided", () => {
-    renderFooter({ copyright: undefined });
-
-    expect(screen.queryByTestId("footer-copyright")).not.toBeInTheDocument();
-  });
-
-  it("renders a string logo source as an img element", () => {
-    renderFooter({ logo: "/logo.png" });
-
-    const logo = screen.getByTestId("footer-logo");
-    expect(logo.tagName).toBe("IMG");
-    expect(logo).toHaveAttribute("src", "/logo.png");
-    expect(logo).toHaveAttribute("alt", "Logo");
-    expect(logo).toHaveAttribute("loading", "lazy");
-    expect(logo).toHaveAttribute("width", "20");
-    expect(logo).toHaveAttribute("height", "20");
-  });
-
-  it("uses logoAriaLabel for image logos", () => {
-    renderFooter({
-      logo: "/logo.png",
-      logoAriaLabel: "Acme brand logo",
+      expect(screen.getByTestId("footer-brand")).toBeInTheDocument();
+      expect(screen.getByTestId("footer-brand-title")).toHaveTextContent(
+        "Boreal UI",
+      );
     });
 
-    const logo = screen.getByTestId("footer-logo");
-    expect(logo).toHaveAttribute("alt", "Acme brand logo");
-  });
+    it("renders grouped footer sections with section headings and links", () => {
+      renderFooter({
+        layout: "columns",
+        sections: defaultSections,
+        socialLinks: [],
+        showThemeSelect: false,
+      });
 
-  it("renders decorative image logos with empty alt text and aria-hidden", () => {
-    renderFooter({
-      logo: "/logo.png",
-      logoDecorative: true,
-      logoAriaLabel: "Should not be announced",
+      const resourcesNav = screen.getByRole("navigation", {
+        name: "Resources links",
+      });
+      const legalNav = screen.getByRole("navigation", {
+        name: "Legal links",
+      });
+
+      expect(resourcesNav).toBeInTheDocument();
+      expect(legalNav).toBeInTheDocument();
+
+      expect(within(resourcesNav).getByText("Resources")).toHaveClass(
+        "footerSectionTitle",
+      );
+      expect(within(resourcesNav).getByTestId("footer-link-docs")).toHaveClass(
+        "footerLink",
+      );
+      expect(
+        within(resourcesNav).getByTestId("footer-link-docs"),
+      ).toHaveAttribute("href", "/docs");
+
+      expect(
+        within(legalNav).getByTestId("footer-link-privacy"),
+      ).toHaveAttribute("href", "/privacy");
+      expect(within(legalNav).getAllByRole("listitem")).toHaveLength(2);
     });
 
-    const logo = screen.getByTestId("footer-logo");
-    expect(logo).toHaveAttribute("alt", "");
-    expect(logo).toHaveAttribute("aria-hidden", "true");
-  });
+    it("uses a custom section aria-label when provided", () => {
+      renderFooter({
+        layout: "columns",
+        sections: [
+          {
+            title: "Resources",
+            "aria-label": "Helpful resources",
+            links: [{ label: "Docs", href: "/docs" }],
+          },
+        ],
+        socialLinks: [],
+        showThemeSelect: false,
+      });
 
-  it("renders an object logo source with custom dimensions", () => {
-    renderFooter({
-      logo: {
-        src: "/brand-mark.svg",
-        width: 48,
-        height: 32,
-      },
+      expect(
+        screen.getByRole("navigation", { name: "Helpful resources" }),
+      ).toBeInTheDocument();
+
+      expect(
+        screen.queryByRole("navigation", { name: "Resources links" }),
+      ).not.toBeInTheDocument();
     });
 
-    const logo = screen.getByTestId("footer-logo");
-    expect(logo.tagName).toBe("IMG");
-    expect(logo).toHaveAttribute("src", "/brand-mark.svg");
-    expect(logo).toHaveAttribute("width", "48");
-    expect(logo).toHaveAttribute("height", "32");
-    expect(logo).toHaveAttribute("alt", "Logo");
-  });
+    it("uses the existing links prop as a fallback section when sections are omitted", () => {
+      renderFooter({
+        layout: "columns",
+        sections: undefined,
+        links: defaultLinks,
+        socialLinks: [],
+        showThemeSelect: false,
+      });
 
-  it("renders logo using a custom ImageComponent when provided", () => {
-    renderFooter({
-      logo: "/logo-custom.png",
-      ImageComponent: CustomImage,
+      expect(screen.getByTestId("footer-sections")).toBeInTheDocument();
+
+      const fallbackNav = screen.getByRole("navigation", {
+        name: /footer site links/i,
+      });
+
+      expect(fallbackNav).toBeInTheDocument();
+      expect(
+        within(fallbackNav).getByTestId("footer-link-home"),
+      ).toHaveAttribute("href", "/");
+      expect(
+        within(fallbackNav).getByTestId("footer-link-about-us"),
+      ).toHaveTextContent("About Us");
     });
 
-    const logo = screen.getByTestId("footer-logo");
-    expect(logo).toHaveAttribute("src", "/logo-custom.png");
-    expect(logo).toHaveAttribute("alt", "Logo");
-    expect(logo).toHaveAttribute("data-custom-image", "true");
-  });
+    it("does not render sections when sections and links are empty", () => {
+      renderFooter({
+        layout: "columns",
+        sections: [],
+        links: [],
+        socialLinks: [],
+        showThemeSelect: false,
+      });
 
-  it("renders a custom node logo with img role and accessible label", () => {
-    renderFooter({
-      logo: (
-        <svg>
-          <title>Brand</title>
-        </svg>
-      ),
-      logoAriaLabel: "Brand logo",
+      expect(screen.queryByTestId("footer-sections")).not.toBeInTheDocument();
     });
 
-    const logo = screen.getByTestId("footer-logo");
-    expect(logo.tagName).toBe("SPAN");
-    expect(logo).toHaveAttribute("role", "img");
-    expect(logo).toHaveAttribute("aria-label", "Brand logo");
-  });
+    it("renders social links and theme select inside the actions region", () => {
+      renderFooter({
+        layout: "columns",
+        sections: defaultSections,
+        socialLinks: defaultSocialLinks,
+        showThemeSelect: true,
+      });
 
-  it("renders a decorative custom node logo as hidden from assistive tech", () => {
-    renderFooter({
-      logo: (
-        <svg>
-          <title>Brand</title>
-        </svg>
-      ),
-      logoDecorative: true,
+      const actions = screen.getByTestId("footer-actions");
+
+      expect(actions).toHaveClass("footerActions");
+      expect(within(actions).getByText("Connect")).toHaveClass(
+        "footerSectionTitle",
+      );
+      expect(within(actions).getByTestId("footer-social")).toHaveClass(
+        "footerSocial",
+      );
+      expect(within(actions).getByTestId("footer-theme-select")).toHaveClass(
+        "footerThemeToggle",
+      );
     });
 
-    const logo = screen.getByTestId("footer-logo");
-    expect(logo).toHaveAttribute("aria-hidden", "true");
-    expect(logo).not.toHaveAttribute("role");
-    expect(logo).not.toHaveAttribute("aria-label");
-  });
+    it("does not render the actions region when social links and theme select are omitted", () => {
+      renderFooter({
+        layout: "columns",
+        sections: defaultSections,
+        socialLinks: [],
+        showThemeSelect: false,
+      });
 
-  it("renders no logo element when logo is not provided", () => {
-    renderFooter({ logo: undefined });
-
-    expect(screen.queryByTestId("footer-logo")).not.toBeInTheDocument();
-  });
-
-  it("renders no site links nav when links array is empty", () => {
-    renderFooter({ links: [] });
-
-    expect(
-      screen.queryByRole("navigation", { name: /footer site links/i }),
-    ).not.toBeInTheDocument();
-    expect(screen.queryByTestId("footer-nav")).not.toBeInTheDocument();
-  });
-
-  it("renders no social nav when socialLinks array is empty", () => {
-    renderFooter({ socialLinks: [] });
-
-    expect(
-      screen.queryByRole("navigation", { name: /social media/i }),
-    ).not.toBeInTheDocument();
-    expect(screen.queryByTestId("footer-social")).not.toBeInTheDocument();
-  });
-
-  it("uses the provided data-testid prefix for internal elements", () => {
-    renderFooter({
-      "data-testid": "site-footer",
-      logo: "/logo.png",
+      expect(screen.queryByTestId("footer-actions")).not.toBeInTheDocument();
     });
 
-    expect(screen.getByTestId("site-footer")).toBeInTheDocument();
-    expect(screen.getByTestId("site-footer-left")).toBeInTheDocument();
-    expect(screen.getByTestId("site-footer-nav")).toBeInTheDocument();
-    expect(screen.getByTestId("site-footer-social")).toBeInTheDocument();
-    expect(screen.getByTestId("site-footer-theme-select")).toBeInTheDocument();
-    expect(screen.getByTestId("site-footer-copyright")).toBeInTheDocument();
-    expect(screen.getByTestId("site-footer-logo")).toBeInTheDocument();
-    expect(screen.getByTestId("site-footer-link-home")).toBeInTheDocument();
-  });
+    it("renders copyright in the bottom bar by default for columns layout", () => {
+      renderFooter({
+        layout: "columns",
+        sections: defaultSections,
+        socialLinks: [],
+        showThemeSelect: false,
+      });
 
-  it("creates slugged test ids for links based on label text", () => {
-    renderFooter({
-      links: [
-        { label: "Contact Us", href: "/contact" },
-        { label: "Privacy Policy", href: "/privacy" },
-      ],
+      const bottom = screen.getByTestId("footer-bottom");
+      const copyright = screen.getByTestId("footer-copyright");
+
+      expect(bottom).toBeInTheDocument();
+      expect(copyright).toHaveClass("footerBottomCopyright");
+      expect(copyright).toHaveTextContent("© 2025 MyCompany");
     });
 
-    expect(screen.getByTestId("footer-link-contact-us")).toBeInTheDocument();
-    expect(
-      screen.getByTestId("footer-link-privacy-policy"),
-    ).toBeInTheDocument();
-  });
+    it("can render copyright in the brand column when copyrightInBottom is false", () => {
+      renderFooter({
+        layout: "columns",
+        logo: <svg />,
+        brandTitle: "Boreal UI",
+        copyrightInBottom: false,
+        sections: [],
+        socialLinks: [],
+        showThemeSelect: false,
+        bottomEnd: "Secure Environment",
+      });
 
-  it("creates slugged test ids for social titles with spaces", () => {
-    renderFooter({
-      socialLinks: [
-        {
-          icon: FaGithub,
-          title: "Git Hub",
-          href: "https://github.com",
-        },
-      ],
+      const brand = screen.getByTestId("footer-brand");
+      const copyright = screen.getByTestId("footer-copyright");
+
+      expect(within(brand).getByText("© 2025 MyCompany")).toBeInTheDocument();
+      expect(copyright).toHaveClass("footerCopyright");
+      expect(screen.getByTestId("footer-bottom")).toBeInTheDocument();
+      expect(screen.getByTestId("footer-bottom-end")).toHaveTextContent(
+        "Secure Environment",
+      );
     });
 
-    expect(screen.getByTestId("footer-social-git-hub")).toBeInTheDocument();
-    expect(screen.getByLabelText("Git Hub")).toHaveAttribute(
-      "href",
-      "https://github.com",
-    );
-  });
+    it("does not render the bottom bar when copyright and bottomEnd are omitted", () => {
+      renderFooter({
+        layout: "columns",
+        copyright: undefined,
+        bottomEnd: undefined,
+        sections: defaultSections,
+        socialLinks: [],
+        showThemeSelect: false,
+      });
 
-  it("renders with only the required structural parts when optional content is omitted", () => {
-    render(
-      <BaseFooter
-        theme="primary"
-        classMap={classNames}
-        IconButton={DummyIconButton}
-        ThemeSelect={DummyThemeSelect}
-        LinkWrapper={DummyLinkWrapper}
-      />,
-    );
-
-    expect(screen.getByRole("contentinfo")).toBeInTheDocument();
-    expect(screen.getByTestId("footer-left")).toBeInTheDocument();
-
-    expect(screen.queryByTestId("footer-nav")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("footer-social")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("footer-theme-select")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("footer-copyright")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("footer-logo")).not.toBeInTheDocument();
-  });
-
-  it("has no accessibility violations", async () => {
-    const { container } = renderFooter({
-      "aria-label": "Site footer",
-      navAriaLabel: "Footer navigation links",
-      socialNavAriaLabel: "Footer social links",
-      themeSelectAriaLabel: "Choose theme",
-      logo: {
-        src: "/logo.svg",
-        width: 40,
-        height: 40,
-      },
-      logoAriaLabel: "Company logo",
+      expect(screen.queryByTestId("footer-bottom")).not.toBeInTheDocument();
     });
 
-    const results = await axe(container);
-    expect(results).toHaveNoViolations();
+    it("uses labelId on bottom copyright in columns layout", () => {
+      renderFooter({
+        layout: "columns",
+        labelId: "columns-footer-label",
+        sections: defaultSections,
+        socialLinks: [],
+        showThemeSelect: false,
+      });
+
+      const footer = screen.getByRole("contentinfo");
+      const copyright = screen.getByTestId("footer-copyright");
+
+      expect(footer).toHaveAttribute("aria-labelledby", "columns-footer-label");
+      expect(copyright).toHaveAttribute("id", "columns-footer-label");
+    });
+  });
+
+  describe("accessibility", () => {
+    it("has no axe violations in the inline layout", async () => {
+      const { container } = renderFooter({
+        "aria-label": "Footer",
+        logo: <svg />,
+        logoDecorative: true,
+      });
+
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+
+    it("has no axe violations in the columns layout", async () => {
+      const { container } = renderFooter({
+        layout: "columns",
+        "aria-label": "Footer",
+        logo: <svg />,
+        logoDecorative: true,
+        brandTitle: "Boreal UI",
+        brandDescription:
+          "Accessible components for React and Next.js applications.",
+        brandHref: "/",
+        sections: defaultSections,
+        bottomEnd: "Secure Environment",
+      });
+
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
   });
 });

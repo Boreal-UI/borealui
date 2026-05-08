@@ -1,7 +1,6 @@
 export { default as FileIcon } from "./FileIcon";
 export { default as TrashIcon } from "./TrashIcon";
 export { default as FallbackUserIcon } from "./UserIcon";
-export { default as SeparatorIcon } from "./SeperatorIcon";
 export { default as ArrowUpIcon } from "./ArrowUpIcon";
 export { default as CloseIcon } from "./CloseIcon";
 export { default as ArrowLeftIcon } from "./ArrowLeftIcon";

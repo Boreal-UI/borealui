@@ -16,6 +16,7 @@ const classes = {
   input: "tag_input_input",
   suggestionList: "tag_input_suggestion_list",
   suggestionItem: "tag_input_suggestion_item",
+  active: "tag_input_active",
 
   primary: "tag_input_primary",
   secondary: "tag_input_secondary",
@@ -27,6 +28,7 @@ const classes = {
   error: "tag_input_error",
 
   clear: "tag_input_clear",
+  glass: "tag_input_glass",
 
   xs: "tag_input_xs",
   small: "tag_input_small",

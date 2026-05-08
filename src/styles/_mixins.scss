@@ -41,3 +41,14 @@
   white-space: nowrap;
   border: 0;
 }
+
+@mixin glass-surface(
+  $background: var(--glass-background),
+  $border: var(--glass-border-color),
+  $blur: var(--glass-blur)
+) {
+  background: $background;
+  border: 1px solid $border;
+  -webkit-backdrop-filter: blur($blur) saturate(var(--glass-saturate));
+  backdrop-filter: blur($blur) saturate(var(--glass-saturate));
+}

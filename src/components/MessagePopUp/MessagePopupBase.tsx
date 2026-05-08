@@ -133,6 +133,8 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
     rounding && classMap[`round${capitalize(rounding)}`],
     className,
   );
+  const resolvedDialogRole =
+    dialogRole === "alertdialog" ? "alertdialog" : "dialog";
 
   return ReactDOM.createPortal(
     <div
@@ -144,7 +146,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
       <div
         className={classMap.content}
         onClick={(e) => e.stopPropagation()}
-        role={dialogRole}
+        role={resolvedDialogRole}
         aria-modal={true}
         aria-label={ariaLabel}
         aria-labelledby={resolvedAriaLabelledBy}

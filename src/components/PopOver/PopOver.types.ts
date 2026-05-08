@@ -58,6 +58,11 @@ export interface PopoverProps {
   theme?: ThemeType;
 
   /**
+   * Adds translucent glass styling to the floating popover content.
+   */
+  glass?: boolean;
+
+  /**
    * State of the popover, for feedback styling.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    */

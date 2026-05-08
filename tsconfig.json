@@ -24,20 +24,24 @@
   },
 
   "include": [
-    "src",
-    "scripts",
-    "__tests__",
-    "jest.setup.ts",
-    "jest.config.ts",
-    "global.d.ts",
-    "./src/types/scss.d.ts",
-    "./src/types/types.d.ts",
-    "next.config.mjs",
+    "src/**/*",
+    "__tests__/**/*",
     "stories-core/**/*",
     "stories-next/**/*",
-    "webpack.config.cjs",
-    "scripts/buildEntryMap.js"
+    ".storybook/**/*",
+    ".storybook-core/**/*",
+    ".storybook-next/**/*",
+    "vite.config.ts",
+    "vite.config.core.ts",
+    "vite.config.next.ts",
+    "global.d.ts",
+    "vite-env.d.ts"
   ],
-
-  "exclude": ["node_modules", "cypress", "dist"]
+  "exclude": [
+    "dist",
+    "node_modules",
+    "coverage",
+    "storybook-static",
+    ".storybook-static"
+  ]
 }

@@ -3,55 +3,54 @@ import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import ThemeProvider, { ThemeContext } from "../../src/context/ThemeContext";
 import type { ThemeContextType } from "../../src/context/ThemeContext.types";
 
-jest.mock("../../src/styles/colorSchemeRegistry", () => ({
-  getAllColorSchemes: jest.fn(),
-  registerColorScheme: jest.fn(),
+jest.mock("../../src/styles/Themes", () => ({
+  defaultColorSchemes: [
+    {
+      name: "Forest Dusk",
+      primaryColor: "#336699",
+      secondaryColor: "#993366",
+      tertiaryColor: "#669933",
+      quaternaryColor: "#cc9933",
+      backgroundColor: "#ffffff",
+    },
+    {
+      name: "Ocean Breeze",
+      primaryColor: "#005577",
+      secondaryColor: "#227799",
+      tertiaryColor: "#4499bb",
+      quaternaryColor: "#66bbdd",
+      backgroundColor: "#f4faff",
+    },
+  ],
 }));
 
 jest.mock("../../src/config/boreal-style-config", () => ({
   getDefaultColorSchemeName: jest.fn(),
 }));
 
-import {
-  getAllColorSchemes,
-  registerColorScheme,
-} from "../../src/styles/colorSchemeRegistry";
+import { defaultColorSchemes } from "../../src/styles/Themes";
 import { getDefaultColorSchemeName } from "../../src/config/boreal-style-config";
 
-const mockedGetAllColorSchemes = getAllColorSchemes as jest.Mock;
-const mockedRegisterColorScheme = registerColorScheme as jest.Mock;
 const mockedGetDefaultColorSchemeName = getDefaultColorSchemeName as jest.Mock;
 
-const baseSchemes = [
-  {
-    name: "Forest Dusk",
-    primaryColor: "#336699",
-    secondaryColor: "#993366",
-    tertiaryColor: "#669933",
-    quaternaryColor: "#cc9933",
-    backgroundColor: "#ffffff",
-  },
-  {
-    name: "Ocean Breeze",
-    primaryColor: "#005577",
-    secondaryColor: "#227799",
-    tertiaryColor: "#4499bb",
-    quaternaryColor: "#66bbdd",
-    backgroundColor: "#f4faff",
-  },
-];
+const baseSchemes = defaultColorSchemes;
 
 const STORAGE_KEY = "boreal:selectedSchemeName";
 
 const Consumer = () => {
   const context: ThemeContextType | undefined = React.useContext(ThemeContext);
 
-  if (!context) return <div data-testid="no-context">No context</div>;
+  if (!context) {
+    return <div data-testid="no-context">No context</div>;
+  }
 
   return (
     <div>
       <div data-testid="selected-scheme">{context.selectedScheme}</div>
       <div data-testid="scheme-count">{context.schemes.length}</div>
+      <div data-testid="scheme-names">
+        {context.schemes.map((scheme) => scheme.name).join(", ")}
+      </div>
       <button
         data-testid="set-scheme"
         onClick={() => context.setSelectedScheme(1)}
@@ -71,8 +70,6 @@ describe("ThemeProvider", () => {
     document.documentElement.removeAttribute("style");
 
     mockedGetDefaultColorSchemeName.mockReturnValue("Forest Dusk");
-    mockedGetAllColorSchemes.mockReturnValue(baseSchemes);
-
     console.error = jest.fn();
   });
 
@@ -80,7 +77,7 @@ describe("ThemeProvider", () => {
     console.error = originalError;
   });
 
-  it("uses getAllColorSchemes to initialize schemes", async () => {
+  it("uses defaultColorSchemes when no custom schemes are provided", async () => {
     render(
       <ThemeProvider>
         <Consumer />
@@ -88,8 +85,10 @@ describe("ThemeProvider", () => {
     );
 
     await waitFor(() => {
-      expect(mockedGetAllColorSchemes).toHaveBeenCalled();
       expect(screen.getByTestId("scheme-count")).toHaveTextContent("2");
+      expect(screen.getByTestId("scheme-names")).toHaveTextContent(
+        "Forest Dusk, Ocean Breeze",
+      );
     });
   });
 
@@ -123,11 +122,11 @@ describe("ThemeProvider", () => {
     });
   });
 
-  it("prefers initialScheme over the saved localStorage value", async () => {
+  it("prefers initialSchemeName over the saved localStorage value", async () => {
     localStorage.setItem(STORAGE_KEY, "Forest Dusk");
 
     render(
-      <ThemeProvider initialScheme={1}>
+      <ThemeProvider initialSchemeName="Ocean Breeze">
         <Consumer />
       </ThemeProvider>,
     );
@@ -138,7 +137,7 @@ describe("ThemeProvider", () => {
     });
   });
 
-  it("calls registerColorScheme when custom schemes are provided", async () => {
+  it("merges custom schemes with default schemes by default", async () => {
     const customSchemes = [
       {
         name: "Custom Aurora",
@@ -149,37 +148,6 @@ describe("ThemeProvider", () => {
         backgroundColor: "#fefefe",
       },
     ];
-
-    render(
-      <ThemeProvider customSchemes={customSchemes}>
-        <Consumer />
-      </ThemeProvider>,
-    );
-
-    await waitFor(() => {
-      expect(mockedRegisterColorScheme).toHaveBeenCalledWith(customSchemes);
-    });
-  });
-
-  it("refreshes schemes after registering custom schemes", async () => {
-    const customSchemes = [
-      {
-        name: "Custom Aurora",
-        primaryColor: "#111111",
-        secondaryColor: "#222222",
-        tertiaryColor: "#333333",
-        quaternaryColor: "#444444",
-        backgroundColor: "#fefefe",
-      },
-    ];
-
-    let availableSchemes = [...baseSchemes];
-
-    mockedGetAllColorSchemes.mockImplementation(() => availableSchemes);
-
-    mockedRegisterColorScheme.mockImplementation((schemes) => {
-      availableSchemes = [...baseSchemes, ...schemes];
-    });
 
     render(
       <ThemeProvider customSchemes={customSchemes}>
@@ -189,29 +157,110 @@ describe("ThemeProvider", () => {
 
     await waitFor(() => {
       expect(screen.getByTestId("scheme-count")).toHaveTextContent("3");
+      expect(screen.getByTestId("scheme-names")).toHaveTextContent(
+        "Forest Dusk, Ocean Breeze, Custom Aurora",
+      );
     });
-
-    expect(mockedRegisterColorScheme).toHaveBeenCalledWith(customSchemes);
-    expect(mockedGetAllColorSchemes).toHaveBeenCalled();
   });
 
-  it("does not call registerColorScheme when customSchemes is empty", async () => {
+  it("overrides matching default schemes when custom schemes share the same name", async () => {
+    const customSchemes = [
+      {
+        name: "Forest Dusk",
+        primaryColor: "#101010",
+        secondaryColor: "#202020",
+        tertiaryColor: "#303030",
+        quaternaryColor: "#404040",
+        backgroundColor: "#fafafa",
+      },
+    ];
+
     render(
-      <ThemeProvider customSchemes={[]}>
+      <ThemeProvider
+        customSchemes={customSchemes}
+        initialSchemeName="Forest Dusk"
+      >
         <Consumer />
       </ThemeProvider>,
     );
 
     await waitFor(() => {
       expect(screen.getByTestId("scheme-count")).toHaveTextContent("2");
+      expect(
+        document.documentElement.style.getPropertyValue("--primary-color"),
+      ).toBe("#101010");
+      expect(
+        document.documentElement.style.getPropertyValue("--background-color"),
+      ).toBe("#fafafa");
     });
+  });
 
-    expect(mockedRegisterColorScheme).not.toHaveBeenCalled();
+  it("uses only custom schemes when useOnlyCustomSchemes is true", async () => {
+    const customSchemes = [
+      {
+        name: "Custom Aurora",
+        primaryColor: "#111111",
+        secondaryColor: "#222222",
+        tertiaryColor: "#333333",
+        quaternaryColor: "#444444",
+        backgroundColor: "#fefefe",
+      },
+      {
+        name: "Northern Glow",
+        primaryColor: "#550055",
+        secondaryColor: "#770077",
+        tertiaryColor: "#990099",
+        quaternaryColor: "#bb00bb",
+        backgroundColor: "#fff8ff",
+      },
+    ];
+
+    render(
+      <ThemeProvider customSchemes={customSchemes} useOnlyCustomSchemes>
+        <Consumer />
+      </ThemeProvider>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("scheme-count")).toHaveTextContent("2");
+      expect(screen.getByTestId("scheme-names")).toHaveTextContent(
+        "Custom Aurora, Northern Glow",
+      );
+      expect(screen.getByTestId("scheme-names")).not.toHaveTextContent(
+        "Forest Dusk",
+      );
+    });
+  });
+
+  it("falls back to index 0 when useOnlyCustomSchemes is true and the configured default scheme is missing", async () => {
+    const customSchemes = [
+      {
+        name: "Custom Aurora",
+        primaryColor: "#111111",
+        secondaryColor: "#222222",
+        tertiaryColor: "#333333",
+        quaternaryColor: "#444444",
+        backgroundColor: "#fefefe",
+      },
+    ];
+
+    mockedGetDefaultColorSchemeName.mockReturnValue("Forest Dusk");
+
+    render(
+      <ThemeProvider customSchemes={customSchemes} useOnlyCustomSchemes>
+        <Consumer />
+      </ThemeProvider>,
+    );
+
+    await waitFor(() => {
+      expect(screen.getByTestId("selected-scheme")).toHaveTextContent("0");
+      expect(localStorage.getItem(STORAGE_KEY)).toBe("Custom Aurora");
+    });
   });
 
   it("applies CSS variables to the root element", async () => {
     render(
-      <ThemeProvider initialScheme={0}>
+      <ThemeProvider initialSchemeName="Forest Dusk">
         <Consumer />
       </ThemeProvider>,
     );
@@ -237,7 +286,7 @@ describe("ThemeProvider", () => {
 
   it("updates selectedScheme through context and saves the scheme name", async () => {
     render(
-      <ThemeProvider initialScheme={0}>
+      <ThemeProvider initialSchemeName="Forest Dusk">
         <Consumer />
       </ThemeProvider>,
     );

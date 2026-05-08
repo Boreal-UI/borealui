@@ -23,6 +23,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   asChild = false,
   placement = "bottom",
   theme = getDefaultTheme(),
+  glass = false,
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   state = "",
@@ -180,6 +181,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
         classMap[dynamicPlacement],
         classMap[theme],
         classMap[state],
+        glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         contentClassName,
@@ -189,6 +191,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
       dynamicPlacement,
       theme,
       state,
+      glass,
       shadow,
       rounding,
       contentClassName,
@@ -222,7 +225,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   const renderedTrigger =
     asChild && isValidElement<TriggerElementProps>(trigger) ? (
       (() => {
-        const triggerEl = trigger as React.ReactElement<TriggerElementProps>;
+        const triggerEl = trigger;
 
         return cloneElement(triggerEl, {
           ...triggerProps,

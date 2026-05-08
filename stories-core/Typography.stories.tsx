@@ -1,7 +1,8 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { Typography } from "../src/index.core";
+import { TypographyVariant } from "@/core/Typography";
 
-const variantOptions = [
+const variantOptions: TypographyVariant[] = [
   "display",
   "h1",
   "h2",
@@ -16,43 +17,6 @@ const variantOptions = [
   "caption",
   "overline",
   "code",
-];
-
-const alignOptions = ["left", "center", "right", "inherit"];
-const weightOptions = [
-  "light",
-  "normal",
-  "medium",
-  "bold",
-  "bolder",
-  "inherit",
-];
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-  "success",
-  "warning",
-  "error",
-  "inherit",
-];
-
-const asOptions = [
-  "span",
-  "p",
-  "div",
-  "label",
-  "strong",
-  "em",
-  "code",
-  "h1",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
-  "h6",
 ];
 
 const meta: Meta<typeof Typography> = {
@@ -76,7 +40,7 @@ const defaultArgs = {
   truncate: false,
   noWrap: false,
   srOnly: false,
-};
+} satisfies React.ComponentProps<typeof Typography>;
 
 export const Default: Story = {
   args: {

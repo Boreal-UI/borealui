@@ -48,7 +48,10 @@ function addExports(type) {
       }
 
       exportEntry.import = `./dist/${type}/${name}.js`;
-      exportEntry.require = `./dist/${type}/${name}.cjs.js`;
+
+      if (type === "core") {
+        exportEntry.require = `./dist/${type}/${name}.cjs.js`;
+      }
 
       exportsMap[key] = exportEntry;
     });

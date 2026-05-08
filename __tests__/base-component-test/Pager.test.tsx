@@ -7,11 +7,14 @@ expect.extend(toHaveNoViolations);
 
 const classNames = {
   wrapper: "pagerWrapper",
+  glass: "pagerGlass",
   controls: "pagerControls",
   controlButton: "pagerControlButton",
   buttonWrapper: "pagerButtonWrapper",
   button: "pagerButton",
   active: "activePage",
+  primary: "themePrimary",
+  success: "stateSuccess",
   shadowLight: "shadowLight",
   shadowMedium: "shadowMedium",
   roundSmall: "roundSmall",
@@ -632,6 +635,9 @@ describe("BasePager", () => {
         currentPage={2}
         onPageChange={jest.fn()}
         className="customPager"
+        theme="primary"
+        state="success"
+        glass
         rounding="medium"
         shadow="light"
         Button={DummyButton}
@@ -643,6 +649,8 @@ describe("BasePager", () => {
 
     expect(screen.getByTestId("pager")).toHaveClass(
       "pagerWrapper",
+      "themePrimary",
+      "stateSuccess",
       "customPager",
     );
 
@@ -653,6 +661,14 @@ describe("BasePager", () => {
       "pagerButton",
       "roundMedium",
       "shadowLight",
+    );
+    expect(screen.getByTestId("pager-button-1")).toHaveAttribute(
+      "data-glass",
+      "true",
+    );
+    expect(screen.getByTestId("pager-prev")).toHaveAttribute(
+      "data-glass",
+      "true",
     );
   });
 

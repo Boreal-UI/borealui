@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .container {
@@ -39,8 +40,10 @@
   justify-content: space-between;
   align-items: center;
   width: fit-content;
-  height: fit-content;
+  height: max-content;
   margin: var(--spacing-sm);
+  padding-left: var(--spacing-sm);
+  padding-right: var(--spacing-sm);
   transition: var(--transition-default);
   background: transparent;
   outline: none;
@@ -62,6 +65,28 @@
     height: 100%;
     background-color: transparent;
     color: var(--text-color-primary);
+
+    &[type="password"] {
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    &[type="password"]::-ms-reveal,
+    &[type="password"]::-ms-clear {
+      display: none;
+      width: 0;
+      height: 0;
+    }
+
+    &[type="password"]::-webkit-credentials-auto-fill-button,
+    &[type="password"]::-webkit-caps-lock-indicator,
+    &[type="password"]::-webkit-contacts-auto-fill-button {
+      visibility: hidden;
+      display: none !important;
+      pointer-events: none;
+      position: absolute;
+      right: 0;
+    }
 
     &:hover {
       background-color: transparent;
@@ -101,6 +126,8 @@
     display: flex;
     box-sizing: border-box;
     margin: 0.5rem;
+    background-color: transparent;
+    box-shadow: none;
 
     @include bp.down(xs) {
       margin: 0.1rem;
@@ -148,12 +175,20 @@
 
 @each $state, $vals in theme.$states {
   .textInput_#{$state} {
+    --textInput-glass-bg: #{map.get($vals, glass-bg)};
+    --textInput-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --textInput-glass-border: #{map.get($vals, glass-border)};
+    --textInput-glass-text: #{map.get($vals, text)};
     border: 2px solid map.get($vals, border);
   }
 }
 
 @each $themeName, $vals in theme.$themes {
   .textInput_#{$themeName} {
+    --textInput-glass-bg: #{map.get($vals, glass-bg)};
+    --textInput-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --textInput-glass-border: #{map.get($vals, glass-border)};
+    --textInput-glass-text: #{map.get($vals, text)};
     background-color: map.get($vals, bg);
     color: map.get($vals, text);
     box-shadow: if(
@@ -185,6 +220,24 @@
       border: 2px solid map.get($vals, border);
     }
   }
+}
+
+.textInput_glass {
+  @include mixins.glass-surface(
+    var(--textInput-glass-bg, rgba(255, 255, 255, 0.18)),
+    inherit,
+    16px
+  );
+  color: var(--textInput-glass-text, var(--text-color-primary));
+  box-shadow: var(--box-shadow-sm);
+}
+
+.textInput_glass:hover {
+  background: var(--textInput-glass-hover-bg, rgba(255, 255, 255, 0.24));
+}
+
+.textInput_glass.textInput_outline {
+  border-color: var(--textInput-glass-border);
 }
 
 .textInput_icon_container,
@@ -224,6 +277,14 @@
 }
 
 @media (forced-colors: active) {
+  .textInput_glass {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonText;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   .textInput_container {
     background: Canvas;
     color: CanvasText;

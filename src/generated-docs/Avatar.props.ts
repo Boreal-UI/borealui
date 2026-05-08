@@ -92,6 +92,14 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "href",
       "type": "string",
       "description": "If provided, avatar becomes a link (internal or external).",

@@ -1,5 +1,4 @@
 "use client";
-
 import React, {
   createContext,
   useState,
@@ -7,18 +6,35 @@ import React, {
   useLayoutEffect,
   useMemo,
 } from "react";
-import {
-  getAllColorSchemes,
-  registerColorScheme,
-} from "../styles/colorSchemeRegistry";
 import { getDefaultColorSchemeName } from "../config/boreal-style-config";
 import { ThemeContextType, ThemeProviderProps } from "./ThemeContext.types";
+import { defaultColorSchemes } from "../styles/Themes";
+import { ColorScheme } from "@/types";
 
 export const ThemeContext = createContext<ThemeContextType | undefined>(
   undefined,
 );
 
 const STORAGE_KEY = "boreal:selectedSchemeName";
+
+function mergeSchemes(
+  baseSchemes: ColorScheme[],
+  customSchemes: ColorScheme[],
+): ColorScheme[] {
+  const merged = [...baseSchemes];
+
+  for (const scheme of customSchemes) {
+    const index = merged.findIndex((s) => s.name === scheme.name);
+
+    if (index >= 0) {
+      merged[index] = scheme;
+    } else {
+      merged.push(scheme);
+    }
+  }
+
+  return merged;
+}
 
 function shallowEqualByName(a: { name: string }[], b: { name: string }[]) {
   if (a === b) return true;
@@ -37,10 +53,19 @@ function getSchemeIndexByName(
   return schemes.findIndex((scheme) => scheme.name === name);
 }
 
-const ThemeProvider: React.FC<
-  ThemeProviderProps & { initialScheme?: number }
-> = ({ children, customSchemes = [], initialScheme }) => {
-  const [schemes, setSchemes] = useState(() => getAllColorSchemes());
+const ThemeProvider: React.FC<ThemeProviderProps> = ({
+  children,
+  customSchemes = [],
+  initialSchemeName,
+  useOnlyCustomSchemes = false,
+}) => {
+  const [schemes, setSchemes] = useState<ColorScheme[]>(() => {
+    if (useOnlyCustomSchemes) {
+      return [...customSchemes];
+    }
+
+    return mergeSchemes([...defaultColorSchemes], customSchemes);
+  });
   const [selectedScheme, setSelectedScheme] = useState<number>(0);
   const [hasResolvedInitialScheme, setHasResolvedInitialScheme] =
     useState(false);
@@ -51,56 +76,56 @@ const ThemeProvider: React.FC<
   );
 
   useEffect(() => {
+    let parsedCustomSchemes: ColorScheme[] = [];
+
     try {
       const parsed = JSON.parse(customSchemesKey);
-      if (Array.isArray(parsed) && parsed.length > 0) {
-        registerColorScheme(parsed);
+      if (Array.isArray(parsed)) {
+        parsedCustomSchemes = parsed;
       }
     } catch {
       console.error("Failed to parse custom schemes");
     }
 
-    const nextSchemes = getAllColorSchemes();
+    const nextSchemes = useOnlyCustomSchemes
+      ? [...parsedCustomSchemes]
+      : mergeSchemes([...defaultColorSchemes], parsedCustomSchemes);
+
     setSchemes((prev) =>
       shallowEqualByName(prev, nextSchemes) ? prev : nextSchemes,
     );
 
     let nextIndex = 0;
+    let savedName: string | null = null;
 
-    if (typeof initialScheme === "number") {
-      nextIndex =
-        initialScheme >= 0 && initialScheme < nextSchemes.length
-          ? initialScheme
-          : 0;
+    if (typeof window !== "undefined") {
+      try {
+        savedName = localStorage.getItem(STORAGE_KEY);
+      } catch {
+        console.error("Failed to load saved theme name");
+      }
+    }
+
+    const savedIndex = getSchemeIndexByName(nextSchemes, savedName);
+    const initialIndex = getSchemeIndexByName(nextSchemes, initialSchemeName);
+    const defaultIndex = getSchemeIndexByName(
+      nextSchemes,
+      getDefaultColorSchemeName(),
+    );
+
+    if (initialIndex !== -1) {
+      nextIndex = initialIndex;
+    } else if (savedIndex !== -1) {
+      nextIndex = savedIndex;
+    } else if (defaultIndex !== -1) {
+      nextIndex = defaultIndex;
     } else {
-      let savedName: string | null = null;
-
-      if (typeof window !== "undefined") {
-        try {
-          savedName = localStorage.getItem(STORAGE_KEY);
-        } catch {
-          console.error("Failed to load saved theme name");
-        }
-      }
-
-      const savedIndex = getSchemeIndexByName(nextSchemes, savedName);
-      const defaultIndex = getSchemeIndexByName(
-        nextSchemes,
-        getDefaultColorSchemeName(),
-      );
-
-      if (savedIndex !== -1) {
-        nextIndex = savedIndex;
-      } else if (defaultIndex !== -1) {
-        nextIndex = defaultIndex;
-      } else {
-        nextIndex = 0;
-      }
+      nextIndex = 0;
     }
 
     setSelectedScheme(nextIndex);
     setHasResolvedInitialScheme(true);
-  }, [customSchemesKey, initialScheme]);
+  }, [customSchemesKey, initialSchemeName, useOnlyCustomSchemes]);
 
   useLayoutEffect(() => {
     if (!hasResolvedInitialScheme) return;
@@ -110,7 +135,9 @@ const ThemeProvider: React.FC<
       allSchemes,
       getDefaultColorSchemeName(),
     );
+
     const safeFallbackIndex = fallbackIndex !== -1 ? fallbackIndex : 0;
+
     const scheme = allSchemes[selectedScheme] ?? allSchemes[safeFallbackIndex];
 
     if (!scheme) return;

@@ -6,6 +6,7 @@ import { SpinnerProps } from "../Spinner.types";
 const classes = {
   wrapper: "spinner_wrapper",
   spinner: "spinner",
+  glass: "spinner_glass",
   label: "spinner_label",
 
   primary: "spinner_primary",

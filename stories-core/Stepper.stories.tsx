@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { FaCheckCircle, FaClipboardList, FaFileAlt } from "react-icons/fa";
-import { Stepper } from "../src/index.core";
+import { StateType, Stepper, ThemeType } from "../src/index.core";
 import type { StepperProps } from "../src/components/Stepper/Stepper.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
@@ -26,7 +26,7 @@ const meta: Meta<StepperProps> = {
   },
 };
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -34,7 +34,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
 export default meta;
 
@@ -105,6 +105,50 @@ export const StateVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => {
+          const [activeStep, setActiveStep] = useState(1);
+          return (
+            <Stepper
+              key={theme}
+              {...args}
+              theme={theme}
+              glass
+              activeStep={activeStep}
+              onStepClick={setActiveStep}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => {
+          const [activeStep, setActiveStep] = useState(1);
+          return (
+            <Stepper
+              key={state}
+              {...args}
+              state={state}
+              glass
+              activeStep={activeStep}
+              onStepClick={setActiveStep}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
 export const SizeVariants: Story = {
   render: (args) => {
     const sizes = ["xs", "small", "medium", "large", "xl"] as const;
@@ -148,12 +192,12 @@ export const NoBackwardsNavigation: Story = {
   },
 };
 
-export const RoundingVariants = (args) =>
+export const RoundingVariants = (args: React.ComponentProps<typeof Stepper>) =>
   withVariants(Stepper, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof Stepper>) =>
   withVariants(Stepper, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);

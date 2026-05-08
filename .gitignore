@@ -64,3 +64,4 @@ yarn.lock
 # Lint results (if generated)
 eslint-report.json
 stylelint-report.json
+DESIGN.md

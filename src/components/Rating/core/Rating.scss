@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 $sizes: (
@@ -74,7 +75,7 @@ $sizes: (
     transition:
       color 0.3s ease-in-out,
       transform 0.2s ease;
-    color: var(--background-color-dark);
+    color: var(--disabled-color);
 
     svg {
       width: 1em;
@@ -98,12 +99,26 @@ $sizes: (
         color: map.get($vals, bg);
       }
     }
+
+    &_#{$themeName}.rating_glass {
+      --rating-glass-bg: #{map.get($vals, glass-bg)};
+      .rating_active {
+        color: var(--rating-glass-bg);
+      }
+    }
   }
 
   @each $stateName, $vals in theme.$states {
     &_#{$stateName} {
       .rating_active {
         color: map.get($vals, bg);
+      }
+    }
+
+    &_#{$stateName}.rating_glass {
+      --rating-glass-bg: #{map.get($vals, glass-bg)};
+      .rating_active {
+        color: var(--rating-glass-bg);
       }
     }
   }
@@ -129,12 +144,6 @@ $sizes: (
   outline-offset: 2px;
 }
 
-.rating:focus-within {
-  outline: 2px solid var(--focus-outline-color, var(--primary-color));
-  outline-offset: 4px;
-  border-radius: 6px;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .rating_star,
   .rating {
@@ -153,6 +162,14 @@ $sizes: (
 }
 
 @media (forced-colors: active) {
+  .rating.rating_glass {
+    background: Canvas;
+    border-color: ButtonText;
+    color: ButtonText;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   .rating_star {
     color: ButtonText;
   }

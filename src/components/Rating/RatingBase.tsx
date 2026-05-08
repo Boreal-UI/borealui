@@ -15,6 +15,7 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   size = getDefaultSize(),
   interactive = true,
   theme = getDefaultTheme(),
+  glass = false,
   state = "",
   className = "",
   label,
@@ -93,10 +94,11 @@ const BaseRating: React.FC<BaseRatingProps> = ({
         classMap[theme],
         classMap[state],
         classMap[size],
+        glass && classMap.glass,
         canInteract && classMap.interactive,
         className,
       ),
-    [classMap, theme, state, size, canInteract, className],
+    [classMap, theme, state, size, glass, canInteract, className],
   );
 
   return (

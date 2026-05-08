@@ -14,6 +14,7 @@ const mockStyles = {
   disabled: "disabled",
   content: "content",
   primary: "primary",
+  glass: "glass",
   medium: "medium",
   icon: "icon",
   shadowLight: "shadowLight",
@@ -175,6 +176,7 @@ describe("TabsBase", () => {
         tabs={tabsMock}
         classMap={mockStyles}
         theme="primary"
+        glass
         size="medium"
         rounding="medium"
         shadow="light"
@@ -186,6 +188,7 @@ describe("TabsBase", () => {
     expect(screen.getByTestId("tabs")).toHaveClass(
       "tabsContainer",
       "primary",
+      "glass",
       "medium",
       "customTabs",
     );

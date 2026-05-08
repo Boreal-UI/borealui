@@ -30,6 +30,18 @@ export interface ButtonProps extends Pick<
   | "aria-disabled"
 > {
   /**
+   * Optional target for link rendering.
+   * Example: "_blank", "_self", "_parent", "_top"
+   */
+  _target?: React.HTMLAttributeAnchorTarget;
+
+  /**
+   * Optional element or component override.
+   * Example: "a", "button", Link
+   */
+  as?: React.ElementType;
+
+  /**
    * Optional icon component to render inside the button.
    */
   icon?: React.ComponentType<{
@@ -37,6 +49,16 @@ export interface ButtonProps extends Pick<
     "aria-hidden"?: boolean;
     focusable?: boolean;
   }>;
+
+  /**
+   * Position of the icon relative to the button label.
+   */
+  iconPosition?: "left" | "right";
+
+  /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
 
   /**
    * Theme style of the button

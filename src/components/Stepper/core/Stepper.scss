@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 $stepper-sizes: (
@@ -118,14 +119,40 @@ $stepper-sizes: (
   }
 
   @each $name, $vals in theme.$themes {
+    &.stepper_#{$name} {
+      --stepper-glass-bg: #{map.get($vals, glass-bg)};
+      --stepper-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --stepper-glass-border: #{map.get($vals, glass-border)};
+      --stepper-glass-text: #{map.get($vals, text)};
+    }
+
     &.stepper_#{$name} &_active .stepper_step_button {
       background-color: map.get($vals, bg);
+    }
+
+    &.stepper_#{$name}.stepper_glass .stepper_active .stepper_step_button {
+      background-color: var(--stepper-glass-bg);
+      border: 2px solid var(--stepper-glass-border);
+      color: var(--stepper-glass-text);
     }
   }
 
   @each $name, $vals in theme.$states {
+    &.stepper_#{$name} {
+      --stepper-glass-bg: #{map.get($vals, glass-bg)};
+      --stepper-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --stepper-glass-border: #{map.get($vals, glass-border)};
+      --stepper-glass-text: #{map.get($vals, text)};
+    }
+
     &.stepper_#{$name} &_active .stepper_step_button {
       background-color: map.get($vals, bg);
+    }
+
+    &.stepper_#{$name}.stepper_glass .stepper_active .stepper_step_button {
+      background-color: var(--stepper-glass-bg);
+      border: 2px solid var(--stepper-glass-border);
+      color: var(--stepper-glass-text);
     }
   }
 
@@ -170,6 +197,14 @@ $stepper-sizes: (
 }
 
 @media (forced-colors: active) {
+  .stepper_glass .stepper_step {
+    background: Canvas;
+    border-color: ButtonText;
+    color: CanvasText;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   .stepper {
     color: CanvasText;
   }

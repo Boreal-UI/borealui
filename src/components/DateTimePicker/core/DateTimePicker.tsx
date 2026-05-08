@@ -19,6 +19,7 @@ const classes = {
   warning: "datetime_picker_warning",
 
   clear: "datetime_picker_clear",
+  glass: "datetime_picker_glass",
 
   xs: "datetime_picker_xs",
   small: "datetime_picker_small",

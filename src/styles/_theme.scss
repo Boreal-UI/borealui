@@ -82,6 +82,18 @@ $link-color: #8bb0c7 !default;
 $link-hover-color: #627e8f !default;
 $link-hover-color-primary: color.mix(rgb(0 0 0), $primary-color, 20%);
 $link-hover-color-secondary: color.mix(rgb(0 0 0), $secondary-color, 20%);
+$glass-background: rgb(255 255 255 / 8%) !default;
+$glass-background-strong: rgb(255 255 255 / 14%) !default;
+$glass-background-subtle: rgb(255 255 255 / 5%) !default;
+$glass-border-color: rgb(255 255 255 / 18%) !default;
+$glass-border-color-strong: rgb(255 255 255 / 28%) !default;
+$glass-blur: 16px !default;
+$glass-blur-sm: 8px !default;
+$glass-blur-lg: 24px !default;
+$glass-saturate: 160% !default;
+$glass-shadow: 0 8px 32px rgb(0 0 0 / 24%) !default;
+$glass-shadow-strong: 0 12px 48px rgb(0 0 0 / 35%) !default;
+$glass-inset-highlight: inset 0 1px 0 rgb(255 255 255 / 18%) !default;
 $text-color: rgb(255 255 255) !default;
 $text-color-light: color.adjust($text-color, $lightness: 20%);
 $text-color-lighter: color.adjust($text-color, $lightness: 40%);
@@ -216,6 +228,9 @@ $themes: (
     text: var(--text-color-primary),
     border: var(--primary-color),
     text-hover: var(--text-color-primary),
+    glass-bg: var(--primary-glass-background),
+    glass-hover: var(--primary-glass-background-hover),
+    glass-border: var(--primary-glass-border),
   ),
   "secondary": (
     bg: var(--secondary-color),
@@ -224,6 +239,9 @@ $themes: (
     text: var(--text-color-secondary),
     border: var(--secondary-color),
     text-hover: var(--text-color-secondary),
+    glass-bg: var(--secondary-glass-background),
+    glass-hover: var(--secondary-glass-background-hover),
+    glass-border: var(--secondary-glass-border),
   ),
   "tertiary": (
     bg: var(--tertiary-color),
@@ -232,6 +250,9 @@ $themes: (
     text: var(--text-color-primary),
     border: var(--tertiary-color),
     text-hover: var(--text-color-primary),
+    glass-bg: var(--tertiary-glass-background),
+    glass-hover: var(--tertiary-glass-background-hover),
+    glass-border: var(--tertiary-glass-border),
   ),
   "quaternary": (
     bg: var(--quaternary-color),
@@ -239,6 +260,10 @@ $themes: (
     hover: var(--quaternary-color-hover),
     text: var(--text-color-primary),
     border: var(--quaternary-color),
+    text-hover: var(--text-color-primary),
+    glass-bg: var(--quaternary-glass-background),
+    glass-hover: var(--quaternary-glass-background-hover),
+    glass-border: var(--quaternary-glass-border),
   ),
   "clear": (
     bg: transparent,
@@ -248,6 +273,9 @@ $themes: (
     hover: rgb(0 0 0 / 20%),
     border: var(--text-color-primary),
     text-hover: var(--disabled-color),
+    glass-bg: var(--clear-glass-background),
+    glass-hover: var(--clear-glass-background-hover),
+    glass-border: var(--clear-glass-border),
   ),
 ) !default;
 $states: (
@@ -257,6 +285,9 @@ $states: (
     text: var(--text-color-primary),
     border: var(--success-color),
     text-hover: var(--text-color-primary),
+    glass-bg: var(--success-glass-background),
+    glass-hover: var(--success-glass-background-hover),
+    glass-border: var(--success-glass-border),
   ),
   "error": (
     bg: var(--error-color),
@@ -264,6 +295,9 @@ $states: (
     text: var(--text-color-primary),
     border: var(--error-color),
     text-hover: var(--text-color-primary),
+    glass-bg: var(--error-glass-background),
+    glass-hover: var(--error-glass-background-hover),
+    glass-border: var(--error-glass-border),
   ),
   "warning": (
     bg: var(--warning-color),
@@ -271,6 +305,9 @@ $states: (
     text: var(--text-color-primary),
     border: var(--warning-color),
     text-hover: var(--text-color-primary),
+    glass-bg: var(--warning-glass-background),
+    glass-hover: var(--warning-glass-background-hover),
+    glass-border: var(--warning-glass-border),
   ),
 ) !default;
 $rounding: (
@@ -301,4 +338,24 @@ $inverted-shadows: (
   "Medium": var(--box-shadow-inverted-medium),
   "Strong": var(--box-shadow-inverted-strong),
   "Intense": var(--box-shadow-inverted-intense),
+) !default;
+$glass: (
+  "Subtle": (
+    bg: var(--glass-background-subtle),
+    border: var(--glass-border-color),
+    blur: var(--glass-blur-sm),
+    shadow: var(--glass-shadow),
+  ),
+  "Default": (
+    bg: var(--glass-background),
+    border: var(--glass-border-color),
+    blur: var(--glass-blur),
+    shadow: var(--glass-shadow),
+  ),
+  "Strong": (
+    bg: var(--glass-background-strong),
+    border: var(--glass-border-color-strong),
+    blur: var(--glass-blur-lg),
+    shadow: var(--glass-shadow-strong),
+  ),
 ) !default;

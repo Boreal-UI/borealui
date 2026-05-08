@@ -94,7 +94,7 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
     const raw = marked.parse(trimmed, {
       async: false,
       renderer,
-    }) as string;
+    });
 
     const sanitize = sanitizeHtml ?? safeSanitize;
     return sanitize(raw);

@@ -35,6 +35,7 @@ const classes = {
   warning: "accordion_warning",
   clear: "accordion_clear",
   outline: "accordion_outline",
+  glass: "accordion_glass",
 
   xs: "accordion_xs",
   small: "accordion_small",

@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .fileUpload {
@@ -189,6 +190,13 @@
 }
 
 @each $theme-name, $vals in theme.$themes {
+  .#{$theme-name} {
+    --file-upload-glass-bg: #{map.get($vals, glass-bg)};
+    --file-upload-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --file-upload-glass-border: #{map.get($vals, glass-border)};
+    --file-upload-glass-text: #{map.get($vals, text)};
+  }
+
   .#{$theme-name}:hover {
     border-color: map.get($vals, border);
   }
@@ -196,12 +204,31 @@
 
 @each $state-name, $vals in theme.$states {
   .#{$state-name} {
+    --file-upload-glass-bg: #{map.get($vals, glass-bg)};
+    --file-upload-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --file-upload-glass-border: #{map.get($vals, glass-border)};
+    --file-upload-glass-text: #{map.get($vals, text)};
     border-color: map.get($vals, border);
   }
 
   .#{$state-name}:hover {
     border-color: map.get($vals, hover);
   }
+}
+
+.glass {
+  @include mixins.glass-surface(
+    var(--file-upload-glass-bg, rgba(255, 255, 255, 0.16)),
+    var(--file-upload-glass-border, rgba(255, 255, 255, 0.34)),
+    16px
+  );
+  color: var(--file-upload-glass-text, var(--text-color-primary));
+}
+
+.glass:hover,
+.glass.dragOver,
+.glass[data-drag-active="true"] {
+  background: var(--file-upload-glass-hover-bg, rgba(255, 255, 255, 0.24));
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -219,6 +246,14 @@
 }
 
 @media (forced-colors: active) {
+  .fileUpload.glass {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonText;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .fileUpload {
     background: Canvas;
     color: CanvasText;

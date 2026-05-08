@@ -26,11 +26,20 @@ const CardBase: React.FC<CardBaseProps> = ({
   imageFill,
   imageDecorative = false,
   className = "",
+  contentClassName = "",
+  mediaClassName = "",
   imageClassName = "",
   headerClassName = "",
+  titleClassName = "",
+  iconClassName = "",
   bodyClassName = "",
+  descriptionClassName = "",
+  childrenClassName = "",
   footerClassName = "",
+  actionsClassName = "",
+  actionButtonClassName = "",
   outline = false,
+  glass = false,
   size = getDefaultSize(),
   align = "center",
   renderHeader,
@@ -65,8 +74,8 @@ const CardBase: React.FC<CardBaseProps> = ({
   const autoId = useId();
   const resolvedHeaderId = headerId || ariaLabelledBy || `${autoId}-header`;
   const resolvedDescriptionId = descriptionId || `${autoId}-description`;
-
   const hasTitle = Boolean(title);
+
   const hasDescription = Boolean(description);
 
   const derivedAriaLabel = ariaLabel || title || description || "Content card";
@@ -145,6 +154,7 @@ const CardBase: React.FC<CardBaseProps> = ({
         rounding && classMap[`round${capitalize(rounding)}`],
         border && classMap[`border${capitalize(border)}`],
         outline && classMap.outline,
+        glass && classMap.glass,
         loading && classMap.loading,
         disabled && classMap.disabled,
         selected && classMap.selected,
@@ -162,6 +172,7 @@ const CardBase: React.FC<CardBaseProps> = ({
       rounding,
       border,
       outline,
+      glass,
       loading,
       disabled,
       selected,
@@ -200,11 +211,13 @@ const CardBase: React.FC<CardBaseProps> = ({
           data-testid={`${testId}-skeleton`}
         />
       ) : (
-        <div className={classMap.content}>
+        <div className={combineClassNames(classMap.content, contentClassName)}>
           {hasImage &&
             imgSrc &&
             (imageFill ? (
-              <div className={classMap.media}>
+              <div
+                className={combineClassNames(classMap.media, mediaClassName)}
+              >
                 <ImageRenderer
                   src={imgSrc}
                   alt={imgAlt}
@@ -223,27 +236,37 @@ const CardBase: React.FC<CardBaseProps> = ({
             ))}
 
           <div>
-            <div
-              className={combineClassNames(classMap.header, headerClassName)}
-              id={resolvedHeaderId}
-            >
-              {renderHeader ? (
-                renderHeader()
-              ) : hasTitle ? (
-                <h2 className={classMap.title}>
-                  {cardIcon && (
-                    <span
-                      className={classMap.icon}
-                      aria-hidden="true"
-                      data-testid={`${testId}-icon`}
-                    >
-                      {React.createElement(cardIcon)}
-                    </span>
-                  )}
-                  {title}
-                </h2>
-              ) : null}
-            </div>
+            {(renderHeader || hasTitle) && (
+              <div
+                className={combineClassNames(classMap.header, headerClassName)}
+                id={resolvedHeaderId}
+              >
+                {renderHeader ? (
+                  renderHeader()
+                ) : hasTitle ? (
+                  <h2
+                    className={combineClassNames(
+                      classMap.title,
+                      titleClassName,
+                    )}
+                  >
+                    {cardIcon && (
+                      <span
+                        className={combineClassNames(
+                          classMap.icon,
+                          iconClassName,
+                        )}
+                        aria-hidden="true"
+                        data-testid={`${testId}-icon`}
+                      >
+                        {React.createElement(cardIcon)}
+                      </span>
+                    )}
+                    {title}
+                  </h2>
+                ) : null}
+              </div>
+            )}
 
             <div className={combineClassNames(classMap.body, bodyClassName)}>
               {renderContent ? (
@@ -253,13 +276,23 @@ const CardBase: React.FC<CardBaseProps> = ({
                   {hasDescription && (
                     <p
                       id={resolvedDescriptionId}
-                      className={classMap.description}
+                      className={combineClassNames(
+                        classMap.description,
+                        descriptionClassName,
+                      )}
                     >
                       {description}
                     </p>
                   )}
                   {children && (
-                    <div className={classMap.children}>{children}</div>
+                    <div
+                      className={combineClassNames(
+                        classMap.children,
+                        childrenClassName,
+                      )}
+                    >
+                      {children}
+                    </div>
                   )}
                 </>
               )}
@@ -270,14 +303,22 @@ const CardBase: React.FC<CardBaseProps> = ({
                 className={combineClassNames(classMap.footer, footerClassName)}
               >
                 {actionButtons.length > 0 && (
-                  <div className={classMap.actions}>
+                  <div
+                    className={combineClassNames(
+                      classMap.actions,
+                      actionsClassName,
+                    )}
+                  >
                     {actionButtons.map((button, index) =>
                       useIconButtons && button.icon ? (
                         <button.iconButtonComponent
                           key={index}
                           icon={button.icon}
                           onClick={button.onClick}
-                          className={classMap.action_button}
+                          className={combineClassNames(
+                            classMap.action_button,
+                            actionButtonClassName,
+                          )}
                           theme={button.theme || "clear"}
                           state={button.state || ""}
                           aria-label={button["aria-label"] || button.label}
@@ -298,13 +339,16 @@ const CardBase: React.FC<CardBaseProps> = ({
                         <button.buttonComponent
                           key={index}
                           onClick={button.onClick}
-                          className={classMap.action_button}
+                          className={combineClassNames(
+                            classMap.action_button,
+                            actionButtonClassName,
+                          )}
                           theme={button.theme || "secondary"}
                           state={button.state || ""}
                           href={button.href}
                           loading={button.loading}
                           size={button.size || size}
-                          ariaLabel={button["aria-label"] || button.label}
+                          aria-label={button["aria-label"] || button.label}
                           aria-describedby={button["aria-describedby"]}
                           aria-labelledby={button["aria-labelledby"]}
                           aria-pressed={button["aria-pressed"]}

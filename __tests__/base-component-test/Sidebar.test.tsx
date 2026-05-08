@@ -40,6 +40,7 @@ const classMap = {
   footerVersion: "footerVersion",
   icon: "icon",
   outline: "outline",
+  glass: "glass",
   primary: "primary",
   success: "success",
   shadowMedium: "shadowMedium",
@@ -269,7 +270,6 @@ describe("SidebarBase", () => {
         href: "/Settings",
         "aria-label": "Open settings page",
         "aria-description": "Navigates to application settings",
-        "aria-disabled": true,
       },
     ];
 
@@ -282,11 +282,40 @@ describe("SidebarBase", () => {
     );
 
     const link = screen.getByRole("link", { name: "Open settings page" });
+
     expect(link).toHaveAttribute(
       "aria-description",
       "Navigates to application settings",
     );
-    expect(link).toHaveAttribute("aria-disabled", "true");
+  });
+
+  it("renders aria-disabled links as non-link labels", () => {
+    const links = [
+      {
+        label: "Settings",
+        href: "/Settings",
+        "aria-label": "Open settings page",
+        "aria-description": "Navigates to application settings",
+        "aria-disabled": true,
+      },
+    ];
+
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={links}
+        LinkComponent={TestLink}
+      />,
+    );
+
+    const label = screen.getByTestId("sidebar-sidebarLabel");
+
+    expect(label).toHaveAttribute("aria-disabled", "true");
+    expect(label).toHaveAttribute(
+      "aria-description",
+      "Navigates to application settings",
+    );
+    expect(screen.queryByRole("link")).not.toBeInTheDocument();
   });
 
   it("applies generated aria props to expandable buttons", () => {
@@ -436,7 +465,7 @@ describe("SidebarBase", () => {
     expect(lists[1]).toHaveClass("childList");
   });
 
-  it("applies theme, state, outline, rounding, shadow, and custom className to the wrapper", () => {
+  it("applies theme, state, outline, glass, rounding, shadow, and custom className to the wrapper", () => {
     render(
       <SidebarBase
         classMap={classMap}
@@ -444,6 +473,7 @@ describe("SidebarBase", () => {
         theme="primary"
         state="success"
         outline
+        glass
         rounding="medium"
         shadow="medium"
         className="customSidebar"
@@ -455,6 +485,7 @@ describe("SidebarBase", () => {
     expect(sidebar).toHaveClass("primary");
     expect(sidebar).toHaveClass("success");
     expect(sidebar).toHaveClass("outline");
+    expect(sidebar).toHaveClass("glass");
     expect(sidebar).toHaveClass("roundMedium");
     expect(sidebar).toHaveClass("shadowMedium");
     expect(sidebar).toHaveClass("customSidebar");

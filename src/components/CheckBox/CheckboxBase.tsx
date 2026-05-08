@@ -27,6 +27,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
       size = getDefaultSize(),
       shadow = getDefaultShadow(),
       state = "",
+      glass = false,
       disabled = false,
       required = false,
       invalid = false,
@@ -74,6 +75,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
           rounding && classMap[`round${capitalize(rounding)}`],
           disabled && classMap.disabled,
           invalid && classMap.invalid,
+          glass && classMap.glass,
           className,
         ),
       [
@@ -86,6 +88,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
         rounding,
         disabled,
         invalid,
+        glass,
         className,
       ],
     );

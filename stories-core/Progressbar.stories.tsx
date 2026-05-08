@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Progressbar } from "../src/index.core";
+import {
+  Progressbar,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.core";
 import type { ProgressBarProps } from "../src/components/ProgressBar/ProgressBar.types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -11,10 +17,22 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large", "full"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = [
+  "none",
+  "small",
+  "medium",
+  "large",
+  "full",
+];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<ProgressBarProps> = {
   title: "Components/ProgressBar",
@@ -125,6 +143,46 @@ export const StateVariants: Story = {
               value={20 + stateOptions.indexOf(state) * 15}
               state={state}
               label={state.charAt(0).toUpperCase() + state.slice(1)}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => (
+          <div key={`glass-${theme}`}>
+            <Progressbar
+              {...args}
+              value={20 + themeOptions.indexOf(theme) * 15}
+              theme={theme}
+              glass
+              label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
+            />
+          </div>
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <div key={`glass-${state}`}>
+            <Progressbar
+              {...args}
+              value={20 + stateOptions.indexOf(state) * 15}
+              state={state}
+              glass
+              label={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
             />
           </div>
         ))}

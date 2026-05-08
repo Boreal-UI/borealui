@@ -34,8 +34,10 @@ const classes = {
   roundLarge: "badge_round-Large",
 
   outline: "badge_outline",
+  glass: "badge_glass",
   disabled: "badge_disabled",
   icon: "badge_icon",
+  badge_icon: "badge_icon",
   clickable: "badge_clickable",
 };
 

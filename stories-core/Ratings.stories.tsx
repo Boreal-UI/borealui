@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Rating } from "../src/index.core";
+import { Rating, StateType, ThemeType } from "../src/index.core";
 import type { RatingProps } from "../src/components/Rating/Rating.types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -11,7 +11,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const meta: Meta<RatingProps> = {
   title: "Components/Rating",
@@ -89,13 +89,55 @@ export const StateVariants: Story = {
 
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        {stateOptions.map((theme) => (
+        {stateOptions.map((state) => (
+          <Rating
+            key={state}
+            state={state}
+            value={value}
+            onChange={setValue}
+            label={`State: ${state}`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassThemeVariants: Story = {
+  render: () => {
+    const [value, setValue] = useState(3);
+
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {themeOptions.map((theme) => (
           <Rating
             key={theme}
             theme={theme}
+            glass
             value={value}
             onChange={setValue}
-            label={`Theme: ${theme}`}
+            label={`Glass theme: ${theme}`}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: () => {
+    const [value, setValue] = useState(3);
+
+    return (
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <Rating
+            key={state}
+            state={state}
+            glass
+            value={value}
+            onChange={setValue}
+            label={`Glass state: ${state}`}
           />
         ))}
       </div>

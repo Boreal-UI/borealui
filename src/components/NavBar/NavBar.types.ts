@@ -29,6 +29,11 @@ export interface NavBarProps {
   theme?: ThemeType;
 
   /**
+   * Adds translucent glass styling to nav items.
+   */
+  glass?: boolean;
+
+  /**
    * Optional rounding to apply to the NavBar.
    * One of: "none" | "small" | "medium" | "large" | "full"
    */

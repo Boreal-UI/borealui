@@ -29,6 +29,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   theme = getDefaultTheme(),
   state = "",
   outline = false,
+  glass = false,
   expanded,
   disabled,
   customCollapsedIcon,
@@ -126,13 +127,24 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         classMap.accordion,
         classMap[size],
         classMap[state],
+        glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
         isExpanded && classMap.expanded,
         className,
       ),
-    [classMap, size, state, shadow, rounding, disabled, isExpanded, className],
+    [
+      classMap,
+      size,
+      state,
+      glass,
+      shadow,
+      rounding,
+      disabled,
+      isExpanded,
+      className,
+    ],
   );
 
   const headerClassName = useMemo(
@@ -142,15 +154,23 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         classMap[theme],
         classMap[state],
         outline && classMap.outline,
+        glass && classMap.glass,
         disabled && classMap.disabled,
         isExpanded && classMap.expanded,
       ),
-    [classMap, theme, state, outline, disabled, isExpanded],
+    [classMap, theme, state, outline, glass, disabled, isExpanded],
   );
 
   const contentClassName = useMemo(
-    () => combineClassNames(classMap.content, isExpanded && classMap.expanded),
-    [classMap, isExpanded],
+    () =>
+      combineClassNames(
+        classMap.content,
+        glass && classMap[theme],
+        glass && classMap[state],
+        glass && classMap.glass,
+        isExpanded && classMap.expanded,
+      ),
+    [classMap, glass, theme, state, isExpanded],
   );
 
   const iconClassName = useMemo(

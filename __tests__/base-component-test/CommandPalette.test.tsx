@@ -47,6 +47,7 @@ const classMap: Record<string, string> = {
   active: "active",
   icon: "icon",
   empty: "empty",
+  glass: "glass",
   srOnly: "srOnly",
   shadowLight: "shadowLight",
   shadowNone: "shadowNone",
@@ -66,6 +67,7 @@ type RenderPaletteOptions = {
   shadow?: "light" | "none";
   state?: "" | "success";
   className?: string;
+  glass?: boolean;
   testId?: string;
 
   paletteId?: string;
@@ -108,6 +110,7 @@ const renderPalette = ({
   shadow = "light",
   state = "",
   className,
+  glass = false,
   testId = "command-palette",
   paletteId,
   inputId,
@@ -139,6 +142,7 @@ const renderPalette = ({
         rounding={rounding}
         shadow={shadow}
         state={state}
+        glass={glass}
         TextInputComponent={DummyTextInput}
         classMap={classMap}
         className={className}
@@ -205,22 +209,30 @@ describe("CommandPaletteBase", () => {
     expect(portal).toContainElement(screen.getByRole("dialog"));
   });
 
-  it("applies default and custom classes to the palette container", () => {
+  it("applies default, glass, and custom classes to the palette container", () => {
     renderPalette({
       className: "custom-class",
       theme: "primary",
       rounding: "medium",
       shadow: "light",
       state: "success",
+      glass: true,
     });
 
     const dialog = screen.getByRole("dialog");
     expect(dialog).toHaveClass("palette");
     expect(dialog).toHaveClass("theme-primary");
     expect(dialog).toHaveClass("state-success");
+    expect(dialog).toHaveClass("glass");
     expect(dialog).toHaveClass("shadowLight");
     expect(dialog).toHaveClass("roundMedium");
     expect(dialog).toHaveClass("custom-class");
+  });
+
+  it("passes glass styling to the nested text input", () => {
+    renderPalette({ glass: true });
+
+    expect(screen.getByRole("combobox")).toHaveAttribute("data-glass", "true");
   });
 
   it("uses a custom placeholder", () => {

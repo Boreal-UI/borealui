@@ -8,6 +8,7 @@ const classes = {
   horizontal: "divider_horizontal",
   vertical: "divider_vertical",
   dashed: "divider_dashed",
+  glass: "divider_glass",
   primary: "divider_primary",
   secondary: "divider_secondary",
   tertiary: "divider_tertiary",

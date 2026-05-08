@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { CommandPalette } from "../src/index.core";
+import {
+  CommandPalette,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.core";
 import type { CommandPaletteProps } from "../src/components/CommandPalette/CommandPalette.types";
 import { FaSearch, FaUser, FaCog } from "react-icons/fa";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -13,10 +19,16 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<CommandPaletteProps> = {
   title: "Components/CommandPalette",
@@ -114,6 +126,58 @@ export const StateVariants = {
               commands={sampleCommands}
               placeholder={`state: ${state}`}
               state={state}
+            />
+          </div>
+        ))}
+      </StoryGrid>
+    );
+  },
+};
+
+export const GlassThemeVariants = {
+  render: () => {
+    const [openPalette, setOpenPalette] = useState<string | null>(null);
+
+    return (
+      <StoryGrid title="Glass Theme Variants">
+        {themeOptions.map((theme) => (
+          <div key={theme} style={{ paddingBottom: "1rem" }}>
+            <button onClick={() => setOpenPalette(theme)}>
+              Glass {theme} Palette
+            </button>
+            <CommandPalette
+              isOpen={openPalette === theme}
+              onClose={() => setOpenPalette(null)}
+              commands={sampleCommands}
+              placeholder={`Glass theme: ${theme}`}
+              theme={theme}
+              glass
+            />
+          </div>
+        ))}
+      </StoryGrid>
+    );
+  },
+};
+
+export const GlassStateVariants = {
+  render: () => {
+    const [openPalette, setOpenPalette] = useState<string | null>(null);
+
+    return (
+      <StoryGrid title="Glass State Variants">
+        {stateOptions.map((state) => (
+          <div key={state} style={{ paddingBottom: "1rem" }}>
+            <button onClick={() => setOpenPalette(state)}>
+              Glass {state} Palette
+            </button>
+            <CommandPalette
+              isOpen={openPalette === state}
+              onClose={() => setOpenPalette(null)}
+              commands={sampleCommands}
+              placeholder={`Glass state: ${state}`}
+              state={state}
+              glass
             />
           </div>
         ))}

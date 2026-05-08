@@ -1,5 +1,11 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { PopOver, Button } from "../src/index.core";
+import {
+  PopOver,
+  Button,
+  StateType,
+  RoundingType,
+  ShadowType,
+} from "../src/index.core";
 import type { PopoverProps } from "../src/components/PopOver/PopOver.types";
 
 const meta: Meta<PopoverProps> = {
@@ -14,8 +20,14 @@ const meta: Meta<PopoverProps> = {
 
 export default meta;
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 type Story = StoryObj<PopoverProps>;
 
@@ -61,7 +73,7 @@ export const ThemedVariants: Story = {
 
 export const StateVariants: Story = {
   render: () => {
-    const stateOptions = ["success", "error", "warning"];
+    const stateOptions: StateType[] = ["success", "error", "warning"];
 
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
@@ -74,6 +86,64 @@ export const StateVariants: Story = {
               <div style={{ padding: "0.5rem" }}>
                 {state.charAt(0).toUpperCase() + state.slice(1)} state
               </div>
+            }
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassThemeVariants: Story = {
+  render: () => {
+    const themes = [
+      "primary",
+      "secondary",
+      "tertiary",
+      "quaternary",
+      "clear",
+    ] as const;
+
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {themes.map((theme) => (
+          <PopOver
+            key={theme}
+            theme={theme}
+            glass
+            trigger={
+              <Button theme={theme} glass>
+                {theme}
+              </Button>
+            }
+            content={
+              <div style={{ padding: "0.5rem" }}>Glass {theme} theme</div>
+            }
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: () => {
+    const stateOptions: StateType[] = ["success", "error", "warning"];
+
+    return (
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+        {stateOptions.map((state) => (
+          <PopOver
+            key={state}
+            state={state}
+            glass
+            trigger={
+              <Button state={state} glass>
+                {state}
+              </Button>
+            }
+            content={
+              <div style={{ padding: "0.5rem" }}>Glass {state} state</div>
             }
           />
         ))}
@@ -169,14 +239,14 @@ export const RoundingVariants: Story = {
   render: () => {
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-        {roundingOptions.map((state) => (
+        {roundingOptions.map((rounding) => (
           <PopOver
-            key={state}
-            rounding={state}
-            trigger={<Button>{state}</Button>}
+            key={rounding}
+            rounding={rounding}
+            trigger={<Button>{rounding}</Button>}
             content={
               <div style={{ padding: "0.5rem" }}>
-                {state.charAt(0).toUpperCase() + state.slice(1)} state
+                {rounding.charAt(0).toUpperCase() + rounding.slice(1)} rounding
               </div>
             }
           />
@@ -190,14 +260,14 @@ export const ShadowVariants: Story = {
   render: () => {
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-        {shadowOptions.map((state) => (
+        {shadowOptions.map((shadow) => (
           <PopOver
-            key={state}
-            shadow={state}
-            trigger={<Button>{state}</Button>}
+            key={shadow}
+            shadow={shadow}
+            trigger={<Button>{shadow}</Button>}
             content={
               <div style={{ padding: "0.5rem" }}>
-                {state.charAt(0).toUpperCase() + state.slice(1)} state
+                {shadow.charAt(0).toUpperCase() + shadow.slice(1)} shadow
               </div>
             }
           />

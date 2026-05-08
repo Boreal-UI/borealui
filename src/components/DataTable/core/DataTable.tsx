@@ -5,13 +5,17 @@ import { DataTableProps } from "../DataTable.types";
 const classes = {
   wrapper: "data_table_wrapper",
   table: "data_table",
+
   headerCell: "data_table_header_cell",
   sortable: "data_table_header_sortable",
   sortButton: "data_table_sort_button",
   sortIcon: "data_table_sort_icon",
+
   clickable: "data_table_row_clickable",
   striped: "data_table_row_striped",
+
   cell: "data_table_cell",
+  wrapCell: "data_table_cell_wrap",
 
   primary: "data_table_primary",
   secondary: "data_table_secondary",
@@ -23,8 +27,8 @@ const classes = {
   warning: "data_table_warning",
 
   clear: "data_table_clear",
-
   outline: "data_table_outline",
+  glass: "data_table_glass",
 
   shadowNone: "data_table_shadow-None",
   shadowLight: "data_table_shadow-Light",
@@ -41,5 +45,7 @@ const classes = {
 function DataTable<T extends object>(props: DataTableProps<T>) {
   return <DataTableBase {...props} classMap={classes} />;
 }
+
 DataTable.displayName = "DataTable";
+
 export default DataTable;

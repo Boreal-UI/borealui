@@ -20,6 +20,7 @@ const classes = {
   warning: "rating_warning",
 
   clear: "rating_clear",
+  glass: "rating_glass",
 
   xs: "rating_xs",
   small: "rating_small",

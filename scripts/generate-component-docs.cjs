@@ -21,6 +21,11 @@ const config = {
   outputDir: path.resolve("src/generated-docs"),
 };
 
+async function resetDir(dirPath) {
+  await fs.rm(dirPath, { recursive: true, force: true });
+  await fs.mkdir(dirPath, { recursive: true });
+}
+
 function normalizeWhitespace(input) {
   return String(input || "")
     .replace(/\s+/g, " ")
@@ -421,10 +426,6 @@ ${lines.join("\n")}
 `;
 }
 
-async function ensureDir(dirPath) {
-  await fs.mkdir(dirPath, { recursive: true });
-}
-
 function getCandidateInterfaces(sourceFile) {
   return sourceFile
     .getInterfaces()
@@ -505,7 +506,7 @@ async function main() {
     return;
   }
 
-  await ensureDir(config.outputDir);
+  await resetDir(config.outputDir);
 
   await fs.writeFile(
     path.join(config.outputDir, "types.ts"),
