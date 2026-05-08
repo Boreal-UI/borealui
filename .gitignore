@@ -38,7 +38,8 @@ jest-test-results.json
 .stylelintcache
 
 # Optional: Docs output
-docs/
+docs/.vitepress/dist/
+docs/.next/
 
 # Optional: Storybook
 .storybook-out/

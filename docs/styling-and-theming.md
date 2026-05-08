@@ -1,0 +1,208 @@
+# Styling and Theming
+
+Boreal UI styles are driven by CSS variables, shared style props, global defaults, and the color scheme theme provider.
+
+## Global Styles
+
+Import the global stylesheet once.
+
+```tsx
+import "boreal-ui/core/globals.css";
+```
+
+For Next.js:
+
+```tsx
+import "boreal-ui/next/globals.css";
+```
+
+The global stylesheet provides CSS variables, resets, theme values, animations, and shared utility styles used by components.
+
+## Shared Style Props
+
+Many components support a common styling vocabulary.
+
+| Prop | Values |
+| --- | --- |
+| `theme` | `primary`, `secondary`, `tertiary`, `quaternary`, `clear` |
+| `state` | `success`, `error`, `warning`, `disabled`, empty string |
+| `size` | `xs`, `small`, `medium`, `large`, `xl` |
+| `rounding` | `none`, `small`, `medium`, `large`, `full` |
+| `shadow` | `none`, `light`, `medium`, `strong`, `intense` |
+| `borderWidth` | `none`, `xs`, `small`, `medium`, `large`, `xl` |
+| `outline` | Boolean outline treatment where supported. |
+| `glass` | Boolean translucent surface treatment where supported. |
+| `className` | Consumer class hook on the root element. |
+
+Exact support varies by component. Use TypeScript or generated prop docs to confirm a component's full API.
+
+```tsx
+import { Button, Card } from "boreal-ui/core";
+
+export function Actions() {
+  return (
+    <Card theme="secondary" rounding="large" shadow="strong" glass>
+      <Button theme="primary" size="large" outline>
+        Save changes
+      </Button>
+    </Card>
+  );
+}
+```
+
+## Global Style Defaults
+
+Use `setBorealStyleConfig` to set project-wide defaults for components that read Boreal style config.
+
+```tsx
+import { setBorealStyleConfig } from "boreal-ui/core";
+
+setBorealStyleConfig({
+  defaultTheme: "secondary",
+  defaultSize: "medium",
+  defaultRounding: "medium",
+  defaultShadow: "light",
+  defaultBorderWidth: "none",
+  defaultColorSchemeName: "Forest Dusk",
+});
+```
+
+For Next.js:
+
+```tsx
+import { setBorealStyleConfig } from "boreal-ui/next";
+```
+
+Component props override global defaults.
+
+```tsx
+<Button theme="primary" size="large">
+  Save
+</Button>
+```
+
+## ThemeProvider
+
+`ThemeProvider` manages the active color scheme and writes it into CSS variables.
+
+```tsx
+import { ThemeProvider } from "boreal-ui/core";
+
+export function AppProviders({ children }: { children: React.ReactNode }) {
+  return <ThemeProvider initialSchemeName="Forest Dusk">{children}</ThemeProvider>;
+}
+```
+
+For Next.js:
+
+```tsx
+"use client";
+
+import { ThemeProvider } from "boreal-ui/next";
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return <ThemeProvider initialSchemeName="Forest Dusk">{children}</ThemeProvider>;
+}
+```
+
+`ThemeProvider` props:
+
+| Prop | Description |
+| --- | --- |
+| `children` | Application or subtree to theme. |
+| `customSchemes` | Registers additional color schemes. |
+| `initialSchemeName` | Selects the starting scheme by name. |
+| `useOnlyCustomSchemes` | Uses only custom schemes instead of built-in schemes. |
+
+## Custom Color Schemes
+
+```tsx
+import { ThemeProvider } from "boreal-ui/core";
+import type { ColorScheme } from "boreal-ui/core/types";
+
+const schemes: ColorScheme[] = [
+  {
+    name: "Brand Night",
+    primaryColor: "#4f46e5",
+    secondaryColor: "#06b6d4",
+    tertiaryColor: "#a855f7",
+    quaternaryColor: "#22c55e",
+    backgroundColor: "#0f172a",
+    forceTextColor: "#ffffff",
+  },
+];
+
+export function AppProviders({ children }: { children: React.ReactNode }) {
+  return (
+    <ThemeProvider customSchemes={schemes} initialSchemeName="Brand Night">
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+You can also register a scheme outside the provider.
+
+```tsx
+import { registerColorScheme } from "boreal-ui/core";
+
+registerColorScheme({
+  name: "Brand Light",
+  primaryColor: "#2563eb",
+  secondaryColor: "#0891b2",
+  tertiaryColor: "#7c3aed",
+  quaternaryColor: "#16a34a",
+  backgroundColor: "#ffffff",
+});
+```
+
+## ThemeSelect
+
+`ThemeSelect` renders a control for selecting registered color schemes.
+
+```tsx
+import { ThemeProvider, ThemeSelect } from "boreal-ui/core";
+
+export function Settings() {
+  return (
+    <ThemeProvider>
+      <ThemeSelect aria-label="Select color scheme" />
+    </ThemeProvider>
+  );
+}
+```
+
+## CSS Variable Overrides
+
+Override variables globally or scope them to a subtree.
+
+```css
+:root {
+  --font-family-ui: Inter, system-ui, sans-serif;
+  --border-radius-md: 0.5rem;
+  --transition-default: 160ms ease;
+  --focus-outline-color: #2563eb;
+}
+
+.admin-shell {
+  --background-color: #0f172a;
+  --text-color: #f8fafc;
+}
+```
+
+## Class Name Customization
+
+Most components accept `className`. Larger components expose section-level class props so consumers can style specific regions while preserving Boreal's internal classes.
+
+```tsx
+<Card
+  title="Revenue"
+  className="dashboard-card"
+  headerClassName="dashboard-card-header"
+  contentClassName="dashboard-card-content"
+>
+  <MetricBox value="$42,180" label="This month" />
+</Card>
+```
+
+Prefer CSS variables for global visual changes and class props for local layout or component-specific polish.

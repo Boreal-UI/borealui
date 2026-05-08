@@ -86,6 +86,8 @@ import Card from "boreal-ui/next/Card";
 
 ## Components
 
+For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs/README.md). They cover import paths, styling and theming, common component patterns, generated prop docs, and public TypeScript types.
+
 ### Actions
 
 - `Button` supports native buttons, links via `href`, custom elements via `as`, icons, loading states, full-width layout, external links, outline, glass, theme, state, size, rounding, shadow, and ARIA attributes.
