@@ -311,6 +311,8 @@ Most components also accept `className`, and larger components expose section-le
 
 Boreal UI is designed for Testing Library, Jest, jest-axe, Cypress, and Storybook workflows.
 
+For a full consumer guide, see [Accessibility](./docs/accessibility.md).
+
 - Prefer roles and accessible names in tests.
 - Use `data-testid` when a stable selector is needed.
 - Icon-only controls should receive an accessible label.
