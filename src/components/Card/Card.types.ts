@@ -186,14 +186,47 @@ export interface CardProps {
   /** Custom class name for the card container. */
   className?: string;
 
-  /** Custom class name for the header section. */
-  headerClassName?: string;
+  /** Custom class name for the content wrapper. */
+  contentClassName?: string;
+
+  /** Custom class name for the media/image wrapper. */
+  mediaClassName?: string;
 
   /** Custom class name for the image element. */
   imageClassName?: string;
 
+  /** Custom class name for the header section. */
+  headerClassName?: string;
+
+  /** Custom class name for the title element. */
+  titleClassName?: string;
+
+  /** Custom class name for the icon wrapper. */
+  iconClassName?: string;
+
+  /** Custom class name for the description text. */
+  descriptionClassName?: string;
+
+  /** Custom class name for the children wrapper. */
+  childrenClassName?: string;
+
+  /** Custom class name for the actions wrapper. */
+  actionsClassName?: string;
+
+  /** Custom class name for each action button. */
+  actionButtonClassName?: string;
+
+  /** Custom class name for the body section. */
+  bodyClassName?: string;
+
+  /** Custom class name for the footer section. */
+  footerClassName?: string;
+
   /** Outlines card instead of solid fill. */
   outline?: boolean;
+
+  /** Applies a translucent glass style to the card. */
+  glass?: boolean;
 
   /**
    * Card size
@@ -206,12 +239,6 @@ export interface CardProps {
    * ('left' | 'right' | 'center').
    */
   align?: "left" | "right" | "center";
-
-  /** Custom class name for the body section. */
-  bodyClassName?: string;
-
-  /** Custom class name for the footer section. */
-  footerClassName?: string;
 
   /** Custom render function for the header section. */
   renderHeader?: () => ReactNode;

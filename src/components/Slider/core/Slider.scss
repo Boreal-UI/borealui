@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 @use "sass:color";
 
@@ -165,6 +166,13 @@ $slider-sizes: (
 }
 
 @each $name, $vals in theme.$themes {
+  .slider_#{$name} {
+    --slider-glass-bg: #{map.get($vals, glass-bg)};
+    --slider-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --slider-glass-border: #{map.get($vals, glass-border)};
+    --slider-glass-text: #{map.get($vals, text)};
+  }
+
   .slider_#{$name} .slider {
     background-color: map.get($vals, bg);
     color: map.get($vals, bg);
@@ -176,6 +184,13 @@ $slider-sizes: (
 }
 
 @each $name, $vals in theme.$states {
+  .slider_#{$name} {
+    --slider-glass-bg: #{map.get($vals, glass-bg)};
+    --slider-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --slider-glass-border: #{map.get($vals, glass-border)};
+    --slider-glass-text: #{map.get($vals, text)};
+  }
+
   .slider_#{$name} .slider {
     background-color: map.get($vals, bg);
     color: map.get($vals, bg);
@@ -188,6 +203,20 @@ $slider-sizes: (
 
 .slider_clear .slider {
   background-color: var(--background-color-light);
+}
+
+.slider_glass .slider {
+  @include mixins.glass-surface(
+    var(--slider-glass-bg, var(--glass-background)),
+    var(--slider-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--slider-glass-text, currentcolor);
+
+  &:hover {
+    background: var(--slider-glass-hover-bg, var(--glass-background));
+  }
 }
 
 @each $size, $props in $slider-sizes {
@@ -304,5 +333,13 @@ $slider-sizes: (
   .slider:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 3px;
+  }
+
+  .slider_glass .slider {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

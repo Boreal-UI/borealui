@@ -167,6 +167,11 @@ export interface AvatarProps {
   outline?: boolean;
 
   /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
+  /**
    * If provided, avatar becomes a link (internal or external).
    */
   href?: string;

@@ -20,6 +20,7 @@ const classes = {
   warning: "tabs_warning",
 
   clear: "tabs_clear",
+  glass: "tabs_glass",
 
   xs: "tabs_xs",
   small: "tabs_small",

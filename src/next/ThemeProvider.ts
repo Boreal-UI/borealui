@@ -1,6 +1,4 @@
-export {
-  default as ThemeProvider,
-  ThemeContext,
-} from "../context/ThemeContext";
+"use client";
+export { default as ThemeProvider } from "../context/NextThemeProvider";
 
 export * from "../context/ThemeContext.types";

@@ -1,9 +1,19 @@
 import React, { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { RadioButton } from "../src/index.core";
-import type { RadioButtonProps } from "../src/components/RadioButton/RadioButton.types";
+import {
+  RadioButton,
+  RadioGroup,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.core";
+import type {
+  RadioButtonProps,
+  RadioGroupProps,
+} from "../src/components/RadioButton/RadioButton.types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -11,10 +21,16 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<RadioButtonProps> = {
   title: "Components/RadioButton",
@@ -31,6 +47,13 @@ const meta: Meta<RadioButtonProps> = {
 export default meta;
 
 type Story = StoryObj<RadioButtonProps>;
+type GroupStory = StoryObj<RadioGroupProps>;
+
+const contactOptions = [
+  { label: "Email", value: "email" },
+  { label: "SMS", value: "sms" },
+  { label: "Phone", value: "phone" },
+];
 
 export const Default: Story = {
   render: (args) => {
@@ -68,6 +91,111 @@ export const Grouped: Story = {
   },
 };
 
+export const RadioGroupDefault: GroupStory = {
+  render: (args) => {
+    const [selected, setSelected] = useState("email");
+
+    return (
+      <RadioGroup
+        {...args}
+        value={selected}
+        onChange={setSelected}
+        options={contactOptions}
+      />
+    );
+  },
+  args: {
+    legend: "Preferred contact method",
+    name: "storybook-contact",
+    theme: "secondary",
+    description: "Radio groups select one option from a shared set.",
+  },
+};
+
+export const RadioGroupHorizontal: GroupStory = {
+  render: () => {
+    const [selected, setSelected] = useState("monthly");
+
+    return (
+      <RadioGroup
+        legend="Billing cycle"
+        name="storybook-billing"
+        value={selected}
+        onChange={setSelected}
+        orientation="horizontal"
+        theme="primary"
+        options={[
+          { label: "Monthly", value: "monthly" },
+          { label: "Quarterly", value: "quarterly" },
+          { label: "Annual", value: "annual" },
+        ]}
+      />
+    );
+  },
+};
+
+export const RadioGroupWithDisabledOption: GroupStory = {
+  render: () => {
+    const [selected, setSelected] = useState("standard");
+
+    return (
+      <RadioGroup
+        legend="Shipping speed"
+        name="storybook-shipping"
+        value={selected}
+        onChange={setSelected}
+        theme="tertiary"
+        options={[
+          { label: "Standard", value: "standard" },
+          { label: "Express", value: "express" },
+          { label: "Overnight", value: "overnight", disabled: true },
+        ]}
+      />
+    );
+  },
+};
+
+export const RadioGroupGlass: GroupStory = {
+  render: () => {
+    const [selected, setSelected] = useState("design");
+
+    return (
+      <RadioGroup
+        legend="Project focus"
+        name="storybook-focus"
+        value={selected}
+        onChange={setSelected}
+        theme="quaternary"
+        glass
+        options={[
+          { label: "Design", value: "design" },
+          { label: "Engineering", value: "engineering" },
+          { label: "Research", value: "research" },
+        ]}
+      />
+    );
+  },
+};
+
+export const RadioGroupInvalid: GroupStory = {
+  render: () => (
+    <RadioGroup
+      legend="Deployment target"
+      name="storybook-deployment"
+      value=""
+      onChange={() => {}}
+      state="error"
+      invalid
+      required
+      errorMessage="Choose one deployment target."
+      options={[
+        { label: "Preview", value: "preview" },
+        { label: "Production", value: "production" },
+      ]}
+    />
+  ),
+};
+
 export const Disabled: Story = {
   args: {
     label: "Disabled Option",
@@ -98,19 +226,63 @@ export const ThemeVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: () => {
+    const [selected, setSelected] = useState("primary");
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => (
+          <RadioButton
+            key={`glass-${theme}`}
+            label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
+            value={theme}
+            theme={theme}
+            glass
+            checked={selected === theme}
+            onChange={setSelected}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const StateVariants: Story = {
   render: () => {
     const [selected, setSelected] = useState("primary");
 
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {stateOptions.map((theme) => (
+        {stateOptions.map((state) => (
           <RadioButton
-            key={theme}
-            label={theme.charAt(0).toUpperCase() + theme.slice(1)}
-            value={theme}
-            theme={theme}
-            checked={selected === theme}
+            key={state}
+            label={state.charAt(0).toUpperCase() + state.slice(1)}
+            value={state}
+            state={state}
+            checked={selected === state}
+            onChange={setSelected}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: () => {
+    const [selected, setSelected] = useState("success");
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <RadioButton
+            key={`glass-${state}`}
+            label={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
+            value={state}
+            state={state}
+            glass
+            checked={selected === state}
             onChange={setSelected}
           />
         ))}

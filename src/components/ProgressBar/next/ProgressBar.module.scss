@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 $progress-sizes: (
@@ -49,6 +50,16 @@ $progress-sizes: (
 
   &.clear {
     background-color: var(--background-color-lighter);
+  }
+
+  &.glass {
+    @include mixins.glass-surface(
+      var(--progress-glass-bg, var(--glass-background)),
+      var(--progress-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--progress-glass-text, currentcolor);
   }
 }
 
@@ -104,12 +115,22 @@ $progress-sizes: (
 
   @each $name, $vals in theme.$themes {
     &.#{$name} {
+      --progress-glass-bg: #{map.get($vals, glass-bg)};
+      --progress-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --progress-glass-border: #{map.get($vals, glass-border)};
+      --progress-glass-text: #{map.get($vals, text)};
+
       background-color: map.get($vals, bg);
     }
   }
 
   @each $name, $vals in theme.$states {
     &.#{$name} {
+      --progress-glass-bg: #{map.get($vals, glass-bg)};
+      --progress-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --progress-glass-border: #{map.get($vals, glass-border)};
+      --progress-glass-text: #{map.get($vals, text)};
+
       background-color: map.get($vals, bg);
     }
   }
@@ -117,6 +138,30 @@ $progress-sizes: (
   &.clear {
     background-color: var(--text-color-primary);
   }
+}
+
+.container {
+  @each $name, $vals in theme.$themes {
+    &.#{$name} {
+      --progress-glass-bg: #{map.get($vals, glass-bg)};
+      --progress-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --progress-glass-border: #{map.get($vals, glass-border)};
+      --progress-glass-text: #{map.get($vals, text)};
+    }
+  }
+
+  @each $name, $vals in theme.$states {
+    &.#{$name} {
+      --progress-glass-bg: #{map.get($vals, glass-bg)};
+      --progress-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --progress-glass-border: #{map.get($vals, glass-border)};
+      --progress-glass-text: #{map.get($vals, text)};
+    }
+  }
+}
+
+.glassBar {
+  box-shadow: inset 0 0 0 1px var(--progress-glass-border, transparent);
 }
 
 .animated {
@@ -160,5 +205,13 @@ $progress-sizes: (
 
   .bar {
     background: Highlight;
+  }
+
+  .container.glass {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

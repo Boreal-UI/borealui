@@ -1,24 +1,19 @@
 # Boreal UI
 
-A **highly customizable**, **accessible** React and Next.js component library with SCSS-powered theming.  
-Offers both Core (framework-agnostic React) and Next.js-optimized variants for seamless integration in any project.
+Boreal UI is a customizable, accessible React and Next.js component library with SCSS-powered theming, TypeScript types, generated prop metadata, and parallel `core` and `next` package outputs.
 
----
+Use it when you want production-ready UI primitives that can be themed globally, customized per component, tested predictably, and imported in either standard React apps or Next.js app-router projects.
 
-## Features
+## Highlights
 
-- **Dual Build Support:**  
-  Use `boreal-ui/core` for any React project or `boreal-ui/next` for Next.js apps.
-- **SCSS-Based Theming:**  
-  Override color, typography, spacing, border, and shadow variables to perfectly match your brand.
-- **Accessibility First:**  
-  WCAG-friendly out of the box. Includes keyboard navigation, ARIA roles, and robust focus states.
-- **Rich Component Set:**  
-  Buttons, IconButtons, Cards, Accordions, Modals, Tabs, DataTable, Avatar, Badge, Tooltip, FileUpload, EmptyState, and more.
-- **TypeScript Native:**  
-  All components include full prop typing and interfaces for an exceptional developer experience.
-
----
+- **React and Next.js builds:** import from `boreal-ui/core` for React apps or `boreal-ui/next` for Next.js apps.
+- **Deep component set:** buttons, forms, navigation, data display, feedback, overlays, layout primitives, and utility components.
+- **Theme system:** curated color schemes, custom schemes, runtime theme selection, CSS variables, and `ThemeSelect`.
+- **Global defaults:** configure default theme, size, rounding, shadow, border width, and color scheme once with `setBorealStyleConfig`.
+- **Accessible by default:** semantic markup, ARIA support, keyboard behavior, visible focus states, disabled states, live announcements where useful, and predictable test IDs.
+- **Styling flexibility:** theme, state, size, rounding, shadow, outline, glass, custom class names, SCSS variables, and consumer CSS overrides.
+- **Typed public API:** TypeScript component props, shared type exports, and generated prop documentation objects for docs tooling.
+- **Package-friendly output:** tree-shakeable ESM, CommonJS support for core entry points, standalone component exports, and Next.js client-boundary handling.
 
 ## Installation
 
@@ -26,165 +21,364 @@ Offers both Core (framework-agnostic React) and Next.js-optimized variants for s
 npm install boreal-ui
 ```
 
----
+Boreal UI expects React and React DOM in the consuming app. Next.js users should also have Next installed. `marked` and `uuid` are peer dependencies because some components and utilities rely on them.
 
-## Quick Usage
+## Setup
 
-### Including Global Styles
+Import the global stylesheet once near the top of your application.
 
-**For Next.js :**
-
-In your globals.css (or globals.scss), add the following at the top:
-
-```css
-@import "boreal-ui/next/globals.css";
-```
-
-Then, make sure this global file is included in your layout or \_app.tsx:
-
-```tsx
-import "./globals.css"; // or "./globals.scss"
-```
-
-**For React (Core):**
-
-If you're using boreal-ui/core, import the base styles in your main entry (e.g., index.tsx or App.tsx):
+### React
 
 ```tsx
 import "boreal-ui/core/globals.css";
 ```
 
-### Importing Components
-
-**For React (Core):**
+Then import components from the core build:
 
 ```tsx
-import { Button } from "boreal-ui/core/Button";
-import { Card } from "boreal-ui/core/Card";
-```
+import { Button, Card, TextInput } from "boreal-ui/core";
 
-**For Next.js (Optimized):**
-
-```tsx
-import { Button } from "boreal-ui/next/Button";
-import { Card } from "boreal-ui/next/Card";
-```
-
----
-
-## Global Configuration
-
-Boreal UI lets you define project-wide style defaults (theme, rounding, shadow, size) in a single config API.
-
-**Call the config API**
-
-```ts
-import { setBorealStyleConfig } from "boreal-ui/config/[next|core]";
-
-setBorealStyleConfig({
-  defaultTheme: "secondary", // "primary" | "secondary" | "tertiary" | "quaternary"
-  defaultRounding: "medium", // "none" | "small" | "medium" | "large" | "full"
-  defaultShadow: "light", // "none" | "light" | "medium" | "strong" | "intense"
-  defaultSize: "large", // "xs" | "small" | "medium" | "large" | "xl"
-});
-```
-
-Call this once early in your app before rendering any components.
-
-These defaults apply globally, but you can override them per component as needed:
-
-```tsx
-<Button theme="secondary" size="large" shadow="strong">
-  Custom Button
-</Button>
-```
-
-## Theming & Custom Color Schemes
-
-Boreal UI supports custom color schemes through the `ThemeProvider`.
-
-**Wrap your app (typically in `_app.tsx` or a custom provider):**
-
-```tsx
-"use client";
-import { ThemeProvider } from "boreal-ui";
-
-export default function RootLayout({ children }) {
+export function Example() {
   return (
-    <html lang="en">
-      <body>
-        <ThemeProvider
-          customSchemes={[
-            {
-              name: "Cyberpunk Pulse",
-              primaryColor: "#ff006e",
-              secondaryColor: "#8338ec",
-              tertiaryColor: "#3a0ca3",
-              quaternaryColor: "#fb5607",
-              backgroundColor: "#0f0f0f",
-            },
-          ]}
-        >
-          {children}
-        </ThemeProvider>
-      </body>
-    </html>
+    <Card title="Welcome" theme="primary" shadow="medium">
+      <TextInput label="Project name" placeholder="Aurora dashboard" />
+      <Button theme="secondary" size="large">
+        Continue
+      </Button>
+    </Card>
   );
 }
 ```
 
-**Theme property reference:**
+### Next.js
 
-| Property          | Description                      |
-| ----------------- | -------------------------------- |
-| `name`            | Unique identifier for the scheme |
-| `primaryColor`    | Main UI color                    |
-| `secondaryColor`  | Accent color                     |
-| `tertiaryColor`   | Additional accent                |
-| `quaternaryColor` | Additional accent                |
-| `backgroundColor` | Background/base color            |
+Import the Next stylesheet once from `app/layout.tsx`, `pages/_app.tsx`, or your global stylesheet.
 
----
+```tsx
+import "boreal-ui/next/globals.css";
+```
 
-## Post-Install Verification
+Then import components from the Next build:
 
-After installation, we recommend testing the following in your app:
+```tsx
+"use client";
 
-- Component renders correctly and styles are applied.
+import { Button, Card, TextInput } from "boreal-ui/next";
 
-- Custom theme is working when passed via ThemeProvider.
+export default function Example() {
+  return (
+    <Card title="Welcome" theme="primary" shadow="medium">
+      <TextInput label="Project name" placeholder="Aurora dashboard" />
+      <Button theme="secondary" size="large">
+        Continue
+      </Button>
+    </Card>
+  );
+}
+```
 
-- Global config overrides (theme, size, etc.) are applied.
+You can also import standalone components:
 
-- No console errors or missing styles on first render.
+```tsx
+import Button from "boreal-ui/core/Button";
+import Card from "boreal-ui/next/Card";
+```
 
-## Why Use Boreal UI?
+## Components
 
-- Enforces consistent styling and branding across your project.
-- Save time: define defaults once, override only when needed.
-- Switch between multiple color schemes easily (great for light/dark mode).
-- Fully accessible and ready for production.
+For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs/README.md). They cover import paths, styling and theming, common component patterns, generated prop docs, and public TypeScript types.
 
----
+### Actions
+
+- `Button` supports native buttons, links via `href`, custom elements via `as`, icons, loading states, full-width layout, external links, outline, glass, theme, state, size, rounding, shadow, and ARIA attributes.
+- `IconButton` provides compact icon-only actions with accessible labels.
+- `ScrollToTop` adds a reusable page action for returning to the top of the viewport.
+
+### Forms and Inputs
+
+- `TextInput` and `TextArea` support labels, helper/error text, validation state, disabled state, sizing, theming, and accessible descriptions.
+- `Select` and `ThemeSelect` cover option selection and color-scheme switching.
+- `Checkbox`, `RadioButton`, `Toggle`, and `Slider` provide common controlled input patterns.
+- `ColorPicker` supports color selection flows.
+- `DateTimePicker` handles date and time input.
+- `FileUpload` supports file selection UI.
+- `TagInput` supports editable tag lists, async suggestions, debouncing, accessible listbox labeling, and remove-tag controls.
+- `FormGroup` helps compose labels, helper text, and grouped form controls.
+
+### Data and Content
+
+- `DataTable` supports generic row data, typed columns, sorting, server-side sorting hooks, interactive rows, captions, loading and empty states, row/cell class customization, wrapping cells, striped rows, theme, outline, glass, rounding, shadow, and accessible sort announcements.
+- `MarkdownRenderer` renders markdown content.
+- `Typography` provides semantic text rendering with variants and theme-aware color.
+- `MetricBox` displays key values and supporting content.
+
+### Feedback and Status
+
+- `Badge`, `Chip`, and `ChipGroup` cover labels, statuses, and compact selectable or grouped metadata.
+- `Progressbar`, `CircularProgress`, `Spinner`, and `Skeleton` cover loading and progress states.
+- `Rating` provides star-style rating UI.
+- `Tooltip`, `MessagePopup`, `PopOver`, `Modal`, `NotificationCenter`, and `EmptyState` cover contextual help, alerts, overlays, dialogs, notification lists, and no-data states.
+
+### Navigation and Layout
+
+- `Navbar`, `Sidebar`, `Footer`, `Breadcrumbs`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Toolbar`, `Dropdown`, and `Divider` cover navigation, page structure, disclosure, pagination, tool rows, menus, and visual separation.
+- `Card` supports title, description, icon, header/content/footer customization, loading content, outline, glass, shadow, rounding, theme, and section-level class names.
+- `Avatar` supports image, initials, fallback icon, shape, status, status position, size, theme, and custom styling.
+
+## Common Styling Props
+
+Many components share the same styling vocabulary:
+
+| Prop                                 | Values                                                    |
+| ------------------------------------ | --------------------------------------------------------- |
+| `theme`                              | `primary`, `secondary`, `tertiary`, `quaternary`, `clear` |
+| `state`                              | `success`, `error`, `warning`, `disabled`, empty string   |
+| `size`                               | `xs`, `small`, `medium`, `large`, `xl`                    |
+| `rounding`                           | `none`, `small`, `medium`, `large`, `full`                |
+| `shadow`                             | `none`, `light`, `medium`, `strong`, `intense`            |
+| `borderWidth` / `defaultBorderWidth` | `none`, `xs`, `small`, `medium`, `large`, `xl`            |
+| `outline`                            | outline treatment where supported                         |
+| `glass`                              | translucent theme-aware surface where supported           |
+| `className` and section class props  | consumer styling hooks where supported                    |
+| `data-testid`                        | stable test selectors                                     |
+
+Exact props vary by component. TypeScript and the generated prop docs are the source of truth for each component.
+
+## Global Style Defaults
+
+Call `setBorealStyleConfig` once before rendering your app to set project-wide defaults.
+
+```tsx
+import { setBorealStyleConfig } from "boreal-ui/core";
+
+setBorealStyleConfig({
+  defaultTheme: "secondary",
+  defaultSize: "medium",
+  defaultRounding: "medium",
+  defaultShadow: "light",
+  defaultBorderWidth: "none",
+  defaultColorSchemeName: "Forest Dusk",
+});
+```
+
+For Next.js, import the same API from `boreal-ui/next`:
+
+```tsx
+import { setBorealStyleConfig } from "boreal-ui/next";
+```
+
+Component props still win over global defaults:
+
+```tsx
+<Button theme="primary" size="large" shadow="strong">
+  Save changes
+</Button>
+```
+
+## Theme Provider and Color Schemes
+
+`ThemeProvider` manages the active color scheme and writes the scheme into CSS variables used by components.
+
+```tsx
+"use client";
+
+import { ThemeProvider } from "boreal-ui/next";
+
+const customSchemes = [
+  {
+    name: "Cyberpunk Pulse",
+    primaryColor: "#ff006e",
+    secondaryColor: "#8338ec",
+    tertiaryColor: "#3a0ca3",
+    quaternaryColor: "#fb5607",
+    backgroundColor: "#0f0f0f",
+    forceTextColor: "#ffffff",
+  },
+];
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <ThemeProvider
+      customSchemes={customSchemes}
+      initialSchemeName="Cyberpunk Pulse"
+    >
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+`ThemeProvider` props:
+
+| Prop                   | Description                                           |
+| ---------------------- | ----------------------------------------------------- |
+| `customSchemes`        | Register additional color schemes at runtime.         |
+| `initialSchemeName`    | Select an initial scheme by name.                     |
+| `useOnlyCustomSchemes` | Use only custom schemes instead of the built-in list. |
+
+Color scheme shape:
+
+```ts
+type ColorScheme = {
+  name: string;
+  primaryColor: string;
+  secondaryColor: string;
+  tertiaryColor: string;
+  quaternaryColor: string;
+  backgroundColor: string;
+  forceTextColor?: string;
+};
+```
+
+You can also use `registerColorScheme` and `defaultColorSchemes`:
+
+```tsx
+import {
+  defaultColorSchemes,
+  registerColorScheme,
+  ThemeSelect,
+} from "boreal-ui/core";
+
+registerColorScheme({
+  name: "Brand Night",
+  primaryColor: "#4f46e5",
+  secondaryColor: "#06b6d4",
+  tertiaryColor: "#a855f7",
+  quaternaryColor: "#22c55e",
+  backgroundColor: "#0f172a",
+  forceTextColor: "#ffffff",
+});
+
+console.log(defaultColorSchemes.map((scheme) => scheme.name));
+```
+
+## Generated Prop Docs
+
+Boreal UI exports generated prop metadata for documentation sites, playgrounds, or prop tables.
+
+```tsx
+import { buttonPropDocs, dataTablePropDocs } from "boreal-ui/core";
+
+console.log(buttonPropDocs.name);
+console.log(dataTablePropDocs.props);
+```
+
+The docs export includes `GeneratedComponentDoc` and `GeneratedPropDoc` types, plus one prop-doc object per documented component.
+
+## Type Exports
+
+Shared public types are exported from both builds:
+
+```ts
+import type {
+  BorderType,
+  ColorScheme,
+  RoundingType,
+  ShadowType,
+  SizeType,
+  ThemeType,
+} from "boreal-ui/core";
+```
+
+Standalone type entry points are also available:
+
+```ts
+import type { ThemeType } from "boreal-ui/core/types";
+import type { SizeType } from "boreal-ui/next/types";
+```
+
+## CSS Customization
+
+Boreal UI styles are built on CSS variables and SCSS. You can override variables globally or scope them to a subtree:
+
+```css
+:root {
+  --font-family-ui: Inter, system-ui, sans-serif;
+  --border-radius-md: 0.5rem;
+  --transition-default: 160ms ease;
+  --focus-outline-color: #2563eb;
+}
+
+.admin-shell {
+  --background-color: #0f172a;
+  --text-color: #f8fafc;
+}
+```
+
+Most components also accept `className`, and larger components expose section-level class props such as `headerClassName`, `contentClassName`, `footerClassName`, `titleClassName`, or similar names where relevant.
+
+## Accessibility and Testing
+
+Boreal UI is designed for Testing Library, Jest, jest-axe, Cypress, and Storybook workflows.
+
+For a full consumer guide, see [Accessibility](./docs/accessibility.md).
+
+- Prefer roles and accessible names in tests.
+- Use `data-testid` when a stable selector is needed.
+- Icon-only controls should receive an accessible label.
+- Helper and error text are connected with ARIA where components support those states.
+- Interactive components are built with keyboard behavior and visible focus states in mind.
+
+```tsx
+import { render, screen } from "@testing-library/react";
+import { Button } from "boreal-ui/core";
+
+it("renders an accessible button", () => {
+  render(<Button>Submit</Button>);
+  expect(screen.getByRole("button", { name: /submit/i })).toBeInTheDocument();
+});
+```
+
+## Development
+
+```bash
+npm run dev
+npm run storybook:core
+npm run storybook:next
+npm run test
+npm run lint
+npm run typecheck
+npm run build
+```
+
+Useful scripts:
+
+| Script                         | Purpose                                                 |
+| ------------------------------ | ------------------------------------------------------- |
+| `npm run build`                | Build core, Next, docs, and public types.               |
+| `npm run test`                 | Run Jest tests.                                         |
+| `npm run test:coverage`        | Run Jest with coverage.                                 |
+| `npm run lint`                 | Lint TypeScript and TSX files.                          |
+| `npm run lint:styles`          | Lint CSS and SCSS files.                                |
+| `npm run audit`                | Run type, lint, style, test, build, and package checks. |
+| `npm run generate:docs`        | Regenerate component prop docs.                         |
+| `npm run generate:entrypoints` | Regenerate component entry points.                      |
+| `npm run generate:exports`     | Regenerate package exports.                             |
+
+## Package Entry Points
+
+```tsx
+import { Button } from "boreal-ui/core";
+import Button from "boreal-ui/core/Button";
+import "boreal-ui/core/globals.css";
+
+import { Button as NextButton } from "boreal-ui/next";
+import NextCard from "boreal-ui/next/Card";
+import "boreal-ui/next/globals.css";
+```
+
+The root `boreal-ui` entry currently points to the core build. For Next.js apps, prefer `boreal-ui/next` so the Next wrappers and client directives are used.
 
 ## Contributing
 
 1. Fork this repo.
-2. Create a feature branch: `git checkout -b feat/my-component`
-3. Commit your changes: `git commit -m "Add MyComponent"`
-4. Push to your fork: `git push origin feat/my-component`
-5. Open a Pull Request.
+2. Create a feature branch: `git checkout -b feat/my-component`.
+3. Add or update component logic, types, SCSS, tests, stories, and docs metadata as needed.
+4. Run the relevant checks.
+5. Open a pull request.
 
-**Include**
-
-- Component logic (TSX)
-- Styles (SCSS)
-- Tests (Jest/Cypress)
-- Storybook stories
-- Docs/comments for props
-
----
+When adding or changing a public component, keep the base/core/next architecture aligned: shared behavior in the base component, global SCSS for core, SCSS Modules for Next, and tests that cover accessibility and customization.
 
 ## License
 
-MIT © [Davin Chiupka](https://davinchiupka.com)
+MIT (c) [Davin Chiupka](https://davinchiupka.ca)

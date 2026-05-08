@@ -17,6 +17,7 @@ const classMap = {
   labelRight: "labelRight",
   loading: "loading",
   outline: "outline",
+  glass: "glass",
   disabled: "disabled",
   primary: "themePrimary",
   secondary: "themeSecondary",
@@ -268,10 +269,29 @@ describe("BaseSelect", () => {
   });
 
   it("renders the layout wrapper and main wrapper test ids", () => {
-    render(<BaseSelect {...defaultProps} aria-label="Fruit select" />);
+    render(
+      <BaseSelect
+        {...defaultProps}
+        aria-label="Fruit select"
+        theme="primary"
+        state="error"
+        outline
+        glass
+        rounding="medium"
+        shadow="medium"
+      />,
+    );
 
     expect(screen.getByTestId("select-layout")).toBeInTheDocument();
-    expect(screen.getByTestId("select")).toBeInTheDocument();
+    expect(screen.getByTestId("select")).toHaveClass(
+      "wrapper",
+      "themePrimary",
+      "stateError",
+      "glass",
+      "outline",
+      "roundMedium",
+      "shadowMedium",
+    );
   });
 
   it("loads async options and shows a loading message", async () => {

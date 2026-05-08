@@ -40,6 +40,48 @@ export interface Column<T> {
    * Useful for tables where the first column identifies the row.
    */
   isRowHeader?: boolean;
+  /**
+   * Optional class name applied to this column's header cell.
+   */
+  headerClassName?: string;
+
+  /**
+   * Optional class name applied to every body cell in this column.
+   */
+  cellClassName?: string;
+
+  /**
+   * Optional class name applied to row header cells when this column uses isRowHeader.
+   */
+  rowHeaderClassName?: string;
+
+  /**
+   * Optional class name applied to the sort button inside a sortable header.
+   */
+  sortButtonClassName?: string;
+  /**
+   * Allows this column's cells to wrap onto multiple lines.
+   * Useful for descriptions, notes, code summaries, or long labels.
+   */
+  wrap?: boolean;
+
+  /**
+   * Optional max width for this column.
+   * Example: "24rem", "320px", "40ch".
+   */
+  maxWidth?: string;
+
+  /**
+   * Optional min width for this column.
+   * Example: "10rem", "160px".
+   */
+  minWidth?: string;
+
+  /**
+   * Optional width for this column.
+   * Example: "12rem", "20%", "240px".
+   */
+  width?: string;
 }
 
 /**
@@ -59,10 +101,52 @@ export interface DataTableProps<T> {
   className?: string;
 
   /**
+   * Optional class name applied directly to the table element.
+   */
+  tableClassName?: string;
+
+  /**
+   * Optional class name applied to the table head.
+   */
+  theadClassName?: string;
+
+  /**
+   * Optional class name applied to the table body.
+   */
+  tbodyClassName?: string;
+
+  /**
+   * Optional static or dynamic class name for each row.
+   */
+  rowClassName?: string | ((row: T, index: number) => string | undefined);
+
+  /**
+   * Optional dynamic class name for each cell.
+   */
+  cellClassName?: (
+    value: unknown,
+    row: T,
+    column: Column<T>,
+    rowIndex: number,
+  ) => string | undefined;
+
+  /**
+   * Allows table cells to wrap onto multiple lines.
+   * Can be overridden per column with column.wrap.
+   */
+  wrapCells?: boolean;
+
+  /**
    * Theme used for styling the table
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
    */
   theme?: ThemeType;
+
+  /**
+   * If true, applies a translucent glass surface using the selected theme/state.
+   * Defaults to `false`.
+   */
+  glass?: boolean;
 
   /**
    * State of the table

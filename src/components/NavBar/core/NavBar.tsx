@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import BaseNavBar from "../NavBarBase";
 import "./NavBar.scss";
 import { NavBarProps, NavItem } from "../NavBar.types";
+import { isNavItemActiveForPath } from "../NavBar.utils";
 
 const classes = {
   container: "nav",
@@ -18,6 +19,7 @@ const classes = {
   tertiary: "nav_tertiary",
   quaternary: "nav_quaternary",
   clear: "nav_clear",
+  glass: "nav_glass",
 
   shadowNone: "nav_shadow-None",
   shadowLight: "nav_shadow-Light",
@@ -32,9 +34,6 @@ const classes = {
   roundFull: "nav_round-Full",
 };
 
-const normalizePath = (p: string) =>
-  p.endsWith("/") && p.length > 1 ? p.slice(0, -1) : p;
-
 const NavBar: React.FC<NavBarProps> = ({
   isItemActive: consumerIsItemActive,
   ...props
@@ -46,7 +45,7 @@ const NavBar: React.FC<NavBarProps> = ({
   }, []);
 
   const defaultIsItemActive = (item: NavItem) =>
-    normalizePath(item.path) === normalizePath(pathname);
+    isNavItemActiveForPath(item, pathname);
 
   const resolvedIsItemActive = consumerIsItemActive ?? defaultIsItemActive;
 

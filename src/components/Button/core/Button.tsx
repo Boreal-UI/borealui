@@ -6,6 +6,8 @@ import { ButtonProps } from "../Button.types";
 const classes = {
   button: "button",
   icon: "button_icon",
+  iconLeft: "button_icon_left",
+  iconRight: "button_icon_right",
   buttonIcon: "button_button_icon",
   buttonLabel: "button_label",
   loader: "button_loader",
@@ -14,6 +16,7 @@ const classes = {
   fullWidth: "button_full_width",
   disabled: "button_disabled",
   outline: "button_outline",
+  glass: "button_glass",
 
   primary: "button_primary",
   secondary: "button_secondary",

@@ -13,7 +13,9 @@
 "use client";
 
 import { ColorScheme } from "@/types/types";
-import { colorSchemes } from "./Themes";
+import { defaultColorSchemes } from "./Themes";
+
+const colorSchemes: ColorScheme[] = [...defaultColorSchemes];
 
 /**
  * Registers custom color schemes.
@@ -28,7 +30,7 @@ import { colorSchemes } from "./Themes";
  */
 export const registerColorScheme = (
   customSchemes: ColorScheme[],
-  override: boolean = false
+  override: boolean = false,
 ) => {
   for (const scheme of customSchemes) {
     const index = colorSchemes.findIndex((s) => s.name === scheme.name);

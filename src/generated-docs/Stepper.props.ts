@@ -76,6 +76,14 @@ export const stepperPropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Adds glass styling to the step buttons.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "groupLabel",
       "type": "string",
       "description": "Fallback hidden label text when no aria-label or aria-labelledby is provided. Defaults to \"Progress Stepper\".",

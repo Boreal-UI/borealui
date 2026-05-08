@@ -1,36 +1,88 @@
-// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
-import storybook from "eslint-plugin-storybook";
-
 import js from "@eslint/js";
+import globals from "globals";
 import tseslint from "typescript-eslint";
-import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
-import jsxA11y from "eslint-plugin-jsx-a11y";
+import reactRefresh from "eslint-plugin-react-refresh";
 
-export default [js.configs.recommended, ...tseslint.configs.recommended, {
-  plugins: {
-    react,
-    "react-hooks": reactHooks,
-    "jsx-a11y": jsxA11y,
-  },
-  languageOptions: {
-    parser: tseslint.parser,
-    parserOptions: {
-      ecmaVersion: "latest",
-      sourceType: "module",
-      project: "./tsconfig.json",
-    },
-  },
-  settings: {
-    react: {
-      version: "detect",
-    },
-  },
-  rules: {
-    "react/react-in-jsx-scope": "off",
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
-      { argsIgnorePattern: "^_" },
+export default tseslint.config(
+  {
+    ignores: [
+      "dist/**",
+      "coverage/**",
+      "node_modules/**",
+      ".storybook-static/**",
+      "storybook-static/**",
+      "*.d.ts",
+      "dist/types/**",
     ],
   },
-}, ...storybook.configs["flat/recommended"]];
+
+  js.configs.recommended,
+
+  {
+    files: [
+      "src/**/*.{ts,tsx}",
+      "__tests__/**/*.{ts,tsx}",
+      "stories-core/**/*.{ts,tsx}",
+      "stories-next/**/*.{ts,tsx}",
+      ".storybook/**/*.{ts,tsx}",
+      ".storybook-core/**/*.{ts,tsx}",
+      ".storybook-next/**/*.{ts,tsx}",
+    ],
+
+    extends: [...tseslint.configs.recommendedTypeChecked],
+
+    languageOptions: {
+      parserOptions: {
+        project: "./tsconfig.eslint.json",
+        tsconfigRootDir: import.meta.dirname,
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.es2022,
+        ...globals.jest,
+      },
+    },
+
+    plugins: {
+      "react-hooks": reactHooks,
+      "react-refresh": reactRefresh,
+    },
+
+    rules: {
+      "react-hooks/rules-of-hooks": "off",
+      "react-hooks/exhaustive-deps": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+    },
+  },
+
+  {
+    files: [
+      "*.config.{js,cjs,mjs,ts}",
+      "vite.config*.ts",
+      "webpack.config.cjs",
+      "eslint.config.js",
+      "scripts/**/*.{js,cjs,mjs}",
+    ],
+
+    extends: [tseslint.configs.disableTypeChecked],
+
+    languageOptions: {
+      parser: tseslint.parser,
+      globals: {
+        ...globals.node,
+        ...globals.es2022,
+      },
+      parserOptions: {
+        project: false,
+      },
+    },
+
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
+      "no-undef": "off",
+    },
+  },
+);

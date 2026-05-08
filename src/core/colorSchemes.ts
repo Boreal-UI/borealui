@@ -1,1 +1,1 @@
-export { colorSchemes } from "../styles/Themes";
+export { defaultColorSchemes } from "../styles/Themes";

@@ -84,6 +84,14 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment to the progress track.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "indeterminate",
       "type": "boolean",
       "description": "If true, the progress bar shows an indeterminate animation. When true, the value prop is ignored.",

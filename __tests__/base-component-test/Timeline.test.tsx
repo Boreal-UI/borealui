@@ -19,6 +19,7 @@ const mockStyles = {
   horizontal: "horizontal",
   primary: "primary",
   secondary: "secondary",
+  glass: "glass",
   roundNone: "roundNone",
   roundSmall: "roundSmall",
   roundMedium: "roundMedium",
@@ -135,22 +136,26 @@ describe("TimelineBase", () => {
     expect(screen.getByTestId("timeline-item-1")).toHaveClass("horizontal");
   });
 
-  it("applies theme, rounding, and shadow classes", () => {
+  it("applies theme, rounding, shadow, and glass classes", () => {
     render(
       <TimelineBase
         items={items}
         classMap={mockStyles}
         theme="secondary"
+        glass
         rounding="large"
         shadow="strong"
       />,
     );
 
     expect(screen.getByTestId("timeline")).toHaveClass("secondary");
+    expect(screen.getByTestId("timeline")).toHaveClass("glass");
 
     expect(screen.getByTestId("timeline-item-0-marker")).toHaveClass(
       "shadowStrong",
     );
+    expect(screen.getByTestId("timeline-item-0-marker")).toHaveClass("glass");
+    expect(screen.getByTestId("timeline-item-0-content")).toHaveClass("glass");
     expect(screen.getByTestId("timeline-item-0-content")).toHaveClass(
       "roundLarge",
     );

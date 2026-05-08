@@ -27,6 +27,7 @@ const classMap = {
   xl: "xl",
 
   outline: "outline",
+  glass: "glass",
   disabled: "disabled",
 
   shadowNone: "shadowNone",
@@ -535,6 +536,7 @@ describe("BreadcrumbsBase", () => {
       shadow: "light",
       rounding: "small",
       outline: true,
+      glass: true,
       disabled: true,
       className: "custom-breadcrumbs-class",
     });
@@ -548,6 +550,7 @@ describe("BreadcrumbsBase", () => {
     expect(nav).toHaveClass("shadowLight");
     expect(nav).toHaveClass("roundSmall");
     expect(nav).toHaveClass("outline");
+    expect(nav).toHaveClass("glass");
     expect(nav).toHaveClass("disabled");
     expect(nav).toHaveClass("custom-breadcrumbs-class");
   });

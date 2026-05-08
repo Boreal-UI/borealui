@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .datetime_picker {
@@ -130,6 +131,13 @@
   }
 
   @each $theme-name, $values in theme.$themes {
+    &_#{$theme-name} {
+      --datetime-picker-glass-bg: #{map.get($values, glass-bg)};
+      --datetime-picker-glass-hover-bg: #{map.get($values, glass-hover)};
+      --datetime-picker-glass-border: #{map.get($values, glass-border)};
+      --datetime-picker-glass-text: #{map.get($values, text)};
+    }
+
     &_#{$theme-name} &_input_wrapper {
       background-color: map.get($values, bg);
       color: map.get($values, text);
@@ -157,6 +165,13 @@
   }
 
   @each $state-name, $values in theme.$states {
+    &_#{$state-name} {
+      --datetime-picker-glass-bg: #{map.get($values, glass-bg)};
+      --datetime-picker-glass-hover-bg: #{map.get($values, glass-hover)};
+      --datetime-picker-glass-border: #{map.get($values, glass-border)};
+      --datetime-picker-glass-text: #{map.get($values, text)};
+    }
+
     &_#{$state-name} &_input_wrapper {
       background-color: map.get($values, bg);
       color: map.get($values, text);
@@ -186,6 +201,22 @@
   &_outline .datetime_picker_input_wrapper {
     background-color: transparent;
     box-shadow: none;
+  }
+
+  &_glass .datetime_picker_input_wrapper {
+    @include mixins.glass-surface(
+      var(--datetime-picker-glass-bg, rgba(255, 255, 255, 0.18)),
+      var(--datetime-picker-glass-border, rgba(255, 255, 255, 0.34)),
+      16px
+    );
+    color: var(--datetime-picker-glass-text, var(--text-color-primary));
+  }
+
+  &_glass .datetime_picker_input_wrapper:hover {
+    background: var(
+      --datetime-picker-glass-hover-bg,
+      rgba(255, 255, 255, 0.24)
+    );
   }
 
   &_clear.datetime_picker_outline .datetime_picker_input_wrapper {
@@ -308,6 +339,14 @@
 }
 
 @media (forced-colors: active) {
+  .datetime_picker_glass .datetime_picker_input_wrapper {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonText;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .datetime_picker_input_wrapper {
     background: Canvas;
     color: CanvasText;

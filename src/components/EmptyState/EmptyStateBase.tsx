@@ -14,6 +14,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   title = "Nothing Here Yet",
   message = "There’s no content to display.",
   theme = getDefaultTheme(),
+  glass = false,
   state = "",
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
@@ -59,9 +60,20 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         outline && classMap.outline,
+        glass && classMap.glass,
         className,
       ),
-    [classMap, rounding, shadow, size, state, theme, outline, className],
+    [
+      classMap,
+      rounding,
+      shadow,
+      size,
+      state,
+      theme,
+      outline,
+      glass,
+      className,
+    ],
   );
 
   const resolvedActionAriaLabel =
@@ -117,6 +129,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
         <Button
           theme="clear"
           outline={outline}
+          glass={glass}
           onClick={onActionClick}
           aria-label={resolvedActionAriaLabel}
           data-testid={`${testId}-action`}

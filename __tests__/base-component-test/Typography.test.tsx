@@ -45,6 +45,7 @@ const mockClassMap = {
   warning: "warning",
   error: "error",
   themeInherit: "themeInherit",
+  glass: "glass",
 
   italic: "italic",
   underline: "underline",
@@ -118,12 +119,13 @@ describe("TypographyBase", () => {
     expect(element.tagName).toBe("DIV");
   });
 
-  it("applies the base, variant, alignment, weight, and theme classes", () => {
+  it("applies the base, variant, alignment, weight, theme, and glass classes", () => {
     renderTypography({
       variant: "h2",
       align: "center",
       weight: "bold",
       theme: "success",
+      glass: true,
     });
 
     const element = screen.getByTestId("typography");
@@ -133,6 +135,7 @@ describe("TypographyBase", () => {
       "alignCenter",
       "weightBold",
       "success",
+      "glass",
     );
   });
 

@@ -3,15 +3,34 @@ import {
   removeColorScheme,
   getAllColorSchemes,
 } from "../../src/styles/colorSchemeRegistry";
-import { colorSchemes } from "../../src/styles/Themes";
+import { defaultColorSchemes } from "../../src/styles/Themes";
 
 describe("colorSchemeRegistry", () => {
-  const originalSchemes = [...colorSchemes];
+  const originalSchemes = [...defaultColorSchemes];
   const originalWarn = console.warn;
+  const originalEnv = process.env.NODE_ENV;
+
+  const resetRegistry = () => {
+    const current = getAllColorSchemes();
+    const defaultNames = new Set(originalSchemes.map((scheme) => scheme.name));
+
+    for (const scheme of current) {
+      if (!defaultNames.has(scheme.name)) {
+        removeColorScheme(scheme.name);
+      }
+    }
+
+    registerColorScheme(originalSchemes, true);
+  };
 
   beforeEach(() => {
-    colorSchemes.splice(0, colorSchemes.length, ...originalSchemes);
+    resetRegistry();
     console.warn = jest.fn();
+    process.env.NODE_ENV = originalEnv;
+  });
+
+  afterEach(() => {
+    process.env.NODE_ENV = originalEnv;
   });
 
   afterAll(() => {
@@ -28,33 +47,35 @@ describe("colorSchemeRegistry", () => {
       backgroundColor: "#fefefe",
     };
 
-    const before = colorSchemes.length;
+    const before = getAllColorSchemes().length;
 
     registerColorScheme([newScheme]);
 
-    expect(colorSchemes).toHaveLength(before + 1);
-    expect(colorSchemes.find((s) => s.name === "Custom Aurora")).toEqual(
-      newScheme,
-    );
+    const result = getAllColorSchemes();
+
+    expect(result).toHaveLength(before + 1);
+    expect(result.find((s) => s.name === "Custom Aurora")).toEqual(newScheme);
   });
 
   it("skips a duplicate color scheme when override is false", () => {
-    const existing = colorSchemes[0];
+    const existing = getAllColorSchemes()[0];
     const replacement = {
       ...existing,
       primaryColor: "#123456",
     };
 
-    const before = colorSchemes.length;
+    const before = getAllColorSchemes();
 
     registerColorScheme([replacement], false);
 
-    expect(colorSchemes).toHaveLength(before);
-    expect(colorSchemes[0].primaryColor).toBe(existing.primaryColor);
+    const result = getAllColorSchemes();
+
+    expect(result).toHaveLength(before.length);
+    expect(result[0].primaryColor).toBe(existing.primaryColor);
   });
 
   it("overrides an existing color scheme when override is true", () => {
-    const existing = colorSchemes[0];
+    const existing = getAllColorSchemes()[0];
     const replacement = {
       ...existing,
       primaryColor: "#123456",
@@ -63,22 +84,31 @@ describe("colorSchemeRegistry", () => {
 
     registerColorScheme([replacement], true);
 
-    expect(colorSchemes[0]).toEqual(replacement);
+    const result = getAllColorSchemes();
+
+    expect(result[0]).toEqual(replacement);
   });
 
   it("warns in development when trying to register a duplicate without override", () => {
-    const originalEnv = process.env.NODE_ENV;
     process.env.NODE_ENV = "development";
 
-    const existing = colorSchemes[0];
+    const existing = getAllColorSchemes()[0];
 
     registerColorScheme([existing], false);
 
     expect(console.warn).toHaveBeenCalledWith(
       `Color scheme "${existing.name}" already exists. Skipping.`,
     );
+  });
 
-    process.env.NODE_ENV = originalEnv;
+  it("does not warn outside development when trying to register a duplicate without override", () => {
+    process.env.NODE_ENV = "test";
+
+    const existing = getAllColorSchemes()[0];
+
+    registerColorScheme([existing], false);
+
+    expect(console.warn).not.toHaveBeenCalled();
   });
 
   it("removes a color scheme by name and returns true when found", () => {
@@ -94,9 +124,10 @@ describe("colorSchemeRegistry", () => {
     registerColorScheme([newScheme]);
 
     const removed = removeColorScheme("Temp Scheme");
+    const result = getAllColorSchemes();
 
     expect(removed).toBe(true);
-    expect(colorSchemes.find((s) => s.name === "Temp Scheme")).toBeUndefined();
+    expect(result.find((s) => s.name === "Temp Scheme")).toBeUndefined();
   });
 
   it("returns false when removing a color scheme that does not exist", () => {
@@ -107,14 +138,15 @@ describe("colorSchemeRegistry", () => {
 
   it("returns a copy of all color schemes", () => {
     const result = getAllColorSchemes();
+    const secondResult = getAllColorSchemes();
 
-    expect(result).toEqual(colorSchemes);
-    expect(result).not.toBe(colorSchemes);
+    expect(result).toEqual(secondResult);
+    expect(result).not.toBe(secondResult);
   });
 
   it("does not mutate the original registry array when the returned copy is changed", () => {
     const result = getAllColorSchemes();
-    const originalLength = colorSchemes.length;
+    const originalLength = result.length;
 
     result.push({
       name: "Fake Added To Copy",
@@ -126,6 +158,6 @@ describe("colorSchemeRegistry", () => {
     });
 
     expect(result).toHaveLength(originalLength + 1);
-    expect(colorSchemes).toHaveLength(originalLength);
+    expect(getAllColorSchemes()).toHaveLength(originalLength);
   });
 });

@@ -38,15 +38,6 @@ const createChip = (
   ...overrides,
 });
 
-const allThemes: ChipProps["theme"][] = [
-  "primary",
-  "secondary",
-  "success",
-  "error",
-  "warning",
-  "clear",
-];
-
 const positions: ChipGroupProps["position"][] = [
   "topLeft",
   "topCenter",
@@ -58,12 +49,12 @@ const positions: ChipGroupProps["position"][] = [
 
 const defaultChips: ChipProps[] = [
   createChip("Success message!", {
-    theme: "success",
+    state: "success",
     icon: FaCheckCircle,
     duration: 4000,
   }),
   createChip("Something went wrong!", {
-    theme: "error",
+    state: "error",
     icon: FaExclamationTriangle,
     autoClose: false,
   }),

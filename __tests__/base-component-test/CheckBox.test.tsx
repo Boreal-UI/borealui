@@ -45,6 +45,7 @@ const classMap = {
 
   disabled: "disabled",
   indeterminate: "indeterminate",
+  glass: "glass",
 };
 
 describe("CheckboxBase", () => {
@@ -281,7 +282,104 @@ describe("CheckboxBase", () => {
     expect(input).toBeRequired();
   });
 
-  it("applies theme, state, label position, size, shadow, rounding, disabled, invalid, and custom className to wrapper", () => {
+  it.each([
+    ["xs", "sizeXs"],
+    ["small", "sizeSmall"],
+    ["medium", "sizeMedium"],
+    ["large", "sizeLarge"],
+    ["xl", "sizeXl"],
+  ] as const)(
+    "applies the %s size class used for checkbox box sizing",
+    (size, expectedClass) => {
+      renderCheckbox({
+        label: `${size} checkbox`,
+        size,
+      });
+
+      const wrapper = screen.getByTestId("checkbox-wrapper");
+      const box = screen.getByTestId("checkbox-box");
+
+      expect(wrapper).toHaveClass(expectedClass);
+      expect(box).toHaveClass("checkboxBox");
+    },
+  );
+
+  it("uses the native checked state for the filled checkbox indicator", () => {
+    renderCheckbox({
+      label: "Filled checkbox",
+      checked: true,
+    });
+
+    const input = screen.getByLabelText("Filled checkbox");
+    const box = screen.getByTestId("checkbox-box");
+
+    expect(input).toBeChecked();
+    expect(input).toHaveAttribute("aria-checked", "true");
+    expect(box).toHaveClass("checkboxBox");
+    expect(box).not.toHaveClass("indeterminate");
+  });
+
+  it("does not apply the indeterminate box class when unchecked normally", () => {
+    renderCheckbox({
+      label: "Unchecked checkbox",
+      checked: false,
+      indeterminate: false,
+    });
+
+    const input = screen.getByLabelText("Unchecked checkbox");
+    const box = screen.getByTestId("checkbox-box");
+
+    expect(input).not.toBeChecked();
+    expect(input).toHaveAttribute("aria-checked", "false");
+    expect(box).not.toHaveClass("indeterminate");
+  });
+
+  it("handles indeterminate state", () => {
+    renderCheckbox({
+      label: "Indeterminate",
+      indeterminate: true,
+      checked: false,
+    });
+
+    const input = screen.getByLabelText("Indeterminate") as HTMLInputElement;
+    const box = screen.getByTestId("checkbox-box");
+
+    expect(input).toHaveAttribute("aria-checked", "mixed");
+    expect(input.indeterminate).toBe(true);
+    expect(box).toHaveClass("checkboxBox");
+    expect(box).toHaveClass("indeterminate");
+  });
+
+  it("applies all visual classes needed by the checkbox styling system", () => {
+    renderCheckbox({
+      label: "Visual checkbox",
+      theme: "secondary",
+      state: "warning",
+      size: "large",
+      shadow: "medium",
+      rounding: "large",
+      labelPosition: "right",
+    });
+
+    const wrapper = screen.getByTestId("checkbox-wrapper");
+    const input = screen.getByLabelText("Visual checkbox");
+    const box = screen.getByTestId("checkbox-box");
+    const label = screen.getByTestId("checkbox-label");
+
+    expect(wrapper).toHaveClass("checkbox");
+    expect(wrapper).toHaveClass("themeSecondary");
+    expect(wrapper).toHaveClass("stateWarning");
+    expect(wrapper).toHaveClass("sizeLarge");
+    expect(wrapper).toHaveClass("shadowMedium");
+    expect(wrapper).toHaveClass("roundLarge");
+    expect(wrapper).toHaveClass("labelRight");
+
+    expect(input).toHaveClass("checkboxInput");
+    expect(box).toHaveClass("checkboxBox");
+    expect(label).toHaveClass("checkboxLabel");
+  });
+
+  it("applies theme, state, label position, size, shadow, rounding, disabled, invalid, glass, and custom className to wrapper", () => {
     renderCheckbox({
       label: "Styled checkbox",
       theme: "primary",
@@ -292,6 +390,7 @@ describe("CheckboxBase", () => {
       rounding: "small",
       disabled: true,
       invalid: true,
+      glass: true,
       className: "custom-checkbox-class",
     });
 
@@ -306,6 +405,7 @@ describe("CheckboxBase", () => {
     expect(wrapper).toHaveClass("roundSmall");
     expect(wrapper).toHaveClass("disabled");
     expect(wrapper).toHaveClass("invalid");
+    expect(wrapper).toHaveClass("glass");
     expect(wrapper).toHaveClass("custom-checkbox-class");
   });
 

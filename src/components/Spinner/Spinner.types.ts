@@ -12,6 +12,11 @@ export interface SpinnerProps {
   theme?: ThemeType;
 
   /**
+   * Applies a translucent frosted-glass surface behind the spinner.
+   */
+  glass?: boolean;
+
+  /**
    * The state of the spinner.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    */

@@ -92,6 +92,14 @@ export const togglePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment to the toggle track.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "id",
       "type": "string",
       "description": "Optional id for the toggle button. If not provided, one will be generated automatically.",

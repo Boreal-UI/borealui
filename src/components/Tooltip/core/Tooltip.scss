@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 $positions: (
@@ -122,6 +123,11 @@ $positions: (
 
 @each $name, $color in theme.$themes {
   .tooltip_#{$name} {
+    --tooltip-glass-bg: #{map.get($color, glass-bg)};
+    --tooltip-glass-hover-bg: #{map.get($color, glass-hover)};
+    --tooltip-glass-border: #{map.get($color, glass-border)};
+    --tooltip-glass-text: #{map.get($color, text)};
+
     background-color: map.get($color, bg);
     color: map.get($color, text);
   }
@@ -145,6 +151,11 @@ $positions: (
 
 @each $name, $color in theme.$states {
   .tooltip_#{$name} {
+    --tooltip-glass-bg: #{map.get($color, glass-bg)};
+    --tooltip-glass-hover-bg: #{map.get($color, glass-hover)};
+    --tooltip-glass-border: #{map.get($color, glass-border)};
+    --tooltip-glass-text: #{map.get($color, text)};
+
     background-color: map.get($color, bg);
     color: map.get($color, text);
   }
@@ -164,6 +175,36 @@ $positions: (
   .tooltip_right.tooltip_#{$name}::after {
     border-color: transparent transparent transparent map.get($color, bg);
   }
+}
+
+.tooltip_glass {
+  @include mixins.glass-surface(
+    var(--tooltip-glass-bg, var(--glass-background)),
+    var(--tooltip-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--tooltip-glass-text, currentcolor);
+}
+
+.tooltip_glass::after {
+  border-color: var(--tooltip-glass-bg, var(--glass-background)) transparent
+    transparent transparent;
+}
+
+.tooltip_bottom.tooltip_glass::after {
+  border-color: transparent transparent
+    var(--tooltip-glass-bg, var(--glass-background)) transparent;
+}
+
+.tooltip_left.tooltip_glass::after {
+  border-color: transparent var(--tooltip-glass-bg, var(--glass-background))
+    transparent transparent;
+}
+
+.tooltip_right.tooltip_glass::after {
+  border-color: transparent transparent transparent
+    var(--tooltip-glass-bg, var(--glass-background));
 }
 
 .tooltip_clear {
@@ -241,5 +282,13 @@ $positions: (
 
   .tooltip_right::after {
     border-color: transparent transparent transparent CanvasText !important;
+  }
+
+  .tooltip_glass {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

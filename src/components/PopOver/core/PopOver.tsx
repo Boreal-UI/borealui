@@ -23,6 +23,7 @@ const classes = {
   warning: "popover_warning",
 
   clear: "popover_clear",
+  glass: "popover_glass",
 
   shadowNone: "popover_shadow-None",
   shadowLight: "popover_shadow-Light",

@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .toolbar {
@@ -26,6 +27,10 @@
 
   @each $theme, $color in theme.$themes {
     &_#{$theme} {
+      --toolbar-glass-bg: #{map.get($color, glass-bg)};
+      --toolbar-glass-border: #{map.get($color, glass-border)};
+      --toolbar-glass-text: #{map.get($color, text)};
+
       background-color: map.get($color, bg);
 
       @if $theme == "secondary" {
@@ -34,6 +39,34 @@
         color: var(--text-color-primary);
       }
     }
+  }
+
+  &_glass {
+    @include mixins.glass-surface(
+      var(--toolbar-glass-bg, var(--glass-background)),
+      var(--toolbar-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--toolbar-glass-text, currentcolor);
+  }
+
+  &_static {
+    position: static;
+  }
+
+  &_fixed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--z-index-fixed, 1000);
+  }
+
+  &_sticky {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-index-sticky, 999);
   }
 
   &_section {
@@ -125,5 +158,13 @@
   .toolbar_section > *:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;
+  }
+
+  .toolbar.toolbar_glass {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

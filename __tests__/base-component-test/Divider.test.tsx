@@ -10,6 +10,7 @@ const styles = {
   horizontal: "horizontal",
   vertical: "vertical",
   dashed: "dashed",
+  glass: "glass",
   primary: "themePrimary",
   success: "stateSuccess",
 };
@@ -176,6 +177,15 @@ describe("DividerBase", () => {
 
     expect(divider).toHaveClass("themePrimary");
     expect(divider).toHaveClass("stateSuccess");
+  });
+
+  it("applies the glass class when requested", () => {
+    renderDivider({ glass: true, theme: "primary" });
+
+    const divider = screen.getByTestId("divider");
+
+    expect(divider).toHaveClass("themePrimary");
+    expect(divider).toHaveClass("glass");
   });
 
   it("applies a custom className alongside mapped classes", () => {

@@ -68,6 +68,14 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Adds translucent glass styling to the wrapper, tags, and nested controls.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "idBase",
       "type": "string",
       "description": "Custom ID base for stable accessibility relationships. Can be used to generate predictable ids for label, description, listbox, input, and status elements.",

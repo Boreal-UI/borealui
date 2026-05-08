@@ -45,6 +45,11 @@ export interface DateTimePickerProps {
   theme?: ThemeType;
 
   /**
+   * Adds translucent glass styling to the input surface.
+   */
+  glass?: boolean;
+
+  /**
    * State of the input
    * ('success' | 'error' | 'warning' | 'disabled' | '').
    */

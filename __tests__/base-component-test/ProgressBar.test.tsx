@@ -9,6 +9,8 @@ const classNames = {
   layout: "progressLayout",
   container: "progressContainer",
   bar: "progressBar",
+  glass: "glass",
+  glassBar: "glassBar",
   label: "progressLabel",
 
   primary: "themePrimary",
@@ -393,7 +395,7 @@ describe("BaseProgressBar", () => {
     );
   });
 
-  it("applies expected theme, state, size, rounding, shadow, and custom classes", () => {
+  it("applies expected theme, state, size, rounding, shadow, glass, and custom classes", () => {
     render(
       <BaseProgressBar
         value={75}
@@ -402,6 +404,7 @@ describe("BaseProgressBar", () => {
         size="large"
         rounding="full"
         shadow="strong"
+        glass
         className="custom-progress"
         classMap={classNames}
         data-testid="progressbar"
@@ -414,6 +417,9 @@ describe("BaseProgressBar", () => {
     expect(progressbar).toHaveClass(
       "progressContainer",
       "sizeLarge",
+      "themeSecondary",
+      "stateSuccess",
+      "glass",
       "shadowStrong",
       "roundFull",
       "custom-progress",
@@ -423,6 +429,7 @@ describe("BaseProgressBar", () => {
       "progressBar",
       "themeSecondary",
       "stateSuccess",
+      "glassBar",
       "animated",
       "roundFull",
     );

@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import CheckboxBase from "../CheckboxBase";
-import "./CheckBox.scss";
+import "./Checkbox.scss";
 import { CheckBoxProps } from "../Checkbox.types";
 
 const classes = {
@@ -16,6 +16,7 @@ const classes = {
   warning: "checkbox_warning",
 
   clear: "checkbox_clear",
+  glass: "checkbox_glass",
 
   disabled: "checkbox_disabled",
   indeterminate: "checkbox_indeterminate",
@@ -44,6 +45,9 @@ const classes = {
   label: "checkbox_label",
   input: "checkbox_input",
   box: "checkbox_box",
+  invalid: "checkbox_invalid",
+  description: "checkbox_description",
+  errorMessage: "checkbox_errorMessage",
 };
 
 const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>((props, ref) => (

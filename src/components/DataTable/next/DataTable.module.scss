@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .wrapper {
@@ -10,12 +11,15 @@
   font-weight: var(--font-weight-body);
   line-height: var(--line-height-body);
   letter-spacing: var(--letter-spacing-body);
+  border-radius: inherit;
+  -webkit-overflow-scrolling: touch;
 
   .table {
     width: 100%;
-    border-collapse: collapse;
-    font-size: inherit;
     min-width: 600px;
+    border-collapse: collapse;
+    table-layout: auto;
+    font-size: inherit;
 
     @include bp.down(md) {
       min-width: 520px;
@@ -24,43 +28,45 @@
     @include bp.up(lg) {
       min-width: 720px;
     }
+  }
 
-    th {
-      text-align: left;
-      padding: var(--spacing-sm);
-      font-family: var(--font-family-ui);
-      font-size: var(--font-size-label);
-      font-weight: var(--font-weight-label);
-      line-height: var(--line-height-label);
-      letter-spacing: var(--letter-spacing-label);
-      white-space: nowrap;
-      color: var(--text-color-primary);
-    }
+  .headerCell {
+    text-align: left;
+    padding: var(--spacing-sm);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    white-space: nowrap;
+    color: var(--text-color-primary);
+    vertical-align: top;
+  }
 
-    td {
-      padding: var(--spacing-sm);
-      border-bottom: 1px solid var(--text-color-primary);
-      text-align: left;
-      white-space: nowrap;
-      color: var(--text-color-primary);
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-body-sm);
-      font-weight: var(--font-weight-body);
-      line-height: var(--line-height-body);
-      letter-spacing: var(--letter-spacing-body);
-    }
+  .cell {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid var(--text-color-primary);
+    text-align: left;
+    white-space: nowrap;
+    color: var(--text-color-primary);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    vertical-align: top;
+  }
 
-    th:hover {
-      cursor: pointer;
-    }
+  .wrapCell {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    line-height: 1.5;
+  }
 
-    tbody tr:last-child td {
-      border-bottom: none;
-    }
-
-    tbody tr {
-      background-color: var(--background-color-dark);
-    }
+  .headerCell.wrapCell,
+  .cell.wrapCell {
+    min-width: 0;
   }
 
   .sortable {
@@ -74,19 +80,30 @@
   }
 
   .sortButton {
-    margin-left: var(--spacing-xxs);
+    margin: 0;
+    padding: 0;
     background-color: transparent;
     border: none;
-    color: var(--text-color-primary);
+    color: inherit;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--spacing-xs);
+    font: inherit;
+    text-align: inherit;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: var(--border-radius-sm);
+    }
   }
 
   .sort_icon {
     margin-left: var(--spacing-xs);
     font-size: 0.9em;
+    flex-shrink: 0;
 
     @include bp.down(sm) {
       font-size: 0.85em;
@@ -120,10 +137,55 @@
     background-color: var(--background-color-darker);
   }
 
+  tbody tr {
+    background-color: var(--background-color-dark);
+  }
+
+  tbody tr:last-child .cell {
+    border-bottom: none;
+  }
+
+  tbody tr:last-child th.cell {
+    border-bottom: none;
+  }
+
+  &.glass {
+    @include mixins.glass-surface(
+      var(--data-table-glass-bg, rgba(255, 255, 255, 0.16)),
+      var(--data-table-glass-border, rgba(255, 255, 255, 0.28)),
+      18px
+    );
+    color: var(--data-table-glass-text, var(--text-color-primary));
+
+    .table {
+      background: transparent;
+    }
+
+    .headerCell {
+      background-color: var(
+        --data-table-glass-hover-bg,
+        rgba(255, 255, 255, 0.22)
+      );
+      color: var(--data-table-glass-text, var(--text-color-primary));
+    }
+
+    tbody tr {
+      background-color: transparent;
+    }
+
+    .striped:nth-child(even),
+    .clickable:hover {
+      background-color: var(
+        --data-table-glass-hover-bg,
+        rgba(255, 255, 255, 0.22)
+      );
+    }
+  }
+
   &.clear {
     box-shadow: none;
 
-    th {
+    .headerCell {
       background-color: transparent;
     }
   }
@@ -131,72 +193,98 @@
   @include bp.down(md) {
     .table {
       font-size: var(--font-size-label);
+    }
 
-      th,
-      td {
-        padding: var(--spacing-xs);
-      }
+    .headerCell,
+    .cell {
+      padding: var(--spacing-xs);
+    }
 
-      th {
-        font-size: var(--font-size-caption);
-      }
+    .headerCell {
+      font-size: var(--font-size-caption);
+    }
 
-      td {
-        font-size: var(--font-size-label);
-      }
+    .cell {
+      font-size: var(--font-size-label);
     }
   }
 
   @include bp.down(xs) {
+    overflow-x: visible;
+
     .table {
+      min-width: 0;
+      width: 100%;
       font-size: var(--font-size-caption);
+    }
 
-      th,
-      td {
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-        text-align: left;
-        padding: var(--spacing-xs);
-        border-bottom: 1px solid var(--text-color-primary);
-        white-space: normal;
-      }
+    .table thead {
+      display: none;
+    }
 
-      tbody tr {
-        display: block;
-        margin-bottom: var(--spacing-sm);
-        background-color: var(--background-color-dark);
-      }
+    .table tbody {
+      display: block;
+    }
 
-      thead {
-        display: none;
-      }
+    .table tbody tr {
+      display: block;
+      margin-bottom: var(--spacing-sm);
+      background-color: var(--background-color-dark);
+      border-radius: var(--border-radius-md);
+      overflow: hidden;
+    }
 
-      td::before {
-        content: attr(data-label);
-        display: block;
-        font-family: var(--font-family-ui);
-        font-size: var(--font-size-label);
-        font-weight: var(--font-weight-label);
-        line-height: var(--line-height-label);
-        letter-spacing: var(--letter-spacing-label);
-        margin-bottom: 2px;
-        color: var(--text-color-secondary);
-      }
+    .headerCell,
+    .cell {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: left;
+      padding: var(--spacing-xs);
+      border-bottom: 1px solid var(--text-color-primary);
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .cell::before {
+      content: attr(data-label);
+      display: block;
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
+      margin-bottom: 2px;
+      color: var(--text-color-secondary);
+    }
+
+    tbody tr:last-child .cell,
+    tbody tr:last-child th.cell {
+      border-bottom: 1px solid var(--text-color-primary);
+    }
+
+    tbody tr .cell:last-child,
+    tbody tr th.cell:last-child {
+      border-bottom: none;
     }
   }
 }
 
 @each $name, $values in theme.$themes {
   .#{$name} {
-    th {
+    --data-table-glass-bg: #{map.get($values, glass-bg)};
+    --data-table-glass-hover-bg: #{map.get($values, glass-hover)};
+    --data-table-glass-border: #{map.get($values, glass-border)};
+    --data-table-glass-text: #{map.get($values, text)};
+
+    .headerCell {
       background-color: map.get($values, bg);
       color: map.get($values, text);
     }
   }
 
   .#{$name}.outline {
-    th {
+    .headerCell {
       border: 2px solid map.get($values, border);
       background-color: transparent;
       color: map.get($values, text);
@@ -210,14 +298,19 @@
 
 @each $name, $values in theme.$states {
   .#{$name} {
-    th {
+    --data-table-glass-bg: #{map.get($values, glass-bg)};
+    --data-table-glass-hover-bg: #{map.get($values, glass-hover)};
+    --data-table-glass-border: #{map.get($values, glass-border)};
+    --data-table-glass-text: #{map.get($values, text)};
+
+    .headerCell {
       background-color: map.get($values, bg);
       color: map.get($values, text);
     }
   }
 
   .#{$name}.outline {
-    th {
+    .headerCell {
       border: 2px solid map.get($values, border);
       background-color: transparent;
       color: map.get($values, text);
@@ -226,6 +319,32 @@
         border-width: 1.5px;
       }
     }
+  }
+}
+
+.wrapper.glass {
+  .table {
+    background: transparent;
+  }
+
+  .headerCell {
+    background-color: var(
+      --data-table-glass-hover-bg,
+      rgba(255, 255, 255, 0.22)
+    );
+    color: var(--data-table-glass-text, var(--text-color-primary));
+  }
+
+  tbody tr {
+    background-color: transparent;
+  }
+
+  .striped:nth-child(even),
+  .clickable:hover {
+    background-color: var(
+      --data-table-glass-hover-bg,
+      rgba(255, 255, 255, 0.22)
+    );
   }
 }
 
@@ -261,18 +380,25 @@
     background: Canvas;
   }
 
-  .wrapper .table th,
-  .wrapper .table td {
+  .wrapper.glass {
+    background: Canvas;
+    border-color: ButtonText;
+    box-shadow: none;
+  }
+
+  .wrapper .headerCell,
+  .wrapper .cell {
     border-bottom: 1px solid ButtonText;
   }
 
-  .wrapper .table thead th {
+  .wrapper .headerCell {
     background: Canvas;
     color: CanvasText;
     border: 1px solid ButtonText;
   }
 
-  .wrapper .clickable:focus-visible {
+  .wrapper .clickable:focus-visible,
+  .wrapper .sortButton:focus-visible {
     outline: 2px solid Highlight;
     outline-offset: 2px;
   }

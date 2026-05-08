@@ -68,6 +68,14 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
       "category": "testing"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass surface behind the spinner.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "label",
       "type": "string",
       "description": "Optional visible label for the spinner.",

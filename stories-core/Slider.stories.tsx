@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Slider } from "../src/index.core";
+import { Slider, StateType, ThemeType } from "../src/index.core";
 import type { SliderProps } from "../src/components/Slider/Slider.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -12,7 +12,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
@@ -123,6 +123,28 @@ export const ThemeVariants: Story = {
   },
 };
 
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState(75);
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => (
+          <Slider
+            key={`glass-${theme}`}
+            {...args}
+            theme={theme}
+            glass
+            label={`Glass theme: ${theme}`}
+            value={value}
+            onChange={(e) => setValue(Number(e.target.value))}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const StateVariants: Story = {
   render: (args) => {
     const [value, setValue] = useState(75);
@@ -133,7 +155,7 @@ export const StateVariants: Story = {
           <Slider
             key={state}
             {...args}
-            theme={state}
+            state={state}
             label={`State: ${state}`}
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
@@ -144,12 +166,34 @@ export const StateVariants: Story = {
   },
 };
 
-export const RoundingVariants = (args) =>
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState(75);
+
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => (
+          <Slider
+            key={`glass-${state}`}
+            {...args}
+            state={state}
+            glass
+            label={`Glass state: ${state}`}
+            value={value}
+            onChange={(e) => setValue(Number(e.target.value))}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
+export const RoundingVariants = (args: React.ComponentProps<typeof Slider>) =>
   withVariants(Slider, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof Slider>) =>
   withVariants(Slider, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);

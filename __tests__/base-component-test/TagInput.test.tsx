@@ -23,6 +23,7 @@ const mockStyles = {
   suggestionList: "suggestionList",
   suggestionItem: "suggestionItem",
   active: "active",
+  glass: "glass",
   primary: "primary",
   secondary: "secondary",
   success: "success",
@@ -593,6 +594,7 @@ describe("TagInputBase", () => {
         theme="primary"
         state="error"
         size="medium"
+        glass
       />,
     );
 
@@ -601,6 +603,11 @@ describe("TagInputBase", () => {
     expect(wrapper).toHaveClass("primary");
     expect(wrapper).toHaveClass("error");
     expect(wrapper).toHaveClass("medium");
+    expect(wrapper).toHaveClass("glass");
+    expect(screen.getByTestId("tag-input-input")).toHaveAttribute(
+      "data-glass",
+      "true",
+    );
   });
 
   it("applies rounding and shadow classes to each tag", () => {
@@ -610,6 +617,7 @@ describe("TagInputBase", () => {
         TextInput={DummyTextInput}
         IconButton={DummyIconButton}
         tags={["React"]}
+        glass
         rounding="medium"
         shadow="light"
       />,
@@ -619,6 +627,10 @@ describe("TagInputBase", () => {
     expect(tag).toHaveClass("tag");
     expect(tag).toHaveClass("roundMedium");
     expect(tag).toHaveClass("shadowLight");
+    expect(screen.getByTestId("tag-input-remove-0")).toHaveAttribute(
+      "data-glass",
+      "true",
+    );
   });
 
   it("has no accessibility violations", async () => {

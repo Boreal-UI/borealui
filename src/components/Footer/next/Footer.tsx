@@ -1,13 +1,15 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import Image from "next/image";
+
 import FooterBase from "../FooterBase";
 import { FooterProps } from "../Footer.types";
 import IconButton from "../../IconButton/next/IconButton";
 import ThemeSelect from "../../Select/ThemeSelect/next/ThemeSelect";
-import Link from "next/link";
+
 import styles from "./Footer.module.scss";
-import Image from "next/image";
 
 const Footer: React.FC<FooterProps> = (props) => {
   return (
@@ -25,5 +27,7 @@ const Footer: React.FC<FooterProps> = (props) => {
     />
   );
 };
+
 Footer.displayName = "Footer";
+
 export default Footer;

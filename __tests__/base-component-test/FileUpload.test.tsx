@@ -37,6 +37,7 @@ const classMap = {
   error: "error",
   disabled: "disabled",
   dragging: "dragging",
+  glass: "glass",
   roundMedium: "roundMedium",
   shadowLight: "shadowLight",
   primary: "primary",
@@ -101,15 +102,17 @@ describe("BaseFileUpload", () => {
   });
 
   it("applies default structural classes", () => {
-    const { wrapper, input, fileButton } = renderFileUpload();
+    const { wrapper, input, fileButton } = renderFileUpload({ glass: true });
 
     expect(wrapper).toHaveClass("fileUpload");
     expect(wrapper).toHaveClass("primary");
+    expect(wrapper).toHaveClass("glass");
     expect(wrapper).toHaveClass("roundMedium");
     expect(wrapper).toHaveClass("shadowLight");
 
     expect(input).toHaveClass("hiddenInput");
     expect(fileButton).toHaveClass("fileInput");
+    expect(fileButton).toHaveAttribute("data-glass", "true");
   });
 
   it("sets accessible wrapper and input attributes including describedby", () => {

@@ -15,6 +15,7 @@ const mockClassNames = {
   success: "success",
   warning: "warning",
   disabled: "disabled",
+  glass: "glass",
   medium: "medium",
   large: "large",
   interactive: "interactive",
@@ -90,6 +91,7 @@ describe("BaseRating", () => {
         theme="secondary"
         size="large"
         state="warning"
+        glass
         className="customClass"
       />,
     );
@@ -99,6 +101,7 @@ describe("BaseRating", () => {
     expect(group).toHaveClass("secondary");
     expect(group).toHaveClass("large");
     expect(group).toHaveClass("warning");
+    expect(group).toHaveClass("glass");
     expect(group).toHaveClass("interactive");
     expect(group).toHaveClass("customClass");
   });

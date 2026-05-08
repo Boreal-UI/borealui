@@ -11,19 +11,25 @@ import {
   ThemeType,
 } from "../src/types/types";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
   "quaternary",
   "clear",
 ];
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
+const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<ButtonProps> = {
   title: "Components/Button",
@@ -36,6 +42,14 @@ const meta: Meta<ButtonProps> = {
     state: "" as StateType,
     rounding: "medium" as RoundingType,
     shadow: "medium" as ShadowType,
+  },
+  argTypes: {
+    iconPosition: {
+      control: "select",
+      options: ["left", "right"],
+      description:
+        "Controls whether the button icon renders before or after the label.",
+    },
   },
 };
 
@@ -59,6 +73,18 @@ export const WithIcon: Story = {
     children: "Add Item",
   },
 };
+
+export const IconPositions = () => (
+  <StoryGrid title="Icon Positions">
+    <Button icon={FaPlus} iconPosition="left">
+      Icon Left
+    </Button>
+
+    <Button icon={FaPlus} iconPosition="right">
+      Icon Right
+    </Button>
+  </StoryGrid>
+);
 
 export const Loading: Story = {
   args: {
@@ -88,9 +114,9 @@ export const OutlineVariants = () => (
         {theme} Outline
       </Button>
     ))}
-    {stateOptions.map((theme) => (
-      <Button key={theme} theme={theme} outline>
-        {theme} Outline
+    {stateOptions.map((state) => (
+      <Button key={state} state={state} outline>
+        {state} Outline
       </Button>
     ))}
   </StoryGrid>
@@ -111,6 +137,38 @@ export const StateVariants = () => (
     {stateOptions.map((state) => (
       <Button key={state} state={state}>
         {state}
+      </Button>
+    ))}
+  </StoryGrid>
+);
+
+export const GlassVariants = () => (
+  <StoryGrid title="Glass Buttons">
+    {themeOptions.map((theme) => (
+      <Button key={theme} theme={theme} glass>
+        {theme} Glass
+      </Button>
+    ))}
+
+    {stateOptions.map((state) => (
+      <Button key={state} state={state} glass>
+        {state} Glass
+      </Button>
+    ))}
+  </StoryGrid>
+);
+
+export const OutlineGlassVariants = () => (
+  <StoryGrid title="Glass Outline Buttons">
+    {themeOptions.map((theme) => (
+      <Button key={theme} theme={theme} outline glass>
+        {theme} Glass Outline
+      </Button>
+    ))}
+
+    {stateOptions.map((state) => (
+      <Button key={state} state={state} outline glass>
+        {state} Glass Outline
       </Button>
     ))}
   </StoryGrid>
@@ -162,10 +220,19 @@ export const WithHref: Story = {
   },
 };
 
+export const WithLongText: Story = {
+  args: {
+    ...defaultArgs,
+    href: "https://example.com",
+    children: "This is a very long link button text to test overflow handling",
+  },
+};
+
 export const WithExternalLink: Story = {
   args: {
     ...defaultArgs,
     href: "https://example.com",
+    _target: "_blank",
     isExternal: true,
     children: "External Link",
   },
@@ -182,7 +249,7 @@ export const SubmitType: Story = {
 export const WithAriaLabel: Story = {
   args: {
     ...defaultArgs,
-    ariaLabel: "Custom Aria Label",
+    "aria-label": "Custom Aria Label",
     children: "Accessible Button",
   },
 };

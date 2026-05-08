@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { FaCommentDots, FaInbox } from "react-icons/fa";
-import { TextArea } from "../src/index.core";
+import { StateType, TextArea, ThemeType } from "../src/index.core";
 import type { TextAreaProps } from "../src/components/TextArea/TextArea.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -13,7 +13,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
@@ -111,11 +111,59 @@ export const OutlineVariants: Story = {
           return (
             <TextArea
               key={theme}
-              icon={FaInbox}
               {...args}
               outline
               theme={theme}
+              icon={FaInbox}
               placeholder={`${theme} outline`}
+              value={value}
+              onChange={(value) => setValue(value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const GlassThemeVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {themeOptions.map((theme) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextArea
+              key={`glass-${theme}`}
+              {...args}
+              icon={FaInbox}
+              glass
+              theme={theme}
+              placeholder={`${theme} glass`}
+              value={value}
+              onChange={(value) => setValue(value)}
+            />
+          );
+        })}
+      </div>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: (args) => {
+    return (
+      <div style={{ display: "grid", gap: "1rem" }}>
+        {stateOptions.map((state) => {
+          const [value, setValue] = useState("");
+          return (
+            <TextArea
+              key={`glass-${state}`}
+              {...args}
+              icon={FaInbox}
+              glass
+              state={state}
+              placeholder={`${state} glass`}
               value={value}
               onChange={(value) => setValue(value)}
             />
@@ -155,7 +203,6 @@ export const Unresizable: Story = {
       />
     );
   },
-  name: "Unresizable",
   args: {
     resizable: false,
   },
@@ -210,12 +257,12 @@ export const LabelPositionVariants: Story = {
   },
 };
 
-export const RoundingVariants = (args) =>
+export const RoundingVariants = (args: React.ComponentProps<typeof TextArea>) =>
   withVariants(TextArea, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args) =>
+export const ShadowVariants = (args: React.ComponentProps<typeof TextArea>) =>
   withVariants(TextArea, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);

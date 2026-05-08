@@ -147,6 +147,68 @@
   --link-hover-color-primary: #{theme.$link-hover-color-primary};
   --link-hover-color-secondary: #{theme.$link-hover-color-secondary};
 
+  /* ===========================
+   Glass / Frosted Surface
+=========================== */
+  --glass-background: #{theme.$glass-background};
+  --glass-background-subtle: #{theme.$glass-background-subtle};
+  --glass-background-strong: #{theme.$glass-background-strong};
+  --glass-border-color: #{theme.$glass-border-color};
+  --glass-border-color-strong: #{theme.$glass-border-color-strong};
+  --glass-blur: #{theme.$glass-blur};
+  --glass-blur-sm: #{theme.$glass-blur-sm};
+  --glass-blur-lg: #{theme.$glass-blur-lg};
+  --glass-saturate: #{theme.$glass-saturate};
+  --glass-shadow: #{theme.$glass-shadow};
+  --glass-shadow-strong: #{theme.$glass-shadow-strong};
+  --glass-inset-highlight: #{theme.$glass-inset-highlight};
+
+  /* ================================
+   THEME GLASS COLORS
+================================== */
+  --primary-glass-background: rgb(from var(--primary-color) r g b / 20%);
+  --primary-glass-background-hover: rgb(
+    from var(--primary-color-hover) r g b / 38%
+  );
+  --primary-glass-border: rgb(from var(--primary-color) r g b / 48%);
+  --secondary-glass-background: rgb(from var(--secondary-color) r g b / 20%);
+  --secondary-glass-background-hover: rgb(
+    from var(--secondary-color-hover) r g b / 38%
+  );
+  --secondary-glass-border: rgb(from var(--secondary-color) r g b / 48%);
+  --tertiary-glass-background: rgb(from var(--tertiary-color) r g b / 20%);
+  --tertiary-glass-background-hover: rgb(
+    from var(--tertiary-color-hover) r g b / 38%
+  );
+  --tertiary-glass-border: rgb(from var(--tertiary-color) r g b / 48%);
+  --quaternary-glass-background: rgb(from var(--quaternary-color) r g b / 20%);
+  --quaternary-glass-background-hover: rgb(
+    from var(--quaternary-color-hover) r g b / 38%
+  );
+  --quaternary-glass-border: rgb(from var(--quaternary-color) r g b / 48%);
+  --clear-glass-background: rgb(255 255 255 / 10%);
+  --clear-glass-background-hover: rgb(255 255 255 / 18%);
+  --clear-glass-border: rgb(255 255 255 / 28%);
+
+  /* ================================
+   STATE GLASS COLORS
+================================== */
+  --success-glass-background: rgb(from var(--success-color) r g b / 20%);
+  --success-glass-background-hover: rgb(
+    from var(--success-color-hover) r g b / 38%
+  );
+  --success-glass-border: rgb(from var(--success-color) r g b / 48%);
+  --warning-glass-background: rgb(from var(--warning-color) r g b / 20%);
+  --warning-glass-background-hover: rgb(
+    from var(--warning-color-hover) r g b / 38%
+  );
+  --warning-glass-border: rgb(from var(--warning-color) r g b / 48%);
+  --error-glass-background: rgb(from var(--error-color) r g b / 20%);
+  --error-glass-background-hover: rgb(
+    from var(--error-color-hover) r g b / 38%
+  );
+  --error-glass-border: rgb(from var(--error-color) r g b / 48%);
+
   /* ================================
      FOCUS & INTERACTION
   ================================== */

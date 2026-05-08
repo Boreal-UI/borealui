@@ -1,0 +1,355 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
+
+$sizes: (
+  "xs": (
+    font-size: var(--font-size-caption),
+    padding: var(--spacing-xs) var(--spacing-xs),
+  ),
+  "small": (
+    font-size: var(--font-size-label),
+    padding: var(--spacing-xs) var(--spacing-xs),
+  ),
+  "medium": (
+    font-size: var(--font-size-body-sm),
+    padding: var(--spacing-xs) var(--spacing-sm),
+  ),
+  "large": (
+    font-size: var(--font-size-body),
+    padding: var(--spacing-sm),
+  ),
+  "xl": (
+    font-size: var(--font-size-h6),
+    padding: var(--spacing-sm),
+  ),
+);
+
+.tagInput {
+  display: flex;
+  position: relative;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-xxs);
+  width: fit-content;
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xxs) var(--spacing-xs);
+  transition: border-color var(--transition-default);
+  font-family: var(--font-family-ui);
+
+  @include bp.down(sm) {
+    width: 100%;
+    gap: var(--spacing-xxs);
+    padding: var(--spacing-xxs) var(--spacing-xs);
+  }
+
+  @include bp.up(lg) {
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  &:focus-within {
+    border-color: var(--primary-color);
+  }
+
+  &:focus-within .tag,
+  &:focus-within .suggestionItem {
+    outline: none;
+  }
+}
+
+.inputWrapper {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    list-style: none;
+  }
+}
+
+.tagContainer {
+  display: flex;
+  width: fit-content;
+  height: fit-content;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-xs);
+  width: fit-content;
+  overflow: show;
+
+  @include bp.down(xs) {
+    max-width: 100%;
+    max-height: 120px;
+    gap: var(--spacing-xxs);
+  }
+
+  @include bp.up(lg) {
+    max-width: 480px;
+  }
+}
+
+.removeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 1.15em;
+  height: 1.15em;
+  min-width: 1.15em;
+  min-height: 1.15em;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  line-height: 1;
+  background: transparent;
+  color: inherit;
+  vertical-align: middle;
+
+  @include bp.down(xs) {
+    width: 1em;
+    height: 1em;
+    min-width: 1em;
+    min-height: 1em;
+  }
+
+  @include bp.between(xs, sm) {
+    width: 1.1em;
+    height: 1.1em;
+    min-width: 1.1em;
+    min-height: 1.1em;
+  }
+
+  @include bp.up(lg) {
+    width: 1.2em;
+    height: 1.2em;
+    min-width: 1.2em;
+    min-height: 1.2em;
+  }
+
+  @include bp.up(xl) {
+    width: 1.3em;
+    height: 1.3em;
+    min-width: 1.3em;
+    min-height: 1.3em;
+  }
+
+  svg {
+    display: block;
+    width: 0.75em;
+    height: 0.75em;
+  }
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  gap: var(--spacing-sm);
+  background-color: var(--primary-color);
+  color: var(--text-color-primary);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  letter-spacing: var(--letter-spacing-label);
+  vertical-align: middle;
+
+  @include bp.down(xs) {
+    gap: var(--spacing-xxs);
+    font-size: var(--font-size-caption);
+  }
+
+  @include bp.up(lg) {
+    font-size: var(--font-size-label);
+  }
+}
+
+.tagLabel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  min-height: 1em;
+}
+
+.suggestionList {
+  position: relative;
+  inset: 80% 0 auto;
+  z-index: 10;
+  width: fit-content;
+  max-width: 300px;
+  max-height: 200px;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  overflow-y: auto;
+  background: var(--background-color);
+  border: 1px solid var(--background-color-darker);
+  border-radius: var(--border-radius-md);
+}
+
+.suggestionItem {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  color: var(--text-color-primary);
+  cursor: pointer;
+  transition: background-color var(--transition-default);
+  border-radius: 4px;
+
+  &:hover {
+    background-color: var(--background-secondary-light-color);
+  }
+
+  &:focus-visible {
+    background-color: var(--background-secondary-light-color);
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+  }
+
+  @include bp.down(xs) {
+    font-size: var(--font-size-caption);
+    padding: var(--spacing-xxs) var(--spacing-xs);
+  }
+}
+
+.active {
+  background-color: var(--background-secondary-light-color);
+  border-radius: 4px;
+}
+
+@each $size, $props in $sizes {
+  .#{$size} {
+    .tag {
+      font-size: map.get($props, font-size);
+      padding: map.get($props, padding);
+
+      @include bp.up(lg) {
+        font-size: calc(#{map.get($props, font-size)} * 1.05);
+      }
+    }
+  }
+}
+
+@each $themeName, $vals in theme.$themes {
+  .#{$themeName} {
+    --tag-input-glass-bg: #{map.get($vals, glass-bg)};
+    --tag-input-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --tag-input-glass-border: #{map.get($vals, glass-border)};
+    --tag-input-glass-text: #{map.get($vals, text)};
+
+    .tag {
+      background-color: map.get($vals, bg);
+    }
+  }
+}
+
+@each $stateName, $vals in theme.$states {
+  .#{$stateName} {
+    --tag-input-glass-bg: #{map.get($vals, glass-bg)};
+    --tag-input-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --tag-input-glass-border: #{map.get($vals, glass-border)};
+    --tag-input-glass-text: #{map.get($vals, text)};
+
+    .tag {
+      background-color: var(--primary-color);
+      border: 2px solid map.get($vals, bg);
+    }
+  }
+}
+
+.glass .tag,
+.glass .suggestionList {
+  @include mixins.glass-surface(
+    var(--tag-input-glass-bg, rgba(255, 255, 255, 0.18)),
+    var(--tag-input-glass-border, rgba(255, 255, 255, 0.34)),
+    14px
+  );
+  color: var(--tag-input-glass-text, var(--text-color-primary));
+}
+
+.glass .removeButton {
+  background-color: transparent;
+  border: none;
+}
+
+.glass .suggestionItem:hover,
+.glass .suggestionItem:focus-visible,
+.glass .active {
+  background: var(--tag-input-glass-hover-bg, rgba(255, 255, 255, 0.24));
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tagInput,
+  .tagInput * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (hover: none) {
+  .suggestionItem:hover {
+    background-color: transparent;
+  }
+}
+
+@media (forced-colors: active) {
+  .glass,
+  .glass .tag,
+  .glass .suggestionList {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonText;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .tagInput {
+    background: Canvas;
+    color: CanvasText;
+    border: 1px solid ButtonText;
+  }
+
+  .tag {
+    background: ButtonFace !important;
+    color: ButtonText !important;
+    border: 1px solid ButtonText !important;
+  }
+
+  .suggestionList {
+    background: Canvas;
+    border: 1px solid ButtonText;
+  }
+
+  .suggestionItem:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  .active {
+    background: Highlight;
+    color: HighlightText;
+  }
+}

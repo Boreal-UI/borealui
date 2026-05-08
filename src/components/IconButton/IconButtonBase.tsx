@@ -45,6 +45,7 @@ const IconButtonBase = forwardRef<
     role,
     title,
     outline = false,
+    glass = false,
     rounding = getDefaultRounding(),
     shadow = getDefaultShadow(),
     size = getDefaultSize(),
@@ -82,10 +83,22 @@ const IconButtonBase = forwardRef<
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         outline && classMap.outline,
+        glass && classMap.glass,
         inert && classMap.disabled,
         className,
       ),
-    [classMap, theme, state, size, shadow, rounding, outline, inert, className],
+    [
+      classMap,
+      theme,
+      state,
+      size,
+      shadow,
+      rounding,
+      outline,
+      glass,
+      inert,
+      className,
+    ],
   );
 
   const sharedAccessibilityProps = {

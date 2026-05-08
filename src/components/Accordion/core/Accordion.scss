@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 @use "sass:list";
 
@@ -79,6 +80,25 @@ $sizes: (
   box-shadow: none !important;
 }
 
+.accordion_glass {
+  .accordion_header,
+  &.accordion_content {
+    @include mixins.glass-surface(
+      var(--accordion-glass-bg, var(--glass-background)),
+      var(--accordion-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--accordion-glass-text, currentcolor);
+  }
+
+  &.accordion_content {
+    background: var(--accordion-glass-bg, var(--glass-background-subtle));
+    border-top: 0;
+    box-shadow: inset 0 1px 0 var(--glass-inset-highlight);
+  }
+}
+
 .accordion_expanded .accordion_header {
   border-bottom-left-radius: 0;
   border-bottom-right-radius: 0;
@@ -130,10 +150,25 @@ $sizes: (
   .accordion_#{$name} {
     background-color: map.get($values, bg);
     color: var(--text-color-primary);
+
+    --accordion-glass-bg: #{map.get($values, glass-bg)};
+    --accordion-glass-hover-bg: #{map.get($values, glass-hover)};
+    --accordion-glass-border: #{map.get($values, glass-border)};
+    --accordion-glass-text: #{map.get($values, text)};
   }
 
   .accordion_#{$name}:hover {
     background-color: map.get($values, hover);
+  }
+
+  .accordion_#{$name}.accordion_glass {
+    background: var(--accordion-glass-bg);
+    border: 1px solid var(--accordion-glass-border);
+    color: var(--accordion-glass-text);
+
+    &:hover {
+      background: var(--accordion-glass-hover-bg);
+    }
   }
 
   .accordion_outline.accordion_#{$name} {
@@ -149,6 +184,16 @@ $sizes: (
       background-color: map.get($values, hover);
       color: map.get($values, text-hover);
     }
+  }
+
+  .accordion_outline.accordion_#{$name}.accordion_glass {
+    @include mixins.glass-surface(
+      transparent,
+      var(--accordion-glass-border),
+      var(--glass-blur)
+    );
+
+    color: var(--accordion-glass-text);
   }
 }
 
@@ -156,10 +201,24 @@ $sizes: (
   .accordion_#{$name} {
     background-color: map.get($values, bg);
     color: var(--text-color-primary);
+
+    --accordion-glass-bg: #{map.get($values, glass-bg)};
+    --accordion-glass-hover-bg: #{map.get($values, glass-hover)};
+    --accordion-glass-border: #{map.get($values, glass-border)};
+    --accordion-glass-text: #{map.get($values, text)};
   }
 
   .accordion_#{$name}:hover {
     background-color: map.get($values, hover);
+  }
+
+  .accordion_#{$name}.accordion_glass {
+    background: var(--accordion-glass-bg);
+    color: var(--accordion-glass-text);
+
+    &:hover {
+      background: var(--accordion-glass-hover-bg);
+    }
   }
 
   .accordion_outline.accordion_#{$name} {
@@ -175,6 +234,16 @@ $sizes: (
       background-color: map.get($values, hover);
       color: map.get($values, text-hover);
     }
+  }
+
+  .accordion_outline.accordion_#{$name}.accordion_glass {
+    @include mixins.glass-surface(
+      transparent,
+      var(--accordion-glass-border),
+      var(--glass-blur)
+    );
+
+    color: var(--accordion-glass-text);
   }
 }
 
@@ -318,5 +387,15 @@ $sizes: (
   .accordion_header {
     border: 1px solid ButtonText;
     outline-color: Highlight;
+  }
+
+  .accordion_glass,
+  .accordion_glass .accordion_header,
+  .accordion_glass.accordion_content {
+    background: Canvas;
+    border: 1px solid ButtonText;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }

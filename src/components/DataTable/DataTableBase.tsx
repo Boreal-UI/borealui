@@ -18,8 +18,15 @@ function DataTableBase<T extends object>({
   shadow = getDefaultShadow(),
   state = "",
   outline = false,
+  glass = false,
   className = "",
+  tableClassName,
+  theadClassName,
+  tbodyClassName,
+  rowClassName,
+  cellClassName,
   striped = true,
+  wrapCells = false,
   defaultSortKey,
   defaultSortOrder = "asc",
   serverSort = false,
@@ -127,6 +134,29 @@ function DataTableBase<T extends object>({
       }
     };
 
+  const getColumnStyle = (column: Column<T>): React.CSSProperties => ({
+    width: column.width,
+    minWidth: column.minWidth,
+    maxWidth: column.maxWidth,
+  });
+
+  const getRowClassName = (row: T, index: number): string | undefined => {
+    if (typeof rowClassName === "function") {
+      return rowClassName(row, index);
+    }
+
+    return rowClassName;
+  };
+
+  const getCellClassName = (
+    value: unknown,
+    row: T,
+    column: Column<T>,
+    rowIndex: number,
+  ): string | undefined => {
+    return cellClassName?.(value, row, column, rowIndex);
+  };
+
   const getHeaderScope = (column: Column<T>): "col" | "colgroup" =>
     column.scope ?? "col";
 
@@ -180,17 +210,36 @@ function DataTableBase<T extends object>({
     announceSortChange(activeColumn, sortOrder);
   }, []);
 
-  return (
-    <div
-      className={combineClassNames(
+  const tableClass = useMemo(
+    () =>
+      combineClassNames(
+        classMap.table,
+        classMap[theme],
+        classMap[state],
+        outline && classMap.outline,
+        glass && classMap.glass,
+        tableClassName,
+      ),
+    [classMap, theme, state, outline, glass, tableClassName],
+  );
+
+  const wrapperClass = useMemo(
+    () =>
+      combineClassNames(
         classMap.wrapper,
+        classMap[theme],
+        classMap[state],
+        glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         striped && classMap.striped,
         className,
-      )}
-      data-testid={testId}
-    >
+      ),
+    [classMap, theme, state, glass, shadow, rounding, striped, className],
+  );
+
+  return (
+    <div className={wrapperClass} data-testid={testId}>
       <div
         id={liveRegionId}
         className={classMap.srOnly ?? "sr_only"}
@@ -201,12 +250,7 @@ function DataTableBase<T extends object>({
       </div>
 
       <table
-        className={combineClassNames(
-          classMap.table,
-          classMap[theme],
-          classMap[state],
-          outline && classMap.outline,
-        )}
+        className={tableClass}
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
         aria-describedby={computedAriaDescribedBy || undefined}
@@ -222,7 +266,7 @@ function DataTableBase<T extends object>({
           </caption>
         ) : null}
 
-        <thead>
+        <thead className={theadClassName}>
           <tr>
             {columns.map((column) => {
               const isActive = sortKey === column.key;
@@ -232,6 +276,7 @@ function DataTableBase<T extends object>({
                   key={String(column.key)}
                   id={getHeaderId(column)}
                   scope={getHeaderScope(column)}
+                  style={getColumnStyle(column)}
                   aria-sort={
                     column.sortable
                       ? isActive
@@ -244,12 +289,17 @@ function DataTableBase<T extends object>({
                   className={combineClassNames(
                     column.sortable && classMap.sortable,
                     classMap.headerCell,
+                    (column.wrap ?? wrapCells) && classMap.wrapCell,
+                    column.headerClassName,
                   )}
                 >
                   {column.sortable ? (
                     <button
                       type="button"
-                      className={classMap.sortButton}
+                      className={combineClassNames(
+                        classMap.sortButton,
+                        column.sortButtonClassName,
+                      )}
                       onClick={() => handleSort(column)}
                       onKeyDown={handleSortKeyDown(column)}
                       aria-label={getColumnAriaLabel(column, isActive)}
@@ -269,7 +319,7 @@ function DataTableBase<T extends object>({
           </tr>
         </thead>
 
-        <tbody>
+        <tbody className={tbodyClassName}>
           {loading ? (
             <tr>
               <td
@@ -302,6 +352,7 @@ function DataTableBase<T extends object>({
                   className={combineClassNames(
                     onRowClick && classMap.clickable,
                     striped && index % 2 === 1 && classMap.striped,
+                    getRowClassName(row, index),
                   )}
                   onClick={() => onRowClick?.(row)}
                   onKeyDown={handleRowKeyDown(row)}
@@ -312,8 +363,17 @@ function DataTableBase<T extends object>({
                 >
                   {columns.map((column) => {
                     const cellKey = String(column.key);
+                    const value = row[column.key];
                     const content = renderCellContent(row, column);
                     const headerId = getHeaderId(column);
+                    const shouldWrap = column.wrap ?? wrapCells;
+
+                    const resolvedCellClassName = combineClassNames(
+                      classMap.cell,
+                      shouldWrap && classMap.wrapCell,
+                      column.cellClassName,
+                      getCellClassName(value, row, column, index),
+                    );
 
                     if (column.isRowHeader) {
                       return (
@@ -322,7 +382,11 @@ function DataTableBase<T extends object>({
                           scope="row"
                           headers={headerId}
                           data-label={column.label}
-                          className={classMap.cell}
+                          style={getColumnStyle(column)}
+                          className={combineClassNames(
+                            resolvedCellClassName,
+                            column.rowHeaderClassName,
+                          )}
                         >
                           {content}
                         </th>
@@ -334,7 +398,8 @@ function DataTableBase<T extends object>({
                         key={cellKey}
                         headers={headerId}
                         data-label={column.label}
-                        className={classMap.cell}
+                        style={getColumnStyle(column)}
+                        className={resolvedCellClassName}
                       >
                         {content}
                       </td>

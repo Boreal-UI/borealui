@@ -47,6 +47,7 @@ const classes = {
   large: "textInput_large",
 
   outline: "textInput_outline",
+  glass: "textInput_glass",
   disabled: "textInput_disabled",
 
   shadowNone: "textInput_shadow-None",

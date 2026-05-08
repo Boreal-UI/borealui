@@ -12,6 +12,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
   "sourcePath": "src\\components\\Button\\Button.types.ts",
   "props": [
     {
+      "name": "_target",
+      "type": "React.HTMLAttributeAnchorTarget",
+      "description": "Optional target for link rendering. Example: \"_blank\", \"_self\", \"_parent\", \"_top\"",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "aria-atomic",
       "type": "boolean",
       "description": "Whether assistive technologies should treat live updates as atomic.",
@@ -108,6 +116,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "category": "aria"
     },
     {
+      "name": "as",
+      "type": "React.ElementType<any, keyof React.JSX.IntrinsicElements>",
+      "description": "Optional element or component override. Example: \"a\", \"button\", Link",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "children",
       "type": "ReactNode",
       "description": "Child content to display inside the button.",
@@ -148,6 +164,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "href",
       "type": "string",
       "description": "If provided, button will render as a link pointing to this href.",
@@ -159,6 +183,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "name": "icon",
       "type": "ComponentType<{ className?: string; \"aria-hidden\"?: boolean; focusable?: boolean; }>",
       "description": "Optional icon component to render inside the button.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "iconPosition",
+      "type": "\"left\" | \"right\"",
+      "description": "Position of the icon relative to the button label.",
       "required": false,
       "inherited": false,
       "category": "props"

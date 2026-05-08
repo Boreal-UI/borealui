@@ -1,9 +1,16 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { IconButton } from "../src/index.core";
+import {
+  IconButton,
+  RoundingType,
+  ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
+} from "../src/index.core";
 import { FaPlus, FaExternalLinkAlt } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
@@ -11,12 +18,18 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "warning", "error"];
+const stateOptions: StateType[] = ["success", "warning", "error"];
 
-const sizeOptions = ["xs", "small", "medium", "large", "xl"];
+const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<typeof IconButton> = {
   title: "Components/IconButton",
@@ -55,7 +68,7 @@ export const StateVariants = () =>
     {
       icon: FaPlus,
       size: "medium",
-      "aria-label": "Theme",
+      "aria-label": "State",
       state: "",
     },
     [{ propName: "state", values: stateOptions }],
@@ -73,16 +86,70 @@ export const OutlineAndDisabledVariants: Story = {
           aria-label={`Theme: ${theme}`}
         />
       ))}
-      {stateOptions.map((theme) => (
+      {stateOptions.map((state) => (
         <IconButton
-          key={theme}
+          key={state}
+          {...args}
+          state={state}
+          outline
+          aria-label={`State: ${state}`}
+        />
+      ))}
+      <IconButton {...args} disabled outline aria-label="Disabled" />
+      <IconButton {...args} disabled aria-label="Disabled" />
+    </div>
+  ),
+};
+
+export const GlassThemeVariants = () =>
+  withVariants(
+    IconButton,
+    {
+      icon: FaPlus,
+      size: "medium",
+      "aria-label": "Glass Theme",
+      theme: "primary",
+      glass: true,
+    },
+    [{ propName: "theme", values: themeOptions }],
+  );
+
+export const GlassStateVariants = () =>
+  withVariants(
+    IconButton,
+    {
+      icon: FaPlus,
+      size: "medium",
+      "aria-label": "Glass State",
+      state: "" as StateType,
+      glass: true,
+    },
+    [{ propName: "state", values: stateOptions }],
+  );
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => (
+    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+      {themeOptions.map((theme) => (
+        <IconButton
+          key={`glass-theme-${theme}`}
           {...args}
           theme={theme}
           outline
-          aria-label={`Theme: ${theme}`}
+          glass
+          aria-label={`Glass Theme: ${theme}`}
         />
       ))}
-      <IconButton {...args} disabled aria-label="Disabled" />
+      {stateOptions.map((state) => (
+        <IconButton
+          key={`glass-state-${state}`}
+          {...args}
+          state={state}
+          outline
+          glass
+          aria-label={`Glass State: ${state}`}
+        />
+      ))}
     </div>
   ),
 };

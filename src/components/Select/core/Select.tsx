@@ -25,6 +25,7 @@ const classes = {
   warning: "select_warning",
 
   clear: "select_clear",
+  glass: "select_glass",
 
   icon: "select_icon",
   disabled: "select_disabled",

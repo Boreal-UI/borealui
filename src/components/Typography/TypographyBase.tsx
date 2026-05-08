@@ -6,7 +6,6 @@ import {
   TypographyVariant,
   TypographyWeight,
 } from "./Typography.types";
-import { getDefaultTheme } from "@/config/boreal-style-config";
 
 const DEFAULT_TAG_BY_VARIANT: Record<
   TypographyVariant,
@@ -79,7 +78,8 @@ function TypographyBase({
   as,
   align = "inherit",
   weight = "inherit",
-  theme = getDefaultTheme(),
+  theme = "inherit",
+  glass = false,
   italic = false,
   underline = false,
   truncate = false,
@@ -111,6 +111,7 @@ function TypographyBase({
         classMap[alignClassMap[align]],
         classMap[weightClassMap[weight]],
         classMap[themeClassMap[theme]],
+        glass && classMap.glass,
         italic && classMap.italic,
         underline && classMap.underline,
         truncate && classMap.truncate,
@@ -124,6 +125,7 @@ function TypographyBase({
       align,
       weight,
       theme,
+      glass,
       italic,
       underline,
       truncate,

@@ -23,6 +23,7 @@ const classMap = {
   primary: "primaryTheme",
   secondary: "secondaryTheme",
   clear: "clearTheme",
+  glass: "glass",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
   shadowLight: "shadowLight",
@@ -274,6 +275,7 @@ describe("BaseNavBar", () => {
         LinkWrapper={LinkWrapper}
         data-testid={testId}
         theme="primary"
+        glass
         rounding="medium"
         shadow="light"
         className="customNavClass"
@@ -285,6 +287,7 @@ describe("BaseNavBar", () => {
 
     expect(nav.className).toContain("navContainer");
     expect(nav.className).toContain("primaryTheme");
+    expect(nav.className).toContain("glass");
     expect(nav.className).toContain("customNavClass");
 
     expect(homeItem.className).toContain("navItem");

@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 @use "sass:list";
 
@@ -142,17 +143,40 @@ $sizes: (
 }
 
 .buttonIcon {
-  margin-right: var(--spacing-sm);
   display: flex;
   align-items: center;
-  margin-top: -0.1em;
+  line-height: 1em;
+}
 
-  @include bp.down(sm) {
-    margin-right: var(--spacing-xs);
-  }
+.button.iconLeft {
+  flex-direction: row;
 
-  @include bp.up(lg) {
+  .buttonIcon {
     margin-right: var(--spacing-sm);
+
+    @include bp.down(sm) {
+      margin-right: var(--spacing-xs);
+    }
+
+    @include bp.up(lg) {
+      margin-right: var(--spacing-sm);
+    }
+  }
+}
+
+.button.iconRight {
+  flex-direction: row;
+
+  .buttonIcon {
+    margin-left: var(--spacing-sm);
+
+    @include bp.down(sm) {
+      margin-left: var(--spacing-xs);
+    }
+
+    @include bp.up(lg) {
+      margin-left: var(--spacing-sm);
+    }
   }
 }
 
@@ -160,6 +184,29 @@ $sizes: (
   font: inherit;
   line-height: inherit;
   letter-spacing: inherit;
+}
+
+.glass {
+  @include mixins.glass-surface(
+    var(--button-glass-bg, var(--glass-background)),
+    var(--button-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--button-glass-text, currentcolor);
+  isolation: isolate;
+
+  &:hover {
+    background: var(--button-glass-hover-bg, var(--glass-background-strong));
+  }
+
+  &.outline {
+    border-color: var(--button-glass-border, var(--glass-border-color));
+
+    &:hover {
+      background: var(--button-glass-hover-bg, var(--glass-background));
+    }
+  }
 }
 
 .clear {
@@ -187,12 +234,29 @@ $sizes: (
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
+    --button-glass-bg: #{map.get($values, glass-bg)};
+    --button-glass-hover-bg: #{map.get($values, glass-hover)};
+    --button-glass-border: #{map.get($values, glass-border)};
+    --button-glass-text: #{map.get($values, text)};
+
     &:hover {
       background-color: map.get($values, hover);
     }
 
     .loader {
       border-top-color: map.get($values, text);
+    }
+
+    &.glass {
+      background-color: transparent;
+      background: var(--button-glass-bg);
+      border: 1px solid var(--button-glass-border);
+      color: var(--button-glass-text);
+
+      &:hover {
+        background-color: transparent;
+        background: var(--button-glass-hover-bg);
+      }
     }
 
     &.outline {
@@ -214,12 +278,29 @@ $sizes: (
     background-color: map.get($values, bg);
     color: map.get($values, text);
 
+    --button-glass-bg: #{map.get($values, glass-bg)};
+    --button-glass-hover-bg: #{map.get($values, glass-hover)};
+    --button-glass-border: #{map.get($values, glass-border)};
+    --button-glass-text: #{map.get($values, text)};
+
     &:hover {
       background-color: map.get($values, hover);
     }
 
     .loader {
       border-top-color: map.get($values, text);
+    }
+
+    &.glass {
+      background-color: transparent;
+      background: var(--button-glass-bg);
+      border: 1px solid var(--button-glass-border);
+      color: var(--button-glass-text);
+
+      &:hover {
+        background-color: transparent;
+        background: var(--button-glass-hover-bg);
+      }
     }
 
     &.outline {
@@ -236,18 +317,29 @@ $sizes: (
   }
 }
 
-.disabled {
+.disabled,
+.button:disabled {
   background-color: var(--disabled-color);
+  background: var(--disabled-color);
   color: var(--text-color-primary);
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.6;
   box-shadow: none;
+}
 
-  &.outline {
-    border-color: var(--disabled-color);
-    color: var(--disabled-color);
-  }
+.disabled.glass,
+.button:disabled.glass {
+  background-color: var(--disabled-color);
+  background: var(--disabled-color);
+  color: var(--text-color-primary);
+}
+
+.disabled.outline,
+.button:disabled.outline {
+  background-color: transparent;
+  border-color: var(--disabled-color);
+  color: var(--disabled-color);
 }
 
 @each $size, $values in $sizes {

@@ -11,6 +11,7 @@ const classes = {
   icon: "empty_state_icon",
 
   outline: "empty_state_outline",
+  glass: "empty_state_glass",
   disabled: "empty_state_disabled",
 
   primary: "empty_state_primary",

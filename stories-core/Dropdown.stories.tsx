@@ -1,18 +1,30 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Dropdown } from "../src/index.core";
+import {
+  Dropdown,
+  RoundingType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "../src/index.core";
 import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import type { DropdownProps } from "../src/components/Dropdown/Dropdown.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
   "quaternary",
   "clear",
 ];
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const meta: Meta<DropdownProps> = {
   title: "Components/Dropdown",
@@ -114,7 +126,7 @@ export const Themed: Story = {
 
 export const States: Story = {
   render: () => {
-    const stateOptions = ["success", "error", "warning"];
+    const stateOptions: StateType[] = ["success", "error", "warning"];
 
     return (
       <StoryGrid title="State Variants">
@@ -127,6 +139,54 @@ export const States: Story = {
               triggerIcon={FaEllipsisV}
               state={state}
               items={[{ label: `Item (${state})`, onClick: () => {} }]}
+            />
+          </div>
+        ))}
+      </StoryGrid>
+    );
+  },
+};
+
+export const GlassThemeVariants: Story = {
+  render: () => {
+    return (
+      <StoryGrid title="Glass Theme Variants">
+        {themeOptions.map((theme) => (
+          <div key={theme} style={{ textAlign: "center" }}>
+            <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+              {theme}
+            </p>
+            <Dropdown
+              triggerIcon={FaEllipsisV}
+              theme={theme}
+              glass
+              items={[{ label: `Glass item (${theme})`, onClick: () => {} }]}
+              aria-label={`Glass ${theme} actions`}
+            />
+          </div>
+        ))}
+      </StoryGrid>
+    );
+  },
+};
+
+export const GlassStateVariants: Story = {
+  render: () => {
+    const stateOptions: StateType[] = ["success", "error", "warning"];
+
+    return (
+      <StoryGrid title="Glass State Variants">
+        {stateOptions.map((state) => (
+          <div key={state} style={{ textAlign: "center" }}>
+            <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
+              {state}
+            </p>
+            <Dropdown
+              triggerIcon={FaEllipsisV}
+              state={state}
+              glass
+              items={[{ label: `Glass item (${state})`, onClick: () => {} }]}
+              aria-label={`Glass ${state} actions`}
             />
           </div>
         ))}

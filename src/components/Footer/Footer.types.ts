@@ -8,6 +8,51 @@ import {
 import { IconButtonProps } from "../IconButton/IconButton.types";
 import { ThemeSelectProps } from "../Select/Select.types";
 
+export type FooterLayout = "inline" | "columns";
+
+export interface FooterSection {
+  /**
+   * Heading displayed above this footer group.
+   */
+  title: React.ReactNode;
+
+  /**
+   * Links displayed in this section.
+   */
+  links: FooterLink[];
+
+  /**
+   * Accessible label for the section nav.
+   * Defaults to `${title} links` when title is a string.
+   */
+  "aria-label"?: string;
+
+  /**
+   * Optional custom class name for this section nav.
+   */
+  className?: string;
+
+  /**
+   * Optional custom class name for this section heading.
+   */
+  titleClassName?: string;
+
+  /**
+   * Optional custom class name for this section link list.
+   */
+  listClassName?: string;
+
+  /**
+   * Optional custom class name applied to links in this section.
+   */
+  linkClassName?: string;
+
+  /**
+   * Optional test id suffix.
+   */
+  testId?: string;
+}
+
 /**
  * Represents a navigational link in the footer.
  */
@@ -118,8 +163,108 @@ export interface FooterProps extends Omit<
    */
   theme?: ThemeType;
 
+  /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
   /** Optional class name for custom styles. */
   className?: string;
+
+  /**
+   * Optional custom class name for the main footer content wrapper.
+   */
+  contentClassName?: string;
+
+  /**
+   * Optional custom class name for the inline layout left area.
+   */
+  leftClassName?: string;
+
+  /**
+   * Optional custom class name for the inline layout links nav.
+   */
+  linksClassName?: string;
+
+  /**
+   * Optional custom class name applied to inline footer links.
+   */
+  linkClassName?: string;
+
+  /**
+   * Optional custom class name for the logo wrapper/image.
+   */
+  logoClassName?: string;
+
+  /**
+   * Optional custom class name for the social links nav.
+   */
+  socialClassName?: string;
+
+  /**
+   * Optional custom class name for the theme selector wrapper.
+   */
+  themeToggleClassName?: string;
+
+  /**
+   * Optional custom class name for the columns layout brand area.
+   */
+  brandClassName?: string;
+
+  /**
+   * Optional custom class name for the brand link/wrapper.
+   */
+  brandLinkClassName?: string;
+
+  /**
+   * Optional custom class name for the brand title.
+   */
+  brandTitleClassName?: string;
+
+  /**
+   * Optional custom class name for the brand description.
+   */
+  brandDescriptionClassName?: string;
+
+  /**
+   * Optional custom class name for the grouped sections wrapper.
+   */
+  sectionsClassName?: string;
+
+  /**
+   * Optional custom class name for section titles in the columns layout.
+   */
+  sectionTitleClassName?: string;
+
+  /**
+   * Optional custom class name for the actions column.
+   */
+  actionsClassName?: string;
+
+  /**
+   * Optional custom class name for action groups, such as the Connect group.
+   */
+  actionGroupClassName?: string;
+
+  /**
+   * Optional custom class name for the bottom bar.
+   */
+  bottomClassName?: string;
+
+  /**
+   * Optional custom class name for the bottom copyright text.
+   */
+  bottomCopyrightClassName?: string;
+
+  /**
+   * Optional custom class name for the bottom-end content.
+   */
+  bottomEndClassName?: string;
+
+  /**
+   * Optional custom class name for copyright when rendered outside the bottom bar.
+   */
+  copyrightClassName?: string;
 
   /**
    * Attachment type for how the footer is positioned.
@@ -156,6 +301,46 @@ export interface FooterProps extends Omit<
 
   /** Whether to show the theme selector dropdown. */
   showThemeSelect?: boolean;
+
+  /**
+   * Footer layout style.
+   * "inline" keeps the older compact layout.
+   * "columns" supports brand, grouped sections, social links, and bottom bar.
+   */
+  layout?: FooterLayout;
+
+  /**
+   * Optional brand title displayed beside or below the logo.
+   */
+  brandTitle?: React.ReactNode;
+
+  /**
+   * Optional brand description text displayed in the brand column.
+   */
+  brandDescription?: React.ReactNode;
+
+  /**
+   * Optional href for the brand/logo area.
+   */
+  brandHref?: string;
+
+  /**
+   * Grouped footer link sections.
+   * When omitted, the old `links` prop is still supported.
+   */
+  sections?: FooterSection[];
+
+  /**
+   * Content shown on the right side of the bottom bar.
+   * Example: "Secure Environment"
+   */
+  bottomEnd?: React.ReactNode;
+
+  /**
+   * Whether copyright should render in the bottom bar.
+   * Useful for column layouts.
+   */
+  copyrightInBottom?: boolean;
 
   /**
    * Accessible label for the overall footer landmark.

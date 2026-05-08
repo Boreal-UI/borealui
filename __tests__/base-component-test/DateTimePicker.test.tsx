@@ -16,6 +16,7 @@ const styles = {
   outline: "outline",
   disabled: "disabled",
   readOnly: "readOnly",
+  glass: "glass",
   primary: "themePrimary",
   secondary: "themeSecondary",
   success: "stateSuccess",
@@ -415,6 +416,7 @@ describe("DateTimePickerBase", () => {
     renderPicker({
       theme: "primary",
       size: "medium",
+      glass: true,
       outline: true,
       disabled: true,
       className: "customClass",
@@ -425,6 +427,7 @@ describe("DateTimePickerBase", () => {
     expect(wrapper).toHaveClass("pickerWrapper");
     expect(wrapper).toHaveClass("themePrimary");
     expect(wrapper).toHaveClass("sizeMedium");
+    expect(wrapper).toHaveClass("glass");
     expect(wrapper).toHaveClass("outline");
     expect(wrapper).toHaveClass("disabled");
     expect(wrapper).toHaveClass("customClass");

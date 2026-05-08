@@ -7,11 +7,20 @@ import { PagerProps } from "../Pager.types";
 
 const classes = {
   wrapper: "pagination",
+  glass: "pagination_glass",
   controls: "pagination_controls",
   controlButton: "pagination_control_button",
   buttonWrapper: "pagination_button_wrapper",
   button: "pagination_button",
   active: "pagination_active",
+  primary: "pagination_primary",
+  secondary: "pagination_secondary",
+  tertiary: "pagination_tertiary",
+  quaternary: "pagination_quaternary",
+  clear: "pagination_clear",
+  success: "pagination_success",
+  error: "pagination_error",
+  warning: "pagination_warning",
 };
 
 const Pager: React.FC<PagerProps> = (props) => {

@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .wrapper {
@@ -40,7 +41,7 @@
 
 .icon {
   font-size: 2rem;
-  color: inherit;
+  color: var(--text-color);
   padding: 0;
   line-height: 1;
 
@@ -57,7 +58,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: inherit;
+  align-items: center;
   padding: var(--spacing-sm);
 
   @include bp.up(lg) {
@@ -136,6 +137,11 @@
 
 @each $name, $props in theme.$themes {
   .#{$name} {
+    --metric-box-glass-bg: #{map.get($props, glass-bg)};
+    --metric-box-glass-hover-bg: #{map.get($props, glass-hover)};
+    --metric-box-glass-border: #{map.get($props, glass-border)};
+    --metric-box-glass-text: #{map.get($props, text)};
+
     background-color: map.get($props, bg);
     color: map.get($props, text);
 
@@ -152,15 +158,16 @@
         border-width: 1.5px;
       }
     }
-  }
-
-  .#{$name}.outline .icon {
-    color: map.get($props, border);
   }
 }
 
 @each $state, $props in theme.$states {
   .#{$state} {
+    --metric-box-glass-bg: #{map.get($props, glass-bg)};
+    --metric-box-glass-hover-bg: #{map.get($props, glass-hover)};
+    --metric-box-glass-border: #{map.get($props, glass-border)};
+    --metric-box-glass-text: #{map.get($props, text)};
+
     background-color: map.get($props, bg);
     color: map.get($props, text);
 
@@ -177,16 +184,30 @@
         border-width: 1.5px;
       }
     }
-  }
-
-  .#{$state}.outline .icon {
-    color: map.get($props, bg);
   }
 }
 
 .clear {
   border: none;
   box-shadow: none;
+}
+
+.glass {
+  @include mixins.glass-surface(
+    var(--metric-box-glass-bg, var(--glass-background)),
+    var(--metric-box-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--metric-box-glass-text, currentcolor);
+}
+
+.glass:hover {
+  background: var(--metric-box-glass-hover-bg, var(--glass-background));
+}
+
+.glass.outline {
+  border-color: var(--metric-box-glass-border, var(--glass-border-color));
 }
 
 $sizes: (
@@ -259,5 +280,13 @@ $sizes: (
 
   .outline {
     border: 1px solid ButtonText;
+  }
+
+  .wrapper.glass {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 }

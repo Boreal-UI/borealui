@@ -15,6 +15,7 @@ const classNames = {
   right: "placementRight",
   primary: "themePrimary",
   secondary: "themeSecondary",
+  glass: "glass",
   success: "stateSuccess",
   shadowMedium: "shadowMedium",
   roundMedium: "roundMedium",
@@ -349,6 +350,7 @@ describe("BasePopover", () => {
       rounding: "medium",
       shadow: "medium",
       state: "success",
+      glass: true,
     });
 
     fireEvent.click(screen.getByTestId("popover-trigger"));
@@ -357,6 +359,7 @@ describe("BasePopover", () => {
       "popoverContent",
       "placementBottom",
       "themePrimary",
+      "glass",
       "roundMedium",
       "shadowMedium",
       "stateSuccess",

@@ -8,6 +8,7 @@ expect.extend(toHaveNoViolations);
 const classNames = {
   wrapper: "metricWrapper",
   outline: "metricOutline",
+  glass: "metricGlass",
   primary: "themePrimary",
   secondary: "themeSecondary",
   success: "stateSuccess",
@@ -196,6 +197,7 @@ describe("BaseMetricBox", () => {
         size="large"
         align="left"
         outline={true}
+        glass={true}
         shadow="medium"
         rounding="medium"
         className="customClass"
@@ -212,6 +214,7 @@ describe("BaseMetricBox", () => {
     expect(wrapper).toHaveClass("stateSuccess");
     expect(wrapper).toHaveClass("sizeLarge");
     expect(wrapper).toHaveClass("alignLeft");
+    expect(wrapper).toHaveClass("metricGlass");
     expect(wrapper).toHaveClass("shadowMedium");
     expect(wrapper).toHaveClass("roundMedium");
     expect(wrapper).toHaveClass("customClass");

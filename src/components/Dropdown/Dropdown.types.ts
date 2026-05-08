@@ -187,6 +187,11 @@ export interface DropdownProps extends Omit<
   theme?: ThemeType;
 
   /**
+   * Adds glass styling to the trigger IconButton and dropdown menu.
+   */
+  glass?: boolean;
+
+  /**
    * State of the dropdown
    * ('success' | 'error' | 'warning' | 'disabled' | '').
    */

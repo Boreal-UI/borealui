@@ -25,6 +25,7 @@ const SliderBase: React.FC<
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   theme = getDefaultTheme(),
+  glass = false,
   state = "",
   showValue = true,
   className = "",
@@ -62,11 +63,12 @@ const SliderBase: React.FC<
         classMap[size],
         classMap[theme],
         classMap[state],
+        glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         className,
       ),
-    [classMap, size, theme, state, className, shadow, rounding],
+    [classMap, size, theme, state, glass, className, shadow, rounding],
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

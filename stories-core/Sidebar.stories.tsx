@@ -1,40 +1,32 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Sidebar } from "../src/index.core";
+import {
+  RoundingType,
+  ShadowType,
+  Sidebar,
+  StateType,
+  ThemeType,
+} from "../src/index.core";
 import { SidebarProps } from "../src/components/Sidebar/Sidebar.types";
 import { FaBook, FaPaperclip, FaCogs, FaCalendar } from "react-icons/fa";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 
-const themeOptions = [
+const themeOptions: ThemeType[] = [
   "primary",
   "secondary",
   "tertiary",
   "quaternary",
   "clear",
 ];
-const stateOptions = ["success", "error", "warning"];
+const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
-
-const classMap = {
-  wrapper: "wrapper",
-  nav: "nav",
-  list: "list",
-  childList: "childList",
-  item: "item",
-  link: "link",
-  childLink: "childLink",
-  active: "active",
-  chevron: "chevron",
-  chevronOpen: "chevronOpen",
-  submenu: "submenu",
-  submenuOpen: "submenuOpen",
-  footer: "footer",
-  footerLink: "footerLink",
-  footerVersion: "footerVersion",
-};
+const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
+const shadowOptions: ShadowType[] = [
+  "none",
+  "light",
+  "medium",
+  "strong",
+  "intense",
+];
 
 const mockLinks = [
   { label: "Dashboard", href: "/Dashboard", icon: <FaBook /> },
@@ -71,22 +63,10 @@ export const Default: Story = {};
 export const OutlineVariants = () => (
   <StoryGrid title="Outline Sidebars">
     {themeOptions.map((theme) => (
-      <Sidebar
-        key={theme}
-        theme={theme}
-        outline
-        links={mockLinks}
-        currentPath="/Settings"
-      />
+      <Sidebar key={theme} theme={theme} outline links={mockLinks} />
     ))}
-    {stateOptions.map((theme) => (
-      <Sidebar
-        key={theme}
-        theme={theme}
-        outline
-        links={mockLinks}
-        currentPath="/Settings"
-      />
+    {stateOptions.map((state) => (
+      <Sidebar key={state} state={state} outline links={mockLinks} />
     ))}
   </StoryGrid>
 );
@@ -94,12 +74,7 @@ export const OutlineVariants = () => (
 export const ThemeVariants = () => (
   <StoryGrid title="Theme Variants">
     {themeOptions.map((theme) => (
-      <Sidebar
-        key={theme}
-        theme={theme}
-        links={mockLinks}
-        currentPath="/Settings"
-      />
+      <Sidebar key={theme} theme={theme} links={mockLinks} />
     ))}
   </StoryGrid>
 );
@@ -107,12 +82,23 @@ export const ThemeVariants = () => (
 export const StateVariants = () => (
   <StoryGrid title="State Variants">
     {stateOptions.map((state) => (
-      <Sidebar
-        key={state}
-        state={state}
-        links={mockLinks}
-        currentPath="/Settings"
-      />
+      <Sidebar key={state} state={state} links={mockLinks} />
+    ))}
+  </StoryGrid>
+);
+
+export const GlassThemeVariants = () => (
+  <StoryGrid title="Glass Theme Variants">
+    {themeOptions.map((theme) => (
+      <Sidebar key={theme} theme={theme} glass links={mockLinks} />
+    ))}
+  </StoryGrid>
+);
+
+export const GlassStateVariants = () => (
+  <StoryGrid title="Glass State Variants">
+    {stateOptions.map((state) => (
+      <Sidebar key={state} state={state} glass links={mockLinks} />
     ))}
   </StoryGrid>
 );
@@ -120,12 +106,7 @@ export const StateVariants = () => (
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (
-      <Sidebar
-        key={rounding}
-        rounding={rounding}
-        links={mockLinks}
-        currentPath="/Settings"
-      />
+      <Sidebar key={rounding} rounding={rounding} links={mockLinks} />
     ))}
   </StoryGrid>
 );
@@ -133,12 +114,7 @@ export const RoundingVariants = () => (
 export const ShadowVariants = () => (
   <StoryGrid title="Shadow Variants">
     {shadowOptions.map((shadow) => (
-      <Sidebar
-        key={shadow}
-        shadow={shadow}
-        links={mockLinks}
-        currentPath="/Settings"
-      />
+      <Sidebar key={shadow} shadow={shadow} links={mockLinks} />
     ))}
   </StoryGrid>
 );

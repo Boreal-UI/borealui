@@ -114,3 +114,21 @@ export const Default: Story = {
     );
   },
 };
+
+export const GlassThemeVariants: Story = {
+  render: (args) => (
+    <div style={{ paddingTop: "5rem", display: "grid", gap: "7rem" }}>
+      {themeOptions.map((theme) => (
+        <Navbar
+          key={theme}
+          {...args}
+          theme={theme}
+          glass
+          rounding="large"
+          shadow="light"
+          className={`storybook-nav-${theme}`}
+        />
+      ))}
+    </div>
+  ),
+};

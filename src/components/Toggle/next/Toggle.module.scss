@@ -1,5 +1,6 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 @use "sass:list";
 
@@ -171,15 +172,44 @@ $sizes: (
 }
 
 @each $themeName, $vals in theme.$themes {
+  .#{$themeName} {
+    --toggle-glass-bg: #{map.get($vals, glass-bg)};
+    --toggle-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --toggle-glass-border: #{map.get($vals, glass-border)};
+    --toggle-glass-text: #{map.get($vals, text)};
+  }
+
   .#{$themeName} .toggle.active {
     background-color: map.get($vals, bg);
   }
 }
 
 @each $stateName, $vals in theme.$states {
+  .#{$stateName} {
+    --toggle-glass-bg: #{map.get($vals, glass-bg)};
+    --toggle-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --toggle-glass-border: #{map.get($vals, glass-border)};
+    --toggle-glass-text: #{map.get($vals, text)};
+  }
+
   .#{$stateName} .toggle.active {
     outline: 2px solid map.get($vals, border);
   }
+}
+
+.glass .glassTrack {
+  @include mixins.glass-surface(
+    var(--toggle-glass-bg, var(--glass-background)),
+    var(--toggle-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--toggle-glass-text, currentcolor);
+}
+
+.glass .toggle.active {
+  background: var(--toggle-glass-hover-bg, var(--glass-background));
+  border-color: var(--toggle-glass-border, var(--glass-border-color));
 }
 
 .clear .toggle.active {
@@ -240,6 +270,14 @@ $sizes: (
 
   .toggle .slider {
     background: ButtonText;
+  }
+
+  .glass .glassTrack {
+    background: Canvas !important;
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
   }
 
   .toggle:focus-visible {

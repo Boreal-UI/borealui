@@ -599,6 +599,107 @@ describe("CardBase", () => {
     expect(card).toHaveClass("custom-card-class");
   });
 
+  it("applies custom class names to card sections", () => {
+    renderCard({
+      title: "Class Name Card",
+      description: "Body text",
+      imageUrl: "/img.jpg",
+      imageAlt: "Class name image",
+      cardIcon: FaStar,
+      contentClassName: "custom-content",
+      imageClassName: "custom-image",
+      headerClassName: "custom-header",
+      titleClassName: "custom-title",
+      iconClassName: "custom-icon",
+      bodyClassName: "custom-body",
+      descriptionClassName: "custom-description",
+      childrenClassName: "custom-children",
+      footerClassName: "custom-footer",
+      actionsClassName: "custom-actions",
+      actionButtonClassName: "custom-action-button",
+      children: <div data-testid="custom-child-content">Child content</div>,
+      actionButtons: [
+        {
+          label: "Action",
+          onClick: jest.fn(),
+          buttonComponent: DummyButton,
+          iconButtonComponent: DummyIconButton,
+        },
+      ],
+    });
+
+    const image = screen.getByTestId("card-image");
+    const title = screen.getByText("Class Name Card");
+    const description = screen.getByText("Body text");
+    const childContent = screen.getByTestId("custom-child-content");
+    const icon = screen.getByTestId("card-icon");
+    const action = screen.getByRole("button", { name: "Action" });
+
+    expect(title.closest(".card-content")).toHaveClass("custom-content");
+
+    expect(image).toHaveClass("card-img");
+    expect(image).toHaveClass("custom-image");
+
+    expect(title.closest(".card-header")).toHaveClass("custom-header");
+
+    expect(title).toHaveClass("card-title");
+    expect(title).toHaveClass("custom-title");
+
+    expect(icon).toHaveClass("card-icon");
+    expect(icon).toHaveClass("custom-icon");
+
+    expect(description.closest(".card-body")).toHaveClass("custom-body");
+
+    expect(description).toHaveClass("card-desc");
+    expect(description).toHaveClass("custom-description");
+
+    expect(childContent.closest(".card-children")).toHaveClass(
+      "custom-children",
+    );
+
+    expect(action.closest(".card-footer")).toHaveClass("custom-footer");
+    expect(action.closest(".card-actions")).toHaveClass("custom-actions");
+
+    expect(action).toHaveClass("action-btn");
+    expect(action).toHaveClass("custom-action-button");
+  });
+
+  it("applies custom media class name when imageFill is true", () => {
+    renderCard({
+      imageUrl: "/img.jpg",
+      imageAlt: "Fill image",
+      imageFill: true,
+      mediaClassName: "custom-media",
+    });
+
+    const image = screen.getByTestId("card-image");
+
+    expect(image.parentElement).toHaveClass("card-media");
+    expect(image.parentElement).toHaveClass("custom-media");
+  });
+
+  it("applies custom action button class name to icon action buttons", () => {
+    renderCard({
+      title: "Icon Action Class Card",
+      useIconButtons: true,
+      actionButtonClassName: "custom-icon-action-button",
+      actionButtons: [
+        {
+          label: "Favorite",
+          icon: FaStar,
+          onClick: jest.fn(),
+          buttonComponent: DummyButton,
+          iconButtonComponent: DummyIconButton,
+        },
+      ],
+    });
+
+    const button = screen.getByRole("button", { name: "Favorite" });
+
+    expect(button).toHaveClass("action-btn");
+    expect(button).toHaveClass("custom-icon-action-button");
+  });
+
   it("applies selectable, selected, and disabled classes when provided", () => {
     renderCard({
       title: "Interactive Card",

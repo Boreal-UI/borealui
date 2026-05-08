@@ -25,6 +25,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       password = false,
       readOnly = false,
       theme = getDefaultTheme(),
+      glass = false,
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       onChange,
@@ -142,12 +143,23 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
           classMap[theme],
           classMap[state],
           outline && classMap.outline,
+          glass && classMap.glass,
           disabled && classMap.disabled,
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
           className,
         ),
-      [classMap, theme, state, outline, disabled, shadow, rounding, className],
+      [
+        classMap,
+        theme,
+        state,
+        outline,
+        glass,
+        disabled,
+        shadow,
+        rounding,
+        className,
+      ],
     );
 
     const inputClasses = useMemo(

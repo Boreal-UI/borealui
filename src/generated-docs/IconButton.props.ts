@@ -156,6 +156,14 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "href",
       "type": "string",
       "description": "Optional href to turn the button into a link.",

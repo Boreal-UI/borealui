@@ -19,6 +19,7 @@ const TimelineBase: React.FC<
   "aria-describedby": ariaDescribedBy,
   role = "list",
   theme = getDefaultTheme(),
+  glass = false,
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   classMap,
@@ -32,15 +33,21 @@ const TimelineBase: React.FC<
         classMap.timeline,
         classMap[orientation],
         classMap[theme],
+        glass && classMap.glass,
         className,
       ),
-    [classMap, orientation, theme, className],
+    [classMap, orientation, theme, glass, className],
   );
 
   const itemClassName = useMemo(
     () =>
-      combineClassNames(classMap.item, classMap[orientation], classMap[theme]),
-    [classMap, orientation, theme],
+      combineClassNames(
+        classMap.item,
+        classMap[orientation],
+        classMap[theme],
+        glass && classMap.glass,
+      ),
+    [classMap, orientation, theme, glass],
   );
 
   const markerClassName = useMemo(
@@ -49,9 +56,10 @@ const TimelineBase: React.FC<
         classMap.marker,
         classMap[theme],
         classMap[orientation],
+        glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
       ),
-    [classMap, theme, orientation, shadow],
+    [classMap, theme, orientation, glass, shadow],
   );
 
   const contentClassName = useMemo(
@@ -59,10 +67,12 @@ const TimelineBase: React.FC<
       combineClassNames(
         classMap.content,
         classMap[orientation],
+        classMap[theme],
+        glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
       ),
-    [classMap, orientation, shadow, rounding],
+    [classMap, orientation, theme, glass, shadow, rounding],
   );
 
   const setSize = items.length;

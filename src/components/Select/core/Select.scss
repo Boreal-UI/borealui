@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 .select_wrapper {
@@ -36,6 +37,10 @@
 
   @each $themeName, $values in theme.$themes {
     &.select_#{$themeName} {
+      --select-glass-bg: #{map.get($values, glass-bg)};
+      --select-glass-hover-bg: #{map.get($values, glass-hover)};
+      --select-glass-border: #{map.get($values, glass-border)};
+      --select-glass-text: #{map.get($values, text)};
       background-color: map.get($values, bg);
       color: map.get($values, text);
 
@@ -61,6 +66,10 @@
 
   @each $stateName, $values in theme.$states {
     &.select_#{$stateName} {
+      --select-glass-bg: #{map.get($values, glass-bg)};
+      --select-glass-hover-bg: #{map.get($values, glass-hover)};
+      --select-glass-border: #{map.get($values, glass-border)};
+      --select-glass-text: #{map.get($values, text)};
       background-color: map.get($values, bg);
       color: map.get($values, text);
 
@@ -78,6 +87,23 @@
         border-width: 1.5px;
       }
     }
+  }
+
+  &.select_glass {
+    @include mixins.glass-surface(
+      var(--select-glass-bg, rgba(255, 255, 255, 0.18)),
+      var(--select-glass-border, rgba(255, 255, 255, 0.34)),
+      16px
+    );
+    color: var(--select-glass-text, var(--text-color-primary));
+  }
+
+  &.select_glass:hover {
+    background: var(--select-glass-hover-bg, rgba(255, 255, 255, 0.24));
+  }
+
+  &.select_glass.select_outline {
+    background: var(--select-glass-bg, rgba(255, 255, 255, 0.14));
   }
 }
 
@@ -212,6 +238,14 @@
 }
 
 @media (forced-colors: active) {
+  .select_wrapper.select_glass {
+    background: Canvas;
+    color: CanvasText;
+    border-color: ButtonText;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .select {
     background: Canvas;
     color: CanvasText;

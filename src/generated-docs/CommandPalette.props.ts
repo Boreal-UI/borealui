@@ -60,6 +60,14 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "If true, applies a translucent glass surface using the selected theme/state. Defaults to `false`.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "inputAriaDescribedBy",
       "type": "string",
       "description": "Accessible description reference for the search input.",

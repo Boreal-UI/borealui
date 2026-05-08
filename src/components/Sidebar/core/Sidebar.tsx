@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import SidebarBase from "../SidebarBase";
 import "./Sidebar.scss";
 import { SidebarLink, SidebarProps } from "../Sidebar.types";
+import {
+  isActiveRecursive,
+  isDescendantPath,
+  normalizePath,
+} from "../Sidebar.helpers";
 
 const classes = {
   wrapper: "sidebar",
@@ -25,6 +30,7 @@ const classes = {
   submenuOpen: "sidebar_submenu_open",
 
   outline: "sidebar_outline",
+  glass: "sidebar_glass",
 
   primary: "sidebar_primary",
   secondary: "sidebar_secondary",
@@ -49,27 +55,8 @@ const classes = {
   roundLarge: "sidebar_round-Large",
 };
 
-const normalizePath = (p: string) =>
-  p.endsWith("/") && p.length > 1 ? p.slice(0, -1) : p;
-
 const getInitialPath = () =>
   typeof window !== "undefined" ? window.location.pathname || "/" : "/";
-
-const isDescendantPath = (parentPath: string, currentPath: string): boolean => {
-  const parent = normalizePath(parentPath);
-  const current = normalizePath(currentPath);
-
-  if (parent === "/") return current === "/";
-  return current === parent || current.startsWith(`${parent}/`);
-};
-
-const isActiveRecursive = (
-  link: SidebarLink,
-  matcher: (link: SidebarLink) => boolean,
-): boolean => {
-  if (matcher(link)) return true;
-  return !!link.children?.some((child) => isActiveRecursive(child, matcher));
-};
 
 const Sidebar: React.FC<SidebarProps> = ({
   isLinkActive: consumerIsLinkActive,

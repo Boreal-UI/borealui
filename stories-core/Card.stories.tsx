@@ -62,6 +62,20 @@ export const WithImage: Story = {
   },
 };
 
+export const WithNoHeader: Story = {
+  args: {
+    ...defaultArgs,
+    title: undefined,
+    description: undefined,
+    children: (
+      <p>
+        This card has no header. The content is meant to show how the layout
+        adjusts when the title is not provided.
+      </p>
+    ),
+  },
+};
+
 export const WithIcon: Story = {
   args: {
     ...defaultArgs,
@@ -119,10 +133,21 @@ export const ThemeVariants = () =>
     { propName: "theme", values: [...themeOptions] },
   ]);
 
+export const GlassThemeVariants = () =>
+  withVariants(Card, { ...defaultArgs, glass: true }, [
+    { propName: "theme", values: [...themeOptions] },
+  ]);
+
 export const StateVariants = () =>
   withVariants(Card, defaultArgs, [
-    { propName: "theme", values: [...stateOptions] },
+    { propName: "state", values: [...stateOptions] },
   ]);
+
+export const GlassStateVariants = () =>
+  withVariants(Card, { ...defaultArgs, glass: true }, [
+    { propName: "state", values: [...stateOptions] },
+  ]);
+
 export const OutlineThemeVariants = () =>
   withVariants(Card, { ...defaultArgs, outline: true }, [
     { propName: "theme", values: [...themeOptions, ...stateOptions] },

@@ -23,6 +23,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
   footerLinks,
   footerVersion,
   outline = false,
+  glass = false,
   className = "",
   "data-testid": testId = "sidebar",
   "aria-label": ariaLabel = "Sidebar navigation",
@@ -94,8 +95,9 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         outline && classMap.outline,
+        glass && classMap.glass,
       ),
-    [classMap, className, theme, state, outline, rounding, shadow],
+    [classMap, className, theme, state, outline, glass, rounding, shadow],
   );
 
   const renderLinks = (items: SidebarLink[], isChild = false) => (
@@ -159,7 +161,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                     getExpandButtonAriaDescription?.(link, isOpen) ??
                     linkAriaDescription
                   }
-                  aria-disabled={linkAriaDisabled || undefined}
+                  aria-disabled={linkAriaDisabled ? true : undefined}
                   data-testid={`${testId}-expandItemButton`}
                 >
                   {icon && <span className={classMap.icon}>{icon}</span>}
@@ -189,7 +191,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                   {renderLinks(children, true)}
                 </div>
               </>
-            ) : href ? (
+            ) : href && !linkAriaDisabled ? (
               <LinkComponent
                 href={href}
                 className={combineClassNames(
@@ -200,7 +202,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                 aria-current={isActive ? "page" : undefined}
                 aria-label={linkAriaLabel}
                 aria-description={linkAriaDescription}
-                aria-disabled={linkAriaDisabled || undefined}
+                aria-disabled={linkAriaDisabled ? true : undefined}
                 data-testid={`${testId}-sidebarLink`}
               >
                 {icon && <span className={classMap.icon}>{icon}</span>}
@@ -211,10 +213,11 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                 className={combineClassNames(
                   classMap.link,
                   isChild && classMap.childLink,
+                  isActive && classMap.active,
                 )}
                 aria-label={linkAriaLabel}
                 aria-description={linkAriaDescription}
-                aria-disabled={linkAriaDisabled || undefined}
+                aria-disabled={linkAriaDisabled ? true : undefined}
                 data-testid={`${testId}-sidebarLabel`}
               >
                 {icon && <span className={classMap.icon}>{icon}</span>}
@@ -263,7 +266,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                 className={classMap.footerLink}
                 aria-label={footerLinkAriaLabel}
                 aria-description={footerLinkAriaDescription}
-                aria-disabled={footerLinkAriaDisabled || undefined}
+                aria-disabled={footerLinkAriaDisabled ? true : undefined}
                 data-testid={`${testId}-footerLink`}
               >
                 {icon && <span className={classMap.icon}>{icon}</span>}

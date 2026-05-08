@@ -19,14 +19,14 @@ export const LayoutVariants: Story = {
     return (
       <div style={{ display: "grid", gap: "1.5rem" }}>
         <FormGroup label="Vertical" id="layout-vertical" layout="vertical">
-          <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
+          <TextInput value={value} onChange={(value) => setValue(value)} />
         </FormGroup>
         <FormGroup
           label="Horizontal"
           id="layout-horizontal"
           layout="horizontal"
         >
-          <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
+          <TextInput value={value} onChange={(value) => setValue(value)} />
         </FormGroup>
       </div>
     );
@@ -50,12 +50,12 @@ export const SpacingVariants: Story = {
             <TextInput
               placeholder="Text 1"
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
             <TextInput
               placeholder="Text 2"
               value={value}
-              onChange={(e) => setValue(e.target.value)}
+              onChange={(value) => setValue(value)}
             />
           </FormGroup>
         ))}
@@ -70,14 +70,14 @@ export const DescriptionVariants: Story = {
     return (
       <div style={{ display: "grid", gap: "1.5rem" }}>
         <FormGroup label="No Description" id="desc-none">
-          <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
+          <TextInput value={value} onChange={(value) => setValue(value)} />
         </FormGroup>
         <FormGroup
           label="With Description"
           id="desc-present"
           description="Helpful context goes here."
         >
-          <TextInput value={value} onChange={(e) => setValue(e.target.value)} />
+          <TextInput value={value} onChange={(value) => setValue(value)} />
         </FormGroup>
       </div>
     );

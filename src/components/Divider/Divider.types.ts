@@ -30,6 +30,11 @@ export interface DividerProps extends Omit<
   theme?: ThemeType;
 
   /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
+  /**
    * State of the divider
    * ('success' | 'error' | 'warning' | 'disabled' | '').
    */

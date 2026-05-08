@@ -45,6 +45,11 @@ export interface FileUploadProps
   theme?: ThemeType;
 
   /**
+   * Adds glass styling to the dropzone and nested controls.
+   */
+  glass?: boolean;
+
+  /**
    * The state of the file upload
    * ('success' | 'error' | 'warning' | 'disabled' | '').
    */

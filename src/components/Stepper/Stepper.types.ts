@@ -45,6 +45,11 @@ export interface StepperProps {
   theme?: ThemeType;
 
   /**
+   * Adds glass styling to the step buttons.
+   */
+  glass?: boolean;
+
+  /**
    * State of the stepper.
    * "success" | "error" | "warning" | "disabled" | ""
    */

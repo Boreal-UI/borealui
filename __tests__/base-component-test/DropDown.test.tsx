@@ -16,6 +16,9 @@ const classMap = {
   disabled: "disabled",
   alignLeft: "alignLeft",
   alignRight: "alignRight",
+  primary: "primary",
+  success: "success",
+  glass: "glass",
   shadowLight: "shadowLight",
   shadowMedium: "shadowMedium",
   roundSmall: "roundSmall",
@@ -141,12 +144,23 @@ describe("BaseDropdown", () => {
       menuRounding: "medium",
       menuShadow: "light",
       menuClassName: "customMenuClass",
+      theme: "primary",
+      state: "success",
+      glass: true,
     });
+
+    expect(screen.getByTestId("dropdown-trigger")).toHaveAttribute(
+      "data-glass",
+      "true",
+    );
 
     fireEvent.click(screen.getByTestId("dropdown-trigger"));
 
     const menu = screen.getByTestId("dropdown-menu");
     expect(menu).toHaveClass("dropdownMenu");
+    expect(menu).toHaveClass("primary");
+    expect(menu).toHaveClass("success");
+    expect(menu).toHaveClass("glass");
     expect(menu).toHaveClass("roundMedium");
     expect(menu).toHaveClass("shadowLight");
     expect(menu).toHaveClass("customMenuClass");
@@ -557,7 +571,7 @@ describe("BaseDropdown", () => {
     renderDropdown({
       menuProps: {
         "data-extra": "menu-extra",
-      },
+      } as React.HTMLProps<HTMLDivElement>,
     });
 
     fireEvent.click(screen.getByTestId("dropdown-trigger"));

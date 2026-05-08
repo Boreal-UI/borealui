@@ -68,6 +68,14 @@ export const tabsPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "glass",
+      "type": "boolean",
+      "description": "Adds translucent glass styling to the tab controls.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "idBase",
       "type": "string",
       "description": "Optional stable base used to create ids: `${idBase}-tab-${i}` and `${idBase}-panel-${i}`",

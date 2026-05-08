@@ -15,6 +15,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   icon: Icon,
   subtext,
   theme = getDefaultTheme(),
+  glass = false,
   shadow = getDefaultShadow(),
   rounding = getDefaultRounding(),
   state = "",
@@ -47,11 +48,23 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
         classMap[state],
         classMap[size],
         classMap[align],
+        glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         className,
       ),
-    [classMap, theme, state, size, align, outline, shadow, rounding, className],
+    [
+      classMap,
+      theme,
+      state,
+      size,
+      align,
+      glass,
+      outline,
+      shadow,
+      rounding,
+      className,
+    ],
   );
 
   const valueLabel =

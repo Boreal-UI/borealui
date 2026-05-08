@@ -14,6 +14,7 @@ const classes = {
   error: "avatar_error",
   clear: "avatar_clear",
   outline: "avatar_outline",
+  glass: "avatar_glass",
 
   clickable: "avatar_clickable",
   disabled: "avatar_disabled",

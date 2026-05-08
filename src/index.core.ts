@@ -6,7 +6,7 @@ export * from "./generated-docs/index";
 
 export { default as ThemeProvider, ThemeContext } from "./context/ThemeContext";
 export { registerColorScheme } from "./styles/colorSchemeRegistry";
-export { colorSchemes } from "./styles/Themes";
+export { defaultColorSchemes } from "./styles/Themes";
 export { setBorealStyleConfig } from "./config/boreal-style-config";
 
 export { default as Typography } from "./components/Typography/core/Typography";
@@ -24,6 +24,7 @@ export { default as ThemeSelect } from "./components/Select/ThemeSelect/core/The
 export { default as FileUpload } from "./components/FileUpload/core/FileUpload";
 export { default as TagInput } from "./components/TagInput/core/TagInput";
 export { default as RadioButton } from "./components/RadioButton/core/RadioButton";
+export { default as RadioGroup } from "./components/RadioButton/core/RadioGroup";
 export { default as Slider } from "./components/Slider/core/Slider";
 export { default as Checkbox } from "./components/Checkbox/core/Checkbox";
 export { default as ColorPicker } from "./components/ColorPicker/core/ColorPicker";

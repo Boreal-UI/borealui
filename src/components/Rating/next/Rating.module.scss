@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
+@use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 $sizes: (
@@ -75,7 +76,7 @@ $sizes: (
   transition:
     color 0.3s ease-in-out,
     transform 0.2s ease;
-  color: var(--background-color-dark);
+  color: var(--disabled-color);
 
   svg {
     width: 1em;
@@ -107,14 +108,10 @@ $sizes: (
   outline-offset: 2px;
 }
 
-.wrapper:focus-within {
-  outline: 2px solid var(--focus-outline-color, var(--primary-color));
-  outline-offset: 4px;
-  border-radius: 6px;
-}
-
 @each $themeName, $vals in theme.$themes {
   .#{$themeName} {
+    --rating-glass-text: #{map.get($vals, text)};
+
     .active {
       color: map.get($vals, bg);
     }
@@ -123,6 +120,11 @@ $sizes: (
 
 @each $stateName, $vals in theme.$states {
   .#{$stateName} {
+    --rating-glass-bg: #{map.get($vals, glass-bg)};
+    --rating-glass-hover-bg: #{map.get($vals, glass-hover)};
+    --rating-glass-border: #{map.get($vals, glass-border)};
+    --rating-glass-text: #{map.get($vals, text)};
+
     .active {
       color: map.get($vals, bg);
     }
@@ -152,7 +154,31 @@ $sizes: (
   }
 }
 
+.glass {
+  @include mixins.glass-surface(
+    var(--rating-glass-bg, rgba(255, 255, 255, 0.18)),
+    var(--rating-glass-border, rgba(255, 255, 255, 0.32)),
+    14px
+  );
+  color: var(--rating-glass-text, var(--text-color-primary));
+  padding: var(--spacing-xxs) var(--spacing-xs);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow-sm);
+}
+
+.interactive.glass:hover {
+  background: var(--rating-glass-hover-bg, rgba(255, 255, 255, 0.24));
+}
+
 @media (forced-colors: active) {
+  .wrapper.glass {
+    background: Canvas;
+    border-color: ButtonText;
+    color: ButtonText;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
   .star {
     color: ButtonText;
   }

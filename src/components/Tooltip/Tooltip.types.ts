@@ -23,6 +23,11 @@ export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
   theme?: ThemeType;
 
   /**
+   * Applies a translucent frosted-glass treatment using the active theme palette.
+   */
+  glass?: boolean;
+
+  /**
    * State of the tooltip for visual feedback.
    * "success" | "error" | "warning" | "disabled" | ""
    */
