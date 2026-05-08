@@ -48,7 +48,8 @@ const TooltipBase = forwardRef<
     keepMountedWhenHidden = true,
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
-    "data-testid": testId = "tooltip",
+    "data-testid": dataTestId,
+    testId = dataTestId ?? "tooltip",
     classMap,
     ...rest
   },

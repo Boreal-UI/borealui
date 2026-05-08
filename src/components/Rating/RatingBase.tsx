@@ -25,7 +25,8 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   starAriaLabelPrefix = "Rate",
   required = false,
   readOnly = false,
-  "data-testid": testId = "rating",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "rating",
   classMap,
 }) => {
   const uid = useId();

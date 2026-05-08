@@ -42,7 +42,8 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   orientation = "horizontal",
   activationMode = "auto",
   idBase,
-  "data-testid": testId = "tabs",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "tabs",
   classMap,
 }) => {
   const uid = useId();

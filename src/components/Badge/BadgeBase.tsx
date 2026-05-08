@@ -30,7 +30,8 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   icon: Icon,
   className = "",
   classMap,
-  "data-testid": testId = "badge",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "badge",
   onClick,
   href,
   ...rest

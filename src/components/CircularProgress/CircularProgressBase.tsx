@@ -34,7 +34,8 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
-  "data-testid": testId = "circular-progress",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "circular-progress",
   ...rest
 }) => {
   const range = Math.max(0, max - min);

@@ -58,7 +58,8 @@ const NavBar: React.FC<NavBarProps> = ({
         children,
         className,
         isActive,
-        "data-testid": testId,
+        "data-testid": dataTestId,
+        testId = dataTestId,
       }) => (
         <a
           href={href}

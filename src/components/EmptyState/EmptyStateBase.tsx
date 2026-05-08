@@ -31,7 +31,8 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
-  "data-testid": testId = "empty-state",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "empty-state",
   Button,
   classMap,
   ...rest
@@ -63,17 +64,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
         glass && classMap.glass,
         className,
       ),
-    [
-      classMap,
-      rounding,
-      shadow,
-      size,
-      state,
-      theme,
-      outline,
-      glass,
-      className,
-    ],
+    [classMap, rounding, shadow, size, state, theme, outline, glass, className],
   );
 
   const resolvedActionAriaLabel =

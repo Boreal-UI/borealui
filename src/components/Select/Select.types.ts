@@ -186,9 +186,10 @@ export interface SelectProps {
    */
   className?: string;
 
-  /**
-   * Optional test ID for testing frameworks.
-   */
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 
@@ -202,6 +203,10 @@ export interface ThemeSelectProps {
   shadow?: ShadowType;
   rounding?: RoundingType;
   state?: StateType;
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /**

@@ -46,7 +46,8 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
-  "data-testid": testId = "accordion",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "accordion",
   ...rest
 }) => {
   const isControlled = expanded !== undefined;

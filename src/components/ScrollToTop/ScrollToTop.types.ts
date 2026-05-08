@@ -61,9 +61,10 @@ export interface ScrollToTopProps {
    */
   id?: string;
 
-  /**
-   * Test identifier for the component, used to target it in testing frameworks.
-   */
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

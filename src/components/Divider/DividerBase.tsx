@@ -19,7 +19,8 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
       label,
       labelledBy,
       classMap,
-      "data-testid": testId = "divider",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "divider",
       style,
       ...rest
     },

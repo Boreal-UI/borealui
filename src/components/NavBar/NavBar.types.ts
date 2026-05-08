@@ -49,6 +49,9 @@ export interface NavBarProps {
   className?: string;
 
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /**
@@ -92,6 +95,10 @@ export interface BaseNavBarProps extends NavBarProps {
     children: React.ReactNode;
     className: string;
     isActive: boolean;
+    /** Optional test ID for testing frameworks. */
+    testId?: string;
+
+    /** Backward-compatible alias for test ID attributes. */
     "data-testid"?: string;
     "aria-current"?: "page";
     "aria-label"?: string;

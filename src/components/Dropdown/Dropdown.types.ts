@@ -60,6 +60,9 @@ export interface DropdownItem {
   title?: string;
 
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /**
@@ -201,6 +204,9 @@ export interface DropdownProps extends Omit<
   title?: string;
 
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /**

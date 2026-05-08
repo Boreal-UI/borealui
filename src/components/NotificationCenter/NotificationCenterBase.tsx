@@ -36,7 +36,8 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   Button,
   IconButton,
   classMap,
-  "data-testid": testId = "notification-center",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "notification-center",
 }) => {
   const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
   const prevIds = useRef<Set<string>>(new Set());

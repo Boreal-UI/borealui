@@ -21,7 +21,8 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
   role,
   wrapperAriaLabel,
   id,
-  "data-testid": testId = "scroll",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "scroll",
 }) => {
   const [isVisible, setIsVisible] = useState(false);
 

@@ -45,7 +45,8 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   title,
   triggerProps,
   menuProps,
-  "data-testid": testId = "dropdown",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "dropdown",
   IconButton,
   classMap,
   ...rest

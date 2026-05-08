@@ -38,9 +38,10 @@ export interface SpinnerProps {
    */
   className?: string;
 
-  /**
-   * Test ID for testing frameworks (e.g., for use with Jest or Cypress).
-   */
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /**

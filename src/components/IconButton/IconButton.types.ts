@@ -29,6 +29,10 @@ export interface IconButtonProps extends InteractiveProps {
     className?: string;
     "aria-hidden"?: boolean;
     focusable?: boolean;
+    /** Optional test ID for testing frameworks. */
+    testId?: string;
+
+    /** Backward-compatible alias for test ID attributes. */
     "data-testid"?: string;
   }>;
 
@@ -140,7 +144,7 @@ export interface IconButtonProps extends InteractiveProps {
   size?: SizeType;
 
   /**
-   * Tooltip text (not rendered automatically—use `title` for built-in browser tooltip).
+   * Tooltip text (not rendered automatically; use `title` for built-in browser tooltip).
    */
   tooltip?: string;
 
@@ -159,6 +163,9 @@ export interface IconButtonProps extends InteractiveProps {
   tabIndex?: number;
 
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

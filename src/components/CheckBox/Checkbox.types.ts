@@ -122,6 +122,9 @@ export interface CheckBoxProps extends Omit<
   role?: "checkbox";
 
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

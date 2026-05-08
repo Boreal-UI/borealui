@@ -24,7 +24,8 @@ const BaseRadioGroup = ({
   optionsClassName,
   id,
   "aria-describedby": ariaDescribedBy,
-  "data-testid": testId = "radio-group",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "radio-group",
   classMap,
   ...props
 }: BaseRadioGroupProps) => {

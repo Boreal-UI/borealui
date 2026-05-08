@@ -38,7 +38,8 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
   "aria-modal": ariaModal,
-  "data-testid": testId = "popover",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "popover",
   classMap,
 }): JSX.Element => {
   const [open, setOpen] = useState(false);

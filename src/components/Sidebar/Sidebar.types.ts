@@ -140,9 +140,10 @@ export interface SidebarProps {
    */
   className?: string;
 
-  /**
-   * Optional test ID for testing frameworks like Jest and React Testing Library.
-   */
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /**

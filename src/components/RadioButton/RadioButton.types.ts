@@ -15,6 +15,10 @@ export type RadioButtonOption = {
   "aria-label"?: string;
 
   /** Optional test ID for this option. */
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 };
 
@@ -113,9 +117,10 @@ export interface RadioButtonProps extends Omit<
    */
   className?: string;
 
-  /**
-   * Optional test ID for testing frameworks.
-   */
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 
@@ -182,6 +187,9 @@ export interface RadioGroupProps extends Omit<
   optionsClassName?: string;
 
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

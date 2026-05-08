@@ -22,7 +22,8 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
-  "data-testid": testId = "form-group",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "form-group",
   classMap,
   ...rest
 }) => {

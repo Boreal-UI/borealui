@@ -46,7 +46,8 @@ function DataTableBase<T extends object>({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
-  "data-testid": testId = "data-table",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "data-table",
 }: DataTableBaseProps<T>) {
   const [sortKey, setSortKey] = useState<keyof T | undefined>(defaultSortKey);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">(defaultSortOrder);

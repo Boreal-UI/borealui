@@ -29,7 +29,8 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   labelId,
   description,
   descriptionId,
-  "data-testid": testId = "progressbar",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "progressbar",
   classMap,
 }) => {
   const numeric = Number(value);

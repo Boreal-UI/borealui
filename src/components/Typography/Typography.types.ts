@@ -129,6 +129,9 @@ export interface TypographyProps {
    */
   testId?: string;
 
+  /** Backward-compatible alias for test ID attributes. */
+  "data-testid"?: string;
+
   /**
    * Optional ARIA role for the rendered element.
    */

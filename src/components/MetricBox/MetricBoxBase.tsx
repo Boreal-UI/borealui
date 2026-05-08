@@ -31,7 +31,8 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   "aria-atomic": ariaAtomic,
   decorativeIcon = true,
   iconAriaLabel,
-  "data-testid": testId = "metric-box",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "metric-box",
   classMap,
 }) => {
   const uid = useId();

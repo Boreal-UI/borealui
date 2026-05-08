@@ -61,7 +61,8 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
-  "data-testid": testId = "markdown-renderer",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "markdown-renderer",
   classMap,
   sanitizeHtml,
 }) => {

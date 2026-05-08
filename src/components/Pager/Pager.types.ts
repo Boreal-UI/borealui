@@ -93,6 +93,9 @@ export interface PagerProps {
   liveRegionAriaLive?: "off" | "polite" | "assertive";
 
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

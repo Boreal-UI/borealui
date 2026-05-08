@@ -89,9 +89,10 @@ export interface TimelineProps extends Omit<
    */
   shadow?: ShadowType;
 
-  /**
-   * Optional test ID for testing purposes.
-   */
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /**

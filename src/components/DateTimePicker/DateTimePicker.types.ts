@@ -77,6 +77,9 @@ export interface DateTimePickerProps {
   outline?: boolean;
 
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /** Custom input id. */

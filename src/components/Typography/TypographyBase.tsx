@@ -90,6 +90,7 @@ function TypographyBase({
   id,
   title,
   testId,
+  "data-testid": dataTestId,
   role,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
@@ -144,7 +145,7 @@ function TypographyBase({
       style,
       role,
       className: resolvedClassName,
-      "data-testid": testId ?? "typography",
+      "data-testid": testId ?? dataTestId ?? "typography",
 
       "aria-label": ariaLabelledBy ? undefined : ariaLabel,
       "aria-labelledby": ariaLabelledBy,

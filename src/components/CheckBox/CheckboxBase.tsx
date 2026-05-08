@@ -41,7 +41,8 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
       "aria-labelledby": ariaLabelledBy,
       "aria-describedby": ariaDescribedBy,
       "aria-errormessage": ariaErrorMessage,
-      "data-testid": testId = "checkbox",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "checkbox",
       classMap,
       ...props
     },

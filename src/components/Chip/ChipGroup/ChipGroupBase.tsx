@@ -37,7 +37,8 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
       className = "",
       ChipComponent,
       classMap,
-      "data-testid": testId = "chip-group",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "chip-group",
     },
     ref,
   ) => {

@@ -271,6 +271,10 @@ export interface CardProps {
   loading?: boolean;
 
   /** Optional test ID for test targeting. */
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /** Optional id for the card root. */

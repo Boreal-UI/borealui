@@ -52,7 +52,8 @@ const ButtonBase = forwardRef<
       loading = false,
       loadingLabel = "Loading",
       fullWidth = false,
-      "data-testid": testId = "button",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "button",
       classMap,
       LinkComponent = "a",
       ...rest

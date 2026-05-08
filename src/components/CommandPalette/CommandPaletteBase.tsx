@@ -52,7 +52,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   "aria-controls": ariaControls,
   "aria-expanded": ariaExpanded,
   "aria-activedescendant": ariaActiveDescendant,
-  "data-testid": testId = "command-palette",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "command-palette",
   className,
   ...rest
 }) => {

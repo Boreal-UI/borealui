@@ -95,9 +95,10 @@ export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
    */
   keepMountedWhenHidden?: boolean;
 
-  /**
-   * Optional test ID for testing frameworks.
-   */
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 
@@ -111,5 +112,9 @@ export type TriggerElementProps = React.HTMLAttributes<HTMLElement> & {
   onMouseLeave?: React.MouseEventHandler<HTMLElement>;
   onFocus?: React.FocusEventHandler<HTMLElement>;
   onBlur?: React.FocusEventHandler<HTMLElement>;
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 };

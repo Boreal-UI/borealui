@@ -53,7 +53,8 @@ export const AvatarBase = forwardRef<
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     "aria-current": ariaCurrent,
-    "data-testid": testId = "avatar",
+    "data-testid": dataTestId,
+    testId = dataTestId ?? "avatar",
     ...rest
   },
   ref,

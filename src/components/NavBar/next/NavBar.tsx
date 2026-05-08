@@ -30,7 +30,8 @@ const NavBar: React.FC<NavBarProps & { mockPath?: string }> = ({
         children,
         className,
         isActive,
-        "data-testid": testId,
+        "data-testid": dataTestId,
+        testId = dataTestId,
       }) => (
         <Link
           href={href}

@@ -41,7 +41,8 @@ const SliderBase: React.FC<
   "aria-invalid": ariaInvalid,
   "aria-required": ariaRequired,
   "aria-orientation": ariaOrientation = "horizontal",
-  "data-testid": testId = "slider",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "slider",
   classMap,
   ...rest
 }) => {

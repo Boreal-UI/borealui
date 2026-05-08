@@ -103,6 +103,10 @@ export interface TabsProps {
   "aria-live"?: "off" | "polite" | "assertive";
 
   /** Test ID for testing purposes. */
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

@@ -37,7 +37,8 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       IconButton,
       className = "",
       srOnlyText,
-      "data-testid": testId = "text-input",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "text-input",
       ...rest
     },
     ref,

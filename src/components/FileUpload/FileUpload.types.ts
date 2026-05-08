@@ -98,6 +98,9 @@ export interface FileUploadProps
   uploadProgress?: number;
 
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /** Maximum file size in bytes (e.g., 5MB = 5 * 1024 * 1024). */

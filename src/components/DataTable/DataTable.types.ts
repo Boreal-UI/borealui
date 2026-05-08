@@ -279,6 +279,9 @@ export interface DataTableProps<T> {
   rowCount?: number;
 
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

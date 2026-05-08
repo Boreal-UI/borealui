@@ -16,6 +16,10 @@ export type TriggerElementProps = {
   "aria-expanded"?: boolean;
   "aria-controls"?: string;
   "aria-haspopup"?: React.AriaAttributes["aria-haspopup"];
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
   [key: string]: unknown;
 };
@@ -87,6 +91,9 @@ export interface PopoverProps {
   contentClassName?: string;
 
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /** Accessible label for the trigger button or trigger element. */

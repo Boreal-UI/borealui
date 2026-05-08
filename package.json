@@ -8,9 +8,14 @@
   "module": "./dist/core/index.js",
   "types": "./dist/types/index.core.d.ts",
   "type": "module",
+  "bin": {
+    "boreal-ui": "./packages/cli/src/index.js",
+    "create-boreal-ui": "./packages/cli/src/index.js"
+  },
   "files": [
     "dist",
     "dist/types",
+    "packages/cli/src",
     "docs",
     "README.md",
     "LICENSE"
@@ -23,6 +28,7 @@
     "audit:build": "npm run build",
     "audit:package": "npm pack --dry-run",
     "audit": "npm run audit:types && npm run audit:lint && npm run audit:styles && npm run audit:test && npm run audit:build && npm run audit:package",
+    "cli:check": "node --check packages/cli/src/index.js",
     "dev": "vite",
     "clean": "rimraf dist",
     "boreal": "ts-node ./scripts/boreal.cjs",

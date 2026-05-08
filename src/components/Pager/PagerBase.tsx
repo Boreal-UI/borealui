@@ -34,7 +34,8 @@ const BasePager: React.FC<BasePagerProps> = ({
   getLiveRegionMessage = (activePage, totalPages) =>
     `Page ${activePage} of ${totalPages}`,
   liveRegionAriaLive = "polite",
-  "data-testid": testId = "pager",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "pager",
   Button,
   IconButton,
   classMap,

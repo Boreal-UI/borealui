@@ -88,6 +88,9 @@ export interface FormGroupProps extends Omit<
   controller?: ReactNode;
 
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /** Optional role for the wrapper. Defaults to "group". */

@@ -59,6 +59,9 @@ export interface ChipGroupCommon {
   /** Optional class name for the chip group container. */
   className?: string;
   /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

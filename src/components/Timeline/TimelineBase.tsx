@@ -24,7 +24,8 @@ const TimelineBase: React.FC<
   shadow = getDefaultShadow(),
   classMap,
   className,
-  "data-testid": testId = "timeline",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "timeline",
   ...rest
 }) => {
   const outerWrapper = useMemo(

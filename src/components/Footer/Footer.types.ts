@@ -285,6 +285,10 @@ export interface FooterProps extends Omit<
   rounding?: RoundingType;
 
   /** Test ID for testing frameworks. */
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /** Optional copyright text. */
@@ -410,6 +414,10 @@ export type ImageLikeProps = {
   width?: number;
   height?: number;
   fill?: boolean;
+  /** Optional test ID for testing frameworks. */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
   "aria-hidden"?: boolean;
 };

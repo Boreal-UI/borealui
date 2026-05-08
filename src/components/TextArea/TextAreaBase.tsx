@@ -38,7 +38,8 @@ const TextAreaBase = forwardRef<
       height,
       classMap,
       className = "",
-      "data-testid": testId = "text-area",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "text-area",
       id: idProp,
       required,
 

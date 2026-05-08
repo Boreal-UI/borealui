@@ -51,7 +51,8 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       "aria-required": ariaRequired,
       "aria-busy": ariaBusy,
       "aria-live": ariaLive = "polite",
-      "data-testid": testId = "select",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "select",
     },
     ref,
   ) => {
