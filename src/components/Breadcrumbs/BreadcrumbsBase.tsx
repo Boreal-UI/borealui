@@ -4,6 +4,8 @@ import { combineClassNames } from "../../utils/classNames";
 import { ArrowRightIcon } from "../../Icons/index";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -25,8 +27,8 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   classMap,
   disabled = false,
   size = getDefaultSize(),
-  outline = false,
-  glass = false,
+  outline = getDefaultOutline(),
+  glass = getDefaultGlass(),
   className = "",
   maxVisible,
   LinkComponent = "a",

@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import ButtonBase from "../../src/components/Button/ButtonBase";
 import { FaStar } from "react-icons/fa";
+import { setBorealStyleConfig } from "../../src/config/boreal-style-config";
 
 expect.extend(toHaveNoViolations);
 
@@ -70,6 +71,7 @@ describe("ButtonBase", () => {
     );
 
   afterEach(() => {
+    setBorealStyleConfig({});
     jest.clearAllMocks();
   });
 
@@ -191,6 +193,20 @@ describe("ButtonBase", () => {
 
     expect(button).toHaveClass("btn");
     expect(button).toHaveClass("btn-glass");
+  });
+
+  it("uses configured glass and outline defaults when props are omitted", () => {
+    setBorealStyleConfig({
+      defaultGlass: true,
+      defaultOutline: true,
+    });
+
+    renderButton({}, "Configured Button");
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn-glass");
+    expect(button).toHaveClass("btn-outline");
   });
 
   it("applies glass with a theme class", () => {

@@ -1,6 +1,8 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -22,8 +24,8 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
   showFooter = false,
   footerLinks,
   footerVersion,
-  outline = false,
-  glass = false,
+  outline = getDefaultOutline(),
+  glass = getDefaultGlass(),
   className = "",
   "data-testid": dataTestId,
   testId = dataTestId ?? "sidebar",

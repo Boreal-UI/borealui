@@ -4,6 +4,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -37,7 +38,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   shadow = getDefaultShadow(),
   className = "",
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   state = "",
   size = getDefaultSize(),
   orientation = "horizontal",

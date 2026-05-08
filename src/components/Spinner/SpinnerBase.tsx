@@ -3,6 +3,7 @@ import { SpinnerProps } from "./Spinner.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultShadow,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -11,7 +12,7 @@ const SpinnerBase: React.FC<
   SpinnerProps & { classMap: Record<string, string> }
 > = ({
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   state = "",
   size = 50,
   shadow = getDefaultShadow(),

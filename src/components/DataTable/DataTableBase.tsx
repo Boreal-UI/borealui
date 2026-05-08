@@ -3,6 +3,8 @@ import { combineClassNames } from "../../utils/classNames";
 import { DataTableBaseProps, Column } from "./DataTable.types";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -17,8 +19,8 @@ function DataTableBase<T extends object>({
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   state = "",
-  outline = false,
-  glass = false,
+  outline = getDefaultOutline(),
+  glass = getDefaultGlass(),
   className = "",
   tableClassName,
   theadClassName,

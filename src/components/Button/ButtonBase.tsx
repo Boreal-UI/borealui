@@ -3,6 +3,8 @@ import { ButtonBaseProps } from "./Button.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -19,7 +21,7 @@ const ButtonBase = forwardRef<
       iconPosition = "left",
 
       theme = getDefaultTheme(),
-      glass = false,
+      glass = getDefaultGlass(),
 
       state = "",
       onClick,
@@ -47,7 +49,7 @@ const ButtonBase = forwardRef<
       _target,
       as,
       isExternal = false,
-      outline = false,
+      outline = getDefaultOutline(),
       size = getDefaultSize(),
       loading = false,
       loadingLabel = "Loading",

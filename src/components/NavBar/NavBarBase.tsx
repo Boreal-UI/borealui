@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -21,7 +22,7 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   classMap,
   isItemActive,
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   className = "",

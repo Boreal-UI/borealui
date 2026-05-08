@@ -1,6 +1,7 @@
 import React from "react";
 import { combineClassNames } from "../../utils/classNames";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -15,7 +16,7 @@ const StepperBase: React.FC<StepperBaseProps> = ({
   disableBackNavigation = false,
   orientation = "horizontal",
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   state = "",
   size = getDefaultSize(),
   shadow = getDefaultShadow(),

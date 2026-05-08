@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "../../Icons";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -19,7 +20,7 @@ const BasePager: React.FC<BasePagerProps> = ({
   className = "",
   size = getDefaultSize(),
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   state = "",

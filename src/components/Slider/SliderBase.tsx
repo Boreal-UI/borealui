@@ -3,6 +3,7 @@ import { SliderProps } from "./Slider.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -25,7 +26,7 @@ const SliderBase: React.FC<
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   state = "",
   showValue = true,
   className = "",

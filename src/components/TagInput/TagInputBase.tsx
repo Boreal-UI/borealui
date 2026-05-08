@@ -11,6 +11,7 @@ import { CloseIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -36,7 +37,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   debounceMs = 300,
   placeholder = "Add a tag...",
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   state = "",
   size = getDefaultSize(),
   rounding = getDefaultRounding(),

@@ -2,6 +2,7 @@ import React, { useState, KeyboardEvent, useMemo, useId } from "react";
 import { StarIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import {
+  getDefaultGlass,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -15,7 +16,7 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   size = getDefaultSize(),
   interactive = true,
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   state = "",
   className = "",
   label,

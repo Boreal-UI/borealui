@@ -4,6 +4,8 @@ import { TextAreaProps } from "./TextArea.types";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -20,11 +22,11 @@ const TextAreaBase = forwardRef<
       icon: Icon,
       placeholder = "Enter text",
       readOnly = false,
-      outline = false,
+      outline = getDefaultOutline(),
       autocomplete = false,
       onChange,
       theme = getDefaultTheme(),
-      glass = false,
+      glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       state = "",

@@ -3,6 +3,8 @@ import { BadgeBaseProps } from "./Badge.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -25,8 +27,8 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   shadow = getDefaultShadow(),
   title,
   size = getDefaultSize(),
-  outline = false,
-  glass = false,
+  outline = getDefaultOutline(),
+  glass = getDefaultGlass(),
   icon: Icon,
   className = "",
   classMap,

@@ -3,6 +3,8 @@ import { BaseMetricBoxProps } from "./MetricBox.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -15,11 +17,11 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   icon: Icon,
   subtext,
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   shadow = getDefaultShadow(),
   rounding = getDefaultRounding(),
   state = "",
-  outline = false,
+  outline = getDefaultOutline(),
   align = "center",
   size = getDefaultSize(),
   className = "",

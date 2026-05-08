@@ -6,7 +6,10 @@ import {
   LogoSource,
 } from "./Footer.types";
 import { combineClassNames } from "../../utils/classNames";
-import { getDefaultTheme } from "../../config/boreal-style-config";
+import {
+  getDefaultGlass,
+  getDefaultTheme,
+} from "../../config/boreal-style-config";
 import { capitalize } from "@/utils/capitalize";
 import { resolvePropAlias } from "@/utils/propAliases";
 
@@ -15,7 +18,7 @@ const slugify = (value: string) =>
 
 const FooterBase: React.FC<BaseFooterProps> = ({
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   attachment = "static",
   shadow = "none",
   rounding = "none",

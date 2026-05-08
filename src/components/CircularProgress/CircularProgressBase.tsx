@@ -3,6 +3,7 @@ import type { CircularProgressBaseProps } from "./CircularProgress.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultShadow,
   getDefaultSize,
   getDefaultTheme,
@@ -25,7 +26,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   size = getDefaultSize(),
   theme = getDefaultTheme(),
   state = "",
-  glass = false,
+  glass = getDefaultGlass(),
   className = "",
   classMap,
   decorative = false,

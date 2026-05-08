@@ -13,6 +13,8 @@ import { combineClassNames } from "../../utils/classNames";
 import { FallbackUserIcon } from "../../Icons/index";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultShadow,
   getDefaultSize,
   getDefaultTheme,
@@ -39,8 +41,8 @@ export const AvatarBase = forwardRef<
     size = getDefaultSize(),
     shadow = getDefaultShadow(),
     shape = "circle",
-    outline = false,
-    glass = false,
+    outline = getDefaultOutline(),
+    glass = getDefaultGlass(),
     theme = getDefaultTheme(),
     state = "",
     className = "",

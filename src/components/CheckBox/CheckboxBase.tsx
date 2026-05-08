@@ -11,6 +11,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -28,7 +29,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
       size = getDefaultSize(),
       shadow = getDefaultShadow(),
       state = "",
-      glass = false,
+      glass = getDefaultGlass(),
       disabled = false,
       required = false,
       invalid = false,

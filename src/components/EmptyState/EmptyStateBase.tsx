@@ -3,6 +3,8 @@ import type { BaseEmptyStateProps } from "./EmptyState.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -14,12 +16,12 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   title = "Nothing Here Yet",
   message = "There’s no content to display.",
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   state = "",
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
-  outline = false,
+  outline = getDefaultOutline(),
   actionLabel,
   onActionClick,
   className = "",

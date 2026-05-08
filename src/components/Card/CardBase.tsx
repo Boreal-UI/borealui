@@ -3,6 +3,8 @@ import { CardBaseProps, CardImageSource, StaticCardImage } from "./Card.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -38,8 +40,8 @@ const CardBase: React.FC<CardBaseProps> = ({
   footerClassName = "",
   actionsClassName = "",
   actionButtonClassName = "",
-  outline = false,
-  glass = false,
+  outline = getDefaultOutline(),
+  glass = getDefaultGlass(),
   size = getDefaultSize(),
   align = "center",
   renderHeader,

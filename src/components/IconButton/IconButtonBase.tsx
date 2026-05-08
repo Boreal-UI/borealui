@@ -3,6 +3,8 @@ import { IconButtonBaseProps } from "./IconButton.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -44,8 +46,8 @@ const IconButtonBase = forwardRef<
     "aria-atomic": ariaAtomic,
     role,
     title,
-    outline = false,
-    glass = false,
+    outline = getDefaultOutline(),
+    glass = getDefaultGlass(),
     rounding = getDefaultRounding(),
     shadow = getDefaultShadow(),
     size = getDefaultSize(),

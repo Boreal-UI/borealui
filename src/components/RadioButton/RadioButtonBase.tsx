@@ -4,6 +4,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -19,7 +20,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       onChange,
       name,
       theme = getDefaultTheme(),
-      glass = false,
+      glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       state = "",

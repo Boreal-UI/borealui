@@ -3,6 +3,7 @@ import { TimelineProps } from "./Timeline.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -19,7 +20,7 @@ const TimelineBase: React.FC<
   "aria-describedby": ariaDescribedBy,
   role = "list",
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   classMap,

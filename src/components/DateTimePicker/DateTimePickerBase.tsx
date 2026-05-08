@@ -4,6 +4,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { CalendarIcon } from "../../Icons";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -26,7 +27,7 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
   size = getDefaultSize(),
   outline,
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   state = "",
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),

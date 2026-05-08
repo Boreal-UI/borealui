@@ -11,6 +11,8 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -21,9 +23,9 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
   (
     {
       theme = getDefaultTheme(),
-      glass = false,
+      glass = getDefaultGlass(),
       state = "",
-      outline = false,
+      outline = getDefaultOutline(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       options,

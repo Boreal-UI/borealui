@@ -13,6 +13,7 @@ import { combineClassNames } from "../../utils/classNames";
 import MenuIcon from "../../Icons/MenuIcon";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -35,7 +36,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   focusFirstItemOnOpen = true,
   closeOnSelect = true,
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   toggleRounding = getDefaultRounding(),
   menuRounding = getDefaultRounding(),
   toggleShadow = getDefaultShadow(),

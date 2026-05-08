@@ -1,4 +1,5 @@
 import { createElement, JSX, useMemo } from "react";
+import { getDefaultGlass } from "../../config/boreal-style-config";
 import {
   TypographyAlign,
   TypographyBaseProps,
@@ -79,7 +80,7 @@ function TypographyBase({
   align = "inherit",
   weight = "inherit",
   theme = "inherit",
-  glass = false,
+  glass = getDefaultGlass(),
   italic = false,
   underline = false,
   truncate = false,

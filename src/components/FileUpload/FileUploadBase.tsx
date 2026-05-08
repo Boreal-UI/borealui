@@ -4,6 +4,8 @@ import { FileIcon, TrashIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -15,10 +17,10 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   error,
   required = false,
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   controlRounding = getDefaultRounding(),
   controlShadow = getDefaultShadow(),
-  outline = false,
+  outline = getDefaultOutline(),
   outlineRounding = getDefaultRounding(),
   outlineShadow = getDefaultShadow(),
   state = "",

@@ -2,7 +2,10 @@ import React, { forwardRef } from "react";
 import { DividerBaseProps } from "./Divider.types";
 import { combineClassNames } from "../../utils/classNames";
 import { resolvePropAlias } from "../../utils/propAliases";
-import { getDefaultTheme } from "../../config/boreal-style-config";
+import {
+  getDefaultGlass,
+  getDefaultTheme,
+} from "../../config/boreal-style-config";
 
 const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
   (
@@ -13,7 +16,7 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
       className = "",
       dashed = false,
       theme = getDefaultTheme(),
-      glass = false,
+      glass = getDefaultGlass(),
       state = "",
       as = "div",
       decorative = true,

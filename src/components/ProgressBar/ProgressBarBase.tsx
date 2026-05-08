@@ -3,6 +3,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -13,7 +14,7 @@ import { BaseProgressBarProps } from "./ProgressBar.types";
 const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   value = 0,
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   state = "",
   size = getDefaultSize(),
   rounding = getDefaultRounding(),

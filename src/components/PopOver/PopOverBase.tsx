@@ -12,6 +12,7 @@ import { BasePopoverProps, TriggerElementProps } from "./PopOver.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -23,7 +24,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   asChild = false,
   placement = "bottom",
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   state = "",

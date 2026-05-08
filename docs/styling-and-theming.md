@@ -52,17 +52,19 @@ export function Actions() {
 
 ## Global Style Defaults
 
-Use `setBorealStyleConfig` to set project-wide defaults for components that read Boreal style config.
+Use `borealConfig` to set project-wide defaults for components that read Boreal style config. `setBorealStyleConfig` is still exported for the same behavior.
 
 ```tsx
-import { setBorealStyleConfig } from "boreal-ui/core";
+import { borealConfig } from "boreal-ui/core";
 
-setBorealStyleConfig({
+borealConfig({
   defaultTheme: "secondary",
   defaultSize: "medium",
   defaultRounding: "medium",
   defaultShadow: "light",
   defaultBorderWidth: "none",
+  defaultGlass: false,
+  defaultOutline: false,
   defaultColorSchemeName: "Forest Dusk",
 });
 ```
@@ -70,7 +72,7 @@ setBorealStyleConfig({
 For Next.js:
 
 ```tsx
-import { setBorealStyleConfig } from "boreal-ui/next";
+import { borealConfig } from "boreal-ui/next";
 ```
 
 Component props override global defaults.

@@ -11,6 +11,8 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -26,14 +28,14 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       password = false,
       readOnly = false,
       theme = getDefaultTheme(),
-      glass = false,
+      glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       onChange,
       state = "",
       disabled = false,
       autocomplete = false,
-      outline = false,
+      outline = getDefaultOutline(),
       classMap,
       IconButton,
       className = "",
