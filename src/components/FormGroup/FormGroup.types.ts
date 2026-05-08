@@ -63,37 +63,62 @@ export interface FormGroupProps extends Omit<
   /** Unique ID for the input and label association. */
   id?: string;
 
-  /** Whether the field is required (adds asterisk). */
+  /**
+   * Whether the field is required (adds asterisk).
+   *
+   * @default false
+   */
   required?: boolean;
 
-  /** Additional class names for styling. */
+  /**
+   * Additional class names for styling.
+   *
+   * @default ""
+   */
   className?: string;
 
   /**
    * Layout style for label and input.
    * "vertical" (default) or "horizontal"
+   *
+   * @default "vertical"
    */
   layout?: "vertical" | "horizontal";
 
-  /** If true, visually hides the label but keeps it accessible. */
+  /**
+   * If true, visually hides the label but keeps it accessible.
+   *
+   * @default false
+   */
   hideLabel?: boolean;
 
   /**
    * Spacing size between each input in the form group.
    * ('xs' | 'small' | 'medium' | 'large' | 'xl')
+   *
+   * @default "xs"
    */
   spacing?: SizeType;
 
   /** Optional controller element (e.g., button, icon) beside input. */
   controller?: ReactNode;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "form-group"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
-  /** Optional role for the wrapper. Defaults to "group". */
+  /**
+   * Optional role for the wrapper. Defaults to "group".
+   *
+   * @default "group"
+   */
   role?: AriaRole;
 
   /** Optional aria-label for the wrapper group. */

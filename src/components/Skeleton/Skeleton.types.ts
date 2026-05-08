@@ -7,32 +7,47 @@ import { AriaAttributes, HTMLAttributes, JSX } from "react";
 export interface SkeletonProps {
   /**
    * Width of the skeleton loader (e.g., "100%", "200px", or a number representing pixels).
+   *
+   * @default "100%"
    */
   width?: string | number;
 
   /**
    * Height of the skeleton loader (e.g., "100%", "50px", or a number representing pixels).
+   *
+   * @default "100%"
    */
   height?: string | number;
 
   /**
    * Rounding of the skeleton.
    * "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style for the skeleton loader.
    * "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Additional class name(s) for custom styling.
+   *
+   * @default ""
    */
   className?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "skeleton-loader"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */
@@ -41,6 +56,8 @@ export interface SkeletonProps {
   /**
    * Accessibility label for screen readers.
    * Used as fallback hidden descriptive text when announce is enabled.
+   *
+   * @default "Loading content..."
    */
   label?: string;
 

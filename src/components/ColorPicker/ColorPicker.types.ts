@@ -26,7 +26,11 @@ export type ShapeType = "square" | "round" | "pill";
  * Props for the ColorPicker component.
  */
 export interface ColorPickerProps {
-  /** Optional visible label above the color group. */
+  /**
+   * Optional visible label above the color group.
+   *
+   * @default "Choose a color"
+   */
   label?: string;
 
   /** Array of color options to choose from. */
@@ -38,37 +42,63 @@ export interface ColorPickerProps {
   /** Callback triggered when a color is selected. */
   onChange: (color: string) => void;
 
-  /** Optional name attribute for the radio group. */
+  /**
+   * Optional name attribute for the radio group.
+   *
+   * @default "color-picker"
+   */
   name?: string;
 
-  /** Whether the entire picker is disabled. */
+  /**
+   * Whether the entire picker is disabled.
+   *
+   * @default false
+   */
   disabled?: boolean;
 
   /**
    * Size of the swatches
    * ('xs' | 'small' | 'medium' | 'large' | 'xl').
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * Shape of the swatches
    * ('square' | 'round' | 'pill').
+   *
+   * @default "round"
    */
   shape?: ShapeType;
 
   /**
    * Applies a shadow effect to the swatches
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
-  /** If true, allows picking a custom color via a color input. */
+  /**
+   * If true, allows picking a custom color via a color input.
+   *
+   * @default false
+   */
   allowCustom?: boolean;
 
-  /** Marks the group as required. */
+  /**
+   * Marks the group as required.
+   *
+   * @default false
+   */
   required?: boolean;
 
-  /** Marks the group as invalid. */
+  /**
+   * Marks the group as invalid.
+   *
+   * @default false
+   */
   invalid?: boolean;
 
   /** Optional helper text shown below or associated with the picker. */
@@ -97,18 +127,31 @@ export interface ColorPickerProps {
 
   /**
    * Optional label for the custom color input.
+   *
+   * @default "Custom color picker"
    */
   customInputAriaLabel?: string;
 
   /**
    * Hide the visible legend visually while preserving it for screen readers.
+   *
+   * @default false
    */
   hideLabel?: boolean;
 
-  /** Custom class name for the component container. */
+  /**
+   * Custom class name for the component container.
+   *
+   * @default ""
+   */
   className?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "color-picker"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */

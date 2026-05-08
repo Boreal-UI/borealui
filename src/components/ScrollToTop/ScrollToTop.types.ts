@@ -6,26 +6,36 @@ import { RoundingType, ShadowType } from "@/types";
 export interface ScrollToTopProps {
   /**
    * Optional rounding style applied to the button.
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Optional shadow style for the button.
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * The scroll offset (in pixels) from the top of the page at which the button becomes visible.
+   *
+   * @default 300
    */
   offset?: number;
 
   /**
    * Additional custom class names for the root element of the component.
+   *
+   * @default ""
    */
   className?: string;
 
   /**
    * Accessible label for the scroll-to-top button.
+   *
+   * @default "Scroll to top"
    */
   "aria-label"?: string;
 
@@ -61,7 +71,12 @@ export interface ScrollToTopProps {
    */
   id?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "scroll"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */

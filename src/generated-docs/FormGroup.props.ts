@@ -49,7 +49,8 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "controller",
@@ -62,7 +63,7 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -89,7 +90,8 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "If true, visually hides the label but keeps it accessible.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "id",
@@ -113,7 +115,8 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Layout style for label and input. \"vertical\" (default) or \"horizontal\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"vertical\""
     },
     {
       "name": "required",
@@ -121,7 +124,8 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Whether the field is required (adds asterisk).",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "role",
@@ -129,7 +133,8 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Optional role for the wrapper. Defaults to \"group\".",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"group\""
     },
     {
       "name": "spacing",
@@ -137,7 +142,17 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Spacing size between each input in the form group. ('xs' | 'small' | 'medium' | 'large' | 'xl')",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"xs\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"form-group\""
     }
   ]
 };

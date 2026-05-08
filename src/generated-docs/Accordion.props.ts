@@ -41,7 +41,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "If true, the accordion content is loaded asynchronously.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "children",
@@ -57,7 +58,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "Additional custom class names for the wrapper element.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "customCollapsedIcon",
@@ -78,7 +80,7 @@ export const accordionPropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -113,7 +115,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "iconPosition",
@@ -121,7 +124,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "Position of accordion toggle icon.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"right\""
     },
     {
       "name": "id",
@@ -137,7 +141,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "If true, the accordion is initially expanded (uncontrolled mode).",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "isToggleable",
@@ -145,7 +150,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "If true, the accordion can be toggled open or closed. If false, the accordion is always expanded.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "lazyLoad",
@@ -153,7 +159,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "If true, the accordion content will be loaded lazily.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "loadingAriaLabel",
@@ -177,7 +184,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "If true, applies an outline style to the accordion.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "regionAriaDescribedBy",
@@ -217,7 +225,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "Controls the rounding of the accordion.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -225,7 +234,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "Controls the shadow of the accordion.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -233,7 +243,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "The size of the accordion.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -241,7 +252,17 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "The state of the accordion ('success' | 'error' | 'warning').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"accordion\""
     },
     {
       "name": "theme",
@@ -249,7 +270,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "The theme color of the accordion.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "title",

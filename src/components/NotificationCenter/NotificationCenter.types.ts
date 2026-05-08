@@ -50,43 +50,71 @@ export interface NotificationCenterProps {
   /** Optional callback function to fetch more notifications. */
   fetchNotifications?: () => Promise<Notification[]>;
 
-  /** Optional interval (in milliseconds) at which to fetch more notifications. */
+  /**
+   * Optional interval (in milliseconds) at which to fetch more notifications.
+   *
+   * @default 5000
+   */
   pollInterval?: number;
 
-  /** Whether to show a "Clear All" button if notifications are present. */
+  /**
+   * Whether to show a "Clear All" button if notifications are present.
+   *
+   * @default true
+   */
   showClearAll?: boolean;
 
-  /** Maximum number of notifications to display. */
+  /**
+   * Maximum number of notifications to display.
+   *
+   * @default 10
+   */
   maxNotifications?: number;
 
-  /** If true, clears the oldest notifications when over the maximum. */
+  /**
+   * If true, clears the oldest notifications when over the maximum.
+   *
+   * @default true
+   */
   clearOldOnOverflow?: boolean;
 
   /**
    * Rounding for the notification control.
    * One of: "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   controlRounding?: RoundingType;
 
   /**
    * Shadow for the notification control.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   controlShadow?: ShadowType;
 
   /**
    * Rounding of the notification.
    * One of: "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   notificationRounding?: RoundingType;
 
   /**
    * Shadow of the notification.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   notificationShadow?: ShadowType;
 
-  /** Accessible label for the notification center region. */
+  /**
+   * Accessible label for the notification center region.
+   *
+   * @default "Notification center"
+   */
   "aria-label"?: string;
 
   /** Optional ID of an external element that labels the notification center. */
@@ -98,25 +126,54 @@ export interface NotificationCenterProps {
   /** Accessible label for the notifications list when needed. */
   "list-aria-label"?: string;
 
-  /** Live region politeness level for notification updates. */
+  /**
+   * Live region politeness level for notification updates.
+   *
+   * @default "polite"
+   */
   liveRegionPoliteness?: "off" | "polite" | "assertive";
 
-  /** Which kinds of changes should be announced by assistive technology. */
+  /**
+   * Which kinds of changes should be announced by assistive technology.
+   *
+   * @default "additions text"
+   */
   liveRegionRelevant?: React.AriaAttributes["aria-relevant"];
 
-  /** Whether the live region should announce the entire region or only changed content. */
+  /**
+   * Whether the live region should announce the entire region or only changed content.
+   *
+   * @default false
+   */
   liveRegionAtomic?: boolean;
 
-  /** Accessible text announced when there are no notifications. */
+  /**
+   * Accessible text announced when there are no notifications.
+   *
+   * @default "No notifications."
+   */
   emptyMessage?: string;
 
-  /** Prefix used to build dismiss button labels. */
+  /**
+   * Prefix used to build dismiss button labels.
+   *
+   * @default "Dismiss notification"
+   */
   dismissButtonLabelPrefix?: string;
 
-  /** Accessible label for the clear all button. */
+  /**
+   * Accessible label for the clear all button.
+   *
+   * @default "Clear all notifications"
+   */
   clearAllAriaLabel?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "notification-center"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */

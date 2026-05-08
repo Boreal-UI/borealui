@@ -14,52 +14,70 @@ import {
 export interface ProgressBarProps {
   /**
    * Value of progress (0 to 100). Ignored if `indeterminate` is true.
+   *
+   * @default 0
    */
   value?: number;
 
   /**
    * Theme for styling the progress bar.
    * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Applies a translucent frosted-glass treatment to the progress track.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State of the progress bar.
    * One of: "success" | "error" | "warning" | "disabled" | ""
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Size of the progress bar.
    * One of: "xs" | "small" | "medium" | "large" | "xl"
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * Rounding to apply to the progress bar.
    * One of: "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow to apply to the progress bar.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * If true, applies an animated effect to the progress bar.
+   *
+   * @default true
    */
   animated?: boolean;
 
   /**
    * Accessible label for the progress bar.
    * Use this when no visible label exists.
+   *
+   * @default "Progress"
    */
   "aria-label"?: string;
 
@@ -84,11 +102,15 @@ export interface ProgressBarProps {
   /**
    * If true, the progress bar shows an indeterminate animation.
    * When true, the value prop is ignored.
+   *
+   * @default false
    */
   indeterminate?: boolean;
 
   /**
    * Optional additional class name(s) for custom styling.
+   *
+   * @default ""
    */
   className?: string;
 
@@ -100,6 +122,8 @@ export interface ProgressBarProps {
 
   /**
    * Position of the label relative to the progress bar.
+   *
+   * @default "top"
    */
   labelPosition?: LabelPositionType;
 
@@ -120,7 +144,12 @@ export interface ProgressBarProps {
    */
   descriptionId?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "progressbar"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */

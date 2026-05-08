@@ -25,7 +25,8 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "Accessible name for the toolbar. Prefer this over the legacy `ariaLabel` prop.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Toolbar\""
     },
     {
       "name": "aria-labelledby",
@@ -41,7 +42,8 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "How the toolbar attaches to the viewport or page layout. \"static\" | \"fixed\" | \"sticky\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"static\""
     },
     {
       "name": "avatar",
@@ -65,7 +67,8 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "Optional accessible label for the center section.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Toolbar center section\""
     },
     {
       "name": "className",
@@ -73,12 +76,13 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class names for styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Data test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -89,7 +93,8 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "left",
@@ -105,7 +110,8 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "Optional accessible label for the left section.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Toolbar left section\""
     },
     {
       "name": "right",
@@ -121,7 +127,8 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "Optional accessible label for the right section.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Toolbar right section\""
     },
     {
       "name": "rounding",
@@ -129,7 +136,8 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the component. \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -137,7 +145,17 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the component. \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"toolbar\""
     },
     {
       "name": "theme",
@@ -145,7 +163,8 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "The visual theme of the toolbar. \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "title",
@@ -161,7 +180,8 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name for the toolbar title element. Useful when consumers need to style the title directly.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "titleId",

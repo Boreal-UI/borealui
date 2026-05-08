@@ -46,51 +46,78 @@ export interface PopoverProps {
   /**
    * When true, the popover will clone the provided trigger element and attach
    * popover behavior directly to it instead of wrapping it in an internal button.
+   *
+   * @default false
    */
   asChild?: boolean;
 
   /**
    * Placement of the popover relative to the trigger element.
    * One of: "top" | "bottom" | "left" | "right"
+   *
+   * @default "bottom"
    */
   placement?: "top" | "bottom" | "left" | "right";
 
   /**
    * Theme for the popover styling.
    * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Adds translucent glass styling to the floating popover content.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State of the popover, for feedback styling.
    * One of: "success" | "error" | "warning" | "disabled" | ""
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Rounding of the popover content.
    * One of: "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow of the popover content.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
-  /** Optional additional class name(s) for custom styling. */
+  /**
+   * Optional additional class name(s) for custom styling.
+   *
+   * @default ""
+   */
   className?: string;
 
-  /** Optional additional class name(s) for the popover content element. */
+  /**
+   * Optional additional class name(s) for the popover content element.
+   *
+   * @default ""
+   */
   contentClassName?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "popover"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */
@@ -114,7 +141,11 @@ export interface PopoverProps {
   /** Optional title attribute for the trigger element. */
   triggerTitle?: string;
 
-  /** Disables interaction with the trigger and popover. */
+  /**
+   * Disables interaction with the trigger and popover.
+   *
+   * @default false
+   */
   disabled?: boolean;
 
   /** Optional ID for the popover content element. */

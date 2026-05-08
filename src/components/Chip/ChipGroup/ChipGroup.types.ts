@@ -52,13 +52,30 @@ export type InjectedDefaults = {
 export interface ChipGroupCommon {
   /** Optional callback when a chip is removed. */
   onRemove?: (id: string) => void;
-  /** Default position for chips in the group. */
+  /**
+   * Default position for chips in the group.
+   *
+   * @default "topCenter"
+   */
   position?: PositionType;
-  /** Default size for chips if not individually specified. */
+  /**
+   * Default size for chips if not individually specified.
+   *
+   * @default configured default size (fallback: "medium")
+   */
   size?: SizeType;
-  /** Optional class name for the chip group container. */
+  /**
+   * Optional class name for the chip group container.
+   *
+   * @default ""
+   */
   className?: string;
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "chip-group"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */

@@ -43,7 +43,7 @@ function getJsDocText(node) {
   if (!docs.length) return "";
 
   return docs
-    .map((doc) => doc.getInnerText().trim())
+    .map((doc) => (doc.getCommentText() ?? doc.getInnerText()).trim())
     .filter(Boolean)
     .map(normalizeWhitespace)
     .join("\n\n");
@@ -69,6 +69,97 @@ function simplifyTypeText(typeText) {
   return normalizeWhitespace(
     simplifyImportedTypes(removeUndefinedFromOptionalType(typeText)),
   );
+}
+
+const knownDefaultAccessors = new Map([
+  [
+    "getDefaultTheme()",
+    'configured default theme (fallback: "primary")',
+  ],
+  [
+    "getDefaultRounding()",
+    'configured default rounding (fallback: "medium")',
+  ],
+  [
+    "getDefaultShadow()",
+    'configured default shadow (fallback: "light")',
+  ],
+  [
+    "getDefaultSize()",
+    'configured default size (fallback: "medium")',
+  ],
+  [
+    "getDefaultGlass()",
+    "configured default glass setting (fallback: false)",
+  ],
+  [
+    "getDefaultOutline()",
+    "configured default outline setting (fallback: false)",
+  ],
+  [
+    "getDefaultBorder()",
+    'configured default border width (fallback: "none")',
+  ],
+  [
+    "getDefaultColorSchemeName()",
+    'configured default color scheme (fallback: "Forest Dusk")',
+  ],
+]);
+
+function formatDefaultValue(initializerText) {
+  const normalized = normalizeWhitespace(initializerText);
+  return knownDefaultAccessors.get(normalized) ?? normalized;
+}
+
+function getBaseComponentPath(typesFilePath, componentName) {
+  return path.join(path.dirname(typesFilePath), `${componentName}Base.tsx`);
+}
+
+function getBindingElementPropName(bindingElement) {
+  const propertyName = bindingElement.getPropertyNameNode();
+
+  if (propertyName) {
+    if (Node.isStringLiteral(propertyName) || Node.isNumericLiteral(propertyName)) {
+      return propertyName.getLiteralText();
+    }
+
+    return propertyName.getText();
+  }
+
+  const nameNode = bindingElement.getNameNode();
+  if (!Node.isIdentifier(nameNode)) return null;
+
+  return nameNode.getText();
+}
+
+async function getComponentDefaultValues(project, typesFilePath, componentName) {
+  const baseComponentPath = getBaseComponentPath(typesFilePath, componentName);
+
+  try {
+    await fs.access(baseComponentPath);
+  } catch {
+    return new Map();
+  }
+
+  const sourceFile =
+    project.getSourceFile(baseComponentPath) ||
+    project.addSourceFileAtPath(baseComponentPath);
+
+  const defaults = new Map();
+
+  for (const bindingElement of sourceFile.getDescendantsOfKind(
+    SyntaxKind.BindingElement,
+  )) {
+    const initializer = bindingElement.getInitializer();
+    if (!initializer) continue;
+
+    const propName = getBindingElementPropName(bindingElement);
+    if (!propName || isInternalPropName(propName)) continue;
+
+    defaults.set(propName, formatDefaultValue(initializer.getText()));
+  }
+
+  return defaults;
 }
 
 function isInternalPropName(name) {
@@ -238,10 +329,25 @@ function mergePropDocs(existingProps, newProps) {
       description,
       required,
       inherited,
+      defaultValue: existing.defaultValue ?? prop.defaultValue,
     });
   }
 
   return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
+}
+
+function applyDefaultValues(props, defaultValues) {
+  if (!defaultValues.size) return props;
+
+  return props.map((prop) => {
+    const defaultValue = defaultValues.get(prop.name);
+    if (!defaultValue) return prop;
+
+    return {
+      ...prop,
+      defaultValue,
+    };
+  });
 }
 
 function getPropertySignaturesFromTypeLiteral(typeLiteralNode) {
@@ -380,6 +486,7 @@ export interface GeneratedPropDoc {
   required: boolean;
   inherited: boolean;
   category: string;
+  defaultValue?: string;
 }
 
 export interface GeneratedComponentDoc {
@@ -528,10 +635,17 @@ async function main() {
     const propsName = declaration.node.getName();
     const componentName = getComponentNameFromPropsName(propsName);
 
-    const props =
+    const rawProps =
       declaration.kind === "interface"
         ? getPropDocsFromInterface(declaration.node, false)
         : getPropDocsFromTypeAlias(declaration.node, sourceFile, false);
+
+    const defaultValues = await getComponentDefaultValues(
+      project,
+      filePath,
+      componentName,
+    );
+    const props = applyDefaultValues(rawProps, defaultValues);
 
     const doc = {
       name: componentName,

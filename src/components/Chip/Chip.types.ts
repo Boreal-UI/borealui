@@ -64,6 +64,8 @@ export interface ChipProps
    * Whether the leading icon is decorative.
    * When true, it will be hidden from assistive technology.
    * Defaults to true.
+   *
+   * @default true
    */
   iconDecorative?: boolean;
 
@@ -75,10 +77,16 @@ export interface ChipProps
   /**
    * Size of the chip
    * ('xs' | 'small' | 'medium' | 'large' | 'xl').
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
-  /** Whether to use a portal for rendering the chip. */
+  /**
+   * Whether to use a portal for rendering the chip.
+   *
+   * @default true
+   */
   usePortal?: boolean;
 
   /** Callback when the chip is closed manually or automatically. */
@@ -87,59 +95,87 @@ export interface ChipProps
   /**
    * Theme color for the chip
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Applies a translucent frosted-glass treatment using the active theme palette.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * Rounding style for the chip
    * ('none' | 'small' | 'medium' | 'large' | 'full').
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style for the chip
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * State of the chip
    * ('success' | 'error' | 'warning' | 'disabled' | '').
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Position of the chip on the screen
    * ('topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight').
+   *
+   * @default "topCenter"
    */
   position?: PositionType;
 
-  /** Additional class name for custom styling. */
+  /**
+   * Additional class name for custom styling.
+   *
+   * @default ""
+   */
   className?: string;
 
   /** Index for stacking multiple chips, useful for z-index logic. */
   stackIndex?: number;
 
-  /** Whether the chip should close automatically after a delay. */
+  /**
+   * Whether the chip should close automatically after a delay.
+   *
+   * @default true
+   */
   autoClose?: boolean;
 
-  /** Time in milliseconds before auto-closing (default: 3000). */
+  /**
+   * Time in milliseconds before auto-closing (default: 3000).
+   *
+   * @default 3000
+   */
   duration?: number;
 
   /**
    * ARIA role for the chip container.
    * Defaults to "alert".
+   *
+   * @default "alert"
    */
   role?: "alert" | "status" | "log" | "none" | "presentation";
 
   /**
    * Custom accessible label for the close button.
    * Defaults to "Close notification".
+   *
+   * @default "Close notification"
    */
   closeButtonAriaLabel?: string;
 
@@ -149,7 +185,12 @@ export interface ChipProps
    */
   messageId?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "chip"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */

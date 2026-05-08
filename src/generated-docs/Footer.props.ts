@@ -57,7 +57,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Attachment type for how the footer is positioned. ('static' | 'fixed' | 'sticky')",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"static\""
     },
     {
       "name": "bottomClassName",
@@ -153,7 +154,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Optional class name for custom styles.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "contentClassName",
@@ -190,7 +192,7 @@ export const footerPropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -201,7 +203,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "labelId",
@@ -217,7 +220,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Footer layout style. \"inline\" keeps the older compact layout. \"columns\" supports brand, grouped sections, social links, and bottom bar.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"inline\""
     },
     {
       "name": "leftClassName",
@@ -241,7 +245,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Array of footer navigation links.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "[]"
     },
     {
       "name": "linksClassName",
@@ -265,7 +270,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Accessible name for the logo when it is rendered as an image or custom node.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Logo\""
     },
     {
       "name": "logoClassName",
@@ -281,7 +287,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "If true, the logo is decorative and should be hidden from assistive tech.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "navAriaLabel",
@@ -289,7 +296,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the site links navigation region. Defaults can still be provided in the base component.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Footer site links\""
     },
     {
       "name": "rounding",
@@ -297,7 +305,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the component. ('none' | 'small' | 'medium' | 'large' | 'full')",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"none\""
     },
     {
       "name": "sections",
@@ -329,7 +338,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the component. ('none' | 'light' | 'medium' | 'strong' | 'intense')",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"none\""
     },
     {
       "name": "showThemeSelect",
@@ -337,7 +347,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Whether to show the theme selector dropdown.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "socialClassName",
@@ -353,7 +364,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Array of social links with icons.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "[]"
     },
     {
       "name": "socialNavAriaLabel",
@@ -361,7 +373,17 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the social links navigation region. Defaults can still be provided in the base component.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Social media\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Test ID for testing frameworks.\n\nOptional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"footer\""
     },
     {
       "name": "theme",
@@ -369,7 +391,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Theme used for styling. ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear')",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "themeSelectAriaLabel",
@@ -377,7 +400,8 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the theme selector region/container.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Theme selector\""
     },
     {
       "name": "themeToggleClassName",

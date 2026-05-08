@@ -49,7 +49,8 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "When true, the popover will clone the provided trigger element and attach popover behavior directly to it instead of wrapping it in an internal button.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "className",
@@ -57,7 +58,8 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "content",
@@ -73,12 +75,13 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name(s) for the popover content element.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -89,7 +92,8 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "Disables interaction with the trigger and popover.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "glass",
@@ -97,7 +101,8 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "Adds translucent glass styling to the floating popover content.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "id",
@@ -113,7 +118,8 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "Placement of the popover relative to the trigger element. One of: \"top\" | \"bottom\" | \"left\" | \"right\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"bottom\""
     },
     {
       "name": "rounding",
@@ -121,7 +127,8 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the popover content. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -129,7 +136,8 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the popover content. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "state",
@@ -137,7 +145,17 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "State of the popover, for feedback styling. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"popover\""
     },
     {
       "name": "theme",
@@ -145,7 +163,8 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "Theme for the popover styling. One of: \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "trigger",

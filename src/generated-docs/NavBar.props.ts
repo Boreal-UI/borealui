@@ -25,7 +25,8 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the navigation landmark. Defaults to \"Main navigation\".",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Main navigation\""
     },
     {
       "name": "aria-labelledby",
@@ -41,12 +42,13 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Optional extra class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -65,7 +67,8 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Adds translucent glass styling to nav items.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "isItemActive",
@@ -89,7 +92,8 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Optional accessible label for the internal navigation list. Usually not required, but useful in complex layouts.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Main navigation items\""
     },
     {
       "name": "rounding",
@@ -97,7 +101,8 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Optional rounding to apply to the NavBar. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -105,7 +110,17 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Optional shadow to apply to the NavBar. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"nav-bar\""
     },
     {
       "name": "theme",
@@ -113,7 +128,8 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Optional theme class names to apply to the NavBar. One of: \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     }
   ]
 };

@@ -25,7 +25,8 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the navigation landmark. Prefer the kebab-case ARIA prop for consistency with other React ARIA props.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Sidebar navigation\""
     },
     {
       "name": "aria-labelledby",
@@ -41,12 +42,13 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name(s) for applying custom styles.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks like Jest and React Testing Library.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -57,7 +59,8 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Optional label for the footer landmark when footer content is rendered. Example: \"Sidebar footer links\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Sidebar footer\""
     },
     {
       "name": "footerAriaLabelledBy",
@@ -105,7 +108,8 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "If true, applies a translucent glass surface using the selected theme/state. Defaults to `false`.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "hasActiveChild",
@@ -137,7 +141,8 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "If true, the sidebar is styled with an outline variant. Defaults to `false`.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "rounding",
@@ -145,7 +150,8 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Rounding style for the sidebar container. - \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -153,7 +159,8 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the sidebar container. - \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "showFooter",
@@ -161,7 +168,8 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Whether to display a footer section at the bottom of the sidebar. Defaults to `false`.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "state",
@@ -169,7 +177,17 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "State variant for styling. Typically used to apply semantic states to the component. - \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"sidebar\""
     },
     {
       "name": "theme",
@@ -177,7 +195,8 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Theme for styling. Determines the base color scheme for the sidebar. - \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     }
   ]
 };

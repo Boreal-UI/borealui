@@ -97,7 +97,11 @@ export interface DataTableProps<T> {
   /** Optional callback when a row is clicked. */
   onRowClick?: (row: T) => void;
 
-  /** Optional class name for the table wrapper. */
+  /**
+   * Optional class name for the table wrapper.
+   *
+   * @default ""
+   */
   className?: string;
 
   /**
@@ -133,43 +137,63 @@ export interface DataTableProps<T> {
   /**
    * Allows table cells to wrap onto multiple lines.
    * Can be overridden per column with column.wrap.
+   *
+   * @default false
    */
   wrapCells?: boolean;
 
   /**
    * Theme used for styling the table
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * If true, applies a translucent glass surface using the selected theme/state.
    * Defaults to `false`.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State of the table
    * ('success' | 'error' | 'warning' | 'disabled' | '').
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Rounding style for the table
    * ('none' | 'small' | 'medium' | 'large' | 'full').
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style for the data table
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
-  /** Whether to use outline styling. */
+  /**
+   * Whether to use outline styling.
+   *
+   * @default configured default outline setting (fallback: false)
+   */
   outline?: boolean;
 
-  /** Whether to use striped row styling. */
+  /**
+   * Whether to use striped row styling.
+   *
+   * @default true
+   */
   striped?: boolean;
 
   /** Default key to sort by on initial render. */
@@ -178,6 +202,8 @@ export interface DataTableProps<T> {
   /**
    * Default sort order on initial render
    * ('asc' | 'desc').
+   *
+   * @default "asc"
    */
   defaultSortOrder?: "asc" | "desc";
 
@@ -202,12 +228,16 @@ export interface DataTableProps<T> {
   /**
    * Optional visible or screen-reader-only caption text for the table.
    * A table caption is the preferred built-in table label.
+   *
+   * @default "Data table"
    */
   caption?: string;
 
   /**
    * Whether the caption should be visually hidden.
    * Useful when you want semantic labeling without visible UI.
+   *
+   * @default true
    */
   hideCaption?: boolean;
 
@@ -230,7 +260,11 @@ export interface DataTableProps<T> {
     sortOrder: "asc" | "desc",
   ) => string;
 
-  /** Whether to enable server-side sorting. */
+  /**
+   * Whether to enable server-side sorting.
+   *
+   * @default false
+   */
   serverSort?: boolean;
 
   /** Function to handle server-side sorting. */
@@ -253,16 +287,22 @@ export interface DataTableProps<T> {
 
   /**
    * Text shown when no rows are available.
+   *
+   * @default "No data available"
    */
   emptyMessage?: string;
 
   /**
    * Whether the table is currently loading data.
+   *
+   * @default false
    */
   loading?: boolean;
 
   /**
    * Accessible and/or visible loading message.
+   *
+   * @default "Loading data"
    */
   loadingMessage?: string;
 
@@ -278,7 +318,12 @@ export interface DataTableProps<T> {
    */
   rowCount?: number;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "data-table"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */

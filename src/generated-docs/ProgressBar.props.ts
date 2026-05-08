@@ -17,7 +17,8 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "If true, applies an animated effect to the progress bar.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "aria-describedby",
@@ -33,7 +34,8 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the progress bar. Use this when no visible label exists.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Progress\""
     },
     {
       "name": "aria-labelledby",
@@ -57,12 +59,13 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing purposes.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -89,7 +92,8 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment to the progress track.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "indeterminate",
@@ -97,7 +101,8 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "If true, the progress bar shows an indeterminate animation. When true, the value prop is ignored.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "label",
@@ -121,7 +126,8 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "Position of the label relative to the progress bar.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"top\""
     },
     {
       "name": "rounding",
@@ -129,7 +135,8 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "Rounding to apply to the progress bar. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -137,7 +144,8 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "Shadow to apply to the progress bar. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -145,7 +153,8 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "Size of the progress bar. One of: \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -153,7 +162,17 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "State of the progress bar. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"progressbar\""
     },
     {
       "name": "theme",
@@ -161,7 +180,8 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "Theme for styling the progress bar. One of: \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "value",
@@ -169,7 +189,8 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "Value of progress (0 to 100). Ignored if `indeterminate` is true.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "0"
     }
   ]
 };

@@ -17,7 +17,8 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Menu alignment relative to the trigger ('left' | 'right').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"right\""
     },
     {
       "name": "aria-describedby",
@@ -33,7 +34,8 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the trigger button. Prefer this when the trigger is icon-only.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Dropdown menu\""
     },
     {
       "name": "aria-labelledby",
@@ -49,7 +51,8 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the dropdown wrapper.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "closeOnSelect",
@@ -57,12 +60,13 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Whether the menu should close after selecting an item. Default is usually true for action menus.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -73,7 +77,8 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Whether keyboard focus should move to the first item when the menu opens. Default behavior in your base already does this logically.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "glass",
@@ -81,7 +86,8 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Adds glass styling to the trigger IconButton and dropdown menu.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "items",
@@ -121,7 +127,8 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the dropdown menu.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "menuId",
@@ -137,7 +144,8 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the dropdown menu ('none' | 'small' | 'medium' | 'large' | 'full').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "menuShadow",
@@ -145,7 +153,8 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the dropdown menu ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "state",
@@ -153,7 +162,17 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "State of the dropdown ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"dropdown\""
     },
     {
       "name": "theme",
@@ -161,7 +180,8 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Theme for styling ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "title",
@@ -177,7 +197,8 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Whether to use the outline style on the toggle button.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "toggleRounding",
@@ -185,7 +206,8 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the toggle button ('none' | 'small' | 'medium' | 'large' | 'full').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "toggleShadow",
@@ -193,7 +215,8 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the toggle button ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "triggerIcon",

@@ -49,7 +49,8 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for custom styling the modal content.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "closeButtonAriaLabel",
@@ -57,12 +58,13 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the close button. Defaults to \"Close modal\" in the base implementation.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Close modal\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -105,7 +107,8 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the modal corners. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -113,7 +116,17 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the modal. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"modal\""
     },
     {
       "name": "title",
@@ -121,7 +134,8 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Optional modal title used for accessible labelling and default header content.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Modal Dialog\""
     }
   ]
 };

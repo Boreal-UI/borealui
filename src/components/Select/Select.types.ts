@@ -28,22 +28,30 @@ export interface SelectProps {
   /**
    * Theme for styling.
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Adds translucent glass styling to the select wrapper.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State variant for styling.
    * "success" | "error" | "warning" | "disabled" | ""
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * If true, the select element is styled as outlined.
+   *
+   * @default configured default outline setting (fallback: false)
    */
   outline?: boolean;
 
@@ -71,30 +79,42 @@ export interface SelectProps {
 
   /**
    * Optional polling interval for updating options in milliseconds.
+   *
+   * @default 0
    */
   pollInterval?: number;
 
   /**
    * Placeholder text to display when no option is selected.
+   *
+   * @default "Select an option"
    */
   placeholder?: string;
 
   /**
    * Rounding style of the select element.
    * "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style of the select element.
    * "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /** Whether the select element is required. */
   required?: boolean;
 
-  /** Whether the select element is disabled. */
+  /**
+   * Whether the select element is disabled.
+   *
+   * @default false
+   */
   disabled?: boolean;
 
   /**
@@ -109,6 +129,8 @@ export interface SelectProps {
 
   /**
    * Position of the label relative to the select.
+   *
+   * @default "top"
    */
   labelPosition?: LabelPositionType;
 
@@ -167,6 +189,8 @@ export interface SelectProps {
 
   /**
    * Optional aria-live setting for async status messaging.
+   *
+   * @default "polite"
    */
   "aria-live"?: "off" | "polite" | "assertive";
 
@@ -183,10 +207,17 @@ export interface SelectProps {
 
   /**
    * Additional class name(s) for custom styling.
+   *
+   * @default ""
    */
   className?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "select"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */

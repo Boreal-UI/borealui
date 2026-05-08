@@ -113,7 +113,8 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Controls whether autocomplete is enabled. Pass true for \"on\" or false for \"off\".",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "className",
@@ -121,12 +122,13 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional CSS class names for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -137,7 +139,8 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Adds translucent glass styling to the input wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "icon",
@@ -161,7 +164,8 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Position of the label. \"top\" | \"left\" | \"right\" | \"bottom\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"top\""
     },
     {
       "name": "maxLength",
@@ -185,7 +189,8 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "If true, the input is outlined instead of filled.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "password",
@@ -193,7 +198,8 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "If true, the input behaves as a password field and shows a visibility toggle.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "readOnly",
@@ -201,7 +207,8 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "If true, the input is rendered in read-only mode.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "role",
@@ -217,7 +224,8 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the component. \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -225,7 +233,8 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the component. \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "srOnlyText",
@@ -241,7 +250,17 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "State of the input. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"text-input\""
     },
     {
       "name": "theme",
@@ -249,7 +268,8 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Theme used for styling. \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     }
   ]
 };

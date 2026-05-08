@@ -40,6 +40,8 @@ export interface TimelineProps extends Omit<
   /**
    * Accessible label for the timeline.
    * Defaults to "Timeline".
+   *
+   * @default "Timeline"
    */
   "aria-label"?: string;
 
@@ -57,39 +59,56 @@ export interface TimelineProps extends Omit<
   /**
    * Optional role override for the root element.
    * Defaults to "list" when not provided.
+   *
+   * @default "list"
    */
   role?: React.AriaRole;
 
   /**
    * Orientation of the timeline.
    * "vertical" | "horizontal"
+   *
+   * @default "vertical"
    */
   orientation?: OrientationType;
 
   /**
    * Theme to apply for styling.
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Applies a translucent frosted-glass treatment using the active theme palette.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * Rounding of the component.
    * "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style of the component.
    * "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "timeline"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */

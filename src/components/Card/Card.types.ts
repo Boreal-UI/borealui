@@ -129,37 +129,55 @@ export interface CardProps {
   /**
    * Theme style to apply to the card
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * State of the card
    * ('success' | 'error' | 'warning' | 'disabled' | '').
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Optional rounding style for the card
    * ('none' | 'small' | 'medium' | 'large' | 'full').
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Optional shadow style for the card
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Optional border width for the card
    * ('none' | 'xs' | 'small' | 'medium' | 'large' | 'xl').
+   *
+   * @default configured default border width (fallback: "none")
    */
   border?: BorderType;
 
-  /** Optional card title displayed in the header. */
+  /**
+   * Optional card title displayed in the header.
+   *
+   * @default ""
+   */
   title?: string;
 
-  /** Optional description displayed in the body. */
+  /**
+   * Optional description displayed in the body.
+   *
+   * @default ""
+   */
   description?: string;
 
   /**
@@ -180,63 +198,131 @@ export interface CardProps {
   /** Use fill layout for the image (next/image: fill; core: ratio-box render) */
   imageFill?: boolean;
 
-  /** Marks the image as decorative and forces empty alt text. */
+  /**
+   * Marks the image as decorative and forces empty alt text.
+   *
+   * @default false
+   */
   imageDecorative?: boolean;
 
-  /** Custom class name for the card container. */
+  /**
+   * Custom class name for the card container.
+   *
+   * @default ""
+   */
   className?: string;
 
-  /** Custom class name for the content wrapper. */
+  /**
+   * Custom class name for the content wrapper.
+   *
+   * @default ""
+   */
   contentClassName?: string;
 
-  /** Custom class name for the media/image wrapper. */
+  /**
+   * Custom class name for the media/image wrapper.
+   *
+   * @default ""
+   */
   mediaClassName?: string;
 
-  /** Custom class name for the image element. */
+  /**
+   * Custom class name for the image element.
+   *
+   * @default ""
+   */
   imageClassName?: string;
 
-  /** Custom class name for the header section. */
+  /**
+   * Custom class name for the header section.
+   *
+   * @default ""
+   */
   headerClassName?: string;
 
-  /** Custom class name for the title element. */
+  /**
+   * Custom class name for the title element.
+   *
+   * @default ""
+   */
   titleClassName?: string;
 
-  /** Custom class name for the icon wrapper. */
+  /**
+   * Custom class name for the icon wrapper.
+   *
+   * @default ""
+   */
   iconClassName?: string;
 
-  /** Custom class name for the description text. */
+  /**
+   * Custom class name for the description text.
+   *
+   * @default ""
+   */
   descriptionClassName?: string;
 
-  /** Custom class name for the children wrapper. */
+  /**
+   * Custom class name for the children wrapper.
+   *
+   * @default ""
+   */
   childrenClassName?: string;
 
-  /** Custom class name for the actions wrapper. */
+  /**
+   * Custom class name for the actions wrapper.
+   *
+   * @default ""
+   */
   actionsClassName?: string;
 
-  /** Custom class name for each action button. */
+  /**
+   * Custom class name for each action button.
+   *
+   * @default ""
+   */
   actionButtonClassName?: string;
 
-  /** Custom class name for the body section. */
+  /**
+   * Custom class name for the body section.
+   *
+   * @default ""
+   */
   bodyClassName?: string;
 
-  /** Custom class name for the footer section. */
+  /**
+   * Custom class name for the footer section.
+   *
+   * @default ""
+   */
   footerClassName?: string;
 
-  /** Outlines card instead of solid fill. */
+  /**
+   * Outlines card instead of solid fill.
+   *
+   * @default configured default outline setting (fallback: false)
+   */
   outline?: boolean;
 
-  /** Applies a translucent glass style to the card. */
+  /**
+   * Applies a translucent glass style to the card.
+   *
+   * @default configured default glass setting (fallback: false)
+   */
   glass?: boolean;
 
   /**
    * Card size
    * ('xs' | 'small' | 'medium' | 'large' | 'xl').
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * Alignment of card content
    * ('left' | 'right' | 'center').
+   *
+   * @default "center"
    */
   align?: "left" | "right" | "center";
 
@@ -249,15 +335,25 @@ export interface CardProps {
   /** Custom render function for the footer section. */
   renderFooter?: () => ReactNode;
 
-  /** List of action buttons to render in the footer. */
+  /**
+   * List of action buttons to render in the footer.
+   *
+   * @default []
+   */
   actionButtons?: ActionButton[];
 
-  /** Whether to render action buttons as icon buttons. */
+  /**
+   * Whether to render action buttons as icon buttons.
+   *
+   * @default false
+   */
   useIconButtons?: boolean;
 
   /**
    * Layout orientation of the card
    * ('horizontal' | 'vertical').
+   *
+   * @default "vertical"
    */
   layout?: OrientationType;
 
@@ -267,11 +363,18 @@ export interface CardProps {
   /** Optional custom children passed into the body. */
   children?: ReactNode;
 
-  /** Whether the card is in a loading state (shows skeleton). */
+  /**
+   * Whether the card is in a loading state (shows skeleton).
+   *
+   * @default false
+   */
   loading?: boolean;
 
-  /** Optional test ID for test targeting. */
-  /** Optional test ID for testing frameworks. */
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "card"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */
@@ -301,13 +404,25 @@ export interface CardProps {
   /** Optional override for the generated description id. */
   descriptionId?: string;
 
-  /** Marks the card as selectable. */
+  /**
+   * Marks the card as selectable.
+   *
+   * @default false
+   */
   selectable?: boolean;
 
-  /** Indicates selected state for selectable cards. */
+  /**
+   * Indicates selected state for selectable cards.
+   *
+   * @default false
+   */
   selected?: boolean;
 
-  /** Indicates disabled state for the card. */
+  /**
+   * Indicates disabled state for the card.
+   *
+   * @default false
+   */
   disabled?: boolean;
 
   /** Indicates expanded state if the card controls collapsible content. */

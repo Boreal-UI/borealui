@@ -160,15 +160,23 @@ export interface FooterProps extends Omit<
   /**
    * Theme used for styling.
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear')
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Applies a translucent frosted-glass treatment using the active theme palette.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
-  /** Optional class name for custom styles. */
+  /**
+   * Optional class name for custom styles.
+   *
+   * @default ""
+   */
   className?: string;
 
   /**
@@ -269,23 +277,34 @@ export interface FooterProps extends Omit<
   /**
    * Attachment type for how the footer is positioned.
    * ('static' | 'fixed' | 'sticky')
+   *
+   * @default "static"
    */
   attachment?: AttachmentType;
 
   /**
    * Shadow of the component.
    * ('none' | 'light' | 'medium' | 'strong' | 'intense')
+   *
+   * @default "none"
    */
   shadow?: ShadowType;
 
   /**
    * Rounding of the component.
    * ('none' | 'small' | 'medium' | 'large' | 'full')
+   *
+   * @default "none"
    */
   rounding?: RoundingType;
 
   /** Test ID for testing frameworks. */
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "footer"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */
@@ -297,19 +316,33 @@ export interface FooterProps extends Omit<
   /** Optional logo element (e.g., <img>, <Logo />). */
   logo?: LogoSource;
 
-  /** Array of footer navigation links. */
+  /**
+   * Array of footer navigation links.
+   *
+   * @default []
+   */
   links?: FooterLink[];
 
-  /** Array of social links with icons. */
+  /**
+   * Array of social links with icons.
+   *
+   * @default []
+   */
   socialLinks?: SocialLink[];
 
-  /** Whether to show the theme selector dropdown. */
+  /**
+   * Whether to show the theme selector dropdown.
+   *
+   * @default false
+   */
   showThemeSelect?: boolean;
 
   /**
    * Footer layout style.
    * "inline" keeps the older compact layout.
    * "columns" supports brand, grouped sections, social links, and bottom bar.
+   *
+   * @default "inline"
    */
   layout?: FooterLayout;
 
@@ -365,27 +398,37 @@ export interface FooterProps extends Omit<
   /**
    * Accessible label for the site links navigation region.
    * Defaults can still be provided in the base component.
+   *
+   * @default "Footer site links"
    */
   navAriaLabel?: string;
 
   /**
    * Accessible label for the social links navigation region.
    * Defaults can still be provided in the base component.
+   *
+   * @default "Social media"
    */
   socialNavAriaLabel?: string;
 
   /**
    * Accessible label for the theme selector region/container.
+   *
+   * @default "Theme selector"
    */
   themeSelectAriaLabel?: string;
 
   /**
    * Accessible name for the logo when it is rendered as an image or custom node.
+   *
+   * @default "Logo"
    */
   logoAriaLabel?: string;
 
   /**
    * If true, the logo is decorative and should be hidden from assistive tech.
+   *
+   * @default false
    */
   logoDecorative?: boolean;
 

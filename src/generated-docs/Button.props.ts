@@ -137,12 +137,13 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -153,7 +154,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Whether the button should be disabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "fullWidth",
@@ -161,7 +163,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Whether the button should take up the full width of its container.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "glass",
@@ -169,7 +172,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "href",
@@ -193,7 +197,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Position of the icon relative to the button label.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"left\""
     },
     {
       "name": "isExternal",
@@ -201,7 +206,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "If true, opens the link in a new tab (used with `href`).",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "loading",
@@ -209,7 +215,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Whether to show a loading indicator instead of the children.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "loadingLabel",
@@ -217,7 +224,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Optional accessible text announced while loading. Defaults to \"Loading\" in the component if not provided.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Loading\""
     },
     {
       "name": "onClick",
@@ -233,7 +241,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Whether to use outline styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "rounding",
@@ -241,7 +250,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Rounding style for the button ('none' | 'small' | 'medium' | 'large' | 'full').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -249,7 +259,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the button ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -257,7 +268,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Size of the button ('xs' | 'small' | 'medium' | 'large' | 'xl').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -265,7 +277,17 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "State of the button ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"button\""
     },
     {
       "name": "theme",
@@ -273,7 +295,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Theme style of the button ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "type",
@@ -281,7 +304,8 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Button type for native `<button>` elements ('button' | 'reset' | 'submit').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"button\""
     }
   ]
 };

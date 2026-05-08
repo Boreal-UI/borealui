@@ -17,7 +17,8 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Whether the chip should close automatically after a delay.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "className",
@@ -25,7 +26,8 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "closeButtonAriaLabel",
@@ -33,12 +35,13 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Custom accessible label for the close button. Defaults to \"Close notification\".",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Close notification\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -49,7 +52,8 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Time in milliseconds before auto-closing (default: 3000).",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "3000"
     },
     {
       "name": "glass",
@@ -57,7 +61,8 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "icon",
@@ -81,7 +86,8 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Whether the leading icon is decorative. When true, it will be hidden from assistive technology. Defaults to true.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "id",
@@ -121,15 +127,17 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Position of the chip on the screen ('topLeft' | 'topCenter' | 'topRight' | 'bottomLeft' | 'bottomCenter' | 'bottomRight').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"topCenter\""
     },
     {
       "name": "role",
-      "type": "\"none\" | \"alert\" | \"log\" | \"presentation\" | \"status\"",
+      "type": "\"alert\" | \"log\" | \"none\" | \"presentation\" | \"status\"",
       "description": "ARIA role for the chip container. Defaults to \"alert\".",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"alert\""
     },
     {
       "name": "rounding",
@@ -137,7 +145,8 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Rounding style for the chip ('none' | 'small' | 'medium' | 'large' | 'full').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -145,7 +154,8 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the chip ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -153,7 +163,8 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Size of the chip ('xs' | 'small' | 'medium' | 'large' | 'xl').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "stackIndex",
@@ -169,7 +180,17 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "State of the chip ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"chip\""
     },
     {
       "name": "theme",
@@ -177,7 +198,8 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Theme color for the chip ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "usePortal",
@@ -185,7 +207,8 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Whether to use a portal for rendering the chip.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "visible",

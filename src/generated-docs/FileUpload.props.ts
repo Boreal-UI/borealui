@@ -17,7 +17,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Allowed file MIME types or file extensions (e.g. \".pdf\", \"image/png\").",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "[]"
     },
     {
       "name": "controlRounding",
@@ -25,7 +26,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the control button ('none' | 'small' | 'medium' | 'large' | 'full').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "controlShadow",
@@ -33,12 +35,13 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the control button ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -57,7 +60,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Whether to disable the file input.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "dropzoneDescription",
@@ -73,7 +77,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Whether the dropzone should expose a button-like role.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"group\""
     },
     {
       "name": "enableDragAndDrop",
@@ -81,7 +86,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Whether drag and drop is enabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "error",
@@ -97,7 +103,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Status message announced when upload fails.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Upload failed. Please try again.\""
     },
     {
       "name": "fileListAriaLabel",
@@ -129,7 +136,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Adds glass styling to the dropzone and nested controls.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "id",
@@ -153,7 +161,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Label displayed above the file input.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Upload File\""
     },
     {
       "name": "liveRegionPoliteness",
@@ -161,7 +170,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Live region politeness for status updates.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"polite\""
     },
     {
       "name": "maxFileSizeBytes",
@@ -169,7 +179,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Maximum file size in bytes (e.g., 5MB = 5 * 1024 * 1024).",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "Infinity"
     },
     {
       "name": "multiple",
@@ -177,7 +188,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Allows multiple file selection if true.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "onFilesChange",
@@ -201,7 +213,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Whether to display the control button as an outline.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "outlineRounding",
@@ -209,7 +222,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the wrapping element ('none' | 'small' | 'medium' | 'large' | 'full').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "outlineShadow",
@@ -217,7 +231,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the wrapping element ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "rejectedFilesAriaLabel",
@@ -249,7 +264,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Whether the file input is required.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "selectButtonAriaLabel",
@@ -265,7 +281,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "The state of the file upload ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "successMessage",
@@ -273,7 +290,17 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Status message announced when upload succeeds.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Upload successful.\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"file-upload\""
     },
     {
       "name": "theme",
@@ -281,7 +308,8 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Theme for the buttons and progress bar ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "uploadButtonAriaLabel",

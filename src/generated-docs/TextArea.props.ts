@@ -33,7 +33,8 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Enables or disables autocomplete.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "className",
@@ -41,12 +42,13 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Additional custom CSS class name(s) to apply to the wrapper.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -65,7 +67,8 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "If true, the textarea is disabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "errorMessage",
@@ -81,7 +84,8 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Adds translucent glass styling to the textarea wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "height",
@@ -121,7 +125,8 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Position of the label relative to the textarea.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"top\""
     },
     {
       "name": "onChange",
@@ -137,7 +142,8 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "If true, the textarea is styled with an outline.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "placeholder",
@@ -145,7 +151,8 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Placeholder text for the textarea.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Enter text\""
     },
     {
       "name": "readOnly",
@@ -153,7 +160,8 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "If true, renders the textarea as read-only.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "resizable",
@@ -161,7 +169,8 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "If false, the textarea is not resizable.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "rounding",
@@ -169,7 +178,8 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the component.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -177,7 +187,8 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the component.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "state",
@@ -185,7 +196,17 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "State of the text area.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"text-area\""
     },
     {
       "name": "theme",
@@ -193,7 +214,8 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Theme used for styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     }
   ]
 };

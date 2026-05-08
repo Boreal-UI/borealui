@@ -34,7 +34,11 @@ export interface RadioButtonProps extends Omit<
    */
   label?: ReactNode;
 
-  /** Position of the label relative to the radio button. */
+  /**
+   * Position of the label relative to the radio button.
+   *
+   * @default "left"
+   */
   labelPosition?: "left" | "right";
 
   /**
@@ -55,34 +59,46 @@ export interface RadioButtonProps extends Omit<
   /**
    * Theme applied for styling.
    * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Applies a translucent frosted-glass treatment to the visible radio control.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State of the radio button.
    * One of: "success" | "error" | "warning" | "disabled" | ""
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Rounding of the radio button.
    * One of: "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style of the radio button.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Whether the radio button is disabled.
+   *
+   * @default false
    */
   disabled?: boolean;
 
@@ -114,10 +130,17 @@ export interface RadioButtonProps extends Omit<
 
   /**
    * Additional CSS class names for custom styling.
+   *
+   * @default ""
    */
   className?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "radio-button"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */

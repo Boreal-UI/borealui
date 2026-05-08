@@ -55,6 +55,8 @@ export interface BreadcrumbsProps extends Omit<
   /**
    * Accessible label for the breadcrumb navigation.
    * Defaults to "Breadcrumbs".
+   *
+   * @default "Breadcrumbs"
    */
   "aria-label"?: string;
 
@@ -71,6 +73,8 @@ export interface BreadcrumbsProps extends Omit<
 
   /**
    * Disables interaction and styles as disabled.
+   *
+   * @default false
    */
   disabled?: boolean;
 
@@ -83,18 +87,24 @@ export interface BreadcrumbsProps extends Omit<
   /**
    * Theme style to apply to the breadcrumbs
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Rounding style to apply to the breadcrumbs
    * ('none' | 'small' | 'medium' | 'large' | 'full').
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style to apply to the breadcrumbs
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
@@ -102,27 +112,37 @@ export interface BreadcrumbsProps extends Omit<
    * State of the breadcrumbs
    * ('success' | 'error' | 'warning' | 'disabled' | '').
    * Used for visual feedback.
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Size of the breadcrumbs
    * ('xs' | 'small' | 'medium' | 'large' | 'xl').
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * Additional class name for custom styling.
+   *
+   * @default ""
    */
   className?: string;
 
   /**
    * Whether to use the outline style.
+   *
+   * @default configured default outline setting (fallback: false)
    */
   outline?: boolean;
 
   /**
    * Applies a translucent frosted-glass treatment using the active theme palette.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
@@ -131,7 +151,12 @@ export interface BreadcrumbsProps extends Omit<
    */
   maxVisible?: number;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "breadcrumbs"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */

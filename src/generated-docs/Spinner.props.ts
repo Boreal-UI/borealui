@@ -17,7 +17,8 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
       "description": "Whether the related region is busy. Defaults to true.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "true"
     },
     {
       "name": "aria-describedby",
@@ -49,7 +50,8 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
       "description": "ARIA live region politeness. Defaults to \"polite\".",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"polite\""
     },
     {
       "name": "className",
@@ -57,12 +59,13 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for styling customization.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Test ID for testing frameworks (e.g., for use with Jest or Cypress).",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -73,7 +76,8 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass surface behind the spinner.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "label",
@@ -89,7 +93,8 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
       "description": "Optional ARIA role. Defaults to \"status\".",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"status\""
     },
     {
       "name": "shadow",
@@ -97,7 +102,8 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the spinner. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -105,7 +111,8 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
       "description": "The size of the spinner (in pixels).",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "50"
     },
     {
       "name": "state",
@@ -113,7 +120,17 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
       "description": "The state of the spinner. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"spinner\""
     },
     {
       "name": "theme",
@@ -121,7 +138,8 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
       "description": "The theme color of the spinner. One of: \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     }
   ]
 };

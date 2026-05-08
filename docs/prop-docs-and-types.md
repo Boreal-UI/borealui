@@ -104,8 +104,11 @@ type GeneratedPropDoc = {
   required: boolean;
   inherited: boolean;
   category: string;
+  defaultValue?: string;
 };
 ```
+
+`defaultValue` is included when the generator can read a default from the component implementation. Configurable Boreal style defaults, such as theme or size, include their built-in fallback value.
 
 ## Rendering a Prop Table
 
@@ -120,6 +123,7 @@ export function ButtonPropTable() {
         <tr>
           <th scope="col">Name</th>
           <th scope="col">Type</th>
+          <th scope="col">Default</th>
           <th scope="col">Required</th>
           <th scope="col">Description</th>
         </tr>
@@ -131,6 +135,7 @@ export function ButtonPropTable() {
             <td>
               <code>{prop.type}</code>
             </td>
+            <td>{prop.defaultValue ? <code>{prop.defaultValue}</code> : "-"}</td>
             <td>{prop.required ? "Yes" : "No"}</td>
             <td>{prop.description}</td>
           </tr>

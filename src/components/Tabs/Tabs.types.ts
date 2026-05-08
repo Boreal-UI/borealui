@@ -37,13 +37,25 @@ export interface TabsProps {
   /** Controlled active tab index. */
   value?: number;
 
-  /** Custom class names to apply to the tabs container. */
+  /**
+   * Custom class names to apply to the tabs container.
+   *
+   * @default ""
+   */
   className?: string;
 
-  /** Uncontrolled initial index. */
+  /**
+   * Uncontrolled initial index.
+   *
+   * @default 0
+   */
   defaultIndex?: number;
 
-  /** Accessible name for the tablist. */
+  /**
+   * Accessible name for the tablist.
+   *
+   * @default "Tabs"
+   */
   "aria-label"?: string;
 
   /** Accessible labelledby id for the tablist. Preferred over aria-label when provided. */
@@ -61,35 +73,47 @@ export interface TabsProps {
   /**
    * Theme for styling the tabs.
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Adds translucent glass styling to the tab controls.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State of the tabs.
    * "success" | "error" | "warning" | "disabled" | ""
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Rounding of the tabs.
    * "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style of the tabs.
    * "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Size of the tabs.
    * "xs" | "small" | "medium" | "large" | "xl"
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
@@ -103,7 +127,12 @@ export interface TabsProps {
   "aria-live"?: "off" | "polite" | "assertive";
 
   /** Test ID for testing purposes. */
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "tabs"
+   */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */

@@ -279,7 +279,7 @@ console.log(buttonPropDocs.name);
 console.log(dataTablePropDocs.props);
 ```
 
-The docs export includes `GeneratedComponentDoc` and `GeneratedPropDoc` types, plus one prop-doc object per documented component.
+The docs export includes `GeneratedComponentDoc` and `GeneratedPropDoc` types, plus one prop-doc object per documented component. Prop docs include `defaultValue` when the component implementation sets a readable default.
 
 ## Type Exports
 

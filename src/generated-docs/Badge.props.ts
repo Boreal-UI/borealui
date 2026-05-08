@@ -25,12 +25,13 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "Additional custom class names.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -41,7 +42,8 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "If true, disables user interaction and styles as disabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "glass",
@@ -49,7 +51,8 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "icon",
@@ -73,7 +76,8 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "Whether to use the outline style.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "rounding",
@@ -81,7 +85,8 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the badge ('none' | 'small' | 'medium' | 'large' | 'full').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -89,7 +94,8 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the badge ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -97,7 +103,8 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "Badge size ('xs' | 'small' | 'medium' | 'large' | 'xl').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -105,7 +112,17 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "The badge state ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"badge\""
     },
     {
       "name": "theme",
@@ -113,7 +130,8 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "Theme color for the badge ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "title",

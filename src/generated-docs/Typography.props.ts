@@ -17,7 +17,8 @@ export const typographyPropDocs: GeneratedComponentDoc = {
       "description": "Horizontal text alignment.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"inherit\""
     },
     {
       "name": "aria-atomic",
@@ -100,12 +101,21 @@ export const typographyPropDocs: GeneratedComponentDoc = {
       "category": "styling"
     },
     {
+      "name": "data-testid",
+      "type": "string",
+      "description": "Backward-compatible alias for test ID attributes.",
+      "required": false,
+      "inherited": false,
+      "category": "testing"
+    },
+    {
       "name": "glass",
       "type": "boolean",
       "description": "Applies a compact translucent frosted-glass treatment around the text.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "id",
@@ -121,7 +131,8 @@ export const typographyPropDocs: GeneratedComponentDoc = {
       "description": "Whether the text should be displayed in italic style.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "noWrap",
@@ -129,7 +140,8 @@ export const typographyPropDocs: GeneratedComponentDoc = {
       "description": "Whether the text should remain on a single line without wrapping.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "role",
@@ -145,7 +157,8 @@ export const typographyPropDocs: GeneratedComponentDoc = {
       "description": "Whether the text should be visually hidden but still available to screen readers.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "style",
@@ -169,7 +182,8 @@ export const typographyPropDocs: GeneratedComponentDoc = {
       "description": "Visual theme style applied to the typography.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"inherit\""
     },
     {
       "name": "title",
@@ -185,7 +199,8 @@ export const typographyPropDocs: GeneratedComponentDoc = {
       "description": "Whether overflowing text should be truncated, typically with an ellipsis.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "underline",
@@ -193,7 +208,8 @@ export const typographyPropDocs: GeneratedComponentDoc = {
       "description": "Whether the text should be underlined.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "variant",
@@ -201,7 +217,8 @@ export const typographyPropDocs: GeneratedComponentDoc = {
       "description": "Predefined typography style variant. Examples may include headings, body text, captions, or labels.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"body\""
     },
     {
       "name": "weight",
@@ -209,7 +226,8 @@ export const typographyPropDocs: GeneratedComponentDoc = {
       "description": "Font weight of the text.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"inherit\""
     }
   ]
 };
