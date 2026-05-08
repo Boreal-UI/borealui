@@ -83,7 +83,7 @@ Component props override global defaults.
 
 ## ThemeProvider
 
-`ThemeProvider` manages the active color scheme and writes it into CSS variables.
+`ThemeProvider` manages the active color scheme and writes it into CSS variables. It resolves text colors against the active surfaces with a WCAG 2.1 AA normal-text contrast target, so low-contrast custom schemes fall back to readable foreground colors instead of blindly using `forceTextColor`.
 
 ```tsx
 import { ThemeProvider } from "boreal-ui/core";
@@ -105,6 +105,25 @@ export function Providers({ children }: { children: React.ReactNode }) {
 }
 ```
 
+To reduce first-paint color flashing, render Boreal's initialization script as early as possible in the document. In Next.js app router projects, place it in the root layout before themed content:
+
+```tsx
+import { getThemeInitializationScript } from "boreal-ui/next";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en">
+      <body>
+        <script
+          dangerouslySetInnerHTML={{ __html: getThemeInitializationScript() }}
+        />
+        {children}
+      </body>
+    </html>
+  );
+}
+```
+
 `ThemeProvider` props:
 
 | Prop | Description |
@@ -113,6 +132,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
 | `customSchemes` | Registers additional color schemes. |
 | `initialSchemeName` | Selects the starting scheme by name. |
 | `useOnlyCustomSchemes` | Uses only custom schemes instead of built-in schemes. |
+
+When `initialSchemeName` is provided, it is preferred over the saved theme name. Without it, the saved theme name is used when available, then the configured Boreal default, then the first available scheme.
 
 ## Custom Color Schemes
 

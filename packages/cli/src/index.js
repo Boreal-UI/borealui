@@ -1,6 +1,7 @@
 #!/usr/bin/env node
+/* eslint-disable no-undef */
 import { spawnSync } from "node:child_process";
-import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
@@ -164,7 +165,9 @@ async function promptForOptions(options) {
         defaults.projectName;
     }
 
-    options.projectName = slugifyProjectName(options.projectName || defaults.projectName);
+    options.projectName = slugifyProjectName(
+      options.projectName || defaults.projectName,
+    );
     if (!options.projectName) {
       options.projectName = defaults.projectName;
     }
@@ -172,7 +175,9 @@ async function promptForOptions(options) {
     if (!options.framework) {
       options.framework =
         promptText("Framework", defaults.framework) ??
-        (await rl.question("Framework: React core or Next.js? (react/next) [react]: ")) ??
+        (await rl.question(
+          "Framework: React core or Next.js? (react/next) [react]: ",
+        )) ??
         defaults.framework;
     }
     options.framework = normalizeChoice(options.framework, defaults.framework);
@@ -204,7 +209,10 @@ async function promptForOptions(options) {
         (await rl.question("Package manager? (npm/pnpm/yarn) [npm]: ")) ??
         defaults.packageManager;
     }
-    options.packageManager = normalizeChoice(options.packageManager, defaults.packageManager);
+    options.packageManager = normalizeChoice(
+      options.packageManager,
+      defaults.packageManager,
+    );
     if (!PACKAGE_MANAGERS.has(options.packageManager)) {
       fail("Package manager must be npm, pnpm, or yarn.");
     }
@@ -219,7 +227,12 @@ async function promptForOptions(options) {
     }
 
     if (typeof options.git !== "boolean") {
-      options.git = await promptBoolean(rl, "Initialize git?", defaults.git, options.yes);
+      options.git = await promptBoolean(
+        rl,
+        "Initialize git?",
+        defaults.git,
+        options.yes,
+      );
     }
   } finally {
     rl.close();
@@ -229,7 +242,9 @@ async function promptForOptions(options) {
 }
 
 function normalizeChoice(value, fallback) {
-  const cleaned = String(value || fallback).trim().toLowerCase();
+  const cleaned = String(value || fallback)
+    .trim()
+    .toLowerCase();
   if (cleaned === "nextjs" || cleaned === "next.js") return "next";
   if (cleaned === "core" || cleaned === "react-core") return "react";
   return cleaned || fallback;
@@ -238,7 +253,9 @@ function normalizeChoice(value, fallback) {
 async function promptBoolean(rl, question, defaultValue, yes) {
   if (yes) return defaultValue;
   const suffix = defaultValue ? "Y/n" : "y/N";
-  const answer = (await rl.question(`${question} (${suffix}): `)).trim().toLowerCase();
+  const answer = (await rl.question(`${question} (${suffix}): `))
+    .trim()
+    .toLowerCase();
   if (!answer) return defaultValue;
   return ["y", "yes", "true", "1"].includes(answer);
 }
@@ -287,7 +304,9 @@ function runCommand(command, commandArgs, cwd, successMessage) {
     return;
   }
 
-  console.warn(`Skipped: ${command} ${commandArgs.join(" ")} did not complete successfully.`);
+  console.warn(
+    `Skipped: ${command} ${commandArgs.join(" ")} did not complete successfully.`,
+  );
 }
 
 function packageJson(options) {
@@ -364,7 +383,10 @@ function getReactFiles(options) {
     { path: "package.json", contents: packageJson(options) },
     { path: "index.html", contents: reactIndexHtml(options.projectName, ext) },
     { path: `src/main.${ext}`, contents: reactMain(options, ext) },
-    { path: `src/App.${ext}`, contents: options.starter ? reactStarterApp() : reactMinimalApp() },
+    {
+      path: `src/App.${ext}`,
+      contents: options.starter ? reactStarterApp() : reactMinimalApp(),
+    },
     { path: "src/App.css", contents: starterCss() },
     { path: ".gitignore", contents: gitignore() },
     { path: "README.md", contents: projectReadme(options) },
@@ -385,16 +407,26 @@ function getNextFiles(options) {
     { path: "package.json", contents: packageJson(options) },
     { path: `app/layout.${ext}`, contents: nextLayout(options) },
     { path: `app/providers.${ext}`, contents: nextProviders(options) },
-    { path: `app/page.${ext}`, contents: options.starter ? nextStarterPage() : nextMinimalPage() },
+    {
+      path: `app/page.${ext}`,
+      contents: options.starter ? nextStarterPage() : nextMinimalPage(),
+    },
     { path: "app/globals.css", contents: starterCss() },
-    { path: "next.config.js", contents: "const nextConfig = {};\n\nexport default nextConfig;\n" },
+    {
+      path: "next.config.js",
+      contents: "const nextConfig = {};\n\nexport default nextConfig;\n",
+    },
     { path: ".gitignore", contents: gitignore() },
     { path: "README.md", contents: projectReadme(options) },
   ];
 
   if (options.typescript) {
     files.push({ path: "tsconfig.json", contents: nextTsConfig() });
-    files.push({ path: "next-env.d.ts", contents: "/// <reference types=\"next\" />\n/// <reference types=\"next/image-types/global\" />\n" });
+    files.push({
+      path: "next-env.d.ts",
+      contents:
+        '/// <reference types="next" />\n/// <reference types="next/image-types/global" />\n',
+    });
   }
 
   return files;
@@ -416,7 +448,7 @@ function reactIndexHtml(projectName, ext) {
 `;
 }
 
-function reactMain(options, ext) {
+function reactMain(options) {
   const rootElement = options.typescript
     ? 'document.getElementById("root")!'
     : 'document.getElementById("root")';
@@ -507,7 +539,9 @@ export default function App() {
 }
 
 function nextLayout(options) {
-  const typeAnnotation = options.typescript ? ": Readonly<{ children: ReactNode }>" : "";
+  const typeAnnotation = options.typescript
+    ? ": Readonly<{ children: ReactNode }>"
+    : "";
   return `import "boreal-ui/next/globals.css";
 import "./globals.css";
 import Providers from "./providers";
@@ -527,7 +561,9 @@ export default function RootLayout({ children }${typeAnnotation}) {
 }
 
 function nextProviders(options) {
-  const typeAnnotation = options.typescript ? ": Readonly<{ children: ReactNode }>" : "";
+  const typeAnnotation = options.typescript
+    ? ": Readonly<{ children: ReactNode }>"
+    : "";
   return `"use client";
 
 import { ThemeProvider, setBorealStyleConfig } from "boreal-ui/next";
@@ -756,10 +792,20 @@ coverage
 }
 
 function projectReadme(options) {
-  const dev = options.packageManager === "npm" ? "npm run dev" : `${options.packageManager} dev`;
-  const install = options.packageManager === "npm" ? "npm install" : `${options.packageManager} install`;
-  const build = options.packageManager === "npm" ? "npm run build" : `${options.packageManager} build`;
-  const importPath = options.framework === "next" ? "boreal-ui/next" : "boreal-ui/core";
+  const dev =
+    options.packageManager === "npm"
+      ? "npm run dev"
+      : `${options.packageManager} dev`;
+  const install =
+    options.packageManager === "npm"
+      ? "npm install"
+      : `${options.packageManager} install`;
+  const build =
+    options.packageManager === "npm"
+      ? "npm run build"
+      : `${options.packageManager} build`;
+  const importPath =
+    options.framework === "next" ? "boreal-ui/next" : "boreal-ui/core";
 
   return `# ${options.projectName}
 
@@ -779,8 +825,14 @@ This project imports Boreal UI from \`${importPath}\` and loads the required glo
 
 function printSuccess(root, options) {
   const cd = `cd ${options.projectName}`;
-  const install = options.packageManager === "npm" ? "npm install" : `${options.packageManager} install`;
-  const dev = options.packageManager === "npm" ? "npm run dev" : `${options.packageManager} dev`;
+  const install =
+    options.packageManager === "npm"
+      ? "npm install"
+      : `${options.packageManager} install`;
+  const dev =
+    options.packageManager === "npm"
+      ? "npm run dev"
+      : `${options.packageManager} dev`;
 
   console.log(`
 Created ${options.projectName} at ${root}

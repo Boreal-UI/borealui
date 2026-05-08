@@ -30,6 +30,11 @@ jest.mock("../../src/config/boreal-style-config", () => ({
 
 import { defaultColorSchemes } from "../../src/styles/Themes";
 import { getDefaultColorSchemeName } from "../../src/config/boreal-style-config";
+import {
+  buildThemeVariables,
+  contrastRatio,
+  getThemeInitializationScript,
+} from "../../src/context/themeRuntime";
 
 const mockedGetDefaultColorSchemeName = getDefaultColorSchemeName as jest.Mock;
 
@@ -281,7 +286,57 @@ describe("ThemeProvider", () => {
       expect(
         document.documentElement.style.getPropertyValue("--divider-color"),
       ).not.toBe("");
+      expect(
+        document.documentElement.style.getPropertyValue("--text-color"),
+      ).toBe("#000000");
     });
+  });
+
+  it("keeps generated foreground tokens at WCAG AA contrast for normal text", () => {
+    const vars = buildThemeVariables({
+      name: "Low Contrast Brand",
+      primaryColor: "#f4d7d7",
+      secondaryColor: "#dbeafe",
+      tertiaryColor: "#fef3c7",
+      quaternaryColor: "#dcfce7",
+      backgroundColor: "#ffffff",
+      forceTextColor: "#ffffff",
+    });
+
+    expect(
+      contrastRatio(vars["--background-color"], vars["--text-color"]),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(vars["--primary-color"], vars["--text-color-primary"]),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(vars["--secondary-color"], vars["--text-color-secondary"]),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(vars["--tertiary-color"], vars["--text-color-tertiary"]),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(
+        vars["--quaternary-color"],
+        vars["--text-color-quaternary"],
+      ),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(vars["--background-color"], vars["--link-hover-color"]),
+    ).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it("creates a bootstrap script that applies the saved scheme before React effects run", () => {
+    localStorage.setItem(STORAGE_KEY, "Ocean Breeze");
+
+    const script = getThemeInitializationScript();
+
+    Function(script)();
+
+    expect(
+      document.documentElement.style.getPropertyValue("--primary-color"),
+    ).toBe("#005577");
+    expect(document.documentElement.dataset.borealTheme).toBe("Ocean Breeze");
   });
 
   it("updates selectedScheme through context and saves the scheme name", async () => {
