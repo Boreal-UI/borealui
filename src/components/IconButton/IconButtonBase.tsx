@@ -26,6 +26,8 @@ const IconButtonBase = forwardRef<
     onKeyDown,
     className = "",
     iconClassName = "",
+    labelClassName = "",
+    loaderClassName = "",
     disabled = false,
     rel,
     target,
@@ -126,13 +128,16 @@ const IconButtonBase = forwardRef<
 
   const iconContent = (
     <span
-      className={classMap.buttonLabel}
+      className={combineClassNames(classMap.buttonLabel, labelClassName)}
       aria-live={ariaLive ?? "polite"}
       aria-atomic={ariaAtomic ?? true}
     >
       {loading ? (
         <>
-          <div className={classMap.loader} aria-hidden="true" />
+          <div
+            className={combineClassNames(classMap.loader, loaderClassName)}
+            aria-hidden="true"
+          />
           <span className="sr_only">Loading</span>
         </>
       ) : Icon ? (

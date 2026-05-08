@@ -126,6 +126,15 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"\""
     },
     {
+      "name": "containerClassName",
+      "type": "string",
+      "description": "Additional class names for the outer layout container.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "data-testid",
       "type": "string",
       "description": "Backward-compatible alias for test ID attributes.",
@@ -151,12 +160,39 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class names for the icon wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "inputClassName",
+      "type": "string",
+      "description": "Additional class names for the native input.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "label",
       "type": "string",
       "description": "Optional visible label/title for the input.",
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Additional class names for the visible label.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "labelPosition",
@@ -237,6 +273,15 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
+      "name": "srOnlyClassName",
+      "type": "string",
+      "description": "Additional class names for the screen-reader-only text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "srOnlyText",
       "type": "ReactNode",
       "description": "Optional content rendered for assistive technologies only. Useful for dynamic status or extra context.",
@@ -270,6 +315,15 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "configured default theme (fallback: \"primary\")"
+    },
+    {
+      "name": "togglePasswordClassName",
+      "type": "string",
+      "description": "Additional class names for the password toggle button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     }
   ]
 };

@@ -230,6 +230,43 @@ describe("BaseModal", () => {
     expect(content).toHaveClass("customModalClass");
   });
 
+  it("applies custom class names to modal sections", async () => {
+    renderModal({
+      footer: <button>Done</button>,
+      overlayClassName: "custom-overlay",
+      headerClassName: "custom-header",
+      headerContentClassName: "custom-header-content",
+      titleClassName: "custom-title",
+      closeButtonClassName: "custom-close",
+      bodyClassName: "custom-body",
+      footerClassName: "custom-footer",
+    });
+
+    const overlay = await screen.findByTestId("modal");
+    const header = screen.getByTestId("modal-header");
+    const closeButton = screen.getByTestId("modal-close");
+    const body = screen.getByTestId("modal-body");
+    const footer = screen.getByTestId("modal-footer");
+
+    expect(overlay).toHaveClass("modalOverlay", "custom-overlay");
+    expect(header).toHaveClass("modalHeader", "custom-header");
+    const visibleTitle = screen
+      .getAllByText("Modal Dialog")
+      .find((element) => element.classList.contains("modalTitle"));
+
+    expect(visibleTitle?.parentElement).toHaveClass(
+      "modalHeaderContent",
+      "custom-header-content",
+    );
+    expect(visibleTitle).toHaveClass(
+      "modalTitle",
+      "custom-title",
+    );
+    expect(closeButton).toHaveClass("closeButton", "custom-close");
+    expect(body).toHaveClass("modalBody", "custom-body");
+    expect(footer).toHaveClass("modalFooter", "custom-footer");
+  });
+
   it("calls onClose when the close button is clicked", async () => {
     renderModal();
 

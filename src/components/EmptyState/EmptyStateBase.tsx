@@ -25,6 +25,10 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   actionLabel,
   onActionClick,
   className = "",
+  iconClassName = "",
+  titleClassName = "",
+  messageClassName = "",
+  actionButtonClassName = "",
   id,
   role,
   iconDecorative = true,
@@ -86,7 +90,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
     >
       {Icon && (
         <div
-          className={classMap.icon}
+          className={combineClassNames(classMap.icon, iconClassName)}
           data-testid={`${testId}-icon`}
           aria-hidden={iconDecorative ? true : undefined}
         >
@@ -101,7 +105,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
       {title && (
         <h2
           id={titleId}
-          className={classMap.title}
+          className={combineClassNames(classMap.title, titleClassName)}
           data-testid={`${testId}-title`}
         >
           {title}
@@ -111,7 +115,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
       {message && (
         <p
           id={messageId}
-          className={classMap.message}
+          className={combineClassNames(classMap.message, messageClassName)}
           data-testid={`${testId}-message`}
         >
           {message}
@@ -125,6 +129,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
           glass={glass}
           onClick={onActionClick}
           aria-label={resolvedActionAriaLabel}
+          className={actionButtonClassName}
           data-testid={`${testId}-action`}
         >
           {actionLabel}

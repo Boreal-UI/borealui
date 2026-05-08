@@ -136,6 +136,15 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class names for the dropdown icon wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "id",
       "type": "string",
       "description": "Optional id for the underlying select element.",
@@ -152,6 +161,15 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Additional class names for the visible label.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "labelPosition",
       "type": "LabelPositionType",
       "description": "Position of the label relative to the select.",
@@ -159,6 +177,24 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"top\""
+    },
+    {
+      "name": "layoutClassName",
+      "type": "string",
+      "description": "Additional class names for the outer layout container.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "loadingClassName",
+      "type": "string",
+      "description": "Additional class names for async loading text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "name",
@@ -237,6 +273,15 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
+      "name": "selectClassName",
+      "type": "string",
+      "description": "Additional class names for the native select element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "shadow",
       "type": "ShadowType",
       "description": "Shadow style of the select element. \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
@@ -244,6 +289,15 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "configured default shadow (fallback: \"light\")"
+    },
+    {
+      "name": "srOnlyClassName",
+      "type": "string",
+      "description": "Additional class names for screen-reader-only description text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "state",

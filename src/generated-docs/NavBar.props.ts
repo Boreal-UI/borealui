@@ -71,12 +71,30 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class names for each icon wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "isItemActive",
       "type": "((item: NavItem) => boolean)",
       "description": "Optional callback used to determine whether a nav item should be styled as active.",
       "required": false,
       "inherited": false,
       "category": "events"
+    },
+    {
+      "name": "itemClassName",
+      "type": "string",
+      "description": "Additional class names for each nav link.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "items",
@@ -87,6 +105,24 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Additional class names for each label.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "linkContentClassName",
+      "type": "string",
+      "description": "Additional class names for each link content wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "list-aria-label",
       "type": "string",
       "description": "Optional accessible label for the internal navigation list. Usually not required, but useful in complex layouts.",
@@ -94,6 +130,24 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"Main navigation items\""
+    },
+    {
+      "name": "listClassName",
+      "type": "string",
+      "description": "Additional class names for the navigation list.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "listItemClassName",
+      "type": "string",
+      "description": "Additional class names for each list item.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "rounding",

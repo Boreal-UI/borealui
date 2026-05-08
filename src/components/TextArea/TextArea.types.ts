@@ -56,6 +56,30 @@ export interface TextAreaProps extends Omit<
    */
   className?: string;
 
+  /** Additional class names for the outer layout container. */
+  containerClassName?: string;
+
+  /** Additional class names for the visible label. */
+  labelClassName?: string;
+
+  /** Additional class names for the icon wrapper. */
+  iconClassName?: string;
+
+  /** Additional class names for the textarea element. */
+  inputClassName?: string;
+
+  /** Additional class names for the resize handle. */
+  resizeHandleClassName?: string;
+
+  /** Additional class names for helper text. */
+  helperTextClassName?: string;
+
+  /** Additional class names for the error message. */
+  errorMessageClassName?: string;
+
+  /** Additional class names for screen-reader-only description text. */
+  srOnlyClassName?: string;
+
   /**
    * If true, renders the textarea as read-only.
    *

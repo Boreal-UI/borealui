@@ -168,6 +168,42 @@ export interface NotificationCenterProps {
    */
   clearAllAriaLabel?: string;
 
+  /** Additional class names for the notification center wrapper. */
+  className?: string;
+
+  /** Additional class names for the header section. */
+  headerClassName?: string;
+
+  /** Additional class names for the clear-all button. */
+  clearAllClassName?: string;
+
+  /** Additional class names for the live-region/body section. */
+  bodyClassName?: string;
+
+  /** Additional class names for the empty state text. */
+  emptyClassName?: string;
+
+  /** Additional class names for the notification list. */
+  listClassName?: string;
+
+  /** Additional class names for each notification item. */
+  notificationClassName?: string;
+
+  /** Additional class names for each notification icon. */
+  iconClassName?: string;
+
+  /** Additional class names for each notification content wrapper. */
+  contentClassName?: string;
+
+  /** Additional class names for each notification message. */
+  messageClassName?: string;
+
+  /** Additional class names for each notification timestamp. */
+  timestampClassName?: string;
+
+  /** Additional class names for each dismiss button. */
+  closeButtonClassName?: string;
+
 
   /**
    * Optional test ID for testing frameworks.

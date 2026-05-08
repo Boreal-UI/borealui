@@ -12,6 +12,15 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
   "sourcePath": "src\\components\\MessagePopup\\MessagePopup.types.ts",
   "props": [
     {
+      "name": "actionsClassName",
+      "type": "string",
+      "description": "Additional class names for the actions wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "aria-describedby",
       "type": "string",
       "description": "Optional ID of an external element that describes the dialog. Useful when the popup description should point to custom content.",
@@ -53,6 +62,24 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "category": "aria"
     },
     {
+      "name": "bodyClassName",
+      "type": "string",
+      "description": "Additional class names for the body section.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "cancelButtonClassName",
+      "type": "string",
+      "description": "Additional class names for the cancel button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "cancelText",
       "type": "string",
       "description": "Optional text for the cancel button (default: \"Cancel\").",
@@ -71,6 +98,24 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"\""
     },
     {
+      "name": "closeButtonClassName",
+      "type": "string",
+      "description": "Additional class names for the close button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "confirmButtonClassName",
+      "type": "string",
+      "description": "Additional class names for the confirm button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "confirmText",
       "type": "string",
       "description": "Optional text for the confirm button (default: \"Confirm\").",
@@ -78,6 +123,15 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"Confirm\""
+    },
+    {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "Additional class names for the dialog content panel.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "controlsRounding",
@@ -106,12 +160,30 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"dialog\""
     },
     {
+      "name": "headerClassName",
+      "type": "string",
+      "description": "Additional class names for the header section.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "message",
       "type": "string",
       "description": "Message text to be displayed within the popup dialog.",
       "required": true,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "messageClassName",
+      "type": "string",
+      "description": "Additional class names for the message text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "onCancel",
@@ -171,6 +243,15 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "titleClassName",
+      "type": "string",
+      "description": "Additional class names for the title element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     }
   ]
 };

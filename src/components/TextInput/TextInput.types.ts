@@ -49,6 +49,24 @@ export interface TextInputProps extends NativeInputProps {
    */
   className?: string;
 
+  /** Additional class names for the outer layout container. */
+  containerClassName?: string;
+
+  /** Additional class names for the visible label. */
+  labelClassName?: string;
+
+  /** Additional class names for the icon wrapper. */
+  iconClassName?: string;
+
+  /** Additional class names for the native input. */
+  inputClassName?: string;
+
+  /** Additional class names for the password toggle button. */
+  togglePasswordClassName?: string;
+
+  /** Additional class names for the screen-reader-only text. */
+  srOnlyClassName?: string;
+
   /**
    * If true, the input is rendered in read-only mode.
    *

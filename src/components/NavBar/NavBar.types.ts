@@ -60,6 +60,24 @@ export interface NavBarProps {
    */
   className?: string;
 
+  /** Additional class names for the navigation list. */
+  listClassName?: string;
+
+  /** Additional class names for each list item. */
+  listItemClassName?: string;
+
+  /** Additional class names for each nav link. */
+  itemClassName?: string;
+
+  /** Additional class names for each link content wrapper. */
+  linkContentClassName?: string;
+
+  /** Additional class names for each icon wrapper. */
+  iconClassName?: string;
+
+  /** Additional class names for each label. */
+  labelClassName?: string;
+
 
   /**
    * Optional test ID for testing frameworks.

@@ -122,6 +122,24 @@ export interface CheckBoxProps extends Omit<
    */
   className?: string;
 
+  /** Additional class names for the label/input wrapper. */
+  labelWrapperClassName?: string;
+
+  /** Additional class names for the native input. */
+  inputClassName?: string;
+
+  /** Additional class names for the visual checkbox box. */
+  boxClassName?: string;
+
+  /** Additional class names for the label text. */
+  labelClassName?: string;
+
+  /** Additional class names for the helper description. */
+  descriptionClassName?: string;
+
+  /** Additional class names for the error message. */
+  errorMessageClassName?: string;
+
   /**
    * Position of the label relative to the checkbox
    * ('left' | 'right').

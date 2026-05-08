@@ -44,6 +44,15 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "category": "aria"
     },
     {
+      "name": "boxClassName",
+      "type": "string",
+      "description": "Additional class names for the visual checkbox box.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "checked",
       "type": "boolean",
       "description": "Checked state of the checkbox.",
@@ -77,6 +86,15 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "descriptionClassName",
+      "type": "string",
+      "description": "Additional class names for the helper description.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "disabled",
       "type": "boolean",
       "description": "Whether the checkbox is disabled.",
@@ -92,6 +110,15 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "errorMessageClassName",
+      "type": "string",
+      "description": "Additional class names for the error message.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "glass",
@@ -112,6 +139,15 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
+      "name": "inputClassName",
+      "type": "string",
+      "description": "Additional class names for the native input.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "invalid",
       "type": "boolean",
       "description": "Marks the checkbox as invalid. Useful when validation fails.",
@@ -130,6 +166,15 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"\""
     },
     {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Additional class names for the label text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "labelPosition",
       "type": "\"left\" | \"right\"",
       "description": "Position of the label relative to the checkbox ('left' | 'right').",
@@ -137,6 +182,15 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"right\""
+    },
+    {
+      "name": "labelWrapperClassName",
+      "type": "string",
+      "description": "Additional class names for the label/input wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "onChange",

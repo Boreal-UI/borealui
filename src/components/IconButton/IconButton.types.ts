@@ -86,6 +86,20 @@ export interface IconButtonProps extends InteractiveProps {
   iconClassName?: string;
 
   /**
+   * Custom class name for the label/loading wrapper.
+   *
+   * @default ""
+   */
+  labelClassName?: string;
+
+  /**
+   * Custom class name for the loading indicator.
+   *
+   * @default ""
+   */
+  loaderClassName?: string;
+
+  /**
    * Custom class name for additional styling.
    *
    * @default ""

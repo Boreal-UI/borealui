@@ -37,6 +37,24 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "category": "aria"
     },
     {
+      "name": "bodyClassName",
+      "type": "string",
+      "description": "Additional class names for the live-region/body section.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Additional class names for the notification center wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "clearAllAriaLabel",
       "type": "string",
       "description": "Accessible label for the clear all button.",
@@ -46,6 +64,15 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"Clear all notifications\""
     },
     {
+      "name": "clearAllClassName",
+      "type": "string",
+      "description": "Additional class names for the clear-all button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "clearOldOnOverflow",
       "type": "boolean",
       "description": "If true, clears the oldest notifications when over the maximum.",
@@ -53,6 +80,24 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "true"
+    },
+    {
+      "name": "closeButtonClassName",
+      "type": "string",
+      "description": "Additional class names for each dismiss button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "Additional class names for each notification content wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "controlRounding",
@@ -90,6 +135,15 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"Dismiss notification\""
     },
     {
+      "name": "emptyClassName",
+      "type": "string",
+      "description": "Additional class names for the empty state text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "emptyMessage",
       "type": "string",
       "description": "Accessible text announced when there are no notifications.",
@@ -107,12 +161,39 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "headerClassName",
+      "type": "string",
+      "description": "Additional class names for the header section.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class names for each notification icon.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "list-aria-label",
       "type": "string",
       "description": "Accessible label for the notifications list when needed.",
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "listClassName",
+      "type": "string",
+      "description": "Additional class names for the notification list.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "liveRegionAtomic",
@@ -149,6 +230,24 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "10"
+    },
+    {
+      "name": "messageClassName",
+      "type": "string",
+      "description": "Additional class names for each notification message.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "notificationClassName",
+      "type": "string",
+      "description": "Additional class names for each notification item.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "notificationRounding",
@@ -226,6 +325,15 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "dataTestId ?? \"notification-center\""
+    },
+    {
+      "name": "timestampClassName",
+      "type": "string",
+      "description": "Additional class names for each notification timestamp.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     }
   ]
 };

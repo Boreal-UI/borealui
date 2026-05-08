@@ -192,6 +192,15 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class names for the rendered icon.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "iconPosition",
       "type": "\"left\" | \"right\"",
       "description": "Position of the icon relative to the button label.",
@@ -201,6 +210,15 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"left\""
     },
     {
+      "name": "iconWrapperClassName",
+      "type": "string",
+      "description": "Additional class names for the icon wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "isExternal",
       "type": "boolean",
       "description": "If true, opens the link in a new tab (used with `href`).",
@@ -208,6 +226,24 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "false"
+    },
+    {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Additional class names for the label/content wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "loaderClassName",
+      "type": "string",
+      "description": "Additional class names for the loading indicator.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "loading",

@@ -92,6 +92,21 @@ export interface MetricBoxProps {
    */
   className?: string;
 
+  /** Additional class names for the icon wrapper. */
+  iconClassName?: string;
+
+  /** Additional class names for the content wrapper. */
+  contentClassName?: string;
+
+  /** Additional class names for the title element. */
+  titleClassName?: string;
+
+  /** Additional class names for the value element. */
+  valueClassName?: string;
+
+  /** Additional class names for the subtext element. */
+  subtextClassName?: string;
+
 
   /**
    * Optional test ID for testing frameworks.

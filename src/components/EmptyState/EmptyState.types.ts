@@ -93,6 +93,18 @@ export interface EmptyStateProps extends Omit<
   /** Optional click handler for the action button. */
   onActionClick?: () => void;
 
+  /** Additional class names for the icon wrapper. */
+  iconClassName?: string;
+
+  /** Additional class names for the title element. */
+  titleClassName?: string;
+
+  /** Additional class names for the message element. */
+  messageClassName?: string;
+
+  /** Additional class names for the action button. */
+  actionButtonClassName?: string;
+
   /**
    * Optional custom accessible label for the entire empty state region.
    * Useful when the title is visual but not sufficient as a landmark label.

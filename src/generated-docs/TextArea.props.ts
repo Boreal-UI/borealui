@@ -46,6 +46,15 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"\""
     },
     {
+      "name": "containerClassName",
+      "type": "string",
+      "description": "Additional class names for the outer layout container.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "data-testid",
       "type": "string",
       "description": "Backward-compatible alias for test ID attributes.",
@@ -79,6 +88,15 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "errorMessageClassName",
+      "type": "string",
+      "description": "Additional class names for the error message.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "glass",
       "type": "boolean",
       "description": "Adds translucent glass styling to the textarea wrapper.",
@@ -104,6 +122,15 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "helperTextClassName",
+      "type": "string",
+      "description": "Additional class names for helper text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "icon",
       "type": "ComponentType<{ className?: string; \"aria-hidden\"?: boolean; }>",
       "description": "Optional icon to display alongside the textarea.",
@@ -112,12 +139,39 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class names for the icon wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "inputClassName",
+      "type": "string",
+      "description": "Additional class names for the textarea element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "label",
       "type": "string",
       "description": "Optional visible label for the textarea.",
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Additional class names for the visible label.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "labelPosition",
@@ -173,6 +227,15 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "defaultValue": "true"
     },
     {
+      "name": "resizeHandleClassName",
+      "type": "string",
+      "description": "Additional class names for the resize handle.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "rounding",
       "type": "RoundingType",
       "description": "Rounding of the component.",
@@ -189,6 +252,15 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "configured default shadow (fallback: \"light\")"
+    },
+    {
+      "name": "srOnlyClassName",
+      "type": "string",
+      "description": "Additional class names for screen-reader-only description text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "state",

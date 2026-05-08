@@ -70,6 +70,15 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"\""
     },
     {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "Additional class names for the content wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "data-testid",
       "type": "string",
       "description": "Backward-compatible alias for test ID attributes.",
@@ -110,6 +119,15 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class names for the icon wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "outline",
@@ -173,6 +191,15 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "subtextClassName",
+      "type": "string",
+      "description": "Additional class names for the subtext element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "testId",
       "type": "string",
       "description": "Optional test ID for testing frameworks.",
@@ -199,12 +226,30 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "titleClassName",
+      "type": "string",
+      "description": "Additional class names for the title element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "value",
       "type": "string | number",
       "description": "The primary value of the metric, e.g., a number or a string.",
       "required": true,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "valueClassName",
+      "type": "string",
+      "description": "Additional class names for the value element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     }
   ]
 };

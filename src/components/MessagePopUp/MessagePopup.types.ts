@@ -117,6 +117,33 @@ export interface MessagePopupProps {
    */
   className?: string;
 
+  /** Additional class names for the dialog content panel. */
+  contentClassName?: string;
+
+  /** Additional class names for the header section. */
+  headerClassName?: string;
+
+  /** Additional class names for the title element. */
+  titleClassName?: string;
+
+  /** Additional class names for the close button. */
+  closeButtonClassName?: string;
+
+  /** Additional class names for the body section. */
+  bodyClassName?: string;
+
+  /** Additional class names for the message text. */
+  messageClassName?: string;
+
+  /** Additional class names for the actions wrapper. */
+  actionsClassName?: string;
+
+  /** Additional class names for the confirm button. */
+  confirmButtonClassName?: string;
+
+  /** Additional class names for the cancel button. */
+  cancelButtonClassName?: string;
+
 
   /**
    * Optional test ID for testing frameworks.

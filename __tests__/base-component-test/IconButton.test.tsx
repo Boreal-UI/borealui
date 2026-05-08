@@ -266,6 +266,26 @@ describe("IconButtonBase", () => {
     expect(screen.getByTestId("icon-button-icon")).toHaveClass("custom-icon");
   });
 
+  it("applies custom class names to icon button sections", () => {
+    render(
+      <IconButtonBase
+        icon={FaTimes}
+        aria-label="Close"
+        labelClassName="custom-label"
+        loaderClassName="custom-loader"
+        loading
+        classMap={classMap}
+        data-testid="icon-button"
+      />,
+    );
+
+    const label = screen.getByText("Loading").parentElement;
+    const loader = label?.querySelector(`.${classMap.loader}`);
+
+    expect(label).toHaveClass("button-label", "custom-label");
+    expect(loader).toHaveClass("loader", "custom-loader");
+  });
+
   it("passes the button type prop", () => {
     render(
       <IconButtonBase

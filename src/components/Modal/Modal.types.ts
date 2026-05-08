@@ -13,6 +13,27 @@ export interface ModalProps {
    */
   className?: string;
 
+  /** Additional class names for the modal overlay/backdrop. */
+  overlayClassName?: string;
+
+  /** Additional class names for the modal header section. */
+  headerClassName?: string;
+
+  /** Additional class names for the modal header content wrapper. */
+  headerContentClassName?: string;
+
+  /** Additional class names for the modal title element. */
+  titleClassName?: string;
+
+  /** Additional class names for the modal close button. */
+  closeButtonClassName?: string;
+
+  /** Additional class names for the modal body section. */
+  bodyClassName?: string;
+
+  /** Additional class names for the modal footer section. */
+  footerClassName?: string;
+
   /** The content to be rendered inside the modal. Expected to be a single React element. */
   children?: ReactElement;
 

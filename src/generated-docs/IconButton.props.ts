@@ -209,6 +209,24 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Custom class name for the label/loading wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "loaderClassName",
+      "type": "string",
+      "description": "Custom class name for the loading indicator.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "loading",
       "type": "boolean",
       "description": "Whether to show a loading spinner instead of the icon.",

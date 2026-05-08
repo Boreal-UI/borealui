@@ -295,6 +295,37 @@ describe("BaseNavBar", () => {
     expect(homeItem.className).toContain("shadowLight");
   });
 
+  it("applies custom class names to nav sections", () => {
+    render(
+      <BaseNavBar
+        items={mockItems}
+        classMap={classMap}
+        LinkWrapper={LinkWrapper}
+        data-testid={testId}
+        listClassName="custom-list"
+        listItemClassName="custom-list-item"
+        itemClassName="custom-item"
+        linkContentClassName="custom-link-content"
+        iconClassName="custom-icon"
+        labelClassName="custom-label"
+      />,
+    );
+
+    const list = screen.getByTestId(`${testId}-nav-list`);
+    const listItem = screen.getByTestId(`${testId}-nav-list-item-home`);
+    const item = screen.getByTestId(`${testId}-nav-item-home`);
+    const icon = screen.getByTestId(`${testId}-nav-icon-home`);
+    const linkContent = icon.parentElement;
+    const label = screen.getByText("Home");
+
+    expect(list).toHaveClass("navList", "custom-list");
+    expect(listItem).toHaveClass("navListItem", "custom-list-item");
+    expect(item).toHaveClass("navItem", "custom-item");
+    expect(linkContent).toHaveClass("navLinkContent", "custom-link-content");
+    expect(icon).toHaveClass("navIcon", "custom-icon");
+    expect(label).toHaveClass("navLabel", "custom-label");
+  });
+
   it("supports custom item aria-labels via getItemAriaLabel", () => {
     render(
       <BaseNavBar

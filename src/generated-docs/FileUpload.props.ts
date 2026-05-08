@@ -55,6 +55,15 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "descriptionClassName",
+      "type": "string",
+      "description": "Additional class names for the FormGroup description.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "disabled",
       "type": "boolean",
       "description": "Whether to disable the file input.",
@@ -62,6 +71,15 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "false"
+    },
+    {
+      "name": "dropzoneClassName",
+      "type": "string",
+      "description": "Additional class names for the dropzone/root wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "dropzoneDescription",
@@ -98,6 +116,15 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "errorMessageClassName",
+      "type": "string",
+      "description": "Additional class names for the FormGroup error message.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "failureMessage",
       "type": "string",
       "description": "Status message announced when upload fails.",
@@ -115,6 +142,24 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "fileListClassName",
+      "type": "string",
+      "description": "Additional class names for the selected files list.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "fileListItemClassName",
+      "type": "string",
+      "description": "Additional class names for each selected file item.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "fileRemovedMessage",
       "type": "((fileName: string, index: number) => string)",
       "description": "Message announced when a file is removed.",
@@ -129,6 +174,15 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "events"
+    },
+    {
+      "name": "formGroupClassName",
+      "type": "string",
+      "description": "Additional class names for the outer FormGroup wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "glass",
@@ -156,6 +210,15 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "inputClassName",
+      "type": "string",
+      "description": "Additional class names for the visually hidden native input.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "label",
       "type": "string",
       "description": "Label displayed above the file input.",
@@ -163,6 +226,15 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"Upload File\""
+    },
+    {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Additional class names for the FormGroup label.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "liveRegionPoliteness",
@@ -243,12 +315,66 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "rejectedFilesClassName",
+      "type": "string",
+      "description": "Additional class names for the rejected files wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "rejectedFilesMessage",
       "type": "((files: { name: string; reason: string; }[]) => string)",
       "description": "Message announced when rejected files are detected.",
       "required": false,
       "inherited": false,
       "category": "events"
+    },
+    {
+      "name": "rejectedItemClassName",
+      "type": "string",
+      "description": "Additional class names for each rejected file item.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "rejectedLabelClassName",
+      "type": "string",
+      "description": "Additional class names for the rejected files label.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "rejectedListClassName",
+      "type": "string",
+      "description": "Additional class names for the rejected files list.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "rejectedReasonClassName",
+      "type": "string",
+      "description": "Additional class names for each rejected reason.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "removeButtonClassName",
+      "type": "string",
+      "description": "Additional class names for each remove-file button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "removeFileAriaLabel",
@@ -274,6 +400,15 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "selectButtonClassName",
+      "type": "string",
+      "description": "Additional class names for the select-file button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "state",
@@ -312,6 +447,15 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
+      "name": "uploadActionsClassName",
+      "type": "string",
+      "description": "Additional class names for the upload actions wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "uploadButtonAriaLabel",
       "type": "string",
       "description": "Accessible label for the submit/upload button.",
@@ -320,12 +464,39 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "uploadButtonClassName",
+      "type": "string",
+      "description": "Additional class names for the upload button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "uploadControlsClassName",
+      "type": "string",
+      "description": "Additional class names for the upload controls wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "uploadProgress",
       "type": "number",
       "description": "External upload progress value (overrides internal simulation).",
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "uploadProgressClassName",
+      "type": "string",
+      "description": "Additional class names for the upload progress bar.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     }
   ]
 };

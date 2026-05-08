@@ -212,6 +212,24 @@ export interface SelectProps {
    */
   className?: string;
 
+  /** Additional class names for the outer layout container. */
+  layoutClassName?: string;
+
+  /** Additional class names for the visible label. */
+  labelClassName?: string;
+
+  /** Additional class names for the native select element. */
+  selectClassName?: string;
+
+  /** Additional class names for the dropdown icon wrapper. */
+  iconClassName?: string;
+
+  /** Additional class names for async loading text. */
+  loadingClassName?: string;
+
+  /** Additional class names for screen-reader-only description text. */
+  srOnlyClassName?: string;
+
 
   /**
    * Optional test ID for testing frameworks.

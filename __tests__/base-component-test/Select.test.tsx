@@ -294,6 +294,70 @@ describe("BaseSelect", () => {
     );
   });
 
+  it("applies custom class names to select sections", () => {
+    render(
+      <BaseSelect
+        {...defaultProps}
+        aria-label="Fruit select"
+        aria-description="Choose carefully"
+        label="Favorite fruit"
+        layoutClassName="custom-layout"
+        labelClassName="custom-label"
+        selectClassName="custom-select"
+        iconClassName="custom-icon"
+        srOnlyClassName="custom-sr-only"
+      />,
+    );
+
+    expect(screen.getByTestId("select-layout")).toHaveClass(
+      "layout",
+      "custom-layout",
+    );
+    expect(screen.getByTestId("select-label")).toHaveClass(
+      "label",
+      "labelOverlay",
+      "custom-label",
+    );
+    expect(screen.getByTestId("select-input")).toHaveClass(
+      "select",
+      "custom-select",
+    );
+    expect(screen.getByTestId("select-icon")).toHaveClass(
+      "icon",
+      "custom-icon",
+    );
+    expect(screen.getByTestId("select-description")).toHaveClass(
+      "sr_only",
+      "custom-sr-only",
+    );
+  });
+
+  it("applies custom class names to async loading text", async () => {
+    const asyncOptions = jest
+      .fn()
+      .mockResolvedValue([{ value: "orange", label: "Orange" }]);
+
+    render(
+      <BaseSelect
+        {...defaultProps}
+        asyncOptions={asyncOptions}
+        aria-label="Fruit select"
+        loadingClassName="custom-loading"
+      />,
+    );
+
+    expect(screen.getByTestId("select-loading")).toHaveClass(
+      "loading",
+      "custom-loading",
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("option", { name: "Orange" }),
+      ).toBeInTheDocument();
+    });
+  });
+
   it("loads async options and shows a loading message", async () => {
     const asyncOptions = jest.fn().mockResolvedValue([
       { value: "orange", label: "Orange" },

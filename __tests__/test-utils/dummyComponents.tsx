@@ -343,18 +343,22 @@ export const DummyFormGroup = ({
   description,
   error,
   required,
+  className,
+  labelClassName,
+  descriptionClassName,
+  errorMessageClassName,
   "data-testid": testId,
 }: FormGroupProps) => (
-  <div data-testid={testId}>
+  <div data-testid={testId} className={className}>
     {label && (
-      <label>
+      <label className={labelClassName}>
         {label}
         {required ? " *" : ""}
       </label>
     )}
 
-    {description && <div>{description}</div>}
-    {error && <div>{error}</div>}
+    {description && <div className={descriptionClassName}>{description}</div>}
+    {error && <div className={errorMessageClassName}>{error}</div>}
     {children}
   </div>
 );

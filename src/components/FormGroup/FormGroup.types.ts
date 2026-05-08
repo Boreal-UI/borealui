@@ -77,6 +77,27 @@ export interface FormGroupProps extends Omit<
    */
   className?: string;
 
+  /** Additional class names for the label element. */
+  labelClassName?: string;
+
+  /** Additional class names for the required marker. */
+  requiredClassName?: string;
+
+  /** Additional class names for each input wrapper. */
+  inputWrapperClassName?: string;
+
+  /** Additional class names for each input field wrapper. */
+  inputFieldClassName?: string;
+
+  /** Additional class names for the optional controller wrapper. */
+  controllerClassName?: string;
+
+  /** Additional class names for the helper description. */
+  descriptionClassName?: string;
+
+  /** Additional class names for the error message. */
+  errorMessageClassName?: string;
+
   /**
    * Layout style for label and input.
    * "vertical" (default) or "horizontal"

@@ -30,6 +30,10 @@ const ButtonBase = forwardRef<
       shadow = getDefaultShadow(),
       children,
       className = "",
+      iconWrapperClassName = "",
+      iconClassName = "",
+      labelClassName = "",
+      loaderClassName = "",
       disabled = false,
 
       "aria-label": ariaLabel,
@@ -115,24 +119,31 @@ const ButtonBase = forwardRef<
 
     const iconElement = Icon ? (
       <span
-        className={classMap.buttonIcon}
+        className={combineClassNames(classMap.buttonIcon, iconWrapperClassName)}
         aria-hidden="true"
         data-testid={testId ? `${testId}-icon` : undefined}
       >
-        <Icon className={classMap.icon} aria-hidden={true} focusable={false} />
+        <Icon
+          className={combineClassNames(classMap.icon, iconClassName)}
+          aria-hidden={true}
+          focusable={false}
+        />
       </span>
     ) : null;
 
     const labelElement = (
       <span
-        className={classMap.buttonLabel}
+        className={combineClassNames(classMap.buttonLabel, labelClassName)}
         aria-live={loading ? (ariaLive ?? "polite") : undefined}
         aria-atomic={loading ? (ariaAtomic ?? true) : undefined}
         data-testid={testId ? `${testId}-loading` : undefined}
       >
         {loading ? (
           <>
-            <div className={classMap.loader} aria-hidden="true" />
+            <div
+              className={combineClassNames(classMap.loader, loaderClassName)}
+              aria-hidden="true"
+            />
             <span className="sr_only">{loadingLabel}</span>
           </>
         ) : (

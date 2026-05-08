@@ -131,6 +131,63 @@ export interface FileUploadProps
   /** External upload progress value (overrides internal simulation). */
   uploadProgress?: number;
 
+  /** Additional class names for the outer FormGroup wrapper. */
+  formGroupClassName?: string;
+
+  /** Additional class names for the FormGroup label. */
+  labelClassName?: string;
+
+  /** Additional class names for the FormGroup description. */
+  descriptionClassName?: string;
+
+  /** Additional class names for the FormGroup error message. */
+  errorMessageClassName?: string;
+
+  /** Additional class names for the dropzone/root wrapper. */
+  dropzoneClassName?: string;
+
+  /** Additional class names for the visually hidden native input. */
+  inputClassName?: string;
+
+  /** Additional class names for the upload actions wrapper. */
+  uploadActionsClassName?: string;
+
+  /** Additional class names for the select-file button. */
+  selectButtonClassName?: string;
+
+  /** Additional class names for the rejected files wrapper. */
+  rejectedFilesClassName?: string;
+
+  /** Additional class names for the rejected files label. */
+  rejectedLabelClassName?: string;
+
+  /** Additional class names for the rejected files list. */
+  rejectedListClassName?: string;
+
+  /** Additional class names for each rejected file item. */
+  rejectedItemClassName?: string;
+
+  /** Additional class names for each rejected reason. */
+  rejectedReasonClassName?: string;
+
+  /** Additional class names for the upload controls wrapper. */
+  uploadControlsClassName?: string;
+
+  /** Additional class names for the selected files list. */
+  fileListClassName?: string;
+
+  /** Additional class names for each selected file item. */
+  fileListItemClassName?: string;
+
+  /** Additional class names for each remove-file button. */
+  removeButtonClassName?: string;
+
+  /** Additional class names for the upload progress bar. */
+  uploadProgressClassName?: string;
+
+  /** Additional class names for the upload button. */
+  uploadButtonClassName?: string;
+
 
   /**
    * Optional test ID for testing frameworks.

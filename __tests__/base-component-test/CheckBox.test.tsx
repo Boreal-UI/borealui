@@ -425,6 +425,41 @@ describe("CheckboxBase", () => {
     expect(label).toHaveClass("checkboxLabel");
   });
 
+  it("applies custom class names to checkbox sections", () => {
+    renderCheckbox({
+      label: "Custom parts",
+      description: "Helpful detail",
+      errorMessage: "Needs attention",
+      invalid: true,
+      labelWrapperClassName: "custom-label-wrapper",
+      inputClassName: "custom-input",
+      boxClassName: "custom-box",
+      labelClassName: "custom-label",
+      descriptionClassName: "custom-description",
+      errorMessageClassName: "custom-error",
+    });
+
+    const input = screen.getByLabelText("Custom parts");
+    const label = screen.getByTestId("checkbox-label");
+    const labelWrapper = label.parentElement;
+
+    expect(labelWrapper).toHaveClass("labelWrapper", "custom-label-wrapper");
+    expect(input).toHaveClass("checkboxInput", "custom-input");
+    expect(screen.getByTestId("checkbox-box")).toHaveClass(
+      "checkboxBox",
+      "custom-box",
+    );
+    expect(label).toHaveClass("checkboxLabel", "custom-label");
+    expect(screen.getByTestId("checkbox-description")).toHaveClass(
+      "checkboxDescription",
+      "custom-description",
+    );
+    expect(screen.getByTestId("checkbox-error")).toHaveClass(
+      "checkboxErrorMessage",
+      "custom-error",
+    );
+  });
+
   it("uses the default test id when none is provided", () => {
     render(
       <CheckboxBase

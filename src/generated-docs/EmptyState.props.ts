@@ -20,6 +20,15 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "actionButtonClassName",
+      "type": "string",
+      "description": "Additional class names for the action button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "actionLabel",
       "type": "ReactNode",
       "description": "Optional label for an action button.",
@@ -85,6 +94,15 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class names for the icon wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "iconDecorative",
       "type": "boolean",
       "description": "Whether the icon should be announced to assistive technology. Defaults to false.",
@@ -109,6 +127,15 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"There’s no content to display.\""
+    },
+    {
+      "name": "messageClassName",
+      "type": "string",
+      "description": "Additional class names for the message element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "onActionClick",
@@ -197,6 +224,15 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"Nothing Here Yet\""
+    },
+    {
+      "name": "titleClassName",
+      "type": "string",
+      "description": "Additional class names for the title element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     }
   ]
 };

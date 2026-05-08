@@ -25,6 +25,11 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   align = "center",
   size = getDefaultSize(),
   className = "",
+  iconClassName = "",
+  contentClassName = "",
+  titleClassName = "",
+  valueClassName = "",
+  subtextClassName = "",
   role,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
@@ -92,7 +97,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
     >
       {Icon && (
         <div
-          className={classMap.icon}
+          className={combineClassNames(classMap.icon, iconClassName)}
           data-testid={`${testId}-icon`}
           aria-hidden={decorativeIcon ? true : undefined}
         >
@@ -104,11 +109,11 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
         </div>
       )}
 
-      <div className={classMap.content}>
+      <div className={combineClassNames(classMap.content, contentClassName)}>
         {title && (
           <h3
             id={titleId}
-            className={classMap.title}
+            className={combineClassNames(classMap.title, titleClassName)}
             data-testid={`${testId}-title`}
           >
             {title}
@@ -116,7 +121,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
         )}
 
         <div
-          className={classMap.value}
+          className={combineClassNames(classMap.value, valueClassName)}
           data-testid={`${testId}-value`}
           aria-label={valueLabel}
         >
@@ -126,7 +131,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
         {subtext && (
           <div
             id={subtextId}
-            className={classMap.subtext}
+            className={combineClassNames(classMap.subtext, subtextClassName)}
             data-testid={`${testId}-subtext`}
           >
             {subtext}

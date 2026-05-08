@@ -97,6 +97,18 @@ export interface ButtonProps extends Pick<
    */
   className?: string;
 
+  /** Additional class names for the icon wrapper. */
+  iconWrapperClassName?: string;
+
+  /** Additional class names for the rendered icon. */
+  iconClassName?: string;
+
+  /** Additional class names for the label/content wrapper. */
+  labelClassName?: string;
+
+  /** Additional class names for the loading indicator. */
+  loaderClassName?: string;
+
   /**
    * Whether the button should be disabled.
    *

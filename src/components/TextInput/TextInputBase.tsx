@@ -39,6 +39,12 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       classMap,
       IconButton,
       className = "",
+      containerClassName = "",
+      labelClassName = "",
+      iconClassName = "",
+      inputClassName = "",
+      togglePasswordClassName = "",
+      srOnlyClassName = "",
       srOnlyText,
       "data-testid": dataTestId,
       testId = dataTestId ?? "text-input",
@@ -137,8 +143,9 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         combineClassNames(
           classMap.container,
           classMap[`label${capitalize(resolvedLabelPosition)}`],
+          containerClassName,
         ),
-      [classMap, resolvedLabelPosition],
+      [classMap, resolvedLabelPosition, containerClassName],
     );
 
     const wrapperClass = useMemo(
@@ -178,8 +185,9 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
           classMap.iconContainer,
           classMap[theme],
           disabled && classMap.disabled,
+          iconClassName,
         ),
-      [classMap, theme, disabled],
+      [classMap, theme, disabled, iconClassName],
     );
 
     return (
@@ -187,7 +195,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className={classMap.label}
+            className={combineClassNames(classMap.label, labelClassName)}
             data-testid={`${testId}-label`}
           >
             {label}
@@ -208,7 +216,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             ref={ref}
             id={inputId}
             type={inputType}
-            className={inputClasses}
+            className={combineClassNames(inputClasses, inputClassName)}
             placeholder={computedPlaceholder}
             role={role}
             aria-label={computedAriaLabel}
@@ -235,7 +243,10 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
           {password && (
             <IconButton
               type="button"
-              className={classMap.togglePassword}
+              className={combineClassNames(
+                classMap.togglePassword,
+                togglePasswordClassName,
+              )}
               onClick={togglePasswordVisibility}
               theme="clear"
               shadow="none"
@@ -249,7 +260,10 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
           {srOnlyText && (
             <span
               id={generatedDescriptionId}
-              className={classMap.srOnly || "sr_only"}
+              className={combineClassNames(
+                classMap.srOnly || "sr_only",
+                srOnlyClassName,
+              )}
               data-testid={`${testId}-sr-only-text`}
             >
               {srOnlyText}

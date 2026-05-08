@@ -34,6 +34,12 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       placeholder = "Select an option",
       disabled = false,
       className = "",
+      layoutClassName = "",
+      labelClassName = "",
+      selectClassName = "",
+      iconClassName = "",
+      loadingClassName = "",
+      srOnlyClassName = "",
       classMap,
       asyncOptions,
       pollInterval = 0,
@@ -76,12 +82,17 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         ? classMap[`label${capitalize(resolvedLabelPosition)}`]
         : undefined;
 
-      return combineClassNames(classMap.layout, posClass);
-    }, [classMap, hasLabel, resolvedLabelPosition]);
+      return combineClassNames(classMap.layout, posClass, layoutClassName);
+    }, [classMap, hasLabel, resolvedLabelPosition, layoutClassName]);
 
     const labelClasses = useMemo(
-      () => combineClassNames(classMap.label, classMap.labelOverlay),
-      [classMap],
+      () =>
+        combineClassNames(
+          classMap.label,
+          classMap.labelOverlay,
+          labelClassName,
+        ),
+      [classMap, labelClassName],
     );
 
     const computedDescribedBy = useMemo(() => {
@@ -164,8 +175,13 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     );
 
     const selectClasses = useMemo(
-      () => combineClassNames(classMap.select, outline && classMap.outline),
-      [classMap, outline],
+      () =>
+        combineClassNames(
+          classMap.select,
+          outline && classMap.outline,
+          selectClassName,
+        ),
+      [classMap, outline, selectClassName],
     );
 
     const iconClasses = useMemo(
@@ -174,8 +190,9 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           classMap.icon,
           classMap[theme],
           disabled && classMap.disabled,
+          iconClassName,
         ),
-      [classMap, theme, disabled],
+      [classMap, theme, disabled, iconClassName],
     );
 
     const opts = asyncOptions ? internalOptions : options;
@@ -237,7 +254,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           {ariaDescription && (
             <span
               id={internalDescriptionId}
-              className="sr_only"
+              className={combineClassNames("sr_only", srOnlyClassName)}
               data-testid={`${testId}-description`}
             >
               {ariaDescription}
@@ -246,7 +263,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
           {loading && (
             <span
-              className={classMap.loading}
+              className={combineClassNames(classMap.loading, loadingClassName)}
               aria-live={ariaLive}
               data-testid={`${testId}-loading`}
             >

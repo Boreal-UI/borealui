@@ -319,6 +319,48 @@ describe("ButtonBase", () => {
     expect(label).toHaveClass("btn-label");
   });
 
+  it("applies custom class names to button sections", () => {
+    const { unmount } = renderButton(
+      {
+        icon: FaStar,
+        iconWrapperClassName: "custom-icon-wrapper",
+        iconClassName: "custom-icon",
+        labelClassName: "custom-label",
+      },
+      "Favorite",
+    );
+
+    const renderedIconWrapper = screen.getByTestId("button-test-icon");
+    const renderedIcon = renderedIconWrapper.querySelector("svg");
+
+    expect(renderedIconWrapper).toHaveClass("btn-icon", "custom-icon-wrapper");
+    expect(renderedIcon).toHaveClass("icon-style", "custom-icon");
+    expect(screen.getByTestId("button-test-loading")).toHaveClass(
+      "btn-label",
+      "custom-label",
+    );
+
+    unmount();
+
+    renderButton(
+      {
+        icon: FaStar,
+        labelClassName: "custom-label",
+        loaderClassName: "custom-loader",
+        loading: true,
+      },
+      "Saving",
+    );
+
+    const iconWrapper = screen.getByTestId("button-test-icon");
+    const label = screen.getByTestId("button-test-loading");
+    const loader = label.querySelector(`.${classMap.loader}`);
+
+    expect(iconWrapper).toHaveClass("btn-icon");
+    expect(label).toHaveClass("btn-label", "custom-label");
+    expect(loader).toHaveClass("btn-loader", "custom-loader");
+  });
+
   it("handles click events", () => {
     const handleClick = jest.fn();
 
