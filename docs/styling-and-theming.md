@@ -141,18 +141,24 @@ For Next.js:
 import { ThemeProvider } from "boreal-ui/next";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <ThemeProvider initialSchemeName="Forest Dusk">{children}</ThemeProvider>;
+  return (
+    <ThemeProvider initialSchemeName="Forest Dusk" enableThemeScript={false}>
+      {children}
+    </ThemeProvider>
+  );
 }
 ```
 
-To reduce first-paint color flashing, render Boreal's initialization script as early as possible in the document. In Next.js app router projects, place it in the root layout before themed content:
+In Next.js app router projects, `enableThemeScript={false}` avoids mutating the root `<html>` element before React hydrates. This is the default for `boreal-ui/next`. Boreal still applies the selected scheme during React insertion effects, which keeps the setup hydration-safe with a small chance of first-paint color flash.
+
+To reduce first-paint color flashing outside that stricter hydration-safe setup, render Boreal's initialization script as early as possible in the document. In Next.js app router projects, this root-level script intentionally changes `<html>` before hydration, so the root element also needs React's `suppressHydrationWarning` prop:
 
 ```tsx
 import { getThemeInitializationScript } from "boreal-ui/next";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <script
           dangerouslySetInnerHTML={{ __html: getThemeInitializationScript() }}
@@ -170,6 +176,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 | --- | --- |
 | `children` | Application or subtree to theme. |
 | `customSchemes` | Registers additional color schemes. |
+| `enableThemeScript` | Renders the pre-hydration theme script. Defaults to `true` for core and `false` for Next. |
 | `initialSchemeName` | Selects the starting scheme by name. |
 | `useOnlyCustomSchemes` | Uses only custom schemes instead of built-in schemes. |
 

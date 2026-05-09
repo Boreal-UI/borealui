@@ -256,6 +256,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
       customSchemes={customSchemes}
+      enableThemeScript={false}
       initialSchemeName="Cyberpunk Pulse"
     >
       {children}
@@ -266,11 +267,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
 `ThemeProvider` props:
 
-| Prop                   | Description                                           |
-| ---------------------- | ----------------------------------------------------- |
-| `customSchemes`        | Register additional color schemes at runtime.         |
-| `initialSchemeName`    | Select an initial scheme by name.                     |
-| `useOnlyCustomSchemes` | Use only custom schemes instead of the built-in list. |
+| Prop                   | Description                                                                              |
+| ---------------------- | ---------------------------------------------------------------------------------------- |
+| `customSchemes`        | Register additional color schemes at runtime.                                            |
+| `enableThemeScript`    | Render the pre-hydration theme script. Defaults to `true` for core and `false` for Next. |
+| `initialSchemeName`    | Select an initial scheme by name.                                                        |
+| `useOnlyCustomSchemes` | Use only custom schemes instead of the built-in list.                                    |
 
 Color scheme shape:
 

@@ -399,6 +399,7 @@
       "require": "./dist/core/TextInput.cjs.js"
     },
     "./core/ThemeProvider": {
+      "types": "./dist/types/core/ThemeProvider.d.ts",
       "import": "./dist/core/ThemeProvider.js",
       "require": "./dist/core/ThemeProvider.cjs.js"
     },
@@ -631,6 +632,7 @@
       "import": "./dist/next/TextInput.js"
     },
     "./next/ThemeProvider": {
+      "types": "./dist/types/next/ThemeProvider.d.ts",
       "import": "./dist/next/ThemeProvider.js"
     },
     "./next/Timeline": {

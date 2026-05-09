@@ -18,6 +18,8 @@ import { ReactNode } from "react";
  * @property {string} [initialSchemeName] - Optional name of the color scheme to be selected on initial load. If not provided, the provider will
  *                                          attempt to use the saved scheme from localStorage or the default scheme.
  * @property {boolean} [useOnlyCustomSchemes] - Optional flag to indicate if only custom schemes should be used, ignoring default schemes.
+ * @property {boolean} [enableThemeScript] - Optional flag to render the pre-hydration script that applies theme variables before React effects run.
+ *                                           Defaults to true for core and false for Next.
  *
  * @example
  * <ThemeProvider customSchemes={[customTheme]}>
@@ -27,6 +29,7 @@ import { ReactNode } from "react";
 export interface ThemeProviderProps {
   children: ReactNode;
   customSchemes?: ColorScheme[];
+  enableThemeScript?: boolean;
   initialSchemeName?: string;
   useOnlyCustomSchemes?: boolean;
 }

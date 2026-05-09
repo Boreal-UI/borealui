@@ -24,6 +24,8 @@ const BOREAL_CONFIG_CALL = `setBorealStyleConfig({
   defaultColorSchemeName: "Forest Dusk",
 });
 `;
+const NEXT_APP_THEME_PROVIDER_PROPS =
+  'initialSchemeName="Forest Dusk" enableThemeScript={false}';
 const NEXT_RECOMMENDED_GLOBALS = `html {
   box-sizing: border-box;
 }
@@ -326,6 +328,8 @@ function addNextProviderChange(changes, providerPath) {
     nextSource = ensureProviderComponent(nextSource);
   }
 
+  nextSource = ensureNextAppThemeProviderProps(nextSource);
+
   if (nextSource !== source) {
     changes.push({
       path: providerPath,
@@ -515,7 +519,7 @@ function ensureProviderComponent(source) {
 
   let nextSource = source.replace(
     /\{children\}/,
-    `<ThemeProvider initialSchemeName="Forest Dusk">{children}</ThemeProvider>`,
+    `<ThemeProvider ${NEXT_APP_THEME_PROVIDER_PROPS}>{children}</ThemeProvider>`,
   );
 
   if (nextSource !== source) {
@@ -524,7 +528,7 @@ function ensureProviderComponent(source) {
 
   nextSource = source.replace(
     /return\s+children\s*;/,
-    `return <ThemeProvider initialSchemeName="Forest Dusk">{children}</ThemeProvider>;`,
+    `return <ThemeProvider ${NEXT_APP_THEME_PROVIDER_PROPS}>{children}</ThemeProvider>;`,
   );
 
   if (nextSource === source) {
@@ -532,6 +536,22 @@ function ensureProviderComponent(source) {
   }
 
   return nextSource;
+}
+
+function ensureNextAppThemeProviderProps(source) {
+  return source.replace(/<ThemeProvider\b([^>]*)>/, (match, attrs = "") => {
+    let nextAttrs = attrs;
+
+    if (!/\binitialSchemeName(?:\s|=|$)/.test(nextAttrs)) {
+      nextAttrs += ' initialSchemeName="Forest Dusk"';
+    }
+
+    if (!/\benableThemeScript(?:\s|=|$)/.test(nextAttrs)) {
+      nextAttrs += " enableThemeScript={false}";
+    }
+
+    return nextAttrs === attrs ? match : `<ThemeProvider${nextAttrs}>`;
+  });
 }
 
 function ensureUseClient(source) {
@@ -621,7 +641,7 @@ import { ThemeProvider, setBorealStyleConfig } from "boreal-ui/next";
 ${BOREAL_CONFIG_CALL}
 export default function BorealProvider(${props}) {
   return (
-    <ThemeProvider initialSchemeName="Forest Dusk">{children}</ThemeProvider>
+    <ThemeProvider ${NEXT_APP_THEME_PROVIDER_PROPS}>{children}</ThemeProvider>
   );
 }
 `;
