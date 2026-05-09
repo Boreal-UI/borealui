@@ -340,10 +340,6 @@
       "import": "./dist/core/Rating.js",
       "require": "./dist/core/Rating.cjs.js"
     },
-    "./core/registerColorSheme": {
-      "import": "./dist/core/registerColorSheme.js",
-      "require": "./dist/core/registerColorSheme.cjs.js"
-    },
     "./core/registerColorScheme": {
       "import": "./dist/core/registerColorScheme.js",
       "require": "./dist/core/registerColorScheme.cjs.js"
@@ -580,9 +576,6 @@
     "./next/Rating": {
       "types": "./dist/types/components/Rating/next/Rating.d.ts",
       "import": "./dist/next/Rating.js"
-    },
-    "./next/registerColorSheme": {
-      "import": "./dist/next/registerColorSheme.js"
     },
     "./next/registerColorScheme": {
       "import": "./dist/next/registerColorScheme.js"
