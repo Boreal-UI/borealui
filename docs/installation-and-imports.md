@@ -90,6 +90,8 @@ npx boreal-ui init --framework next --recommended-globals
 
 Interactive Next.js setup prompts for this by default. Use `--recommended-globals` to apply it without the prompt, or `--no-recommended-globals` to skip it.
 
+For the full command reference, options, prompts, and generated file changes, see the [CLI guide](./cli.md).
+
 Use the Next build for components.
 
 ```tsx

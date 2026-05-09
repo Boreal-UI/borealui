@@ -50,6 +50,8 @@ For Next.js projects, you can also apply Boreal’s recommended global CSS basel
 npx boreal-ui init --framework next --recommended-globals
 ```
 
+See [CLI guide](./docs/cli.md) for all commands, options, prompts, and generated file changes.
+
 ## Setup
 
 Import the global stylesheet once near the top of your application.

@@ -122,8 +122,6 @@ Standalone component paths:
 | `defaultColorSchemes` | `boreal-ui/core` or `boreal-ui/next` |
 | `registerColorScheme` | `boreal-ui/core`, `boreal-ui/next`, `boreal-ui/core/registerColorScheme`, or `boreal-ui/next/registerColorScheme` |
 
-The misspelled `registerColorSheme` standalone path remains available for backward compatibility. New code should use `registerColorScheme`.
-
 ## Generated Prop Docs
 
 Generated prop metadata is available from `boreal-ui/docs` and from the `core` and `next` barrels.
