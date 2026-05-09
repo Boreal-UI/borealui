@@ -15,6 +15,8 @@ Options:
   --dry-run, --check              Show planned edits without writing files
   --install                       Run dependency install after edits
   --package-manager <name>        npm, pnpm, or yarn
+  --recommended-globals           Add a Boreal-safe Next globals.css baseline
+  --no-recommended-globals        Skip the recommended Next globals.css change
   --no-install                    Skip dependency installation
   --yes, -y                       Apply recommended edits without prompts
   --help, -h                      Show this help message

@@ -4,6 +4,8 @@ Boreal UI is a customizable, accessible React and Next.js component library with
 
 Use it when you want production-ready UI primitives that can be themed globally, customized per component, tested predictably, and imported in either standard React apps or Next.js app-router projects.
 
+[View the Boreal UI docs](https://www.borealui.ca)
+
 ## Highlights
 
 - **React and Next.js builds:** import from `boreal-ui/core` for React apps or `boreal-ui/next` for Next.js apps.
@@ -36,6 +38,7 @@ You can preview changes or run non-interactively:
 ```bash
 npx boreal-ui init --dry-run
 npx boreal-ui init --framework next --yes
+npx boreal-ui init --framework next --recommended-globals
 ```
 
 ## Setup
@@ -71,6 +74,40 @@ Import the Next stylesheet once from `app/layout.tsx`, `pages/_app.tsx`, or your
 
 ```tsx
 import "boreal-ui/next/globals.css";
+```
+
+If your Next.js app still has the starter `globals.css` reset below, avoid loading it after Boreal styles:
+
+```css
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+```
+
+The universal `padding` and `margin` reset can override spacing that Boreal components and nested content rely on. Prefer a narrower baseline:
+
+```css
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+```
+
+The CLI can create or repair that safer baseline for Next.js apps:
+
+```bash
+npx boreal-ui init --framework next --recommended-globals
 ```
 
 Then import components from the Next build:

@@ -18,6 +18,42 @@ import "boreal-ui/next/globals.css";
 
 The global stylesheet provides CSS variables, resets, theme values, animations, and shared utility styles used by components.
 
+Be careful with the default `globals.css` created by many Next.js starters:
+
+```css
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+```
+
+When that reset is loaded after Boreal, the universal `padding` and `margin` declarations can override spacing used by Boreal components and nested content. A safer app-level baseline is:
+
+```css
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+```
+
+Keep broader spacing rules scoped to your app shell, page layouts, or utility classes so they do not erase component-level padding and margins.
+
+The CLI can create or repair that safer baseline for Next.js apps:
+
+```bash
+npx boreal-ui init --framework next --recommended-globals
+```
+
 ## Shared Style Props
 
 Many components support a common styling vocabulary.

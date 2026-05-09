@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import {
   existsSync,
+  mkdirSync,
   readFileSync,
   statSync,
   writeFileSync,
@@ -23,6 +24,20 @@ const BOREAL_CONFIG_CALL = `setBorealStyleConfig({
   defaultColorSchemeName: "Forest Dusk",
 });
 `;
+const NEXT_RECOMMENDED_GLOBALS = `html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+`;
 
 export async function initCommand(rawOptions) {
   const options = await promptForOptions(rawOptions);
@@ -41,7 +56,7 @@ export async function initCommand(rawOptions) {
   const packageJson = readPackageJson(packageJsonPath);
   const framework = resolveFramework(root, packageJson, options.framework);
   const packageManager = resolvePackageManager(root, options.packageManager);
-  const plan = createSetupPlan(root, packageJsonPath, packageJson, framework);
+  const plan = createSetupPlan(root, packageJsonPath, packageJson, framework, options);
 
   if (plan.length === 0) {
     console.log("Boreal UI already looks configured for this project.");
@@ -60,6 +75,7 @@ export async function initCommand(rawOptions) {
   try {
     for (const change of plan) {
       if (await shouldApplyChange(rl, change, options.yes)) {
+        mkdirSync(dirname(change.path), { recursive: true });
         writeFileSync(change.path, change.nextContents, "utf8");
         appliedCount += 1;
         console.log(`Updated ${relative(root, change.path) || basename(change.path)}`);
@@ -114,13 +130,13 @@ function resolvePackageManager(root, requestedPackageManager) {
   return "npm";
 }
 
-function createSetupPlan(root, packageJsonPath, packageJson, framework) {
+function createSetupPlan(root, packageJsonPath, packageJson, framework, options) {
   const changes = [];
 
   addPackageJsonChange(changes, packageJsonPath, packageJson);
 
   if (framework === "next") {
-    addNextChanges(changes, root);
+    addNextChanges(changes, root, options);
     return changes;
   }
 
@@ -179,11 +195,19 @@ function addReactChanges(changes, root) {
   }
 }
 
-function addNextChanges(changes, root) {
+function addNextChanges(changes, root, options) {
   const pagesAppPath = findFirst(root, nextPagesAppCandidates());
 
   if (pagesAppPath) {
-    addNextPagesRouterChange(changes, pagesAppPath);
+    const globalsPath = resolveNextGlobalsPath(root, pagesAppPath, "pages", options);
+
+    addNextPagesRouterChange(changes, pagesAppPath, globalsPath);
+    addNextRecommendedGlobalsChange(changes, root, {
+      enabled: options.recommendedGlobals,
+      globalsPath,
+      routerEntryPath: pagesAppPath,
+      routerType: "pages",
+    });
     return;
   }
 
@@ -197,16 +221,30 @@ function addNextChanges(changes, root) {
   const resolvedProviderPath =
     providerPath ?? join(dirname(layoutPath), `boreal-provider.${extensionFor(layoutPath)}`);
   const providerImportPath = `./${basename(resolvedProviderPath).replace(/\.[^.]+$/, "")}`;
+  const globalsPath = resolveNextGlobalsPath(root, layoutPath, "app", options);
 
   addNextProviderChange(changes, resolvedProviderPath);
-  addNextLayoutChange(changes, layoutPath, providerImportPath);
+  addNextLayoutChange(changes, layoutPath, providerImportPath, globalsPath);
+  addNextRecommendedGlobalsChange(changes, root, {
+    enabled: options.recommendedGlobals,
+    globalsPath,
+    routerEntryPath: layoutPath,
+    routerType: "app",
+  });
 }
 
-function addNextPagesRouterChange(changes, pagesAppPath) {
+function addNextPagesRouterChange(changes, pagesAppPath, globalsPath) {
   const source = readFileSync(pagesAppPath, "utf8");
   let nextSource = source;
 
   nextSource = ensureSideEffectImport(nextSource, "boreal-ui/next/globals.css");
+  if (globalsPath) {
+    nextSource = ensureSideEffectImportAfter(
+      nextSource,
+      toImportSpecifier(pagesAppPath, globalsPath),
+      "boreal-ui/next/globals.css",
+    );
+  }
   nextSource = ensureNamedImport(nextSource, "boreal-ui/next", [
     "ThemeProvider",
     "setBorealStyleConfig",
@@ -224,13 +262,20 @@ function addNextPagesRouterChange(changes, pagesAppPath) {
   }
 }
 
-function addNextLayoutChange(changes, layoutPath, providerImportPath) {
+function addNextLayoutChange(changes, layoutPath, providerImportPath, globalsPath) {
   const source = readFileSync(layoutPath, "utf8");
   let nextSource = source;
   const providerImportName =
     getDefaultImportName(source, providerImportPath) ?? "BorealProvider";
 
   nextSource = ensureSideEffectImport(nextSource, "boreal-ui/next/globals.css");
+  if (globalsPath) {
+    nextSource = ensureSideEffectImportAfter(
+      nextSource,
+      toImportSpecifier(layoutPath, globalsPath),
+      "boreal-ui/next/globals.css",
+    );
+  }
   nextSource = ensureDefaultImport(nextSource, providerImportName, providerImportPath);
   nextSource = ensureNextLayoutProvider(nextSource, providerImportName);
 
@@ -272,12 +317,71 @@ function addNextProviderChange(changes, providerPath) {
   }
 }
 
+function addNextRecommendedGlobalsChange(
+  changes,
+  root,
+  { enabled, globalsPath, routerEntryPath, routerType },
+) {
+  if (!enabled) return;
+
+  const resolvedGlobalsPath =
+    globalsPath ?? defaultNextGlobalsPath(root, routerEntryPath, routerType);
+  const exists = existsSync(resolvedGlobalsPath);
+  const source = exists ? readFileSync(resolvedGlobalsPath, "utf8") : "";
+  const nextSource = ensureRecommendedNextGlobals(source);
+
+  if (nextSource !== source) {
+    changes.push({
+      path: resolvedGlobalsPath,
+      summary: exists
+        ? "Replace broad Next.js global spacing resets with a Boreal-safe globals.css baseline."
+        : "Create a Boreal-safe Next.js globals.css baseline.",
+      nextContents: nextSource,
+    });
+  }
+}
+
+function resolveNextGlobalsPath(root, routerEntryPath, routerType, options) {
+  if (!options.recommendedGlobals) return undefined;
+
+  return (
+    findFirst(root, nextGlobalsCandidates()) ??
+    defaultNextGlobalsPath(root, routerEntryPath, routerType)
+  );
+}
+
+function toImportSpecifier(fromPath, targetPath) {
+  let specifier = relative(dirname(fromPath), targetPath).replace(/\\/g, "/");
+
+  if (!specifier.startsWith(".")) {
+    specifier = `./${specifier}`;
+  }
+
+  return specifier;
+}
+
 function ensureSideEffectImport(source, specifier) {
   if (source.includes(`"${specifier}"`) || source.includes(`'${specifier}'`)) {
     return source;
   }
 
   return insertAfterUseClient(source, `import "${specifier}";\n`);
+}
+
+function ensureSideEffectImportAfter(source, specifier, afterSpecifier) {
+  if (source.includes(`"${specifier}"`) || source.includes(`'${specifier}'`)) {
+    return source;
+  }
+
+  const afterImportRegex = new RegExp(
+    `(import\\s*["']${escapeRegExp(afterSpecifier)}["'];?\\s*)`,
+  );
+
+  if (afterImportRegex.test(source)) {
+    return source.replace(afterImportRegex, `$1import "${specifier}";\n`);
+  }
+
+  return ensureSideEffectImport(source, specifier);
 }
 
 function ensureNamedImport(source, specifier, names) {
@@ -420,6 +524,29 @@ function ensureUseClient(source) {
   return `"use client";\n\n${source}`;
 }
 
+function ensureRecommendedNextGlobals(source) {
+  if (!source.trim()) return NEXT_RECOMMENDED_GLOBALS;
+
+  const starterResetRegex = /\*\s*\{(?=[^}]*box-sizing\s*:\s*border-box\s*;?)(?=[^}]*padding\s*:\s*0\s*;?)(?=[^}]*margin\s*:\s*0\s*;?)[^}]*\}/m;
+  const hasRecommendedBoxSizing =
+    /html\s*\{[^}]*box-sizing\s*:\s*border-box\s*;?[^}]*\}/m.test(source) &&
+    /\*\s*,\s*\*::before\s*,\s*\*::after\s*\{[^}]*box-sizing\s*:\s*inherit\s*;?[^}]*\}/m.test(source);
+
+  let nextSource = source;
+
+  if (starterResetRegex.test(nextSource)) {
+    nextSource = nextSource.replace(starterResetRegex, NEXT_RECOMMENDED_GLOBALS.trimEnd());
+  } else if (!hasRecommendedBoxSizing) {
+    nextSource = `${NEXT_RECOMMENDED_GLOBALS}\n${nextSource}`;
+  }
+
+  if (!/body\s*\{[^}]*margin\s*:\s*0\s*;?[^}]*\}/m.test(nextSource)) {
+    nextSource = `${nextSource.trimEnd()}\n\nbody {\n  margin: 0;\n}\n`;
+  }
+
+  return nextSource.endsWith("\n") ? nextSource : `${nextSource}\n`;
+}
+
 function insertAfterUseClient(source, text) {
   const useClientRegex = /^(\s*["']use client["'];?\s*)/;
   const match = source.match(useClientRegex);
@@ -499,6 +626,26 @@ function nextPagesAppCandidates() {
     `pages/_app.${extension}`,
     `src/pages/_app.${extension}`,
   ]);
+}
+
+function nextGlobalsCandidates() {
+  return [
+    "app/globals.css",
+    "src/app/globals.css",
+    "styles/globals.css",
+    "src/styles/globals.css",
+  ];
+}
+
+function defaultNextGlobalsPath(root, routerEntryPath, routerType) {
+  if (routerType === "app") {
+    return join(dirname(routerEntryPath), "globals.css");
+  }
+
+  const pagesDirectory = dirname(routerEntryPath);
+  const sourceDirectory = basename(pagesDirectory) === "pages" ? dirname(pagesDirectory) : root;
+
+  return join(sourceDirectory, "styles", "globals.css");
 }
 
 function nextProviderCandidates(layoutDirectory) {
