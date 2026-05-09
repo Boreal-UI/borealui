@@ -56,6 +56,7 @@ export async function initCommand(rawOptions) {
   const packageJson = readPackageJson(packageJsonPath);
   const framework = resolveFramework(root, packageJson, options.framework);
   const packageManager = resolvePackageManager(root, options.packageManager);
+  options.recommendedGlobals = await resolveRecommendedGlobalsOption(options, framework);
   const plan = createSetupPlan(root, packageJsonPath, packageJson, framework, options);
 
   if (plan.length === 0) {
@@ -128,6 +129,25 @@ function resolvePackageManager(root, requestedPackageManager) {
   if (existsSync(join(root, "pnpm-lock.yaml"))) return "pnpm";
   if (existsSync(join(root, "yarn.lock"))) return "yarn";
   return "npm";
+}
+
+async function resolveRecommendedGlobalsOption(options, framework) {
+  if (framework !== "next") return false;
+  if (typeof options.recommendedGlobals === "boolean") return options.recommendedGlobals;
+  if (options.yes) return true;
+  if (options.dryRun) return false;
+
+  const rl = createInterface({ input, output });
+
+  try {
+    return await promptBoolean(
+      rl,
+      "Create or repair a Boreal-safe Next globals.css baseline?",
+      true,
+    );
+  } finally {
+    rl.close();
+  }
 }
 
 function createSetupPlan(root, packageJsonPath, packageJson, framework, options) {
@@ -680,6 +700,17 @@ async function shouldApplyChange(rl, change, yes) {
     .toLowerCase();
 
   return !answer || ["y", "yes", "true", "1"].includes(answer);
+}
+
+async function promptBoolean(rl, question, defaultValue) {
+  const suffix = defaultValue ? "Y/n" : "y/N";
+  const answer = (await rl.question(`${question} (${suffix}): `))
+    .trim()
+    .toLowerCase();
+
+  if (!answer) return defaultValue;
+
+  return ["y", "yes", "true", "1"].includes(answer);
 }
 
 function printPlan(root, framework, plan, dryRun) {

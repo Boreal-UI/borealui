@@ -54,6 +54,8 @@ The CLI can create or repair that safer baseline for Next.js apps:
 npx boreal-ui init --framework next --recommended-globals
 ```
 
+Interactive Next.js setup prompts for this by default. Use `--recommended-globals` to apply it without the prompt, or `--no-recommended-globals` to skip it.
+
 ## Shared Style Props
 
 Many components support a common styling vocabulary.

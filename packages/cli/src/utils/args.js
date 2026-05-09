@@ -8,7 +8,7 @@ export async function parseArgs(argv) {
     framework: undefined,
     install: undefined,
     packageManager: undefined,
-    recommendedGlobals: false,
+    recommendedGlobals: undefined,
     dryRun: false,
     yes: false,
   };
