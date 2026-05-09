@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import ThemeProvider, { ThemeContext } from "../../src/context/ThemeContext";
+import NextThemeProvider from "../../src/context/NextThemeProvider";
 import type { ThemeContextType } from "../../src/context/ThemeContext.types";
 
 jest.mock("../../src/styles/Themes", () => ({
@@ -337,6 +338,36 @@ describe("ThemeProvider", () => {
       document.documentElement.style.getPropertyValue("--primary-color"),
     ).toBe("#005577");
     expect(document.documentElement.dataset.borealTheme).toBe("Ocean Breeze");
+  });
+
+  it("can skip rendering the pre-hydration theme script", () => {
+    const { container } = render(
+      <ThemeProvider enableThemeScript={false}>
+        <Consumer />
+      </ThemeProvider>,
+    );
+
+    expect(container.querySelector("script")).toBeNull();
+  });
+
+  it("skips the pre-hydration theme script by default for the Next provider", () => {
+    const { container } = render(
+      <NextThemeProvider>
+        <Consumer />
+      </NextThemeProvider>,
+    );
+
+    expect(container.querySelector("script")).toBeNull();
+  });
+
+  it("allows the Next provider to opt into the pre-hydration theme script", () => {
+    const { container } = render(
+      <NextThemeProvider enableThemeScript>
+        <Consumer />
+      </NextThemeProvider>,
+    );
+
+    expect(container.querySelector("script")).not.toBeNull();
   });
 
   it("updates selectedScheme through context and saves the scheme name", async () => {

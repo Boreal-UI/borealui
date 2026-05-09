@@ -1,6 +1,7 @@
 {
   "name": "boreal-ui",
-  "version": "0.0.888",
+  "version": "0.0.890",
+  "readme": "README.npm.md",
   "description": "A modern, customizable React/Next.js component library",
   "author": "Davin Chiupka",
   "license": "MIT",
@@ -398,6 +399,7 @@
       "require": "./dist/core/TextInput.cjs.js"
     },
     "./core/ThemeProvider": {
+      "types": "./dist/types/core/ThemeProvider.d.ts",
       "import": "./dist/core/ThemeProvider.js",
       "require": "./dist/core/ThemeProvider.cjs.js"
     },
@@ -630,6 +632,7 @@
       "import": "./dist/next/TextInput.js"
     },
     "./next/ThemeProvider": {
+      "types": "./dist/types/next/ThemeProvider.d.ts",
       "import": "./dist/next/ThemeProvider.js"
     },
     "./next/Timeline": {

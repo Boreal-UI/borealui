@@ -23,6 +23,7 @@ export const ThemeContext = createContext<ThemeContextType | undefined>(
 const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   customSchemes = [],
+  enableThemeScript = true,
   initialSchemeName,
   useOnlyCustomSchemes = false,
 }) => {
@@ -106,16 +107,18 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
         schemes,
       }}
     >
-      <script
-        dangerouslySetInnerHTML={{
-          __html: getThemeInitializationScript({
-            customSchemes: parsedCustomSchemes,
-            initialSchemeName,
-            useOnlyCustomSchemes,
-          }),
-        }}
-        suppressHydrationWarning
-      />
+      {enableThemeScript ? (
+        <script
+          dangerouslySetInnerHTML={{
+            __html: getThemeInitializationScript({
+              customSchemes: parsedCustomSchemes,
+              initialSchemeName,
+              useOnlyCustomSchemes,
+            }),
+          }}
+          suppressHydrationWarning
+        />
+      ) : null}
       {children}
     </ThemeContext.Provider>
   );

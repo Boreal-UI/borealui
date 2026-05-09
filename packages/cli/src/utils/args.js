@@ -8,6 +8,7 @@ export async function parseArgs(argv) {
     framework: undefined,
     install: undefined,
     packageManager: undefined,
+    recommendedGlobals: undefined,
     dryRun: false,
     yes: false,
   };
@@ -65,6 +66,14 @@ export async function parseArgs(argv) {
 
       case "--package-manager":
         options.packageManager = rest.shift();
+        break;
+
+      case "--recommended-globals":
+        options.recommendedGlobals = true;
+        break;
+
+      case "--no-recommended-globals":
+        options.recommendedGlobals = false;
         break;
 
       default:
