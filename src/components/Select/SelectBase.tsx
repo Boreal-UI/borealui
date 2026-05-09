@@ -1,9 +1,12 @@
 import {
   forwardRef,
   ChangeEvent,
+  MouseEvent,
   useId,
   useMemo,
   useEffect,
+  useImperativeHandle,
+  useRef,
   useState,
 } from "react";
 import { ChevronDownIcon } from "../../Icons";
@@ -74,6 +77,9 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
     const [internalOptions, setInternalOptions] = useState(options);
     const [loading, setLoading] = useState(false);
+    const selectRef = useRef<HTMLSelectElement>(null);
+
+    useImperativeHandle(ref, () => selectRef.current as HTMLSelectElement);
 
     const hasLabel = Boolean(label);
 
@@ -148,6 +154,13 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       onChange(event.target.value);
     };
 
+    const handleWrapperClick = (event: MouseEvent<HTMLDivElement>) => {
+      if (disabled || event.target === selectRef.current) return;
+
+      selectRef.current?.focus();
+      selectRef.current?.click();
+    };
+
     const wrapperClasses = useMemo(
       () =>
         combineClassNames(
@@ -203,9 +216,13 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           resolvedLabelPosition === "left") &&
           labelNode}
 
-        <div className={wrapperClasses} data-testid={testId}>
+        <div
+          className={wrapperClasses}
+          data-testid={testId}
+          onClick={handleWrapperClick}
+        >
           <select
-            ref={ref}
+            ref={selectRef}
             id={selectId}
             name={name}
             form={form}

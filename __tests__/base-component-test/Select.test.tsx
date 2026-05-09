@@ -254,6 +254,45 @@ describe("BaseSelect", () => {
     expect(iconWrapper).toHaveAttribute("aria-hidden", "true");
   });
 
+  it("forwards wrapper clicks to the native select", () => {
+    render(<BaseSelect {...defaultProps} aria-label="Fruit select" />);
+
+    const wrapper = screen.getByTestId("select");
+    const select = screen.getByTestId("select-input") as HTMLSelectElement;
+    const focusSpy = jest.spyOn(select, "focus");
+    const clickSpy = jest.spyOn(select, "click");
+
+    fireEvent.click(wrapper);
+
+    expect(focusSpy).toHaveBeenCalledTimes(1);
+    expect(clickSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it("does not forward direct select clicks back to the native select", () => {
+    render(<BaseSelect {...defaultProps} aria-label="Fruit select" />);
+
+    const select = screen.getByTestId("select-input") as HTMLSelectElement;
+    const clickSpy = jest.spyOn(select, "click");
+
+    fireEvent.click(select);
+
+    expect(clickSpy).not.toHaveBeenCalled();
+  });
+
+  it("does not forward wrapper clicks when disabled", () => {
+    render(<BaseSelect {...defaultProps} aria-label="Fruit select" disabled />);
+
+    const wrapper = screen.getByTestId("select");
+    const select = screen.getByTestId("select-input") as HTMLSelectElement;
+    const focusSpy = jest.spyOn(select, "focus");
+    const clickSpy = jest.spyOn(select, "click");
+
+    fireEvent.click(wrapper);
+
+    expect(focusSpy).not.toHaveBeenCalled();
+    expect(clickSpy).not.toHaveBeenCalled();
+  });
+
   it("renders a visible label when provided", () => {
     render(
       <BaseSelect
