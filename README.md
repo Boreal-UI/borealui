@@ -41,6 +41,8 @@ npx boreal-ui init --framework next --yes
 npx boreal-ui init --framework next --recommended-globals
 ```
 
+See [CLI guide](./docs/cli.md) for all commands, options, prompts, and generated file changes.
+
 ## Setup
 
 Import the global stylesheet once near the top of your application.
