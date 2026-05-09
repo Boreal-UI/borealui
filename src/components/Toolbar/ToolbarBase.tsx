@@ -3,6 +3,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { ToolbarBaseProps } from "./Toolbar.types";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -16,13 +17,14 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   right,
   avatar,
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   attachment = "static",
   shadow = getDefaultShadow(),
   rounding = getDefaultRounding(),
   className = "",
   titleClassName = "",
-  "data-testid": testId = "toolbar",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "toolbar",
   "aria-label": ariaLabelProp,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,

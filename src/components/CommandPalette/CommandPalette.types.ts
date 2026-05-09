@@ -48,7 +48,11 @@ export interface CommandPaletteProps
   /** Array of available command options. */
   commands: CommandItem[];
 
-  /** Optional placeholder for the input field. */
+  /**
+   * Optional placeholder for the input field.
+   *
+   * @default "Search..."
+   */
   placeholder?: string;
 
   /** Custom classname for the command palette. */
@@ -57,30 +61,40 @@ export interface CommandPaletteProps
   /**
    * Theme style for the palette
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * If true, applies a translucent glass surface using the selected theme/state.
    * Defaults to `false`.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * Rounding style for the palette
    * ('none' | 'small' | 'medium' | 'large' | 'full').
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style for the palette
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * The state of the command palette
    * ('success' | 'error' | 'warning' | 'disabled' | '').
+   *
+   * @default ""
    */
   state?: StateType;
 
@@ -93,7 +107,11 @@ export interface CommandPaletteProps
   /** Callback to handle the search input asynchronously. */
   asyncSearch?: (query: string) => Promise<CommandItem[]>;
 
-  /** Optional debounce time (in ms) for the search input. */
+  /**
+   * Optional debounce time (in ms) for the search input.
+   *
+   * @default 300
+   */
   debounceMs?: number;
 
   /** Accessible label for the search input. */
@@ -117,25 +135,57 @@ export interface CommandPaletteProps
   /** Optional ID for the palette container/dialog. */
   paletteId?: string;
 
-  /** Accessible label for the command results list. */
+  /**
+   * Accessible label for the command results list.
+   *
+   * @default "Command suggestions"
+   */
   listAriaLabel?: string;
 
-  /** Message announced when there are no matching commands. */
+  /**
+   * Message announced when there are no matching commands.
+   *
+   * @default "No matching results"
+   */
   emptyMessage?: string;
 
-  /** Accessible live region message prefix for result count updates. */
+  /**
+   * Accessible live region message prefix for result count updates.
+   *
+   * @default "results available"
+   */
   resultsAnnouncement?: string;
 
-  /** Whether the palette should behave like a modal dialog for assistive tech. */
+  /**
+   * Whether the palette should behave like a modal dialog for assistive tech.
+   *
+   * @default true
+   */
   modal?: boolean;
 
-  /** Whether focus should be trapped while the palette is open. */
+  /**
+   * Whether focus should be trapped while the palette is open.
+   *
+   * @default false
+   */
   trapFocus?: boolean;
 
-  /** Whether focus should return to the trigger element on close. */
+  /**
+   * Whether focus should return to the trigger element on close.
+   *
+   * @default true
+   */
   restoreFocusOnClose?: boolean;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "command-palette"
+   */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

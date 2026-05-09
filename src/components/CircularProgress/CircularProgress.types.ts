@@ -11,19 +11,33 @@ export interface CircularProgressProps extends Omit<
   /** Current value to be visualized (e.g., 75). */
   value: number;
 
-  /** Minimum value for the range (default: 0). */
+  /**
+   * Minimum value for the range (default: 0).
+   *
+   * @default 0
+   */
   min?: number;
 
-  /** Maximum value for the range (default: 100). */
+  /**
+   * Maximum value for the range (default: 100).
+   *
+   * @default 100
+   */
   max?: number;
 
   /**
    * Visible label fallback and default accessible name.
    * Used only when no aria-label or aria-labelledby is provided.
+   *
+   * @default "Progress"
    */
   label?: string;
 
-  /** Whether to show raw value (e.g., "75/100") instead of percent. */
+  /**
+   * Whether to show raw value (e.g., "75/100") instead of percent.
+   *
+   * @default false
+   */
   showRaw?: boolean;
 
   /**
@@ -52,6 +66,8 @@ export interface CircularProgressProps extends Omit<
   /**
    * Marks the component as decorative.
    * When true, the progressbar will be hidden from assistive technology.
+   *
+   * @default false
    */
   decorative?: boolean;
 
@@ -60,42 +76,66 @@ export interface CircularProgressProps extends Omit<
    * by assistive technologies.
    *
    * Default: false, because the progressbar itself already exposes value via ARIA.
+   *
+   * @default false
    */
   announceInnerValue?: boolean;
 
   /**
    * Size of the component
    * ('xs' | 'small' | 'medium' | 'large' | 'xl').
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * Optional theme for the component
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Optional shadow style for the component
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * State of progress
    * ('success' | 'error' | 'warning' | 'disabled' | '').
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Applies a translucent frosted-glass treatment using the active theme palette.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
-  /** Optional class name for custom styling. */
+  /**
+   * Optional class name for custom styling.
+   *
+   * @default ""
+   */
   className?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "circular-progress"
+   */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

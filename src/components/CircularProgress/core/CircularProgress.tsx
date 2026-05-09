@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import CircularProgressBase from "../CircularProgressBase";
 import "./CircularProgress.scss";
@@ -35,7 +36,7 @@ const classes = {
 };
 
 const CircularProgress: React.FC<CircularProgressProps> = (props) => (
-  <CircularProgressBase {...props} classMap={classes} />
+  <CircularProgressBase {...props} classMap={expandClassMap(classes)} />
 );
 CircularProgress.displayName = "CircularProgress";
 export default CircularProgress;

@@ -29,54 +29,86 @@ export interface DateTimePickerProps {
   /** Name attribute for form submission. */
   name?: string;
 
-  /** Additional class name for custom styling. */
+  /**
+   * Additional class name for custom styling.
+   *
+   * @default ""
+   */
   className?: string;
 
-  /** Whether the input is required for form validation. */
+  /**
+   * Whether the input is required for form validation.
+   *
+   * @default false
+   */
   required?: boolean;
 
-  /** Whether the input is disabled. */
+  /**
+   * Whether the input is disabled.
+   *
+   * @default false
+   */
   disabled?: boolean;
 
   /**
    * Thematic style of the input
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Adds translucent glass styling to the input surface.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State of the input
    * ('success' | 'error' | 'warning' | 'disabled' | '').
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Controls the rounding of the input
    * ('none' | 'small' | 'medium' | 'large' | 'full').
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Controls the shadow of the input
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Size of the component
    * ('xs' | 'small' | 'medium' | 'large' | 'xl').
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /** Whether to use outlined styling. */
   outline?: boolean;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "datetime-picker"
+   */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /** Custom input id. */
@@ -109,13 +141,21 @@ export interface DateTimePickerProps {
   /** Marks the input as required for assistive technologies. */
   "aria-required"?: boolean;
 
-  /** Whether the input should be read-only. */
+  /**
+   * Whether the input should be read-only.
+   *
+   * @default false
+   */
   readOnly?: boolean;
 
   /** Optional placeholder text. */
   placeholder?: string;
 
-  /** Optional autocomplete value. */
+  /**
+   * Optional autocomplete value.
+   *
+   * @default "off"
+   */
   autoComplete?: InputHTMLAttributes<HTMLInputElement>["autoComplete"];
 
   /** Optional title/tooltip for the input. */

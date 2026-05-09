@@ -3,6 +3,9 @@
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 $small-gap: var(--spacing-xxs);
 $medium-gap: var(--spacing-sm);
 $large-gap: var(--spacing-lg);
@@ -101,4 +104,5 @@ $large-gap: var(--spacing-lg);
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
   }
+}
 }

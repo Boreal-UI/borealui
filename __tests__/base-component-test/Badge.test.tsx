@@ -224,6 +224,21 @@ describe("BadgeBase", () => {
     expect(badge).not.toHaveAttribute("rel");
   });
 
+  it("applies custom target and rel for link badges", () => {
+    renderBadge(
+      {
+        href: "/release-notes",
+        target: "_blank",
+        rel: "external",
+      },
+      "Release Notes",
+    );
+
+    const badge = screen.getByTestId("badge-main");
+    expect(badge).toHaveAttribute("target", "_blank");
+    expect(badge).toHaveAttribute("rel", "external");
+  });
+
   it("renders disabled anchor without href and with aria-disabled", () => {
     renderBadge({ href: "/dashboard", disabled: true }, "Disabled Link");
 
@@ -246,7 +261,9 @@ describe("BadgeBase", () => {
   });
 
   it("calls onClick for enabled anchor", () => {
-    const handleClick = jest.fn();
+    const handleClick = jest.fn((event: React.MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+    });
     renderBadge({ href: "/dashboard", onClick: handleClick }, "Enabled Link");
 
     fireEvent.click(screen.getByTestId("badge-main"));

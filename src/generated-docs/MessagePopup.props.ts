@@ -12,6 +12,15 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
   "sourcePath": "src\\components\\MessagePopup\\MessagePopup.types.ts",
   "props": [
     {
+      "name": "actionsClassName",
+      "type": "string",
+      "description": "Additional class names for the actions wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "aria-describedby",
       "type": "string",
       "description": "Optional ID of an external element that describes the dialog. Useful when the popup description should point to custom content.",
@@ -33,7 +42,8 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the close button. Defaults to \"Close popup\".",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Close popup\""
     },
     {
       "name": "aria-labelledby",
@@ -52,12 +62,31 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "category": "aria"
     },
     {
+      "name": "bodyClassName",
+      "type": "string",
+      "description": "Additional class names for the body section.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "cancelButtonClassName",
+      "type": "string",
+      "description": "Additional class names for the cancel button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "cancelText",
       "type": "string",
       "description": "Optional text for the cancel button (default: \"Cancel\").",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Cancel\""
     },
     {
       "name": "className",
@@ -65,7 +94,26 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class names for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "closeButtonClassName",
+      "type": "string",
+      "description": "Additional class names for the close button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "confirmButtonClassName",
+      "type": "string",
+      "description": "Additional class names for the confirm button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "confirmText",
@@ -73,7 +121,17 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Optional text for the confirm button (default: \"Confirm\").",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Confirm\""
+    },
+    {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "Additional class names for the dialog content panel.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "controlsRounding",
@@ -81,12 +139,13 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Optional rounding for controls in the message popup. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for targeting the component during testing.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -97,7 +156,17 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Optional role for the popup container. Defaults to \"dialog\". Use \"alertdialog\" for urgent confirmations.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"dialog\""
+    },
+    {
+      "name": "headerClassName",
+      "type": "string",
+      "description": "Additional class names for the header section.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "message",
@@ -106,6 +175,15 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "required": true,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "messageClassName",
+      "type": "string",
+      "description": "Additional class names for the message text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "onCancel",
@@ -137,7 +215,8 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Optional rounding for the message popup. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -145,7 +224,17 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Optional shadow for the message popup. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"message-popup\""
     },
     {
       "name": "title",
@@ -154,6 +243,15 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "titleClassName",
+      "type": "string",
+      "description": "Additional class names for the title element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     }
   ]
 };

@@ -25,7 +25,8 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the notification center region.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Notification center\""
     },
     {
       "name": "aria-labelledby",
@@ -36,12 +37,40 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "category": "aria"
     },
     {
+      "name": "bodyClassName",
+      "type": "string",
+      "description": "Additional class names for the live-region/body section.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Additional class names for the notification center wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "clearAllAriaLabel",
       "type": "string",
       "description": "Accessible label for the clear all button.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Clear all notifications\""
+    },
+    {
+      "name": "clearAllClassName",
+      "type": "string",
+      "description": "Additional class names for the clear-all button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "clearOldOnOverflow",
@@ -49,7 +78,26 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "If true, clears the oldest notifications when over the maximum.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
+    },
+    {
+      "name": "closeButtonClassName",
+      "type": "string",
+      "description": "Additional class names for each dismiss button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "Additional class names for each notification content wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "controlRounding",
@@ -57,7 +105,8 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Rounding for the notification control. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "controlShadow",
@@ -65,12 +114,13 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Shadow for the notification control. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -81,7 +131,17 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Prefix used to build dismiss button labels.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Dismiss notification\""
+    },
+    {
+      "name": "emptyClassName",
+      "type": "string",
+      "description": "Additional class names for the empty state text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "emptyMessage",
@@ -89,7 +149,8 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Accessible text announced when there are no notifications.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"No notifications.\""
     },
     {
       "name": "fetchNotifications",
@@ -100,6 +161,24 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "headerClassName",
+      "type": "string",
+      "description": "Additional class names for the header section.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class names for each notification icon.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "list-aria-label",
       "type": "string",
       "description": "Accessible label for the notifications list when needed.",
@@ -108,12 +187,22 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "listClassName",
+      "type": "string",
+      "description": "Additional class names for the notification list.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "liveRegionAtomic",
       "type": "boolean",
       "description": "Whether the live region should announce the entire region or only changed content.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "liveRegionPoliteness",
@@ -121,7 +210,8 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Live region politeness level for notification updates.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"polite\""
     },
     {
       "name": "liveRegionRelevant",
@@ -129,7 +219,8 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Which kinds of changes should be announced by assistive technology.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"additions text\""
     },
     {
       "name": "maxNotifications",
@@ -137,7 +228,26 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Maximum number of notifications to display.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "10"
+    },
+    {
+      "name": "messageClassName",
+      "type": "string",
+      "description": "Additional class names for each notification message.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "notificationClassName",
+      "type": "string",
+      "description": "Additional class names for each notification item.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "notificationRounding",
@@ -145,7 +255,8 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the notification. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "notifications",
@@ -161,7 +272,8 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the notification. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "onClearAll",
@@ -185,7 +297,8 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Optional interval (in milliseconds) at which to fetch more notifications.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "5000"
     },
     {
       "name": "setNotifications",
@@ -201,7 +314,26 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Whether to show a \"Clear All\" button if notifications are present.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"notification-center\""
+    },
+    {
+      "name": "timestampClassName",
+      "type": "string",
+      "description": "Additional class names for each notification timestamp.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     }
   ]
 };

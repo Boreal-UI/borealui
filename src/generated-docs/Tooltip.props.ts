@@ -46,7 +46,7 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -57,7 +57,8 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "id",
@@ -73,7 +74,8 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
       "description": "Whether the tooltip should remain in the accessibility tree when hidden. Defaults to false behavior via aria-hidden.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "position",
@@ -81,7 +83,8 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
       "description": "The position of the tooltip relative to the target element. \"top\" | \"bottom\" | \"left\" | \"right\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"top\""
     },
     {
       "name": "rounding",
@@ -89,7 +92,8 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
       "description": "Rounding style of the tooltip. \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -97,7 +101,8 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style of the tooltip. \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "state",
@@ -105,7 +110,17 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
       "description": "State of the tooltip for visual feedback. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"tooltip\""
     },
     {
       "name": "theme",
@@ -113,7 +128,8 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
       "description": "Theme style of the tooltip. \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "triggerAriaDescribedBy",

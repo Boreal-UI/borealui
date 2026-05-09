@@ -41,7 +41,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Optional visible or screen-reader-only caption text for the table. A table caption is the preferred built-in table label.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Data table\""
     },
     {
       "name": "cellClassName",
@@ -57,7 +58,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Optional class name for the table wrapper.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "colCount",
@@ -86,7 +88,7 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -105,7 +107,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Default sort order on initial render ('asc' | 'desc').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"asc\""
     },
     {
       "name": "emptyMessage",
@@ -113,7 +116,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Text shown when no rows are available.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"No data available\""
     },
     {
       "name": "getRowAriaDescription",
@@ -153,7 +157,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "If true, applies a translucent glass surface using the selected theme/state. Defaults to `false`.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "hideCaption",
@@ -161,7 +166,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Whether the caption should be visually hidden. Useful when you want semantic labeling without visible UI.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "loading",
@@ -169,7 +175,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Whether the table is currently loading data.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "loadingMessage",
@@ -177,7 +184,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Accessible and/or visible loading message.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Loading data\""
     },
     {
       "name": "onRowClick",
@@ -201,7 +209,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Whether to use outline styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "rounding",
@@ -209,7 +218,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Rounding style for the table ('none' | 'small' | 'medium' | 'large' | 'full').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "rowClassName",
@@ -241,7 +251,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Whether to enable server-side sorting.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "shadow",
@@ -249,7 +260,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the data table ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "state",
@@ -257,7 +269,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "State of the table ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "striped",
@@ -265,7 +278,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Whether to use striped row styling.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "tableClassName",
@@ -284,6 +298,15 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"data-table\""
+    },
+    {
       "name": "theadClassName",
       "type": "string",
       "description": "Optional class name applied to the table head.",
@@ -297,7 +320,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Theme used for styling the table ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "wrapCells",
@@ -305,7 +329,8 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Allows table cells to wrap onto multiple lines. Can be overridden per column with column.wrap.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     }
   ]
 };

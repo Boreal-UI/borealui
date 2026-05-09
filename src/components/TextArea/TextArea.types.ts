@@ -26,6 +26,8 @@ export interface TextAreaProps extends Omit<
 
   /**
    * Position of the label relative to the textarea.
+   *
+   * @default "top"
    */
   labelPosition?: LabelPositionType;
 
@@ -42,21 +44,53 @@ export interface TextAreaProps extends Omit<
 
   /**
    * Placeholder text for the textarea.
+   *
+   * @default "Enter text"
    */
   placeholder?: string;
 
   /**
    * Additional custom CSS class name(s) to apply to the wrapper.
+   *
+   * @default ""
    */
   className?: string;
 
+  /** Additional class names for the outer layout container. */
+  containerClassName?: string;
+
+  /** Additional class names for the visible label. */
+  labelClassName?: string;
+
+  /** Additional class names for the icon wrapper. */
+  iconClassName?: string;
+
+  /** Additional class names for the textarea element. */
+  inputClassName?: string;
+
+  /** Additional class names for the resize handle. */
+  resizeHandleClassName?: string;
+
+  /** Additional class names for helper text. */
+  helperTextClassName?: string;
+
+  /** Additional class names for the error message. */
+  errorMessageClassName?: string;
+
+  /** Additional class names for screen-reader-only description text. */
+  srOnlyClassName?: string;
+
   /**
    * If true, renders the textarea as read-only.
+   *
+   * @default false
    */
   readOnly?: boolean;
 
   /**
    * Enables or disables autocomplete.
+   *
+   * @default false
    */
   autocomplete?: boolean;
 
@@ -90,41 +124,57 @@ export interface TextAreaProps extends Omit<
 
   /**
    * Theme used for styling.
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Adds translucent glass styling to the textarea wrapper.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State of the text area.
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Rounding of the component.
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow of the component.
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * If true, the textarea is styled with an outline.
+   *
+   * @default configured default outline setting (fallback: false)
    */
   outline?: boolean;
 
   /**
    * If true, the textarea is disabled.
+   *
+   * @default false
    */
   disabled?: boolean;
 
   /**
    * If false, the textarea is not resizable.
+   *
+   * @default true
    */
   resizable?: boolean;
 
@@ -133,8 +183,14 @@ export interface TextAreaProps extends Omit<
    */
   height?: string | number;
 
+
   /**
    * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "text-area"
    */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }

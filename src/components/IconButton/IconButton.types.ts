@@ -29,49 +29,91 @@ export interface IconButtonProps extends InteractiveProps {
     className?: string;
     "aria-hidden"?: boolean;
     focusable?: boolean;
+    /** Optional test ID for testing frameworks. */
+    testId?: string;
+
+    /** Backward-compatible alias for test ID attributes. */
     "data-testid"?: string;
   }>;
 
   /**
    * Theme style of the button.
    * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * State of the button.
    * One of: "success" | "error" | "warning" | "disabled" | ""
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Rounding style of the button.
    * One of: "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style of the button.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /** Optional href to turn the button into a link. */
   href?: string;
 
-  /** If true, opens the link in a new tab (used with `href`). */
+  /**
+   * If true, opens the link in a new tab (used with `href`).
+   *
+   * @default false
+   */
   isExternal?: boolean;
 
-  /** Custom class name for the icon. */
+  /**
+   * Custom class name for the icon.
+   *
+   * @default ""
+   */
   iconClassName?: string;
 
-  /** Custom class name for additional styling. */
+  /**
+   * Custom class name for the label/loading wrapper.
+   *
+   * @default ""
+   */
+  labelClassName?: string;
+
+  /**
+   * Custom class name for the loading indicator.
+   *
+   * @default ""
+   */
+  loaderClassName?: string;
+
+  /**
+   * Custom class name for additional styling.
+   *
+   * @default ""
+   */
   className?: string;
 
   /** Title attribute (native browser tooltip text). */
   title?: string;
 
-  /** Whether the button should be disabled. */
+  /**
+   * Whether the button should be disabled.
+   *
+   * @default false
+   */
   disabled?: boolean;
 
   /** Accessible label for screen readers. Required for icon-only usage unless title is provided. */
@@ -122,25 +164,37 @@ export interface IconButtonProps extends InteractiveProps {
   /** Optional role override for advanced accessible interaction patterns. */
   role?: React.AriaRole;
 
-  /** Whether to show a loading spinner instead of the icon. */
+  /**
+   * Whether to show a loading spinner instead of the icon.
+   *
+   * @default false
+   */
   loading?: boolean;
 
-  /** Whether the button should use an outline style. */
+  /**
+   * Whether the button should use an outline style.
+   *
+   * @default configured default outline setting (fallback: false)
+   */
   outline?: boolean;
 
   /**
    * Applies a translucent frosted-glass treatment using the active theme palette.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * Size of the button.
    * One of: "xs" | "small" | "medium" | "large" | "xl"
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
-   * Tooltip text (not rendered automatically—use `title` for built-in browser tooltip).
+   * Tooltip text (not rendered automatically; use `title` for built-in browser tooltip).
    */
   tooltip?: string;
 
@@ -152,13 +206,23 @@ export interface IconButtonProps extends InteractiveProps {
   /**
    * Native button type.
    * One of: "button" | "reset" | "submit"
+   *
+   * @default "button"
    */
   type?: "button" | "reset" | "submit";
 
   /** Optional tab index override. */
   tabIndex?: number;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "icon-button"
+   */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

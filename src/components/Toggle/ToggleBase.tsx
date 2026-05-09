@@ -3,6 +3,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { ToggleBaseProps } from "./Toggle.types";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -24,7 +25,7 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       "aria-disabled": ariaDisabled,
       tabIndex,
       theme = getDefaultTheme(),
-      glass = false,
+      glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       state = "",
@@ -32,7 +33,8 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       disabled = false,
       classMap,
       className,
-      "data-testid": testId = "toggle",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "toggle",
     },
     ref,
   ) => {

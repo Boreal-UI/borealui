@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import "./Accordion.scss";
 import { AccordionBase } from "../AccordionBase";
@@ -50,7 +51,7 @@ const generateUniqueId = (() => {
 })();
 
 const Accordion: React.FC<AccordionProps> = (props) => (
-  <AccordionBase {...props} getUniqueId={generateUniqueId} classMap={classes} />
+  <AccordionBase {...props} getUniqueId={generateUniqueId} classMap={expandClassMap(classes)} />
 );
 Accordion.displayName = "Accordion";
 export default Accordion;

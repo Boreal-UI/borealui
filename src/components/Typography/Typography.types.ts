@@ -50,6 +50,8 @@ export interface TypographyProps {
   /**
    * Predefined typography style variant.
    * Examples may include headings, body text, captions, or labels.
+   *
+   * @default "body"
    */
   variant?: TypographyVariant;
 
@@ -61,46 +63,64 @@ export interface TypographyProps {
 
   /**
    * Horizontal text alignment.
+   *
+   * @default "inherit"
    */
   align?: TypographyAlign;
 
   /**
    * Font weight of the text.
+   *
+   * @default "inherit"
    */
   weight?: TypographyWeight;
 
   /**
    * Visual theme style applied to the typography.
+   *
+   * @default "inherit"
    */
   theme?: TypographyTheme;
 
   /**
    * Applies a compact translucent frosted-glass treatment around the text.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * Whether the text should be displayed in italic style.
+   *
+   * @default false
    */
   italic?: boolean;
 
   /**
    * Whether the text should be underlined.
+   *
+   * @default false
    */
   underline?: boolean;
 
   /**
    * Whether overflowing text should be truncated, typically with an ellipsis.
+   *
+   * @default false
    */
   truncate?: boolean;
 
   /**
    * Whether the text should remain on a single line without wrapping.
+   *
+   * @default false
    */
   noWrap?: boolean;
 
   /**
    * Whether the text should be visually hidden but still available to screen readers.
+   *
+   * @default false
    */
   srOnly?: boolean;
 
@@ -128,6 +148,9 @@ export interface TypographyProps {
    * Optional test id used for testing the component.
    */
   testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
+  "data-testid"?: string;
 
   /**
    * Optional ARIA role for the rendered element.

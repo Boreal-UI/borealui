@@ -29,51 +29,78 @@ export interface StepperProps {
   activeStep: number;
   /** Optional callback when a step is clicked. */
   onStepClick?: (stepIndex: number) => void;
-  /** If true, disables backward navigation (users cannot go to previous steps). */
+  /**
+   * If true, disables backward navigation (users cannot go to previous steps).
+   *
+   * @default false
+   */
   disableBackNavigation?: boolean;
 
   /**
    * Orientation of the stepper.
    * "horizontal" | "vertical"
+   *
+   * @default "horizontal"
    */
   orientation?: OrientationType;
 
   /**
    * Theme style for the stepper.
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Adds glass styling to the step buttons.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State of the stepper.
    * "success" | "error" | "warning" | "disabled" | ""
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Shadow style for the stepper buttons.
    * "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Rounding of the stepper buttons.
    * "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Size of the stepper icons.
    * "xs" | "small" | "medium" | "large" | "xl"
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /** Optional test ID for testing purposes. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "stepper"
+   */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /**
@@ -101,6 +128,8 @@ export interface StepperProps {
   /**
    * Fallback hidden label text when no aria-label or aria-labelledby is provided.
    * Defaults to "Progress Stepper".
+   *
+   * @default "Progress Stepper"
    */
   groupLabel?: string;
 

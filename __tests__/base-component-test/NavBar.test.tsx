@@ -32,6 +32,8 @@ const classMap = {
 
 type MockLinkWrapperProps = {
   href: string;
+  target?: React.AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+  rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
   children: React.ReactNode;
   className: string;
   isActive: boolean;
@@ -42,6 +44,8 @@ type MockLinkWrapperProps = {
 
 const LinkWrapper = ({
   href,
+  target,
+  rel,
   children,
   className,
   isActive,
@@ -51,6 +55,8 @@ const LinkWrapper = ({
 }: MockLinkWrapperProps) => (
   <a
     href={href}
+    target={target}
+    rel={rel}
     className={className}
     data-testid={testId}
     aria-current={ariaCurrent}
@@ -112,6 +118,29 @@ describe("BaseNavBar", () => {
       "href",
       "/profile",
     );
+  });
+
+  it("applies target and rel to nav item links", () => {
+    render(
+      <BaseNavBar
+        items={[
+          {
+            label: "Docs",
+            path: "/docs",
+            icon: <FaHome />,
+            target: "_blank",
+            rel: "external",
+          },
+        ]}
+        classMap={classMap}
+        LinkWrapper={LinkWrapper}
+        data-testid={testId}
+      />,
+    );
+
+    const link = screen.getByTestId(`${testId}-nav-item-docs`);
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "external");
   });
 
   it("applies the default navigation aria-label", () => {
@@ -293,6 +322,37 @@ describe("BaseNavBar", () => {
     expect(homeItem.className).toContain("navItem");
     expect(homeItem.className).toContain("roundMedium");
     expect(homeItem.className).toContain("shadowLight");
+  });
+
+  it("applies custom class names to nav sections", () => {
+    render(
+      <BaseNavBar
+        items={mockItems}
+        classMap={classMap}
+        LinkWrapper={LinkWrapper}
+        data-testid={testId}
+        listClassName="custom-list"
+        listItemClassName="custom-list-item"
+        itemClassName="custom-item"
+        linkContentClassName="custom-link-content"
+        iconClassName="custom-icon"
+        labelClassName="custom-label"
+      />,
+    );
+
+    const list = screen.getByTestId(`${testId}-nav-list`);
+    const listItem = screen.getByTestId(`${testId}-nav-list-item-home`);
+    const item = screen.getByTestId(`${testId}-nav-item-home`);
+    const icon = screen.getByTestId(`${testId}-nav-icon-home`);
+    const linkContent = icon.parentElement;
+    const label = screen.getByText("Home");
+
+    expect(list).toHaveClass("navList", "custom-list");
+    expect(listItem).toHaveClass("navListItem", "custom-list-item");
+    expect(item).toHaveClass("navItem", "custom-item");
+    expect(linkContent).toHaveClass("navLinkContent", "custom-link-content");
+    expect(icon).toHaveClass("navIcon", "custom-icon");
+    expect(label).toHaveClass("navLabel", "custom-label");
   });
 
   it("supports custom item aria-labels via getItemAriaLabel", () => {

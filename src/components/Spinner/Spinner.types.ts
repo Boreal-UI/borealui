@@ -8,39 +8,57 @@ export interface SpinnerProps {
   /**
    * The theme color of the spinner.
    * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Applies a translucent frosted-glass surface behind the spinner.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * The state of the spinner.
    * One of: "success" | "error" | "warning" | "disabled" | ""
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * The size of the spinner (in pixels).
+   *
+   * @default 50
    */
   size?: number;
 
   /**
    * Shadow style for the spinner.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Additional class names for styling customization.
+   *
+   * @default ""
    */
   className?: string;
 
+
   /**
-   * Test ID for testing frameworks (e.g., for use with Jest or Cypress).
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "spinner"
    */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /**
@@ -68,18 +86,24 @@ export interface SpinnerProps {
   /**
    * ARIA live region politeness.
    * Defaults to "polite".
+   *
+   * @default "polite"
    */
   "aria-live"?: "off" | "polite" | "assertive";
 
   /**
    * Whether the related region is busy.
    * Defaults to true.
+   *
+   * @default true
    */
   "aria-busy"?: boolean;
 
   /**
    * Optional ARIA role.
    * Defaults to "status".
+   *
+   * @default "status"
    */
   role?: React.AriaRole;
 }

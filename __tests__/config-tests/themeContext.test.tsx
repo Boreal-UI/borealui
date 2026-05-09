@@ -1,6 +1,7 @@
 import React from "react";
 import { render, screen, waitFor, fireEvent } from "@testing-library/react";
 import ThemeProvider, { ThemeContext } from "../../src/context/ThemeContext";
+import NextThemeProvider from "../../src/context/NextThemeProvider";
 import type { ThemeContextType } from "../../src/context/ThemeContext.types";
 
 jest.mock("../../src/styles/Themes", () => ({
@@ -30,6 +31,11 @@ jest.mock("../../src/config/boreal-style-config", () => ({
 
 import { defaultColorSchemes } from "../../src/styles/Themes";
 import { getDefaultColorSchemeName } from "../../src/config/boreal-style-config";
+import {
+  buildThemeVariables,
+  contrastRatio,
+  getThemeInitializationScript,
+} from "../../src/context/themeRuntime";
 
 const mockedGetDefaultColorSchemeName = getDefaultColorSchemeName as jest.Mock;
 
@@ -281,7 +287,87 @@ describe("ThemeProvider", () => {
       expect(
         document.documentElement.style.getPropertyValue("--divider-color"),
       ).not.toBe("");
+      expect(
+        document.documentElement.style.getPropertyValue("--text-color"),
+      ).toBe("#000000");
     });
+  });
+
+  it("keeps generated foreground tokens at WCAG AA contrast for normal text", () => {
+    const vars = buildThemeVariables({
+      name: "Low Contrast Brand",
+      primaryColor: "#f4d7d7",
+      secondaryColor: "#dbeafe",
+      tertiaryColor: "#fef3c7",
+      quaternaryColor: "#dcfce7",
+      backgroundColor: "#ffffff",
+      forceTextColor: "#ffffff",
+    });
+
+    expect(
+      contrastRatio(vars["--background-color"], vars["--text-color"]),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(vars["--primary-color"], vars["--text-color-primary"]),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(vars["--secondary-color"], vars["--text-color-secondary"]),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(vars["--tertiary-color"], vars["--text-color-tertiary"]),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(
+        vars["--quaternary-color"],
+        vars["--text-color-quaternary"],
+      ),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(vars["--background-color"], vars["--link-hover-color"]),
+    ).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it("creates a bootstrap script that applies the saved scheme before React effects run", () => {
+    localStorage.setItem(STORAGE_KEY, "Ocean Breeze");
+
+    const script = getThemeInitializationScript();
+
+    Function(script)();
+
+    expect(
+      document.documentElement.style.getPropertyValue("--primary-color"),
+    ).toBe("#005577");
+    expect(document.documentElement.dataset.borealTheme).toBe("Ocean Breeze");
+  });
+
+  it("can skip rendering the pre-hydration theme script", () => {
+    const { container } = render(
+      <ThemeProvider enableThemeScript={false}>
+        <Consumer />
+      </ThemeProvider>,
+    );
+
+    expect(container.querySelector("script")).toBeNull();
+  });
+
+  it("skips the pre-hydration theme script by default for the Next provider", () => {
+    const { container } = render(
+      <NextThemeProvider>
+        <Consumer />
+      </NextThemeProvider>,
+    );
+
+    expect(container.querySelector("script")).toBeNull();
+  });
+
+  it("allows the Next provider to opt into the pre-hydration theme script", () => {
+    const { container } = render(
+      <NextThemeProvider enableThemeScript>
+        <Consumer />
+      </NextThemeProvider>,
+    );
+
+    expect(container.querySelector("script")).not.toBeNull();
   });
 
   it("updates selectedScheme through context and saves the scheme name", async () => {

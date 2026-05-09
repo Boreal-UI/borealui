@@ -4,6 +4,7 @@ import { ChipBaseProps } from "./Chip.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -20,7 +21,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   iconAriaLabel,
   size = getDefaultSize(),
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   state = "",
@@ -43,7 +44,8 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   "aria-atomic": ariaAtomic,
   "aria-relevant": ariaRelevant,
   "aria-hidden": ariaHidden,
-  "data-testid": testId = "chip",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "chip",
   ...rest
 }) => {
   const [closing, setClosing] = useState(false);

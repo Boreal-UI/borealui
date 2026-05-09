@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import ScrollToTopBase from "../ScrollToTopBase";
 import "./ScrollToTop.scss";
@@ -22,7 +23,7 @@ const classes = {
 };
 
 const ScrollToTopButton: React.FC<ScrollToTopProps> = (props) => (
-  <ScrollToTopBase {...props} classMap={classes} IconComponent={ArrowUpIcon} />
+  <ScrollToTopBase {...props} classMap={expandClassMap(classes)} IconComponent={ArrowUpIcon} />
 );
 ScrollToTopButton.displayName = "ScrollToTopButton";
 export default ScrollToTopButton;

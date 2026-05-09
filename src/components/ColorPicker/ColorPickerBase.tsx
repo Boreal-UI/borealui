@@ -29,7 +29,8 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
-  "data-testid": testId = "color-picker",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "color-picker",
 }) => {
   const legendId = `${testId}-legend`;
   const helperTextId = helperText ? `${testId}-helper-text` : undefined;

@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseFileUpload from "../FileUploadBase";
 import { FileUploadProps } from "../FileUpload.types";
@@ -17,7 +18,7 @@ const FileUpload: React.FC<FileUploadProps> = (props) => {
       Button={Button}
       IconButton={IconButton}
       ProgressBar={Progressbar}
-      classMap={styles}
+      classMap={expandClassMap(styles)}
     />
   );
 };

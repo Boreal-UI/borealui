@@ -2,6 +2,9 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 $swatch-sizes: (
   xs: 20px,
   small: 24px,
@@ -71,7 +74,7 @@ $swatch-sizes: (
 }
 
 .selected,
-:focus-visible {
+.swatch:focus-visible {
   outline: 2px solid var(--focus-outline-color, var(--primary-color));
   outline-offset: 2px;
 }
@@ -195,4 +198,5 @@ $swatch-sizes: (
   .preview {
     background: CanvasText;
   }
+}
 }

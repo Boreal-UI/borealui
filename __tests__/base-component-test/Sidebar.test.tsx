@@ -289,6 +289,29 @@ describe("SidebarBase", () => {
     );
   });
 
+  it("applies target and rel to regular links", () => {
+    const links = [
+      {
+        label: "Docs",
+        href: "/docs",
+        target: "_blank" as const,
+        rel: "external",
+      },
+    ];
+
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={links}
+        LinkComponent={TestLink}
+      />,
+    );
+
+    const link = screen.getByRole("link", { name: "Docs" });
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "external");
+  });
+
   it("renders aria-disabled links as non-link labels", () => {
     const links = [
       {
@@ -439,6 +462,29 @@ describe("SidebarBase", () => {
       "Get support and documentation",
     );
     expect(footerLink).toHaveAttribute("aria-disabled", "true");
+  });
+
+  it("applies target and rel to footer links", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        showFooter
+        footerLinks={[
+          {
+            label: "Docs",
+            href: "/docs",
+            target: "_blank",
+            rel: "external",
+          },
+        ]}
+        LinkComponent={TestLink}
+      />,
+    );
+
+    const footerLink = screen.getByRole("link", { name: "Docs" });
+    expect(footerLink).toHaveAttribute("target", "_blank");
+    expect(footerLink).toHaveAttribute("rel", "external");
   });
 
   it("applies custom data-testid values consistently", () => {

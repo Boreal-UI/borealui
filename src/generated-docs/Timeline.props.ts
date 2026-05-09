@@ -25,7 +25,8 @@ export const timelinePropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the timeline. Defaults to \"Timeline\".",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Timeline\""
     },
     {
       "name": "aria-labelledby",
@@ -46,7 +47,7 @@ export const timelinePropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing purposes.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -57,7 +58,8 @@ export const timelinePropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "items",
@@ -73,7 +75,8 @@ export const timelinePropDocs: GeneratedComponentDoc = {
       "description": "Orientation of the timeline. \"vertical\" | \"horizontal\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"vertical\""
     },
     {
       "name": "role",
@@ -81,7 +84,8 @@ export const timelinePropDocs: GeneratedComponentDoc = {
       "description": "Optional role override for the root element. Defaults to \"list\" when not provided.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"list\""
     },
     {
       "name": "rounding",
@@ -89,7 +93,8 @@ export const timelinePropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the component. \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -97,7 +102,17 @@ export const timelinePropDocs: GeneratedComponentDoc = {
       "description": "Shadow style of the component. \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"timeline\""
     },
     {
       "name": "theme",
@@ -105,7 +120,8 @@ export const timelinePropDocs: GeneratedComponentDoc = {
       "description": "Theme to apply for styling. \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     }
   ]
 };

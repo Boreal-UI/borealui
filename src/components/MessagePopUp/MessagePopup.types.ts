@@ -35,28 +35,38 @@ export interface MessagePopupProps {
   /**
    * Optional rounding for controls in the message popup.
    * One of: "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   controlsRounding?: RoundingType;
 
   /**
    * Optional rounding for the message popup.
    * One of: "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Optional shadow for the message popup.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Optional text for the confirm button (default: "Confirm").
+   *
+   * @default "Confirm"
    */
   confirmText?: string;
 
   /**
    * Optional text for the cancel button (default: "Cancel").
+   *
+   * @default "Cancel"
    */
   cancelText?: string;
 
@@ -81,6 +91,8 @@ export interface MessagePopupProps {
   /**
    * Accessible label for the close button.
    * Defaults to "Close popup".
+   *
+   * @default "Close popup"
    */
   "aria-label-close-button"?: string;
 
@@ -93,17 +105,54 @@ export interface MessagePopupProps {
   /**
    * Optional role for the popup container.
    * Defaults to "dialog". Use "alertdialog" for urgent confirmations.
+   *
+   * @default "dialog"
    */
   dialogRole?: "dialog" | "alertdialog";
 
   /**
    * Optional additional class names for custom styling.
+   *
+   * @default ""
    */
   className?: string;
 
+  /** Additional class names for the dialog content panel. */
+  contentClassName?: string;
+
+  /** Additional class names for the header section. */
+  headerClassName?: string;
+
+  /** Additional class names for the title element. */
+  titleClassName?: string;
+
+  /** Additional class names for the close button. */
+  closeButtonClassName?: string;
+
+  /** Additional class names for the body section. */
+  bodyClassName?: string;
+
+  /** Additional class names for the message text. */
+  messageClassName?: string;
+
+  /** Additional class names for the actions wrapper. */
+  actionsClassName?: string;
+
+  /** Additional class names for the confirm button. */
+  confirmButtonClassName?: string;
+
+  /** Additional class names for the cancel button. */
+  cancelButtonClassName?: string;
+
+
   /**
-   * Optional test ID for targeting the component during testing.
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "message-popup"
    */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

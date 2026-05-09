@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import Link from "next/link";
 import styles from "./Breadcrumbs.module.scss";
@@ -11,7 +12,7 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = (props) => {
   return (
     <BreadcrumbsBase
       {...props}
-      classMap={styles}
+      classMap={expandClassMap(styles)}
       LinkComponent={Link}
       ButtonComponent={Button}
     />

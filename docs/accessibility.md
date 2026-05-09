@@ -239,7 +239,9 @@ For content regions that update after async work, pair visual loading states wit
 
 ## Custom Color Schemes and Contrast
 
-When registering custom schemes, verify text, borders, focus indicators, success/error/warning states, outline variants, and glass surfaces against the backgrounds where they appear.
+Boreal derives foreground tokens for each registered color scheme with a WCAG 2.1 AA normal-text contrast target. If `forceTextColor` does not meet that target on a surface, the theme runtime falls back to the more readable black or white foreground for that surface.
+
+When registering custom schemes, still verify borders, focus indicators, success/error/warning states, outline variants, glass surfaces, and any app-specific CSS variable overrides against the backgrounds where they appear.
 
 ```tsx
 import { ThemeProvider } from "boreal-ui/core";

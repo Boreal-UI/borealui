@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BasePager from "../PagerBase";
 import Button from "../../Button/core/Button";
@@ -29,7 +30,7 @@ const Pager: React.FC<PagerProps> = (props) => {
       {...props}
       Button={Button}
       IconButton={IconButton}
-      classMap={classes}
+      classMap={expandClassMap(classes)}
     />
   );
 };

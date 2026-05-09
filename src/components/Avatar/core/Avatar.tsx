@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import "./Avatar.scss";
 import { AvatarProps } from "../Avatar.types";
@@ -53,7 +54,7 @@ const classes = {
 };
 
 const Avatar = forwardRef<HTMLButtonElement | HTMLAnchorElement, AvatarProps>(
-  (props, ref) => <AvatarBase {...props} classMap={classes} ref={ref} />
+  (props, ref) => <AvatarBase {...props} classMap={expandClassMap(classes)} ref={ref} />
 );
 Avatar.displayName = "Avatar";
 export default Avatar;

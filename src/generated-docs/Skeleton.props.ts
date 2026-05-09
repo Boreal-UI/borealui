@@ -65,12 +65,13 @@ export const skeletonPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -81,7 +82,8 @@ export const skeletonPropDocs: GeneratedComponentDoc = {
       "description": "Height of the skeleton loader (e.g., \"100%\", \"50px\", or a number representing pixels).",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"100%\""
     },
     {
       "name": "label",
@@ -89,7 +91,8 @@ export const skeletonPropDocs: GeneratedComponentDoc = {
       "description": "Accessibility label for screen readers. Used as fallback hidden descriptive text when announce is enabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Loading content...\""
     },
     {
       "name": "role",
@@ -105,7 +108,8 @@ export const skeletonPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the skeleton. \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -113,7 +117,17 @@ export const skeletonPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the skeleton loader. \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"skeleton-loader\""
     },
     {
       "name": "width",
@@ -121,7 +135,8 @@ export const skeletonPropDocs: GeneratedComponentDoc = {
       "description": "Width of the skeleton loader (e.g., \"100%\", \"200px\", or a number representing pixels).",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"100%\""
     }
   ]
 };

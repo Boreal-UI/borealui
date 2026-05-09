@@ -18,6 +18,44 @@ import "boreal-ui/next/globals.css";
 
 The global stylesheet provides CSS variables, resets, theme values, animations, and shared utility styles used by components.
 
+Be careful with the default `globals.css` created by many Next.js starters:
+
+```css
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+```
+
+When that reset is loaded after Boreal, the universal `padding` and `margin` declarations can override spacing used by Boreal components and nested content. A safer app-level baseline is:
+
+```css
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+```
+
+Keep broader spacing rules scoped to your app shell, page layouts, or utility classes so they do not erase component-level padding and margins.
+
+The CLI can create or repair that safer baseline for Next.js apps:
+
+```bash
+npx boreal-ui init --framework next --recommended-globals
+```
+
+Interactive Next.js setup prompts for this by default. Use `--recommended-globals` to apply it without the prompt, or `--no-recommended-globals` to skip it.
+
 ## Shared Style Props
 
 Many components support a common styling vocabulary.
@@ -52,17 +90,19 @@ export function Actions() {
 
 ## Global Style Defaults
 
-Use `setBorealStyleConfig` to set project-wide defaults for components that read Boreal style config.
+Use `borealConfig` to set project-wide defaults for components that read Boreal style config. `setBorealStyleConfig` is still exported for the same behavior.
 
 ```tsx
-import { setBorealStyleConfig } from "boreal-ui/core";
+import { borealConfig } from "boreal-ui/core";
 
-setBorealStyleConfig({
+borealConfig({
   defaultTheme: "secondary",
   defaultSize: "medium",
   defaultRounding: "medium",
   defaultShadow: "light",
   defaultBorderWidth: "none",
+  defaultGlass: false,
+  defaultOutline: false,
   defaultColorSchemeName: "Forest Dusk",
 });
 ```
@@ -70,7 +110,7 @@ setBorealStyleConfig({
 For Next.js:
 
 ```tsx
-import { setBorealStyleConfig } from "boreal-ui/next";
+import { borealConfig } from "boreal-ui/next";
 ```
 
 Component props override global defaults.
@@ -83,7 +123,7 @@ Component props override global defaults.
 
 ## ThemeProvider
 
-`ThemeProvider` manages the active color scheme and writes it into CSS variables.
+`ThemeProvider` manages the active color scheme and writes it into CSS variables. It resolves text colors against the active surfaces with a WCAG 2.1 AA normal-text contrast target, so low-contrast custom schemes fall back to readable foreground colors instead of blindly using `forceTextColor`.
 
 ```tsx
 import { ThemeProvider } from "boreal-ui/core";
@@ -101,7 +141,32 @@ For Next.js:
 import { ThemeProvider } from "boreal-ui/next";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  return <ThemeProvider initialSchemeName="Forest Dusk">{children}</ThemeProvider>;
+  return (
+    <ThemeProvider initialSchemeName="Forest Dusk" enableThemeScript={false}>
+      {children}
+    </ThemeProvider>
+  );
+}
+```
+
+In Next.js app router projects, `enableThemeScript={false}` avoids mutating the root `<html>` element before React hydrates. This is the default for `boreal-ui/next`. Boreal still applies the selected scheme during React insertion effects, which keeps the setup hydration-safe with a small chance of first-paint color flash.
+
+To reduce first-paint color flashing outside that stricter hydration-safe setup, render Boreal's initialization script as early as possible in the document. In Next.js app router projects, this root-level script intentionally changes `<html>` before hydration, so the root element also needs React's `suppressHydrationWarning` prop:
+
+```tsx
+import { getThemeInitializationScript } from "boreal-ui/next";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body>
+        <script
+          dangerouslySetInnerHTML={{ __html: getThemeInitializationScript() }}
+        />
+        {children}
+      </body>
+    </html>
+  );
 }
 ```
 
@@ -111,8 +176,11 @@ export function Providers({ children }: { children: React.ReactNode }) {
 | --- | --- |
 | `children` | Application or subtree to theme. |
 | `customSchemes` | Registers additional color schemes. |
+| `enableThemeScript` | Renders the pre-hydration theme script. Defaults to `true` for core and `false` for Next. |
 | `initialSchemeName` | Selects the starting scheme by name. |
 | `useOnlyCustomSchemes` | Uses only custom schemes instead of built-in schemes. |
+
+When `initialSchemeName` is provided, it is preferred over the saved theme name. Without it, the saved theme name is used when available, then the configured Boreal default, then the first available scheme.
 
 ## Custom Color Schemes
 

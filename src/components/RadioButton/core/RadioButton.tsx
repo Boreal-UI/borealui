@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import BaseRadioButton from "../RadioButtonBase";
 import "./RadioButton.scss";
@@ -46,7 +47,7 @@ export const classes = {
 };
 
 const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
-  (props, ref) => <BaseRadioButton {...props} ref={ref} classMap={classes} />,
+  (props, ref) => <BaseRadioButton {...props} ref={ref} classMap={expandClassMap(classes)} />,
 );
 
 RadioButton.displayName = "RadioButton";

@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import "./Stepper.scss";
 import StepperBase from "../StepperBase";
@@ -33,7 +34,7 @@ const classes = {
 };
 
 const Stepper: React.FC<StepperProps> = (props) => (
-  <StepperBase {...props} classMap={classes} IconButtonComponent={IconButton} />
+  <StepperBase {...props} classMap={expandClassMap(classes)} IconButtonComponent={IconButton} />
 );
 Stepper.displayName = "Stepper";
 export default Stepper;

@@ -17,7 +17,8 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "If true, allows picking a custom color via a color input.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "aria-describedby",
@@ -49,7 +50,8 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the component container.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "colors",
@@ -65,12 +67,13 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "Optional label for the custom color input.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Custom color picker\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -81,7 +84,8 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "Whether the entire picker is disabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "errorText",
@@ -105,7 +109,8 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "Hide the visible legend visually while preserving it for screen readers.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "invalid",
@@ -113,7 +118,8 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "Marks the group as invalid.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "label",
@@ -121,7 +127,8 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "Optional visible label above the color group.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Choose a color\""
     },
     {
       "name": "name",
@@ -129,7 +136,8 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "Optional name attribute for the radio group.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"color-picker\""
     },
     {
       "name": "onChange",
@@ -145,7 +153,8 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "Marks the group as required.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "selected",
@@ -161,7 +170,8 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "Applies a shadow effect to the swatches ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "shape",
@@ -169,7 +179,8 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "Shape of the swatches ('square' | 'round' | 'pill').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"round\""
     },
     {
       "name": "size",
@@ -177,7 +188,17 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "Size of the swatches ('xs' | 'small' | 'medium' | 'large' | 'xl').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"color-picker\""
     }
   ]
 };

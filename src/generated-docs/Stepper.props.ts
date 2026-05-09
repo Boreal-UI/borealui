@@ -54,7 +54,7 @@ export const stepperPropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing purposes.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -65,7 +65,8 @@ export const stepperPropDocs: GeneratedComponentDoc = {
       "description": "If true, disables backward navigation (users cannot go to previous steps).",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "getStepAriaLabel",
@@ -81,7 +82,8 @@ export const stepperPropDocs: GeneratedComponentDoc = {
       "description": "Adds glass styling to the step buttons.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "groupLabel",
@@ -89,7 +91,8 @@ export const stepperPropDocs: GeneratedComponentDoc = {
       "description": "Fallback hidden label text when no aria-label or aria-labelledby is provided. Defaults to \"Progress Stepper\".",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Progress Stepper\""
     },
     {
       "name": "onStepClick",
@@ -105,7 +108,8 @@ export const stepperPropDocs: GeneratedComponentDoc = {
       "description": "Orientation of the stepper. \"horizontal\" | \"vertical\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"horizontal\""
     },
     {
       "name": "rounding",
@@ -113,7 +117,8 @@ export const stepperPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the stepper buttons. \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -121,7 +126,8 @@ export const stepperPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the stepper buttons. \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -129,7 +135,8 @@ export const stepperPropDocs: GeneratedComponentDoc = {
       "description": "Size of the stepper icons. \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -137,7 +144,8 @@ export const stepperPropDocs: GeneratedComponentDoc = {
       "description": "State of the stepper. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "steps",
@@ -148,12 +156,22 @@ export const stepperPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing purposes.\n\nOptional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"stepper\""
+    },
+    {
       "name": "theme",
       "type": "ThemeType",
       "description": "Theme style for the stepper. \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     }
   ]
 };

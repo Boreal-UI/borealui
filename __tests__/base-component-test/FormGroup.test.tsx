@@ -264,6 +264,71 @@ describe("BaseFormGroup", () => {
     expect(screen.getByTestId("form-group")).toHaveClass("myCustomClass");
   });
 
+  it("applies custom class names to form group sections", () => {
+    render(
+      <BaseFormGroup
+        id="custom-sections"
+        label="Custom Sections"
+        description="Helpful detail"
+        required
+        classMap={classNames}
+        labelClassName="custom-label"
+        requiredClassName="custom-required"
+        inputWrapperClassName="custom-input-wrapper"
+        inputFieldClassName="custom-input-field"
+        controllerClassName="custom-controller"
+        descriptionClassName="custom-description"
+        controller={<button type="button">Reset</button>}
+      >
+        <input type="text" title="test input" />
+      </BaseFormGroup>,
+    );
+
+    expect(screen.getByTestId("form-group-label")).toHaveClass(
+      "formLabel",
+      "custom-label",
+    );
+    expect(screen.getByTestId("form-group-required")).toHaveClass(
+      "formRequired",
+      "custom-required",
+    );
+    expect(screen.getByTestId("form-group-wrapper-0")).toHaveClass(
+      "inputWrapper",
+      "custom-input-wrapper",
+    );
+    expect(screen.getByTestId("form-group-input-field-0")).toHaveClass(
+      "inputField",
+      "custom-input-field",
+    );
+    expect(screen.getByTestId("form-group-controller")).toHaveClass(
+      "controller",
+      "custom-controller",
+    );
+    expect(screen.getByTestId("form-group-description")).toHaveClass(
+      "description",
+      "custom-description",
+    );
+  });
+
+  it("applies custom class names to form group error messages", () => {
+    render(
+      <BaseFormGroup
+        id="custom-error"
+        label="Custom Error"
+        error="Required"
+        classMap={classNames}
+        errorMessageClassName="custom-error-message"
+      >
+        <input type="text" title="test input" />
+      </BaseFormGroup>,
+    );
+
+    expect(screen.getByTestId("form-group-error")).toHaveClass(
+      "errorMessage",
+      "custom-error-message",
+    );
+  });
+
   it("renders one wrapper and one input field container per direct child", () => {
     render(
       <BaseFormGroup id="multi" label="Multiple" classMap={classNames}>

@@ -1,7 +1,11 @@
 import React, { forwardRef } from "react";
 import { DividerBaseProps } from "./Divider.types";
 import { combineClassNames } from "../../utils/classNames";
-import { getDefaultTheme } from "../../config/boreal-style-config";
+import { resolvePropAlias } from "../../utils/propAliases";
+import {
+  getDefaultGlass,
+  getDefaultTheme,
+} from "../../config/boreal-style-config";
 
 const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
   (
@@ -12,20 +16,22 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
       className = "",
       dashed = false,
       theme = getDefaultTheme(),
-      glass = false,
+      glass = getDefaultGlass(),
       state = "",
       as = "div",
       decorative = true,
       label,
       labelledBy,
       classMap,
-      "data-testid": testId = "divider",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "divider",
       style,
       ...rest
     },
     ref,
   ) => {
-    const isVertical = orientation === "vertical";
+    const resolvedOrientation = resolvePropAlias(orientation);
+    const isVertical = resolvedOrientation === "vertical";
     const ComponentTag = as;
 
     const isHr = ComponentTag === "hr";
@@ -65,7 +71,7 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
         ref={ref as never}
         className={combineClassNames(
           classMap.divider,
-          classMap[orientation],
+          classMap[resolvedOrientation],
           theme && classMap[theme],
           state && classMap[state],
           dashed && classMap.dashed,
@@ -77,7 +83,7 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
         aria-orientation={!decorative && isVertical ? "vertical" : undefined}
         aria-label={!decorative ? label : undefined}
         aria-labelledby={!decorative ? labelledBy : undefined}
-        data-orientation={orientation}
+        data-orientation={resolvedOrientation}
         style={computedStyle}
         data-testid={testId}
         {...rest}

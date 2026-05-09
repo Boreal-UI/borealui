@@ -14,6 +14,7 @@ import type {
 } from "./CommandPalette.types";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -30,7 +31,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   state = "",
-  glass = false,
+  glass = getDefaultGlass(),
   classMap,
   TextInputComponent,
   inputAriaLabel,
@@ -52,7 +53,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   "aria-controls": ariaControls,
   "aria-expanded": ariaExpanded,
   "aria-activedescendant": ariaActiveDescendant,
-  "data-testid": testId = "command-palette",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "command-palette",
   className,
   ...rest
 }) => {

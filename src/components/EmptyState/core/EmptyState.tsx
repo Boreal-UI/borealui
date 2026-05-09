@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseEmptyState from "../EmptyStateBase";
 import { EmptyStateProps } from "../EmptyState.types";
@@ -44,7 +45,7 @@ const classes = {
 };
 
 const EmptyState: React.FC<EmptyStateProps> = (props) => {
-  return <BaseEmptyState {...props} Button={Button} classMap={classes} />;
+  return <BaseEmptyState {...props} Button={Button} classMap={expandClassMap(classes)} />;
 };
 EmptyState.displayName = "EmptyState";
 export default EmptyState;

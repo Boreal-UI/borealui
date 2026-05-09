@@ -13,6 +13,8 @@ import { combineClassNames } from "../../utils/classNames";
 import { FallbackUserIcon } from "../../Icons/index";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultShadow,
   getDefaultSize,
   getDefaultTheme,
@@ -30,6 +32,8 @@ export const AvatarBase = forwardRef<
     onClick,
     disabled = false,
     href,
+    target: targetProp,
+    rel: relProp,
     status,
     statusLabel,
     statusIcon,
@@ -39,12 +43,13 @@ export const AvatarBase = forwardRef<
     size = getDefaultSize(),
     shadow = getDefaultShadow(),
     shape = "circle",
-    outline = false,
-    glass = false,
+    outline = getDefaultOutline(),
+    glass = getDefaultGlass(),
     theme = getDefaultTheme(),
     state = "",
     className = "",
     priority = false,
+    imageFill = false,
     ImageComponent = "img",
     LinkComponent = "a",
     classMap,
@@ -53,7 +58,8 @@ export const AvatarBase = forwardRef<
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     "aria-current": ariaCurrent,
-    "data-testid": testId = "avatar",
+    "data-testid": dataTestId,
+    testId = dataTestId ?? "avatar",
     ...rest
   },
   ref,
@@ -132,8 +138,6 @@ export const AvatarBase = forwardRef<
     ],
   );
 
-  const isNextImage = typeof ImageComponent !== "string";
-
   const avatarContent =
     !imgError && src ? (
       <ImageComponent
@@ -144,7 +148,7 @@ export const AvatarBase = forwardRef<
         {...(priority
           ? { loading: "eager" as const }
           : { loading: "lazy" as const })}
-        {...(isNextImage ? { fill: true } : {})}
+        {...(imageFill ? { fill: true } : {})}
         data-testid={testId ? `${testId}-image` : undefined}
       />
     ) : (
@@ -204,6 +208,11 @@ export const AvatarBase = forwardRef<
 
   if (href) {
     const isHttp = /^https?:\/\//i.test(href);
+    const target = disabled
+      ? undefined
+      : (targetProp ?? (isHttp ? "_blank" : undefined));
+    const rel =
+      relProp ?? (target === "_blank" ? "noopener noreferrer" : undefined);
 
     return LinkComponent === "a" ? (
       <a
@@ -212,8 +221,8 @@ export const AvatarBase = forwardRef<
         className={combinedClassName}
         onClick={handleClick}
         data-testid={testId ? `${testId}-main` : undefined}
-        target={isHttp && !disabled ? "_blank" : undefined}
-        rel={isHttp && !disabled ? "noopener noreferrer" : undefined}
+        target={target}
+        rel={rel}
         tabIndex={disabled ? -1 : 0}
         {...linkAria}
         {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}
@@ -228,6 +237,8 @@ export const AvatarBase = forwardRef<
         onClick={handleClick}
         data-testid={testId ? `${testId}-main` : undefined}
         tabIndex={disabled ? -1 : 0}
+        target={target}
+        rel={rel}
         {...linkAria}
         {...(rest as Record<string, unknown>)}
       >

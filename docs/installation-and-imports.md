@@ -52,6 +52,44 @@ Import the Next stylesheet once from `app/layout.tsx`, `pages/_app.tsx`, or anot
 import "boreal-ui/next/globals.css";
 ```
 
+Next.js starter projects often include this broad reset in the app's default `globals.css`:
+
+```css
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+```
+
+Avoid loading that reset after Boreal styles. The universal `padding` and `margin` rules can override spacing that Boreal components and nested content rely on. Prefer a narrower global override that keeps box sizing predictable without removing spacing from every element:
+
+```css
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+```
+
+If your app needs additional layout resets, scope them to your own shell classes instead of applying them to every element globally.
+
+The CLI can create or repair that safer baseline for Next.js apps:
+
+```bash
+npx boreal-ui init --framework next --recommended-globals
+```
+
+Interactive Next.js setup prompts for this by default. Use `--recommended-globals` to apply it without the prompt, or `--no-recommended-globals` to skip it.
+
 Use the Next build for components.
 
 ```tsx
@@ -100,6 +138,10 @@ import NextDataTable from "boreal-ui/next/DataTable";
 | `boreal-ui/core/types` | Shared public type entry point. |
 | `boreal-ui/next/types` | Shared public type entry point for Next consumers. |
 | `boreal-ui/docs` | Generated component prop metadata for docs tools and prop tables. |
+| `boreal-ui/core/registerColorScheme` | Standalone color-scheme registration helper for React consumers. |
+| `boreal-ui/next/registerColorScheme` | Standalone color-scheme registration helper for Next consumers. |
+
+For a complete list of barrel exports, standalone component paths, generated prop-doc objects, and compatibility aliases, see [Public API Reference](./public-api-reference.md).
 
 ## Choosing Core or Next
 

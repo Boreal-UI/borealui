@@ -11,23 +11,31 @@ export interface MarkdownRendererProps {
 
   /**
    * Optional additional class name for styling.
+   *
+   * @default ""
    */
   className?: string;
 
   /**
    * Optional rounding style for the rendered container.
    * One of: "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Optional shadow styling for the rendered container.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Language of the rendered markdown content.
+   *
+   * @default "en"
    */
   language?: string;
 
@@ -51,6 +59,8 @@ export interface MarkdownRendererProps {
   /**
    * Optional ARIA role for the wrapper element.
    * Defaults to "region".
+   *
+   * @default "region"
    */
   role?: React.AriaRole;
 
@@ -59,9 +69,15 @@ export interface MarkdownRendererProps {
    */
   tabIndex?: number;
 
+
   /**
    * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "markdown-renderer"
    */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

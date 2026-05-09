@@ -3,6 +3,8 @@ import { IconButtonBaseProps } from "./IconButton.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -24,6 +26,8 @@ const IconButtonBase = forwardRef<
     onKeyDown,
     className = "",
     iconClassName = "",
+    labelClassName = "",
+    loaderClassName = "",
     disabled = false,
     rel,
     target,
@@ -44,8 +48,8 @@ const IconButtonBase = forwardRef<
     "aria-atomic": ariaAtomic,
     role,
     title,
-    outline = false,
-    glass = false,
+    outline = getDefaultOutline(),
+    glass = getDefaultGlass(),
     rounding = getDefaultRounding(),
     shadow = getDefaultShadow(),
     size = getDefaultSize(),
@@ -53,7 +57,8 @@ const IconButtonBase = forwardRef<
     type = "button",
     classMap,
     LinkComponent = "a",
-    "data-testid": testId = "icon-button",
+    "data-testid": dataTestId,
+    testId = dataTestId ?? "icon-button",
     tabIndex,
     ...rest
   },
@@ -123,13 +128,16 @@ const IconButtonBase = forwardRef<
 
   const iconContent = (
     <span
-      className={classMap.buttonLabel}
+      className={combineClassNames(classMap.buttonLabel, labelClassName)}
       aria-live={ariaLive ?? "polite"}
       aria-atomic={ariaAtomic ?? true}
     >
       {loading ? (
         <>
-          <div className={classMap.loader} aria-hidden="true" />
+          <div
+            className={combineClassNames(classMap.loader, loaderClassName)}
+            aria-hidden="true"
+          />
           <span className="sr_only">Loading</span>
         </>
       ) : Icon ? (
@@ -144,6 +152,12 @@ const IconButtonBase = forwardRef<
   );
 
   if (renderAsLink) {
+    const resolvedTarget = inert
+      ? undefined
+      : (target ?? (isExternal ? "_blank" : undefined));
+    const resolvedRel =
+      rel ?? (resolvedTarget === "_blank" ? "noopener noreferrer" : undefined);
+
     const linkProps = {
       className: combineClassNames(classNames, classMap.link),
       ref: ref as React.Ref<HTMLAnchorElement>,
@@ -152,6 +166,8 @@ const IconButtonBase = forwardRef<
         : onClick,
       onKeyDown,
       "aria-disabled": inert || undefined,
+      target: resolvedTarget,
+      rel: resolvedRel,
       ...sharedAccessibilityProps,
       ...rest,
       tabIndex: inert ? -1 : tabIndex,
@@ -162,8 +178,6 @@ const IconButtonBase = forwardRef<
         <a
           {...linkProps}
           href={inert ? undefined : href}
-          target={target ?? "_blank"}
-          rel={rel ?? "noopener noreferrer"}
         >
           {iconContent}
         </a>

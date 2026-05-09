@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BasePopover from "../PopOverBase";
 import "./PopOver.scss";
@@ -38,7 +39,7 @@ const classes = {
 };
 
 const Popover: React.FC<PopoverProps> = (props) => {
-  return <BasePopover {...props} classMap={classes} />;
+  return <BasePopover {...props} classMap={expandClassMap(classes)} />;
 };
 Popover.displayName = "Popover";
 export default Popover;

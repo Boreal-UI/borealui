@@ -13,6 +13,7 @@ import { combineClassNames } from "../../utils/classNames";
 import MenuIcon from "../../Icons/MenuIcon";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -35,7 +36,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   focusFirstItemOnOpen = true,
   closeOnSelect = true,
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   toggleRounding = getDefaultRounding(),
   menuRounding = getDefaultRounding(),
   toggleShadow = getDefaultShadow(),
@@ -45,7 +46,8 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   title,
   triggerProps,
   menuProps,
-  "data-testid": testId = "dropdown",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "dropdown",
   IconButton,
   classMap,
   ...rest
@@ -310,10 +312,17 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
             };
 
             if (item.href) {
+              const target = item.disabled ? undefined : item.target;
+              const rel =
+                item.rel ??
+                (target === "_blank" ? "noopener noreferrer" : undefined);
+
               return (
                 <a
                   key={item.id ?? index}
                   href={item.disabled ? undefined : item.href}
+                  target={target}
+                  rel={rel}
                   {...commonProps}
                   onClick={(e) => {
                     if (item.disabled) {

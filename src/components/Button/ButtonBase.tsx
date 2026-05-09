@@ -3,6 +3,8 @@ import { ButtonBaseProps } from "./Button.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -19,7 +21,7 @@ const ButtonBase = forwardRef<
       iconPosition = "left",
 
       theme = getDefaultTheme(),
-      glass = false,
+      glass = getDefaultGlass(),
 
       state = "",
       onClick,
@@ -28,6 +30,10 @@ const ButtonBase = forwardRef<
       shadow = getDefaultShadow(),
       children,
       className = "",
+      iconWrapperClassName = "",
+      iconClassName = "",
+      labelClassName = "",
+      loaderClassName = "",
       disabled = false,
 
       "aria-label": ariaLabel,
@@ -44,15 +50,17 @@ const ButtonBase = forwardRef<
       "aria-disabled": ariaDisabled,
 
       href,
-      _target,
+      target: targetProp,
+      rel: relProp,
       as,
       isExternal = false,
-      outline = false,
+      outline = getDefaultOutline(),
       size = getDefaultSize(),
       loading = false,
       loadingLabel = "Loading",
       fullWidth = false,
-      "data-testid": testId = "button",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "button",
       classMap,
       LinkComponent = "a",
       ...rest
@@ -112,31 +120,38 @@ const ButtonBase = forwardRef<
 
     const iconElement = Icon ? (
       <span
-        className={classMap.buttonIcon}
+        className={combineClassNames(classMap.buttonIcon, iconWrapperClassName)}
         aria-hidden="true"
         data-testid={testId ? `${testId}-icon` : undefined}
       >
-        <Icon className={classMap.icon} aria-hidden={true} focusable={false} />
+        <Icon
+          className={combineClassNames(classMap.icon, iconClassName)}
+          aria-hidden={true}
+          focusable={false}
+        />
       </span>
     ) : null;
 
     const labelElement = (
       <span
-        className={classMap.buttonLabel}
+        className={combineClassNames(classMap.buttonLabel, labelClassName)}
         aria-live={loading ? (ariaLive ?? "polite") : undefined}
         aria-atomic={loading ? (ariaAtomic ?? true) : undefined}
         data-testid={testId ? `${testId}-loading` : undefined}
       >
         {loading ? (
           <>
-            <div className={classMap.loader} aria-hidden="true" />
+            <div
+              className={combineClassNames(classMap.loader, loaderClassName)}
+              aria-hidden="true"
+            />
             <span className="sr_only">{loadingLabel}</span>
           </>
         ) : (
           <>
             {children}
             {href &&
-              (_target === "_blank" ||
+              (targetProp === "_blank" ||
                 (isExternal ?? /^https?:\/\//i.test(href))) && (
                 <span className="sr_only"> (opens in a new tab)</span>
               )}
@@ -155,16 +170,17 @@ const ButtonBase = forwardRef<
 
     if (href) {
       const external =
-        (_target === "_blank" || isExternal || /^https?:\/\//i.test(href)) &&
+        (targetProp === "_blank" || isExternal || /^https?:\/\//i.test(href)) &&
         !disabled;
 
       const Comp = external ? "a" : (as ?? LinkComponent ?? "a");
 
       const target = disabled
         ? undefined
-        : (_target ?? (external ? "_blank" : undefined));
+        : (targetProp ?? (external ? "_blank" : undefined));
 
-      const rel = target === "_blank" ? "noopener noreferrer" : undefined;
+      const rel =
+        relProp ?? (target === "_blank" ? "noopener noreferrer" : undefined);
 
       const linkCommon = {
         ref: ref as React.Ref<HTMLAnchorElement>,

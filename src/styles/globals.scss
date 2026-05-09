@@ -45,8 +45,10 @@
 @use "_animations" as animations;
 @use "_breakpoints" as breakpoints;
 @use "_mixins" as mixins;
-@import "modern-css-reset/dist/reset.css";
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@import "modern-css-reset/dist/reset.css" layer(boreal-ui.reset);
 
+@layer boreal-ui.base {
 :root {
   /* ================================
      PRIMARY COLOR PALETTE
@@ -369,7 +371,7 @@ body {
   font-weight: var(--font-weight-body);
   line-height: var(--line-height-body);
   letter-spacing: var(--letter-spacing-body);
-  color: var(--text-color-primary);
+  color: var(--text-color);
   background-color: var(--background-color);
   margin: 0;
   padding: 0;
@@ -528,4 +530,5 @@ samp {
 
 .sr_only {
   @include mixins.visually-hidden;
+}
 }

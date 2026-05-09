@@ -1,10 +1,25 @@
 const fs = require("fs");
 const path = require("path");
 
-const filesToPatch = [
-  path.resolve(__dirname, "../dist/next/ThemeProvider.js"),
-  path.resolve(__dirname, "../dist/next/index.js"),
-];
+const nextDistDir = path.resolve(__dirname, "../dist/next");
+const nonClientEntries = new Set([
+  "colorSchemes.js",
+  "globals.js",
+  "registerColorScheme.js",
+  "registerColorSheme.js",
+]);
+
+function getFilesToPatch() {
+  if (!fs.existsSync(nextDistDir)) return [];
+
+  return fs
+    .readdirSync(nextDistDir)
+    .filter((file) => file.endsWith(".js"))
+    .filter((file) => !file.endsWith(".cjs.js"))
+    .filter((file) => !file.includes("-"))
+    .filter((file) => !nonClientEntries.has(file))
+    .map((file) => path.join(nextDistDir, file));
+}
 
 function ensureUseClient(filePath) {
   if (!fs.existsSync(filePath)) {
@@ -26,4 +41,4 @@ function ensureUseClient(filePath) {
   console.log(`Patched: ${path.basename(filePath)}`);
 }
 
-filesToPatch.forEach(ensureUseClient);
+getFilesToPatch().forEach(ensureUseClient);

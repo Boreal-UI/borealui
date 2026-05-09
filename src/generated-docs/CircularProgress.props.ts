@@ -17,7 +17,8 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "Whether the visible value text inside the circle should be announced by assistive technologies. Default: false, because the progressbar itself already exposes value via ARIA.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "aria-describedby",
@@ -57,12 +58,13 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "Optional class name for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -73,7 +75,8 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "Marks the component as decorative. When true, the progressbar will be hidden from assistive technology.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "glass",
@@ -81,7 +84,8 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "label",
@@ -89,7 +93,8 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "Visible label fallback and default accessible name. Used only when no aria-label or aria-labelledby is provided.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Progress\""
     },
     {
       "name": "max",
@@ -97,7 +102,8 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "Maximum value for the range (default: 100).",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "100"
     },
     {
       "name": "min",
@@ -105,7 +111,8 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "Minimum value for the range (default: 0).",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "0"
     },
     {
       "name": "shadow",
@@ -113,7 +120,8 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "Optional shadow style for the component ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "showRaw",
@@ -121,7 +129,8 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "Whether to show raw value (e.g., \"75/100\") instead of percent.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "size",
@@ -129,7 +138,8 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "Size of the component ('xs' | 'small' | 'medium' | 'large' | 'xl').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -137,7 +147,17 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "State of progress ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"circular-progress\""
     },
     {
       "name": "theme",
@@ -145,7 +165,8 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "Optional theme for the component ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "value",

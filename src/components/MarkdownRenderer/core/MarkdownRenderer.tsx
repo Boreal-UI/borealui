@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseMarkdownRenderer from "../MarkdownRendererBase";
 import "./MarkdownRenderer.scss";
@@ -20,7 +21,7 @@ const classes = {
 };
 
 const MarkdownRenderer: React.FC<MarkdownRendererProps> = (props) => {
-  return <BaseMarkdownRenderer {...props} classMap={classes} />;
+  return <BaseMarkdownRenderer {...props} classMap={expandClassMap(classes)} />;
 };
 MarkdownRenderer.displayName = "MarkdownRenderer";
 export default MarkdownRenderer;

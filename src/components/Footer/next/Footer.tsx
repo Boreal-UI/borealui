@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -23,7 +24,7 @@ const Footer: React.FC<FooterProps> = (props) => {
           {children}
         </Link>
       )}
-      classMap={styles}
+      classMap={expandClassMap(styles)}
     />
   );
 };

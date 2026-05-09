@@ -209,6 +209,24 @@ describe("BreadcrumbsBase", () => {
     expect(screen.getByText("Library")).toBeInTheDocument();
   });
 
+  it("applies target and rel to linked breadcrumb items", () => {
+    renderBreadcrumbs({
+      items: [
+        {
+          label: "Docs",
+          href: "/docs",
+          target: "_blank",
+          rel: "external",
+        },
+        { label: "Current Page" },
+      ],
+    });
+
+    const link = screen.getByTestId("breadcrumbs-nav-item-label");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "external");
+  });
+
   it("renders the last breadcrumb as the current page", () => {
     renderBreadcrumbs();
 

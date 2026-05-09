@@ -183,6 +183,76 @@ describe("BaseNotificationCenter", () => {
     );
   });
 
+  it("applies custom class names to notification center sections", () => {
+    renderNotificationCenter({
+      className: "custom-wrapper",
+      headerClassName: "custom-header",
+      clearAllClassName: "custom-clear",
+      bodyClassName: "custom-body",
+      listClassName: "custom-list",
+      notificationClassName: "custom-notification",
+      iconClassName: "custom-icon",
+      contentClassName: "custom-content",
+      messageClassName: "custom-message",
+      timestampClassName: "custom-timestamp",
+      closeButtonClassName: "custom-close",
+    });
+
+    const item = screen.getByTestId(`${testId}-item-1`);
+
+    expect(screen.getByTestId(testId)).toHaveClass("wrapper", "custom-wrapper");
+    expect(screen.getByTestId(`${testId}-header`)).toHaveClass(
+      "header",
+      "custom-header",
+    );
+    expect(screen.getByTestId(`${testId}-clear-all`)).toHaveClass(
+      "clearAll",
+      "custom-clear",
+    );
+    expect(screen.getByTestId(`${testId}-live-region`)).toHaveClass(
+      "body",
+      "custom-body",
+    );
+    expect(screen.getByRole("list")).toHaveClass("list", "custom-list");
+    expect(item).toHaveClass("notification", "custom-notification");
+    expect(item.querySelector("svg")).toHaveClass("icon", "custom-icon");
+    expect(screen.getByTestId(`${testId}-item-1-message`).parentElement).toHaveClass(
+      "content",
+      "custom-content",
+    );
+    expect(screen.getByTestId(`${testId}-item-1-message`)).toHaveClass(
+      "message",
+      "custom-message",
+    );
+    expect(screen.getByTestId(`${testId}-item-1-timestamp`)).toHaveClass(
+      "timestamp",
+      "custom-timestamp",
+    );
+    expect(screen.getByTestId(`${testId}-item-1-dismiss`)).toHaveClass(
+      "close",
+      "custom-close",
+    );
+  });
+
+  it("applies custom class names to the empty notification state", () => {
+    render(
+      <BaseNotificationCenter
+        notifications={[]}
+        onRemove={jest.fn()}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classMap}
+        data-testid={testId}
+        emptyClassName="custom-empty"
+      />,
+    );
+
+    expect(screen.getByTestId(`${testId}-empty`)).toHaveClass(
+      "empty",
+      "custom-empty",
+    );
+  });
+
   it("shows the clear all button only when enabled, notifications exist, and onClearAll is provided", () => {
     renderNotificationCenter();
 

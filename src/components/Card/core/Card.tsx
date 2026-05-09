@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import CardBase from "../CardBase";
 import "./Card.scss";
@@ -80,7 +81,7 @@ const Card: React.FC<CardProps> = (props) => {
     <CardBase
       {...props}
       actionButtons={wrappedButtons}
-      classMap={classes}
+      classMap={expandClassMap(classes)}
       SkeletonComponent={Skeleton}
     />
   );

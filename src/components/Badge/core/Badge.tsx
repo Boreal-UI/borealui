@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import "./Badge.scss";
 import { BadgeBase } from "../BadgeBase";
@@ -42,7 +43,7 @@ const classes = {
 };
 
 const Badge: React.FC<BadgeProps> = (props) => {
-  return <BadgeBase {...props} classMap={classes} />;
+  return <BadgeBase {...props} classMap={expandClassMap(classes)} />;
 };
 Badge.displayName = "Badge";
 export default Badge;

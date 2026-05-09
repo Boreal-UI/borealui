@@ -1,15 +1,21 @@
 import {
   forwardRef,
   ChangeEvent,
+  MouseEvent,
   useId,
   useMemo,
   useEffect,
+  useImperativeHandle,
+  useRef,
   useState,
 } from "react";
 import { ChevronDownIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -20,9 +26,9 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
   (
     {
       theme = getDefaultTheme(),
-      glass = false,
+      glass = getDefaultGlass(),
       state = "",
-      outline = false,
+      outline = getDefaultOutline(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       options,
@@ -31,6 +37,12 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       placeholder = "Select an option",
       disabled = false,
       className = "",
+      layoutClassName = "",
+      labelClassName = "",
+      selectClassName = "",
+      iconClassName = "",
+      loadingClassName = "",
+      srOnlyClassName = "",
       classMap,
       asyncOptions,
       pollInterval = 0,
@@ -51,10 +63,12 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       "aria-required": ariaRequired,
       "aria-busy": ariaBusy,
       "aria-live": ariaLive = "polite",
-      "data-testid": testId = "select",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "select",
     },
     ref,
   ) => {
+    const resolvedLabelPosition = resolvePropAlias(labelPosition);
     const generatedId = useId();
     const selectId = id || `${generatedId}-select`;
     const internalDescriptionId = ariaDescription
@@ -63,20 +77,28 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
     const [internalOptions, setInternalOptions] = useState(options);
     const [loading, setLoading] = useState(false);
+    const selectRef = useRef<HTMLSelectElement>(null);
+
+    useImperativeHandle(ref, () => selectRef.current as HTMLSelectElement);
 
     const hasLabel = Boolean(label);
 
     const layoutClasses = useMemo(() => {
       const posClass = hasLabel
-        ? classMap[`label${capitalize(labelPosition)}`]
+        ? classMap[`label${capitalize(resolvedLabelPosition)}`]
         : undefined;
 
-      return combineClassNames(classMap.layout, posClass);
-    }, [classMap, hasLabel, labelPosition]);
+      return combineClassNames(classMap.layout, posClass, layoutClassName);
+    }, [classMap, hasLabel, resolvedLabelPosition, layoutClassName]);
 
     const labelClasses = useMemo(
-      () => combineClassNames(classMap.label, classMap.labelOverlay),
-      [classMap],
+      () =>
+        combineClassNames(
+          classMap.label,
+          classMap.labelOverlay,
+          labelClassName,
+        ),
+      [classMap, labelClassName],
     );
 
     const computedDescribedBy = useMemo(() => {
@@ -132,6 +154,13 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       onChange(event.target.value);
     };
 
+    const handleWrapperClick = (event: MouseEvent<HTMLDivElement>) => {
+      if (disabled || event.target === selectRef.current) return;
+
+      selectRef.current?.focus();
+      selectRef.current?.click();
+    };
+
     const wrapperClasses = useMemo(
       () =>
         combineClassNames(
@@ -159,8 +188,13 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     );
 
     const selectClasses = useMemo(
-      () => combineClassNames(classMap.select, outline && classMap.outline),
-      [classMap, outline],
+      () =>
+        combineClassNames(
+          classMap.select,
+          outline && classMap.outline,
+          selectClassName,
+        ),
+      [classMap, outline, selectClassName],
     );
 
     const iconClasses = useMemo(
@@ -169,19 +203,26 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           classMap.icon,
           classMap[theme],
           disabled && classMap.disabled,
+          iconClassName,
         ),
-      [classMap, theme, disabled],
+      [classMap, theme, disabled, iconClassName],
     );
 
     const opts = asyncOptions ? internalOptions : options;
 
     return (
       <div className={layoutClasses} data-testid={`${testId}-layout`}>
-        {(labelPosition === "top" || labelPosition === "left") && labelNode}
+        {(resolvedLabelPosition === "top" ||
+          resolvedLabelPosition === "left") &&
+          labelNode}
 
-        <div className={wrapperClasses} data-testid={testId}>
+        <div
+          className={wrapperClasses}
+          data-testid={testId}
+          onClick={handleWrapperClick}
+        >
           <select
-            ref={ref}
+            ref={selectRef}
             id={selectId}
             name={name}
             form={form}
@@ -230,7 +271,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           {ariaDescription && (
             <span
               id={internalDescriptionId}
-              className="sr_only"
+              className={combineClassNames("sr_only", srOnlyClassName)}
               data-testid={`${testId}-description`}
             >
               {ariaDescription}
@@ -239,7 +280,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
 
           {loading && (
             <span
-              className={classMap.loading}
+              className={combineClassNames(classMap.loading, loadingClassName)}
               aria-live={ariaLive}
               data-testid={`${testId}-loading`}
             >
@@ -248,7 +289,9 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           )}
         </div>
 
-        {(labelPosition === "bottom" || labelPosition === "right") && labelNode}
+        {(resolvedLabelPosition === "bottom" ||
+          resolvedLabelPosition === "right") &&
+          labelNode}
       </div>
     );
   },

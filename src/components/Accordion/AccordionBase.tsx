@@ -3,6 +3,8 @@ import { AccordionProps } from "./Accordion.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -28,8 +30,8 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   size = getDefaultSize(),
   theme = getDefaultTheme(),
   state = "",
-  outline = false,
-  glass = false,
+  outline = getDefaultOutline(),
+  glass = getDefaultGlass(),
   expanded,
   disabled,
   customCollapsedIcon,
@@ -46,7 +48,8 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
-  "data-testid": testId = "accordion",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "accordion",
   ...rest
 }) => {
   const isControlled = expanded !== undefined;

@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import React, { useId } from "react";
 import { AccordionBase } from "../AccordionBase";
 import type { AccordionProps } from "../Accordion.types";
@@ -10,7 +11,7 @@ const Accordion: React.FC<AccordionProps> = (props) => {
   const getUniqueId = () => `accordion-${id}`;
 
   return (
-    <AccordionBase {...props} getUniqueId={getUniqueId} classMap={styles} />
+    <AccordionBase {...props} getUniqueId={getUniqueId} classMap={expandClassMap(styles)} />
   );
 };
 Accordion.displayName = "Accordion";

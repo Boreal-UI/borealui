@@ -65,12 +65,13 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "Custom class names for the avatar container.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -81,7 +82,8 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "Disables interaction and styles as disabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "fallback",
@@ -97,7 +99,8 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "href",
@@ -106,6 +109,15 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "imageFill",
+      "type": "boolean",
+      "description": "If true, passes a `fill` prop to a custom image component such as Next.js Image. Plain img rendering should leave this false.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "label",
@@ -121,7 +133,8 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "Full name used to generate initials when no image is available.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "onClick",
@@ -137,12 +150,22 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "Whether to apply an outline style.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "priority",
       "type": "boolean",
       "description": "If true, the image loads with higher priority.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
+      "name": "rel",
+      "type": "string",
+      "description": "Optional rel attribute when the avatar renders as a link.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -161,7 +184,8 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the avatar ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "shape",
@@ -169,7 +193,8 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "Shape of the avatar border ('circle' | 'square' | 'rounded').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"circle\""
     },
     {
       "name": "size",
@@ -177,7 +202,8 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "Size of the avatar ('xs' | 'small' | 'medium' | 'large' | 'xl').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "src",
@@ -193,7 +219,8 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "State of the avatar ('success' | 'error' | 'warning').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "status",
@@ -225,7 +252,25 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "Position of the status indicator dot/icon ('topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight').",
       "required": false,
       "inherited": false,
+      "category": "props",
+      "defaultValue": "\"bottomRight\""
+    },
+    {
+      "name": "target",
+      "type": "React.HTMLAttributeAnchorTarget",
+      "description": "Optional target attribute when the avatar renders as a link.",
+      "required": false,
+      "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"avatar\""
     },
     {
       "name": "theme",
@@ -233,7 +278,8 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "Visual theme of the avatar ('primary', 'secondary', 'tertiary', 'quaternary', 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     }
   ]
 };

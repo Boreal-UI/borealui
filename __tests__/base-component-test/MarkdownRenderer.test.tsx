@@ -265,6 +265,37 @@ describe("BaseMarkdownRenderer", () => {
     });
   });
 
+  it("sanitizes unsafe single-quoted and unquoted attributes without DOMParser", async () => {
+    const originalDomParser = window.DOMParser;
+    Object.defineProperty(window, "DOMParser", {
+      configurable: true,
+      value: undefined,
+    });
+
+    try {
+      render(
+        <BaseMarkdownRenderer
+          content={`<p onclick='alert(1)' onmouseover=alert(2)>Safe Text</p><a href=javascript:alert(3)>Bad Link</a>`}
+          classMap={classNames}
+          data-testid="markdown-renderer"
+        />,
+      );
+
+      await waitFor(() => {
+        const region = screen.getByTestId("markdown-renderer");
+        expect(region.innerHTML).toContain("Safe Text");
+        expect(region.innerHTML).not.toContain("onclick");
+        expect(region.innerHTML).not.toContain("onmouseover");
+        expect(region.innerHTML).not.toContain("javascript:alert");
+      });
+    } finally {
+      Object.defineProperty(window, "DOMParser", {
+        configurable: true,
+        value: originalDomParser,
+      });
+    }
+  });
+
   it("uses custom sanitizeHtml when provided", async () => {
     const sanitizeHtml = jest.fn((html: string) =>
       html.replace("Original", "Sanitized"),

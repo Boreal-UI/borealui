@@ -17,7 +17,8 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Text alignment for content. One of: \"left\" | \"center\" | \"right\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"center\""
     },
     {
       "name": "aria-atomic",
@@ -65,12 +66,22 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional CSS class names for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "contentClassName",
+      "type": "string",
+      "description": "Additional class names for the content wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -81,7 +92,8 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Whether the icon is decorative. Defaults to true.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "glass",
@@ -89,7 +101,8 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "icon",
@@ -108,12 +121,22 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class names for the icon wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "outline",
       "type": "boolean",
       "description": "Optional outline style for the component (default: false).",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "role",
@@ -129,7 +152,8 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Rounding style for the component. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -137,7 +161,8 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the component. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -145,7 +170,8 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Size of the component. One of: \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -153,7 +179,8 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "State of the metric. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "subtext",
@@ -164,12 +191,31 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "subtextClassName",
+      "type": "string",
+      "description": "Additional class names for the subtext element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"metric-box\""
+    },
+    {
       "name": "theme",
       "type": "ThemeType",
       "description": "Theme to apply for styling. One of: \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "title",
@@ -180,12 +226,30 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "titleClassName",
+      "type": "string",
+      "description": "Additional class names for the title element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "value",
       "type": "string | number",
       "description": "The primary value of the metric, e.g., a number or a string.",
       "required": true,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "valueClassName",
+      "type": "string",
+      "description": "Additional class names for the value element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     }
   ]
 };

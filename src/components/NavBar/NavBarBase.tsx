@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -21,11 +22,18 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   classMap,
   isItemActive,
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   className = "",
-  "data-testid": testId = "nav-bar",
+  listClassName = "",
+  listItemClassName = "",
+  itemClassName = "",
+  linkContentClassName = "",
+  iconClassName = "",
+  labelClassName = "",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "nav-bar",
   "aria-label": ariaLabel = "Main navigation",
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
@@ -49,8 +57,9 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
         classMap.item,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
+        itemClassName,
       ),
-    [classMap, shadow, rounding],
+    [classMap, shadow, rounding, itemClassName],
   );
 
   return (
@@ -62,7 +71,7 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
       data-testid={`${testId}-nav-bar`}
     >
       <ul
-        className={classMap.list}
+        className={combineClassNames(classMap.list, listClassName)}
         aria-label={listAriaLabel}
         data-testid={`${testId}-nav-list`}
       >
@@ -74,11 +83,16 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
           return (
             <li
               key={`${item.path}-${slug}`}
-              className={classMap.listItem}
+              className={combineClassNames(classMap.listItem, listItemClassName)}
               data-testid={`${testId}-nav-list-item-${slug}`}
             >
               <LinkWrapper
                 href={item.path}
+                target={item.target}
+                rel={
+                  item.rel ??
+                  (item.target === "_blank" ? "noopener noreferrer" : undefined)
+                }
                 isActive={isActive}
                 className={combineClassNames(
                   itemClass,
@@ -88,17 +102,26 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
                 aria-current={isActive ? "page" : undefined}
                 aria-label={itemAriaLabel}
               >
-                <span className={classMap.linkContent}>
+                <span
+                  className={combineClassNames(
+                    classMap.linkContent,
+                    linkContentClassName,
+                  )}
+                >
                   {item.icon && (
                     <span
-                      className={classMap.icon}
+                      className={combineClassNames(classMap.icon, iconClassName)}
                       aria-hidden="true"
                       data-testid={`${testId}-nav-icon-${slug}`}
                     >
                       {item.icon}
                     </span>
                   )}
-                  <span className={classMap.label}>{item.label}</span>
+                  <span
+                    className={combineClassNames(classMap.label, labelClassName)}
+                  >
+                    {item.label}
+                  </span>
                 </span>
               </LinkWrapper>
             </li>

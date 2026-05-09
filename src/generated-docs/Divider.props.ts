@@ -17,7 +17,8 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "description": "HTML tag to render ('div' | 'hr' | 'span').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"div\""
     },
     {
       "name": "dashed",
@@ -25,12 +26,13 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "description": "Whether the divider should be dashed instead of solid.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -41,7 +43,8 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "description": "Whether the divider is purely decorative. When true, it is hidden from assistive technology. Default: true",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "glass",
@@ -49,7 +52,8 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "label",
@@ -73,7 +77,8 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "description": "Length of the divider (e.g., \"100%\", \"60px\").",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"100%\""
     },
     {
       "name": "orientation",
@@ -81,7 +86,8 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "description": "Orientation of the divider ('horizontal' | 'vertical'). Default is 'horizontal'.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"horizontal\""
     },
     {
       "name": "state",
@@ -89,7 +95,17 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "description": "State of the divider ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"divider\""
     },
     {
       "name": "theme",
@@ -97,7 +113,8 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "description": "Theme style to apply to the divider ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "thickness",
@@ -105,7 +122,8 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "description": "Thickness of the divider (e.g., \"1px\", \"4px\").",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"1px\""
     }
   ]
 };

@@ -16,6 +16,8 @@
   "include": [
     "src/index.core.ts",
     "src/index.next.ts",
+    "src/core",
+    "src/next",
     "src/components",
     "src/Icons",
     "src/context",

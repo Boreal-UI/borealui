@@ -552,6 +552,67 @@ describe("BaseMessagePopup", () => {
     expect(wrapper).toHaveClass("customPopupClass");
   });
 
+  it("applies custom class names to popup sections", async () => {
+    render(
+      <BaseMessagePopup
+        title="Custom Popup"
+        message="Class test"
+        onClose={jest.fn()}
+        onConfirm={jest.fn()}
+        onCancel={jest.fn()}
+        contentClassName="custom-content"
+        headerClassName="custom-header"
+        titleClassName="custom-title"
+        closeButtonClassName="custom-close"
+        bodyClassName="custom-body"
+        messageClassName="custom-message"
+        actionsClassName="custom-actions"
+        confirmButtonClassName="custom-confirm"
+        cancelButtonClassName="custom-cancel"
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classMap}
+      />,
+    );
+
+    expect(await screen.findByTestId("message-popup-dialog")).toHaveClass(
+      "popupContent",
+      "custom-content",
+    );
+    expect(screen.getByTestId("message-popup-header")).toHaveClass(
+      "popupHeader",
+      "custom-header",
+    );
+    expect(screen.getByTestId("message-popup-title")).toHaveClass(
+      "popupTitle",
+      "custom-title",
+    );
+    expect(screen.getByTestId("message-popup-close")).toHaveClass(
+      "popupClose",
+      "custom-close",
+    );
+    expect(screen.getByTestId("message-popup-body")).toHaveClass(
+      "popupBody",
+      "custom-body",
+    );
+    expect(screen.getByTestId("message-popup-message")).toHaveClass(
+      "popupMessage",
+      "custom-message",
+    );
+    expect(screen.getByTestId("message-popup-actions")).toHaveClass(
+      "popupActions",
+      "custom-actions",
+    );
+    expect(screen.getByTestId("message-popup-confirm")).toHaveClass(
+      "popupConfirm",
+      "custom-confirm",
+    );
+    expect(screen.getByTestId("message-popup-cancel")).toHaveClass(
+      "popupCancel",
+      "custom-cancel",
+    );
+  });
+
   it("uses a custom data-testid prefix", async () => {
     render(
       <BaseMessagePopup

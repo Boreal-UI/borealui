@@ -692,6 +692,24 @@ describe("FooterBase", () => {
       expect(brandLink).toHaveClass("footerBrandLink");
     });
 
+    it("applies target and rel to the brand link", () => {
+      renderFooter({
+        layout: "columns",
+        logo: <svg />,
+        brandTitle: "Boreal UI",
+        brandHref: "/",
+        brandTarget: "_blank",
+        brandRel: "external",
+        sections: [],
+        socialLinks: [],
+        showThemeSelect: false,
+      });
+
+      const brandLink = screen.getByRole("link", { name: "Boreal UI" });
+      expect(brandLink).toHaveAttribute("target", "_blank");
+      expect(brandLink).toHaveAttribute("rel", "external");
+    });
+
     it("renders brand as non-link content when brandHref is omitted", () => {
       renderFooter({
         layout: "columns",

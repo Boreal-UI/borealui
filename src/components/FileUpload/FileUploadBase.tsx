@@ -4,6 +4,8 @@ import { FileIcon, TrashIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -15,10 +17,10 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   error,
   required = false,
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   controlRounding = getDefaultRounding(),
   controlShadow = getDefaultShadow(),
-  outline = false,
+  outline = getDefaultOutline(),
   outlineRounding = getDefaultRounding(),
   outlineShadow = getDefaultShadow(),
   state = "",
@@ -28,7 +30,27 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   onSubmit,
   onFilesChange,
   uploadProgress,
-  "data-testid": testId = "file-upload",
+  formGroupClassName = "",
+  labelClassName = "",
+  descriptionClassName = "",
+  errorMessageClassName = "",
+  dropzoneClassName = "",
+  inputClassName = "",
+  uploadActionsClassName = "",
+  selectButtonClassName = "",
+  rejectedFilesClassName = "",
+  rejectedLabelClassName = "",
+  rejectedListClassName = "",
+  rejectedItemClassName = "",
+  rejectedReasonClassName = "",
+  uploadControlsClassName = "",
+  fileListClassName = "",
+  fileListItemClassName = "",
+  removeButtonClassName = "",
+  uploadProgressClassName = "",
+  uploadButtonClassName = "",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "file-upload",
   id,
   FormGroup,
   disabled = false,
@@ -275,6 +297,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
         error && classMap.error,
         isDragging && classMap.dragging,
         disabled && classMap.disabled,
+        dropzoneClassName,
         className,
       ),
     [
@@ -313,6 +336,10 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       description={description}
       error={error}
       required={required}
+      className={formGroupClassName}
+      labelClassName={labelClassName}
+      descriptionClassName={descriptionClassName}
+      errorMessageClassName={errorMessageClassName}
       data-testid={testId}
     >
       <div
@@ -347,6 +374,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
           onChange={handleFileChange}
           className={combineClassNames(
             classMap.hiddenInput,
+            inputClassName,
             inputProps?.className,
           )}
           required={required}
@@ -359,7 +387,12 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
           data-testid={`${testId}-input`}
         />
 
-        <div className={classMap.uploadActions}>
+        <div
+          className={combineClassNames(
+            classMap.uploadActions,
+            uploadActionsClassName,
+          )}
+        >
           <Button
             {...selectButtonProps}
             icon={FileIcon}
@@ -369,6 +402,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             state={error ? "error" : state}
             className={combineClassNames(
               classMap.fileInput,
+              selectButtonClassName,
               selectButtonProps?.className,
             )}
             disabled={uploading || disabled}
@@ -392,20 +426,44 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
 
         {rejectedFiles.length > 0 && (
           <div
-            className={classMap.rejectedFiles}
+            className={combineClassNames(
+              classMap.rejectedFiles,
+              rejectedFilesClassName,
+            )}
             aria-label={rejectedFilesAriaLabel}
             data-testid={testId ? `${testId}-rejected-files` : undefined}
           >
-            <p className={classMap.rejectedLabel}>Rejected Files:</p>
+            <p
+              className={combineClassNames(
+                classMap.rejectedLabel,
+                rejectedLabelClassName,
+              )}
+            >
+              Rejected Files:
+            </p>
             <ul
               id={rejectedListId}
-              className={classMap.rejectedList}
+              className={combineClassNames(
+                classMap.rejectedList,
+                rejectedListClassName,
+              )}
               aria-label={rejectedFilesAriaLabel || "Rejected files"}
             >
               {rejectedFiles.map((file, index) => (
-                <li key={index} className={classMap.rejectedItem}>
+                <li
+                  key={index}
+                  className={combineClassNames(
+                    classMap.rejectedItem,
+                    rejectedItemClassName,
+                  )}
+                >
                   <span>{file.name}</span>
-                  <span className={classMap.rejectedReason}>
+                  <span
+                    className={combineClassNames(
+                      classMap.rejectedReason,
+                      rejectedReasonClassName,
+                    )}
+                  >
                     {" "}
                     – {file.reason}
                   </span>
@@ -417,16 +475,25 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
 
         {fileNames.length > 0 && (
           <div
-            className={classMap.uploadControls}
+            className={combineClassNames(
+              classMap.uploadControls,
+              uploadControlsClassName,
+            )}
             data-testid={testId ? `${testId}-controls` : undefined}
           >
             <ul
               id={fileListId}
-              className={classMap.fileList}
+              className={combineClassNames(classMap.fileList, fileListClassName)}
               aria-label={fileListAriaLabel || "Selected files"}
             >
               {fileNames.map((name, index) => (
-                <li key={index} className={classMap.fileListItem}>
+                <li
+                  key={index}
+                  className={combineClassNames(
+                    classMap.fileListItem,
+                    fileListItemClassName,
+                  )}
+                >
                   <span>{name}</span>
                   <IconButton
                     {...removeButtonProps}
@@ -442,6 +509,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
                     onClick={() => removeFile(index)}
                     className={combineClassNames(
                       classMap.removeButton,
+                      removeButtonClassName,
                       removeButtonProps?.className,
                     )}
                     data-testid={`${testId}-remove-${index}`}
@@ -457,6 +525,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
                 glass={glass}
                 className={combineClassNames(
                   classMap.uploadProgress,
+                  uploadProgressClassName,
                   progressBarProps?.className,
                 )}
                 value={uploadProgress ?? internalProgress}
@@ -481,6 +550,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
                 size={uploadButtonProps?.size ?? "small"}
                 className={combineClassNames(
                   classMap.uploadButton,
+                  uploadButtonClassName,
                   uploadButtonProps?.className,
                 )}
                 aria-label={uploadButtonAriaLabel || "Upload selected files"}

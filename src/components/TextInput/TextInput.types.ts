@@ -37,16 +37,40 @@ export interface TextInputProps extends NativeInputProps {
 
   /**
    * If true, the input behaves as a password field and shows a visibility toggle.
+   *
+   * @default false
    */
   password?: boolean;
 
   /**
    * Additional CSS class names for custom styling.
+   *
+   * @default ""
    */
   className?: string;
 
+  /** Additional class names for the outer layout container. */
+  containerClassName?: string;
+
+  /** Additional class names for the visible label. */
+  labelClassName?: string;
+
+  /** Additional class names for the icon wrapper. */
+  iconClassName?: string;
+
+  /** Additional class names for the native input. */
+  inputClassName?: string;
+
+  /** Additional class names for the password toggle button. */
+  togglePasswordClassName?: string;
+
+  /** Additional class names for the screen-reader-only text. */
+  srOnlyClassName?: string;
+
   /**
    * If true, the input is rendered in read-only mode.
+   *
+   * @default false
    */
   readOnly?: boolean;
 
@@ -58,46 +82,62 @@ export interface TextInputProps extends NativeInputProps {
   /**
    * Position of the label.
    * "top" | "left" | "right" | "bottom"
+   *
+   * @default "top"
    */
   labelPosition?: LabelPositionType;
 
   /**
    * Theme used for styling.
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Adds translucent glass styling to the input wrapper.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State of the input.
    * "success" | "error" | "warning" | "disabled" | ""
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Rounding of the component.
    * "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow of the component.
    * "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * If true, the input is outlined instead of filled.
+   *
+   * @default configured default outline setting (fallback: false)
    */
   outline?: boolean;
 
   /**
    * Controls whether autocomplete is enabled.
    * Pass true for "on" or false for "off".
+   *
+   * @default false
    */
   autocomplete?: boolean;
 
@@ -186,9 +226,15 @@ export interface TextInputProps extends NativeInputProps {
    */
   srOnlyText?: ReactNode;
 
+
   /**
    * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "text-input"
    */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

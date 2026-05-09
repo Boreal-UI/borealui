@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseMetricBox from "../MetricBoxBase";
 import "./MetricBox.scss";
@@ -48,7 +49,7 @@ const classes = {
 };
 
 const MetricBox: React.FC<MetricBoxProps> = (props) => {
-  return <BaseMetricBox {...props} classMap={classes} />;
+  return <BaseMetricBox {...props} classMap={expandClassMap(classes)} />;
 };
 MetricBox.displayName = "MetricBox";
 export default MetricBox;

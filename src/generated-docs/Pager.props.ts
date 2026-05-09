@@ -25,7 +25,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the pagination navigation region.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Pagination\""
     },
     {
       "name": "aria-labelledby",
@@ -41,7 +42,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Optional extra class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "currentPage",
@@ -54,7 +56,7 @@ export const pagerPropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -65,7 +67,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Function used to generate the live region status message.",
       "required": false,
       "inherited": false,
-      "category": "events"
+      "category": "events",
+      "defaultValue": "(activePage, totalPages) => `Page ${activePage} of ${totalPages}`"
     },
     {
       "name": "getPageAriaLabel",
@@ -73,7 +76,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Function used to generate an accessible label for each page button.",
       "required": false,
       "inherited": false,
-      "category": "events"
+      "category": "events",
+      "defaultValue": "(pageNumber, isActive) => isActive ? `Current page, page ${pageNumber}` : `Go to page ${pageNumber}`"
     },
     {
       "name": "glass",
@@ -81,7 +85,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment to the pager and nested controls.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "itemsPerPage",
@@ -97,7 +102,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "ARIA live politeness setting for the status message.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"polite\""
     },
     {
       "name": "next-button-aria-label",
@@ -105,7 +111,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the next page button.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Go to next page\""
     },
     {
       "name": "onPageChange",
@@ -121,7 +128,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the page list.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Page list\""
     },
     {
       "name": "previous-button-aria-label",
@@ -129,7 +137,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the previous page button.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Go to previous page\""
     },
     {
       "name": "rounding",
@@ -137,7 +146,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the controls. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "serverControlled",
@@ -145,7 +155,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Enables server side control of the paging.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "shadow",
@@ -153,7 +164,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the controls. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -161,7 +173,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Optional size modifier for pagination buttons. One of: \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -169,7 +182,17 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Optional state of the component for feedback styling. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"pager\""
     },
     {
       "name": "theme",
@@ -177,7 +200,8 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Optional theme to apply for pagination. One of: \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "totalItems",
