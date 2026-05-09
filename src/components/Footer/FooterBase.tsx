@@ -35,6 +35,8 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   brandTitle,
   brandDescription,
   brandHref,
+  brandTarget,
+  brandRel,
 
   socialLinks = [],
   showThemeSelect = false,
@@ -330,6 +332,11 @@ const FooterBase: React.FC<BaseFooterProps> = ({
               classMap.brandLink,
               brandLinkClassName,
             )}
+            target={brandTarget}
+            rel={
+              brandRel ??
+              (brandTarget === "_blank" ? "noopener noreferrer" : undefined)
+            }
             aria-label={
               typeof brandTitle === "string" ? brandTitle : logoAriaLabel
             }

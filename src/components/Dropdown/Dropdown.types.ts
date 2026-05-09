@@ -1,5 +1,10 @@
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
-import { ComponentType, HTMLAttributes, ReactNode } from "react";
+import {
+  AnchorHTMLAttributes,
+  ComponentType,
+  HTMLAttributes,
+  ReactNode,
+} from "react";
 import { IconButtonProps } from "../IconButton/IconButton.types";
 
 /**
@@ -17,6 +22,12 @@ export interface DropdownItem {
 
   /** Optional href to make the item behave as a link. */
   href?: string;
+
+  /** Optional target attribute for linked items. */
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /** Optional rel attribute for linked items. */
+  rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
 
   /** Whether the item is disabled. */
   disabled?: boolean;

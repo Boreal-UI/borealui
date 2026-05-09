@@ -133,6 +133,22 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "brandRel",
+      "type": "string",
+      "description": "Optional rel attribute for the brand/logo link.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "brandTarget",
+      "type": "React.HTMLAttributeAnchorTarget",
+      "description": "Optional target attribute for the brand/logo link.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "brandTitle",
       "type": "ReactNode",
       "description": "Optional brand title displayed beside or below the logo.",

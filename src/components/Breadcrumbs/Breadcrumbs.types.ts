@@ -1,4 +1,9 @@
-import type { ElementType, HTMLAttributes, ReactNode } from "react";
+import type {
+  AnchorHTMLAttributes,
+  ElementType,
+  HTMLAttributes,
+  ReactNode,
+} from "react";
 import {
   RoundingType,
   ShadowType,
@@ -21,6 +26,12 @@ export interface Breadcrumb {
    * If not provided, it is rendered as plain text.
    */
   href?: string;
+
+  /** Optional target attribute for linked breadcrumbs. */
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /** Optional rel attribute for linked breadcrumbs. */
+  rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
 
   /**
    * Optional accessible label override for this breadcrumb item.

@@ -32,6 +32,8 @@ const classMap = {
 
 type MockLinkWrapperProps = {
   href: string;
+  target?: React.AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+  rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
   children: React.ReactNode;
   className: string;
   isActive: boolean;
@@ -42,6 +44,8 @@ type MockLinkWrapperProps = {
 
 const LinkWrapper = ({
   href,
+  target,
+  rel,
   children,
   className,
   isActive,
@@ -51,6 +55,8 @@ const LinkWrapper = ({
 }: MockLinkWrapperProps) => (
   <a
     href={href}
+    target={target}
+    rel={rel}
     className={className}
     data-testid={testId}
     aria-current={ariaCurrent}
@@ -112,6 +118,29 @@ describe("BaseNavBar", () => {
       "href",
       "/profile",
     );
+  });
+
+  it("applies target and rel to nav item links", () => {
+    render(
+      <BaseNavBar
+        items={[
+          {
+            label: "Docs",
+            path: "/docs",
+            icon: <FaHome />,
+            target: "_blank",
+            rel: "external",
+          },
+        ]}
+        classMap={classMap}
+        LinkWrapper={LinkWrapper}
+        data-testid={testId}
+      />,
+    );
+
+    const link = screen.getByTestId(`${testId}-nav-item-docs`);
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "external");
   });
 
   it("applies the default navigation aria-label", () => {

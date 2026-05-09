@@ -204,6 +204,26 @@ describe("BaseDropdown", () => {
     expect(screen.queryByTestId("dropdown-menu")).not.toBeInTheDocument();
   });
 
+  it("applies target and rel to href items", () => {
+    renderDropdown({
+      items: [
+        {
+          label: "Docs",
+          href: "/docs",
+          target: "_blank",
+          rel: "external",
+          "data-testid": "dropdown-docs",
+        },
+      ],
+    });
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+
+    const linkItem = screen.getByTestId("dropdown-docs");
+    expect(linkItem).toHaveAttribute("target", "_blank");
+    expect(linkItem).toHaveAttribute("rel", "external");
+  });
+
   it("supports trigger aria-labelledby instead of aria-label", () => {
     render(
       <>

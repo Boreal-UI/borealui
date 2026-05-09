@@ -56,6 +56,8 @@ const NavBar: React.FC<NavBarProps> = ({
       isItemActive={resolvedIsItemActive}
       LinkWrapper={({
         href,
+        target,
+        rel,
         children,
         className,
         isActive,
@@ -64,6 +66,8 @@ const NavBar: React.FC<NavBarProps> = ({
       }) => (
         <a
           href={href}
+          target={target}
+          rel={rel}
           className={className}
           aria-current={isActive ? "page" : undefined}
           data-testid={testId}

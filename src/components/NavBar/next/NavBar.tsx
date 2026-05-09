@@ -28,6 +28,8 @@ const NavBar: React.FC<NavBarProps & { mockPath?: string }> = ({
       isItemActive={resolvedIsItemActive}
       LinkWrapper={({
         href,
+        target,
+        rel,
         children,
         className,
         isActive,
@@ -36,6 +38,8 @@ const NavBar: React.FC<NavBarProps & { mockPath?: string }> = ({
       }) => (
         <Link
           href={href}
+          target={target}
+          rel={rel}
           className={className}
           aria-current={isActive ? "page" : undefined}
           data-testid={testId}

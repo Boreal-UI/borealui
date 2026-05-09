@@ -312,10 +312,17 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
             };
 
             if (item.href) {
+              const target = item.disabled ? undefined : item.target;
+              const rel =
+                item.rel ??
+                (target === "_blank" ? "noopener noreferrer" : undefined);
+
               return (
                 <a
                   key={item.id ?? index}
                   href={item.disabled ? undefined : item.href}
+                  target={target}
+                  rel={rel}
                   {...commonProps}
                   onClick={(e) => {
                     if (item.disabled) {

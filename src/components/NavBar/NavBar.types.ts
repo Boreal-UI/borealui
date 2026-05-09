@@ -1,5 +1,5 @@
 import { RoundingType, ShadowType, ThemeType } from "@/types/types";
-import { JSX } from "react";
+import { AnchorHTMLAttributes, JSX } from "react";
 
 /**
  * Describes a single navigation item for the NavBar component.
@@ -11,6 +11,10 @@ export interface NavItem {
   label: string;
   /** URL path where the nav item links. */
   path: string;
+  /** Optional target attribute for the nav link. */
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+  /** Optional rel attribute for the nav link. */
+  rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
 }
 
 /**
@@ -131,6 +135,8 @@ export interface NavBarProps {
 export interface BaseNavBarProps extends NavBarProps {
   LinkWrapper: (props: {
     href: string;
+    target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+    rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
     children: React.ReactNode;
     className: string;
     isActive: boolean;

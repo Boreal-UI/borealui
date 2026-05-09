@@ -88,6 +88,11 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
             >
               <LinkWrapper
                 href={item.path}
+                target={item.target}
+                rel={
+                  item.rel ??
+                  (item.target === "_blank" ? "noopener noreferrer" : undefined)
+                }
                 isActive={isActive}
                 className={combineClassNames(
                   itemClass,

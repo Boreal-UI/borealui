@@ -36,6 +36,8 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   testId = dataTestId ?? "badge",
   onClick,
   href,
+  target: targetProp,
+  rel: relProp,
   ...rest
 }: BadgeBaseProps) => {
   if (children == null && !Icon) return null;
@@ -112,6 +114,11 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
 
   if (href) {
     const isHttp = /^https?:\/\//i.test(href);
+    const target = disabled
+      ? undefined
+      : (targetProp ?? (isHttp ? "_blank" : undefined));
+    const rel =
+      relProp ?? (target === "_blank" ? "noopener noreferrer" : undefined);
 
     return (
       <a
@@ -122,8 +129,8 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
         title={title ?? accessibleLabel}
         aria-disabled={disabled || undefined}
         tabIndex={disabled ? -1 : tabIndex}
-        target={isHttp && !disabled ? "_blank" : undefined}
-        rel={isHttp && !disabled ? "noopener noreferrer" : undefined}
+        target={target}
+        rel={rel}
         {...sharedAccessibilityProps}
         {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >

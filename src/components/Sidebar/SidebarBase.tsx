@@ -115,6 +115,8 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
         const {
           label,
           href,
+          target,
+          rel,
           children,
           icon,
           "aria-label": linkAriaLabel,
@@ -137,6 +139,8 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
         const sectionId = idFor(label);
         const buttonId = `${sectionId}-button`;
         const panelId = `${sectionId}-panel`;
+        const linkRel =
+          rel ?? (target === "_blank" ? "noopener noreferrer" : undefined);
 
         return (
           <li
@@ -197,6 +201,8 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
             ) : href && !linkAriaDisabled ? (
               <LinkComponent
                 href={href}
+                target={target}
+                rel={linkRel}
                 className={combineClassNames(
                   classMap.link,
                   isChild && classMap.childLink,
@@ -256,6 +262,8 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
               {
                 label,
                 href,
+                target,
+                rel,
                 icon,
                 "aria-label": footerLinkAriaLabel,
                 "aria-description": footerLinkAriaDescription,
@@ -266,6 +274,8 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
               <LinkComponent
                 key={`${label}-${i}`}
                 href={href}
+                target={target}
+                rel={rel ?? (target === "_blank" ? "noopener noreferrer" : undefined)}
                 className={classMap.footerLink}
                 aria-label={footerLinkAriaLabel}
                 aria-description={footerLinkAriaDescription}

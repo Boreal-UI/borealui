@@ -838,11 +838,11 @@ describe("ButtonBase", () => {
     expect(link).toHaveAttribute("aria-disabled", "true");
   });
 
-  it("applies a custom _target value to anchor links", () => {
+  it("applies a custom target value to anchor links", () => {
     renderButton(
       {
         href: "https://example.com",
-        _target: "_blank",
+        target: "_blank",
       },
       "Open Example",
     );
@@ -854,11 +854,26 @@ describe("ButtonBase", () => {
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });
 
-  it("applies a non-blank _target value without rel", () => {
+  it("applies custom target and rel values to anchor links", () => {
     renderButton(
       {
         href: "/docs",
-        _target: "_self",
+        target: "_blank",
+        rel: "external",
+      },
+      "Docs",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "external");
+  });
+
+  it("applies a non-blank target value without rel", () => {
+    renderButton(
+      {
+        href: "/docs",
+        target: "_self",
       },
       "Docs",
     );
@@ -868,11 +883,11 @@ describe("ButtonBase", () => {
     expect(link).not.toHaveAttribute("rel");
   });
 
-  it("shows new-tab text when _target is _blank", () => {
+  it("shows new-tab text when target is _blank", () => {
     renderButton(
       {
         href: "/external-docs",
-        _target: "_blank",
+        target: "_blank",
       },
       "External Docs",
     );
@@ -953,11 +968,11 @@ describe("ButtonBase", () => {
     expect(element).toHaveAttribute("role", "button");
   });
 
-  it("prevents href navigation and removes target when disabled even if _target is provided", () => {
+  it("prevents href navigation and removes target when disabled even if target is provided", () => {
     renderButton(
       {
         href: "https://example.com",
-        _target: "_blank",
+        target: "_blank",
         disabled: true,
       },
       "Disabled External",

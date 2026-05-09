@@ -198,6 +198,12 @@ export interface AvatarProps {
    */
   href?: string;
 
+  /** Optional target attribute when the avatar renders as a link. */
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /** Optional rel attribute when the avatar renders as a link. */
+  rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
+
   /**
    * If true, the image loads with higher priority.
    *

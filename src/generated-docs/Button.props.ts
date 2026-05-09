@@ -12,14 +12,6 @@ export const buttonPropDocs: GeneratedComponentDoc = {
   "sourcePath": "src\\components\\Button\\Button.types.ts",
   "props": [
     {
-      "name": "_target",
-      "type": "React.HTMLAttributeAnchorTarget",
-      "description": "Optional target for link rendering. Example: \"_blank\", \"_self\", \"_parent\", \"_top\"",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "aria-atomic",
       "type": "boolean",
       "description": "Whether assistive technologies should treat live updates as atomic.",
@@ -281,6 +273,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
+      "name": "rel",
+      "type": "string",
+      "description": "Optional rel attribute for link rendering. Defaults to \"noopener noreferrer\" when opening in a new tab.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "rounding",
       "type": "RoundingType",
       "description": "Rounding style for the button ('none' | 'small' | 'medium' | 'large' | 'full').",
@@ -315,6 +315,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "\"\""
+    },
+    {
+      "name": "target",
+      "type": "React.HTMLAttributeAnchorTarget",
+      "description": "Optional target attribute for link rendering. Example: \"_blank\", \"_self\", \"_parent\", \"_top\"",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "testId",

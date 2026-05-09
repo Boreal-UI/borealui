@@ -50,7 +50,8 @@ const ButtonBase = forwardRef<
       "aria-disabled": ariaDisabled,
 
       href,
-      _target,
+      target: targetProp,
+      rel: relProp,
       as,
       isExternal = false,
       outline = getDefaultOutline(),
@@ -150,7 +151,7 @@ const ButtonBase = forwardRef<
           <>
             {children}
             {href &&
-              (_target === "_blank" ||
+              (targetProp === "_blank" ||
                 (isExternal ?? /^https?:\/\//i.test(href))) && (
                 <span className="sr_only"> (opens in a new tab)</span>
               )}
@@ -169,16 +170,17 @@ const ButtonBase = forwardRef<
 
     if (href) {
       const external =
-        (_target === "_blank" || isExternal || /^https?:\/\//i.test(href)) &&
+        (targetProp === "_blank" || isExternal || /^https?:\/\//i.test(href)) &&
         !disabled;
 
       const Comp = external ? "a" : (as ?? LinkComponent ?? "a");
 
       const target = disabled
         ? undefined
-        : (_target ?? (external ? "_blank" : undefined));
+        : (targetProp ?? (external ? "_blank" : undefined));
 
-      const rel = target === "_blank" ? "noopener noreferrer" : undefined;
+      const rel =
+        relProp ?? (target === "_blank" ? "noopener noreferrer" : undefined);
 
       const linkCommon = {
         ref: ref as React.Ref<HTMLAnchorElement>,

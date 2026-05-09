@@ -154,6 +154,14 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
+      "name": "rel",
+      "type": "string",
+      "description": "Optional rel attribute when the avatar renders as a link.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "role",
       "type": "AriaRole",
       "description": "Optional role override for custom avatar rendering patterns. In most cases this should be left undefined so the native button/link role is preserved.",
@@ -237,6 +245,14 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"bottomRight\""
+    },
+    {
+      "name": "target",
+      "type": "React.HTMLAttributeAnchorTarget",
+      "description": "Optional target attribute when the avatar renders as a link.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "testId",

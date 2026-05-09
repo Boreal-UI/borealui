@@ -30,10 +30,16 @@ export interface ButtonProps extends Pick<
   | "aria-disabled"
 > {
   /**
-   * Optional target for link rendering.
+   * Optional target attribute for link rendering.
    * Example: "_blank", "_self", "_parent", "_top"
    */
-  _target?: React.HTMLAttributeAnchorTarget;
+  target?: React.AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /**
+   * Optional rel attribute for link rendering.
+   * Defaults to "noopener noreferrer" when opening in a new tab.
+   */
+  rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
 
   /**
    * Optional element or component override.
@@ -258,7 +264,6 @@ export interface ButtonProps extends Pick<
    */
   type?: "button" | "reset" | "submit";
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -272,13 +277,7 @@ export interface ButtonProps extends Pick<
 
 type AnchorExtras = Omit<
   AnchorHTMLAttributes<HTMLAnchorElement>,
-  | "href"
-  | "children"
-  | "className"
-  | "onClick"
-  | "target"
-  | "rel"
-  | keyof ButtonProps
+  "href" | "children" | "className" | "onClick" | keyof ButtonProps
 >;
 
 type ButtonExtras = Omit<

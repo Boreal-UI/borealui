@@ -1,4 +1,5 @@
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types";
+import type { AnchorHTMLAttributes } from "react";
 
 export interface SidebarLink {
   /**
@@ -11,6 +12,12 @@ export interface SidebarLink {
    * If omitted, the link may be used as a non-clickable parent for submenu items.
    */
   href?: string;
+
+  /** Optional target attribute for the link. */
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /** Optional rel attribute for the link. */
+  rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
 
   /**
    * Optional child links to render as a collapsible submenu.
@@ -51,6 +58,12 @@ export interface SidebarFooterLink {
    * Navigation path or URL for the footer link.
    */
   href: string;
+
+  /** Optional target attribute for the footer link. */
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /** Optional rel attribute for the footer link. */
+  rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
 
   /**
    * Optional icon to display next to the label.

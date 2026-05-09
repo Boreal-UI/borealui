@@ -152,6 +152,12 @@ const IconButtonBase = forwardRef<
   );
 
   if (renderAsLink) {
+    const resolvedTarget = inert
+      ? undefined
+      : (target ?? (isExternal ? "_blank" : undefined));
+    const resolvedRel =
+      rel ?? (resolvedTarget === "_blank" ? "noopener noreferrer" : undefined);
+
     const linkProps = {
       className: combineClassNames(classNames, classMap.link),
       ref: ref as React.Ref<HTMLAnchorElement>,
@@ -160,6 +166,8 @@ const IconButtonBase = forwardRef<
         : onClick,
       onKeyDown,
       "aria-disabled": inert || undefined,
+      target: resolvedTarget,
+      rel: resolvedRel,
       ...sharedAccessibilityProps,
       ...rest,
       tabIndex: inert ? -1 : tabIndex,
@@ -170,8 +178,6 @@ const IconButtonBase = forwardRef<
         <a
           {...linkProps}
           href={inert ? undefined : href}
-          target={target ?? "_blank"}
-          rel={rel ?? "noopener noreferrer"}
         >
           {iconContent}
         </a>

@@ -148,6 +148,12 @@ export interface BadgeProps extends BadgeAccessibilityProps {
    */
   onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 
+  /** Optional target attribute when the badge renders as a link. */
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /** Optional rel attribute when the badge renders as a link. */
+  rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
+
 
   /**
    * Optional test ID for testing frameworks.
@@ -162,7 +168,7 @@ export interface BadgeProps extends BadgeAccessibilityProps {
 
 type AnchorExtras = Omit<
   AnchorHTMLAttributes<HTMLAnchorElement>,
-  "href" | "children" | "className" | "onClick" | "title" | "role" | "tabIndex"
+  "href" | "children" | "className" | "onClick" | "title" | "role" | "tabIndex" | keyof BadgeProps
 >;
 
 type ButtonExtras = Omit<

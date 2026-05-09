@@ -335,6 +335,8 @@ const CardBase: React.FC<CardBaseProps> = ({
                           title={button.title}
                           size={button.size || size}
                           href={button.href}
+                          target={button.target}
+                          rel={button.rel}
                           loading={button.loading}
                           disabled={button.disabled}
                         />
@@ -349,6 +351,8 @@ const CardBase: React.FC<CardBaseProps> = ({
                           theme={button.theme || "secondary"}
                           state={button.state || ""}
                           href={button.href}
+                          target={button.target}
+                          rel={button.rel}
                           loading={button.loading}
                           size={button.size || size}
                           aria-label={button["aria-label"] || button.label}

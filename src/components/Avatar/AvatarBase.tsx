@@ -32,6 +32,8 @@ export const AvatarBase = forwardRef<
     onClick,
     disabled = false,
     href,
+    target: targetProp,
+    rel: relProp,
     status,
     statusLabel,
     statusIcon,
@@ -207,6 +209,11 @@ export const AvatarBase = forwardRef<
 
   if (href) {
     const isHttp = /^https?:\/\//i.test(href);
+    const target = disabled
+      ? undefined
+      : (targetProp ?? (isHttp ? "_blank" : undefined));
+    const rel =
+      relProp ?? (target === "_blank" ? "noopener noreferrer" : undefined);
 
     return LinkComponent === "a" ? (
       <a
@@ -215,8 +222,8 @@ export const AvatarBase = forwardRef<
         className={combinedClassName}
         onClick={handleClick}
         data-testid={testId ? `${testId}-main` : undefined}
-        target={isHttp && !disabled ? "_blank" : undefined}
-        rel={isHttp && !disabled ? "noopener noreferrer" : undefined}
+        target={target}
+        rel={rel}
         tabIndex={disabled ? -1 : 0}
         {...linkAria}
         {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}
@@ -231,6 +238,8 @@ export const AvatarBase = forwardRef<
         onClick={handleClick}
         data-testid={testId ? `${testId}-main` : undefined}
         tabIndex={disabled ? -1 : 0}
+        target={target}
+        rel={rel}
         {...linkAria}
         {...(rest as Record<string, unknown>)}
       >

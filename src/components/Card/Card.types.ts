@@ -1,5 +1,5 @@
 import { IconType } from "react-icons";
-import type { AriaRole, ReactNode } from "react";
+import type { AnchorHTMLAttributes, AriaRole, ReactNode } from "react";
 import {
   OrientationType,
   RoundingType,
@@ -69,6 +69,12 @@ export interface ActionButton {
 
   /** Optional URL to render the button as a link. */
   href?: string;
+
+  /** Optional target attribute when the action renders as a link. */
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /** Optional rel attribute when the action renders as a link. */
+  rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
 
   /**
    * Size for action buttons.

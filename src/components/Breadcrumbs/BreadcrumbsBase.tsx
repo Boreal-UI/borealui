@@ -110,6 +110,10 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
           );
 
           const itemTitle = item.title ?? item.label;
+          const linkTarget = isItemDisabled ? undefined : item.target;
+          const linkRel =
+            item.rel ??
+            (linkTarget === "_blank" ? "noopener noreferrer" : undefined);
 
           return (
             <li
@@ -155,6 +159,8 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                 ) : (
                   <LinkComponent
                     href={item.href}
+                    target={linkTarget}
+                    rel={linkRel}
                     className={classMap.link}
                     title={itemTitle}
                     aria-label={item["aria-label"]}

@@ -362,6 +362,16 @@ export interface FooterProps extends Omit<
   brandHref?: string;
 
   /**
+   * Optional target attribute for the brand/logo link.
+   */
+  brandTarget?: React.HTMLAttributeAnchorTarget;
+
+  /**
+   * Optional rel attribute for the brand/logo link.
+   */
+  brandRel?: string;
+
+  /**
    * Grouped footer link sections.
    * When omitted, the old `links` prop is still supported.
    */

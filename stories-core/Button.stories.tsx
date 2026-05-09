@@ -232,7 +232,7 @@ export const WithExternalLink: Story = {
   args: {
     ...defaultArgs,
     href: "https://example.com",
-    _target: "_blank",
+    target: "_blank",
     isExternal: true,
     children: "External Link",
   },

@@ -80,6 +80,14 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
+      "name": "rel",
+      "type": "string",
+      "description": "Optional rel attribute when the badge renders as a link.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "rounding",
       "type": "RoundingType",
       "description": "Rounding of the badge ('none' | 'small' | 'medium' | 'large' | 'full').",
@@ -114,6 +122,14 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "\"\""
+    },
+    {
+      "name": "target",
+      "type": "React.HTMLAttributeAnchorTarget",
+      "description": "Optional target attribute when the badge renders as a link.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "testId",
