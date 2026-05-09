@@ -101,7 +101,7 @@ import Card from "boreal-ui/next/Card";
 
 ## Components
 
-For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs/README.md). They cover import paths, styling and theming, common component patterns, generated prop docs, and public TypeScript types.
+For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs/README.md). They cover import paths, styling and theming, common component patterns, generated prop docs, public TypeScript types, and contributor workflow.
 
 ### Actions
 
@@ -113,7 +113,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 
 - `TextInput` and `TextArea` support labels, helper/error text, validation state, disabled state, sizing, theming, and accessible descriptions.
 - `Select` and `ThemeSelect` cover option selection and color-scheme switching.
-- `Checkbox`, `RadioButton`, `Toggle`, and `Slider` provide common controlled input patterns.
+- `Checkbox`, `RadioButton`, `RadioGroup`, `Toggle`, and `Slider` provide common controlled input patterns.
 - `ColorPicker` supports color selection flows.
 - `DateTimePicker` handles date and time input.
 - `FileUpload` supports file selection UI.
@@ -282,6 +282,8 @@ console.log(dataTablePropDocs.props);
 
 The docs export includes `GeneratedComponentDoc` and `GeneratedPropDoc` types, plus one prop-doc object per documented component. Prop docs include `defaultValue` when the component implementation sets a readable default.
 
+For the complete generated prop-doc export list, see [Public API Reference](./docs/public-api-reference.md).
+
 ## Type Exports
 
 Shared public types are exported from both builds:
@@ -371,6 +373,8 @@ Useful scripts:
 | `npm run generate:docs`        | Regenerate component prop docs.                         |
 | `npm run generate:entrypoints` | Regenerate component entry points.                      |
 | `npm run generate:exports`     | Regenerate package exports.                             |
+
+Contributor documentation for component structure, generated docs, package output, and release checks lives in [Development Workflow](./docs/development-workflow.md).
 
 ## Package Entry Points
 

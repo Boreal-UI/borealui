@@ -111,6 +111,15 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "imageFill",
+      "type": "boolean",
+      "description": "If true, passes a `fill` prop to a custom image component such as Next.js Image. Plain img rendering should leave this false.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
       "name": "label",
       "type": "string",
       "description": "Visible or semantic label for the avatar. Used as a fallback accessible name when aria-label / aria-labelledby are not provided.",
@@ -148,15 +157,6 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "name": "priority",
       "type": "boolean",
       "description": "If true, the image loads with higher priority.",
-      "required": false,
-      "inherited": false,
-      "category": "props",
-      "defaultValue": "false"
-    },
-    {
-      "name": "imageFill",
-      "type": "boolean",
-      "description": "If true, passes a `fill` prop to a custom image component such as Next.js Image. Plain img rendering should leave this false.",
       "required": false,
       "inherited": false,
       "category": "props",

@@ -81,6 +81,8 @@ import {
   buttonPropDocs,
   cardPropDocs,
   dataTablePropDocs,
+  radioGroupPropDocs,
+  themeSelectPropDocs,
   type GeneratedComponentDoc,
   type GeneratedPropDoc,
 } from "boreal-ui/docs";
@@ -160,10 +162,14 @@ const docs: GeneratedComponentDoc[] = [
   buttonPropDocs,
   cardPropDocs,
   dataTablePropDocs,
+  radioGroupPropDocs,
+  themeSelectPropDocs,
 ];
 
 export const componentNames = docs.map((doc) => doc.name);
 ```
+
+The docs package currently exports metadata for every documented public component, including public components that share a type file such as `RadioButton`/`RadioGroup` and `Select`/`ThemeSelect`.
 
 ## Keeping Docs Current
 

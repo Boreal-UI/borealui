@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const path = require("path");
+const fsSync = require("fs");
 const fs = require("fs/promises");
 const fg = require("fast-glob");
 const { Project, Node, SyntaxKind } = require("ts-morph");
@@ -112,7 +113,35 @@ function formatDefaultValue(initializerText) {
 }
 
 function getBaseComponentPath(typesFilePath, componentName) {
-  return path.join(path.dirname(typesFilePath), `${componentName}Base.tsx`);
+  const componentDir = path.dirname(typesFilePath);
+  const fileBaseName = path.basename(typesFilePath, ".types.ts");
+  const candidates = [
+    path.join(componentDir, `${componentName}Base.tsx`),
+    path.join(componentDir, `${fileBaseName}Base.tsx`),
+  ];
+
+  const matchingCandidate = candidates.find((candidate) => {
+    try {
+      return fsSync.existsSync(candidate);
+    } catch {
+      return false;
+    }
+  });
+
+  if (matchingCandidate) return matchingCandidate;
+
+  try {
+    const expected = `${componentName}base.tsx`.toLowerCase();
+    const match = fsSync
+      .readdirSync(componentDir)
+      .find((entry) => entry.toLowerCase() === expected);
+
+    if (match) return path.join(componentDir, match);
+  } catch {
+    // Fall through to the conventional path. The caller already tolerates misses.
+  }
+
+  return candidates[0];
 }
 
 function getBindingElementPropName(bindingElement) {
@@ -253,7 +282,12 @@ function shouldSkipPropsLikeName(name) {
     /AccessibilityProps$/.test(name) ||
     /ControlProps$/.test(name) ||
     /InternalProps$/.test(name) ||
-    /InjectedProps$/.test(name)
+    /InjectedProps$/.test(name) ||
+    /ElementProps$/.test(name) ||
+    /WrapperProps$/.test(name) ||
+    /Image.*Props$/.test(name) ||
+    /^Html.*Props$/.test(name) ||
+    /^NextLike.*Props$/.test(name)
   );
 }
 
@@ -596,6 +630,66 @@ function findBestPropsDeclaration(sourceFile, expectedPropsName) {
   return null;
 }
 
+function findPublicPropsDeclarations(sourceFile, expectedPropsName) {
+  const declarations = [];
+  const seen = new Set();
+  const best = findBestPropsDeclaration(sourceFile, expectedPropsName);
+
+  if (best) {
+    declarations.push(best);
+    seen.add(best.node.getName());
+  }
+
+  const candidates = [
+    ...getCandidateInterfaces(sourceFile).map((node) => ({
+      kind: "interface",
+      node,
+    })),
+    ...getCandidateTypeAliases(sourceFile).map((node) => ({
+      kind: "typeAlias",
+      node,
+    })),
+  ];
+
+  for (const candidate of candidates) {
+    const name = candidate.node.getName();
+    if (seen.has(name)) continue;
+
+    const componentName = getComponentNameFromPropsName(name);
+    if (!hasComponentWrapper(sourceFile.getFilePath(), componentName)) continue;
+
+    declarations.push(candidate);
+    seen.add(name);
+  }
+
+  return declarations;
+}
+
+function hasComponentWrapper(typesFilePath, componentName) {
+  const componentDir = path.dirname(typesFilePath);
+  const expected = `${componentName}.tsx`.toLowerCase();
+  const searchDirs = [
+    path.join(componentDir, "core"),
+    path.join(componentDir, "next"),
+    path.join(componentDir, componentName, "core"),
+    path.join(componentDir, componentName, "next"),
+  ];
+
+  for (const searchDir of searchDirs) {
+    try {
+      const match = fsSync
+        .readdirSync(searchDir)
+        .find((entry) => entry.toLowerCase() === expected);
+
+      if (match) return true;
+    } catch {
+      // Directory layouts differ by component; missing candidates are expected.
+    }
+  }
+
+  return false;
+}
+
 async function main() {
   const project = new Project({
     tsConfigFilePath: config.tsConfigFilePath,
@@ -628,37 +722,43 @@ async function main() {
       project.getSourceFile(filePath) || project.addSourceFileAtPath(filePath);
 
     const expectedPropsName = getExpectedPropsNameFromFile(filePath);
-    const declaration = findBestPropsDeclaration(sourceFile, expectedPropsName);
-
-    if (!declaration) continue;
-
-    const propsName = declaration.node.getName();
-    const componentName = getComponentNameFromPropsName(propsName);
-
-    const rawProps =
-      declaration.kind === "interface"
-        ? getPropDocsFromInterface(declaration.node, false)
-        : getPropDocsFromTypeAlias(declaration.node, sourceFile, false);
-
-    const defaultValues = await getComponentDefaultValues(
-      project,
-      filePath,
-      componentName,
+    const declarations = findPublicPropsDeclarations(
+      sourceFile,
+      expectedPropsName,
     );
-    const props = applyDefaultValues(rawProps, defaultValues);
 
-    const doc = {
-      name: componentName,
-      interfaceName: propsName,
-      description: getJsDocText(declaration.node),
-      sourcePath: path.relative(process.cwd(), filePath),
-      props,
-    };
+    for (const declaration of declarations) {
+      const propsName = declaration.node.getName();
+      const componentName = getComponentNameFromPropsName(propsName);
 
-    const outputFile = path.join(config.outputDir, `${componentName}.props.ts`);
-    await fs.writeFile(outputFile, buildComponentFile(doc), "utf8");
+      const rawProps =
+        declaration.kind === "interface"
+          ? getPropDocsFromInterface(declaration.node, false)
+          : getPropDocsFromTypeAlias(declaration.node, sourceFile, false);
 
-    generatedComponentNames.push(componentName);
+      const defaultValues = await getComponentDefaultValues(
+        project,
+        filePath,
+        componentName,
+      );
+      const props = applyDefaultValues(rawProps, defaultValues);
+
+      const doc = {
+        name: componentName,
+        interfaceName: propsName,
+        description: getJsDocText(declaration.node),
+        sourcePath: path.relative(process.cwd(), filePath),
+        props,
+      };
+
+      const outputFile = path.join(
+        config.outputDir,
+        `${componentName}.props.ts`,
+      );
+      await fs.writeFile(outputFile, buildComponentFile(doc), "utf8");
+
+      generatedComponentNames.push(componentName);
+    }
   }
 
   await fs.writeFile(
