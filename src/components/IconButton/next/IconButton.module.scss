@@ -4,6 +4,9 @@
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 .iconButton {
   display: flex;
   align-items: center;
@@ -321,4 +324,5 @@ $sizes: (
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
+}
 }

@@ -5,6 +5,9 @@
 @use "sass:map";
 @use "sass:list";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 $sizes: (
   "xs": (
     padding: 4px 8px,
@@ -363,4 +366,5 @@ $sizes: (
       }
     }
   }
+}
 }

@@ -23,18 +23,19 @@ npm install boreal-ui
 
 Boreal UI expects React and React DOM in the consuming app. Next.js users should also have Next installed. `marked` and `uuid` are peer dependencies because some components and utilities rely on them.
 
-## Create a Project
+## CLI Setup
 
-Use the CLI to scaffold a React core or Next.js project with Boreal UI imports, peer dependencies, global styles, theme provider setup, and optional starter files.
+Use the CLI inside an existing React or Next.js project to add only the file changes Boreal UI needs: the package dependency, the global stylesheet import, `ThemeProvider`, and default style config.
 
 ```bash
-npx boreal-ui@latest create
+npx boreal-ui@latest init
 ```
 
-You can also pass options for a non-interactive setup:
+You can preview changes or run non-interactively:
 
 ```bash
-npx boreal-ui create my-app --framework next --typescript --starter
+npx boreal-ui init --dry-run
+npx boreal-ui init --framework next --yes
 ```
 
 ## Setup

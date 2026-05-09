@@ -5,205 +5,386 @@
 @use "sass:color";
 @use "sass:map";
 
-@media (forced-colors: active) {
-  .card {
-    border: 1px solid ButtonText;
-    outline-color: Highlight;
-    box-shadow: none !important;
-    background: Canvas;
-    color: CanvasText;
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  @media (forced-colors: active) {
+    .card {
+      border: 1px solid ButtonText;
+      outline-color: Highlight;
+      box-shadow: none !important;
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    .glass {
+      background: Canvas;
+      border: 1px solid ButtonText;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .outline {
+      border: 1px solid ButtonText;
+    }
+
+    .clickable:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 3px;
+    }
   }
 
-  .glass {
-    background: Canvas;
-    border: 1px solid ButtonText;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-
-  .outline {
-    border: 1px solid ButtonText;
-  }
-
-  .footer {
-    border-top: 1px solid ButtonText;
-  }
-
-  .clickable:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 3px;
-  }
-}
-
-.card {
-  overflow: hidden;
-  margin: var(--spacing-sm);
-  position: relative;
-  background-color: var(--background-color-surface);
-  display: flex;
-  flex-direction: column;
-  width: fit-content;
-  height: fit-content;
-  color: var(--text-color-primary);
-  transition: transform var(--transition-default);
-
-  @include bp.down(sm) {
-    margin: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    margin: var(--spacing-md);
-  }
-}
-
-@each $key, $value in theme.$border-width {
-  .border#{$key} {
-    border-width: $value;
-    border-style: solid;
-    border-color: var(--divider-color);
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
-  }
-}
-
-.loading {
-  background: none !important;
-  box-shadow: none !important;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 250px;
-
-  @include bp.down(sm) {
-    min-height: 180px;
-  }
-
-  @include bp.up(lg) {
-    min-height: 300px;
-  }
-}
-
-.fade_in {
-  animation: fade-in 0.8s ease-in-out;
-}
-
-.media {
-  width: 100%;
-  height: auto;
-  position: relative;
-  aspect-ratio: 4 / 4;
-  object-fit: cover;
-  border-bottom: 1px solid rgb(0 0 0 / 5%);
-
-  @include bp.down(sm) {
-    aspect-ratio: 1 / 1;
-  }
-
-  @include bp.up(lg) {
-    aspect-ratio: 16 / 9;
-  }
-}
-
-.image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-
-  :global(img) {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.vertical {
-  flex-direction: column;
-
-  .content {
+  :where(.card) {
+    overflow: hidden;
+    margin: var(--spacing-sm);
+    position: relative;
+    background-color: var(--background-color-surface);
+    display: flex;
     flex-direction: column;
-  }
-
-  .image {
-    width: 100%;
-    max-height: 200px;
+    width: fit-content;
+    height: fit-content;
+    color: var(--text-color-primary);
+    transition: transform var(--transition-default);
 
     @include bp.down(sm) {
-      max-height: 150px;
+      margin: var(--spacing-xs);
     }
 
     @include bp.up(lg) {
-      max-height: 300px;
+      margin: var(--spacing-md);
     }
   }
-}
 
-.horizontal {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  width: 100%;
-  height: auto;
-
-  @include bp.down(sm) {
-    flex-direction: column;
-    max-width: 100%;
-    min-height: 150px;
+  @each $key, $value in theme.$border-width {
+    .border#{$key} {
+      border-width: $value;
+      border-style: solid;
+      border-color: var(--divider-color);
+    }
   }
 
-  @include bp.up(lg) {
-    min-height: 250px;
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
+    }
   }
 
-  .content {
-    flex-direction: row;
-    flex: 1;
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  .fade_in {
+    animation: fade-in 0.8s ease-in-out;
+  }
+
+  .media {
     width: 100%;
-    height: 100%;
-
-    @include bp.down(sm) {
-      flex-direction: column;
-    }
-  }
-
-  .image {
-    width: 50%;
     height: auto;
-    aspect-ratio: 1.5;
+    position: relative;
+    aspect-ratio: 4 / 4;
     object-fit: cover;
-    display: block;
+    border-bottom: 1px solid rgb(0 0 0 / 5%);
 
     @include bp.down(sm) {
-      width: 100%;
       aspect-ratio: 1 / 1;
     }
 
     @include bp.up(lg) {
-      aspect-ratio: 16 / 10;
+      aspect-ratio: 16 / 9;
     }
   }
 
-  .body {
-    flex: 1;
-    padding: var(--spacing-md);
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+
+    :global(img) {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .vertical {
+    flex-direction: column;
+
+    .content {
+      flex-direction: column;
+    }
+
+    .image {
+      width: 100%;
+      max-height: 200px;
+
+      @include bp.down(sm) {
+        max-height: 150px;
+      }
+
+      @include bp.up(lg) {
+        max-height: 300px;
+      }
+    }
+  }
+
+  .horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    width: 100%;
+    height: auto;
+
+    @include bp.down(sm) {
+      flex-direction: column;
+      max-width: 100%;
+      min-height: 150px;
+    }
+
+    @include bp.up(lg) {
+      min-height: 250px;
+    }
+
+    .content {
+      flex-direction: row;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+
+      @include bp.down(sm) {
+        flex-direction: column;
+      }
+    }
+
+    .image {
+      width: 50%;
+      height: auto;
+      aspect-ratio: 1.5;
+      object-fit: cover;
+      display: block;
+
+      @include bp.down(sm) {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+      }
+
+      @include bp.up(lg) {
+        aspect-ratio: 16 / 10;
+      }
+    }
+
+    .body {
+      flex: 1;
+      padding: var(--spacing-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      @include bp.down(sm) {
+        padding: var(--spacing-sm);
+      }
+
+      @include bp.up(lg) {
+        padding: var(--spacing-lg);
+      }
+    }
+
+    .footer {
+      padding: var(--spacing-sm);
+
+      @include bp.down(sm) {
+        padding: var(--spacing-xs);
+      }
+
+      @include bp.up(lg) {
+        padding: var(--spacing-md);
+      }
+    }
+  }
+
+  .glass {
+    @include mixins.glass-surface;
+  }
+
+  .disabled {
+    background-color: var(--disabled-color);
+    color: var(--text-color-primary);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+    box-shadow: none;
+  }
+
+  .outline {
+    background: transparent;
+    border: 2px solid currentcolor;
+    box-shadow: none;
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
+  }
+
+  @each $name, $props in theme.$themes {
+    .#{$name} {
+      background: map.get($props, bg);
+      color: map.get($props, text);
+
+      --card-glass-bg: #{map.get($props, glass-bg)};
+      --card-glass-hover-bg: #{map.get($props, glass-hover)};
+      --card-glass-border: #{map.get($props, glass-border)};
+      --card-glass-text: #{map.get($props, text)};
+
+      .icon,
+      .description {
+        color: inherit;
+      }
+
+      .loading {
+        background-color: transparent;
+      }
+
+      &.glass {
+        @include mixins.glass-surface(
+          var(--card-glass-bg),
+          var(--card-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--card-glass-text);
+      }
+
+      &.glass.clickable:hover {
+        background: var(--card-glass-hover-bg);
+        border-color: var(--card-glass-border);
+        box-shadow:
+          var(--glass-shadow-strong),
+          inset 0 1px 0 var(--glass-inset-highlight);
+      }
+
+      &.outline {
+        background: transparent;
+        border: 2px solid map.get($props, border);
+        box-shadow: none;
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+
+      &.outline.glass {
+        @include mixins.glass-surface(
+          var(--card-glass-bg),
+          var(--card-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--card-glass-text);
+      }
+    }
+  }
+
+  @each $name, $props in theme.$states {
+    .#{$name} {
+      background: map.get($props, bg);
+      color: map.get($props, text);
+
+      --card-glass-bg: #{map.get($props, glass-bg)};
+      --card-glass-hover-bg: #{map.get($props, glass-hover)};
+      --card-glass-border: #{map.get($props, glass-border)};
+      --card-glass-text: #{map.get($props, text)};
+
+      .icon,
+      .description {
+        color: inherit;
+      }
+
+      .loading {
+        background-color: transparent;
+      }
+
+      &.glass {
+        @include mixins.glass-surface(
+          var(--card-glass-bg),
+          var(--card-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--card-glass-text);
+      }
+
+      &.glass.clickable:hover {
+        background: var(--card-glass-hover-bg);
+        border-color: var(--card-glass-border);
+      }
+
+      &.outline {
+        background: transparent;
+        border: 2px solid map.get($props, border);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+
+      &.outline.glass {
+        @include mixins.glass-surface(
+          var(--card-glass-bg),
+          var(--card-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--card-glass-text);
+        box-shadow:
+          var(--glass-shadow),
+          inset 0 1px 0 var(--glass-inset-highlight);
+      }
+    }
+  }
+
+  @each $name, $width in theme.$border-width {
+    @if $name != "None" {
+      .border#{$name}.outline {
+        border-width: $width;
+      }
+    }
+  }
+
+  .loading {
+    background: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 250px;
+
+    @include bp.down(sm) {
+      min-height: 180px;
+    }
+
+    @include bp.up(lg) {
+      min-height: 300px;
+    }
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .header {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+    padding: var(--spacing-md);
 
     @include bp.down(sm) {
       padding: var(--spacing-sm);
@@ -211,484 +392,301 @@
 
     @include bp.up(lg) {
       padding: var(--spacing-lg);
+    }
+  }
+
+  .header,
+  .body {
+    padding: var(--spacing-md);
+    display: flex;
+  }
+
+  .body {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+
+    @include bp.up(lg) {
+      gap: var(--spacing-md);
+    }
+  }
+
+  .title {
+    margin: 0;
+    flex: 1;
+    display: flex;
+    gap: var(--spacing-sm);
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-h4);
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-h6);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-h3);
+    }
+  }
+
+  .icon {
+    font-size: 1.2em;
+    display: flex;
+    color: inherit;
+    line-height: 1;
+
+    @include bp.down(sm) {
+      font-size: 1em;
+    }
+
+    @include bp.up(lg) {
+      font-size: 1.4em;
+    }
+  }
+
+  .description {
+    width: 95%;
+    margin: var(--spacing-xxs) auto;
+    color: inherit;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-label);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body);
     }
   }
 
   .footer {
-    padding: var(--spacing-md);
+    padding: var(--spacing-sm);
 
     @include bp.down(sm) {
-      padding: var(--spacing-sm);
+      padding: var(--spacing-xs);
+      border-width: 1px;
     }
 
     @include bp.up(lg) {
-      padding: var(--spacing-lg);
+      padding: var(--spacing-md);
     }
   }
-}
 
-.glass {
-  @include mixins.glass-surface;
-}
-
-.disabled {
-  background-color: var(--disabled-color);
-  color: var(--text-color-primary);
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-  box-shadow: none;
-}
-
-.outline {
-  background: transparent;
-  border: 2px solid currentcolor;
-  box-shadow: none;
-
-  @include bp.down(sm) {
-    border-width: 1.5px;
-  }
-}
-
-@each $name, $props in theme.$themes {
-  .#{$name} {
-    background: map.get($props, bg);
-    color: map.get($props, text);
-
-    --card-glass-bg: #{map.get($props, glass-bg)};
-    --card-glass-hover-bg: #{map.get($props, glass-hover)};
-    --card-glass-border: #{map.get($props, glass-border)};
-    --card-glass-text: #{map.get($props, text)};
-
-    .icon,
-    .description {
-      color: inherit;
-    }
-
-    .loading {
-      background-color: transparent;
-    }
-
-    &.glass {
-      @include mixins.glass-surface(
-        var(--card-glass-bg),
-        var(--card-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--card-glass-text);
-    }
-
-    &.glass.clickable:hover {
-      background: var(--card-glass-hover-bg);
-      border-color: var(--card-glass-border);
-      box-shadow:
-        var(--glass-shadow-strong),
-        inset 0 1px 0 var(--glass-inset-highlight);
-    }
-
-    &.outline {
-      background: transparent;
-      border: 2px solid map.get($props, border);
-      box-shadow: none;
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-    }
-
-    &.outline.glass {
-      @include mixins.glass-surface(
-        var(--card-glass-bg),
-        var(--card-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--card-glass-text);
-    }
-  }
-}
-
-@each $name, $props in theme.$states {
-  .#{$name} {
-    background: map.get($props, bg);
-    color: map.get($props, text);
-
-    --card-glass-bg: #{map.get($props, glass-bg)};
-    --card-glass-hover-bg: #{map.get($props, glass-hover)};
-    --card-glass-border: #{map.get($props, glass-border)};
-    --card-glass-text: #{map.get($props, text)};
-
-    .icon,
-    .description {
-      color: inherit;
-    }
-
-    .loading {
-      background-color: transparent;
-    }
-
-    &.glass {
-      @include mixins.glass-surface(
-        var(--card-glass-bg),
-        var(--card-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--card-glass-text);
-    }
-
-    &.glass.clickable:hover {
-      background: var(--card-glass-hover-bg);
-      border-color: var(--card-glass-border);
-    }
-
-    &.outline {
-      background: transparent;
-      border: 2px solid map.get($props, border);
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-    }
-
-    &.outline.glass {
-      @include mixins.glass-surface(
-        var(--card-glass-bg),
-        var(--card-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--card-glass-text);
-      box-shadow:
-        var(--glass-shadow),
-        inset 0 1px 0 var(--glass-inset-highlight);
-    }
-  }
-}
-
-@each $name, $width in theme.$border-width {
-  @if $name != "None" {
-    .border#{$name}.outline {
-      border-width: $width;
-    }
-  }
-}
-
-.content {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.header {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: var(--spacing-md);
-
-  @include bp.down(sm) {
-    padding: var(--spacing-sm);
-  }
-
-  @include bp.up(lg) {
-    padding: var(--spacing-lg);
-  }
-}
-
-.header,
-.body {
-  padding: var(--spacing-md);
-  display: flex;
-}
-
-.body {
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-sm);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-
-  @include bp.up(lg) {
-    gap: var(--spacing-md);
-  }
-}
-
-.title {
-  margin: 0;
-  flex: 1;
-  display: flex;
-  gap: var(--spacing-sm);
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-h4);
-  font-weight: var(--font-weight-h4);
-  line-height: var(--line-height-heading);
-  letter-spacing: var(--letter-spacing-heading);
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-h6);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-h3);
-  }
-}
-
-.icon {
-  font-size: 1.2em;
-  display: flex;
-  color: inherit;
-  line-height: 1;
-
-  @include bp.down(sm) {
-    font-size: 1em;
-  }
-
-  @include bp.up(lg) {
-    font-size: 1.4em;
-  }
-}
-
-.description {
-  width: 95%;
-  margin: var(--spacing-xxs) auto;
-  color: inherit;
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-label);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body);
-  }
-}
-
-.footer {
-  padding: var(--spacing-md);
-  border-top: 2px solid rgb(0 0 0 / 10%);
-
-  @include bp.down(sm) {
-    padding: var(--spacing-sm);
-    border-width: 1px;
-  }
-
-  @include bp.up(lg) {
-    padding: var(--spacing-lg);
-  }
-}
-
-.actions {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  flex-wrap: wrap;
-  padding: var(--spacing-sm);
-  gap: var(--spacing-sm);
-
-  @include bp.down(sm) {
-    gap: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    gap: var(--spacing-md);
-  }
-}
-
-.xs {
-  .description {
-    font-size: var(--font-size-caption);
-  }
-
-  .icon {
-    font-size: 0.9em;
-  }
-
-  .title {
-    font-size: var(--font-size-label);
-    line-height: var(--line-height-heading);
-  }
-
-  .children {
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-caption);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-  }
-}
-
-.small {
-  .description {
-    font-size: var(--font-size-label);
-  }
-
-  .icon {
-    font-size: 1em;
-  }
-
-  .title {
-    font-size: var(--font-size-body-sm);
-  }
-
-  .children {
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-label);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-  }
-}
-
-.medium {
-  .description {
-    font-size: var(--font-size-body-sm);
-  }
-
-  .icon {
-    font-size: 1.2em;
-  }
-
-  .title {
-    font-size: var(--font-size-body);
-  }
-
-  .children {
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body-sm);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-  }
-}
-
-.large {
-  .description {
-    font-size: var(--font-size-body);
-  }
-
-  .icon {
-    font-size: 1.4em;
-  }
-
-  .title {
-    font-size: var(--font-size-h6);
-  }
-
-  .children {
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-  }
-}
-
-.xl {
-  .description {
-    font-size: var(--font-size-h6);
-  }
-
-  .icon {
-    font-size: 1.2em;
-  }
-
-  .title {
-    font-size: var(--font-size-h4);
-  }
-
-  .children {
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-h6);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-  }
-}
-
-.left {
-  text-align: left;
-
-  .header,
-  .body,
-  .footer,
   .actions {
-    align-items: flex-start;
-    justify-content: flex-start;
-    text-align: left;
-  }
-}
-
-.center {
-  text-align: center;
-
-  .header,
-  .body,
-  .footer,
-  .actions {
+    display: flex;
+    justify-content: space-evenly;
     align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-}
+    flex-wrap: wrap;
+    padding: var(--spacing-sm);
+    gap: var(--spacing-sm);
 
-.right {
-  text-align: right;
+    @include bp.down(sm) {
+      gap: var(--spacing-xs);
+    }
 
-  .header,
-  .body,
-  .footer,
-  .actions {
-    align-items: flex-end;
-    justify-content: flex-end;
-    text-align: right;
-  }
-}
-
-.clickable {
-  cursor: pointer;
-  transition:
-    transform var(--transition-default),
-    box-shadow var(--transition-default);
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--box-shadow-medium);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-    box-shadow: 0 0 0 4px color.adjust(#000, $lightness: 20%, $alpha: -0.8);
-  }
-
-  @include bp.down(sm) {
-    &:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--box-shadow-light);
+    @include bp.up(lg) {
+      gap: var(--spacing-md);
     }
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .card,
-  .card * {
-    animation: none !important;
-    transition: none !important;
+  .xs {
+    .description {
+      font-size: var(--font-size-caption);
+    }
+
+    .icon {
+      font-size: 0.9em;
+    }
+
+    .title {
+      font-size: var(--font-size-label);
+      line-height: var(--line-height-heading);
+    }
+
+    .children {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-caption);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+    }
   }
 
-  .clickable:hover {
-    transform: none !important;
-    box-shadow: none !important;
-  }
-}
+  .small {
+    .description {
+      font-size: var(--font-size-label);
+    }
 
-@media (hover: none) {
-  .clickable:hover {
-    transform: none;
-    box-shadow: none;
+    .icon {
+      font-size: 1em;
+    }
+
+    .title {
+      font-size: var(--font-size-body-sm);
+    }
+
+    .children {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-label);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+    }
+  }
+
+  .medium {
+    .description {
+      font-size: var(--font-size-body-sm);
+    }
+
+    .icon {
+      font-size: 1.2em;
+    }
+
+    .title {
+      font-size: var(--font-size-body);
+    }
+
+    .children {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-sm);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+    }
+  }
+
+  .large {
+    .description {
+      font-size: var(--font-size-body);
+    }
+
+    .icon {
+      font-size: 1.4em;
+    }
+
+    .title {
+      font-size: var(--font-size-h6);
+    }
+
+    .children {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+    }
+  }
+
+  .xl {
+    .description {
+      font-size: var(--font-size-h6);
+    }
+
+    .icon {
+      font-size: 1.2em;
+    }
+
+    .title {
+      font-size: var(--font-size-h4);
+    }
+
+    .children {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-h6);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+    }
+  }
+
+  .left {
+    text-align: left;
+
+    .header,
+    .body,
+    .footer,
+    .actions {
+      align-items: flex-start;
+      justify-content: flex-start;
+      text-align: left;
+    }
+  }
+
+  .center {
+    text-align: center;
+
+    .header,
+    .body,
+    .footer,
+    .actions {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
+  .right {
+    text-align: right;
+
+    .header,
+    .body,
+    .footer,
+    .actions {
+      align-items: flex-end;
+      justify-content: flex-end;
+      text-align: right;
+    }
+  }
+
+  .clickable {
+    cursor: pointer;
+    transition:
+      transform var(--transition-default),
+      box-shadow var(--transition-default);
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--box-shadow-medium);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+      box-shadow: 0 0 0 4px color.adjust(#000, $lightness: 20%, $alpha: -0.8);
+    }
+
+    @include bp.down(sm) {
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--box-shadow-light);
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card,
+    .card * {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    .clickable:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .clickable:hover {
+      transform: none;
+      box-shadow: none;
+    }
   }
 }

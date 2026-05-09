@@ -4,6 +4,9 @@
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 .radio_wrapper,
 .radio_labelWrapper,
 .radio_circle,
@@ -345,4 +348,5 @@
 .radio_invalid .radio_circle {
   border-color: var(--error-color);
   color: var(--error-color);
+}
 }

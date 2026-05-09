@@ -3,6 +3,9 @@
 @use "sass:color";
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 .avatar {
   display: flex;
   align-items: center;
@@ -373,4 +376,5 @@
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
+}
 }

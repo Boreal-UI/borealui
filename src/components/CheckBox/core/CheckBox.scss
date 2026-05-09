@@ -4,6 +4,9 @@
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 $checkbox-sizes: (
   xs: 1rem,
   small: 1.125rem,
@@ -451,4 +454,5 @@ $label-font-sizes: (
 .checkbox_invalid .checkbox_box {
   border-color: var(--error-color);
   color: var(--error-color);
+}
 }

@@ -3,6 +3,9 @@
 @use "../../../styles/_animations";
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 $notification-colors: (
   primary: var(--primary-color),
   success: var(--success-color),
@@ -247,4 +250,5 @@ $notification-colors: (
     border: 1px solid ButtonText;
     border-radius: 4px;
   }
+}
 }

@@ -3,6 +3,9 @@
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 .wrapper {
   position: relative;
   display: inline-flex;
@@ -267,4 +270,5 @@
     outline: 2px solid Highlight;
     outline-offset: 3px;
   }
+}
 }
