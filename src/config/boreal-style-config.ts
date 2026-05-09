@@ -10,6 +10,7 @@
  * - Shadow intensity
  * - Default border width
  * - Default size
+ * - Glass and outline variants
  * - Default color scheme name
  *
  * These defaults are used when components are rendered without
@@ -23,6 +24,8 @@
  *   defaultShadow: "strong",
  *   defaultBorderWidth: "sm",
  *   defaultSize: "large",
+ *   defaultGlass: true,
+ *   defaultOutline: true,
  *   defaultColorSchemeName: "Ocean Breeze",
  * });
  * ```
@@ -37,6 +40,7 @@ import {
   SizeType,
   ThemeType,
 } from "../types/types";
+import { resolveThemeAlias } from "../utils/propAliases";
 
 /**
  * Type for configuring global Boreal UI style defaults.
@@ -47,6 +51,8 @@ export type BorealStyleConfig = {
   defaultShadow: ShadowType;
   defaultSize: SizeType;
   defaultBorderWidth: BorderType;
+  defaultGlass: boolean;
+  defaultOutline: boolean;
   defaultColorSchemeName: string;
 };
 
@@ -56,6 +62,8 @@ const fallback: BorealStyleConfig = {
   defaultShadow: "light",
   defaultSize: "medium",
   defaultBorderWidth: "none",
+  defaultGlass: false,
+  defaultOutline: false,
   defaultColorSchemeName: "Forest Dusk",
 };
 
@@ -71,10 +79,24 @@ export const setBorealStyleConfig = (config: Partial<BorealStyleConfig>) => {
 };
 
 /**
+ * Alias for a concise app-level setup API.
+ */
+export const borealConfig = setBorealStyleConfig;
+
+/**
+ * Gets the complete effective Boreal UI styling configuration.
+ */
+export const getBorealStyleConfig = (): BorealStyleConfig => ({
+  ...fallback,
+  ...userConfig,
+  defaultTheme: getDefaultTheme(),
+});
+
+/**
  * Gets the default theme type (e.g., "primary", "secondary").
  */
 export const getDefaultTheme = (): ThemeType =>
-  userConfig.defaultTheme ?? fallback.defaultTheme;
+  resolveThemeAlias(userConfig.defaultTheme ?? fallback.defaultTheme);
 
 /**
  * Gets the default component rounding type (e.g., "medium", "large").
@@ -93,6 +115,18 @@ export const getDefaultShadow = (): ShadowType =>
  */
 export const getDefaultSize = (): SizeType =>
   userConfig.defaultSize ?? fallback.defaultSize;
+
+/**
+ * Gets whether glass styling should be enabled by default.
+ */
+export const getDefaultGlass = (): boolean =>
+  userConfig.defaultGlass ?? fallback.defaultGlass;
+
+/**
+ * Gets whether outline styling should be enabled by default.
+ */
+export const getDefaultOutline = (): boolean =>
+  userConfig.defaultOutline ?? fallback.defaultOutline;
 
 /**
  * Gets the default color scheme name (e.g., "Forest Dusk").

@@ -6,13 +6,42 @@ import { IconButtonProps } from "../IconButton/IconButton.types";
  * Props for the Modal component.
  */
 export interface ModalProps {
-  /** Additional class names for custom styling the modal content. */
+  /**
+   * Additional class names for custom styling the modal content.
+   *
+   * @default ""
+   */
   className?: string;
+
+  /** Additional class names for the modal overlay/backdrop. */
+  overlayClassName?: string;
+
+  /** Additional class names for the modal header section. */
+  headerClassName?: string;
+
+  /** Additional class names for the modal header content wrapper. */
+  headerContentClassName?: string;
+
+  /** Additional class names for the modal title element. */
+  titleClassName?: string;
+
+  /** Additional class names for the modal close button. */
+  closeButtonClassName?: string;
+
+  /** Additional class names for the modal body section. */
+  bodyClassName?: string;
+
+  /** Additional class names for the modal footer section. */
+  footerClassName?: string;
 
   /** The content to be rendered inside the modal. Expected to be a single React element. */
   children?: ReactElement;
 
-  /** Optional modal title used for accessible labelling and default header content. */
+  /**
+   * Optional modal title used for accessible labelling and default header content.
+   *
+   * @default "Modal Dialog"
+   */
   title?: ReactNode;
 
   /** Optional custom header content. */
@@ -24,12 +53,16 @@ export interface ModalProps {
   /**
    * Rounding of the modal corners.
    * One of: "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow of the modal.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
@@ -65,10 +98,20 @@ export interface ModalProps {
   /**
    * Accessible label for the close button.
    * Defaults to "Close modal" in the base implementation.
+   *
+   * @default "Close modal"
    */
   closeButtonAriaLabel?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "modal"
+   */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

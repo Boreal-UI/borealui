@@ -3,6 +3,9 @@
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 .datetime_picker {
   &_wrapper {
     display: flex;
@@ -360,4 +363,5 @@
     border: 1px solid ButtonText;
     border-radius: 4px;
   }
+}
 }

@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import CommandPaletteBase from "../CommandPaletteBase";
 import "./CommandPalette.scss";
@@ -41,7 +42,7 @@ const classes = {
 const CommandPalette: React.FC<CommandPaletteProps> = (props) => (
   <CommandPaletteBase
     {...props}
-    classMap={classes}
+    classMap={expandClassMap(classes)}
     TextInputComponent={TextInput}
   />
 );

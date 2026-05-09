@@ -220,6 +220,45 @@ describe("BaseMetricBox", () => {
     expect(wrapper).toHaveClass("customClass");
   });
 
+  it("applies custom class names to metric box sections", () => {
+    render(
+      <BaseMetricBox
+        title="Custom Metric"
+        value="42"
+        subtext="Updated now"
+        icon={FaUsers}
+        iconClassName="custom-icon"
+        contentClassName="custom-content"
+        titleClassName="custom-title"
+        valueClassName="custom-value"
+        subtextClassName="custom-subtext"
+        classMap={classNames}
+        data-testid="metric-box"
+      />,
+    );
+
+    expect(screen.getByTestId("metric-box-icon")).toHaveClass(
+      "metricIcon",
+      "custom-icon",
+    );
+    expect(screen.getByTestId("metric-box-title").parentElement).toHaveClass(
+      "metricContent",
+      "custom-content",
+    );
+    expect(screen.getByTestId("metric-box-title")).toHaveClass(
+      "metricTitle",
+      "custom-title",
+    );
+    expect(screen.getByTestId("metric-box-value")).toHaveClass(
+      "metricValue",
+      "custom-value",
+    );
+    expect(screen.getByTestId("metric-box-subtext")).toHaveClass(
+      "metricSubtext",
+      "custom-subtext",
+    );
+  });
+
   it("uses the value itself as the aria-label when title is unavailable", () => {
     render(
       <BaseMetricBox

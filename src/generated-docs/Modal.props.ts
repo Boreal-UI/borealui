@@ -36,6 +36,15 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "category": "aria"
     },
     {
+      "name": "bodyClassName",
+      "type": "string",
+      "description": "Additional class names for the modal body section.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "children",
       "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
       "description": "The content to be rendered inside the modal. Expected to be a single React element.",
@@ -49,7 +58,8 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for custom styling the modal content.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "closeButtonAriaLabel",
@@ -57,12 +67,22 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the close button. Defaults to \"Close modal\" in the base implementation.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Close modal\""
+    },
+    {
+      "name": "closeButtonClassName",
+      "type": "string",
+      "description": "Additional class names for the modal close button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -76,12 +96,39 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "footerClassName",
+      "type": "string",
+      "description": "Additional class names for the modal footer section.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "header",
       "type": "ReactNode",
       "description": "Optional custom header content.",
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "headerClassName",
+      "type": "string",
+      "description": "Additional class names for the modal header section.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "headerContentClassName",
+      "type": "string",
+      "description": "Additional class names for the modal header content wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "onClose",
@@ -100,12 +147,22 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "overlayClassName",
+      "type": "string",
+      "description": "Additional class names for the modal overlay/backdrop.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "rounding",
       "type": "RoundingType",
       "description": "Rounding of the modal corners. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -113,7 +170,17 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the modal. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"modal\""
     },
     {
       "name": "title",
@@ -121,7 +188,17 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Optional modal title used for accessible labelling and default header content.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Modal Dialog\""
+    },
+    {
+      "name": "titleClassName",
+      "type": "string",
+      "description": "Additional class names for the modal title element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     }
   ]
 };

@@ -2,6 +2,9 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 $swatch-sizes: (
   xs: 20px,
   small: 24px,
@@ -195,4 +198,5 @@ $swatch-sizes: (
   .color_picker_preview {
     background: CanvasText;
   }
+}
 }

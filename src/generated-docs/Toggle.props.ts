@@ -78,7 +78,7 @@ export const togglePropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -89,7 +89,8 @@ export const togglePropDocs: GeneratedComponentDoc = {
       "description": "If true, disables user interaction with the toggle.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "glass",
@@ -97,7 +98,8 @@ export const togglePropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment to the toggle track.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "id",
@@ -129,7 +131,8 @@ export const togglePropDocs: GeneratedComponentDoc = {
       "description": "Rounding applied to the toggle. \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -137,7 +140,8 @@ export const togglePropDocs: GeneratedComponentDoc = {
       "description": "Shadow style applied to the toggle. \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -145,7 +149,8 @@ export const togglePropDocs: GeneratedComponentDoc = {
       "description": "Size variant for the toggle. \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -153,7 +158,8 @@ export const togglePropDocs: GeneratedComponentDoc = {
       "description": "State of the toggle. \"\" | \"success\" | \"error\" | \"warning\" | \"disabled\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "tabIndex",
@@ -164,12 +170,22 @@ export const togglePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"toggle\""
+    },
+    {
       "name": "theme",
       "type": "ThemeType",
       "description": "Theme used for styling the toggle. \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     }
   ]
 };

@@ -9,7 +9,7 @@ Use it when you want production-ready UI primitives that can be themed globally,
 - **React and Next.js builds:** import from `boreal-ui/core` for React apps or `boreal-ui/next` for Next.js apps.
 - **Deep component set:** buttons, forms, navigation, data display, feedback, overlays, layout primitives, and utility components.
 - **Theme system:** curated color schemes, custom schemes, runtime theme selection, CSS variables, and `ThemeSelect`.
-- **Global defaults:** configure default theme, size, rounding, shadow, border width, and color scheme once with `setBorealStyleConfig`.
+- **Global defaults:** configure default theme, size, rounding, shadow, border width, glass, outline, and color scheme once with `borealConfig` or `setBorealStyleConfig`.
 - **Accessible by default:** semantic markup, ARIA support, keyboard behavior, visible focus states, disabled states, live announcements where useful, and predictable test IDs.
 - **Styling flexibility:** theme, state, size, rounding, shadow, outline, glass, custom class names, SCSS variables, and consumer CSS overrides.
 - **Typed public API:** TypeScript component props, shared type exports, and generated prop documentation objects for docs tooling.
@@ -22,6 +22,21 @@ npm install boreal-ui
 ```
 
 Boreal UI expects React and React DOM in the consuming app. Next.js users should also have Next installed. `marked` and `uuid` are peer dependencies because some components and utilities rely on them.
+
+## CLI Setup
+
+Use the CLI inside an existing React or Next.js project to add only the file changes Boreal UI needs: the package dependency, the global stylesheet import, `ThemeProvider`, and default style config.
+
+```bash
+npx boreal-ui@latest init
+```
+
+You can preview changes or run non-interactively:
+
+```bash
+npx boreal-ui init --dry-run
+npx boreal-ui init --framework next --yes
+```
 
 ## Setup
 
@@ -86,7 +101,7 @@ import Card from "boreal-ui/next/Card";
 
 ## Components
 
-For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs/README.md). They cover import paths, styling and theming, common component patterns, generated prop docs, and public TypeScript types.
+For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs/README.md). They cover import paths, styling and theming, common component patterns, generated prop docs, public TypeScript types, and contributor workflow.
 
 ### Actions
 
@@ -98,7 +113,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 
 - `TextInput` and `TextArea` support labels, helper/error text, validation state, disabled state, sizing, theming, and accessible descriptions.
 - `Select` and `ThemeSelect` cover option selection and color-scheme switching.
-- `Checkbox`, `RadioButton`, `Toggle`, and `Slider` provide common controlled input patterns.
+- `Checkbox`, `RadioButton`, `RadioGroup`, `Toggle`, and `Slider` provide common controlled input patterns.
 - `ColorPicker` supports color selection flows.
 - `DateTimePicker` handles date and time input.
 - `FileUpload` supports file selection UI.
@@ -146,17 +161,19 @@ Exact props vary by component. TypeScript and the generated prop docs are the so
 
 ## Global Style Defaults
 
-Call `setBorealStyleConfig` once before rendering your app to set project-wide defaults.
+Call `borealConfig` once before rendering your app to set project-wide defaults. `setBorealStyleConfig` remains available as the explicit API name.
 
 ```tsx
-import { setBorealStyleConfig } from "boreal-ui/core";
+import { borealConfig } from "boreal-ui/core";
 
-setBorealStyleConfig({
+borealConfig({
   defaultTheme: "secondary",
   defaultSize: "medium",
   defaultRounding: "medium",
   defaultShadow: "light",
   defaultBorderWidth: "none",
+  defaultGlass: false,
+  defaultOutline: false,
   defaultColorSchemeName: "Forest Dusk",
 });
 ```
@@ -164,7 +181,7 @@ setBorealStyleConfig({
 For Next.js, import the same API from `boreal-ui/next`:
 
 ```tsx
-import { setBorealStyleConfig } from "boreal-ui/next";
+import { borealConfig } from "boreal-ui/next";
 ```
 
 Component props still win over global defaults:
@@ -263,7 +280,9 @@ console.log(buttonPropDocs.name);
 console.log(dataTablePropDocs.props);
 ```
 
-The docs export includes `GeneratedComponentDoc` and `GeneratedPropDoc` types, plus one prop-doc object per documented component.
+The docs export includes `GeneratedComponentDoc` and `GeneratedPropDoc` types, plus one prop-doc object per documented component. Prop docs include `defaultValue` when the component implementation sets a readable default.
+
+For the complete generated prop-doc export list, see [Public API Reference](./docs/public-api-reference.md).
 
 ## Type Exports
 
@@ -354,6 +373,8 @@ Useful scripts:
 | `npm run generate:docs`        | Regenerate component prop docs.                         |
 | `npm run generate:entrypoints` | Regenerate component entry points.                      |
 | `npm run generate:exports`     | Regenerate package exports.                             |
+
+Contributor documentation for component structure, generated docs, package output, and release checks lives in [Development Workflow](./docs/development-workflow.md).
 
 ## Package Entry Points
 

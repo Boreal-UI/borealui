@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseModal from "../ModalBase";
 import "./Modal.scss";
@@ -29,7 +30,7 @@ const classes = {
 };
 
 const Modal: React.FC<ModalProps> = (props) => {
-  return <BaseModal {...props} IconButton={IconButton} classMap={classes} />;
+  return <BaseModal {...props} IconButton={IconButton} classMap={expandClassMap(classes)} />;
 };
 Modal.displayName = "Modal";
 export default Modal;

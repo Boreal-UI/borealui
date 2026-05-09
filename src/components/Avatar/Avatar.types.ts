@@ -53,6 +53,8 @@ export interface AvatarProps {
 
   /**
    * Full name used to generate initials when no image is available.
+   *
+   * @default ""
    */
   name?: string;
 
@@ -94,31 +96,43 @@ export interface AvatarProps {
 
   /**
    * Size of the avatar ('xs' | 'small' | 'medium' | 'large' | 'xl').
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * Shape of the avatar border ('circle' | 'square' | 'rounded').
+   *
+   * @default "circle"
    */
   shape?: ShapeType;
 
   /**
    * Shadow of the avatar ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Visual theme of the avatar ('primary', 'secondary', 'tertiary', 'quaternary', 'clear').
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * State of the avatar ('success' | 'error' | 'warning').
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Disables interaction and styles as disabled.
+   *
+   * @default false
    */
   disabled?: boolean;
 
@@ -143,11 +157,15 @@ export interface AvatarProps {
   /**
    * Position of the status indicator dot/icon
    * ('topLeft' | 'topRight' | 'bottomLeft' | 'bottomRight').
+   *
+   * @default "bottomRight"
    */
   statusPosition?: StatusPositionType;
 
   /**
    * Custom class names for the avatar container.
+   *
+   * @default ""
    */
   className?: string;
 
@@ -163,11 +181,15 @@ export interface AvatarProps {
 
   /**
    * Whether to apply an outline style.
+   *
+   * @default configured default outline setting (fallback: false)
    */
   outline?: boolean;
 
   /**
    * Applies a translucent frosted-glass treatment using the active theme palette.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
@@ -176,18 +198,40 @@ export interface AvatarProps {
    */
   href?: string;
 
+  /** Optional target attribute when the avatar renders as a link. */
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /** Optional rel attribute when the avatar renders as a link. */
+  rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
+
   /**
    * If true, the image loads with higher priority.
+   *
+   * @default false
    */
   priority?: boolean;
+
+  /**
+   * If true, passes a `fill` prop to a custom image component such as Next.js Image.
+   * Plain img rendering should leave this false.
+   *
+   * @default false
+   */
+  imageFill?: boolean;
 
   /**
    * Click handler (used only when not a link).
    */
   onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 
+
   /**
    * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "avatar"
    */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }

@@ -18,6 +18,13 @@ import {
 
 const BaseModal: React.FC<BaseModalProps> = ({
   className = "",
+  overlayClassName = "",
+  headerClassName = "",
+  headerContentClassName = "",
+  titleClassName = "",
+  closeButtonClassName = "",
+  bodyClassName = "",
+  footerClassName = "",
   children,
   title = "Modal Dialog",
   header,
@@ -30,7 +37,8 @@ const BaseModal: React.FC<BaseModalProps> = ({
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
   closeButtonAriaLabel = "Close modal",
-  "data-testid": testId = "modal",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "modal",
   IconButton,
   classMap,
   portalId = "widget-portal",
@@ -170,6 +178,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
       className={combineClassNames(
         classMap.overlay,
         isVisible ? classMap.visible : classMap.hidden,
+        overlayClassName,
       )}
       onClick={handleClose}
       role="presentation"
@@ -195,14 +204,29 @@ const BaseModal: React.FC<BaseModalProps> = ({
         )}
 
         {hasHeader && (
-          <div className={classMap.header} data-testid={`${testId}-header`}>
-            <div className={classMap.headerContent}>
-              {header ?? <div className={classMap.title}>{title}</div>}
+          <div
+            className={combineClassNames(classMap.header, headerClassName)}
+            data-testid={`${testId}-header`}
+          >
+            <div
+              className={combineClassNames(
+                classMap.headerContent,
+                headerContentClassName,
+              )}
+            >
+              {header ?? (
+                <div className={combineClassNames(classMap.title, titleClassName)}>
+                  {title}
+                </div>
+              )}
             </div>
 
             <IconButton
               ref={closeBtnRef}
-              className={classMap.closeButton}
+              className={combineClassNames(
+                classMap.closeButton,
+                closeButtonClassName,
+              )}
               state="error"
               size="small"
               icon={CloseIcon}
@@ -221,7 +245,10 @@ const BaseModal: React.FC<BaseModalProps> = ({
         {!hasHeader && (
           <IconButton
             ref={closeBtnRef}
-            className={classMap.closeButtonFloating ?? classMap.closeButton}
+            className={combineClassNames(
+              classMap.closeButtonFloating ?? classMap.closeButton,
+              closeButtonClassName,
+            )}
             state="error"
             size="small"
             icon={CloseIcon}
@@ -236,12 +263,18 @@ const BaseModal: React.FC<BaseModalProps> = ({
           />
         )}
 
-        <div className={classMap.body} data-testid={`${testId}-body`}>
+        <div
+          className={combineClassNames(classMap.body, bodyClassName)}
+          data-testid={`${testId}-body`}
+        >
           {children}
         </div>
 
         {hasFooter && (
-          <div className={classMap.footer} data-testid={`${testId}-footer`}>
+          <div
+            className={combineClassNames(classMap.footer, footerClassName)}
+            data-testid={`${testId}-footer`}
+          >
             {footer}
           </div>
         )}

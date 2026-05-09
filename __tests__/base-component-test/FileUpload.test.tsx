@@ -877,6 +877,145 @@ describe("BaseFileUpload", () => {
     expect(wrapper).toHaveClass("customWrapper");
   });
 
+  it("applies custom class names to file upload sections", () => {
+    const accepted = createFile("good.txt", "text/plain", 1000);
+    const rejected = createFile("bad.exe", "application/x-msdownload", 1000);
+
+    renderFileUpload({
+      multiple: true,
+      allowedFileTypes: ["text/plain"],
+      formGroupClassName: "custom-form-group",
+      labelClassName: "custom-label",
+      description: "Upload text files only",
+      descriptionClassName: "custom-description",
+      dropzoneClassName: "custom-dropzone",
+      inputClassName: "custom-input",
+      uploadActionsClassName: "custom-upload-actions",
+      selectButtonClassName: "custom-select-button",
+      rejectedFilesClassName: "custom-rejected-files",
+      rejectedLabelClassName: "custom-rejected-label",
+      rejectedListClassName: "custom-rejected-list",
+      rejectedItemClassName: "custom-rejected-item",
+      rejectedReasonClassName: "custom-rejected-reason",
+      uploadControlsClassName: "custom-upload-controls",
+      fileListClassName: "custom-file-list",
+      fileListItemClassName: "custom-file-list-item",
+      removeButtonClassName: "custom-remove-button",
+      uploadButtonClassName: "custom-upload-button",
+    });
+
+    fireEvent.change(screen.getByTestId("upload-input"), {
+      target: { files: [accepted, rejected] },
+    });
+
+    expect(screen.getByTestId("upload")).toHaveClass("custom-form-group");
+    expect(screen.getByText("Upload a file")).toHaveClass("custom-label");
+    expect(screen.getByText("Upload text files only")).toHaveClass(
+      "custom-description",
+    );
+    expect(screen.getByTestId("upload-wrapper")).toHaveClass(
+      "fileUpload",
+      "custom-dropzone",
+    );
+    expect(screen.getByTestId("upload-input")).toHaveClass(
+      "hiddenInput",
+      "custom-input",
+    );
+    expect(screen.getByTestId("upload-file-button").parentElement).toHaveClass(
+      "uploadActions",
+      "custom-upload-actions",
+    );
+    expect(screen.getByTestId("upload-file-button")).toHaveClass(
+      "fileInput",
+      "custom-select-button",
+    );
+    expect(screen.getByTestId("upload-rejected-files")).toHaveClass(
+      "rejectedFiles",
+      "custom-rejected-files",
+    );
+    expect(screen.getByText("Rejected Files:")).toHaveClass(
+      "rejectedLabel",
+      "custom-rejected-label",
+    );
+    expect(screen.getByRole("list", { name: "Rejected files" })).toHaveClass(
+      "rejectedList",
+      "custom-rejected-list",
+    );
+    expect(screen.getByText("bad.exe").parentElement).toHaveClass(
+      "rejectedItem",
+      "custom-rejected-item",
+    );
+    expect(
+      within(screen.getByTestId("upload-rejected-files")).getByText(
+        /Invalid type/,
+      ),
+    ).toHaveClass(
+      "rejectedReason",
+      "custom-rejected-reason",
+    );
+    expect(screen.getByTestId("upload-controls")).toHaveClass(
+      "uploadControls",
+      "custom-upload-controls",
+    );
+    expect(screen.getByRole("list", { name: "Selected files" })).toHaveClass(
+      "fileList",
+      "custom-file-list",
+    );
+    expect(screen.getByText("good.txt").parentElement).toHaveClass(
+      "fileListItem",
+      "custom-file-list-item",
+    );
+    expect(screen.getByLabelText("Remove good.txt")).toHaveClass(
+      "removeButton",
+      "custom-remove-button",
+    );
+    expect(screen.getByTestId("upload-upload-button")).toHaveClass(
+      "uploadButton",
+      "custom-upload-button",
+    );
+  });
+
+  it("applies custom class names to file upload progress", async () => {
+    const file = createFile("upload.txt", "text/plain", 1000);
+    let resolveSubmit: () => void = () => {};
+    const onSubmit = jest.fn(
+      () =>
+        new Promise<void>((resolve) => {
+          resolveSubmit = resolve;
+        }),
+    );
+
+    renderFileUpload({
+      onSubmit,
+      uploadProgressClassName: "custom-progress",
+    });
+
+    fireEvent.change(screen.getByTestId("upload-input"), {
+      target: { files: [file] },
+    });
+    fireEvent.click(screen.getByTestId("upload-upload-button"));
+
+    expect(screen.getByTestId("upload-progress")).toHaveClass(
+      "uploadProgress",
+      "custom-progress",
+    );
+
+    await act(async () => {
+      resolveSubmit();
+    });
+  });
+
+  it("applies custom class names to file upload form errors", () => {
+    renderFileUpload({
+      error: "A file is required",
+      errorMessageClassName: "custom-error-message",
+    });
+
+    expect(screen.getByText("A file is required")).toHaveClass(
+      "custom-error-message",
+    );
+  });
+
   it("has no accessibility violations", async () => {
     const { container } = renderFileUpload({
       description: "Drag and drop your file",

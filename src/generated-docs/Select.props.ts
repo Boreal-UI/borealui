@@ -65,7 +65,8 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Optional aria-live setting for async status messaging.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"polite\""
     },
     {
       "name": "aria-required",
@@ -97,12 +98,13 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -113,7 +115,8 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Whether the select element is disabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "form",
@@ -129,7 +132,17 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Adds translucent glass styling to the select wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
+    },
+    {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class names for the dropdown icon wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "id",
@@ -148,12 +161,40 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Additional class names for the visible label.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "labelPosition",
       "type": "LabelPositionType",
       "description": "Position of the label relative to the select.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"top\""
+    },
+    {
+      "name": "layoutClassName",
+      "type": "string",
+      "description": "Additional class names for the outer layout container.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "loadingClassName",
+      "type": "string",
+      "description": "Additional class names for async loading text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "name",
@@ -185,7 +226,8 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "If true, the select element is styled as outlined.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "placeholder",
@@ -193,7 +235,8 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Placeholder text to display when no option is selected.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Select an option\""
     },
     {
       "name": "pollInterval",
@@ -201,7 +244,8 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Optional polling interval for updating options in milliseconds.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "0"
     },
     {
       "name": "required",
@@ -225,7 +269,17 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Rounding style of the select element. \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
+    },
+    {
+      "name": "selectClassName",
+      "type": "string",
+      "description": "Additional class names for the native select element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "shadow",
@@ -233,7 +287,17 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style of the select element. \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
+    },
+    {
+      "name": "srOnlyClassName",
+      "type": "string",
+      "description": "Additional class names for screen-reader-only description text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "state",
@@ -241,7 +305,8 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "State variant for styling. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "tabIndex",
@@ -252,12 +317,22 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"select\""
+    },
+    {
       "name": "theme",
       "type": "ThemeType",
       "description": "Theme for styling. \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "value",

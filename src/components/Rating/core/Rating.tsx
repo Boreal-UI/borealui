@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseRating from "../RatingBase";
 import "./Rating.scss";
@@ -43,7 +44,7 @@ const classes = {
 };
 
 const Rating: React.FC<RatingProps> = (props) => {
-  return <BaseRating {...props} classMap={classes} />;
+  return <BaseRating {...props} classMap={expandClassMap(classes)} />;
 };
 Rating.displayName = "Rating";
 export default Rating;

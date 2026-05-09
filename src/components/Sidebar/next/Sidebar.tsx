@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -43,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({
   return (
     <SidebarBase
       links={links}
-      classMap={styles}
+      classMap={expandClassMap(styles)}
       LinkComponent={Link}
       isLinkActive={resolvedIsLinkActive}
       hasActiveChild={resolvedHasActiveChild}

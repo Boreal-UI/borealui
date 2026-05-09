@@ -10,6 +10,7 @@ export interface GeneratedPropDoc {
   required: boolean;
   inherited: boolean;
   category: string;
+  defaultValue?: string;
 }
 
 export interface GeneratedComponentDoc {

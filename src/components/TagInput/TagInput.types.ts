@@ -12,13 +12,19 @@ import { TextInputProps } from "../TextInput/TextInput.types";
  * Props for the TagInput component.
  */
 export interface TagInputProps {
-  /** Array of current tags. */
+  /**
+   * Array of current tags.
+   *
+   * @default EMPTY_TAGS
+   */
   tags?: string[];
 
   /**
    * Accessible label for the overall tag input group.
    * Used when no external aria-labelledby is provided.
    * Defaults to "Tag Input".
+   *
+   * @default "Tag Input"
    */
   "aria-label"?: string;
 
@@ -37,12 +43,16 @@ export interface TagInputProps {
   /**
    * Optional screen reader description for the input behavior.
    * This is announced through an internally rendered description element.
+   *
+   * @default "Type a tag and press Enter or comma to add. Use arrow keys to navigate suggestions; Enter to select; Escape to close. Backspace removes the last tag when the field is empty."
    */
   "aria-description"?: string;
 
   /**
    * Optional accessible label for the text input itself.
    * Defaults to "Add new tag".
+   *
+   * @default "Add new tag"
    */
   inputAriaLabel?: string;
 
@@ -61,6 +71,8 @@ export interface TagInputProps {
   /**
    * Accessible label for the suggestions listbox.
    * Defaults to "Tag suggestions".
+   *
+   * @default "Tag suggestions"
    */
   suggestionsAriaLabel?: string;
 
@@ -68,6 +80,8 @@ export interface TagInputProps {
    * Accessible label prefix for remove-tag buttons.
    * Example output: "Remove tag React".
    * Defaults to "Remove tag".
+   *
+   * @default "Remove tag"
    */
   removeTagButtonLabel?: string;
 
@@ -83,44 +97,64 @@ export interface TagInputProps {
    */
   fetchSuggestions?: (query: string) => Promise<string[]>;
 
-  /** Debounce time (ms) for suggestions/autocomplete fetches. */
+  /**
+   * Debounce time (ms) for suggestions/autocomplete fetches.
+   *
+   * @default 300
+   */
   debounceMs?: number;
 
-  /** Placeholder text displayed in the input when empty. */
+  /**
+   * Placeholder text displayed in the input when empty.
+   *
+   * @default "Add a tag..."
+   */
   placeholder?: string;
 
   /**
    * Theme for styling the input and tags.
    * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Adds translucent glass styling to the wrapper, tags, and nested controls.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State of the input (for feedback/validation).
    * One of: "success" | "error" | "warning" | "disabled" | ""
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Size of the input and tags.
    * One of: "xs" | "small" | "medium" | "large" | "xl"
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * Rounding style for the input and tags.
    * One of: "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style for the input and tags.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
@@ -131,7 +165,15 @@ export interface TagInputProps {
    */
   idBase?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "tag-input"
+   */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

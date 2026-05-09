@@ -4,6 +4,8 @@ import { combineClassNames } from "../../utils/classNames";
 import { ArrowRightIcon } from "../../Icons/index";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -25,13 +27,14 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   classMap,
   disabled = false,
   size = getDefaultSize(),
-  outline = false,
-  glass = false,
+  outline = getDefaultOutline(),
+  glass = getDefaultGlass(),
   className = "",
   maxVisible,
   LinkComponent = "a",
   ButtonComponent = "button",
-  "data-testid": testId = "breadcrumbs",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "breadcrumbs",
   ...rest
 }) => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -107,6 +110,10 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
           );
 
           const itemTitle = item.title ?? item.label;
+          const linkTarget = isItemDisabled ? undefined : item.target;
+          const linkRel =
+            item.rel ??
+            (linkTarget === "_blank" ? "noopener noreferrer" : undefined);
 
           return (
             <li
@@ -152,6 +159,8 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                 ) : (
                   <LinkComponent
                     href={item.href}
+                    target={linkTarget}
+                    rel={linkRel}
                     className={classMap.link}
                     title={itemTitle}
                     aria-label={item["aria-label"]}

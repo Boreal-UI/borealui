@@ -33,7 +33,17 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   "aria-label-close-button": ariaLabelCloseButton = "Close popup",
   "aria-live": ariaLive,
   className = "",
-  "data-testid": testId = "message-popup",
+  contentClassName = "",
+  headerClassName = "",
+  titleClassName = "",
+  closeButtonClassName = "",
+  bodyClassName = "",
+  messageClassName = "",
+  actionsClassName = "",
+  confirmButtonClassName = "",
+  cancelButtonClassName = "",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "message-popup",
   Button,
   IconButton,
   classMap,
@@ -144,7 +154,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
       data-testid={testId}
     >
       <div
-        className={classMap.content}
+        className={combineClassNames(classMap.content, contentClassName)}
         onClick={(e) => e.stopPropagation()}
         role={resolvedDialogRole}
         aria-modal={true}
@@ -157,10 +167,13 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
         data-testid={`${testId}-dialog`}
       >
         {title && (
-          <div className={classMap.header} data-testid={`${testId}-header`}>
+          <div
+            className={combineClassNames(classMap.header, headerClassName)}
+            data-testid={`${testId}-header`}
+          >
             <h2
               id={titleId}
-              className={classMap.title}
+              className={combineClassNames(classMap.title, titleClassName)}
               data-testid={`${testId}-title`}
             >
               {title}
@@ -168,7 +181,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
 
             <IconButton
               ref={closeBtnRef}
-              className={classMap.close}
+              className={combineClassNames(classMap.close, closeButtonClassName)}
               onClick={onClose}
               aria-label={ariaLabelCloseButton}
               icon={CloseIcon}
@@ -183,7 +196,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
         {!title && (
           <IconButton
             ref={closeBtnRef}
-            className={classMap.close}
+            className={combineClassNames(classMap.close, closeButtonClassName)}
             onClick={onClose}
             aria-label={ariaLabelCloseButton}
             icon={CloseIcon}
@@ -194,20 +207,29 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
           />
         )}
 
-        <div className={classMap.body} data-testid={`${testId}-body`}>
+        <div
+          className={combineClassNames(classMap.body, bodyClassName)}
+          data-testid={`${testId}-body`}
+        >
           <p
             id={messageId}
-            className={classMap.message}
+            className={combineClassNames(classMap.message, messageClassName)}
             aria-live={ariaLive}
             data-testid={`${testId}-message`}
           >
             {message}
           </p>
 
-          <div className={classMap.actions} data-testid={`${testId}-actions`}>
+          <div
+            className={combineClassNames(classMap.actions, actionsClassName)}
+            data-testid={`${testId}-actions`}
+          >
             {onConfirm && (
               <Button
-                className={classMap.confirm}
+                className={combineClassNames(
+                  classMap.confirm,
+                  confirmButtonClassName,
+                )}
                 state="success"
                 onClick={onConfirm}
                 ref={firstButtonRef}
@@ -222,7 +244,10 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
             {onCancel && (
               <Button
                 ref={cancelButtonRef}
-                className={classMap.cancel}
+                className={combineClassNames(
+                  classMap.cancel,
+                  cancelButtonClassName,
+                )}
                 state="warning"
                 onClick={onCancel}
                 type="button"

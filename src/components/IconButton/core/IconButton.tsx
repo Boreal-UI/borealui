@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import IconButtonBase from "../IconButtonBase";
 import "./IconButton.scss";
 import { IconButtonProps } from "../IconButton.types";
@@ -45,6 +46,6 @@ const classes = {
 const IconButton = forwardRef<
   HTMLButtonElement | HTMLAnchorElement,
   IconButtonProps
->((props, ref) => <IconButtonBase ref={ref} {...props} classMap={classes} />);
+>((props, ref) => <IconButtonBase ref={ref} {...props} classMap={expandClassMap(classes)} />);
 IconButton.displayName = "IconButton";
 export default IconButton;

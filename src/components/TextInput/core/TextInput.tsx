@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import "./TextInput.scss";
 import { TextInputProps } from "../TextInput.types";
@@ -68,7 +69,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
       {...props}
       IconButton={IconButton}
       ref={ref}
-      classMap={classes}
+      classMap={expandClassMap(classes)}
     />
   );
 });

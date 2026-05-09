@@ -20,6 +20,15 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "actionButtonClassName",
+      "type": "string",
+      "description": "Additional class names for the action button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "actionLabel",
       "type": "ReactNode",
       "description": "Optional label for an action button.",
@@ -54,7 +63,7 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -65,7 +74,8 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "icon",
@@ -84,12 +94,22 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class names for the icon wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "iconDecorative",
       "type": "boolean",
       "description": "Whether the icon should be announced to assistive technology. Defaults to false.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "id",
@@ -105,7 +125,17 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "Optional supporting message below the title.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"There’s no content to display.\""
+    },
+    {
+      "name": "messageClassName",
+      "type": "string",
+      "description": "Additional class names for the message element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "onActionClick",
@@ -121,7 +151,8 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "Whether the component uses outline styles.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "role",
@@ -137,7 +168,8 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "Controls the rounding of the component ('none' | 'small' | 'medium' | 'large' | 'full').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -145,7 +177,8 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "Controls the shadow of the component ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -153,7 +186,8 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "Size modifier ('xs' | 'small' | 'medium' | 'large' | 'xl').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -161,7 +195,17 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "The EmptyState state ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"empty-state\""
     },
     {
       "name": "theme",
@@ -169,7 +213,8 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "Theming option for styling ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "title",
@@ -177,7 +222,17 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "Title text displayed prominently.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Nothing Here Yet\""
+    },
+    {
+      "name": "titleClassName",
+      "type": "string",
+      "description": "Additional class names for the title element.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     }
   ]
 };

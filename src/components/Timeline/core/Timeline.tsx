@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import "./Timeline.scss";
 import TimelineBase from "../TimelineBase";
@@ -38,7 +39,7 @@ const classes = {
 };
 
 const Timeline: React.FC<TimelineProps> = (props) => {
-  return <TimelineBase {...props} classMap={classes} />;
+  return <TimelineBase {...props} classMap={expandClassMap(classes)} />;
 };
 Timeline.displayName = "Timeline";
 export default Timeline;

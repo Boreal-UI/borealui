@@ -68,12 +68,16 @@ export interface BadgeProps extends BadgeAccessibilityProps {
   /**
    * Theme color for the badge
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * The badge state
    * ('success' | 'error' | 'warning' | 'disabled' | '').
+   *
+   * @default ""
    */
   state?: StateType;
 
@@ -85,28 +89,38 @@ export interface BadgeProps extends BadgeAccessibilityProps {
   /**
    * Badge size
    * ('xs' | 'small' | 'medium' | 'large' | 'xl').
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * Rounding of the badge
    * ('none' | 'small' | 'medium' | 'large' | 'full').
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow of the badge
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Whether to use the outline style.
+   *
+   * @default configured default outline setting (fallback: false)
    */
   outline?: boolean;
 
   /**
    * Applies a translucent frosted-glass treatment using the active theme palette.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
@@ -117,11 +131,15 @@ export interface BadgeProps extends BadgeAccessibilityProps {
 
   /**
    * Additional custom class names.
+   *
+   * @default ""
    */
   className?: string;
 
   /**
    * If true, disables user interaction and styles as disabled.
+   *
+   * @default false
    */
   disabled?: boolean;
 
@@ -130,15 +148,27 @@ export interface BadgeProps extends BadgeAccessibilityProps {
    */
   onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 
+  /** Optional target attribute when the badge renders as a link. */
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /** Optional rel attribute when the badge renders as a link. */
+  rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
+
+
   /**
    * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "badge"
    */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 
 type AnchorExtras = Omit<
   AnchorHTMLAttributes<HTMLAnchorElement>,
-  "href" | "children" | "className" | "onClick" | "title" | "role" | "tabIndex"
+  "href" | "children" | "className" | "onClick" | "title" | "role" | "tabIndex" | keyof BadgeProps
 >;
 
 type ButtonExtras = Omit<

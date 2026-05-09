@@ -41,12 +41,13 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional CSS class names for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -57,7 +58,8 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "description": "Adds a translucent glass surface behind the rating stars.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "id",
@@ -73,7 +75,8 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "description": "If true, the user can interact with the rating (hover, click, keyboard navigation).",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "label",
@@ -89,7 +92,8 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "description": "The maximum number of stars available for the rating.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "5"
     },
     {
       "name": "onChange",
@@ -105,7 +109,8 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "description": "If true, the rating is read-only and cannot be changed.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "required",
@@ -113,7 +118,8 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "description": "If true, marks the field as required.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "size",
@@ -121,7 +127,8 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "description": "The size of the rating component. One of: \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "starAriaLabelPrefix",
@@ -129,7 +136,8 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "description": "Optional aria-label prefix for each star. Example: \"Rating star\" -> \"Rating star 1 of 5\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Rate\""
     },
     {
       "name": "state",
@@ -137,7 +145,17 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "description": "State of the rating. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"rating\""
     },
     {
       "name": "theme",
@@ -145,7 +163,8 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "description": "The theme to use for styling. One of: \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "value",

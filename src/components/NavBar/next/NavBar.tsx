@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseNavBar from "../NavBarBase";
 import Link from "next/link";
@@ -27,13 +28,18 @@ const NavBar: React.FC<NavBarProps & { mockPath?: string }> = ({
       isItemActive={resolvedIsItemActive}
       LinkWrapper={({
         href,
+        target,
+        rel,
         children,
         className,
         isActive,
-        "data-testid": testId,
+        "data-testid": dataTestId,
+        testId = dataTestId,
       }) => (
         <Link
           href={href}
+          target={target}
+          rel={rel}
           className={className}
           aria-current={isActive ? "page" : undefined}
           data-testid={testId}
@@ -41,7 +47,7 @@ const NavBar: React.FC<NavBarProps & { mockPath?: string }> = ({
           {children}
         </Link>
       )}
-      classMap={styles}
+      classMap={expandClassMap(styles)}
     />
   );
 };

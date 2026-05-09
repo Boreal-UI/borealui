@@ -40,7 +40,7 @@
  * All transitions use the theme-defined `$transition-default` for consistency.
  * CSS variables allow dynamic switching between light/dark/custom themes.
  */
-@import "modern-css-reset/dist/reset.css";
+@import "modern-css-reset/dist/reset.css" layer(boreal-ui.reset);
 /**
  * ---------------------------------------------------------------------
  * theme.scss
@@ -266,370 +266,407 @@
  *   - A `$breakpoints` map from the `breakpoints` module (alias: `bp`)
  *   - `sass:map` module to access map values safely
  */
-:root {
-  /* ================================
-     PRIMARY COLOR PALETTE
-  ================================== */
-  --primary-color: #1c4d3a;
-  --primary-color-light: rgb(107.6, 201.4, 165.0285714286);
-  --primary-color-hover: rgb(14.4, 39.6, 29.8285714286);
-  --text-color-primary: rgb(255, 255, 255);
-  --text-color-primary-contrast: rgb(0, 0, 0);
-  /* ================================
-     SECONDARY COLOR PALETTE
-  ================================== */
-  --secondary-color: #6e502e;
-  --secondary-color-light: rgb(210.7692307692, 181.9230769231, 149.2307692308);
-  --secondary-color-hover: rgb(74.0384615385, 53.8461538462, 30.9615384615);
-  --text-color-secondary: rgb(0, 0, 0);
-  /* ================================
-     TERTIARY COLOR PALETTE
-  ================================== */
-  --tertiary-color: #092b1c;
-  --tertiary-color-light: rgb(44.9615384615, 211.0384615385, 137.7692307692);
-  --tertiary-color-hover: rgb(0.1730769231, 0.8269230769, 0.5384615385);
-  --text-color-tertiary: rgb(255, 255, 255);
-  /* ================================
-     QUATERNARY COLOR PALETTE
-  ================================== */
-  --quaternary-color: #a1733a;
-  --quaternary-color-light: rgb(231.9589041096, 213.6849315068, 191.0410958904);
-  --quaternary-color-hover: rgb(123.5068493151, 88.2191780822, 44.4931506849);
-  --text-color-quaternary: rgb(255, 255, 255);
-  /* ================================
-     FEEDBACK COLORS
-  ================================== */
-  --success-color: #51c703;
-  --success-color-hover: rgb(60.5495049505, 148.7574257426, 2.2425742574);
-  --warning-color: #fca505;
-  --warning-color-hover: rgb(203.557312253, 132.7193675889, 2.442687747);
-  --error-color: #f83838;
-  --error-color-hover: rgb(244.4029126214, 8.5970873786, 8.5970873786);
-  --disabled-color: rgba(184, 184, 184, 0.8666666667);
-  /* ================================
-     BACKGROUND COLORS
-  ================================== */
-  --background-color: #222e2e;
-  --background-color-surface: #384b4b;
-  --background-color-light: rgb(55.675, 75.325, 75.325);
-  --background-color-lighter: rgb(77.35, 104.65, 104.65);
-  --background-color-dark: rgb(12.325, 16.675, 16.675);
-  --background-color-darker: hsl(180, 15%, -4.3137254902%);
-  /* ================================
-     TEXT COLORS
-  ================================== */
-  --text-color: rgb(255, 255, 255);
-  --text-color-light: hsl(0, 0%, 120%);
-  --text-color-lighter: hsl(0, 0%, 140%);
-  /* ================================
-     LINK COLORS
-  ================================== */
-  --link-color: #8bb0c7;
-  --link-hover-color: #627e8f;
-  --link-hover-color-primary: rgb(22.4, 61.6, 46.4);
-  --link-hover-color-secondary: rgb(88, 64, 36.8);
-  /* ================================
-     FOCUS & INTERACTION
-  ================================== */
-  --focus-outline-color: var(--text-color-primary);
-  /* ===========================
-     Spacing Scale
-  =========================== */
-  --spacing-xxs: 2px;
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  /* ===========================
-      Font Sizes
-  =========================== */
-  --font-size-xxs: 10px;
-  --font-size-xs: 12px;
-  --font-size-sm: 14px;
-  --font-size-md: 16px;
-  --font-size-base: 18px;
-  --font-size-lg: 20px;
-  --font-size-xl: 24px;
-  --font-size-xxl: 32px;
-  --font-size-display-sm: 40px;
-  --font-size-display-md: 48px;
-  --font-size-display-lg: 56px;
-  /* ===========================
-     Font Weights
-  =========================== */
-  --font-weight-light: 300;
-  --font-weight-normal: 400;
-  --font-weight-medium: 500;
-  --font-weight-semibold: 600;
-  --font-weight-bold: 700;
-  --font-weight-bolder: 900;
-  /* ===========================
-     Line Heights
-  =========================== */
-  --line-height-tight: 1.2;
-  --line-height-snug: 1.35;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.65;
-  --line-height-loose: 1.8;
-  /* ===========================
-      Semantic Typographic Styles
-  =========================== */
-  --font-size-body: 18px;
-  --font-size-body-sm: 16px;
-  --font-size-body-lg: 20px;
-  --font-size-label: 14px;
-  --font-size-caption: 12px;
-  --font-size-overline: 12px;
-  --font-size-code: 14px;
-  --font-size-h1: 48px;
-  --font-size-h2: 40px;
-  --font-size-h3: 32px;
-  --font-size-h4: 24px;
-  --font-size-h5: 20px;
-  --font-size-h6: 18px;
-  --font-weight-body: 400;
-  --font-weight-label: 500;
-  --font-weight-caption: 400;
-  --font-weight-code: 400;
-  --font-weight-h1: 900;
-  --font-weight-h2: 900;
-  --font-weight-h3: 700;
-  --font-weight-h4: 700;
-  --font-weight-h5: 600;
-  --font-weight-h6: 600;
-  --line-height-body: 1.65;
-  --line-height-heading: 1.2;
-  --line-height-label: 1.5;
-  --line-height-caption: 1.5;
-  --line-height-code: 1.5;
-  --letter-spacing-heading: -0.02em;
-  --letter-spacing-body: 0;
-  --letter-spacing-label: 0.02em;
-  --letter-spacing-caption: 0;
-  --letter-spacing-overline: 0.05em;
-  --letter-spacing-code: 0;
-  /* ===========================
-     Letter Spacing
-  =========================== */
-  --letter-spacing-tight: -0.02em;
-  --letter-spacing-normal: 0;
-  --letter-spacing-wide: 0.02em;
-  --letter-spacing-wider: 0.05em;
-  /* ===========================
-     Border Radius (Rounding)
-  =========================== */
-  --border-radius-xs: 2.5px;
-  --border-radius-sm: 5px;
-  --border-radius-md: 10px;
-  --border-radius-lg: 20px;
-  --border-radius-xl: 40px;
-  --border-radius-full: 50%;
-  --border-radius-round: 50%;
-  --border-radius-none: 0;
-  /* ===========================
-     Border Widths
-  =========================== */
-  --border-width-none: 0;
-  --border-width-xs: 1px;
-  --border-width-sm: 2px;
-  --border-width-md: 3px;
-  --border-width-lg: 4px;
-  --border-width-xl: 5px;
-  /* ===========================
-     Shadows
-  =========================== */
-  --box-shadow-light: 0px 2px 4px rgba(46, 49, 49, 0.1);
-  --box-shadow-medium: 0px 4px 8px rgba(86, 101, 116, 0.2);
-  --box-shadow-heavy: 0px 6px 12px rgba(52, 73, 94, 0.4);
-  --box-shadow-intense: 0px 6px 12px rgba(52, 73, 94, 0.6);
-  /* ===========================
-     Inverted Shadows (Light UI)
-  =========================== */
-  --box-shadow-inverted-none: none;
-  --box-shadow-inverted-light: 0 2px 4px rgb(255 255 255 / 5%);
-  --box-shadow-inverted-medium: 0 4px 8px rgb(255 255 255 / 8%);
-  --box-shadow-inverted-strong: 0 6px 12px rgb(255 255 255 / 12%);
-  --box-shadow-inverted-intense: 0 8px 16px rgb(255 255 255 / 20%);
-  /* ===========================
-     Divider & Overlay Colors
-  =========================== */
-  --divider-color: rgb(99.025, 133.975, 133.975);
-  --border-color: rgb(99.025, 133.975, 133.975);
-  --border-color-subtle: rgb(55.675, 75.325, 75.325);
-  --border-color-strong: rgb(77.35, 104.65, 104.65);
-  --overlay-color: rgb(0 0 0 / 50%);
-  --font-family-body: Inter, system-ui, -apple-system, Segoe UI, roboto, arial, sans-serif;
-  --font-family-heading: Inter, system-ui, -apple-system, Segoe UI, roboto, sans-serif;
-  --font-family-ui: Inter, system-ui, -apple-system, Segoe UI, roboto, arial, sans-serif;
-  --font-family-mono: ui-monospace, sfmono-regular, menlo, consolas, Liberation Mono, monospace;
-}
-
-body {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  color: var(--text-color-primary);
-  background-color: var(--background-color);
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-family-heading);
-  line-height: var(--line-height-heading);
-  letter-spacing: var(--letter-spacing-heading);
-  margin: 0;
-  transition: color 0.3s ease-in-out;
-}
-
-h1 {
-  font-size: var(--font-size-h1);
-  font-weight: var(--font-weight-h1);
-}
-
-h2 {
-  font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-h2);
-}
-
-h3 {
-  font-size: var(--font-size-h3);
-  font-weight: var(--font-weight-h3);
-}
-
-h4 {
-  font-size: var(--font-size-h4);
-  font-weight: var(--font-weight-h4);
-}
-
-h5 {
-  font-size: var(--font-size-h5);
-  font-weight: var(--font-weight-h5);
-}
-
-h6 {
-  font-size: var(--font-size-h6);
-  font-weight: var(--font-weight-h6);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-overline);
-}
-
-p {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  margin-bottom: var(--spacing-md);
-}
-
-a {
-  color: var(--link-color);
-  font-weight: 700;
-  text-decoration: none;
-  transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out;
-}
-a:hover {
-  color: var(--link-color-hover);
-  text-decoration: underline;
-}
-
-label {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-}
-
-small {
-  font-size: var(--font-size-caption);
-  line-height: var(--line-height-caption);
-}
-
-code,
-pre,
-kbd,
-samp {
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-code);
-  font-weight: var(--font-weight-code);
-  line-height: var(--line-height-code);
-  letter-spacing: var(--letter-spacing-code);
-}
-
-.noScroll {
-  overflow: hidden;
-}
-
-.errorMessage {
-  color: #f83838;
-  font-size: 14px;
-}
-
-.loadingContainer {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-}
-
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary-color) var(--background-color-light);
-}
-
-*:focus {
-  outline: 2px solid var(--focus-outline-color);
-  outline-offset: 2px;
-}
-
-::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--background-color);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--primary-color);
-  border-radius: 6px;
-  border: 3px solid var(--background-color-light);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--primary-color-hover);
-}
-
-.hideScrollbar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.hideScrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.sr_only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
-  border: 0;
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components;
+@layer boreal-ui.base {
+  :root {
+    /* ================================
+       PRIMARY COLOR PALETTE
+    ================================== */
+    --primary-color: #1c4d3a;
+    --primary-color-light: rgb(107.6, 201.4, 165.0285714286);
+    --primary-color-hover: rgb(14.4, 39.6, 29.8285714286);
+    --text-color-primary: rgb(255, 255, 255);
+    --text-color-primary-contrast: rgb(0, 0, 0);
+    /* ================================
+       SECONDARY COLOR PALETTE
+    ================================== */
+    --secondary-color: #6e502e;
+    --secondary-color-light: rgb(210.7692307692, 181.9230769231, 149.2307692308);
+    --secondary-color-hover: rgb(74.0384615385, 53.8461538462, 30.9615384615);
+    --text-color-secondary: rgb(0, 0, 0);
+    /* ================================
+       TERTIARY COLOR PALETTE
+    ================================== */
+    --tertiary-color: #092b1c;
+    --tertiary-color-light: rgb(44.9615384615, 211.0384615385, 137.7692307692);
+    --tertiary-color-hover: rgb(0.1730769231, 0.8269230769, 0.5384615385);
+    --text-color-tertiary: rgb(255, 255, 255);
+    /* ================================
+       QUATERNARY COLOR PALETTE
+    ================================== */
+    --quaternary-color: #a1733a;
+    --quaternary-color-light: rgb(231.9589041096, 213.6849315068, 191.0410958904);
+    --quaternary-color-hover: rgb(123.5068493151, 88.2191780822, 44.4931506849);
+    --text-color-quaternary: rgb(255, 255, 255);
+    /* ================================
+       FEEDBACK COLORS
+    ================================== */
+    --success-color: #51c703;
+    --success-color-hover: rgb(60.5495049505, 148.7574257426, 2.2425742574);
+    --warning-color: #fca505;
+    --warning-color-hover: rgb(203.557312253, 132.7193675889, 2.442687747);
+    --error-color: #f83838;
+    --error-color-hover: rgb(244.4029126214, 8.5970873786, 8.5970873786);
+    --disabled-color: rgba(184, 184, 184, 0.8666666667);
+    /* ================================
+       BACKGROUND COLORS
+    ================================== */
+    --background-color: #222e2e;
+    --background-color-surface: #384b4b;
+    --background-color-light: rgb(55.675, 75.325, 75.325);
+    --background-color-lighter: rgb(77.35, 104.65, 104.65);
+    --background-color-dark: rgb(12.325, 16.675, 16.675);
+    --background-color-darker: hsl(180, 15%, -4.3137254902%);
+    /* ================================
+       TEXT COLORS
+    ================================== */
+    --text-color: rgb(255, 255, 255);
+    --text-color-light: hsl(0, 0%, 120%);
+    --text-color-lighter: hsl(0, 0%, 140%);
+    /* ================================
+       LINK COLORS
+    ================================== */
+    --link-color: #8bb0c7;
+    --link-hover-color: #627e8f;
+    --link-hover-color-primary: rgb(22.4, 61.6, 46.4);
+    --link-hover-color-secondary: rgb(88, 64, 36.8);
+    /* ===========================
+       Glass / Frosted Surface
+    =========================== */
+    --glass-background: rgba(255, 255, 255, 0.08);
+    --glass-background-subtle: rgba(255, 255, 255, 0.05);
+    --glass-background-strong: rgba(255, 255, 255, 0.14);
+    --glass-border-color: rgba(255, 255, 255, 0.18);
+    --glass-border-color-strong: rgba(255, 255, 255, 0.28);
+    --glass-blur: 16px;
+    --glass-blur-sm: 8px;
+    --glass-blur-lg: 24px;
+    --glass-saturate: 160%;
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+    --glass-shadow-strong: 0 12px 48px rgba(0, 0, 0, 0.35);
+    --glass-inset-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    /* ================================
+       THEME GLASS COLORS
+    ================================== */
+    --primary-glass-background: rgb(from var(--primary-color) r g b / 20%);
+    --primary-glass-background-hover: rgb(
+      from var(--primary-color-hover) r g b / 38%
+    );
+    --primary-glass-border: rgb(from var(--primary-color) r g b / 48%);
+    --secondary-glass-background: rgb(from var(--secondary-color) r g b / 20%);
+    --secondary-glass-background-hover: rgb(
+      from var(--secondary-color-hover) r g b / 38%
+    );
+    --secondary-glass-border: rgb(from var(--secondary-color) r g b / 48%);
+    --tertiary-glass-background: rgb(from var(--tertiary-color) r g b / 20%);
+    --tertiary-glass-background-hover: rgb(
+      from var(--tertiary-color-hover) r g b / 38%
+    );
+    --tertiary-glass-border: rgb(from var(--tertiary-color) r g b / 48%);
+    --quaternary-glass-background: rgb(from var(--quaternary-color) r g b / 20%);
+    --quaternary-glass-background-hover: rgb(
+      from var(--quaternary-color-hover) r g b / 38%
+    );
+    --quaternary-glass-border: rgb(from var(--quaternary-color) r g b / 48%);
+    --clear-glass-background: rgb(255 255 255 / 10%);
+    --clear-glass-background-hover: rgb(255 255 255 / 18%);
+    --clear-glass-border: rgb(255 255 255 / 28%);
+    /* ================================
+       STATE GLASS COLORS
+    ================================== */
+    --success-glass-background: rgb(from var(--success-color) r g b / 20%);
+    --success-glass-background-hover: rgb(
+      from var(--success-color-hover) r g b / 38%
+    );
+    --success-glass-border: rgb(from var(--success-color) r g b / 48%);
+    --warning-glass-background: rgb(from var(--warning-color) r g b / 20%);
+    --warning-glass-background-hover: rgb(
+      from var(--warning-color-hover) r g b / 38%
+    );
+    --warning-glass-border: rgb(from var(--warning-color) r g b / 48%);
+    --error-glass-background: rgb(from var(--error-color) r g b / 20%);
+    --error-glass-background-hover: rgb(
+      from var(--error-color-hover) r g b / 38%
+    );
+    --error-glass-border: rgb(from var(--error-color) r g b / 48%);
+    /* ================================
+       FOCUS & INTERACTION
+    ================================== */
+    --focus-outline-color: var(--text-color-primary);
+    /* ===========================
+       Spacing Scale
+    =========================== */
+    --spacing-xxs: 2px;
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    /* ===========================
+        Font Sizes
+    =========================== */
+    --font-size-xxs: 10px;
+    --font-size-xs: 12px;
+    --font-size-sm: 14px;
+    --font-size-md: 16px;
+    --font-size-base: 18px;
+    --font-size-lg: 20px;
+    --font-size-xl: 24px;
+    --font-size-xxl: 32px;
+    --font-size-display-sm: 40px;
+    --font-size-display-md: 48px;
+    --font-size-display-lg: 56px;
+    /* ===========================
+       Font Weights
+    =========================== */
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-bolder: 900;
+    /* ===========================
+       Line Heights
+    =========================== */
+    --line-height-tight: 1.2;
+    --line-height-snug: 1.35;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.65;
+    --line-height-loose: 1.8;
+    /* ===========================
+        Semantic Typographic Styles
+    =========================== */
+    --font-size-body: 18px;
+    --font-size-body-sm: 16px;
+    --font-size-body-lg: 20px;
+    --font-size-label: 14px;
+    --font-size-caption: 12px;
+    --font-size-overline: 12px;
+    --font-size-code: 14px;
+    --font-size-h1: 48px;
+    --font-size-h2: 40px;
+    --font-size-h3: 32px;
+    --font-size-h4: 24px;
+    --font-size-h5: 20px;
+    --font-size-h6: 18px;
+    --font-weight-body: 400;
+    --font-weight-label: 500;
+    --font-weight-caption: 400;
+    --font-weight-code: 400;
+    --font-weight-h1: 900;
+    --font-weight-h2: 900;
+    --font-weight-h3: 700;
+    --font-weight-h4: 700;
+    --font-weight-h5: 600;
+    --font-weight-h6: 600;
+    --line-height-body: 1.65;
+    --line-height-heading: 1.2;
+    --line-height-label: 1.5;
+    --line-height-caption: 1.5;
+    --line-height-code: 1.5;
+    --letter-spacing-heading: -0.02em;
+    --letter-spacing-body: 0;
+    --letter-spacing-label: 0.02em;
+    --letter-spacing-caption: 0;
+    --letter-spacing-overline: 0.05em;
+    --letter-spacing-code: 0;
+    /* ===========================
+       Letter Spacing
+    =========================== */
+    --letter-spacing-tight: -0.02em;
+    --letter-spacing-normal: 0;
+    --letter-spacing-wide: 0.02em;
+    --letter-spacing-wider: 0.05em;
+    /* ===========================
+       Border Radius (Rounding)
+    =========================== */
+    --border-radius-xs: 2.5px;
+    --border-radius-sm: 5px;
+    --border-radius-md: 10px;
+    --border-radius-lg: 20px;
+    --border-radius-xl: 40px;
+    --border-radius-full: 50%;
+    --border-radius-round: 50%;
+    --border-radius-none: 0;
+    /* ===========================
+       Border Widths
+    =========================== */
+    --border-width-none: 0;
+    --border-width-xs: 1px;
+    --border-width-sm: 2px;
+    --border-width-md: 3px;
+    --border-width-lg: 4px;
+    --border-width-xl: 5px;
+    /* ===========================
+       Shadows
+    =========================== */
+    --box-shadow-light: 0px 2px 4px rgba(46, 49, 49, 0.1);
+    --box-shadow-medium: 0px 4px 8px rgba(86, 101, 116, 0.2);
+    --box-shadow-heavy: 0px 6px 12px rgba(52, 73, 94, 0.4);
+    --box-shadow-intense: 0px 6px 12px rgba(52, 73, 94, 0.6);
+    /* ===========================
+       Inverted Shadows (Light UI)
+    =========================== */
+    --box-shadow-inverted-none: none;
+    --box-shadow-inverted-light: 0 2px 4px rgb(255 255 255 / 5%);
+    --box-shadow-inverted-medium: 0 4px 8px rgb(255 255 255 / 8%);
+    --box-shadow-inverted-strong: 0 6px 12px rgb(255 255 255 / 12%);
+    --box-shadow-inverted-intense: 0 8px 16px rgb(255 255 255 / 20%);
+    /* ===========================
+       Divider & Overlay Colors
+    =========================== */
+    --divider-color: rgb(99.025, 133.975, 133.975);
+    --border-color: rgb(99.025, 133.975, 133.975);
+    --border-color-subtle: rgb(55.675, 75.325, 75.325);
+    --border-color-strong: rgb(77.35, 104.65, 104.65);
+    --overlay-color: rgb(0 0 0 / 50%);
+    --font-family-body: Inter, system-ui, -apple-system, Segoe UI, roboto, arial, sans-serif;
+    --font-family-heading: Inter, system-ui, -apple-system, Segoe UI, roboto, sans-serif;
+    --font-family-ui: Inter, system-ui, -apple-system, Segoe UI, roboto, arial, sans-serif;
+    --font-family-mono: ui-monospace, sfmono-regular, menlo, consolas, Liberation Mono, monospace;
+  }
+  body {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-family-heading);
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
+    margin: 0;
+    transition: color 0.3s ease-in-out;
+  }
+  h1 {
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-h1);
+  }
+  h2 {
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-h2);
+  }
+  h3 {
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-h3);
+  }
+  h4 {
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-h4);
+  }
+  h5 {
+    font-size: var(--font-size-h5);
+    font-weight: var(--font-weight-h5);
+  }
+  h6 {
+    font-size: var(--font-size-h6);
+    font-weight: var(--font-weight-h6);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-overline);
+  }
+  p {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    margin-bottom: var(--spacing-md);
+  }
+  a {
+    color: var(--link-color);
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 0.3s ease-in-out, text-decoration 0.3s ease-in-out;
+  }
+  a:hover {
+    color: var(--link-color-hover);
+    text-decoration: underline;
+  }
+  label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+  }
+  small {
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+  }
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-code);
+    font-weight: var(--font-weight-code);
+    line-height: var(--line-height-code);
+    letter-spacing: var(--letter-spacing-code);
+  }
+  .noScroll {
+    overflow: hidden;
+  }
+  .errorMessage {
+    color: #f83838;
+    font-size: 14px;
+  }
+  .loadingContainer {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--background-color-light);
+  }
+  *:focus {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+  }
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--background-color);
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 6px;
+    border: 3px solid var(--background-color-light);
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-color-hover);
+  }
+  .hideScrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .hideScrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .sr_only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
 }

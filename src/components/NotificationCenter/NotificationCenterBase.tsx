@@ -33,10 +33,23 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   emptyMessage = "No notifications.",
   dismissButtonLabelPrefix = "Dismiss notification",
   clearAllAriaLabel = "Clear all notifications",
+  className = "",
+  headerClassName = "",
+  clearAllClassName = "",
+  bodyClassName = "",
+  emptyClassName = "",
+  listClassName = "",
+  notificationClassName = "",
+  iconClassName = "",
+  contentClassName = "",
+  messageClassName = "",
+  timestampClassName = "",
+  closeButtonClassName = "",
   Button,
   IconButton,
   classMap,
-  "data-testid": testId = "notification-center",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "notification-center",
 }) => {
   const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
   const prevIds = useRef<Set<string>>(new Set());
@@ -111,20 +124,24 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
           classMap[`shadow${capitalize(notificationShadow)}`],
         notificationRounding &&
           classMap[`round${capitalize(notificationRounding)}`],
+        notificationClassName,
       ),
-    [classMap, notificationShadow, notificationRounding],
+    [classMap, notificationShadow, notificationRounding, notificationClassName],
   );
 
   return (
     <div
-      className={classMap.wrapper}
+      className={combineClassNames(classMap.wrapper, className)}
       role="region"
       aria-label={ariaLabelledBy ? undefined : ariaLabel}
       aria-labelledby={resolvedLabelledBy}
       aria-describedby={ariaDescribedBy}
       data-testid={testId}
     >
-      <div className={classMap.header} data-testid={`${testId}-header`}>
+      <div
+        className={combineClassNames(classMap.header, headerClassName)}
+        data-testid={`${testId}-header`}
+      >
         {!ariaLabelledBy && <h3 id={internalTitleId}>Notifications</h3>}
 
         {showClearAll && notifications.length > 0 && onClearAll && (
@@ -133,7 +150,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
             size="small"
             rounding={controlRounding}
             shadow={controlShadow}
-            className={classMap.clearAll}
+            className={combineClassNames(classMap.clearAll, clearAllClassName)}
             onClick={onClearAll}
             aria-label={clearAllAriaLabel}
             data-testid={`${testId}-clear-all`}
@@ -149,16 +166,19 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
         aria-live={liveRegionPoliteness}
         aria-relevant={liveRegionRelevant}
         aria-atomic={liveRegionAtomic}
-        className={classMap.body}
+        className={combineClassNames(classMap.body, bodyClassName)}
         data-testid={`${testId}-live-region`}
       >
         {notifications.length === 0 ? (
-          <p className={classMap.empty} data-testid={`${testId}-empty`}>
+          <p
+            className={combineClassNames(classMap.empty, emptyClassName)}
+            data-testid={`${testId}-empty`}
+          >
             {emptyMessage}
           </p>
         ) : (
           <ul
-            className={classMap.list}
+            className={combineClassNames(classMap.list, listClassName)}
             aria-labelledby={listAriaLabel ? undefined : resolvedLabelledBy}
             aria-label={listAriaLabel}
           >
@@ -197,15 +217,23 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                   data-testid={noteTestId}
                 >
                   <Icon
-                    className={classMap.icon}
+                    className={combineClassNames(classMap.icon, iconClassName)}
                     aria-hidden="true"
                     focusable={false}
                   />
 
-                  <div className={classMap.content}>
+                  <div
+                    className={combineClassNames(
+                      classMap.content,
+                      contentClassName,
+                    )}
+                  >
                     <span
                       id={messageId}
-                      className={classMap.message}
+                      className={combineClassNames(
+                        classMap.message,
+                        messageClassName,
+                      )}
                       data-testid={`${noteTestId}-message`}
                     >
                       {note.message}
@@ -214,7 +242,10 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                     {note.timestamp && (
                       <span
                         id={timestampId}
-                        className={classMap.timestamp}
+                        className={combineClassNames(
+                          classMap.timestamp,
+                          timestampClassName,
+                        )}
                         data-testid={`${noteTestId}-timestamp`}
                       >
                         {timestampStr}
@@ -233,7 +264,10 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                   </div>
 
                   <IconButton
-                    className={classMap.close}
+                    className={combineClassNames(
+                      classMap.close,
+                      closeButtonClassName,
+                    )}
                     state="error"
                     size="small"
                     outline

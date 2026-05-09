@@ -2,6 +2,9 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_animations";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 $size-margins: (
   "xs": var(--spacing-xs),
   "small": var(--spacing-sm),
@@ -168,7 +171,7 @@ $size-margins: (
   }
 }
 
-.form_group :focus-visible {
+.form_group_input_wrapper > :focus-visible {
   outline: 2px solid var(--focus-outline-color, var(--primary-color));
   outline-offset: 2px;
   border-radius: 4px;
@@ -190,4 +193,5 @@ $size-margins: (
   .form_group_horizontal_input_field_form-error {
     border-color: Highlight !important;
   }
+}
 }

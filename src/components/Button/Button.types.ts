@@ -30,10 +30,16 @@ export interface ButtonProps extends Pick<
   | "aria-disabled"
 > {
   /**
-   * Optional target for link rendering.
+   * Optional target attribute for link rendering.
    * Example: "_blank", "_self", "_parent", "_top"
    */
-  _target?: React.HTMLAttributeAnchorTarget;
+  target?: React.AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /**
+   * Optional rel attribute for link rendering.
+   * Defaults to "noopener noreferrer" when opening in a new tab.
+   */
+  rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
 
   /**
    * Optional element or component override.
@@ -52,23 +58,31 @@ export interface ButtonProps extends Pick<
 
   /**
    * Position of the icon relative to the button label.
+   *
+   * @default "left"
    */
   iconPosition?: "left" | "right";
 
   /**
    * Applies a translucent frosted-glass treatment using the active theme palette.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * Theme style of the button
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * State of the button
    * ('success' | 'error' | 'warning' | 'disabled' | '').
+   *
+   * @default ""
    */
   state?: StateType;
 
@@ -84,11 +98,27 @@ export interface ButtonProps extends Pick<
 
   /**
    * Additional class name(s) for custom styling.
+   *
+   * @default ""
    */
   className?: string;
 
+  /** Additional class names for the icon wrapper. */
+  iconWrapperClassName?: string;
+
+  /** Additional class names for the rendered icon. */
+  iconClassName?: string;
+
+  /** Additional class names for the label/content wrapper. */
+  labelClassName?: string;
+
+  /** Additional class names for the loading indicator. */
+  loaderClassName?: string;
+
   /**
    * Whether the button should be disabled.
+   *
+   * @default false
    */
   disabled?: boolean;
 
@@ -168,69 +198,86 @@ export interface ButtonProps extends Pick<
 
   /**
    * If true, opens the link in a new tab (used with `href`).
+   *
+   * @default false
    */
   isExternal?: boolean;
 
   /**
    * Whether to use outline styling.
+   *
+   * @default configured default outline setting (fallback: false)
    */
   outline?: boolean;
 
   /**
    * Rounding style for the button
    * ('none' | 'small' | 'medium' | 'large' | 'full').
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style for the button
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Size of the button
    * ('xs' | 'small' | 'medium' | 'large' | 'xl').
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * Whether to show a loading indicator instead of the children.
+   *
+   * @default false
    */
   loading?: boolean;
 
   /**
    * Optional accessible text announced while loading.
    * Defaults to "Loading" in the component if not provided.
+   *
+   * @default "Loading"
    */
   loadingLabel?: string;
 
   /**
    * Whether the button should take up the full width of its container.
+   *
+   * @default false
    */
   fullWidth?: boolean;
 
   /**
    * Button type for native `<button>` elements
    * ('button' | 'reset' | 'submit').
+   *
+   * @default "button"
    */
   type?: "button" | "reset" | "submit";
 
   /**
    * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "button"
    */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 
 type AnchorExtras = Omit<
   AnchorHTMLAttributes<HTMLAnchorElement>,
-  | "href"
-  | "children"
-  | "className"
-  | "onClick"
-  | "target"
-  | "rel"
-  | keyof ButtonProps
+  "href" | "children" | "className" | "onClick" | keyof ButtonProps
 >;
 
 type ButtonExtras = Omit<

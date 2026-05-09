@@ -124,46 +124,62 @@ export interface ToolbarProps {
   /**
    * Optional additional class name for the toolbar title element.
    * Useful when consumers need to style the title directly.
+   *
+   * @default ""
    */
   titleClassName?: string;
 
   /**
    * The visual theme of the toolbar.
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Applies a translucent frosted-glass treatment using the active theme palette.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * How the toolbar attaches to the viewport or page layout.
    * "static" | "fixed" | "sticky"
+   *
+   * @default "static"
    */
   attachment?: AttachmentType;
 
   /**
    * Shadow of the component.
    * "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Rounding of the component.
    * "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Optional additional class names for styling.
+   *
+   * @default ""
    */
   className?: string;
 
   /**
    * Accessible name for the toolbar.
    * Prefer this over the legacy `ariaLabel` prop.
+   *
+   * @default "Toolbar"
    */
   "aria-label"?: string;
 
@@ -180,21 +196,33 @@ export interface ToolbarProps {
 
   /**
    * Optional accessible label for the left section.
+   *
+   * @default "Toolbar left section"
    */
   leftAriaLabel?: string;
 
   /**
    * Optional accessible label for the center section.
+   *
+   * @default "Toolbar center section"
    */
   centerAriaLabel?: string;
 
   /**
    * Optional accessible label for the right section.
+   *
+   * @default "Toolbar right section"
    */
   rightAriaLabel?: string;
 
+
   /**
-   * Data test ID for testing frameworks.
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "toolbar"
    */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }

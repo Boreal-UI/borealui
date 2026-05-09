@@ -415,6 +415,33 @@ describe("CardBase", () => {
     expect(button).toBeDisabled();
   });
 
+  it("passes target and rel to linked standard action buttons", () => {
+    render(
+      <CardBase
+        title="Linked Action Card"
+        classMap={classMap}
+        SkeletonComponent={DummySkeleton}
+        ImageComponent={DummyImage}
+        data-testid="card"
+        actionButtons={[
+          {
+            label: "Docs",
+            href: "/docs",
+            target: "_blank",
+            rel: "external",
+            onClick: jest.fn(),
+            buttonComponent: DummyButton,
+            iconButtonComponent: DummyIconButton,
+          },
+        ]}
+      />,
+    );
+
+    const link = screen.getByRole("link", { name: "Docs" });
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "external");
+  });
+
   it("renders icon buttons when useIconButtons is true and icon exists", () => {
     const onClick = jest.fn();
 
@@ -486,6 +513,35 @@ describe("CardBase", () => {
     expect(button).toHaveAttribute("aria-current", "page");
     expect(button).toHaveAttribute("title", "Favorite this item");
     expect(button).toBeDisabled();
+  });
+
+  it("passes target and rel to linked icon action buttons", () => {
+    render(
+      <CardBase
+        title="Linked Icon Action Card"
+        classMap={classMap}
+        SkeletonComponent={DummySkeleton}
+        ImageComponent={DummyImage}
+        data-testid="card"
+        useIconButtons
+        actionButtons={[
+          {
+            label: "Docs",
+            icon: FaStar,
+            href: "/docs",
+            target: "_blank",
+            rel: "external",
+            onClick: jest.fn(),
+            buttonComponent: DummyButton,
+            iconButtonComponent: DummyIconButton,
+          },
+        ]}
+      />,
+    );
+
+    const link = screen.getByRole("link", { name: "Docs" });
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "external");
   });
 
   it("falls back to normal button when useIconButtons is true but icon is missing", () => {

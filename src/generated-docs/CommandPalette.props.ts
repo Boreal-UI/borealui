@@ -38,7 +38,7 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -49,7 +49,8 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "Optional debounce time (in ms) for the search input.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "300"
     },
     {
       "name": "emptyMessage",
@@ -57,7 +58,8 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "Message announced when there are no matching commands.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"No matching results\""
     },
     {
       "name": "glass",
@@ -65,7 +67,8 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "If true, applies a translucent glass surface using the selected theme/state. Defaults to `false`.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "inputAriaDescribedBy",
@@ -121,7 +124,8 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the command results list.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Command suggestions\""
     },
     {
       "name": "listboxId",
@@ -137,7 +141,8 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "Whether the palette should behave like a modal dialog for assistive tech.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "onClose",
@@ -161,7 +166,8 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "Optional placeholder for the input field.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Search...\""
     },
     {
       "name": "restoreFocusOnClose",
@@ -169,7 +175,8 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "Whether focus should return to the trigger element on close.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "resultsAnnouncement",
@@ -177,7 +184,8 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "Accessible live region message prefix for result count updates.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"results available\""
     },
     {
       "name": "rounding",
@@ -185,7 +193,8 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "Rounding style for the palette ('none' | 'small' | 'medium' | 'large' | 'full').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -193,7 +202,8 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the palette ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "state",
@@ -201,7 +211,17 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "The state of the command palette ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"command-palette\""
     },
     {
       "name": "theme",
@@ -209,7 +229,8 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "Theme style for the palette ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "trapFocus",
@@ -217,7 +238,8 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "Whether focus should be trapped while the palette is open.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     }
   ]
 };

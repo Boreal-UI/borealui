@@ -26,7 +26,11 @@ export interface FileUploadProps
       | "aria-busy"
       | "aria-live"
     > {
-  /** Label displayed above the file input. */
+  /**
+   * Label displayed above the file input.
+   *
+   * @default "Upload File"
+   */
   label?: string;
 
   /** Optional description text under the label. */
@@ -35,57 +39,87 @@ export interface FileUploadProps
   /** Optional error message. */
   error?: string;
 
-  /** Whether the file input is required. */
+  /**
+   * Whether the file input is required.
+   *
+   * @default false
+   */
   required?: boolean;
 
   /**
    * Theme for the buttons and progress bar
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Adds glass styling to the dropzone and nested controls.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * The state of the file upload
    * ('success' | 'error' | 'warning' | 'disabled' | '').
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Rounding of the control button
    * ('none' | 'small' | 'medium' | 'large' | 'full').
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   controlRounding?: RoundingType;
 
   /**
    * Shadow of the control button
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   controlShadow?: ShadowType;
 
   /**
    * Rounding of the wrapping element
    * ('none' | 'small' | 'medium' | 'large' | 'full').
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   outlineRounding?: RoundingType;
 
   /**
    * Shadow of the wrapping element
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   outlineShadow?: ShadowType;
 
-  /** Whether to display the control button as an outline. */
+  /**
+   * Whether to display the control button as an outline.
+   *
+   * @default configured default outline setting (fallback: false)
+   */
   outline?: boolean;
 
-  /** Allows multiple file selection if true. */
+  /**
+   * Allows multiple file selection if true.
+   *
+   * @default false
+   */
   multiple?: boolean;
 
-  /** Whether to disable the file input. */
+  /**
+   * Whether to disable the file input.
+   *
+   * @default false
+   */
   disabled?: boolean;
 
   /** Called after upload completes. */
@@ -97,13 +131,86 @@ export interface FileUploadProps
   /** External upload progress value (overrides internal simulation). */
   uploadProgress?: number;
 
-  /** Optional test ID for testing frameworks. */
+  /** Additional class names for the outer FormGroup wrapper. */
+  formGroupClassName?: string;
+
+  /** Additional class names for the FormGroup label. */
+  labelClassName?: string;
+
+  /** Additional class names for the FormGroup description. */
+  descriptionClassName?: string;
+
+  /** Additional class names for the FormGroup error message. */
+  errorMessageClassName?: string;
+
+  /** Additional class names for the dropzone/root wrapper. */
+  dropzoneClassName?: string;
+
+  /** Additional class names for the visually hidden native input. */
+  inputClassName?: string;
+
+  /** Additional class names for the upload actions wrapper. */
+  uploadActionsClassName?: string;
+
+  /** Additional class names for the select-file button. */
+  selectButtonClassName?: string;
+
+  /** Additional class names for the rejected files wrapper. */
+  rejectedFilesClassName?: string;
+
+  /** Additional class names for the rejected files label. */
+  rejectedLabelClassName?: string;
+
+  /** Additional class names for the rejected files list. */
+  rejectedListClassName?: string;
+
+  /** Additional class names for each rejected file item. */
+  rejectedItemClassName?: string;
+
+  /** Additional class names for each rejected reason. */
+  rejectedReasonClassName?: string;
+
+  /** Additional class names for the upload controls wrapper. */
+  uploadControlsClassName?: string;
+
+  /** Additional class names for the selected files list. */
+  fileListClassName?: string;
+
+  /** Additional class names for each selected file item. */
+  fileListItemClassName?: string;
+
+  /** Additional class names for each remove-file button. */
+  removeButtonClassName?: string;
+
+  /** Additional class names for the upload progress bar. */
+  uploadProgressClassName?: string;
+
+  /** Additional class names for the upload button. */
+  uploadButtonClassName?: string;
+
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "file-upload"
+   */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
-  /** Maximum file size in bytes (e.g., 5MB = 5 * 1024 * 1024). */
+  /**
+   * Maximum file size in bytes (e.g., 5MB = 5 * 1024 * 1024).
+   *
+   * @default Infinity
+   */
   maxFileSizeBytes?: number;
 
-  /** Allowed file MIME types or file extensions (e.g. ".pdf", "image/png"). */
+  /**
+   * Allowed file MIME types or file extensions (e.g. ".pdf", "image/png").
+   *
+   * @default []
+   */
   allowedFileTypes?: string[];
 
   /** Optional custom id for the root/input relationship. */
@@ -127,10 +234,18 @@ export interface FileUploadProps
   /** Accessible label for the rejected files list. */
   rejectedFilesAriaLabel?: string;
 
-  /** Status message announced when upload succeeds. */
+  /**
+   * Status message announced when upload succeeds.
+   *
+   * @default "Upload successful."
+   */
   successMessage?: string;
 
-  /** Status message announced when upload fails. */
+  /**
+   * Status message announced when upload fails.
+   *
+   * @default "Upload failed. Please try again."
+   */
   failureMessage?: string;
 
   /** Message announced when files are selected. */
@@ -142,16 +257,28 @@ export interface FileUploadProps
   /** Message announced when rejected files are detected. */
   rejectedFilesMessage?: (files: { name: string; reason: string }[]) => string;
 
-  /** Live region politeness for status updates. */
+  /**
+   * Live region politeness for status updates.
+   *
+   * @default "polite"
+   */
   liveRegionPoliteness?: "polite" | "assertive" | "off";
 
   /** Optional custom instructions for drag-and-drop users and assistive tech. */
   dropzoneDescription?: string;
 
-  /** Whether the dropzone should expose a button-like role. */
+  /**
+   * Whether the dropzone should expose a button-like role.
+   *
+   * @default "group"
+   */
   dropzoneRole?: "group" | "button" | "region";
 
-  /** Whether drag and drop is enabled. */
+  /**
+   * Whether drag and drop is enabled.
+   *
+   * @default true
+   */
   enableDragAndDrop?: boolean;
 
   /** Props passed directly to the native file input. */

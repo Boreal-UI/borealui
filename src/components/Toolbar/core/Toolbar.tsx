@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import "./Toolbar.scss";
 import Avatar from "../../Avatar/core/Avatar";
@@ -36,7 +37,7 @@ const classes = {
 };
 
 const Toolbar: React.FC<ToolbarProps> = (props) => (
-  <ToolbarBase {...props} AvatarComponent={Avatar} classMap={classes} />
+  <ToolbarBase {...props} AvatarComponent={Avatar} classMap={expandClassMap(classes)} />
 );
 Toolbar.displayName = "Toolbar";
 export default Toolbar;

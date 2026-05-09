@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import styles from "./TextInput.module.scss";
 import { TextInputProps } from "../TextInput.types";
@@ -12,7 +13,7 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {
       {...props}
       IconButton={IconButton}
       ref={ref}
-      classMap={styles}
+      classMap={expandClassMap(styles)}
     />
   );
 });

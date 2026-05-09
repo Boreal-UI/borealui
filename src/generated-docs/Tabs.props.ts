@@ -25,7 +25,8 @@ export const tabsPropDocs: GeneratedComponentDoc = {
       "description": "Accessible name for the tablist.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Tabs\""
     },
     {
       "name": "aria-labelledby",
@@ -49,12 +50,13 @@ export const tabsPropDocs: GeneratedComponentDoc = {
       "description": "Custom class names to apply to the tabs container.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Test ID for testing purposes.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -65,7 +67,8 @@ export const tabsPropDocs: GeneratedComponentDoc = {
       "description": "Uncontrolled initial index.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "0"
     },
     {
       "name": "glass",
@@ -73,7 +76,8 @@ export const tabsPropDocs: GeneratedComponentDoc = {
       "description": "Adds translucent glass styling to the tab controls.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "idBase",
@@ -97,7 +101,8 @@ export const tabsPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the tabs. \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -105,7 +110,8 @@ export const tabsPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style of the tabs. \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -113,7 +119,8 @@ export const tabsPropDocs: GeneratedComponentDoc = {
       "description": "Size of the tabs. \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -121,7 +128,8 @@ export const tabsPropDocs: GeneratedComponentDoc = {
       "description": "State of the tabs. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "tabListId",
@@ -140,12 +148,22 @@ export const tabsPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "testId",
+      "type": "string",
+      "description": "Test ID for testing purposes.\n\nOptional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"tabs\""
+    },
+    {
       "name": "theme",
       "type": "ThemeType",
       "description": "Theme for styling the tabs. \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "value",

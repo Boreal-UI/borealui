@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import TextAreaBase from "../TextAreaBase";
 import type { TextAreaProps } from "../TextArea.types";
@@ -49,7 +50,7 @@ const classes = {
 
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (props, ref) => {
-    return <TextAreaBase {...props} ref={ref} classMap={classes} />;
+    return <TextAreaBase {...props} ref={ref} classMap={expandClassMap(classes)} />;
   },
 );
 

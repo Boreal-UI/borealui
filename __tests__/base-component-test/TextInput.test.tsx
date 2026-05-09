@@ -442,6 +442,50 @@ describe("TextInputBase", () => {
     expect(screen.getByTestId("text-input")).toHaveClass("labelLeft");
   });
 
+  it("applies custom class names to text input sections", () => {
+    render(
+      <TextInputBase
+        classMap={mockStyles}
+        label="Password"
+        password
+        icon={FaUser}
+        srOnlyText="Private field"
+        IconButton={IconButton}
+        containerClassName="custom-container"
+        labelClassName="custom-label"
+        iconClassName="custom-icon"
+        inputClassName="custom-input"
+        togglePasswordClassName="custom-toggle"
+        srOnlyClassName="custom-sr-only"
+      />,
+    );
+
+    expect(screen.getByTestId("text-input")).toHaveClass(
+      "container",
+      "custom-container",
+    );
+    expect(screen.getByTestId("text-input-label")).toHaveClass(
+      "label",
+      "custom-label",
+    );
+    expect(screen.getByTestId("text-input-icon")).toHaveClass(
+      "iconContainer",
+      "custom-icon",
+    );
+    expect(screen.getByTestId("text-input-input")).toHaveClass(
+      "textInput",
+      "custom-input",
+    );
+    expect(screen.getByTestId("text-input-password-toggle")).toHaveClass(
+      "togglePassword",
+      "custom-toggle",
+    );
+    expect(screen.getByTestId("text-input-sr-only-text")).toHaveClass(
+      "srOnly",
+      "custom-sr-only",
+    );
+  });
+
   it("passes through native input attributes", () => {
     render(
       <TextInputBase

@@ -419,6 +419,19 @@ describe("AvatarBase (Jest)", () => {
     expect(avatar).not.toHaveAttribute("rel");
   });
 
+  it("applies custom target and rel for avatar links", () => {
+    renderAvatar({
+      name: "Docs Avatar",
+      href: "/docs",
+      target: "_blank",
+      rel: "external",
+    });
+
+    const avatar = screen.getByRole("link", { name: "Docs Avatar" });
+    expect(avatar).toHaveAttribute("target", "_blank");
+    expect(avatar).toHaveAttribute("rel", "external");
+  });
+
   it("prevents navigation behavior for disabled anchor", () => {
     const handleClick = jest.fn();
 
@@ -440,7 +453,9 @@ describe("AvatarBase (Jest)", () => {
   });
 
   it("calls onClick for enabled anchor", () => {
-    const handleClick = jest.fn();
+    const handleClick = jest.fn((event: React.MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+    });
 
     renderAvatar({
       name: "Enabled Link Avatar",

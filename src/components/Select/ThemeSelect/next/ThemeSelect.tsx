@@ -17,7 +17,8 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
       shadow = getDefaultShadow(),
       rounding = getDefaultRounding(),
       state = "",
-      "data-testid": testId = "theme-select",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "theme-select",
     },
     ref,
   ) => {

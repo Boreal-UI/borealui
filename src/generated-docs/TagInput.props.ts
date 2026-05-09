@@ -25,7 +25,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Optional screen reader description for the input behavior. This is announced through an internally rendered description element.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Type a tag and press Enter or comma to add. Use arrow keys to navigate suggestions; Enter to select; Escape to close. Backspace removes the last tag when the field is empty.\""
     },
     {
       "name": "aria-label",
@@ -33,7 +34,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the overall tag input group. Used when no external aria-labelledby is provided. Defaults to \"Tag Input\".",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Tag Input\""
     },
     {
       "name": "aria-labelledby",
@@ -46,7 +48,7 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -57,7 +59,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Debounce time (ms) for suggestions/autocomplete fetches.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "300"
     },
     {
       "name": "fetchSuggestions",
@@ -73,7 +76,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Adds translucent glass styling to the wrapper, tags, and nested controls.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "idBase",
@@ -97,7 +101,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Optional accessible label for the text input itself. Defaults to \"Add new tag\".",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Add new tag\""
     },
     {
       "name": "inputAriaLabelledBy",
@@ -121,7 +126,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Placeholder text displayed in the input when empty.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Add a tag...\""
     },
     {
       "name": "removeTagButtonLabel",
@@ -129,7 +135,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label prefix for remove-tag buttons. Example output: \"Remove tag React\". Defaults to \"Remove tag\".",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Remove tag\""
     },
     {
       "name": "rounding",
@@ -137,7 +144,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Rounding style for the input and tags. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -145,7 +153,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the input and tags. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -153,7 +162,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Size of the input and tags. One of: \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -161,7 +171,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "State of the input (for feedback/validation). One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "suggestionsAriaLabel",
@@ -169,7 +180,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the suggestions listbox. Defaults to \"Tag suggestions\".",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Tag suggestions\""
     },
     {
       "name": "tags",
@@ -177,7 +189,17 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Array of current tags.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "EMPTY_TAGS"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"tag-input\""
     },
     {
       "name": "theme",
@@ -185,7 +207,8 @@ export const tagInputPropDocs: GeneratedComponentDoc = {
       "description": "Theme for styling the input and tags. One of: \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     }
   ]
 };

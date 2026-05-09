@@ -10,6 +10,13 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
   id,
   required = false,
   className = "",
+  labelClassName = "",
+  requiredClassName = "",
+  inputWrapperClassName = "",
+  inputFieldClassName = "",
+  controllerClassName = "",
+  descriptionClassName = "",
+  errorMessageClassName = "",
   layout = "vertical",
   hideLabel = false,
   spacing = "xs",
@@ -22,7 +29,8 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
-  "data-testid": testId = "form-group",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "form-group",
   classMap,
   ...rest
 }) => {
@@ -68,14 +76,21 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
         <label
           id={labelId}
           htmlFor={controlId}
-          className={combineClassNames(classMap.label, hideLabel && "sr_only")}
+          className={combineClassNames(
+            classMap.label,
+            hideLabel && "sr_only",
+            labelClassName,
+          )}
           data-testid={`${testId}-label`}
           {...labelProps}
         >
           {label}
           {required && (
             <span
-              className={classMap.required}
+              className={combineClassNames(
+                classMap.required,
+                requiredClassName,
+              )}
               aria-hidden="true"
               data-testid={`${testId}-required`}
             >
@@ -86,7 +101,10 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
       )}
 
       {childrenArray.map((child, index) => {
-        const clonedChild = React.isValidElement(child)
+        const shouldCloneChild =
+          React.isValidElement(child) && child.type !== React.Fragment;
+
+        const clonedChild = shouldCloneChild
           ? React.cloneElement(
               child as React.ReactElement<Record<string, unknown>>,
               {
@@ -136,11 +154,17 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
         return (
           <div
             key={index}
-            className={classMap.inputWrapper}
+            className={combineClassNames(
+              classMap.inputWrapper,
+              inputWrapperClassName,
+            )}
             data-testid={`${testId}-wrapper-${index}`}
           >
             <div
-              className={classMap.inputField}
+              className={combineClassNames(
+                classMap.inputField,
+                inputFieldClassName,
+              )}
               data-testid={`${testId}-input-field-${index}`}
             >
               {clonedChild}
@@ -148,7 +172,10 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
 
             {controller && index === 0 && (
               <div
-                className={classMap.controller}
+                className={combineClassNames(
+                  classMap.controller,
+                  controllerClassName,
+                )}
                 data-testid={`${testId}-controller`}
               >
                 {controller}
@@ -161,7 +188,10 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
       {description && !error && (
         <p
           id={descriptionId}
-          className={classMap.description}
+          className={combineClassNames(
+            classMap.description,
+            descriptionClassName,
+          )}
           data-testid={`${testId}-description`}
           {...descriptionProps}
         >
@@ -172,7 +202,10 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
       {error && (
         <p
           id={errorId}
-          className={classMap.errorMessage}
+          className={combineClassNames(
+            classMap.errorMessage,
+            errorMessageClassName,
+          )}
           role="alert"
           data-testid={`${testId}-error`}
           {...errorProps}

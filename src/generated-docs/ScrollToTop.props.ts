@@ -25,7 +25,8 @@ export const scrollToTopPropDocs: GeneratedComponentDoc = {
       "description": "Accessible label for the scroll-to-top button.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"Scroll to top\""
     },
     {
       "name": "aria-labelledby",
@@ -41,12 +42,13 @@ export const scrollToTopPropDocs: GeneratedComponentDoc = {
       "description": "Additional custom class names for the root element of the component.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Test identifier for the component, used to target it in testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -65,7 +67,8 @@ export const scrollToTopPropDocs: GeneratedComponentDoc = {
       "description": "The scroll offset (in pixels) from the top of the page at which the button becomes visible.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "300"
     },
     {
       "name": "role",
@@ -81,7 +84,8 @@ export const scrollToTopPropDocs: GeneratedComponentDoc = {
       "description": "Optional rounding style applied to the button.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -89,7 +93,17 @@ export const scrollToTopPropDocs: GeneratedComponentDoc = {
       "description": "Optional shadow style for the button.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"scroll\""
     },
     {
       "name": "title",

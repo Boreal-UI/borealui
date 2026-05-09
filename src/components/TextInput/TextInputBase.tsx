@@ -9,7 +9,10 @@ import { EyeIcon, EyeSlashIcon } from "../../Icons";
 import { TextInputBaseProps } from "./TextInput.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -25,23 +28,31 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       password = false,
       readOnly = false,
       theme = getDefaultTheme(),
-      glass = false,
+      glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       onChange,
       state = "",
       disabled = false,
       autocomplete = false,
-      outline = false,
+      outline = getDefaultOutline(),
       classMap,
       IconButton,
       className = "",
+      containerClassName = "",
+      labelClassName = "",
+      iconClassName = "",
+      inputClassName = "",
+      togglePasswordClassName = "",
+      srOnlyClassName = "",
       srOnlyText,
-      "data-testid": testId = "text-input",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "text-input",
       ...rest
     },
     ref,
   ) => {
+    const resolvedLabelPosition = resolvePropAlias(labelPosition);
     const [showPassword, setShowPassword] = useState(false);
 
     const autoId = useId();
@@ -131,9 +142,10 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       () =>
         combineClassNames(
           classMap.container,
-          classMap[`label${capitalize(labelPosition)}`],
+          classMap[`label${capitalize(resolvedLabelPosition)}`],
+          containerClassName,
         ),
-      [classMap, labelPosition],
+      [classMap, resolvedLabelPosition, containerClassName],
     );
 
     const wrapperClass = useMemo(
@@ -173,8 +185,9 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
           classMap.iconContainer,
           classMap[theme],
           disabled && classMap.disabled,
+          iconClassName,
         ),
-      [classMap, theme, disabled],
+      [classMap, theme, disabled, iconClassName],
     );
 
     return (
@@ -182,7 +195,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className={classMap.label}
+            className={combineClassNames(classMap.label, labelClassName)}
             data-testid={`${testId}-label`}
           >
             {label}
@@ -203,7 +216,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             ref={ref}
             id={inputId}
             type={inputType}
-            className={inputClasses}
+            className={combineClassNames(inputClasses, inputClassName)}
             placeholder={computedPlaceholder}
             role={role}
             aria-label={computedAriaLabel}
@@ -230,7 +243,10 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
           {password && (
             <IconButton
               type="button"
-              className={classMap.togglePassword}
+              className={combineClassNames(
+                classMap.togglePassword,
+                togglePasswordClassName,
+              )}
               onClick={togglePasswordVisibility}
               theme="clear"
               shadow="none"
@@ -244,7 +260,10 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
           {srOnlyText && (
             <span
               id={generatedDescriptionId}
-              className={classMap.srOnly || "sr_only"}
+              className={combineClassNames(
+                classMap.srOnly || "sr_only",
+                srOnlyClassName,
+              )}
               data-testid={`${testId}-sr-only-text`}
             >
               {srOnlyText}

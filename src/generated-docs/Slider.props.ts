@@ -49,7 +49,8 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "Orientation of the slider.",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"horizontal\""
     },
     {
       "name": "aria-required",
@@ -97,12 +98,13 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "Additional CSS class names for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -113,7 +115,8 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "If true, the slider is disabled and cannot be interacted with.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "glass",
@@ -121,7 +124,8 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment to the slider track.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "id",
@@ -145,7 +149,8 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "The maximum value of the slider.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "100"
     },
     {
       "name": "min",
@@ -153,7 +158,8 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "The minimum value of the slider.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "0"
     },
     {
       "name": "name",
@@ -185,7 +191,8 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "If true, the slider is required in form contexts.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "rounding",
@@ -193,7 +200,8 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "Controls the rounding of the component. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -201,7 +209,8 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "Controls the shadow of the component. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "showValue",
@@ -209,7 +218,8 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "If true, the current slider value is displayed alongside the slider.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
     },
     {
       "name": "size",
@@ -217,7 +227,8 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "Size variant for the slider. One of: \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -225,7 +236,8 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "State of the slider. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "step",
@@ -233,7 +245,17 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "Increment step for the slider.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "1"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"slider\""
     },
     {
       "name": "theme",
@@ -241,7 +263,8 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "Theme variant for styling. One of: \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "value",

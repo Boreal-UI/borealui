@@ -198,10 +198,31 @@ describe("BaseDropdown", () => {
     expect(linkItem).toHaveAttribute("href", "/settings");
     expect(linkItem).not.toHaveAttribute("role");
 
+    linkItem.addEventListener("click", (event) => event.preventDefault());
     fireEvent.click(linkItem);
 
     expect(linkClick).toHaveBeenCalledTimes(1);
     expect(screen.queryByTestId("dropdown-menu")).not.toBeInTheDocument();
+  });
+
+  it("applies target and rel to href items", () => {
+    renderDropdown({
+      items: [
+        {
+          label: "Docs",
+          href: "/docs",
+          target: "_blank",
+          rel: "external",
+          "data-testid": "dropdown-docs",
+        },
+      ],
+    });
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+
+    const linkItem = screen.getByTestId("dropdown-docs");
+    expect(linkItem).toHaveAttribute("target", "_blank");
+    expect(linkItem).toHaveAttribute("rel", "external");
   });
 
   it("supports trigger aria-labelledby instead of aria-label", () => {

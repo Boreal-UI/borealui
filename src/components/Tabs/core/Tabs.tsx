@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import "./Tabs.scss";
 import TabsBase from "../TabsBase";
@@ -41,7 +42,7 @@ const classes = {
 };
 
 const Tabs: React.FC<TabsProps> = (props) => {
-  return <TabsBase {...props} classMap={classes} />;
+  return <TabsBase {...props} classMap={expandClassMap(classes)} />;
 };
 
 Tabs.displayName = "Tabs";

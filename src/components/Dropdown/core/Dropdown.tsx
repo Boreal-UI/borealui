@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseDropdown from "../DropdownBase";
 import { DropdownProps } from "../Dropdown.types";
@@ -37,7 +38,7 @@ const classes = {
 };
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
-  return <BaseDropdown {...props} IconButton={IconButton} classMap={classes} />;
+  return <BaseDropdown {...props} IconButton={IconButton} classMap={expandClassMap(classes)} />;
 };
 Dropdown.displayName = "Dropdown";
 export default Dropdown;

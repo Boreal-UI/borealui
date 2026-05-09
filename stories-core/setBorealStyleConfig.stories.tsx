@@ -115,11 +115,11 @@ const meta: Meta<typeof SetBorealStyleConfigDemo> = {
   argTypes: {
     theme: {
       control: "select",
-      options: ["primary", "secondary", "success", "warning", "error", "info"],
+      options: ["primary", "secondary", "tertiary", "quaternary"],
     },
     size: {
       control: "select",
-      options: ["small", "medium", "large"],
+      options: ["xs", "small", "medium", "large", "xl"],
     },
     rounding: {
       control: "select",

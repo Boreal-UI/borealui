@@ -74,40 +74,54 @@ export interface ToggleProps {
   /**
    * Theme used for styling the toggle.
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Applies a translucent frosted-glass treatment to the toggle track.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State of the toggle.
-   *   "" | "success" | "error" | "warning" | "disabled"
+   * "" | "success" | "error" | "warning" | "disabled"
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Rounding applied to the toggle.
    * "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style applied to the toggle.
    * "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Size variant for the toggle.
    * "xs" | "small" | "medium" | "large" | "xl"
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * If true, disables user interaction with the toggle.
+   *
+   * @default false
    */
   disabled?: boolean;
 
@@ -116,9 +130,15 @@ export interface ToggleProps {
    */
   className?: string;
 
+
   /**
    * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "toggle"
    */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

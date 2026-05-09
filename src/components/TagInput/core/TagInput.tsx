@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import "./TagInput.scss";
 import IconButton from "../../IconButton/core/IconButton";
@@ -52,7 +53,7 @@ const TagInput: React.FC<TagInputProps> = (props) => {
   return (
     <TagInputBase
       {...props}
-      classMap={classes}
+      classMap={expandClassMap(classes)}
       IconButton={IconButton}
       TextInput={TextInput}
     />

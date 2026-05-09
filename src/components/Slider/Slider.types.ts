@@ -31,65 +31,103 @@ export interface SliderProps {
   /** Optional form field name. */
   name?: string;
 
-  /** The minimum value of the slider. */
+  /**
+   * The minimum value of the slider.
+   *
+   * @default 0
+   */
   min?: number;
 
-  /** The maximum value of the slider. */
+  /**
+   * The maximum value of the slider.
+   *
+   * @default 100
+   */
   max?: number;
 
-  /** Increment step for the slider. */
+  /**
+   * Increment step for the slider.
+   *
+   * @default 1
+   */
   step?: number;
 
   /** Optional label displayed above or beside the slider. */
   label?: string;
 
-  /** If true, the current slider value is displayed alongside the slider. */
+  /**
+   * If true, the current slider value is displayed alongside the slider.
+   *
+   * @default true
+   */
   showValue?: boolean;
 
   /**
    * Size variant for the slider.
    * One of: "xs" | "small" | "medium" | "large" | "xl"
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * Theme variant for styling.
    * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Applies a translucent frosted-glass treatment to the slider track.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * State of the slider.
    * One of: "success" | "error" | "warning" | "disabled" | ""
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Controls the rounding of the component.
    * One of: "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * If true, the slider is disabled and cannot be interacted with.
+   *
+   * @default false
    */
   disabled?: boolean;
 
-  /** If true, the slider is required in form contexts. */
+  /**
+   * If true, the slider is required in form contexts.
+   *
+   * @default false
+   */
   required?: boolean;
 
   /**
    * Controls the shadow of the component.
    * One of: "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
-  /** Additional CSS class names for custom styling. */
+  /**
+   * Additional CSS class names for custom styling.
+   *
+   * @default ""
+   */
   className?: string;
 
   /** Accessible label for the slider if no visible label is provided. */
@@ -119,9 +157,21 @@ export interface SliderProps {
   /** Marks the slider as required for assistive technology. */
   "aria-required"?: boolean | "true" | "false";
 
-  /** Orientation of the slider. */
+  /**
+   * Orientation of the slider.
+   *
+   * @default "horizontal"
+   */
   "aria-orientation"?: "horizontal" | "vertical";
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "slider"
+   */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }

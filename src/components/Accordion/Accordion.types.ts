@@ -32,41 +32,57 @@ export interface AccordionProps extends Omit<
 
   /**
    * The theme color of the accordion.
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * The state of the accordion ('success' | 'error' | 'warning').
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Controls the shadow of the accordion.
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Controls the rounding of the accordion.
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * The size of the accordion.
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * If true, the accordion is initially expanded (uncontrolled mode).
+   *
+   * @default false
    */
   initiallyExpanded?: boolean;
 
   /**
    * If true, applies an outline style to the accordion.
+   *
+   * @default configured default outline setting (fallback: false)
    */
   outline?: boolean;
 
   /**
    * Applies a translucent frosted-glass treatment using the active theme palette.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
@@ -77,6 +93,8 @@ export interface AccordionProps extends Omit<
 
   /**
    * Additional custom class names for the wrapper element.
+   *
+   * @default ""
    */
   className?: string;
 
@@ -93,12 +111,16 @@ export interface AccordionProps extends Omit<
 
   /**
    * If true, the accordion content is loaded asynchronously.
+   *
+   * @default false
    */
   asyncContent?: boolean;
 
   /**
    * If true, the accordion can be toggled open or closed.
    * If false, the accordion is always expanded.
+   *
+   * @default true
    */
   isToggleable?: boolean;
 
@@ -109,6 +131,8 @@ export interface AccordionProps extends Omit<
 
   /**
    * Position of accordion toggle icon.
+   *
+   * @default "right"
    */
   iconPosition?: "left" | "right";
 
@@ -125,6 +149,8 @@ export interface AccordionProps extends Omit<
 
   /**
    * If true, the accordion content will be loaded lazily.
+   *
+   * @default false
    */
   lazyLoad?: boolean;
 
@@ -174,8 +200,14 @@ export interface AccordionProps extends Omit<
    */
   role?: HTMLAttributes<HTMLDivElement>["role"];
 
+
   /**
    * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "accordion"
    */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }

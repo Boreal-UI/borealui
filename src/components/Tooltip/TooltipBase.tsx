@@ -11,6 +11,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { TooltipProps, TriggerElementProps } from "./Tooltip.types";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -34,7 +35,7 @@ const TooltipBase = forwardRef<
     content,
     position = "top",
     theme = getDefaultTheme(),
-    glass = false,
+    glass = getDefaultGlass(),
     rounding = getDefaultRounding(),
     shadow = getDefaultShadow(),
     state = "",
@@ -48,7 +49,8 @@ const TooltipBase = forwardRef<
     keepMountedWhenHidden = true,
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
-    "data-testid": testId = "tooltip",
+    "data-testid": dataTestId,
+    testId = dataTestId ?? "tooltip",
     classMap,
     ...rest
   },

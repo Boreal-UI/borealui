@@ -3,6 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import ButtonBase from "../../src/components/Button/ButtonBase";
 import { FaStar } from "react-icons/fa";
+import { setBorealStyleConfig } from "../../src/config/boreal-style-config";
 
 expect.extend(toHaveNoViolations);
 
@@ -70,6 +71,7 @@ describe("ButtonBase", () => {
     );
 
   afterEach(() => {
+    setBorealStyleConfig({});
     jest.clearAllMocks();
   });
 
@@ -193,6 +195,20 @@ describe("ButtonBase", () => {
     expect(button).toHaveClass("btn-glass");
   });
 
+  it("uses configured glass and outline defaults when props are omitted", () => {
+    setBorealStyleConfig({
+      defaultGlass: true,
+      defaultOutline: true,
+    });
+
+    renderButton({}, "Configured Button");
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn-glass");
+    expect(button).toHaveClass("btn-outline");
+  });
+
   it("applies glass with a theme class", () => {
     renderButton(
       {
@@ -301,6 +317,48 @@ describe("ButtonBase", () => {
     expect(label).toBeInTheDocument();
     expect(label).toHaveTextContent("Button Label");
     expect(label).toHaveClass("btn-label");
+  });
+
+  it("applies custom class names to button sections", () => {
+    const { unmount } = renderButton(
+      {
+        icon: FaStar,
+        iconWrapperClassName: "custom-icon-wrapper",
+        iconClassName: "custom-icon",
+        labelClassName: "custom-label",
+      },
+      "Favorite",
+    );
+
+    const renderedIconWrapper = screen.getByTestId("button-test-icon");
+    const renderedIcon = renderedIconWrapper.querySelector("svg");
+
+    expect(renderedIconWrapper).toHaveClass("btn-icon", "custom-icon-wrapper");
+    expect(renderedIcon).toHaveClass("icon-style", "custom-icon");
+    expect(screen.getByTestId("button-test-loading")).toHaveClass(
+      "btn-label",
+      "custom-label",
+    );
+
+    unmount();
+
+    renderButton(
+      {
+        icon: FaStar,
+        labelClassName: "custom-label",
+        loaderClassName: "custom-loader",
+        loading: true,
+      },
+      "Saving",
+    );
+
+    const iconWrapper = screen.getByTestId("button-test-icon");
+    const label = screen.getByTestId("button-test-loading");
+    const loader = label.querySelector(`.${classMap.loader}`);
+
+    expect(iconWrapper).toHaveClass("btn-icon");
+    expect(label).toHaveClass("btn-label", "custom-label");
+    expect(loader).toHaveClass("btn-loader", "custom-loader");
   });
 
   it("handles click events", () => {
@@ -552,7 +610,9 @@ describe("ButtonBase", () => {
   });
 
   it("calls onClick for enabled anchors", () => {
-    const handleClick = jest.fn();
+    const handleClick = jest.fn((event: React.MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+    });
 
     renderButton(
       {
@@ -780,11 +840,11 @@ describe("ButtonBase", () => {
     expect(link).toHaveAttribute("aria-disabled", "true");
   });
 
-  it("applies a custom _target value to anchor links", () => {
+  it("applies a custom target value to anchor links", () => {
     renderButton(
       {
         href: "https://example.com",
-        _target: "_blank",
+        target: "_blank",
       },
       "Open Example",
     );
@@ -796,11 +856,26 @@ describe("ButtonBase", () => {
     expect(link).toHaveAttribute("rel", "noopener noreferrer");
   });
 
-  it("applies a non-blank _target value without rel", () => {
+  it("applies custom target and rel values to anchor links", () => {
     renderButton(
       {
         href: "/docs",
-        _target: "_self",
+        target: "_blank",
+        rel: "external",
+      },
+      "Docs",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link).toHaveAttribute("target", "_blank");
+    expect(link).toHaveAttribute("rel", "external");
+  });
+
+  it("applies a non-blank target value without rel", () => {
+    renderButton(
+      {
+        href: "/docs",
+        target: "_self",
       },
       "Docs",
     );
@@ -810,11 +885,11 @@ describe("ButtonBase", () => {
     expect(link).not.toHaveAttribute("rel");
   });
 
-  it("shows new-tab text when _target is _blank", () => {
+  it("shows new-tab text when target is _blank", () => {
     renderButton(
       {
         href: "/external-docs",
-        _target: "_blank",
+        target: "_blank",
       },
       "External Docs",
     );
@@ -895,11 +970,11 @@ describe("ButtonBase", () => {
     expect(element).toHaveAttribute("role", "button");
   });
 
-  it("prevents href navigation and removes target when disabled even if _target is provided", () => {
+  it("prevents href navigation and removes target when disabled even if target is provided", () => {
     renderButton(
       {
         href: "https://example.com",
-        _target: "_blank",
+        target: "_blank",
         disabled: true,
       },
       "Disabled External",

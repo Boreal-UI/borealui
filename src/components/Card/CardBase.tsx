@@ -3,6 +3,8 @@ import { CardBaseProps, CardImageSource, StaticCardImage } from "./Card.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -38,8 +40,8 @@ const CardBase: React.FC<CardBaseProps> = ({
   footerClassName = "",
   actionsClassName = "",
   actionButtonClassName = "",
-  outline = false,
-  glass = false,
+  outline = getDefaultOutline(),
+  glass = getDefaultGlass(),
   size = getDefaultSize(),
   align = "center",
   renderHeader,
@@ -56,7 +58,8 @@ const CardBase: React.FC<CardBaseProps> = ({
   selectable = false,
   selected = false,
   disabled = false,
-  "data-testid": testId = "card",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "card",
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
   "aria-label": ariaLabel,
@@ -332,6 +335,8 @@ const CardBase: React.FC<CardBaseProps> = ({
                           title={button.title}
                           size={button.size || size}
                           href={button.href}
+                          target={button.target}
+                          rel={button.rel}
                           loading={button.loading}
                           disabled={button.disabled}
                         />
@@ -346,6 +351,8 @@ const CardBase: React.FC<CardBaseProps> = ({
                           theme={button.theme || "secondary"}
                           state={button.state || ""}
                           href={button.href}
+                          target={button.target}
+                          rel={button.rel}
                           loading={button.loading}
                           size={button.size || size}
                           aria-label={button["aria-label"] || button.label}

@@ -5,9 +5,15 @@ export * from "./types/index";
 export * from "./generated-docs/index";
 
 export { default as ThemeProvider, ThemeContext } from "./context/ThemeContext";
+export { getThemeInitializationScript } from "./context/themeRuntime";
 export { registerColorScheme } from "./styles/colorSchemeRegistry";
 export { defaultColorSchemes } from "./styles/Themes";
-export { setBorealStyleConfig } from "./config/boreal-style-config";
+export {
+  borealConfig,
+  getBorealStyleConfig,
+  setBorealStyleConfig,
+} from "./config/boreal-style-config";
+export type { BorealStyleConfig } from "./config/boreal-style-config";
 
 export { default as Typography } from "./components/Typography/core/Typography";
 

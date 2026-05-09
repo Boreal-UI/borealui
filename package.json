@@ -1,6 +1,6 @@
 {
   "name": "boreal-ui",
-  "version": "0.0.887",
+  "version": "0.0.888",
   "description": "A modern, customizable React/Next.js component library",
   "author": "Davin Chiupka",
   "license": "MIT",
@@ -8,9 +8,14 @@
   "module": "./dist/core/index.js",
   "types": "./dist/types/index.core.d.ts",
   "type": "module",
+  "bin": {
+    "boreal-ui": "./packages/cli/src/index.js",
+    "create-boreal-ui": "./packages/cli/src/index.js"
+  },
   "files": [
     "dist",
     "dist/types",
+    "packages/cli/src",
     "docs",
     "README.md",
     "LICENSE"
@@ -23,12 +28,13 @@
     "audit:build": "npm run build",
     "audit:package": "npm pack --dry-run",
     "audit": "npm run audit:types && npm run audit:lint && npm run audit:styles && npm run audit:test && npm run audit:build && npm run audit:package",
+    "cli:check": "node --check packages/cli/src/index.js",
     "dev": "vite",
     "clean": "rimraf dist",
     "boreal": "ts-node ./scripts/boreal.cjs",
     "build:core": "vite build --config vite.config.core.ts",
     "build:next": "vite build --config vite.config.next.ts",
-    "build:docs": "tsc -p tsconfig.docs.json",
+    "build:docs": "tsc -p tsconfig.docs.json --incremental false && node scripts/patchGeneratedDocsImports.cjs",
     "build:types": "tsc -p tsconfig.build.json",
     "build:types:public": "tsc -p tsconfig.build.json && node scripts/generateTypesBarrel.cjs",
     "build:css-next": "sass --load-path=node_modules src/styles/globals.scss src/styles/style.css --no-source-map",
@@ -36,7 +42,7 @@
     "lint:styles": "stylelint '**/*.{css,scss}'",
     "lint:styles:fix": "stylelint '**/*.{css,scss}' --fix",
     "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
-    "check:sync": "node scripts/checkSync.js",
+    "check:sync": "node scripts/checkSync.cjs",
     "generate:entrypoints": "node scripts/generateEntryPoints.cjs",
     "generate:exports": "node scripts/generateExports.cjs",
     "generate:docs": "ts-node scripts/generate-component-docs.cjs",
@@ -79,13 +85,13 @@
     "@babel/preset-env": "^7.26.9",
     "@babel/preset-react": "^7.26.3",
     "@babel/preset-typescript": "^7.28.5",
-    "@chromatic-com/storybook": "^5.1.1",
+    "@chromatic-com/storybook": "^5.1.2",
     "@eslint/js": "^9.34.0",
     "@jest/globals": "^30.3.0",
-    "@storybook/addon-docs": "^10.3.4",
-    "@storybook/addon-onboarding": "^10.3.4",
-    "@storybook/nextjs-vite": "10.3.4",
-    "@storybook/react-vite": "^10.3.4",
+    "@storybook/addon-docs": "10.3.6",
+    "@storybook/addon-onboarding": "10.3.6",
+    "@storybook/nextjs-vite": "10.3.6",
+    "@storybook/react-vite": "10.3.6",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
@@ -105,7 +111,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.5.2",
-    "eslint-plugin-storybook": "10.3.4",
+    "eslint-plugin-storybook": "10.3.6",
     "fast-glob": "^3.3.3",
     "identity-obj-proxy": "^3.0.0",
     "jest": "^29.7.0",
@@ -123,7 +129,7 @@
     "sass": "^1.94.2",
     "sass-embedded": "^1.86.3",
     "sass-loader": "^16.0.5",
-    "storybook": "^10.3.4",
+    "storybook": "10.3.6",
     "style-loader": "^4.0.0",
     "stylelint": "^16.19.0",
     "stylelint-config-standard-scss": "^14.0.0",
@@ -172,11 +178,11 @@
       "default": "./dist/next/globals.css"
     },
     "./docs": {
-      "types": "./dist/types/generated-docs/*.d.ts",
+      "types": "./dist/types/generated-docs/index.d.ts",
       "default": "./dist/generated-docs/index.js"
     },
     "./docs/*": {
-      "types": "./dist/types/generated-docs/index.d.ts",
+      "types": "./dist/types/generated-docs/*.d.ts",
       "default": "./dist/generated-docs/*.js"
     },
     "./core/Accordion": {
@@ -336,6 +342,10 @@
     "./core/registerColorSheme": {
       "import": "./dist/core/registerColorSheme.js",
       "require": "./dist/core/registerColorSheme.cjs.js"
+    },
+    "./core/registerColorScheme": {
+      "import": "./dist/core/registerColorScheme.js",
+      "require": "./dist/core/registerColorScheme.cjs.js"
     },
     "./core/ScrollToTop": {
       "types": "./dist/types/components/ScrollToTop/core/ScrollToTop.d.ts",
@@ -571,6 +581,9 @@
     },
     "./next/registerColorSheme": {
       "import": "./dist/next/registerColorSheme.js"
+    },
+    "./next/registerColorScheme": {
+      "import": "./dist/next/registerColorScheme.js"
     },
     "./next/ScrollToTop": {
       "types": "./dist/types/components/ScrollToTop/next/ScrollToTop.d.ts",

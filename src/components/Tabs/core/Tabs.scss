@@ -3,6 +3,9 @@
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 $sizes: (
   "xs": (
     font: var(--font-size-caption),
@@ -256,4 +259,5 @@ $sizes: (
     outline: 2px solid Highlight;
     outline-offset: 2px;
   }
+}
 }

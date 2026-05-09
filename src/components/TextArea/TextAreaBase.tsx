@@ -2,7 +2,10 @@ import { forwardRef, useId, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { TextAreaProps } from "./TextArea.types";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
+  getDefaultOutline,
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
@@ -19,11 +22,11 @@ const TextAreaBase = forwardRef<
       icon: Icon,
       placeholder = "Enter text",
       readOnly = false,
-      outline = false,
+      outline = getDefaultOutline(),
       autocomplete = false,
       onChange,
       theme = getDefaultTheme(),
-      glass = false,
+      glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       state = "",
@@ -38,7 +41,16 @@ const TextAreaBase = forwardRef<
       height,
       classMap,
       className = "",
-      "data-testid": testId = "text-area",
+      containerClassName = "",
+      labelClassName = "",
+      iconClassName = "",
+      inputClassName = "",
+      resizeHandleClassName = "",
+      helperTextClassName = "",
+      errorMessageClassName = "",
+      srOnlyClassName = "",
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "text-area",
       id: idProp,
       required,
 
@@ -52,6 +64,7 @@ const TextAreaBase = forwardRef<
     },
     ref,
   ) => {
+    const resolvedLabelPosition = resolvePropAlias(labelPosition);
     const autoId = useId();
     const id = idProp || autoId;
 
@@ -113,7 +126,8 @@ const TextAreaBase = forwardRef<
       <div
         className={combineClassNames(
           classMap.container,
-          classMap[`label${capitalize(labelPosition)}`],
+          classMap[`label${capitalize(resolvedLabelPosition)}`],
+          containerClassName,
         )}
         data-testid={testId}
       >
@@ -121,7 +135,7 @@ const TextAreaBase = forwardRef<
           <label
             id={labelId}
             htmlFor={id}
-            className={classMap.label}
+            className={combineClassNames(classMap.label, labelClassName)}
             data-testid={`${testId}-label`}
           >
             {label}
@@ -131,7 +145,10 @@ const TextAreaBase = forwardRef<
         <div className={wrapperClass} data-testid={`${testId}-wrapper`}>
           {Icon && (
             <div
-              className={classMap.iconContainer}
+              className={combineClassNames(
+                classMap.iconContainer,
+                iconClassName,
+              )}
               aria-hidden="true"
               data-testid={`${testId}-icon`}
             >
@@ -162,13 +179,16 @@ const TextAreaBase = forwardRef<
               height,
               resize: resizable ? undefined : "none",
             }}
-            className={classMap.textInput}
+            className={combineClassNames(classMap.textInput, inputClassName)}
             data-testid={`${testId}-input`}
             {...props}
           />
 
           <div
-            className={classMap.customResizeHandle}
+            className={combineClassNames(
+              classMap.customResizeHandle,
+              resizeHandleClassName,
+            )}
             aria-hidden="true"
             data-testid={`${testId}-resize-handle`}
           />
@@ -176,7 +196,7 @@ const TextAreaBase = forwardRef<
           {ariaDescription && (
             <span
               id={descriptionId}
-              className="sr_only"
+              className={combineClassNames("sr_only", srOnlyClassName)}
               data-testid={`${testId}-description`}
             >
               {ariaDescription}
@@ -187,7 +207,10 @@ const TextAreaBase = forwardRef<
         {helperText && (
           <div
             id={helperTextId}
-            className={classMap.helperText}
+            className={combineClassNames(
+              classMap.helperText,
+              helperTextClassName,
+            )}
             data-testid={`${testId}-helper-text`}
           >
             {helperText}
@@ -197,7 +220,10 @@ const TextAreaBase = forwardRef<
         {errorMessage && (
           <div
             id={internalErrorId}
-            className={classMap.errorMessage}
+            className={combineClassNames(
+              classMap.errorMessage,
+              errorMessageClassName,
+            )}
             role={isError ? "alert" : undefined}
             data-testid={`${testId}-error-message`}
           >

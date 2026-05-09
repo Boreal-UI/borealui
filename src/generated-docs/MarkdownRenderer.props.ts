@@ -41,7 +41,8 @@ export const markdownRendererPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name for styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "content",
@@ -54,7 +55,7 @@ export const markdownRendererPropDocs: GeneratedComponentDoc = {
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -65,7 +66,8 @@ export const markdownRendererPropDocs: GeneratedComponentDoc = {
       "description": "Language of the rendered markdown content.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"en\""
     },
     {
       "name": "role",
@@ -73,7 +75,8 @@ export const markdownRendererPropDocs: GeneratedComponentDoc = {
       "description": "Optional ARIA role for the wrapper element. Defaults to \"region\".",
       "required": false,
       "inherited": false,
-      "category": "aria"
+      "category": "aria",
+      "defaultValue": "\"region\""
     },
     {
       "name": "rounding",
@@ -81,7 +84,8 @@ export const markdownRendererPropDocs: GeneratedComponentDoc = {
       "description": "Optional rounding style for the rendered container. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -89,7 +93,8 @@ export const markdownRendererPropDocs: GeneratedComponentDoc = {
       "description": "Optional shadow styling for the rendered container. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "tabIndex",
@@ -98,6 +103,15 @@ export const markdownRendererPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"markdown-renderer\""
     }
   ]
 };

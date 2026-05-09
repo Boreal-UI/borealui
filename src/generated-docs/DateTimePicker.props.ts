@@ -65,7 +65,8 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "Optional autocomplete value.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"off\""
     },
     {
       "name": "className",
@@ -73,12 +74,13 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -97,7 +99,8 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "Whether the input is disabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "errorId",
@@ -113,7 +116,8 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "Adds translucent glass styling to the input surface.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "id",
@@ -225,7 +229,8 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "Whether the input should be read-only.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "required",
@@ -233,7 +238,8 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "Whether the input is required for form validation.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "rounding",
@@ -241,7 +247,8 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "Controls the rounding of the input ('none' | 'small' | 'medium' | 'large' | 'full').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -249,7 +256,8 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "Controls the shadow of the input ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -257,7 +265,8 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "Size of the component ('xs' | 'small' | 'medium' | 'large' | 'xl').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -265,7 +274,17 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "State of the input ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"datetime-picker\""
     },
     {
       "name": "theme",
@@ -273,7 +292,8 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "Thematic style of the input ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "title",

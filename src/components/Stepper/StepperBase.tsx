@@ -1,6 +1,7 @@
 import React from "react";
 import { combineClassNames } from "../../utils/classNames";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -15,12 +16,13 @@ const StepperBase: React.FC<StepperBaseProps> = ({
   disableBackNavigation = false,
   orientation = "horizontal",
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   state = "",
   size = getDefaultSize(),
   shadow = getDefaultShadow(),
   rounding = getDefaultRounding(),
-  "data-testid": testId = "stepper",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "stepper",
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,

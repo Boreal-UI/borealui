@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import "./Breadcrumbs.scss";
 import { BreadcrumbsBase } from "../BreadcrumbsBase";
@@ -53,7 +54,7 @@ const classes = {
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = (props) => {
   return (
-    <BreadcrumbsBase {...props} classMap={classes} ButtonComponent={Button} />
+    <BreadcrumbsBase {...props} classMap={expandClassMap(classes)} ButtonComponent={Button} />
   );
 };
 Breadcrumbs.displayName = "Breadcrumbs";

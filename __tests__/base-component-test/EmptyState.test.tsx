@@ -175,6 +175,33 @@ describe("BaseEmptyState", () => {
     expect(onActionClick).toHaveBeenCalledTimes(1);
   });
 
+  it("applies custom class names to empty state sections", () => {
+    renderEmptyState({
+      actionLabel: "Try Again",
+      onActionClick: jest.fn(),
+      iconClassName: "custom-icon",
+      titleClassName: "custom-title",
+      messageClassName: "custom-message",
+      actionButtonClassName: "custom-action",
+    });
+
+    expect(screen.getByTestId("empty-state-icon")).toHaveClass(
+      "emptyIcon",
+      "custom-icon",
+    );
+    expect(screen.getByTestId("empty-state-title")).toHaveClass(
+      "emptyTitle",
+      "custom-title",
+    );
+    expect(screen.getByTestId("empty-state-message")).toHaveClass(
+      "emptyMessage",
+      "custom-message",
+    );
+    expect(screen.getByTestId("empty-state-action")).toHaveClass(
+      "custom-action",
+    );
+  });
+
   it("passes theme='clear' and outline to the injected Button component", () => {
     renderEmptyState({
       actionLabel: "Retry",

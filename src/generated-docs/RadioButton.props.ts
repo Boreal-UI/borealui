@@ -65,12 +65,13 @@ export const radioButtonPropDocs: GeneratedComponentDoc = {
       "description": "Additional CSS class names for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -81,7 +82,8 @@ export const radioButtonPropDocs: GeneratedComponentDoc = {
       "description": "Whether the radio button is disabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "glass",
@@ -89,7 +91,8 @@ export const radioButtonPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment to the visible radio control.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "label",
@@ -105,7 +108,8 @@ export const radioButtonPropDocs: GeneratedComponentDoc = {
       "description": "Position of the label relative to the radio button.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"left\""
     },
     {
       "name": "onChange",
@@ -121,7 +125,8 @@ export const radioButtonPropDocs: GeneratedComponentDoc = {
       "description": "Rounding of the radio button. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -129,7 +134,8 @@ export const radioButtonPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style of the radio button. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "state",
@@ -137,7 +143,17 @@ export const radioButtonPropDocs: GeneratedComponentDoc = {
       "description": "State of the radio button. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"radio-button\""
     },
     {
       "name": "theme",
@@ -145,7 +161,8 @@ export const radioButtonPropDocs: GeneratedComponentDoc = {
       "description": "Theme applied for styling. One of: \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "value",

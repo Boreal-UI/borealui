@@ -137,12 +137,13 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for additional styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -153,7 +154,8 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Whether the button should be disabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "glass",
@@ -161,7 +163,8 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "href",
@@ -173,7 +176,7 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "icon",
-      "type": "ComponentType<{ className?: string; \"aria-hidden\"?: boolean; focusable?: boolean; \"data-testid\"?: string; }>",
+      "type": "ComponentType<{ className?: string; \"aria-hidden\"?: boolean; focusable?: boolean; testId?: string; \"data-testid\"?: string; }>",
       "description": "Icon component to render inside the button. Should be a React component, e.g., from `react-icons`.",
       "required": false,
       "inherited": false,
@@ -185,7 +188,8 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the icon.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "id",
@@ -201,7 +205,26 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "If true, opens the link in a new tab (used with `href`).",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Custom class name for the label/loading wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "loaderClassName",
+      "type": "string",
+      "description": "Custom class name for the loading indicator.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "loading",
@@ -209,7 +232,8 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Whether to show a loading spinner instead of the icon.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "onClick",
@@ -225,7 +249,8 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Whether the button should use an outline style.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "rel",
@@ -249,7 +274,8 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Rounding style of the button. One of: \"none\" | \"small\" | \"medium\" | \"large\" | \"full\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -257,7 +283,8 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style of the button. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -265,7 +292,8 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Size of the button. One of: \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -273,7 +301,8 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "State of the button. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "tabIndex",
@@ -292,12 +321,22 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"icon-button\""
+    },
+    {
       "name": "theme",
       "type": "ThemeType",
       "description": "Theme style of the button. One of: \"primary\" | \"secondary\" | \"tertiary\" | \"quaternary\" | \"clear\"",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
       "name": "title",
@@ -310,7 +349,7 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
     {
       "name": "tooltip",
       "type": "string",
-      "description": "Tooltip text (not rendered automatically—use `title` for built-in browser tooltip).",
+      "description": "Tooltip text (not rendered automatically; use `title` for built-in browser tooltip).",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -321,7 +360,8 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Native button type. One of: \"button\" | \"reset\" | \"submit\"",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"button\""
     }
   ]
 };

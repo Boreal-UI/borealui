@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import ButtonBase from "../ButtonBase";
 import "./Button.scss";
@@ -47,7 +48,7 @@ const classes = {
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
-  <ButtonBase {...props} classMap={classes} ref={ref} />
+  <ButtonBase {...props} classMap={expandClassMap(classes)} ref={ref} />
 ));
 Button.displayName = "Button";
 export default Button;

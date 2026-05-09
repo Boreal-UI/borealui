@@ -1,4 +1,5 @@
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types";
+import type { AnchorHTMLAttributes } from "react";
 
 export interface SidebarLink {
   /**
@@ -11,6 +12,12 @@ export interface SidebarLink {
    * If omitted, the link may be used as a non-clickable parent for submenu items.
    */
   href?: string;
+
+  /** Optional target attribute for the link. */
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /** Optional rel attribute for the link. */
+  rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
 
   /**
    * Optional child links to render as a collapsible submenu.
@@ -52,6 +59,12 @@ export interface SidebarFooterLink {
    */
   href: string;
 
+  /** Optional target attribute for the footer link. */
+  target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
+
+  /** Optional rel attribute for the footer link. */
+  rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
+
   /**
    * Optional icon to display next to the label.
    */
@@ -83,6 +96,8 @@ export interface SidebarProps {
   /**
    * Whether to display a footer section at the bottom of the sidebar.
    * Defaults to `false`.
+   *
+   * @default false
    */
   showFooter?: boolean;
 
@@ -101,12 +116,16 @@ export interface SidebarProps {
    * Theme for styling.
    * Determines the base color scheme for the sidebar.
    * - "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * If true, applies a translucent glass surface using the selected theme/state.
    * Defaults to `false`.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
@@ -114,40 +133,58 @@ export interface SidebarProps {
    * State variant for styling.
    * Typically used to apply semantic states to the component.
    * - "success" | "error" | "warning" | "disabled" | ""
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * If true, the sidebar is styled with an outline variant.
    * Defaults to `false`.
+   *
+   * @default configured default outline setting (fallback: false)
    */
   outline?: boolean;
 
   /**
    * Rounding style for the sidebar container.
    * - "none" | "small" | "medium" | "large" | "full"
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Shadow style for the sidebar container.
    * - "none" | "light" | "medium" | "strong" | "intense"
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
   /**
    * Additional class name(s) for applying custom styles.
+   *
+   * @default ""
    */
   className?: string;
 
+
   /**
-   * Optional test ID for testing frameworks like Jest and React Testing Library.
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "sidebar"
    */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 
   /**
    * Accessible label for the navigation landmark.
    * Prefer the kebab-case ARIA prop for consistency with other React ARIA props.
+   *
+   * @default "Sidebar navigation"
    */
   "aria-label"?: string;
 
@@ -165,6 +202,8 @@ export interface SidebarProps {
   /**
    * Optional label for the footer landmark when footer content is rendered.
    * Example: "Sidebar footer links"
+   *
+   * @default "Sidebar footer"
    */
   footerAriaLabel?: string;
 

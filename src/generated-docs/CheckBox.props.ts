@@ -44,6 +44,15 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "category": "aria"
     },
     {
+      "name": "boxClassName",
+      "type": "string",
+      "description": "Additional class names for the visual checkbox box.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "checked",
       "type": "boolean",
       "description": "Checked state of the checkbox.",
@@ -57,12 +66,13 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for additional styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
@@ -76,12 +86,22 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "descriptionClassName",
+      "type": "string",
+      "description": "Additional class names for the helper description.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "disabled",
       "type": "boolean",
       "description": "Whether the checkbox is disabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "errorMessage",
@@ -92,12 +112,22 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "errorMessageClassName",
+      "type": "string",
+      "description": "Additional class names for the error message.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "glass",
       "type": "boolean",
       "description": "Applies a translucent frosted-glass treatment using the active theme palette.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
       "name": "indeterminate",
@@ -105,7 +135,17 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "description": "Whether the checkbox is in an indeterminate (mixed) state.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
+      "name": "inputClassName",
+      "type": "string",
+      "description": "Additional class names for the native input.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "invalid",
@@ -113,7 +153,8 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "description": "Marks the checkbox as invalid. Useful when validation fails.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "label",
@@ -121,7 +162,17 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "description": "Label text displayed beside the checkbox.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "labelClassName",
+      "type": "string",
+      "description": "Additional class names for the label text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "labelPosition",
@@ -129,7 +180,17 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "description": "Position of the label relative to the checkbox ('left' | 'right').",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"right\""
+    },
+    {
+      "name": "labelWrapperClassName",
+      "type": "string",
+      "description": "Additional class names for the label/input wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "onChange",
@@ -145,7 +206,8 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "description": "Whether the checkbox is required.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "role",
@@ -161,7 +223,8 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "description": "Controls the rounding of the checkbox ('none' | 'small' | 'medium' | 'large' | 'full').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default rounding (fallback: \"medium\")"
     },
     {
       "name": "shadow",
@@ -169,7 +232,8 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "description": "Controls the shadow of the checkbox ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
       "name": "size",
@@ -177,7 +241,8 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "description": "Size of the checkbox ('xs' | 'small' | 'medium' | 'large' | 'xl').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
       "name": "state",
@@ -185,7 +250,17 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "description": "State of the checkbox ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"checkbox\""
     },
     {
       "name": "theme",
@@ -193,7 +268,8 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
       "description": "Optional theme to style the checkbox ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default theme (fallback: \"primary\")"
     }
   ]
 };

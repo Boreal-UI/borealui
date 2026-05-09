@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import BaseSelect from "../SelectBase";
 import "./Select.scss";
@@ -43,7 +44,7 @@ const classes = {
 };
 
 const Select = forwardRef<HTMLSelectElement, SelectProps>((props, ref) => {
-  return <BaseSelect {...props} ref={ref} classMap={classes} />;
+  return <BaseSelect {...props} ref={ref} classMap={expandClassMap(classes)} />;
 });
 
 Select.displayName = "Select";

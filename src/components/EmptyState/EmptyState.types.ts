@@ -19,48 +19,72 @@ export interface EmptyStateProps extends Omit<
   /** Optional icon component (e.g., from react-icons). */
   icon?: IconType;
 
-  /** Title text displayed prominently. */
+  /**
+   * Title text displayed prominently.
+   *
+   * @default "Nothing Here Yet"
+   */
   title?: ReactNode;
 
-  /** Optional supporting message below the title. */
+  /**
+   * Optional supporting message below the title.
+   *
+   * @default "There’s no content to display."
+   */
   message?: ReactNode;
 
   /**
    * Theming option for styling
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
+   *
+   * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
 
   /**
    * Applies a translucent frosted-glass treatment using the active theme palette.
+   *
+   * @default configured default glass setting (fallback: false)
    */
   glass?: boolean;
 
   /**
    * The EmptyState state
    * ('success' | 'error' | 'warning' | 'disabled' | '').
+   *
+   * @default ""
    */
   state?: StateType;
 
   /**
    * Size modifier
    * ('xs' | 'small' | 'medium' | 'large' | 'xl').
+   *
+   * @default configured default size (fallback: "medium")
    */
   size?: SizeType;
 
   /**
    * Controls the rounding of the component
    * ('none' | 'small' | 'medium' | 'large' | 'full').
+   *
+   * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
 
   /**
    * Controls the shadow of the component
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
+   *
+   * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
 
-  /** Whether the component uses outline styles. */
+  /**
+   * Whether the component uses outline styles.
+   *
+   * @default configured default outline setting (fallback: false)
+   */
   outline?: boolean;
 
   /** Optional label for an action button. */
@@ -68,6 +92,18 @@ export interface EmptyStateProps extends Omit<
 
   /** Optional click handler for the action button. */
   onActionClick?: () => void;
+
+  /** Additional class names for the icon wrapper. */
+  iconClassName?: string;
+
+  /** Additional class names for the title element. */
+  titleClassName?: string;
+
+  /** Additional class names for the message element. */
+  messageClassName?: string;
+
+  /** Additional class names for the action button. */
+  actionButtonClassName?: string;
 
   /**
    * Optional custom accessible label for the entire empty state region.
@@ -96,6 +132,8 @@ export interface EmptyStateProps extends Omit<
   /**
    * Whether the icon should be announced to assistive technology.
    * Defaults to false.
+   *
+   * @default true
    */
   iconDecorative?: boolean;
 
@@ -116,7 +154,15 @@ export interface EmptyStateProps extends Omit<
    */
   id?: string;
 
-  /** Optional test ID for testing frameworks. */
+
+  /**
+   * Optional test ID for testing frameworks.
+   *
+   * @default dataTestId ?? "empty-state"
+   */
+  testId?: string;
+
+  /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
 }
 

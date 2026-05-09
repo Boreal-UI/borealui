@@ -4,6 +4,9 @@
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 .popover_container {
   position: relative;
   display: inline-block;
@@ -214,4 +217,5 @@
     border: 1px solid ButtonText;
     outline-color: Highlight;
   }
+}
 }

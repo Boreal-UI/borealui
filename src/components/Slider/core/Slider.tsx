@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import "./Slider.scss"; // Non-module SCSS
 import { SliderProps } from "../Slider.types";
@@ -46,7 +47,7 @@ const Slider: React.FC<SliderProps> = (props) => {
     <SliderBase
       {...props}
       className={combineClassNames(props.className)}
-      classMap={coreStyles}
+      classMap={expandClassMap(coreStyles)}
     />
   );
 };

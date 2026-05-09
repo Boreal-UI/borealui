@@ -100,6 +100,10 @@ import NextDataTable from "boreal-ui/next/DataTable";
 | `boreal-ui/core/types` | Shared public type entry point. |
 | `boreal-ui/next/types` | Shared public type entry point for Next consumers. |
 | `boreal-ui/docs` | Generated component prop metadata for docs tools and prop tables. |
+| `boreal-ui/core/registerColorScheme` | Standalone color-scheme registration helper for React consumers. |
+| `boreal-ui/next/registerColorScheme` | Standalone color-scheme registration helper for Next consumers. |
+
+For a complete list of barrel exports, standalone component paths, generated prop-doc objects, and compatibility aliases, see [Public API Reference](./public-api-reference.md).
 
 ## Choosing Core or Next
 

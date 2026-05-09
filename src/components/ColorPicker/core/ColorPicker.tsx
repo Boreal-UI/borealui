@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import ColorPickerBase from "../ColorPickerBase";
 import "./ColorPicker.scss";
@@ -31,7 +32,7 @@ const classes = {
 };
 
 const ColorPicker: React.FC<ColorPickerProps> = (props) => (
-  <ColorPickerBase {...props} classMap={classes} />
+  <ColorPickerBase {...props} classMap={expandClassMap(classes)} />
 );
 ColorPicker.displayName = "ColorPicker";
 export default ColorPicker;

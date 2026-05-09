@@ -462,6 +462,61 @@ describe("TextAreaBase", () => {
     );
   });
 
+  it("applies custom class names to text area sections", () => {
+    render(
+      <TextAreaBase
+        classMap={mockStyles}
+        label="Comment"
+        icon={FaCommentDots}
+        helperText="Helpful text"
+        state="error"
+        errorMessage="Required"
+        aria-description="Hidden description"
+        containerClassName="custom-container"
+        labelClassName="custom-label"
+        iconClassName="custom-icon"
+        inputClassName="custom-input"
+        resizeHandleClassName="custom-resize"
+        helperTextClassName="custom-helper"
+        errorMessageClassName="custom-error"
+        srOnlyClassName="custom-sr-only"
+      />,
+    );
+
+    expect(screen.getByTestId("text-area")).toHaveClass(
+      "container",
+      "custom-container",
+    );
+    expect(screen.getByTestId("text-area-label")).toHaveClass(
+      "label",
+      "custom-label",
+    );
+    expect(screen.getByTestId("text-area-icon")).toHaveClass(
+      "iconContainer",
+      "custom-icon",
+    );
+    expect(screen.getByTestId("text-area-input")).toHaveClass(
+      "textInput",
+      "custom-input",
+    );
+    expect(screen.getByTestId("text-area-resize-handle")).toHaveClass(
+      "customResizeHandle",
+      "custom-resize",
+    );
+    expect(screen.getByTestId("text-area-helper-text")).toHaveClass(
+      "helperText",
+      "custom-helper",
+    );
+    expect(screen.getByTestId("text-area-error-message")).toHaveClass(
+      "errorMessage",
+      "custom-error",
+    );
+    expect(screen.getByTestId("text-area-description")).toHaveClass(
+      "sr_only",
+      "custom-sr-only",
+    );
+  });
+
   it("supports a custom test id consistently", () => {
     render(
       <TextAreaBase

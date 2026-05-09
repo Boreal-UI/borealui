@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BasePager from "../PagerBase";
 import Button from "../../Button/next/Button";
@@ -13,7 +14,7 @@ const Pager: React.FC<PagerProps> = (props) => {
       {...props}
       Button={Button}
       IconButton={IconButton}
-      classMap={styles}
+      classMap={expandClassMap(styles)}
     />
   );
 };

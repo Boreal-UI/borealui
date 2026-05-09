@@ -6,178 +6,109 @@
 @use "sass:color";
 @use "sass:map";
 
-.card {
-  overflow: hidden;
-  margin: var(--spacing-sm);
-  position: relative;
-  background-color: var(--background-color-surface);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  height: fit-content;
-  color: var(--text-color-primary);
-  transition: transform var(--transition-default);
-
-  @include bp.down(sm) {
-    margin: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    margin: var(--spacing-md);
-  }
-
-  @each $key, $value in theme.$rounding {
-    &_round-#{$key} {
-      border-radius: $value;
-    }
-  }
-
-  @each $key, $value in theme.$shadow {
-    &_shadow-#{$key} {
-      box-shadow: $value;
-    }
-  }
-
-  &_loading {
-    background: none !important;
-    box-shadow: none !important;
-    padding: 0;
-    margin: 0;
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  :where(.card) {
+    overflow: hidden;
+    margin: var(--spacing-sm);
+    position: relative;
+    background-color: var(--background-color-surface);
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    min-height: 250px;
+    width: fit-content;
+    height: fit-content;
+    color: var(--text-color-primary);
+    transition: transform var(--transition-default);
 
     @include bp.down(sm) {
-      min-height: 180px;
+      margin: var(--spacing-xs);
     }
 
     @include bp.up(lg) {
-      min-height: 300px;
+      margin: var(--spacing-md);
     }
   }
 
-  &_fade-in {
-    animation: fade-in 0.8s ease-in-out;
-  }
-
-  &_media {
-    width: 100%;
-    height: auto;
-    position: relative;
-    aspect-ratio: 4 / 4;
-    object-fit: cover;
-    border-bottom: 1px solid rgb(0 0 0 / 5%);
-
-    @include bp.down(sm) {
-      aspect-ratio: 1 / 1;
+  .card {
+    @each $key, $value in theme.$rounding {
+      &_round-#{$key} {
+        border-radius: $value;
+      }
     }
 
-    @include bp.up(lg) {
-      aspect-ratio: 16 / 9;
-    }
-  }
-
-  &_image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-
-  &_vertical {
-    flex-direction: column;
-
-    .card_content {
-      flex-direction: column;
+    @each $key, $value in theme.$shadow {
+      &_shadow-#{$key} {
+        box-shadow: $value;
+      }
     }
 
-    .card_image {
+    &_fade-in {
+      animation: fade-in 0.8s ease-in-out;
+    }
+
+    &_media {
       width: 100%;
-      max-height: 200px;
+      height: auto;
+      position: relative;
+      aspect-ratio: 4 / 4;
+      object-fit: cover;
+      border-bottom: 1px solid rgb(0 0 0 / 5%);
 
       @include bp.down(sm) {
-        max-height: 150px;
+        aspect-ratio: 1 / 1;
       }
 
       @include bp.up(lg) {
-        max-height: 300px;
-      }
-    }
-  }
-
-  &_glass {
-    @include mixins.glass-surface;
-  }
-
-  &_disabled {
-    background-color: var(--disabled-color);
-    color: var(--text-color-primary);
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
-    box-shadow: none;
-  }
-
-  &_outline {
-    background: transparent;
-    border: 2px solid currentcolor;
-    box-shadow: none;
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
-  }
-
-  @each $name, $props in theme.$border-width {
-    &_border-#{$name} {
-      border-width: $props;
-      border-style: solid;
-      border-color: var(--divider-color);
-    }
-  }
-
-  @each $name, $props in theme.$themes {
-    &_#{$name} {
-      background: map.get($props, bg);
-      color: map.get($props, text);
-
-      --card-glass-bg: #{map.get($props, glass-bg)};
-      --card-glass-hover-bg: #{map.get($props, glass-hover)};
-      --card-glass-border: #{map.get($props, glass-border)};
-      --card-glass-text: #{map.get($props, text)};
-
-      .card_icon,
-      .card_description {
-        color: inherit;
-      }
-
-      .card_loading {
-        background-color: transparent;
+        aspect-ratio: 16 / 9;
       }
     }
 
-    &_#{$name}.card_glass {
-      @include mixins.glass-surface(
-        var(--card-glass-bg),
-        var(--card-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--card-glass-text);
+    &_image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    &_#{$name}.card_glass.card_clickable:hover {
-      background: var(--card-glass-hover-bg);
-      border-color: var(--card-glass-border);
+    &_vertical {
+      flex-direction: column;
+
+      .card_content {
+        flex-direction: column;
+      }
+
+      .card_image {
+        width: 100%;
+        max-height: 200px;
+
+        @include bp.down(sm) {
+          max-height: 150px;
+        }
+
+        @include bp.up(lg) {
+          max-height: 300px;
+        }
+      }
     }
 
-    &_#{$name}.card_outline {
+    &_glass {
+      @include mixins.glass-surface;
+    }
+
+    &_disabled {
+      background-color: var(--disabled-color);
+      color: var(--text-color-primary);
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.6;
+      box-shadow: none;
+    }
+
+    &_outline {
       background: transparent;
-      border-color: map.get($props, border);
-      border: 2px solid map.get($props, border);
+      border: 2px solid currentcolor;
       box-shadow: none;
 
       @include bp.down(sm) {
@@ -185,515 +116,584 @@
       }
     }
 
-    &_#{$name}.card_outline.card_glass {
-      @include mixins.glass-surface(
-        var(--card-glass-bg),
-        var(--card-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--card-glass-text);
-    }
-  }
-
-  @each $name, $props in theme.$states {
-    &_#{$name} {
-      background: map.get($props, bg);
-      color: map.get($props, text);
-
-      --card-glass-bg: #{map.get($props, glass-bg)};
-      --card-glass-hover-bg: #{map.get($props, glass-hover)};
-      --card-glass-border: #{map.get($props, glass-border)};
-      --card-glass-text: #{map.get($props, text)};
-
-      .card_icon,
-      .card_description {
-        color: inherit;
-      }
-
-      .card_loading {
-        background-color: transparent;
+    @each $name, $props in theme.$border-width {
+      &_border-#{$name} {
+        border-width: $props;
+        border-style: solid;
+        border-color: var(--divider-color);
       }
     }
 
-    &_#{$name}.card_glass {
-      @include mixins.glass-surface(
-        var(--card-glass-bg),
-        var(--card-glass-border),
-        var(--glass-blur)
-      );
+    @each $name, $props in theme.$themes {
+      &_#{$name} {
+        background: map.get($props, bg);
+        color: map.get($props, text);
 
-      color: var(--card-glass-text);
+        --card-glass-bg: #{map.get($props, glass-bg)};
+        --card-glass-hover-bg: #{map.get($props, glass-hover)};
+        --card-glass-border: #{map.get($props, glass-border)};
+        --card-glass-text: #{map.get($props, text)};
+
+        .card_icon,
+        .card_description {
+          color: inherit;
+        }
+
+        .card_loading {
+          background-color: transparent;
+        }
+      }
+
+      &_#{$name}.card_glass {
+        @include mixins.glass-surface(
+          var(--card-glass-bg),
+          var(--card-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--card-glass-text);
+      }
+
+      &_#{$name}.card_glass.card_clickable:hover {
+        background: var(--card-glass-hover-bg);
+        border-color: var(--card-glass-border);
+      }
+
+      &_#{$name}.card_outline {
+        background: transparent;
+        border-color: map.get($props, border);
+        border: 2px solid map.get($props, border);
+        box-shadow: none;
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+
+      &_#{$name}.card_outline.card_glass {
+        @include mixins.glass-surface(
+          var(--card-glass-bg),
+          var(--card-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--card-glass-text);
+      }
     }
 
-    &_#{$name}.card_glass.card_clickable:hover {
-      background: var(--card-glass-hover-bg);
-      border-color: var(--card-glass-border);
+    @each $name, $props in theme.$states {
+      &_#{$name} {
+        background: map.get($props, bg);
+        color: map.get($props, text);
+
+        --card-glass-bg: #{map.get($props, glass-bg)};
+        --card-glass-hover-bg: #{map.get($props, glass-hover)};
+        --card-glass-border: #{map.get($props, glass-border)};
+        --card-glass-text: #{map.get($props, text)};
+
+        .card_icon,
+        .card_description {
+          color: inherit;
+        }
+
+        .card_loading {
+          background-color: transparent;
+        }
+      }
+
+      &_#{$name}.card_glass {
+        @include mixins.glass-surface(
+          var(--card-glass-bg),
+          var(--card-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--card-glass-text);
+      }
+
+      &_#{$name}.card_glass.card_clickable:hover {
+        background: var(--card-glass-hover-bg);
+        border-color: var(--card-glass-border);
+      }
+
+      &_#{$name}.card_outline {
+        background: transparent;
+        border: 2px solid map.get($props, border);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+
+      &_#{$name}.card_outline.card_glass {
+        @include mixins.glass-surface(
+          var(--card-glass-bg),
+          var(--card-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--card-glass-text);
+      }
     }
 
-    &_#{$name}.card_outline {
-      background: transparent;
-      border: 2px solid map.get($props, border);
+    @each $name, $width in theme.$border-width {
+      @if $name != "None" {
+        &_outline#{&}_border-#{$name} {
+          border-width: $width;
+        }
+      }
+    }
+
+    .card_loading {
+      background: none;
+      box-shadow: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 250px;
 
       @include bp.down(sm) {
-        border-width: 1.5px;
+        min-height: 180px;
+      }
+
+      @include bp.up(lg) {
+        min-height: 300px;
       }
     }
 
-    &_#{$name}.card_outline.card_glass {
-      @include mixins.glass-surface(
-        var(--card-glass-bg),
-        var(--card-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--card-glass-text);
+    &_content {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
     }
-  }
 
-  @each $name, $width in theme.$border-width {
-    @if $name != "None" {
-      &_outline#{&}_border-#{$name} {
-        border-width: $width;
+    &_header {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: var(--spacing-md);
+
+      @include bp.down(sm) {
+        padding: var(--spacing-sm);
+      }
+
+      @include bp.up(lg) {
+        padding: var(--spacing-lg);
       }
     }
-  }
 
-  &_content {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
+    &_header,
+    &_body {
+      padding: var(--spacing-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-  &_header {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: var(--spacing-md);
-
-    @include bp.down(sm) {
+    &_body {
+      flex-direction: column;
+      gap: var(--spacing-sm);
       padding: var(--spacing-sm);
-    }
-
-    @include bp.up(lg) {
-      padding: var(--spacing-lg);
-    }
-  }
-
-  &_header,
-  &_body {
-    padding: var(--spacing-md);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &_body {
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm);
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-
-    @include bp.up(lg) {
-      gap: var(--spacing-md);
-    }
-  }
-
-  &_title {
-    margin: 0;
-    flex: 1;
-    display: flex;
-    gap: var(--spacing-sm);
-    font-family: var(--font-family-heading);
-    font-size: var(--font-size-h4);
-    font-weight: var(--font-weight-h4);
-    line-height: var(--line-height-heading);
-    letter-spacing: var(--letter-spacing-heading);
-
-    @include bp.down(sm) {
-      font-size: var(--font-size-h6);
-    }
-
-    @include bp.up(lg) {
-      font-size: var(--font-size-h3);
-    }
-  }
-
-  &_icon {
-    font-size: 1.2em;
-    display: flex;
-    color: inherit;
-    line-height: 1;
-
-    @include bp.down(sm) {
-      font-size: 1em;
-    }
-
-    @include bp.up(lg) {
-      font-size: 1.4em;
-    }
-  }
-
-  &_description {
-    color: inherit;
-    width: 95%;
-    margin: var(--spacing-xxs) auto;
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-
-    @include bp.down(sm) {
-      font-size: var(--font-size-label);
-    }
-
-    @include bp.up(lg) {
-      font-size: var(--font-size-body);
-    }
-  }
-
-  &_footer {
-    padding: var(--spacing-md);
-    border-top: 2px solid rgb(0 0 0 / 10%);
-
-    @include bp.down(sm) {
-      padding: var(--spacing-sm);
-      border-width: 1px;
-    }
-
-    @include bp.up(lg) {
-      padding: var(--spacing-lg);
-    }
-  }
-
-  &_actions {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    padding: var(--spacing-sm);
-    gap: var(--spacing-sm);
-
-    @include bp.down(sm) {
-      gap: var(--spacing-xs);
-    }
-
-    @include bp.up(lg) {
-      gap: var(--spacing-md);
-    }
-  }
-
-  &_xs {
-    .card_description {
-      font-size: var(--font-size-caption);
-    }
-
-    .card_icon {
-      font-size: 0.9em;
-    }
-
-    .card_title {
-      font-size: var(--font-size-label);
-      line-height: var(--line-height-heading);
-    }
-
-    .card_children {
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-caption);
-      line-height: var(--line-height-body);
-      letter-spacing: var(--letter-spacing-body);
-    }
-  }
-
-  &_small {
-    .card_description {
-      font-size: var(--font-size-label);
-    }
-
-    .card_icon {
-      font-size: 1em;
-    }
-
-    .card_title {
-      font-size: var(--font-size-body-sm);
-    }
-
-    .card_children {
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-label);
-      line-height: var(--line-height-body);
-      letter-spacing: var(--letter-spacing-body);
-    }
-  }
-
-  &_medium {
-    .card_description {
-      font-size: var(--font-size-body-sm);
-    }
-
-    .card_icon {
-      font-size: 1.2em;
-    }
-
-    .card_title {
-      font-size: var(--font-size-body);
-    }
-
-    .card_children {
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-body-sm);
-      line-height: var(--line-height-body);
-      letter-spacing: var(--letter-spacing-body);
-    }
-  }
-
-  &_large {
-    .card_description {
-      font-size: var(--font-size-body);
-    }
-
-    .card_icon {
-      font-size: 1.4em;
-    }
-
-    .card_title {
-      font-size: var(--font-size-h6);
-    }
-
-    .card_children {
       font-family: var(--font-family-body);
       font-size: var(--font-size-body);
+      font-weight: var(--font-weight-body);
       line-height: var(--line-height-body);
       letter-spacing: var(--letter-spacing-body);
-    }
-  }
 
-  &_xl {
-    .card_description {
-      font-size: var(--font-size-h6);
+      @include bp.up(lg) {
+        gap: var(--spacing-md);
+      }
     }
 
-    .card_icon {
-      font-size: 1.2em;
-    }
-
-    .card_title {
+    &_title {
+      margin: 0;
+      flex: 1;
+      display: flex;
+      gap: var(--spacing-sm);
+      font-family: var(--font-family-heading);
       font-size: var(--font-size-h4);
+      font-weight: var(--font-weight-h4);
+      line-height: var(--line-height-heading);
+      letter-spacing: var(--letter-spacing-heading);
+
+      @include bp.down(sm) {
+        font-size: var(--font-size-h6);
+      }
+
+      @include bp.up(lg) {
+        font-size: var(--font-size-h3);
+      }
     }
 
-    .card_children {
+    &_icon {
+      font-size: 1.2em;
+      display: flex;
+      color: inherit;
+      line-height: 1;
+
+      @include bp.down(sm) {
+        font-size: 1em;
+      }
+
+      @include bp.up(lg) {
+        font-size: 1.4em;
+      }
+    }
+
+    &_description {
+      color: inherit;
+      width: 95%;
+      margin: var(--spacing-xxs) auto;
       font-family: var(--font-family-body);
-      font-size: var(--font-size-h6);
+      font-size: var(--font-size-body-sm);
+      font-weight: var(--font-weight-body);
       line-height: var(--line-height-body);
       letter-spacing: var(--letter-spacing-body);
+
+      @include bp.down(sm) {
+        font-size: var(--font-size-label);
+      }
+
+      @include bp.up(lg) {
+        font-size: var(--font-size-body);
+      }
+    }
+
+    &_footer {
+      padding: var(--spacing-sm);
+
+      @include bp.down(sm) {
+        padding: var(--spacing-xs);
+        border-width: 1px;
+      }
+
+      @include bp.up(lg) {
+        padding: var(--spacing-md);
+      }
+    }
+
+    &_actions {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      flex-wrap: wrap;
+      padding: var(--spacing-sm);
+      gap: var(--spacing-sm);
+
+      @include bp.down(sm) {
+        gap: var(--spacing-xs);
+      }
+
+      @include bp.up(lg) {
+        gap: var(--spacing-md);
+      }
+    }
+
+    &_xs {
+      .card_description {
+        font-size: var(--font-size-caption);
+      }
+
+      .card_icon {
+        font-size: 0.9em;
+      }
+
+      .card_title {
+        font-size: var(--font-size-label);
+        line-height: var(--line-height-heading);
+      }
+
+      .card_children {
+        font-family: var(--font-family-body);
+        font-size: var(--font-size-caption);
+        line-height: var(--line-height-body);
+        letter-spacing: var(--letter-spacing-body);
+      }
+    }
+
+    &_small {
+      .card_description {
+        font-size: var(--font-size-label);
+      }
+
+      .card_icon {
+        font-size: 1em;
+      }
+
+      .card_title {
+        font-size: var(--font-size-body-sm);
+      }
+
+      .card_children {
+        font-family: var(--font-family-body);
+        font-size: var(--font-size-label);
+        line-height: var(--line-height-body);
+        letter-spacing: var(--letter-spacing-body);
+      }
+    }
+
+    &_medium {
+      .card_description {
+        font-size: var(--font-size-body-sm);
+      }
+
+      .card_icon {
+        font-size: 1.2em;
+      }
+
+      .card_title {
+        font-size: var(--font-size-body);
+      }
+
+      .card_children {
+        font-family: var(--font-family-body);
+        font-size: var(--font-size-body-sm);
+        line-height: var(--line-height-body);
+        letter-spacing: var(--letter-spacing-body);
+      }
+    }
+
+    &_large {
+      .card_description {
+        font-size: var(--font-size-body);
+      }
+
+      .card_icon {
+        font-size: 1.4em;
+      }
+
+      .card_title {
+        font-size: var(--font-size-h6);
+      }
+
+      .card_children {
+        font-family: var(--font-family-body);
+        font-size: var(--font-size-body);
+        line-height: var(--line-height-body);
+        letter-spacing: var(--letter-spacing-body);
+      }
+    }
+
+    &_xl {
+      .card_description {
+        font-size: var(--font-size-h6);
+      }
+
+      .card_icon {
+        font-size: 1.2em;
+      }
+
+      .card_title {
+        font-size: var(--font-size-h4);
+      }
+
+      .card_children {
+        font-family: var(--font-family-body);
+        font-size: var(--font-size-h6);
+        line-height: var(--line-height-body);
+        letter-spacing: var(--letter-spacing-body);
+      }
     }
   }
-}
 
-.card_left {
-  text-align: left;
-
-  .card_header,
-  .card_body,
-  .card_footer,
-  .card_actions {
-    align-items: flex-start;
-    justify-content: flex-start;
+  .card_left {
     text-align: left;
+
+    .card_header,
+    .card_body,
+    .card_footer,
+    .card_actions {
+      align-items: flex-start;
+      justify-content: flex-start;
+      text-align: left;
+    }
   }
-}
 
-.card_center {
-  text-align: center;
-
-  .card_header,
-  .card_body,
-  .card_footer,
-  .card_actions {
-    align-items: center;
-    justify-content: center;
+  .card_center {
     text-align: center;
+
+    .card_header,
+    .card_body,
+    .card_footer,
+    .card_actions {
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
   }
-}
 
-.card_right {
-  text-align: right;
-
-  .card_header,
-  .card_body,
-  .card_footer,
-  .card_actions {
-    align-items: flex-end;
-    justify-content: flex-end;
+  .card_right {
     text-align: right;
-  }
-}
 
-.card_horizontal {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  min-height: 200px;
-  width: 100%;
-  height: auto;
-
-  @include bp.down(sm) {
-    flex-direction: column;
-    min-height: 150px;
+    .card_header,
+    .card_body,
+    .card_footer,
+    .card_actions {
+      align-items: flex-end;
+      justify-content: flex-end;
+      text-align: right;
+    }
   }
 
-  @include bp.up(lg) {
-    min-height: 250px;
-  }
-
-  .card_content {
+  .card_horizontal {
+    display: flex;
     flex-direction: row;
-    flex: 1;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
     width: 100%;
-    height: 100%;
+    height: auto;
 
     @include bp.down(sm) {
       flex-direction: column;
+      min-height: 150px;
     }
-  }
 
-  .card_image {
-    width: 50%;
-    height: auto;
-    aspect-ratio: 1.5;
-    object-fit: cover;
-    display: block;
+    @include bp.up(lg) {
+      min-height: 250px;
+    }
 
-    @include bp.down(sm) {
+    .card_content {
+      flex-direction: row;
+      flex: 1;
       width: 100%;
-      aspect-ratio: 1 / 1;
+      height: 100%;
+
+      @include bp.down(sm) {
+        flex-direction: column;
+      }
     }
 
-    @include bp.up(lg) {
-      aspect-ratio: 16 / 10;
+    .card_image {
+      width: 50%;
+      height: auto;
+      aspect-ratio: 1.5;
+      object-fit: cover;
+      display: block;
+
+      @include bp.down(sm) {
+        width: 100%;
+        aspect-ratio: 1 / 1;
+      }
+
+      @include bp.up(lg) {
+        aspect-ratio: 16 / 10;
+      }
     }
-  }
 
-  .card_body {
-    flex: 1;
-    padding: var(--spacing-md);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    .card_body {
+      flex: 1;
+      padding: var(--spacing-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
 
-    @include bp.down(sm) {
+      @include bp.down(sm) {
+        padding: var(--spacing-sm);
+      }
+
+      @include bp.up(lg) {
+        padding: var(--spacing-lg);
+      }
+    }
+
+    .card_footer {
       padding: var(--spacing-sm);
-    }
 
-    @include bp.up(lg) {
-      padding: var(--spacing-lg);
-    }
-  }
+      @include bp.down(sm) {
+        padding: var(--spacing-xs);
+      }
 
-  .card_footer {
-    padding: var(--spacing-md);
-
-    @include bp.down(sm) {
-      padding: var(--spacing-sm);
-    }
-
-    @include bp.up(lg) {
-      padding: var(--spacing-lg);
+      @include bp.up(lg) {
+        padding: var(--spacing-md);
+      }
     }
   }
-}
 
-.card_clickable {
-  cursor: pointer;
-  transition:
-    transform var(--transition-default),
-    box-shadow var(--transition-default);
+  .card_clickable {
+    cursor: pointer;
+    transition:
+      transform var(--transition-default),
+      box-shadow var(--transition-default);
 
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--box-shadow-medium);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-    box-shadow: 0 0 0 4px color.adjust(#000, $lightness: 20%, $alpha: -0.8);
-  }
-
-  @include bp.down(sm) {
     &:hover {
-      transform: translateY(-1px);
-      box-shadow: var(--box-shadow-light);
+      transform: translateY(-2px);
+      box-shadow: var(--box-shadow-medium);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+      box-shadow: 0 0 0 4px color.adjust(#000, $lightness: 20%, $alpha: -0.8);
+    }
+
+    @include bp.down(sm) {
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--box-shadow-light);
+      }
     }
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .card,
-  .card * {
-    animation: none !important;
-    transition: none !important;
+  @media (prefers-reduced-motion: reduce) {
+    .card,
+    .card * {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    .card_clickable:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
   }
 
-  .card_clickable:hover {
-    transform: none !important;
-    box-shadow: none !important;
-  }
-}
-
-@media (hover: none) {
-  .card_clickable:hover {
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .card {
-    border: 1px solid ButtonText;
-    outline-color: Highlight;
-    box-shadow: none !important;
-    background: Canvas;
-    color: CanvasText;
+  @media (hover: none) {
+    .card_clickable:hover {
+      transform: none;
+      box-shadow: none;
+    }
   }
 
-  .card_glass {
-    background: Canvas;
-    border: 1px solid ButtonText;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+  @media (forced-colors: active) {
+    .card {
+      border: 1px solid ButtonText;
+      outline-color: Highlight;
+      box-shadow: none !important;
+      background: Canvas;
+      color: CanvasText;
+    }
+
+    .card_glass {
+      background: Canvas;
+      border: 1px solid ButtonText;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .card_outline {
+      border: 1px solid ButtonText;
+    }
+
+    .card_clickable:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 3px;
+    }
   }
 
-  .card_outline {
-    border: 1px solid ButtonText;
-  }
-
-  .card_footer {
-    border-top: 1px solid ButtonText;
-  }
-
-  .card_clickable:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 3px;
-  }
-}
-
-.card_primary,
-.card_secondary,
-.card_tertiary,
-.card_quaternary,
-.card_success,
-.card_error,
-.card_warning {
-  &:focus-within {
-    box-shadow: 0 0 0 3px color.adjust(#000, $lightness: 30%, $alpha: -0.85);
+  .card_primary,
+  .card_secondary,
+  .card_tertiary,
+  .card_quaternary,
+  .card_success,
+  .card_error,
+  .card_warning {
+    &:focus-within {
+      box-shadow: 0 0 0 3px color.adjust(#000, $lightness: 30%, $alpha: -0.85);
+    }
   }
 }

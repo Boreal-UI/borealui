@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import "./DataTable.scss";
 import DataTableBase from "../DataTableBase";
 import { DataTableProps } from "../DataTable.types";
@@ -43,7 +44,7 @@ const classes = {
 };
 
 function DataTable<T extends object>(props: DataTableProps<T>) {
-  return <DataTableBase {...props} classMap={classes} />;
+  return <DataTableBase {...props} classMap={expandClassMap(classes)} />;
 }
 
 DataTable.displayName = "DataTable";

@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React, { useEffect, useState } from "react";
 import BaseNavBar from "../NavBarBase";
 import "./NavBar.scss";
@@ -55,13 +56,18 @@ const NavBar: React.FC<NavBarProps> = ({
       isItemActive={resolvedIsItemActive}
       LinkWrapper={({
         href,
+        target,
+        rel,
         children,
         className,
         isActive,
-        "data-testid": testId,
+        "data-testid": dataTestId,
+        testId = dataTestId,
       }) => (
         <a
           href={href}
+          target={target}
+          rel={rel}
           className={className}
           aria-current={isActive ? "page" : undefined}
           data-testid={testId}
@@ -69,7 +75,7 @@ const NavBar: React.FC<NavBarProps> = ({
           {children}
         </a>
       )}
-      classMap={classes}
+      classMap={expandClassMap(classes)}
     />
   );
 };

@@ -2,7 +2,9 @@ import React, { useEffect, useMemo, useRef, useState, useId } from "react";
 import { BaseTabsProps } from "./Tabs.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
+  getDefaultGlass,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -36,15 +38,17 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   shadow = getDefaultShadow(),
   className = "",
   theme = getDefaultTheme(),
-  glass = false,
+  glass = getDefaultGlass(),
   state = "",
   size = getDefaultSize(),
   orientation = "horizontal",
   activationMode = "auto",
   idBase,
-  "data-testid": testId = "tabs",
+  "data-testid": dataTestId,
+  testId = dataTestId ?? "tabs",
   classMap,
 }) => {
+  const resolvedOrientation = resolvePropAlias(orientation);
   const uid = useId();
 
   const baseId = useMemo<string>(() => {
@@ -149,7 +153,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   };
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {
-    const horiz = orientation === "horizontal";
+    const horiz = resolvedOrientation === "horizontal";
     const { key } = event;
 
     let newFocus = focusIndex;
@@ -197,7 +201,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
         aria-describedby={ariaDescribedBy}
         aria-live={ariaLive}
         role="tablist"
-        aria-orientation={orientation}
+        aria-orientation={resolvedOrientation}
         onKeyDown={onKeyDown}
         data-testid={`${testId}-tablist`}
       >

@@ -33,12 +33,13 @@ export const chipGroupPropDocs: GeneratedComponentDoc = {
       "description": "Optional class name for the chip group container.",
       "required": false,
       "inherited": true,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"\""
     },
     {
       "name": "data-testid",
       "type": "string",
-      "description": "Optional test ID for testing frameworks.",
+      "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": true,
       "category": "testing"
@@ -57,7 +58,8 @@ export const chipGroupPropDocs: GeneratedComponentDoc = {
       "description": "Default position for chips in the group.",
       "required": false,
       "inherited": true,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"topCenter\""
     },
     {
       "name": "size",
@@ -65,7 +67,17 @@ export const chipGroupPropDocs: GeneratedComponentDoc = {
       "description": "Default size for chips if not individually specified.",
       "required": false,
       "inherited": true,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default size (fallback: \"medium\")"
+    },
+    {
+      "name": "testId",
+      "type": "string",
+      "description": "Optional test ID for testing frameworks.",
+      "required": false,
+      "inherited": true,
+      "category": "props",
+      "defaultValue": "dataTestId ?? \"chip-group\""
     }
   ]
 };

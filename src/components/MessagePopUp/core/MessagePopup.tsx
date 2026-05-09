@@ -1,3 +1,4 @@
+import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseMessagePopup from "../MessagePopupBase";
 import Button from "../../Button/core/Button";
@@ -35,7 +36,7 @@ const MessagePopup: React.FC<MessagePopupProps> = (props) => {
       {...props}
       Button={Button}
       IconButton={IconButton}
-      classMap={classes}
+      classMap={expandClassMap(classes)}
     />
   );
 };

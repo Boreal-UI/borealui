@@ -2,6 +2,9 @@
 @use "../../../../styles/_animations";
 @use "sass:map";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+
 $chip-positions: (
   "topLeft": (
     top: 20px,
@@ -85,4 +88,5 @@ $chip-positions: (
 .chip {
   pointer-events: auto;
   align-items: center;
+}
 }

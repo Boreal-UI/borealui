@@ -1,5 +1,6 @@
 "use client";
 
+import { expandClassMap } from "@/utils/propAliases";
 import { JSX } from "react";
 import TypographyBase from "../TypographyBase";
 import { TypographyProps } from "../Typography.types";
@@ -52,7 +53,7 @@ export default function Typography(props: TypographyProps): JSX.Element {
   return (
     <TypographyBase
       {...props}
-      classMap={classMap}
+      classMap={expandClassMap(classMap)}
       combineClassNames={combineClassNames}
     />
   );
