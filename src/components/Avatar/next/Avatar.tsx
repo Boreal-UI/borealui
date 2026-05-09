@@ -12,6 +12,7 @@ const Avatar = forwardRef<HTMLAnchorElement | HTMLButtonElement, AvatarProps>(
   (props, ref) => (
     <AvatarBase
       {...props}
+      imageFill={props.imageFill ?? true}
       ImageComponent={Image}
       LinkComponent={Link}
       classMap={expandClassMap(styles)}

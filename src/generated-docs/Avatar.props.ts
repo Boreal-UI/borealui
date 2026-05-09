@@ -154,6 +154,15 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
+      "name": "imageFill",
+      "type": "boolean",
+      "description": "If true, passes a `fill` prop to a custom image component such as Next.js Image. Plain img rendering should leave this false.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
       "name": "rel",
       "type": "string",
       "description": "Optional rel attribute when the avatar renders as a link.",

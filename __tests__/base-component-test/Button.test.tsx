@@ -610,7 +610,9 @@ describe("ButtonBase", () => {
   });
 
   it("calls onClick for enabled anchors", () => {
-    const handleClick = jest.fn();
+    const handleClick = jest.fn((event: React.MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+    });
 
     renderButton(
       {

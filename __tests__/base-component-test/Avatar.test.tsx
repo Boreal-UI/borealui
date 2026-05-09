@@ -453,7 +453,9 @@ describe("AvatarBase (Jest)", () => {
   });
 
   it("calls onClick for enabled anchor", () => {
-    const handleClick = jest.fn();
+    const handleClick = jest.fn((event: React.MouseEvent<HTMLElement>) => {
+      event.preventDefault();
+    });
 
     renderAvatar({
       name: "Enabled Link Avatar",

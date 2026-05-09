@@ -171,7 +171,7 @@ $size-margins: (
   }
 }
 
-.form_group :focus-visible {
+.form_group_input_wrapper > :focus-visible {
   outline: 2px solid var(--focus-outline-color, var(--primary-color));
   outline-offset: 2px;
   border-radius: 4px;

@@ -6,7 +6,7 @@ const TrashIcon: React.FC<React.SVGProps<SVGSVGElement>> = (props) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     color="currentColor"
-    stroke-width="1.5"
+    strokeWidth="1.5"
     {...props}
   >
     <path

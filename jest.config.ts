@@ -14,15 +14,10 @@ const config: Config = {
   },
   transformIgnorePatterns: ["/node_modules/(?!(marked)/)"],
   transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest",
+    "^.+\\.(ts|tsx)$": ["ts-jest", { useESM: true }],
   },
   extensionsToTreatAsEsm: [".ts", ".tsx"],
   preset: "ts-jest/presets/js-with-ts-esm",
-  globals: {
-    "ts-jest": {
-      useESM: true,
-    },
-  },
   testMatch: ["<rootDir>/__tests__/**/*.(spec|test).[jt]s?(x)"],
 };
 

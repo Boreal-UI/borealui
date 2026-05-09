@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from "react";
 import type { ButtonProps } from "@/components/Button/Button.types";
 import type { IconButtonProps } from "@/components/IconButton/IconButton.types";
@@ -66,12 +67,31 @@ export const DummyButton = React.forwardRef<
       size,
       glass,
       loading,
+      loadingLabel,
+      fullWidth,
+      icon: Icon,
+      iconPosition = "left",
+      iconWrapperClassName,
+      iconClassName,
+      labelClassName,
+      loaderClassName,
       isExternal,
       onClick,
       ...props
     },
     ref,
   ) => {
+    const iconElement = Icon ? (
+      <Icon className={iconClassName} aria-hidden={true} focusable={false} />
+    ) : null;
+    const content = (
+      <>
+        {iconPosition === "left" && iconElement}
+        <span className={labelClassName}>{children}</span>
+        {iconPosition === "right" && iconElement}
+      </>
+    );
+
     if (href) {
       return (
         <a
@@ -89,7 +109,7 @@ export const DummyButton = React.forwardRef<
           aria-disabled={disabled ? "true" : undefined}
           {...props}
         >
-          {children}
+          {content}
         </a>
       );
     }
@@ -106,7 +126,7 @@ export const DummyButton = React.forwardRef<
         disabled={disabled}
         {...props}
       >
-        {children}
+        {content}
       </button>
     );
   },
@@ -144,6 +164,7 @@ export const DummyIconButton = React.forwardRef<
       loading,
       isExternal,
       tooltip,
+      iconClassName,
       rel,
       target,
       onClick,
@@ -169,7 +190,9 @@ export const DummyIconButton = React.forwardRef<
           target={target}
           {...props}
         >
-          {Icon ? <Icon data-testid={`${testId}-icon`} /> : null}
+          {Icon ? (
+            <Icon className={iconClassName} data-testid={`${testId}-icon`} />
+          ) : null}
         </a>
       );
     }
@@ -183,7 +206,9 @@ export const DummyIconButton = React.forwardRef<
         onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
         {...props}
       >
-        {Icon ? <Icon data-testid={`${testId}-icon`} /> : null}
+        {Icon ? (
+          <Icon className={iconClassName} data-testid={`${testId}-icon`} />
+        ) : null}
       </button>
     );
   },
@@ -296,6 +321,22 @@ export const DummyTextInput = React.forwardRef<
       "aria-description": ariaDescription,
       autocomplete,
       glass,
+      icon,
+      label,
+      labelPosition,
+      theme,
+      state,
+      rounding,
+      shadow,
+      outline,
+      containerClassName,
+      labelClassName,
+      iconClassName,
+      inputClassName,
+      togglePasswordClassName,
+      srOnlyClassName,
+      srOnlyText,
+      testId,
       onChange,
       id,
       ...props

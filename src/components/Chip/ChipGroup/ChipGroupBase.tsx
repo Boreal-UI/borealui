@@ -1,5 +1,6 @@
 import {
   Children,
+  Fragment,
   cloneElement,
   forwardRef,
   isValidElement,
@@ -87,6 +88,11 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
 
       const mapped = Children.map(children, (child) => {
         if (!isValidElement(child)) {
+          closers.push(null);
+          return child;
+        }
+
+        if (child.type === Fragment) {
           closers.push(null);
           return child;
         }

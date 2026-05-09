@@ -49,6 +49,7 @@ export const AvatarBase = forwardRef<
     state = "",
     className = "",
     priority = false,
+    imageFill = false,
     ImageComponent = "img",
     LinkComponent = "a",
     classMap,
@@ -137,8 +138,6 @@ export const AvatarBase = forwardRef<
     ],
   );
 
-  const isNextImage = typeof ImageComponent !== "string";
-
   const avatarContent =
     !imgError && src ? (
       <ImageComponent
@@ -149,7 +148,7 @@ export const AvatarBase = forwardRef<
         {...(priority
           ? { loading: "eager" as const }
           : { loading: "lazy" as const })}
-        {...(isNextImage ? { fill: true } : {})}
+        {...(imageFill ? { fill: true } : {})}
         data-testid={testId ? `${testId}-image` : undefined}
       />
     ) : (

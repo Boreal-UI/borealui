@@ -46,6 +46,9 @@ export default defineConfig({
 
     rollupOptions: {
       external: externals,
+      output: {
+        exports: "named",
+      },
     },
   },
 });

@@ -198,6 +198,7 @@ describe("BaseDropdown", () => {
     expect(linkItem).toHaveAttribute("href", "/settings");
     expect(linkItem).not.toHaveAttribute("role");
 
+    linkItem.addEventListener("click", (event) => event.preventDefault());
     fireEvent.click(linkItem);
 
     expect(linkClick).toHaveBeenCalledTimes(1);

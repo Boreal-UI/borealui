@@ -125,7 +125,8 @@
     border-radius: var(--border-radius-xs);
     font-family: var(--font-family-mono);
     font-size: 0.95em;
-    word-break: break-word;
+    overflow-wrap: anywhere;
+    word-break: normal;
   }
 
   pre {

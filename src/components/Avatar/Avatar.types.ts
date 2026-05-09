@@ -212,6 +212,14 @@ export interface AvatarProps {
   priority?: boolean;
 
   /**
+   * If true, passes a `fill` prop to a custom image component such as Next.js Image.
+   * Plain img rendering should leave this false.
+   *
+   * @default false
+   */
+  imageFill?: boolean;
+
+  /**
    * Click handler (used only when not a link).
    */
   onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;

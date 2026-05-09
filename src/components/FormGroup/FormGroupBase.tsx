@@ -101,7 +101,10 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
       )}
 
       {childrenArray.map((child, index) => {
-        const clonedChild = React.isValidElement(child)
+        const shouldCloneChild =
+          React.isValidElement(child) && child.type !== React.Fragment;
+
+        const clonedChild = shouldCloneChild
           ? React.cloneElement(
               child as React.ReactElement<Record<string, unknown>>,
               {

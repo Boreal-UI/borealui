@@ -37,6 +37,7 @@ describe("BaseModal", () => {
   let rootSibling: HTMLDivElement;
   let opener: HTMLButtonElement;
   let originalRequestAnimationFrame: typeof window.requestAnimationFrame;
+  let fakeTimersActive = false;
 
   beforeAll(() => {
     originalRequestAnimationFrame = window.requestAnimationFrame;
@@ -52,6 +53,7 @@ describe("BaseModal", () => {
 
   beforeEach(() => {
     jest.useFakeTimers();
+    fakeTimersActive = true;
 
     onClose.mockClear();
 
@@ -73,10 +75,13 @@ describe("BaseModal", () => {
   });
 
   afterEach(() => {
-    act(() => {
-      jest.runOnlyPendingTimers();
-    });
-    jest.useRealTimers();
+    if (fakeTimersActive) {
+      act(() => {
+        jest.runOnlyPendingTimers();
+      });
+      jest.useRealTimers();
+      fakeTimersActive = false;
+    }
     document.body.innerHTML = "";
   });
 
@@ -483,6 +488,7 @@ describe("BaseModal", () => {
 
   it("has no accessibility violations", async () => {
     jest.useRealTimers();
+    fakeTimersActive = false;
 
     const { container } = render(
       <BaseModal
