@@ -425,6 +425,29 @@ describe("ThemeProvider", () => {
     });
   });
 
+  it("shows the saved theme in ThemeSelect after reload instead of the default option", async () => {
+    localStorage.setItem(STORAGE_KEY, "Ocean Breeze");
+
+    render(
+      <ThemeProvider>
+        <ThemeSelect testId="theme-select" />
+      </ThemeProvider>,
+    );
+
+    const select = screen.getByTestId(
+      "theme-select-input",
+    ) as HTMLSelectElement;
+
+    await waitFor(() => {
+      expect(select.value).toBe("1");
+      expect(select.selectedOptions[0]).toHaveTextContent("Ocean Breeze");
+      expect(localStorage.getItem(STORAGE_KEY)).toBe("Ocean Breeze");
+      expect(document.documentElement.dataset.borealTheme).toBe(
+        "Ocean Breeze",
+      );
+    });
+  });
+
   it("falls back to index 0 when the configured default scheme is not found", async () => {
     mockedGetDefaultColorSchemeName.mockReturnValue("Missing Scheme");
 

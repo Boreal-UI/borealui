@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useInsertionEffect,
   useMemo,
+  useRef,
 } from "react";
 import { ThemeContextType, ThemeProviderProps } from "./ThemeContext.types";
 import {
@@ -67,6 +68,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
           : readSavedSchemeName(window.localStorage),
     }),
   );
+  const hasCheckedInitialStorageRef = useRef(false);
 
   useEffect(() => {
     const nextIndex = resolveSchemeIndex(schemes, {
@@ -90,18 +92,6 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     if (!scheme || typeof document === "undefined") return;
 
     applyThemeScheme(scheme, document);
-  }, [selectedScheme, schemes]);
-
-  useEffect(() => {
-    const scheme = schemes[selectedScheme] ?? schemes[0];
-
-    if (!scheme) return;
-
-    writeSavedSchemeName(
-      typeof window === "undefined" ? undefined : window.localStorage,
-      scheme.name,
-    );
-    dispatchThemeChange(scheme.name);
   }, [selectedScheme, schemes]);
 
   useEffect(() => {
@@ -129,12 +119,43 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
     window.addEventListener(THEME_CHANGE_EVENT, handleThemeChange);
     window.addEventListener("storage", handleStorageChange);
+    syncSchemeName(readSavedSchemeName(window.localStorage));
 
     return () => {
       window.removeEventListener(THEME_CHANGE_EVENT, handleThemeChange);
       window.removeEventListener("storage", handleStorageChange);
     };
   }, [schemes]);
+
+  useEffect(() => {
+    const scheme = schemes[selectedScheme] ?? schemes[0];
+
+    if (!scheme) return;
+
+    const storage =
+      typeof window === "undefined" ? undefined : window.localStorage;
+    const savedSchemeName = readSavedSchemeName(storage);
+    const savedIndex = getSchemeIndexByName(schemes, savedSchemeName);
+
+    if (
+      !hasCheckedInitialStorageRef.current &&
+      !initialSchemeName &&
+      savedIndex !== -1 &&
+      savedIndex !== selectedScheme
+    ) {
+      hasCheckedInitialStorageRef.current = true;
+      setSelectedScheme(savedIndex);
+      return;
+    }
+
+    hasCheckedInitialStorageRef.current = true;
+
+    const didSave = writeSavedSchemeName(storage, scheme.name);
+
+    if (didSave) {
+      dispatchThemeChange(scheme.name);
+    }
+  }, [initialSchemeName, selectedScheme, schemes]);
 
   return (
     <ThemeContext.Provider
