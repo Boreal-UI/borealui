@@ -46,14 +46,14 @@ export { default as MarkdownRenderer } from "./components/MarkdownRenderer/next/
 export { default as Chip } from "./components/Chip/next/Chip";
 export { default as ChipGroup } from "./components/Chip/ChipGroup/next/ChipGroup";
 export { default as Badge } from "./components/Badge/next/Badge";
-export { default as Progressbar } from "./components/ProgressBar/next/ProgressBar";
+export { default as ProgressBar } from "./components/ProgressBar/next/ProgressBar";
 export { default as CircularProgress } from "./components/CircularProgress/next/CircularProgress";
 export { default as Rating } from "./components/Rating/next/Rating";
 export { default as Skeleton } from "./components/Skeleton/next/Skeleton";
 export { default as Spinner } from "./components/Spinner/next/Spinner";
 export { default as Tooltip } from "./components/Tooltip/next/Tooltip";
 export { default as MessagePopup } from "./components/MessagePopup/next/MessagePopup";
-export { default as PopOver } from "./components/PopOver/next/PopOver";
+export { default as Popover } from "./components/PopOver/next/PopOver";
 
 // Navigation & Layout
 export { default as Navbar } from "./components/NavBar/next/NavBar";

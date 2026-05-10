@@ -338,6 +338,13 @@ export interface FooterProps extends Omit<
   showThemeSelect?: boolean;
 
   /**
+   * Label for the theme selector dropdown.
+   *
+   * @default "Theme"
+   */
+  themeSelectLabel?: string;
+
+  /**
    * Footer layout style.
    * "inline" keeps the older compact layout.
    * "columns" supports brand, grouped sections, social links, and bottom bar.

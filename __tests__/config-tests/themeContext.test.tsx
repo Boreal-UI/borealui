@@ -27,6 +27,11 @@ jest.mock("../../src/styles/Themes", () => ({
 
 jest.mock("../../src/config/boreal-style-config", () => ({
   getDefaultColorSchemeName: jest.fn(),
+  getDefaultGlass: jest.fn(() => false),
+  getDefaultOutline: jest.fn(() => false),
+  getDefaultRounding: jest.fn(() => "medium"),
+  getDefaultShadow: jest.fn(() => "light"),
+  getDefaultTheme: jest.fn(() => "primary"),
 }));
 
 import { defaultColorSchemes } from "../../src/styles/Themes";
@@ -36,6 +41,7 @@ import {
   contrastRatio,
   getThemeInitializationScript,
 } from "../../src/context/themeRuntime";
+import ThemeSelect from "../../src/components/Select/ThemeSelect/core/ThemeSelect";
 
 const mockedGetDefaultColorSchemeName = getDefaultColorSchemeName as jest.Mock;
 
@@ -385,6 +391,37 @@ describe("ThemeProvider", () => {
       expect(
         document.documentElement.style.getPropertyValue("--primary-color"),
       ).toBe("#005577");
+    });
+  });
+
+  it("keeps independent ThemeProvider islands synced when a ThemeSelect changes", async () => {
+    render(
+      <>
+        <ThemeProvider>
+          <ThemeSelect testId="footer-theme-select" />
+        </ThemeProvider>
+        <ThemeProvider>
+          <ThemeSelect testId="page-theme-select" />
+        </ThemeProvider>
+      </>,
+    );
+
+    const footerSelect = screen.getByTestId(
+      "footer-theme-select-input",
+    ) as HTMLSelectElement;
+    const pageSelect = screen.getByTestId(
+      "page-theme-select-input",
+    ) as HTMLSelectElement;
+
+    fireEvent.change(footerSelect, { target: { value: "1" } });
+
+    await waitFor(() => {
+      expect(footerSelect.value).toBe("1");
+      expect(pageSelect.value).toBe("1");
+      expect(localStorage.getItem(STORAGE_KEY)).toBe("Ocean Breeze");
+      expect(document.documentElement.dataset.borealTheme).toBe(
+        "Ocean Breeze",
+      );
     });
   });
 

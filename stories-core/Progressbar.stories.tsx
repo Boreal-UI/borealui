@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
 import {
-  Progressbar,
+  ProgressBar,
   RoundingType,
   ShadowType,
   StateType,
@@ -36,7 +36,7 @@ const shadowOptions: ShadowType[] = [
 
 const meta: Meta<ProgressBarProps> = {
   title: "Components/ProgressBar",
-  component: Progressbar,
+  component: ProgressBar,
   tags: ["autodocs"],
   args: {
     theme: "primary",
@@ -79,7 +79,7 @@ export const LabelPositions: Story = {
             <div style={{ fontSize: "0.9rem", opacity: 0.8 }}>
               Label Position: <strong>{pos}</strong>
             </div>
-            <Progressbar
+            <ProgressBar
               {...args}
               value={72}
               label={`Build ${72}%`}
@@ -100,7 +100,7 @@ export const SizeVariants: Story = {
       <div style={{ display: "grid", gap: "1rem" }}>
         {sizes.map((size) => (
           <div key={size}>
-            <Progressbar
+            <ProgressBar
               {...args}
               value={40 + sizes.indexOf(size) * 20}
               size={size}
@@ -119,7 +119,7 @@ export const ThemedVariants: Story = {
       <div style={{ display: "grid", gap: "1rem" }}>
         {themeOptions.map((theme) => (
           <div key={theme}>
-            <Progressbar
+            <ProgressBar
               {...args}
               value={20 + themeOptions.indexOf(theme) * 15}
               theme={theme}
@@ -138,7 +138,7 @@ export const StateVariants: Story = {
       <div style={{ display: "grid", gap: "1rem" }}>
         {stateOptions.map((state) => (
           <div key={state}>
-            <Progressbar
+            <ProgressBar
               {...args}
               value={20 + stateOptions.indexOf(state) * 15}
               state={state}
@@ -157,7 +157,7 @@ export const GlassThemeVariants: Story = {
       <div style={{ display: "grid", gap: "1rem" }}>
         {themeOptions.map((theme) => (
           <div key={`glass-${theme}`}>
-            <Progressbar
+            <ProgressBar
               {...args}
               value={20 + themeOptions.indexOf(theme) * 15}
               theme={theme}
@@ -177,7 +177,7 @@ export const GlassStateVariants: Story = {
       <div style={{ display: "grid", gap: "1rem" }}>
         {stateOptions.map((state) => (
           <div key={`glass-${state}`}>
-            <Progressbar
+            <ProgressBar
               {...args}
               value={20 + stateOptions.indexOf(state) * 15}
               state={state}
@@ -204,7 +204,7 @@ export const LiveProgress: Story = {
 
     return (
       <div style={{ maxWidth: "500px" }}>
-        <Progressbar
+        <ProgressBar
           {...args}
           value={progress}
           label={`Live Updating Progress: ${progress}%`}
@@ -220,7 +220,7 @@ export const RoundingVariants: Story = {
       <div style={{ display: "grid", gap: "1rem" }}>
         {roundingOptions.map((rounding) => (
           <div key={rounding}>
-            <Progressbar
+            <ProgressBar
               {...args}
               value={20 + roundingOptions.indexOf(rounding) * 15}
               rounding={rounding}
@@ -239,7 +239,7 @@ export const ShadowVariants: Story = {
       <div style={{ display: "grid", gap: "1rem" }}>
         {shadowOptions.map((shadow) => (
           <div key={shadow}>
-            <Progressbar
+            <ProgressBar
               {...args}
               value={20 + shadowOptions.indexOf(shadow) * 15}
               shadow={shadow}

@@ -40,6 +40,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
 
   socialLinks = [],
   showThemeSelect = false,
+  themeSelectLabel = "Theme",
   bottomEnd,
 
   contentClassName,
@@ -293,7 +294,8 @@ const FooterBase: React.FC<BaseFooterProps> = ({
       >
         <ThemeSelect
           theme="clear"
-          label={brandDescription}
+          label={themeSelectLabel}
+          labelPosition={layout === "columns" ? "top" : "left"}
           shadow="none"
           aria-label={themeSelectAriaLabel}
         />
