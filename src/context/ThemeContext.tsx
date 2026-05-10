@@ -9,10 +9,14 @@ import React, {
 import { ThemeContextType, ThemeProviderProps } from "./ThemeContext.types";
 import {
   applyThemeScheme,
+  dispatchThemeChange,
   getAvailableSchemes,
+  getSchemeIndexByName,
   getThemeInitializationScript,
   readSavedSchemeName,
   resolveSchemeIndex,
+  THEME_CHANGE_EVENT,
+  THEME_STORAGE_KEY,
   writeSavedSchemeName,
 } from "./themeRuntime";
 
@@ -97,7 +101,40 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
       typeof window === "undefined" ? undefined : window.localStorage,
       scheme.name,
     );
+    dispatchThemeChange(scheme.name);
   }, [selectedScheme, schemes]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const syncSchemeName = (schemeName?: string | null) => {
+      const nextIndex = getSchemeIndexByName(schemes, schemeName);
+
+      if (nextIndex === -1) return;
+
+      setSelectedScheme((current) =>
+        current === nextIndex ? current : nextIndex,
+      );
+    };
+
+    const handleThemeChange = (event: Event) => {
+      const customEvent = event as CustomEvent<{ schemeName?: string }>;
+      syncSchemeName(customEvent.detail?.schemeName);
+    };
+
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key !== THEME_STORAGE_KEY) return;
+      syncSchemeName(event.newValue);
+    };
+
+    window.addEventListener(THEME_CHANGE_EVENT, handleThemeChange);
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener(THEME_CHANGE_EVENT, handleThemeChange);
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [schemes]);
 
   return (
     <ThemeContext.Provider

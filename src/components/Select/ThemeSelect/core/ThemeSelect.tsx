@@ -12,11 +12,22 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
   (
     {
       theme = getDefaultTheme(),
+      glass,
       shadow = getDefaultShadow(),
       rounding = getDefaultRounding(),
       "data-testid": dataTestId,
       testId = dataTestId ?? "theme-select",
       state = "",
+      "aria-label": ariaLabel = "Select Theme",
+      "aria-description": ariaDescription,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedBy,
+      "aria-invalid": ariaInvalid,
+      "aria-required": ariaRequired,
+      disabled,
+      label,
+      name,
+      id,
     },
     ref,
   ) => {
@@ -35,21 +46,37 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
       [schemes],
     );
 
+    const handleChange = (value: string | number) => {
+      const nextIndex = Number.parseInt(String(value), 10);
+
+      if (!Number.isInteger(nextIndex) || !schemes[nextIndex]) return;
+
+      setSelectedScheme(nextIndex);
+    };
+
     return (
       <div className="control-container">
         <Select
           ref={ref}
           theme={theme}
+          glass={glass}
           state={state}
           shadow={shadow}
           rounding={rounding}
           options={options}
           data-testid={testId}
           value={String(selectedScheme)}
-          aria-label="Select Theme"
-          onChange={(value: string | number) =>
-            setSelectedScheme(parseInt(String(value), 10))
-          }
+          aria-label={ariaLabel}
+          aria-description={ariaDescription}
+          aria-labelledby={ariaLabelledBy}
+          aria-describedby={ariaDescribedBy}
+          aria-invalid={ariaInvalid}
+          aria-required={ariaRequired}
+          disabled={disabled}
+          label={label}
+          name={name}
+          id={id}
+          onChange={handleChange}
         />
       </div>
     );

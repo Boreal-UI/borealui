@@ -3,6 +3,7 @@ import { defaultColorSchemes } from "../styles/Themes";
 import { ColorScheme } from "@/types";
 
 export const THEME_STORAGE_KEY = "boreal:selectedSchemeName";
+export const THEME_CHANGE_EVENT = "boreal:theme-change";
 export const MIN_TEXT_CONTRAST = 4.5;
 export const MIN_UI_CONTRAST = 3;
 
@@ -85,14 +86,35 @@ export function readSavedSchemeName(storage: Storage | undefined): string | null
 export function writeSavedSchemeName(
   storage: Storage | undefined,
   schemeName: string,
-) {
-  if (!storage) return;
+): boolean {
+  if (!storage) return false;
 
   try {
+    if (storage.getItem(THEME_STORAGE_KEY) === schemeName) {
+      return false;
+    }
+
     storage.setItem(THEME_STORAGE_KEY, schemeName);
+    return true;
   } catch {
     console.error("Failed to save theme name");
+    return false;
   }
+}
+
+export function dispatchThemeChange(
+  schemeName: string,
+  windowRef: Window | undefined = typeof window === "undefined"
+    ? undefined
+    : window,
+) {
+  if (!windowRef) return;
+
+  windowRef.dispatchEvent(
+    new CustomEvent(THEME_CHANGE_EVENT, {
+      detail: { schemeName },
+    }),
+  );
 }
 
 function normalizeHex(hex: string): string | null {
