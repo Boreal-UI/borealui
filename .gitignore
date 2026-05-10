@@ -66,3 +66,4 @@ yarn.lock
 eslint-report.json
 stylelint-report.json
 DESIGN.md
+debug-storybook.log

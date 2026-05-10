@@ -102,6 +102,15 @@ export const themeSelectPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "labelPosition",
+      "type": "LabelPositionType",
+      "description": "",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"top\""
+    },
+    {
       "name": "name",
       "type": "string",
       "description": "",

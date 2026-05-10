@@ -6,7 +6,7 @@ import {
   RoundingType,
   ShadowType,
 } from "../src/index.core";
-import type { PopoverProps } from "../src/components/Popover/Popover.types";
+import type { PopoverProps } from "../src/components/PopOver/PopOver.types";
 
 const meta: Meta<PopoverProps> = {
   title: "Components/Popover",
