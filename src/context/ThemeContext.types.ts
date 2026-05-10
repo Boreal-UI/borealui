@@ -38,14 +38,18 @@ export interface ThemeProviderProps {
  * Context value provided by the ThemeProvider.
  *
  * @property {number} selectedScheme - Index of the currently active color scheme.
+ * @property {string} selectedSchemeName - Name of the currently active color scheme.
  * @property {ColorScheme[]} schemes - Array of available color schemes.
  * @property {Dispatch<SetStateAction<number>>} setSelectedScheme - Function to update the selected scheme index.
+ * @property {Dispatch<SetStateAction<string>>} setSelectedSchemeName - Function to update the selected scheme name.
  *
  * @example
- * const { selectedScheme, setSelectedScheme } = useContext(ThemeContext);
+ * const { selectedSchemeName, setSelectedSchemeName } = useContext(ThemeContext);
  */
 export interface ThemeContextType {
   selectedScheme: number;
+  selectedSchemeName: string;
   schemes: ColorScheme[];
   setSelectedScheme: React.Dispatch<React.SetStateAction<number>>;
+  setSelectedSchemeName: React.Dispatch<React.SetStateAction<string>>;
 }

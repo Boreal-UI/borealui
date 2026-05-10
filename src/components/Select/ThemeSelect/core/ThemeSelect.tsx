@@ -36,23 +36,23 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
     if (!ctx)
       throw new Error("ThemeContext is undefined. Wrap with ThemeProvider.");
 
-    const { selectedScheme, setSelectedScheme, schemes } = ctx;
+    const { selectedSchemeName, setSelectedSchemeName, schemes } = ctx;
 
     const options = useMemo(
       () =>
-        schemes.map((scheme, index) => ({
-          value: String(index),
+        schemes.map((scheme) => ({
+          value: scheme.name,
           label: scheme.name,
         })),
       [schemes],
     );
 
     const handleChange = (value: string | number) => {
-      const nextIndex = Number.parseInt(String(value), 10);
+      const nextSchemeName = String(value);
 
-      if (!Number.isInteger(nextIndex) || !schemes[nextIndex]) return;
+      if (!schemes.some((scheme) => scheme.name === nextSchemeName)) return;
 
-      setSelectedScheme(nextIndex);
+      setSelectedSchemeName(nextSchemeName);
     };
 
     return (
@@ -66,7 +66,7 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
           rounding={rounding}
           options={options}
           data-testid={testId}
-          value={String(selectedScheme)}
+          value={selectedSchemeName}
           aria-label={ariaLabel}
           aria-description={ariaDescription}
           aria-labelledby={ariaLabelledBy}

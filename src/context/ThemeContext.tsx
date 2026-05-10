@@ -5,7 +5,7 @@ import React, {
   useEffect,
   useInsertionEffect,
   useMemo,
-  useRef,
+  useCallback,
 } from "react";
 import { ThemeContextType, ThemeProviderProps } from "./ThemeContext.types";
 import {
@@ -59,16 +59,62 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     [parsedCustomSchemes, useOnlyCustomSchemes],
   );
 
-  const [selectedScheme, setSelectedScheme] = useState<number>(() =>
-    resolveSchemeIndex(schemes, {
-      initialSchemeName,
-      savedSchemeName:
+  const resolveSelectedSchemeName = useCallback(
+    (savedSchemeName?: string | null) => {
+      const nextIndex = resolveSchemeIndex(schemes, {
+        initialSchemeName,
+        savedSchemeName,
+      });
+
+      return schemes[nextIndex]?.name ?? schemes[0]?.name ?? "";
+    },
+    [initialSchemeName, schemes],
+  );
+
+  const [selectedSchemeName, setSelectedSchemeNameState] = useState<string>(
+    () =>
+      resolveSelectedSchemeName(
         typeof window === "undefined"
           ? null
           : readSavedSchemeName(window.localStorage),
-    }),
+      ),
   );
-  const hasCheckedInitialStorageRef = useRef(false);
+
+  const selectedScheme = useMemo(() => {
+    const index = getSchemeIndexByName(schemes, selectedSchemeName);
+    return index === -1 ? 0 : index;
+  }, [schemes, selectedSchemeName]);
+
+  const setSelectedSchemeName = useCallback<
+    ThemeContextType["setSelectedSchemeName"]
+  >(
+    (value) => {
+      setSelectedSchemeNameState((currentName) => {
+        const nextName =
+          typeof value === "function" ? value(currentName) : value;
+
+        return getSchemeIndexByName(schemes, nextName) === -1
+          ? currentName
+          : nextName;
+      });
+    },
+    [schemes],
+  );
+
+  const setSelectedScheme = useCallback<ThemeContextType["setSelectedScheme"]>(
+    (value) => {
+      setSelectedSchemeNameState((currentName) => {
+        const currentIndex = getSchemeIndexByName(schemes, currentName);
+        const nextIndex =
+          typeof value === "function"
+            ? value(currentIndex === -1 ? 0 : currentIndex)
+            : value;
+
+        return schemes[nextIndex]?.name ?? currentName;
+      });
+    },
+    [schemes],
+  );
 
   useEffect(() => {
     const savedSchemeName =
@@ -76,18 +122,17 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
         ? null
         : readSavedSchemeName(window.localStorage);
     const savedIndex = getSchemeIndexByName(schemes, savedSchemeName);
-    const nextIndex = resolveSchemeIndex(schemes, {
-      initialSchemeName,
-      savedSchemeName,
-    });
+    const nextSchemeName = resolveSelectedSchemeName(savedSchemeName);
 
-    setSelectedScheme((current) => {
-      if (initialSchemeName) return nextIndex;
-      if (savedIndex !== -1) return savedIndex;
-      if (schemes[current]) return current;
-      return nextIndex;
+    setSelectedSchemeNameState((currentName) => {
+      if (initialSchemeName) return nextSchemeName;
+      if (savedIndex !== -1) return savedSchemeName as string;
+      if (getSchemeIndexByName(schemes, currentName) !== -1) {
+        return currentName;
+      }
+      return nextSchemeName;
     });
-  }, [schemes, initialSchemeName]);
+  }, [initialSchemeName, resolveSelectedSchemeName, schemes]);
 
   useInsertionEffect(() => {
     const scheme = schemes[selectedScheme] ?? schemes[0];
@@ -101,12 +146,9 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     if (typeof window === "undefined") return;
 
     const syncSchemeName = (schemeName?: string | null) => {
-      const nextIndex = getSchemeIndexByName(schemes, schemeName);
-
-      if (nextIndex === -1) return;
-
-      setSelectedScheme((current) =>
-        current === nextIndex ? current : nextIndex,
+      if (getSchemeIndexByName(schemes, schemeName) === -1) return;
+      setSelectedSchemeNameState((current) =>
+        current === schemeName ? current : (schemeName as string),
       );
     };
 
@@ -135,36 +177,23 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
     if (!scheme) return;
 
-    const storage =
-      typeof window === "undefined" ? undefined : window.localStorage;
-    const savedSchemeName = readSavedSchemeName(storage);
-    const savedIndex = getSchemeIndexByName(schemes, savedSchemeName);
-
-    if (
-      !hasCheckedInitialStorageRef.current &&
-      !initialSchemeName &&
-      savedIndex !== -1 &&
-      savedIndex !== selectedScheme
-    ) {
-      hasCheckedInitialStorageRef.current = true;
-      setSelectedScheme(savedIndex);
-      return;
-    }
-
-    hasCheckedInitialStorageRef.current = true;
-
-    const didSave = writeSavedSchemeName(storage, scheme.name);
+    const didSave = writeSavedSchemeName(
+      typeof window === "undefined" ? undefined : window.localStorage,
+      scheme.name,
+    );
 
     if (didSave) {
       dispatchThemeChange(scheme.name);
     }
-  }, [initialSchemeName, selectedScheme, schemes]);
+  }, [selectedScheme, schemes]);
 
   return (
     <ThemeContext.Provider
       value={{
         selectedScheme,
+        selectedSchemeName,
         setSelectedScheme,
+        setSelectedSchemeName,
         schemes,
       }}
     >
