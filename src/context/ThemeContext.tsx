@@ -6,6 +6,7 @@ import React, {
   useInsertionEffect,
   useMemo,
   useCallback,
+  useLayoutEffect,
 } from "react";
 import { ThemeContextType, ThemeProviderProps } from "./ThemeContext.types";
 import {
@@ -24,6 +25,9 @@ import {
 export const ThemeContext = createContext<ThemeContextType | undefined>(
   undefined,
 );
+
+const useBrowserLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
@@ -116,7 +120,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     [schemes],
   );
 
-  useEffect(() => {
+  useBrowserLayoutEffect(() => {
     const savedSchemeName =
       typeof window === "undefined"
         ? null
