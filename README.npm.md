@@ -198,14 +198,14 @@ The root `boreal-ui` entry currently points to the core build. For Next.js apps,
 - `Badge`
 - `Chip`
 - `ChipGroup`
-- `Progressbar`
+- `ProgressBar`
 - `CircularProgress`
 - `Spinner`
 - `Skeleton`
 - `Rating`
 - `Tooltip`
 - `MessagePopup`
-- `PopOver`
+- `Popover`
 - `Modal`
 - `NotificationCenter`
 - `EmptyState`

@@ -171,9 +171,9 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 ### Feedback and Status
 
 - `Badge`, `Chip`, and `ChipGroup` cover labels, statuses, and compact selectable or grouped metadata.
-- `Progressbar`, `CircularProgress`, `Spinner`, and `Skeleton` cover loading and progress states.
+- `ProgressBar`, `CircularProgress`, `Spinner`, and `Skeleton` cover loading and progress states.
 - `Rating` provides star-style rating UI.
-- `Tooltip`, `MessagePopup`, `PopOver`, `Modal`, `NotificationCenter`, and `EmptyState` cover contextual help, alerts, overlays, dialogs, notification lists, and no-data states.
+- `Tooltip`, `MessagePopup`, `Popover`, `Modal`, `NotificationCenter`, and `EmptyState` cover contextual help, alerts, overlays, dialogs, notification lists, and no-data states.
 
 ### Navigation and Layout
 

@@ -39,7 +39,7 @@ The `core` and `next` barrels export the same component names:
 | Actions | `Button`, `IconButton`, `ScrollToTop` |
 | Forms and inputs | `TextInput`, `TextArea`, `Select`, `ThemeSelect`, `FileUpload`, `TagInput`, `RadioButton`, `RadioGroup`, `Slider`, `Checkbox`, `ColorPicker`, `FormGroup`, `DateTimePicker` |
 | Data and content | `DataTable`, `MarkdownRenderer`, `MetricBox`, `Card`, `Avatar` |
-| Feedback and status | `Chip`, `ChipGroup`, `Badge`, `Progressbar`, `CircularProgress`, `Rating`, `Skeleton`, `Spinner`, `Tooltip`, `MessagePopup`, `PopOver`, `EmptyState`, `NotificationCenter` |
+| Feedback and status | `Chip`, `ChipGroup`, `Badge`, `ProgressBar`, `CircularProgress`, `Rating`, `Skeleton`, `Spinner`, `Tooltip`, `MessagePopup`, `Popover`, `EmptyState`, `NotificationCenter` |
 | Navigation and layout | `Navbar`, `Sidebar`, `Footer`, `Breadcrumbs`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Modal`, `Toggle`, `Toolbar`, `Dropdown`, `Divider`, `CommandPalette` |
 
 Some barrel names preserve existing casing for compatibility. The standalone paths below use the casing exposed by the package export map.
@@ -63,7 +63,7 @@ Standalone component paths:
 | `Breadcrumbs` | `boreal-ui/core/Breadcrumbs` | `boreal-ui/next/Breadcrumbs` |
 | `Button` | `boreal-ui/core/Button` | `boreal-ui/next/Button` |
 | `Card` | `boreal-ui/core/Card` | `boreal-ui/next/Card` |
-| `CheckBox` | `boreal-ui/core/CheckBox` | `boreal-ui/next/CheckBox` |
+| `Checkbox` | `boreal-ui/core/Checkbox` | `boreal-ui/next/Checkbox` |
 | `Chip` | `boreal-ui/core/Chip` | `boreal-ui/next/Chip` |
 | `CircularProgress` | `boreal-ui/core/CircularProgress` | `boreal-ui/next/CircularProgress` |
 | `ColorPicker` | `boreal-ui/core/ColorPicker` | `boreal-ui/next/ColorPicker` |
@@ -78,13 +78,13 @@ Standalone component paths:
 | `FormGroup` | `boreal-ui/core/FormGroup` | `boreal-ui/next/FormGroup` |
 | `IconButton` | `boreal-ui/core/IconButton` | `boreal-ui/next/IconButton` |
 | `MarkdownRenderer` | `boreal-ui/core/MarkdownRenderer` | `boreal-ui/next/MarkdownRenderer` |
-| `MessagePopUp` | `boreal-ui/core/MessagePopUp` | `boreal-ui/next/MessagePopUp` |
+| `MessagePopup` | `boreal-ui/core/MessagePopup` | `boreal-ui/next/MessagePopup` |
 | `MetricBox` | `boreal-ui/core/MetricBox` | `boreal-ui/next/MetricBox` |
 | `Modal` | `boreal-ui/core/Modal` | `boreal-ui/next/Modal` |
-| `NavBar` | `boreal-ui/core/NavBar` | `boreal-ui/next/NavBar` |
+| `Navbar` | `boreal-ui/core/Navbar` | `boreal-ui/next/Navbar` |
 | `NotificationCenter` | `boreal-ui/core/NotificationCenter` | `boreal-ui/next/NotificationCenter` |
 | `Pager` | `boreal-ui/core/Pager` | `boreal-ui/next/Pager` |
-| `PopOver` | `boreal-ui/core/PopOver` | `boreal-ui/next/PopOver` |
+| `Popover` | `boreal-ui/core/Popover` | `boreal-ui/next/Popover` |
 | `ProgressBar` | `boreal-ui/core/ProgressBar` | `boreal-ui/next/ProgressBar` |
 | `RadioButton` | `boreal-ui/core/RadioButton` | `boreal-ui/next/RadioButton` |
 | `RadioGroup` | `boreal-ui/core/RadioGroup` | `boreal-ui/next/RadioGroup` |
