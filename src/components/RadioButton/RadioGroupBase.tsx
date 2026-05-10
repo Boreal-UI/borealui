@@ -118,7 +118,6 @@ const BaseRadioGroup = ({
           {description}
         </div>
       )}
-      a
       {errorMessage && (
         <div
           id={errorId}

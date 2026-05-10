@@ -420,6 +420,15 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"Theme selector\""
     },
     {
+      "name": "themeSelectLabel",
+      "type": "string",
+      "description": "Label for the theme selector dropdown.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"Theme\""
+    },
+    {
       "name": "themeToggleClassName",
       "type": "string",
       "description": "Optional custom class name for the theme selector wrapper.",
