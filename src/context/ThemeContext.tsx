@@ -71,16 +71,19 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   const hasCheckedInitialStorageRef = useRef(false);
 
   useEffect(() => {
+    const savedSchemeName =
+      typeof window === "undefined"
+        ? null
+        : readSavedSchemeName(window.localStorage);
+    const savedIndex = getSchemeIndexByName(schemes, savedSchemeName);
     const nextIndex = resolveSchemeIndex(schemes, {
       initialSchemeName,
-      savedSchemeName:
-        typeof window === "undefined"
-          ? null
-          : readSavedSchemeName(window.localStorage),
+      savedSchemeName,
     });
 
     setSelectedScheme((current) => {
       if (initialSchemeName) return nextIndex;
+      if (savedIndex !== -1) return savedIndex;
       if (schemes[current]) return current;
       return nextIndex;
     });

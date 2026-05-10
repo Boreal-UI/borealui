@@ -6,7 +6,7 @@ import {
   ShadowType,
   RoundingType,
 } from "../../src/index.next";
-import type { PopoverProps } from "../../src/components/Popover/Popover.types";
+import type { PopoverProps } from "../../src/components/PopOver/PopOver.types";
 
 const meta: Meta<PopoverProps> = {
   title: "Components/Popover",
@@ -117,9 +117,7 @@ export const GlassThemeVariants: Story = {
               </Button>
             }
             content={
-              <div style={{ padding: "0.5rem" }}>
-                Glass {theme} theme
-              </div>
+              <div style={{ padding: "0.5rem" }}>Glass {theme} theme</div>
             }
           />
         ))}
@@ -145,9 +143,7 @@ export const GlassStateVariants: Story = {
               </Button>
             }
             content={
-              <div style={{ padding: "0.5rem" }}>
-                Glass {state} state
-              </div>
+              <div style={{ padding: "0.5rem" }}>Glass {state} state</div>
             }
           />
         ))}
