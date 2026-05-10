@@ -230,7 +230,6 @@ export interface SelectProps {
   /** Additional class names for screen-reader-only description text. */
   srOnlyClassName?: string;
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -290,6 +289,7 @@ export interface ThemeSelectProps {
 
   disabled?: boolean;
   label?: ReactNode;
+  labelPosition?: LabelPositionType;
   name?: string;
   id?: string;
 }

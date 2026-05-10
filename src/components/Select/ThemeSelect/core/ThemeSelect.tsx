@@ -26,6 +26,7 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
       "aria-required": ariaRequired,
       disabled,
       label,
+      labelPosition,
       name,
       id,
     },
@@ -74,6 +75,7 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
           aria-required={ariaRequired}
           disabled={disabled}
           label={label}
+          labelPosition={labelPosition}
           name={name}
           id={id}
           onChange={handleChange}
