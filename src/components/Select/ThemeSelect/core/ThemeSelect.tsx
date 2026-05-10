@@ -1,22 +1,12 @@
-import {
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  forwardRef,
-} from "react";
+import { useContext, useMemo, forwardRef } from "react";
 import Select from "../../core/Select";
 import { ThemeContext } from "../../../../context/ThemeContext";
-import { readSavedSchemeName } from "../../../../context/themeRuntime";
 import {
   getDefaultRounding,
   getDefaultShadow,
   getDefaultTheme,
 } from "@/config/boreal-style-config";
 import { ThemeSelectProps } from "../../Select.types";
-
-const useBrowserLayoutEffect =
-  typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
   (
@@ -56,18 +46,6 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
         })),
       [schemes],
     );
-
-    useBrowserLayoutEffect(() => {
-      const savedSchemeName = readSavedSchemeName(window.localStorage);
-
-      if (
-        savedSchemeName &&
-        savedSchemeName !== selectedSchemeName &&
-        schemes.some((scheme) => scheme.name === savedSchemeName)
-      ) {
-        setSelectedSchemeName(savedSchemeName);
-      }
-    }, [schemes, selectedSchemeName, setSelectedSchemeName]);
 
     const handleChange = (value: string | number) => {
       const nextSchemeName = String(value);

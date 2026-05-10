@@ -41,6 +41,9 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     [customSchemes],
   );
 
+  const [hasResolvedInitialScheme, setHasResolvedInitialScheme] =
+    useState(false);
+
   const parsedCustomSchemes = useMemo(() => {
     try {
       const parsed: unknown = JSON.parse(customSchemesKey);
@@ -76,12 +79,14 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   );
 
   const [selectedSchemeName, setSelectedSchemeNameState] = useState<string>(
-    () =>
-      resolveSelectedSchemeName(
+    () => {
+      const savedSchemeName =
         typeof window === "undefined"
           ? null
-          : readSavedSchemeName(window.localStorage),
-      ),
+          : readSavedSchemeName(window.localStorage);
+
+      return resolveSelectedSchemeName(savedSchemeName);
+    },
   );
 
   const selectedScheme = useMemo(() => {
@@ -125,17 +130,22 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
       typeof window === "undefined"
         ? null
         : readSavedSchemeName(window.localStorage);
+
     const savedIndex = getSchemeIndexByName(schemes, savedSchemeName);
     const nextSchemeName = resolveSelectedSchemeName(savedSchemeName);
 
     setSelectedSchemeNameState((currentName) => {
       if (initialSchemeName) return nextSchemeName;
       if (savedIndex !== -1) return savedSchemeName as string;
+
       if (getSchemeIndexByName(schemes, currentName) !== -1) {
         return currentName;
       }
+
       return nextSchemeName;
     });
+
+    setHasResolvedInitialScheme(true);
   }, [initialSchemeName, resolveSelectedSchemeName, schemes]);
 
   useInsertionEffect(() => {
@@ -177,6 +187,8 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   }, [schemes]);
 
   useEffect(() => {
+    if (!hasResolvedInitialScheme) return;
+
     const scheme = schemes[selectedScheme] ?? schemes[0];
 
     if (!scheme) return;
@@ -189,7 +201,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     if (didSave) {
       dispatchThemeChange(scheme.name);
     }
-  }, [selectedScheme, schemes]);
+  }, [hasResolvedInitialScheme, selectedScheme, schemes]);
 
   return (
     <ThemeContext.Provider
