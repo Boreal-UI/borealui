@@ -43,14 +43,14 @@ export { default as MarkdownRenderer } from "./components/MarkdownRenderer/core/
 export { default as Chip } from "./components/Chip/core/Chip";
 export { default as ChipGroup } from "./components/Chip/ChipGroup/core/ChipGroup";
 export { default as Badge } from "./components/Badge/core/Badge";
-export { default as Progressbar } from "./components/ProgressBar/core/ProgressBar";
+export { default as ProgressBar } from "./components/ProgressBar/core/ProgressBar";
 export { default as CircularProgress } from "./components/CircularProgress/core/CircularProgress";
 export { default as Rating } from "./components/Rating/core/Rating";
 export { default as Skeleton } from "./components/Skeleton/core/Skeleton";
 export { default as Spinner } from "./components/Spinner/core/Spinner";
 export { default as Tooltip } from "./components/Tooltip/core/Tooltip";
 export { default as MessagePopup } from "./components/MessagePopup/core/MessagePopup";
-export { default as PopOver } from "./components/PopOver/core/PopOver";
+export { default as Popover } from "./components/PopOver/core/PopOver";
 
 // Navigation & Layout
 export { default as Navbar } from "./components/NavBar/core/NavBar";
