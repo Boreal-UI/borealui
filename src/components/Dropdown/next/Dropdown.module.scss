@@ -5,250 +5,250 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.wrapper {
-  position: relative;
-  display: inline-block;
-  outline: none;
-  font-family: var(--font-family-ui);
-}
-
-.trigger {
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 6px;
-  }
-}
-
-.alignRight {
-  right: 0;
-  transform: translateX(0);
-}
-
-.alignLeft {
-  left: 0;
-  transform: translateX(0);
-}
-
-.menu {
-  position: absolute;
-  top: 100%;
-  overflow: hidden;
-  margin-top: var(--spacing-xs);
-  background-color: var(--background-color-lighter);
-  z-index: theme.$z-index-drawer;
-  padding: var(--spacing-xs) 0;
-  width: max-content;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  animation: fade-in 0.2s ease-in-out;
-
-  @include bp.up(sm) {
-    &[data-overflow-right="true"] {
-      left: auto;
-      right: 0;
-    }
-
-    &[data-overflow-left="true"] {
-      right: auto;
-      left: 0;
-    }
-  }
-
-  @include bp.down(sm) {
-    min-width: 100%;
-    max-height: 50vh;
-    overflow-y: auto;
-    animation: slide-up 0.3s ease-in-out;
-    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--spacing-sm));
-  }
-
-  @include bp.up(lg) {
-    min-width: 200px;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-  }
-}
-
-@each $name, $values in theme.$themes {
-  .#{$name} {
-    --dropdown-glass-bg: #{map.get($values, glass-bg)};
-    --dropdown-glass-hover-bg: #{map.get($values, glass-hover)};
-    --dropdown-glass-border: #{map.get($values, glass-border)};
-    --dropdown-glass-text: #{map.get($values, text)};
-    color: map.get($values, text);
-    border: 1px solid map.get($values, border);
-  }
-}
-
-@each $name, $values in theme.$states {
-  .#{$name} {
-    --dropdown-glass-bg: #{map.get($values, glass-bg)};
-    --dropdown-glass-hover-bg: #{map.get($values, glass-hover)};
-    --dropdown-glass-border: #{map.get($values, glass-border)};
-    --dropdown-glass-text: #{map.get($values, text)};
-    color: map.get($values, text);
-    border: 1px solid map.get($values, border);
-  }
-}
-
-.glass {
-  @include mixins.glass-surface(
-    var(--dropdown-glass-bg, rgba(255, 255, 255, 0.18)),
-    var(--dropdown-glass-border, rgba(255, 255, 255, 0.34)),
-    16px
-  );
-  color: var(--dropdown-glass-text, var(--text-color-primary));
-  box-shadow: var(--box-shadow-md);
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: var(--spacing-sm);
-  line-height: var(--line-height-label);
-  width: 100%;
-  background: none;
-  border: none;
-  padding: var(--spacing-sm) var(--spacing-md);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  letter-spacing: var(--letter-spacing-label);
-  color: var(--text-color-primary);
-  cursor: pointer;
-  text-align: left;
-  transition:
-    background-color var(--transition-default),
-    transform var(--transition-default),
-    box-shadow var(--transition-default);
-
-  &:hover,
-  &:focus {
-    background-color: var(--dropdown-item-hover-bg, var(--background-color-dark));
-    color: var(--text-color-primary);
+  .wrapper {
+    position: relative;
+    display: inline-block;
     outline: none;
+    font-family: var(--font-family-ui);
   }
 
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 6px;
+  .trigger {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
   }
 
-  @include bp.down(sm) {
-    font-size: var(--font-size-caption);
-    padding: var(--spacing-md);
-    gap: var(--spacing-xs);
+  .alignRight {
+    right: 0;
+    transform: translateX(0);
   }
 
-  @include bp.up(lg) {
-    font-size: var(--font-size-label);
-    padding: var(--spacing-md) var(--spacing-lg);
-    gap: var(--spacing-sm);
-  }
-}
-
-.icon {
-  margin-right: var(--spacing-xs);
-  display: flex;
-  align-items: center;
-
-  @include bp.down(sm) {
-    margin-right: var(--spacing-xxs);
-  }
-
-  @include bp.up(lg) {
-    margin-right: var(--spacing-sm);
-  }
-}
-
-.item[aria-disabled="true"],
-.item.isDisabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-a.item {
-  text-decoration: none;
-}
-
-.menu.glass .item:hover,
-.menu.glass .item:focus {
-  --dropdown-item-hover-bg: var(
-    --dropdown-glass-hover-bg,
-    rgba(255, 255, 255, 0.24)
-  );
-}
-
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-  }
-
-  .round#{$key} .item {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .menu,
-  .item {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .item:hover {
-    background-color: transparent;
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .menu.glass {
-    background: Canvas;
-    color: CanvasText;
-    border-color: ButtonText;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+  .alignLeft {
+    left: 0;
+    transform: translateX(0);
   }
 
   .menu {
-    background: Canvas;
-    color: CanvasText;
-    border: 1px solid ButtonText;
-    outline-color: Highlight;
+    position: absolute;
+    top: 100%;
+    overflow: hidden;
+    margin-top: var(--spacing-xs);
+    background-color: var(--background-color-lighter);
+    z-index: theme.$z-index-drawer;
+    padding: var(--spacing-xs) 0;
+    width: max-content;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    animation: fade-in 0.2s ease-in-out;
+
+    @include bp.up(sm) {
+      &[data-overflow-right="true"] {
+        left: auto;
+        right: 0;
+      }
+
+      &[data-overflow-left="true"] {
+        right: auto;
+        left: 0;
+      }
+    }
+
+    @include bp.down(sm) {
+      min-width: 100%;
+      max-height: 50vh;
+      overflow-y: auto;
+      animation: slide-up 0.3s ease-in-out;
+      padding-bottom: calc(
+        env(safe-area-inset-bottom, 0px) + var(--spacing-sm)
+      );
+    }
+
+    @include bp.up(lg) {
+      min-width: 200px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+    }
+  }
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      --dropdown-glass-bg: #{map.get($values, glass-bg)};
+      --dropdown-glass-hover-bg: #{map.get($values, glass-hover)};
+      --dropdown-glass-border: #{map.get($values, glass-border)};
+      --dropdown-glass-text: #{map.get($values, text)};
+      color: map.get($values, text);
+      border: 1px solid map.get($values, border);
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      --dropdown-glass-bg: #{map.get($values, glass-bg)};
+      --dropdown-glass-hover-bg: #{map.get($values, glass-hover)};
+      --dropdown-glass-border: #{map.get($values, glass-border)};
+      --dropdown-glass-text: #{map.get($values, text)};
+      color: map.get($values, text);
+      border: 1px solid map.get($values, border);
+    }
+  }
+
+  .glass {
+    @include mixins.glass-surface(
+      var(--dropdown-glass-bg, rgba(255, 255, 255, 0.18)),
+      var(--dropdown-glass-border, rgba(255, 255, 255, 0.34)),
+      16px
+    );
+    color: var(--dropdown-glass-text, var(--text-color-primary));
+    box-shadow: var(--box-shadow-md);
   }
 
   .item {
-    border: 1px solid ButtonText;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--spacing-sm);
+    line-height: var(--line-height-label);
+    width: 100%;
+    background: none;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    letter-spacing: var(--letter-spacing-label);
+    color: var(--text-color-primary);
+    cursor: pointer;
+    text-align: left;
+    transition:
+      background-color var(--transition-default),
+      transform var(--transition-default),
+      box-shadow var(--transition-default);
+
+    &:hover,
+    &:focus {
+      background-color: var(
+        --dropdown-item-hover-bg,
+        var(--background-color-dark)
+      );
+      color: var(--text-color-primary);
+      outline: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-caption);
+      padding: var(--spacing-md);
+      gap: var(--spacing-xs);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-label);
+      padding: var(--spacing-md) var(--spacing-lg);
+      gap: var(--spacing-sm);
+    }
   }
 
-  .item:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 2px;
+  .icon {
+    margin-right: var(--spacing-xs);
+    display: flex;
+    align-items: center;
+
+    @include bp.down(sm) {
+      margin-right: var(--spacing-xxs);
+    }
+
+    @include bp.up(lg) {
+      margin-right: var(--spacing-sm);
+    }
   }
-}
+
+  .item[aria-disabled="true"],
+  .item.isDisabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  a.item {
+    text-decoration: none;
+  }
+
+  .menu.glass .item:hover,
+  .menu.glass .item:focus {
+    --dropdown-item-hover-bg: var(
+      --dropdown-glass-hover-bg,
+      rgba(255, 255, 255, 0.24)
+    );
+  }
+
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu,
+    .item {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .item:hover {
+      background-color: transparent;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .menu.glass {
+      background: Canvas;
+      color: CanvasText;
+      border-color: ButtonText;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .menu {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+      outline-color: Highlight;
+    }
+
+    .item {
+      border: 1px solid ButtonText;
+    }
+
+    .item:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+  }
 }
