@@ -169,6 +169,90 @@ export interface SidebarProps {
    */
   className?: string;
 
+  /**
+   * Additional class name for the inner navigation wrapper.
+   */
+  navClassName?: string;
+
+  /**
+   * Additional class name for all sidebar lists.
+   */
+  listClassName?: string;
+
+  /**
+   * Additional class name for nested child lists.
+   */
+  childListClassName?: string;
+
+  /**
+   * Additional class name for each list item.
+   */
+  itemClassName?: string;
+
+  /**
+   * Additional class name for link-style items.
+   */
+  linkClassName?: string;
+
+  /**
+   * Additional class name for child link-style items.
+   */
+  childLinkClassName?: string;
+
+  /**
+   * Additional class name applied when a link/item is active.
+   */
+  activeClassName?: string;
+
+  /**
+   * Additional class name for expandable parent buttons.
+   */
+  expandButtonClassName?: string;
+
+  /**
+   * Additional class name for item icons.
+   */
+  iconClassName?: string;
+
+  /**
+   * Additional class name for expandable item labels.
+   */
+  expandLabelClassName?: string;
+
+  /**
+   * Additional class name for chevron icons.
+   */
+  chevronClassName?: string;
+
+  /**
+   * Additional class name applied when the chevron is open.
+   */
+  chevronOpenClassName?: string;
+
+  /**
+   * Additional class name for submenu containers.
+   */
+  submenuClassName?: string;
+
+  /**
+   * Additional class name applied when a submenu is open.
+   */
+  submenuOpenClassName?: string;
+
+  /**
+   * Additional class name for the footer wrapper.
+   */
+  footerClassName?: string;
+
+  /**
+   * Additional class name for footer links.
+   */
+  footerLinkClassName?: string;
+
+  /**
+   * Additional class name for the footer version text.
+   */
+  footerVersionClassName?: string;
 
   /**
    * Optional test ID for testing frameworks.

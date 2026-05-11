@@ -80,6 +80,24 @@ export interface DropdownItem {
    * Optional id for the rendered menu item.
    */
   id?: string;
+
+  /**
+   * Nested menu items rendered as a submenu.
+   * Items with submenus render as submenu triggers and do not call `onClick`
+   * unless one of their child items is selected.
+   */
+  items?: DropdownItem[];
+
+  /**
+   * Accessible label for the submenu panel.
+   * Falls back to the parent item label when omitted.
+   */
+  submenuAriaLabel?: string;
+
+  /**
+   * Optional id for the rendered submenu panel.
+   */
+  submenuId?: string;
 }
 
 /**

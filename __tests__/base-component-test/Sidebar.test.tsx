@@ -511,7 +511,7 @@ describe("SidebarBase", () => {
     expect(lists[1]).toHaveClass("childList");
   });
 
-  it("applies theme, state, outline, glass, rounding, shadow, and custom className to the wrapper", () => {
+  it("applies theme, state, outline, glass, rounding, shadow, and custom root className to the wrapper", () => {
     render(
       <SidebarBase
         classMap={classMap}
@@ -527,6 +527,7 @@ describe("SidebarBase", () => {
     );
 
     const sidebar = screen.getByTestId("sidebar");
+
     expect(sidebar).toHaveClass("wrapper");
     expect(sidebar).toHaveClass("primary");
     expect(sidebar).toHaveClass("success");
@@ -535,6 +536,196 @@ describe("SidebarBase", () => {
     expect(sidebar).toHaveClass("roundMedium");
     expect(sidebar).toHaveClass("shadowMedium");
     expect(sidebar).toHaveClass("customSidebar");
+  });
+
+  it("applies custom slot class names while preserving default sidebar classes", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        LinkComponent={TestLink}
+        navClassName="customNav"
+        listClassName="customList"
+        itemClassName="customItem"
+        linkClassName="customLink"
+      />,
+    );
+
+    const nav = screen.getByTestId("sidebar").querySelector(".nav");
+    expect(nav).toHaveClass("nav");
+    expect(nav).toHaveClass("customNav");
+
+    const lists = screen.getAllByTestId("sidebar-list");
+    expect(lists[0]).toHaveClass("list");
+    expect(lists[0]).toHaveClass("customList");
+
+    const items = screen.getAllByTestId("sidebar-listItem");
+    expect(items[0]).toHaveClass("item");
+    expect(items[0]).toHaveClass("customItem");
+
+    const dashboardLink = screen.getByRole("link", { name: "Dashboard" });
+    expect(dashboardLink).toHaveClass("link");
+    expect(dashboardLink).toHaveClass("customLink");
+  });
+
+  it("applies custom child list and child link class names", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        LinkComponent={TestLink}
+        childListClassName="customChildList"
+        childLinkClassName="customChildLink"
+      />,
+    );
+
+    const reportsButton = screen.getByRole("button", { name: /reports/i });
+    fireEvent.click(reportsButton);
+
+    const lists = screen.getAllByTestId("sidebar-list");
+    expect(lists[1]).toHaveClass("childList");
+    expect(lists[1]).toHaveClass("customChildList");
+
+    const monthlyLink = screen.getByRole("link", { name: "Monthly" });
+    expect(monthlyLink).toHaveClass("childLink");
+    expect(monthlyLink).toHaveClass("customChildLink");
+  });
+
+  it("applies custom active class name while preserving default active class", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        isLinkActive={isLinkActive}
+        LinkComponent={TestLink}
+        activeClassName="customActive"
+      />,
+    );
+
+    const settingsLink = screen.getByRole("link", { name: "Settings" });
+
+    expect(settingsLink).toHaveClass("active");
+    expect(settingsLink).toHaveClass("customActive");
+    expect(settingsLink).toHaveAttribute("aria-current", "page");
+  });
+
+  it("applies custom expandable button, label, chevron, and submenu class names", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        expandButtonClassName="customExpandButton"
+        expandLabelClassName="customExpandLabel"
+        chevronClassName="customChevron"
+        chevronOpenClassName="customChevronOpen"
+        submenuClassName="customSubmenu"
+        submenuOpenClassName="customSubmenuOpen"
+      />,
+    );
+
+    const reportsButton = screen.getByRole("button", { name: /reports/i });
+    expect(reportsButton).toHaveClass("link");
+    expect(reportsButton).toHaveClass("customExpandButton");
+
+    const label = screen.getByTestId("sidebar-expandItemLabel");
+    expect(label).toHaveClass("customExpandLabel");
+
+    const chevron = screen.getByTestId("sidebar-expandIcon");
+    expect(chevron).toHaveClass("chevron");
+    expect(chevron).toHaveClass("customChevron");
+    expect(chevron).not.toHaveClass("chevronOpen");
+    expect(chevron).not.toHaveClass("customChevronOpen");
+
+    const submenu = screen.getByTestId("sidebar-subMenu");
+    expect(submenu).toHaveClass("submenu");
+    expect(submenu).toHaveClass("customSubmenu");
+    expect(submenu).not.toHaveClass("submenuOpen");
+    expect(submenu).not.toHaveClass("customSubmenuOpen");
+
+    fireEvent.click(reportsButton);
+
+    expect(chevron).toHaveClass("chevronOpen");
+    expect(chevron).toHaveClass("customChevronOpen");
+    expect(submenu).toHaveClass("submenuOpen");
+    expect(submenu).toHaveClass("customSubmenuOpen");
+  });
+
+  it("applies custom icon class name to link, button, and footer icons", () => {
+    const links = [
+      {
+        label: "Dashboard",
+        href: "/Dashboard",
+        icon: <span data-testid="dashboard-icon">D</span>,
+      },
+      {
+        label: "Reports",
+        icon: <span data-testid="reports-icon">R</span>,
+        children: [{ label: "Monthly", href: "/Reports/Monthly" }],
+      },
+    ];
+
+    const footerLinks = [
+      {
+        label: "Help",
+        href: "/Help",
+        icon: <span data-testid="help-icon">H</span>,
+      },
+    ];
+
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={links}
+        showFooter
+        footerLinks={footerLinks}
+        LinkComponent={TestLink}
+        iconClassName="customIcon"
+      />,
+    );
+
+    const dashboardIconWrapper =
+      screen.getByTestId("dashboard-icon").parentElement;
+    const reportsIconWrapper = screen.getByTestId("reports-icon").parentElement;
+    const helpIconWrapper = screen.getByTestId("help-icon").parentElement;
+
+    expect(dashboardIconWrapper).toHaveClass("icon");
+    expect(dashboardIconWrapper).toHaveClass("customIcon");
+
+    expect(reportsIconWrapper).toHaveClass("icon");
+    expect(reportsIconWrapper).toHaveClass("customIcon");
+
+    expect(helpIconWrapper).toHaveClass("icon");
+    expect(helpIconWrapper).toHaveClass("customIcon");
+  });
+
+  it("applies custom footer, footer link, and footer version class names", () => {
+    render(
+      <SidebarBase
+        classMap={classMap}
+        links={mockLinks}
+        showFooter
+        footerLinks={mockFooterLinks}
+        footerVersion="v1.0.0"
+        LinkComponent={TestLink}
+        footerClassName="customFooter"
+        footerLinkClassName="customFooterLink"
+        footerVersionClassName="customFooterVersion"
+      />,
+    );
+
+    const footer = screen.getByTestId("sidebar-footer");
+    expect(footer).toHaveClass("footer");
+    expect(footer).toHaveClass("customFooter");
+
+    const footerLinks = screen.getAllByTestId("sidebar-footerLink");
+    footerLinks.forEach((footerLink) => {
+      expect(footerLink).toHaveClass("footerLink");
+      expect(footerLink).toHaveClass("customFooterLink");
+    });
+
+    const footerVersion = screen.getByTestId("sidebar-footerVersion");
+    expect(footerVersion).toHaveClass("footerVersion");
+    expect(footerVersion).toHaveClass("customFooterVersion");
   });
 
   it("has no accessibility violations", async () => {

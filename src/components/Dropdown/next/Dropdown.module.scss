@@ -37,18 +37,30 @@
   .menu {
     position: absolute;
     top: 100%;
-    overflow: hidden;
+    overflow: visible;
     margin-top: var(--spacing-xs);
     background-color: var(--background-color-lighter);
     z-index: theme.$z-index-drawer;
     padding: var(--spacing-xs) 0;
     width: max-content;
+    max-width: var(--dropdown-panel-max-width, calc(100vw - 1rem));
+    max-height: var(--dropdown-panel-max-height, calc(100vh - 1rem));
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-body);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
     animation: fade-in 0.2s ease-in-out;
+
+    &[data-overflow-right="true"] {
+      left: auto;
+      right: 0;
+    }
+
+    &[data-overflow-left="true"] {
+      right: auto;
+      left: 0;
+    }
 
     @include bp.up(sm) {
       &[data-overflow-right="true"] {
@@ -65,7 +77,7 @@
     @include bp.down(sm) {
       min-width: 100%;
       max-height: 50vh;
-      overflow-y: auto;
+      overflow: hidden auto;
       animation: slide-up 0.3s ease-in-out;
       padding-bottom: calc(
         env(safe-area-inset-bottom, 0px) + var(--spacing-sm)
@@ -165,6 +177,19 @@
     }
   }
 
+  .itemWrapper {
+    position: relative;
+    min-width: 100%;
+  }
+
+  .itemContent {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
   .icon {
     margin-right: var(--spacing-xs);
     display: flex;
@@ -177,6 +202,45 @@
     @include bp.up(lg) {
       margin-right: var(--spacing-sm);
     }
+  }
+
+  .submenuTrigger {
+    justify-content: space-between;
+  }
+
+  .submenuIndicator {
+    margin-left: auto;
+    padding-left: var(--spacing-sm);
+    line-height: 1;
+  }
+
+  .submenu {
+    top: var(--dropdown-panel-offset-y, 0);
+    left: 100%;
+    min-width: max(100%, 12rem);
+    margin-top: 0;
+    margin-left: var(--spacing-xs);
+
+    &[data-placement="left"] {
+      right: 100%;
+      left: auto;
+      margin-right: var(--spacing-xs);
+      margin-left: 0;
+    }
+
+    @include bp.down(sm) {
+      position: static;
+      width: 100%;
+      min-width: 100%;
+      max-height: var(--dropdown-panel-max-height, 50vh);
+      margin: var(--spacing-xxs) 0 0;
+      box-shadow: none;
+    }
+  }
+
+  .submenuOpen,
+  .hasSubmenu {
+    min-width: 100%;
   }
 
   .item[aria-disabled="true"],
@@ -231,8 +295,8 @@
       background: Canvas;
       color: CanvasText;
       border-color: ButtonText;
-      backdrop-filter: none;
       -webkit-backdrop-filter: none;
+      backdrop-filter: none;
     }
 
     .menu {
