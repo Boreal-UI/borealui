@@ -33,7 +33,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   outline = getDefaultOutline(),
   glass = getDefaultGlass(),
   expanded,
-  disabled,
+  disabled = false,
   customCollapsedIcon,
   customExpandedIcon,
   onToggle,
@@ -54,11 +54,24 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
 }) => {
   const isControlled = expanded !== undefined;
   const internalId = useMemo(getUniqueId, []);
-  const [internalExpanded, setInternalExpanded] = useState(initiallyExpanded);
-  const [hasBeenExpanded, setHasBeenExpanded] = useState(initiallyExpanded);
-  const [isLoading, setIsLoading] = useState(asyncContent && initiallyExpanded);
 
-  const isExpanded = isControlled ? expanded : internalExpanded;
+  const shouldAlwaysExpand = isToggleable === false;
+  const initiallyResolvedExpanded = shouldAlwaysExpand
+    ? true
+    : initiallyExpanded;
+
+  const [internalExpanded, setInternalExpanded] = useState(
+    initiallyResolvedExpanded,
+  );
+
+  const controlledOrInternalExpanded = isControlled
+    ? Boolean(expanded)
+    : internalExpanded;
+
+  const isExpanded = shouldAlwaysExpand ? true : controlledOrInternalExpanded;
+
+  const [hasBeenExpanded, setHasBeenExpanded] = useState(isExpanded);
+  const [isLoading, setIsLoading] = useState(asyncContent && isExpanded);
 
   const baseId = id || internalId;
   const contentId = `${baseId}-content`;
@@ -81,14 +94,15 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       .join(" ") || undefined;
 
   const toggleAccordion = () => {
-    if (disabled) return;
-    if (!isToggleable && isExpanded) return;
+    if (disabled || shouldAlwaysExpand) return;
 
-    if (isControlled) {
-      onToggle?.(!expanded);
-    } else {
-      setInternalExpanded((prev) => !prev);
+    const nextExpanded = !isExpanded;
+
+    if (!isControlled) {
+      setInternalExpanded(nextExpanded);
     }
+
+    onToggle?.(nextExpanded);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
@@ -101,6 +115,12 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   };
 
   useEffect(() => {
+    if (shouldAlwaysExpand && !isControlled) {
+      setInternalExpanded(true);
+    }
+  }, [shouldAlwaysExpand, isControlled]);
+
+  useEffect(() => {
     if (isExpanded && !hasBeenExpanded) {
       setHasBeenExpanded(true);
     }
@@ -110,13 +130,14 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
     if (asyncContent && isExpanded) {
       setIsLoading(true);
 
-      const timer = setTimeout(() => {
+      const timer = window.setTimeout(() => {
         setIsLoading(false);
       }, 1000);
 
-      return () => clearTimeout(timer);
+      return () => window.clearTimeout(timer);
     }
 
+    setIsLoading(false);
     return undefined;
   }, [asyncContent, isExpanded]);
 

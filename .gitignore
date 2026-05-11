@@ -67,3 +67,15 @@ eslint-report.json
 stylelint-report.json
 DESIGN.md
 debug-storybook.log
+cypress/screenshots/Accordion.cy.tsx/core Accordion behavior -- has no detectable accessibility violations when collapsed (failed).png
+cypress/screenshots/Accordion.cy.tsx/core Accordion behavior -- has no detectable accessibility violations when disabled (failed).png
+cypress/screenshots/Accordion.cy.tsx/core Accordion behavior -- has no detectable accessibility violations when expanded (failed).png
+cypress/screenshots/Accordion.cy.tsx/core Accordion behavior -- is always expanded when isToggleable is false (failed).png
+cypress/screenshots/Accordion.cy.tsx/core Accordion behavior -- supports keyboard toggling with Enter and Space and calls onToggle (failed).png
+cypress/screenshots/Accordion.cy.tsx/core Accordion behavior -- toggles open and closed when clicked and calls onToggle with the next expanded state (failed).png
+cypress/screenshots/Accordion.cy.tsx/next Accordion behavior -- has no detectable accessibility violations when collapsed (failed).png
+cypress/screenshots/Accordion.cy.tsx/next Accordion behavior -- has no detectable accessibility violations when disabled (failed).png
+cypress/screenshots/Accordion.cy.tsx/next Accordion behavior -- has no detectable accessibility violations when expanded (failed).png
+cypress/screenshots/Accordion.cy.tsx/next Accordion behavior -- is always expanded when isToggleable is false (failed).png
+cypress/screenshots/Accordion.cy.tsx/next Accordion behavior -- supports keyboard toggling with Enter and Space and calls onToggle (failed).png
+cypress/screenshots/Accordion.cy.tsx/next Accordion behavior -- toggles open and closed when clicked and calls onToggle with the next expanded state (failed).png

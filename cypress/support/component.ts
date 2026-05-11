@@ -1,4 +1,5 @@
 import { mount } from "cypress/react";
+import "cypress-axe";
 
 Cypress.Commands.add("mount", mount);
 

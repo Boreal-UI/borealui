@@ -8,6 +8,7 @@ const classes = {
   accordion: "accordion",
   header: "accordion_header",
   content: "accordion_content",
+  loading: "accordion_loading",
   icon: "accordion_icon",
   accordionTitle: "accordion_title",
 
@@ -51,7 +52,11 @@ const generateUniqueId = (() => {
 })();
 
 const Accordion: React.FC<AccordionProps> = (props) => (
-  <AccordionBase {...props} getUniqueId={generateUniqueId} classMap={expandClassMap(classes)} />
+  <AccordionBase
+    {...props}
+    getUniqueId={generateUniqueId}
+    classMap={expandClassMap(classes)}
+  />
 );
 Accordion.displayName = "Accordion";
 export default Accordion;
