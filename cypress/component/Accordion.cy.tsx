@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 
 import React, { useState } from "react";
-import * as Core from "@/index.core";
-import * as Next from "@/index.next";
+import * as Core from "../../src/index.core";
+import * as Next from "../../src/index.next";
 
 type AccordionComponent = typeof Core.Accordion;
 

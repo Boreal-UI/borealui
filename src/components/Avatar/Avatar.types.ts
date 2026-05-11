@@ -138,6 +138,7 @@ export interface AvatarProps {
 
   /**
    * Optional status indicator for user availability and activity.
+   * ( "online" | "offline" | "away" | "busy")
    * Useful for chat apps, collaboration tools, or profile displays.
    */
   status?: StatusType;
@@ -223,7 +224,6 @@ export interface AvatarProps {
    * Click handler (used only when not a link).
    */
   onClick?: (e: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
-
 
   /**
    * Optional test ID for testing frameworks.
