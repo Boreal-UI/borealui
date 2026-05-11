@@ -889,7 +889,7 @@ const runCoreOnlyAvatarTests = (Avatar: AvatarComponent) => {
 };
 
 const runNextOnlyAvatarTests = (Avatar: AvatarComponent) => {
-  describe("next Avatar wrapper smoke behavior", () => {
+  describe("next Avatar wrapper behavior", () => {
     beforeEach(() => {
       cy.viewport(900, 620);
     });
