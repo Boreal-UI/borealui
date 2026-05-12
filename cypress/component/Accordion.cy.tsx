@@ -18,21 +18,6 @@ const TestCollapsedIcon = () => (
   </span>
 );
 
-const terminalLog = (violations: any[]) => {
-  cy.task(
-    "log",
-    violations.map(({ id, impact, description, nodes }) => ({
-      id,
-      impact,
-      description,
-      nodes: nodes.map((node: any) => ({
-        target: node.target,
-        failureSummary: node.failureSummary,
-      })),
-    })),
-  );
-};
-
 const mountAccordion = (
   Accordion: AccordionComponent,
   props: Partial<React.ComponentProps<AccordionComponent>> = {},
@@ -644,41 +629,6 @@ const runAccordionTests = (
 
       cy.get('[data-testid="accordion-loading"]').should("not.exist");
       cy.get('[data-testid="accordion-child"]').should("exist");
-    });
-
-    it("has no detectable accessibility violations when collapsed", () => {
-      mountAccordion(Accordion);
-
-      cy.get('[data-cy="accordion-test-root"]').should("exist");
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="accordion-test-root"]', undefined, terminalLog);
-    });
-
-    it("has no detectable accessibility violations when expanded", () => {
-      mountAccordion(Accordion, {
-        initiallyExpanded: true,
-        description: "Accessible helper description",
-      });
-
-      cy.get('[data-cy="accordion-test-root"]').should("exist");
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="accordion-test-root"]', undefined, terminalLog);
-    });
-
-    it("has no detectable accessibility violations when disabled", () => {
-      mountAccordion(Accordion, {
-        disabled: true,
-      });
-
-      cy.get('[data-cy="accordion-test-root"]').should("exist");
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="accordion-test-root"]', undefined, terminalLog);
     });
   });
 };

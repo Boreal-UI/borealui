@@ -242,7 +242,7 @@ function DataTableBase<T extends object>({
   );
 
   return (
-    <div className={wrapperClass} data-testid={testId}>
+    <div className={wrapperClass} data-testid={testId} tabIndex={0}>
       <div
         id={liveRegionId}
         className={classMap.srOnly ?? "sr_only"}

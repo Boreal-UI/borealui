@@ -9,21 +9,6 @@ type AvatarComponent = typeof Core.Avatar;
 const VALID_AVATAR_SRC =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3C/svg%3E";
 
-const terminalLog = (violations: any[]) => {
-  cy.task(
-    "log",
-    violations.map(({ id, impact, description, nodes }) => ({
-      id,
-      impact,
-      description,
-      nodes: nodes.map((node: any) => ({
-        target: node.target,
-        failureSummary: node.failureSummary,
-      })),
-    })),
-  );
-};
-
 const TestStatusIcon = () => (
   <span data-testid="custom-status-icon" aria-hidden="true">
     ★
@@ -742,68 +727,6 @@ const runSharedAvatarTests = (
       getAvatar("second-avatar").should("contain.text", "GH");
     });
 
-    it("has no detectable accessibility violations as a default button avatar", () => {
-      mountAvatar(Avatar);
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="avatar-test-root"]', undefined, terminalLog);
-    });
-
-    it("has no detectable accessibility violations with image and status", () => {
-      mountAvatar(Avatar, {
-        src: VALID_AVATAR_SRC,
-        alt: "Ada Lovelace avatar",
-        status: "online",
-        statusLabel: "Online",
-      });
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="avatar-test-root"]', undefined, terminalLog);
-    });
-
-    it("has no detectable accessibility violations as a link avatar", () => {
-      mountAvatar(Avatar, {
-        href: "/profile",
-        label: "Open Ada profile",
-      });
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="avatar-test-root"]', undefined, terminalLog);
-    });
-
-    it("has no detectable accessibility violations when disabled", () => {
-      mountAvatar(Avatar, {
-        disabled: true,
-        label: "Disabled avatar",
-      });
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="avatar-test-root"]', undefined, terminalLog);
-    });
-
-    it("has no detectable accessibility violations with aria-labelledby", () => {
-      cy.mount(
-        <div data-cy="avatar-test-root">
-          <span id="external-avatar-label">External avatar label</span>
-
-          <Avatar
-            name="Ada Lovelace"
-            aria-labelledby="external-avatar-label"
-            status="online"
-            statusLabel="Online"
-            data-testid="avatar"
-          />
-        </div>,
-      );
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="avatar-test-root"]', undefined, terminalLog);
-    });
   });
 };
 

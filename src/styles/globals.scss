@@ -49,486 +49,503 @@
 @import "modern-css-reset/dist/reset.css" layer(boreal-ui.reset);
 
 @layer boreal-ui.base {
-:root {
-  /* ================================
+  :root {
+    /* ================================
      PRIMARY COLOR PALETTE
   ================================== */
-  --primary-color: #{theme.$primary-color};
-  --primary-color-light: #{color.adjust(theme.$primary-color, $lightness: 40%)};
-  --primary-color-hover: #{color.adjust(theme.$primary-color, $lightness: -10%)};
-  --text-color-primary: #{theme.$text-color-primary};
-  --text-color-primary-contrast: #{theme.$text-color-secondary};
+    --primary-color: #{theme.$primary-color};
+    --primary-color-light: #{color.adjust(
+        theme.$primary-color,
+        $lightness: 40%
+      )};
+    --primary-color-hover: #{color.adjust(
+        theme.$primary-color,
+        $lightness: -10%
+      )};
+    --text-color-primary: #{theme.$text-color-primary};
+    --text-color-primary-contrast: #{theme.$text-color-secondary};
 
-  /* ================================
+    /* ================================
      SECONDARY COLOR PALETTE
   ================================== */
-  --secondary-color: #{theme.$secondary-color};
-  --secondary-color-light: #{color.adjust(
-      theme.$secondary-color,
-      $lightness: 40%
-    )};
-  --secondary-color-hover: #{color.adjust(
-      theme.$secondary-color,
-      $lightness: -10%
-    )};
-  --text-color-secondary: #{theme.$text-color-secondary};
+    --secondary-color: #{theme.$secondary-color};
+    --secondary-color-light: #{color.adjust(
+        theme.$secondary-color,
+        $lightness: 40%
+      )};
+    --secondary-color-hover: #{color.adjust(
+        theme.$secondary-color,
+        $lightness: -10%
+      )};
+    --text-color-secondary: #{theme.$text-color-secondary};
 
-  /* ================================
+    /* ================================
      TERTIARY COLOR PALETTE
   ================================== */
-  --tertiary-color: #{theme.$tertiary-color};
-  --tertiary-color-light: #{color.adjust(
-      theme.$tertiary-color,
-      $lightness: 40%
-    )};
-  --tertiary-color-hover: #{color.adjust(
-      theme.$tertiary-color,
-      $lightness: -10%
-    )};
-  --text-color-tertiary: #{theme.$text-color-primary};
+    --tertiary-color: #{theme.$tertiary-color};
+    --tertiary-color-light: #{color.adjust(
+        theme.$tertiary-color,
+        $lightness: 40%
+      )};
+    --tertiary-color-hover: #{color.adjust(
+        theme.$tertiary-color,
+        $lightness: -10%
+      )};
+    --text-color-tertiary: #{theme.$text-color-primary};
 
-  /* ================================
+    /* ================================
      QUATERNARY COLOR PALETTE
   ================================== */
-  --quaternary-color: #{theme.$quaternary-color};
-  --quaternary-color-light: #{color.adjust(
-      theme.$quaternary-color,
-      $lightness: 40%
-    )};
-  --quaternary-color-hover: #{color.adjust(
-      theme.$quaternary-color,
-      $lightness: -10%
-    )};
-  --text-color-quaternary: #{theme.$text-color-primary};
+    --quaternary-color: #{theme.$quaternary-color};
+    --quaternary-color-light: #{color.adjust(
+        theme.$quaternary-color,
+        $lightness: 40%
+      )};
+    --quaternary-color-hover: #{color.adjust(
+        theme.$quaternary-color,
+        $lightness: -10%
+      )};
+    --text-color-quaternary: #{theme.$text-color-primary};
 
-  /* ================================
+    /* ================================
      FEEDBACK COLORS
   ================================== */
-  --success-color: #{theme.$success-color};
-  --success-color-hover: #{color.adjust(theme.$success-color, $lightness: -10%)};
-  --warning-color: #{theme.$warning-color};
-  --warning-color-hover: #{color.adjust(theme.$warning-color, $lightness: -10%)};
-  --error-color: #{theme.$error-color};
-  --error-color-hover: #{color.adjust(theme.$error-color, $lightness: -10%)};
-  --disabled-color: #{theme.$disabled-color};
+    --success-color: #{theme.$success-color};
+    --success-color-hover: #{color.adjust(
+        theme.$success-color,
+        $lightness: -10%
+      )};
+    --success-text-color: var(--text-color);
+    --warning-color: #{theme.$warning-color};
+    --warning-color-hover: #{color.adjust(
+        theme.$warning-color,
+        $lightness: -10%
+      )};
+    --warning-text-color: var(--text-color);
+    --error-color: #{theme.$error-color};
+    --error-color-hover: #{color.adjust(theme.$error-color, $lightness: -10%)};
+    --error-text-color: var(--text-color);
+    --disabled-color: #{theme.$disabled-color};
 
-  /* ================================
+    /* ================================
      BACKGROUND COLORS
   ================================== */
-  --background-color: #{theme.$background-color};
-  --background-color-surface: #{theme.$background-color-surface};
-  --background-color-light: #{color.adjust(
-      theme.$background-color,
-      $lightness: 10%
-    )};
-  --background-color-lighter: #{color.adjust(
-      theme.$background-color,
-      $lightness: 20%
-    )};
-  --background-color-dark: #{color.adjust(
-      theme.$background-color,
-      $lightness: -10%
-    )};
-  --background-color-darker: #{color.adjust(
-      theme.$background-color,
-      $lightness: -20%
-    )};
+    --background-color: #{theme.$background-color};
+    --background-color-surface: #{theme.$background-color-surface};
+    --background-color-light: #{color.adjust(
+        theme.$background-color,
+        $lightness: 10%
+      )};
+    --background-color-lighter: #{color.adjust(
+        theme.$background-color,
+        $lightness: 20%
+      )};
+    --background-color-dark: #{color.adjust(
+        theme.$background-color,
+        $lightness: -10%
+      )};
+    --background-color-darker: #{color.adjust(
+        theme.$background-color,
+        $lightness: -20%
+      )};
 
-  /* ================================
+    /* ================================
      TEXT COLORS
   ================================== */
-  --text-color: #{theme.$text-color};
-  --text-color-light: #{theme.$text-color-light};
-  --text-color-lighter: #{theme.$text-color-lighter};
+    --text-color: #{theme.$text-color};
+    --text-color-light: #{theme.$text-color-light};
+    --text-color-lighter: #{theme.$text-color-lighter};
 
-  /* ================================
+    /* ================================
      LINK COLORS
   ================================== */
-  --link-color: #{theme.$link-color};
-  --link-hover-color: #{theme.$link-hover-color};
-  --link-hover-color-primary: #{theme.$link-hover-color-primary};
-  --link-hover-color-secondary: #{theme.$link-hover-color-secondary};
+    --link-color: #{theme.$link-color};
+    --link-hover-color: #{theme.$link-hover-color};
+    --link-hover-color-primary: #{theme.$link-hover-color-primary};
+    --link-hover-color-secondary: #{theme.$link-hover-color-secondary};
 
-  /* ===========================
+    /* ===========================
    Glass / Frosted Surface
 =========================== */
-  --glass-background: #{theme.$glass-background};
-  --glass-background-subtle: #{theme.$glass-background-subtle};
-  --glass-background-strong: #{theme.$glass-background-strong};
-  --glass-border-color: #{theme.$glass-border-color};
-  --glass-border-color-strong: #{theme.$glass-border-color-strong};
-  --glass-blur: #{theme.$glass-blur};
-  --glass-blur-sm: #{theme.$glass-blur-sm};
-  --glass-blur-lg: #{theme.$glass-blur-lg};
-  --glass-saturate: #{theme.$glass-saturate};
-  --glass-shadow: #{theme.$glass-shadow};
-  --glass-shadow-strong: #{theme.$glass-shadow-strong};
-  --glass-inset-highlight: #{theme.$glass-inset-highlight};
+    --glass-background: #{theme.$glass-background};
+    --glass-background-subtle: #{theme.$glass-background-subtle};
+    --glass-background-strong: #{theme.$glass-background-strong};
+    --glass-border-color: #{theme.$glass-border-color};
+    --glass-border-color-strong: #{theme.$glass-border-color-strong};
+    --glass-blur: #{theme.$glass-blur};
+    --glass-blur-sm: #{theme.$glass-blur-sm};
+    --glass-blur-lg: #{theme.$glass-blur-lg};
+    --glass-saturate: #{theme.$glass-saturate};
+    --glass-shadow: #{theme.$glass-shadow};
+    --glass-shadow-strong: #{theme.$glass-shadow-strong};
+    --glass-inset-highlight: #{theme.$glass-inset-highlight};
 
-  /* ================================
+    /* ================================
    THEME GLASS COLORS
 ================================== */
-  --primary-glass-background: rgb(from var(--primary-color) r g b / 20%);
-  --primary-glass-background-hover: rgb(
-    from var(--primary-color-hover) r g b / 38%
-  );
-  --primary-glass-border: rgb(from var(--primary-color) r g b / 48%);
-  --secondary-glass-background: rgb(from var(--secondary-color) r g b / 20%);
-  --secondary-glass-background-hover: rgb(
-    from var(--secondary-color-hover) r g b / 38%
-  );
-  --secondary-glass-border: rgb(from var(--secondary-color) r g b / 48%);
-  --tertiary-glass-background: rgb(from var(--tertiary-color) r g b / 20%);
-  --tertiary-glass-background-hover: rgb(
-    from var(--tertiary-color-hover) r g b / 38%
-  );
-  --tertiary-glass-border: rgb(from var(--tertiary-color) r g b / 48%);
-  --quaternary-glass-background: rgb(from var(--quaternary-color) r g b / 20%);
-  --quaternary-glass-background-hover: rgb(
-    from var(--quaternary-color-hover) r g b / 38%
-  );
-  --quaternary-glass-border: rgb(from var(--quaternary-color) r g b / 48%);
-  --clear-glass-background: rgb(255 255 255 / 10%);
-  --clear-glass-background-hover: rgb(255 255 255 / 18%);
-  --clear-glass-border: rgb(255 255 255 / 28%);
+    --primary-glass-background: rgb(from var(--primary-color) r g b / 40%);
+    --primary-glass-background-hover: rgb(
+      from var(--primary-color-hover) r g b / 38%
+    );
+    --primary-glass-border: rgb(from var(--primary-color) r g b / 48%);
+    --secondary-glass-background: rgb(from var(--secondary-color) r g b / 40%);
+    --secondary-glass-background-hover: rgb(
+      from var(--secondary-color-hover) r g b / 38%
+    );
+    --secondary-glass-border: rgb(from var(--secondary-color) r g b / 48%);
+    --tertiary-glass-background: rgb(from var(--tertiary-color) r g b / 40%);
+    --tertiary-glass-background-hover: rgb(
+      from var(--tertiary-color-hover) r g b / 38%
+    );
+    --tertiary-glass-border: rgb(from var(--tertiary-color) r g b / 48%);
+    --quaternary-glass-background: rgb(
+      from var(--quaternary-color) r g b / 40%
+    );
+    --quaternary-glass-background-hover: rgb(
+      from var(--quaternary-color-hover) r g b / 38%
+    );
+    --quaternary-glass-border: rgb(from var(--quaternary-color) r g b / 48%);
+    --clear-glass-background: rgb(255 255 255 / 10%);
+    --clear-glass-background-hover: rgb(255 255 255 / 18%);
+    --clear-glass-border: rgb(255 255 255 / 28%);
 
-  /* ================================
+    /* ================================
    STATE GLASS COLORS
 ================================== */
-  --success-glass-background: rgb(from var(--success-color) r g b / 20%);
-  --success-glass-background-hover: rgb(
-    from var(--success-color-hover) r g b / 38%
-  );
-  --success-glass-border: rgb(from var(--success-color) r g b / 48%);
-  --warning-glass-background: rgb(from var(--warning-color) r g b / 20%);
-  --warning-glass-background-hover: rgb(
-    from var(--warning-color-hover) r g b / 38%
-  );
-  --warning-glass-border: rgb(from var(--warning-color) r g b / 48%);
-  --error-glass-background: rgb(from var(--error-color) r g b / 20%);
-  --error-glass-background-hover: rgb(
-    from var(--error-color-hover) r g b / 38%
-  );
-  --error-glass-border: rgb(from var(--error-color) r g b / 48%);
+    --success-glass-background: rgb(from var(--success-color) r g b / 40%);
+    --success-glass-background-hover: rgb(
+      from var(--success-color-hover) r g b / 48%
+    );
+    --success-glass-border: rgb(from var(--success-color) r g b / 48%);
+    --warning-glass-background: rgb(from var(--warning-color) r g b / 40%);
+    --warning-glass-background-hover: rgb(
+      from var(--warning-color-hover) r g b / 48%
+    );
+    --warning-glass-border: rgb(from var(--warning-color) r g b / 48%);
+    --error-glass-background: rgb(from var(--error-color) r g b / 40%);
+    --error-glass-background-hover: rgb(
+      from var(--error-color-hover) r g b / 48%
+    );
+    --error-glass-border: rgb(from var(--error-color) r g b / 48%);
 
-  /* ================================
+    /* ================================
      FOCUS & INTERACTION
   ================================== */
-  --focus-outline-color: var(--text-color-primary);
+    --focus-outline-color: var(--text-color-primary);
 
-  /* ===========================
+    /* ===========================
      Spacing Scale
   =========================== */
-  --spacing-xxs: #{theme.$spacing-xxs};
-  --spacing-xs: #{theme.$spacing-xs};
-  --spacing-sm: #{theme.$spacing-sm};
-  --spacing-md: #{theme.$spacing-md};
-  --spacing-lg: #{theme.$spacing-lg};
-  --spacing-xl: #{theme.$spacing-xl};
+    --spacing-xxs: #{theme.$spacing-xxs};
+    --spacing-xs: #{theme.$spacing-xs};
+    --spacing-sm: #{theme.$spacing-sm};
+    --spacing-md: #{theme.$spacing-md};
+    --spacing-lg: #{theme.$spacing-lg};
+    --spacing-xl: #{theme.$spacing-xl};
 
-  /* ===========================
+    /* ===========================
       Font Sizes
   =========================== */
-  --font-size-xxs: #{theme.$font-size-xxs};
-  --font-size-xs: #{theme.$font-size-xs};
-  --font-size-sm: #{theme.$font-size-sm};
-  --font-size-md: #{theme.$font-size-md};
-  --font-size-base: #{theme.$font-size-base};
-  --font-size-lg: #{theme.$font-size-lg};
-  --font-size-xl: #{theme.$font-size-xl};
-  --font-size-xxl: #{theme.$font-size-xxl};
-  --font-size-display-sm: #{theme.$font-size-display-sm};
-  --font-size-display-md: #{theme.$font-size-display-md};
-  --font-size-display-lg: #{theme.$font-size-display-lg};
+    --font-size-xxs: #{theme.$font-size-xxs};
+    --font-size-xs: #{theme.$font-size-xs};
+    --font-size-sm: #{theme.$font-size-sm};
+    --font-size-md: #{theme.$font-size-md};
+    --font-size-base: #{theme.$font-size-base};
+    --font-size-lg: #{theme.$font-size-lg};
+    --font-size-xl: #{theme.$font-size-xl};
+    --font-size-xxl: #{theme.$font-size-xxl};
+    --font-size-display-sm: #{theme.$font-size-display-sm};
+    --font-size-display-md: #{theme.$font-size-display-md};
+    --font-size-display-lg: #{theme.$font-size-display-lg};
 
-  /* ===========================
+    /* ===========================
      Font Weights
   =========================== */
-  --font-weight-light: #{theme.$font-weight-light};
-  --font-weight-normal: #{theme.$font-weight-normal};
-  --font-weight-medium: #{theme.$font-weight-medium};
-  --font-weight-semibold: #{theme.$font-weight-semibold};
-  --font-weight-bold: #{theme.$font-weight-bold};
-  --font-weight-bolder: #{theme.$font-weight-bolder};
+    --font-weight-light: #{theme.$font-weight-light};
+    --font-weight-normal: #{theme.$font-weight-normal};
+    --font-weight-medium: #{theme.$font-weight-medium};
+    --font-weight-semibold: #{theme.$font-weight-semibold};
+    --font-weight-bold: #{theme.$font-weight-bold};
+    --font-weight-bolder: #{theme.$font-weight-bolder};
 
-  /* ===========================
+    /* ===========================
      Line Heights
   =========================== */
-  --line-height-tight: #{theme.$line-height-tight};
-  --line-height-snug: #{theme.$line-height-snug};
-  --line-height-normal: #{theme.$line-height-normal};
-  --line-height-relaxed: #{theme.$line-height-relaxed};
-  --line-height-loose: #{theme.$line-height-loose};
+    --line-height-tight: #{theme.$line-height-tight};
+    --line-height-snug: #{theme.$line-height-snug};
+    --line-height-normal: #{theme.$line-height-normal};
+    --line-height-relaxed: #{theme.$line-height-relaxed};
+    --line-height-loose: #{theme.$line-height-loose};
 
-  /* ===========================
+    /* ===========================
       Semantic Typographic Styles
   =========================== */
-  --font-size-body: #{theme.$font-size-body};
-  --font-size-body-sm: #{theme.$font-size-body-sm};
-  --font-size-body-lg: #{theme.$font-size-body-lg};
-  --font-size-label: #{theme.$font-size-label};
-  --font-size-caption: #{theme.$font-size-caption};
-  --font-size-overline: #{theme.$font-size-overline};
-  --font-size-code: #{theme.$font-size-code};
-  --font-size-h1: #{theme.$font-size-h1};
-  --font-size-h2: #{theme.$font-size-h2};
-  --font-size-h3: #{theme.$font-size-h3};
-  --font-size-h4: #{theme.$font-size-h4};
-  --font-size-h5: #{theme.$font-size-h5};
-  --font-size-h6: #{theme.$font-size-h6};
-  --font-weight-body: #{theme.$font-weight-body};
-  --font-weight-label: #{theme.$font-weight-label};
-  --font-weight-caption: #{theme.$font-weight-caption};
-  --font-weight-code: #{theme.$font-weight-code};
-  --font-weight-h1: #{theme.$font-weight-h1};
-  --font-weight-h2: #{theme.$font-weight-h2};
-  --font-weight-h3: #{theme.$font-weight-h3};
-  --font-weight-h4: #{theme.$font-weight-h4};
-  --font-weight-h5: #{theme.$font-weight-h5};
-  --font-weight-h6: #{theme.$font-weight-h6};
-  --line-height-body: #{theme.$line-height-body};
-  --line-height-heading: #{theme.$line-height-heading};
-  --line-height-label: #{theme.$line-height-label};
-  --line-height-caption: #{theme.$line-height-caption};
-  --line-height-code: #{theme.$line-height-code};
-  --letter-spacing-heading: #{theme.$letter-spacing-heading};
-  --letter-spacing-body: #{theme.$letter-spacing-body};
-  --letter-spacing-label: #{theme.$letter-spacing-label};
-  --letter-spacing-caption: #{theme.$letter-spacing-caption};
-  --letter-spacing-overline: #{theme.$letter-spacing-overline};
-  --letter-spacing-code: #{theme.$letter-spacing-code};
+    --font-size-body: #{theme.$font-size-body};
+    --font-size-body-sm: #{theme.$font-size-body-sm};
+    --font-size-body-lg: #{theme.$font-size-body-lg};
+    --font-size-label: #{theme.$font-size-label};
+    --font-size-caption: #{theme.$font-size-caption};
+    --font-size-overline: #{theme.$font-size-overline};
+    --font-size-code: #{theme.$font-size-code};
+    --font-size-h1: #{theme.$font-size-h1};
+    --font-size-h2: #{theme.$font-size-h2};
+    --font-size-h3: #{theme.$font-size-h3};
+    --font-size-h4: #{theme.$font-size-h4};
+    --font-size-h5: #{theme.$font-size-h5};
+    --font-size-h6: #{theme.$font-size-h6};
+    --font-weight-body: #{theme.$font-weight-body};
+    --font-weight-label: #{theme.$font-weight-label};
+    --font-weight-caption: #{theme.$font-weight-caption};
+    --font-weight-code: #{theme.$font-weight-code};
+    --font-weight-h1: #{theme.$font-weight-h1};
+    --font-weight-h2: #{theme.$font-weight-h2};
+    --font-weight-h3: #{theme.$font-weight-h3};
+    --font-weight-h4: #{theme.$font-weight-h4};
+    --font-weight-h5: #{theme.$font-weight-h5};
+    --font-weight-h6: #{theme.$font-weight-h6};
+    --line-height-body: #{theme.$line-height-body};
+    --line-height-heading: #{theme.$line-height-heading};
+    --line-height-label: #{theme.$line-height-label};
+    --line-height-caption: #{theme.$line-height-caption};
+    --line-height-code: #{theme.$line-height-code};
+    --letter-spacing-heading: #{theme.$letter-spacing-heading};
+    --letter-spacing-body: #{theme.$letter-spacing-body};
+    --letter-spacing-label: #{theme.$letter-spacing-label};
+    --letter-spacing-caption: #{theme.$letter-spacing-caption};
+    --letter-spacing-overline: #{theme.$letter-spacing-overline};
+    --letter-spacing-code: #{theme.$letter-spacing-code};
 
-  /* ===========================
+    /* ===========================
      Letter Spacing
   =========================== */
-  --letter-spacing-tight: #{theme.$letter-spacing-tight};
-  --letter-spacing-normal: #{theme.$letter-spacing-normal};
-  --letter-spacing-wide: #{theme.$letter-spacing-wide};
-  --letter-spacing-wider: #{theme.$letter-spacing-wider};
+    --letter-spacing-tight: #{theme.$letter-spacing-tight};
+    --letter-spacing-normal: #{theme.$letter-spacing-normal};
+    --letter-spacing-wide: #{theme.$letter-spacing-wide};
+    --letter-spacing-wider: #{theme.$letter-spacing-wider};
 
-  /* ===========================
+    /* ===========================
      Border Radius (Rounding)
   =========================== */
-  --border-radius-xs: #{theme.$border-radius-xs};
-  --border-radius-sm: #{theme.$border-radius-sm};
-  --border-radius-md: #{theme.$border-radius-md};
-  --border-radius-lg: #{theme.$border-radius-lg};
-  --border-radius-xl: #{theme.$border-radius-xl};
-  --border-radius-full: #{theme.$border-radius-full};
-  --border-radius-round: #{theme.$border-radius-round};
-  --border-radius-none: 0;
+    --border-radius-xs: #{theme.$border-radius-xs};
+    --border-radius-sm: #{theme.$border-radius-sm};
+    --border-radius-md: #{theme.$border-radius-md};
+    --border-radius-lg: #{theme.$border-radius-lg};
+    --border-radius-xl: #{theme.$border-radius-xl};
+    --border-radius-full: #{theme.$border-radius-full};
+    --border-radius-round: #{theme.$border-radius-round};
+    --border-radius-none: 0;
 
-  /* ===========================
+    /* ===========================
      Border Widths
   =========================== */
-  --border-width-none: 0;
-  --border-width-xs: #{theme.$border-width-xs};
-  --border-width-sm: #{theme.$border-width-sm};
-  --border-width-md: #{theme.$border-width-md};
-  --border-width-lg: #{theme.$border-width-lg};
-  --border-width-xl: #{theme.$border-width-xl};
+    --border-width-none: 0;
+    --border-width-xs: #{theme.$border-width-xs};
+    --border-width-sm: #{theme.$border-width-sm};
+    --border-width-md: #{theme.$border-width-md};
+    --border-width-lg: #{theme.$border-width-lg};
+    --border-width-xl: #{theme.$border-width-xl};
 
-  /* ===========================
+    /* ===========================
      Shadows
   =========================== */
-  --box-shadow-light: #{theme.$box-shadow-light};
-  --box-shadow-medium: #{theme.$box-shadow-medium};
-  --box-shadow-heavy: #{theme.$box-shadow-heavy};
-  --box-shadow-intense: #{theme.$box-shadow-intense};
+    --box-shadow-light: #{theme.$box-shadow-light};
+    --box-shadow-medium: #{theme.$box-shadow-medium};
+    --box-shadow-heavy: #{theme.$box-shadow-heavy};
+    --box-shadow-intense: #{theme.$box-shadow-intense};
 
-  /* ===========================
+    /* ===========================
      Inverted Shadows (Light UI)
   =========================== */
-  --box-shadow-inverted-none: none;
-  --box-shadow-inverted-light: 0 2px 4px rgb(255 255 255 / 5%);
-  --box-shadow-inverted-medium: 0 4px 8px rgb(255 255 255 / 8%);
-  --box-shadow-inverted-strong: 0 6px 12px rgb(255 255 255 / 12%);
-  --box-shadow-inverted-intense: 0 8px 16px rgb(255 255 255 / 20%);
+    --box-shadow-inverted-none: none;
+    --box-shadow-inverted-light: 0 2px 4px rgb(255 255 255 / 5%);
+    --box-shadow-inverted-medium: 0 4px 8px rgb(255 255 255 / 8%);
+    --box-shadow-inverted-strong: 0 6px 12px rgb(255 255 255 / 12%);
+    --box-shadow-inverted-intense: 0 8px 16px rgb(255 255 255 / 20%);
 
-  /* ===========================
+    /* ===========================
      Divider & Overlay Colors
   =========================== */
-  --divider-color: #{color.adjust(theme.$background-color, $lightness: 30%)};
-  --border-color: #{color.adjust(theme.$background-color, $lightness: 30%)};
-  --border-color-subtle: #{color.adjust(
-      theme.$background-color,
-      $lightness: 10%
-    )};
-  --border-color-strong: #{color.adjust(
-      theme.$background-color,
-      $lightness: 20%
-    )};
-  --overlay-color: rgb(0 0 0 / 50%);
-  --font-family-body: #{theme.$font-family-body};
-  --font-family-heading: #{theme.$font-family-heading};
-  --font-family-ui: #{theme.$font-family-ui};
-  --font-family-mono: #{theme.$font-family-mono};
-}
-
-body {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  color: var(--text-color);
-  background-color: var(--background-color);
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  transition:
-    background-color theme.$transition-default,
-    color theme.$transition-default;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-family-heading);
-  line-height: var(--line-height-heading);
-  letter-spacing: var(--letter-spacing-heading);
-  margin: 0;
-  transition: color theme.$transition-default;
-}
-
-h1 {
-  font-size: var(--font-size-h1);
-  font-weight: var(--font-weight-h1);
-}
-
-h2 {
-  font-size: var(--font-size-h2);
-  font-weight: var(--font-weight-h2);
-}
-
-h3 {
-  font-size: var(--font-size-h3);
-  font-weight: var(--font-weight-h3);
-}
-
-h4 {
-  font-size: var(--font-size-h4);
-  font-weight: var(--font-weight-h4);
-}
-
-h5 {
-  font-size: var(--font-size-h5);
-  font-weight: var(--font-weight-h5);
-}
-
-h6 {
-  font-size: var(--font-size-h6);
-  font-weight: var(--font-weight-h6);
-  text-transform: uppercase;
-  letter-spacing: var(--letter-spacing-overline);
-}
-
-p {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  margin-bottom: var(--spacing-md);
-}
-
-a {
-  color: var(--link-color);
-  font-weight: theme.$link-font-weight;
-  text-decoration: theme.$link-text-decoration;
-  transition:
-    color theme.$transition-default,
-    text-decoration theme.$transition-default;
-
-  &:hover {
-    color: var(--link-color-hover);
-    text-decoration: theme.$link-hover-decoration;
+    --divider-color: #{color.adjust(theme.$background-color, $lightness: 30%)};
+    --border-color: #{color.adjust(theme.$background-color, $lightness: 30%)};
+    --border-color-subtle: #{color.adjust(
+        theme.$background-color,
+        $lightness: 10%
+      )};
+    --border-color-strong: #{color.adjust(
+        theme.$background-color,
+        $lightness: 20%
+      )};
+    --overlay-color: rgb(0 0 0 / 50%);
+    --font-family-body: #{theme.$font-family-body};
+    --font-family-heading: #{theme.$font-family-heading};
+    --font-family-ui: #{theme.$font-family-ui};
+    --font-family-mono: #{theme.$font-family-mono};
   }
-}
 
-label {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-}
+  body {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    transition:
+      background-color theme.$transition-default,
+      color theme.$transition-default;
+  }
 
-small {
-  font-size: var(--font-size-caption);
-  line-height: var(--line-height-caption);
-}
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-family-heading);
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
+    margin: 0;
+    transition: color theme.$transition-default;
+  }
 
-code,
-pre,
-kbd,
-samp {
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-code);
-  font-weight: var(--font-weight-code);
-  line-height: var(--line-height-code);
-  letter-spacing: var(--letter-spacing-code);
-}
+  h1 {
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-h1);
+  }
 
-.noScroll {
-  overflow: hidden;
-}
+  h2 {
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-h2);
+  }
 
-.errorMessage {
-  color: theme.$error-color;
-  font-size: theme.$font-size-sm;
-}
+  h3 {
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-h3);
+  }
 
-.loadingContainer {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 1.5rem;
-}
+  h4 {
+    font-size: var(--font-size-h4);
+    font-weight: var(--font-weight-h4);
+  }
 
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary-color) var(--background-color-light);
-}
+  h5 {
+    font-size: var(--font-size-h5);
+    font-weight: var(--font-weight-h5);
+  }
 
-*:focus {
-  outline: 2px solid var(--focus-outline-color);
-  outline-offset: 2px;
-}
+  h6 {
+    font-size: var(--font-size-h6);
+    font-weight: var(--font-weight-h6);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-overline);
+  }
 
-::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
-}
+  p {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    margin-bottom: var(--spacing-md);
+  }
 
-::-webkit-scrollbar-track {
-  background: var(--background-color);
-}
+  a {
+    color: var(--link-color);
+    font-weight: theme.$link-font-weight;
+    text-decoration: theme.$link-text-decoration;
+    transition:
+      color theme.$transition-default,
+      text-decoration theme.$transition-default;
 
-::-webkit-scrollbar-thumb {
-  background-color: var(--primary-color);
-  border-radius: 6px;
-  border: 3px solid var(--background-color-light);
-}
+    &:hover {
+      color: var(--link-color-hover);
+      text-decoration: theme.$link-hover-decoration;
+    }
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--primary-color-hover);
-}
+  label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+  }
 
-.hideScrollbar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
+  small {
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+  }
 
-.hideScrollbar::-webkit-scrollbar {
-  display: none;
-}
+  code,
+  pre,
+  kbd,
+  samp {
+    font-family: var(--font-family-mono);
+    font-size: var(--font-size-code);
+    font-weight: var(--font-weight-code);
+    line-height: var(--line-height-code);
+    letter-spacing: var(--letter-spacing-code);
+  }
 
-.sr_only {
-  @include mixins.visually-hidden;
-}
+  .noScroll {
+    overflow: hidden;
+  }
+
+  .errorMessage {
+    color: theme.$error-color;
+    font-size: theme.$font-size-sm;
+  }
+
+  .loadingContainer {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--background-color-light);
+  }
+
+  *:focus {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--background-color);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 6px;
+    border: 3px solid var(--background-color-light);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--primary-color-hover);
+  }
+
+  .hideScrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .hideScrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sr_only {
+    @include mixins.visually-hidden;
+  }
 }

@@ -7,21 +7,6 @@ import type { IconType } from "react-icons";
 
 type BadgeComponent = React.ComponentType<any>;
 
-const terminalLog = (violations: any[]) => {
-  cy.task(
-    "log",
-    violations.map(({ id, impact, description, nodes }) => ({
-      id,
-      impact,
-      description,
-      nodes: nodes.map((node: any) => ({
-        target: node.target,
-        failureSummary: node.failureSummary,
-      })),
-    })),
-  );
-};
-
 const TestIcon: IconType = ({ className, ...props }) => (
   <svg
     className={className}
@@ -492,63 +477,6 @@ const runSharedBadgeTests = (
       });
 
       getBadge().should("match", "a").and("have.attr", "download");
-    });
-
-    it("has no detectable accessibility violations as a default badge", () => {
-      mountBadge(Badge, {
-        children: "Beta",
-      });
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="badge-test-root"]', undefined, terminalLog);
-    });
-
-    it("has no detectable accessibility violations as an icon badge", () => {
-      mountBadge(Badge, {
-        children: null,
-        icon: TestIcon,
-        "aria-label": "Unread notifications",
-      });
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="badge-test-root"]', undefined, terminalLog);
-    });
-
-    it("has no detectable accessibility violations as a button badge", () => {
-      mountBadge(Badge, {
-        children: "Click me",
-        onClick: cy.stub(),
-      });
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="badge-test-root"]', undefined, terminalLog);
-    });
-
-    it("has no detectable accessibility violations as a link badge", () => {
-      mountBadge(Badge, {
-        children: "Docs",
-        href: "/docs",
-        "aria-label": "Open documentation",
-      });
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="badge-test-root"]', undefined, terminalLog);
-    });
-
-    it("has no detectable accessibility violations when disabled", () => {
-      mountBadge(Badge, {
-        children: "Disabled",
-        disabled: true,
-        onClick: cy.stub(),
-      });
-
-      cy.injectAxe();
-
-      cy.checkA11y('[data-cy="badge-test-root"]', undefined, terminalLog);
     });
   });
 };

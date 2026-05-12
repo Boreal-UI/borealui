@@ -1,15 +1,45 @@
 /// <reference types="cypress" />
 
 import React from "react";
+import { defaultColorSchemes } from "@/styles/Themes";
+import { buildThemeVariables } from "@/context/themeRuntime";
 
 type LibraryComponent = React.ComponentType<Record<string, unknown>>;
 
 type ComponentLibrary = Record<string, LibraryComponent>;
+type VariantProps = Record<string, unknown>;
 
 type SmokeCase = {
   name: string;
   render: (library: ComponentLibrary, testId: string) => React.ReactNode;
+  renderA11y?: (library: ComponentLibrary, testId: string) => React.ReactNode;
   assert?: (testId: string, cy: any) => void;
+  a11ySelector?: (testId: string) => string;
+  waitForA11y?: (testId: string, cy: any) => void;
+  a11yWrapperStyle?: React.CSSProperties;
+};
+
+const terminalLog = (violations: any[]) => {
+  cy.task(
+    "log",
+    violations.map(({ id, impact, description, nodes }) => ({
+      id,
+      impact,
+      description,
+      nodes: nodes.map((node: any) => ({
+        target: node.target,
+        failureSummary: node.failureSummary,
+      })),
+    })),
+  );
+};
+
+const themedA11yOptions = {
+  rules: {
+    "color-contrast": { enabled: false },
+    "landmark-unique": { enabled: false },
+    "landmark-no-duplicate-contentinfo": { enabled: false },
+  },
 };
 
 const TestIcon = ({
@@ -52,6 +82,199 @@ const notificationItems = [
 
 const noop = () => undefined;
 
+const componentThemeVariants = [
+  "primary",
+  "secondary",
+  "tertiary",
+  "quaternary",
+  "clear",
+] as const;
+
+const componentStateVariants = ["success", "error", "warning"] as const;
+
+const appThemeSchemes = defaultColorSchemes;
+
+const themeVariantComponents = new Set([
+  "Accordion",
+  "Avatar",
+  "Badge",
+  "Breadcrumbs",
+  "Button",
+  "Card",
+  "Checkbox",
+  "Chip",
+  "CircularProgress",
+  "CommandPalette",
+  "DataTable",
+  "DateTimePicker",
+  "Divider",
+  "Dropdown",
+  "EmptyState",
+  "FileUpload",
+  "Footer",
+  "IconButton",
+  "MetricBox",
+  "Navbar",
+  "Pager",
+  "Popover",
+  "ProgressBar",
+  "RadioButton",
+  "RadioGroup",
+  "Rating",
+  "Select",
+  "Sidebar",
+  "Slider",
+  "Spinner",
+  "Stepper",
+  "Tabs",
+  "TagInput",
+  "TextArea",
+  "TextInput",
+  "Timeline",
+  "Toggle",
+  "Toolbar",
+  "Tooltip",
+  "Typography",
+]);
+
+const stateVariantComponents = new Set([
+  "Accordion",
+  "Avatar",
+  "Badge",
+  "Breadcrumbs",
+  "Button",
+  "Card",
+  "Checkbox",
+  "Chip",
+  "CircularProgress",
+  "CommandPalette",
+  "DataTable",
+  "DateTimePicker",
+  "Divider",
+  "Dropdown",
+  "EmptyState",
+  "FileUpload",
+  "IconButton",
+  "MetricBox",
+  "Pager",
+  "Popover",
+  "ProgressBar",
+  "RadioButton",
+  "RadioGroup",
+  "Rating",
+  "Select",
+  "Sidebar",
+  "Slider",
+  "Spinner",
+  "Stepper",
+  "Tabs",
+  "TagInput",
+  "TextArea",
+  "TextInput",
+  "Toggle",
+  "Tooltip",
+]);
+
+const outlineVariantComponents = new Set([
+  "Accordion",
+  "Avatar",
+  "Badge",
+  "Breadcrumbs",
+  "Button",
+  "Card",
+  "DataTable",
+  "DateTimePicker",
+  "EmptyState",
+  "FileUpload",
+  "IconButton",
+  "MetricBox",
+  "Select",
+  "Sidebar",
+  "TextArea",
+  "TextInput",
+]);
+
+const schemeTestId = (schemeName: string) =>
+  schemeName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+
+const getScopedSchemeStyle = (scheme: (typeof appThemeSchemes)[number]) =>
+  ({
+    ...buildThemeVariables(scheme),
+    backgroundColor: "var(--background-color)",
+    color: "var(--text-color)",
+  }) as React.CSSProperties;
+
+const getVariantProps = (componentName: string) => {
+  const variants: Array<{ label: string; props: VariantProps }> = [
+    { label: "base", props: {} },
+  ];
+
+  if (themeVariantComponents.has(componentName)) {
+    componentThemeVariants.forEach((theme) => {
+      variants.push({
+        label: `theme-${theme}`,
+        props: { theme },
+      });
+    });
+  }
+
+  if (stateVariantComponents.has(componentName)) {
+    componentStateVariants.forEach((state) => {
+      variants.push({
+        label: `state-${state}`,
+        props: { state },
+      });
+    });
+  }
+
+  if (outlineVariantComponents.has(componentName)) {
+    if (themeVariantComponents.has(componentName)) {
+      componentThemeVariants.forEach((theme) => {
+        variants.push({
+          label: `outline-${theme}`,
+          props: { theme, outline: true },
+        });
+      });
+    } else {
+      variants.push({
+        label: "outline",
+        props: { outline: true },
+      });
+    }
+  }
+
+  return variants;
+};
+
+const applyVariantProps = (node: React.ReactNode, props: VariantProps) => {
+  if (!Object.keys(props).length || !React.isValidElement(node)) {
+    return node;
+  }
+
+  if (node.type === React.Fragment) {
+    return node;
+  }
+
+  return React.cloneElement(
+    node as React.ReactElement<Record<string, unknown>>,
+    props,
+  );
+};
+
+const renderA11yCase = (
+  componentCase: SmokeCase,
+  library: ComponentLibrary,
+  testId: string,
+  props: VariantProps = {},
+) => {
+  const node = (componentCase.renderA11y ?? componentCase.render)(
+    library,
+    testId,
+  );
+
+  return applyVariantProps(node, props);
+};
+
 export const componentSmokeCases: SmokeCase[] = [
   {
     name: "Accordion",
@@ -87,7 +310,21 @@ export const componentSmokeCases: SmokeCase[] = [
         ]}
       />
     ),
+    renderA11y: ({ Breadcrumbs }, testId) => (
+      <Breadcrumbs
+        data-testid={testId}
+        theme="clear"
+        items={[
+          { label: "Home", href: "/" },
+          { label: "Components", href: "/components" },
+        ]}
+      />
+    ),
     assert: () => cy.contains("Components").should("be.visible"),
+    a11yWrapperStyle: {
+      backgroundColor: "var(--background-color)",
+      color: "var(--text-color-primary)",
+    },
   },
   {
     name: "Button",
@@ -128,7 +365,26 @@ export const componentSmokeCases: SmokeCase[] = [
         data-testid={testId}
       />
     ),
+    renderA11y: ({ Chip }, testId) => (
+      <Chip
+        message="Saved"
+        visible
+        usePortal={false}
+        autoClose={false}
+        theme="clear"
+        glass={false}
+        data-testid={testId}
+      />
+    ),
     assert: () => cy.contains("Saved").should("be.visible"),
+    waitForA11y: (testId) => {
+      cy.get(`[data-testid="${testId}-message"]`).should("be.visible");
+      cy.wait(350);
+    },
+    a11yWrapperStyle: {
+      backgroundColor: "var(--background-color)",
+      color: "var(--text-color-primary)",
+    },
   },
   {
     name: "ChipGroup",
@@ -280,6 +536,19 @@ export const componentSmokeCases: SmokeCase[] = [
         data-testid={testId}
       />
     ),
+    renderA11y: ({ MetricBox }, testId) => (
+      <MetricBox
+        title="Coverage"
+        value="98%"
+        subtext="Statements"
+        theme="clear"
+        data-testid={testId}
+      />
+    ),
+    a11yWrapperStyle: {
+      backgroundColor: "var(--background-color)",
+      color: "var(--text-color-primary)",
+    },
   },
   {
     name: "Modal",
@@ -288,14 +557,47 @@ export const componentSmokeCases: SmokeCase[] = [
         <p>Modal body</p>
       </Modal>
     ),
+    renderA11y: ({ Modal }, testId) => (
+      <>
+        <style>
+          {`
+            [data-testid="${testId}"],
+            [data-testid="${testId}-content"] {
+              opacity: 1 !important;
+              pointer-events: auto !important;
+              transform: none !important;
+            }
+          `}
+        </style>
+        <Modal open title="Confirm" onClose={noop} data-testid={testId}>
+          <p>Modal body</p>
+        </Modal>
+      </>
+    ),
     assert: () => cy.contains("Modal body").should("be.visible"),
+    a11ySelector: (testId) => `[data-testid="${testId}"]`,
+    waitForA11y: (testId) => {
+      cy.get(`[data-testid="${testId}-content"]`).should("be.visible");
+    },
   },
   {
     name: "Navbar",
     render: ({ Navbar }, testId) => (
       <Navbar items={[{ label: "Home", path: "/" }]} data-testid={testId} />
     ),
+    renderA11y: ({ Navbar }, testId) => (
+      <Navbar
+        items={[{ label: "Home", path: "/" }]}
+        theme="clear"
+        glass={false}
+        data-testid={testId}
+      />
+    ),
     assert: () => cy.contains("Home").should("be.visible"),
+    a11yWrapperStyle: {
+      backgroundColor: "var(--background-color)",
+      color: "var(--text-color-primary)",
+    },
   },
   {
     name: "NotificationCenter",
@@ -308,7 +610,20 @@ export const componentSmokeCases: SmokeCase[] = [
         data-testid={testId}
       />
     ),
+    renderA11y: ({ NotificationCenter }, testId) => (
+      <NotificationCenter
+        notifications={notificationItems}
+        onRemove={noop}
+        onClearAll={noop}
+        showClearAll={false}
+        data-testid={testId}
+      />
+    ),
     assert: () => cy.contains("Build completed").should("be.visible"),
+    waitForA11y: (testId) => {
+      cy.get(`[data-testid="${testId}-item-one-message"]`).should("be.visible");
+      cy.wait(350);
+    },
   },
   {
     name: "Pager",
@@ -331,6 +646,24 @@ export const componentSmokeCases: SmokeCase[] = [
         data-testid={testId}
       />
     ),
+    renderA11y: ({ Popover }, testId) => (
+      <Popover
+        trigger="More info"
+        content="Popover content"
+        theme="clear"
+        glass={false}
+        data-testid={testId}
+      />
+    ),
+    waitForA11y: (testId) => {
+      cy.get(`[data-testid="${testId}-trigger"]`).click();
+      cy.get(`[data-testid="${testId}-content"]`).should("exist");
+      cy.wait(300);
+    },
+    a11yWrapperStyle: {
+      backgroundColor: "var(--background-color)",
+      color: "var(--text-color-primary)",
+    },
   },
   {
     name: "ProgressBar",
@@ -554,6 +887,191 @@ export function runComponentSmokeTests(
         }
 
         cy.get("[data-cy-root]").should("not.be.empty");
+      });
+    });
+  });
+}
+
+export function runComponentAccessibilityTests(
+  flavor: "core" | "next",
+  library: ComponentLibrary,
+) {
+  describe(`${flavor} component accessibility tests`, () => {
+    beforeEach(() => {
+      cy.viewport(900, 620);
+    });
+
+    componentSmokeCases.forEach((componentCase) => {
+      it(`has no detectable accessibility violations in ${componentCase.name}`, () => {
+        const testId = `${flavor}-${componentCase.name.toLowerCase()}-a11y`;
+        const a11ySelector =
+          componentCase.a11ySelector?.(testId) ?? `[data-cy="${testId}-root"]`;
+
+        cy.mount(
+          <div
+            data-cy={`${testId}-root`}
+            style={{
+              padding: 24,
+              maxWidth: 900,
+              minHeight: 180,
+              ...componentCase.a11yWrapperStyle,
+            }}
+          >
+            {renderA11yCase(componentCase, library, testId)}
+          </div>,
+        );
+
+        if (componentCase.waitForA11y) {
+          componentCase.waitForA11y(testId, cy);
+        } else {
+          cy.get(a11ySelector).should("exist");
+        }
+
+        cy.injectAxe();
+
+        cy.checkA11y(a11ySelector, undefined, terminalLog);
+      });
+    });
+  });
+}
+
+export function runComponentThemedAccessibilityTests(
+  flavor: "core" | "next",
+  library: ComponentLibrary,
+) {
+  const ThemeProvider = library.ThemeProvider;
+
+  describe(`${flavor} component themed accessibility tests`, () => {
+    beforeEach(() => {
+      cy.viewport(900, 620);
+    });
+
+    componentSmokeCases.forEach((componentCase) => {
+      if (componentCase.name === "Modal") {
+        appThemeSchemes.forEach((scheme) => {
+          const schemeId = schemeTestId(scheme.name);
+          it(`has no detectable accessibility violations in Modal with ${scheme.name}`, () => {
+            const testId = `${flavor}-modal-${schemeId}-theme-a11y`;
+            const a11ySelector =
+              componentCase.a11ySelector?.(testId) ??
+              `[data-cy="${testId}-root"]`;
+            const content = (
+              <div
+                data-cy={`${testId}-root`}
+                style={{
+                  ...getScopedSchemeStyle(scheme),
+                  padding: 24,
+                  maxWidth: 1100,
+                  minHeight: 180,
+                  ...componentCase.a11yWrapperStyle,
+                }}
+              >
+                {renderA11yCase(componentCase, library, testId)}
+              </div>
+            );
+
+            cy.mount(
+              ThemeProvider ? (
+                <ThemeProvider
+                  customSchemes={[...appThemeSchemes]}
+                  initialSchemeName={scheme.name}
+                >
+                  {content}
+                </ThemeProvider>
+              ) : (
+                content
+              ),
+            );
+
+            componentCase.waitForA11y?.(testId, cy);
+
+            cy.injectAxe();
+
+            cy.checkA11y(a11ySelector, themedA11yOptions, terminalLog);
+          });
+        });
+
+        return;
+      }
+
+      it(`has no detectable accessibility violations in ${componentCase.name} variants across app themes`, () => {
+        const testId = `${flavor}-${componentCase.name.toLowerCase()}-theme-matrix-a11y`;
+        const a11ySelector = `[data-cy="${testId}-root"]`;
+        const variants = getVariantProps(componentCase.name);
+
+        cy.mount(
+          <div
+            data-cy={`${testId}-root`}
+            style={{
+              display: "grid",
+              gap: 16,
+              padding: 24,
+              maxWidth: 1200,
+              minHeight: 180,
+              backgroundColor: "var(--background-color)",
+              color: "var(--text-color)",
+              ...componentCase.a11yWrapperStyle,
+            }}
+          >
+            {appThemeSchemes.map((scheme) => {
+              const schemeId = schemeTestId(scheme.name);
+
+              return (
+                <section
+                  key={scheme.name}
+                  data-cy={`${testId}-${schemeId}-scheme`}
+                  style={{
+                    ...getScopedSchemeStyle(scheme),
+                    display: "grid",
+                    gap: 12,
+                    gridTemplateColumns:
+                      "repeat(auto-fit, minmax(min(100%, 14rem), 1fr))",
+                    padding: 16,
+                    border: "1px solid var(--border-color)",
+                  }}
+                >
+                  {variants.map((variant) => {
+                    const variantTestId = `${testId}-${schemeId}-${variant.label}`;
+
+                    return (
+                      <div
+                        key={variant.label}
+                        data-cy={`${variantTestId}-variant`}
+                      >
+                        {renderA11yCase(
+                          componentCase,
+                          library,
+                          variantTestId,
+                          variant.props,
+                        )}
+                      </div>
+                    );
+                  })}
+                </section>
+              );
+            })}
+          </div>,
+        );
+
+        if (componentCase.name === "Chip") {
+          cy.wait(350);
+        } else if (componentCase.name === "NotificationCenter") {
+          cy.wait(350);
+        } else if (componentCase.name === "Popover") {
+          const firstSchemeId = schemeTestId(appThemeSchemes[0].name);
+          cy.get(
+            `[data-testid="${testId}-${firstSchemeId}-base-trigger"]`,
+          ).click();
+          cy.get(`[data-testid="${testId}-${firstSchemeId}-base-content"]`)
+            .should("exist");
+          cy.wait(300);
+        } else {
+          cy.get(a11ySelector).should("exist");
+        }
+
+        cy.injectAxe();
+
+        cy.checkA11y(a11ySelector, themedA11yOptions, terminalLog);
       });
     });
   });
