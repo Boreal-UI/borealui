@@ -35,7 +35,7 @@ export { default as TagInput } from "./components/TagInput/next/TagInput";
 export { default as RadioButton } from "./components/RadioButton/next/RadioButton";
 export { default as RadioGroup } from "./components/RadioButton/next/RadioGroup";
 export { default as Slider } from "./components/Slider/next/Slider";
-export { default as Checkbox } from "./components/Checkbox/next/Checkbox";
+export { default as CheckBox } from "./components/CheckBox/next/CheckBox";
 export { default as ColorPicker } from "./components/ColorPicker/next/ColorPicker";
 export { default as FormGroup } from "./components/FormGroup/next/FormGroup";
 export { default as DataTable } from "./components/DataTable/next/DataTable";
@@ -53,10 +53,10 @@ export { default as Skeleton } from "./components/Skeleton/next/Skeleton";
 export { default as Spinner } from "./components/Spinner/next/Spinner";
 export { default as Tooltip } from "./components/Tooltip/next/Tooltip";
 export { default as MessagePopup } from "./components/MessagePopup/next/MessagePopup";
-export { default as Popover } from "./components/PopOver/next/PopOver";
+export { default as PopOver } from "./components/PopOver/next/PopOver";
 
 // Navigation & Layout
-export { default as Navbar } from "./components/NavBar/next/NavBar";
+export { default as NavBar } from "./components/NavBar/next/NavBar";
 export { default as Footer } from "./components/Footer/next/Footer";
 export { default as Breadcrumbs } from "./components/Breadcrumbs/next/Breadcrumbs";
 export { default as Tabs } from "./components/Tabs/next/Tabs";

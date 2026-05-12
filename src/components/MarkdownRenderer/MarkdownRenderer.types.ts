@@ -69,6 +69,13 @@ export interface MarkdownRendererProps {
    */
   tabIndex?: number;
 
+  /**
+   * Allows raw HTML embedded in markdown before sanitization.
+   * Leave false for untrusted content.
+   *
+   * @default false
+   */
+  allowHtml?: boolean;
 
   /**
    * Optional test ID for testing frameworks.
@@ -83,5 +90,10 @@ export interface MarkdownRendererProps {
 
 export interface BaseMarkdownRendererProps extends MarkdownRendererProps {
   classMap: Record<string, string>;
+
+  /**
+   * Optional sanitizer used after markdown is converted to HTML.
+   * When allowHtml is false, raw HTML is escaped before this function runs.
+   */
   sanitizeHtml?: (html: string) => string;
 }

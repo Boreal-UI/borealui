@@ -25,9 +25,9 @@ export type TriggerElementProps = {
 };
 
 /**
- * Props for the Popover component.
+ * Props for the PopOver component.
  */
-export interface PopoverProps {
+export interface PopOverProps {
   /**
    * Trigger content for the popover.
    *
@@ -152,7 +152,7 @@ export interface PopoverProps {
   id?: string;
 }
 
-export interface BasePopoverProps extends PopoverProps {
+export interface BasePopOverProps extends PopOverProps {
   classMap: Record<string, string>;
 
   /**

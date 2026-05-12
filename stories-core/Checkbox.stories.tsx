@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Checkbox } from "../src/index.core";
+import { CheckBox } from "../src/index.core";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import {
   RoundingType,
@@ -23,9 +23,9 @@ const roundingOptions = ["none", "small", "medium", "large"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
-const meta: Meta<typeof Checkbox> = {
-  title: "Components/Checkbox",
-  component: Checkbox,
+const meta: Meta<typeof CheckBox> = {
+  title: "Components/CheckBox",
+  component: CheckBox,
   tags: ["autodocs"],
   args: {
     label: "Accept Terms",
@@ -48,12 +48,12 @@ const defaultArgs = {
   shadow: "none" as ShadowType,
 };
 
-type Story = StoryObj<typeof Checkbox>;
+type Story = StoryObj<typeof CheckBox>;
 
 export const Default: Story = {
   render: (args) => {
     const [checked, setChecked] = useState(false);
-    return <Checkbox {...args} checked={checked} onChange={setChecked} />;
+    return <CheckBox {...args} checked={checked} onChange={setChecked} />;
   },
 };
 
@@ -64,7 +64,7 @@ export const Indeterminate: Story = {
 
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-        <Checkbox
+        <CheckBox
           {...args}
           label="Partially selected"
           checked={checked}
@@ -86,7 +86,7 @@ export const LabelLeft: Story = {
   render: (args) => {
     const [checked, setChecked] = useState(false);
     return (
-      <Checkbox
+      <CheckBox
         {...args}
         labelPosition="left"
         checked={checked}
@@ -105,7 +105,7 @@ export const Disabled: Story = {
 
 export const ThemeVariants = () =>
   withVariants(
-    Checkbox,
+    CheckBox,
     {
       label: "Themed",
       checked: true,
@@ -122,7 +122,7 @@ export const ThemeVariants = () =>
 
 export const GlassThemeVariants = () =>
   withVariants(
-    Checkbox,
+    CheckBox,
     {
       label: "Themed",
       checked: true,
@@ -140,7 +140,7 @@ export const GlassThemeVariants = () =>
 
 export const StateVariants = () =>
   withVariants(
-    Checkbox,
+    CheckBox,
     {
       label: "With State",
       checked: true,
@@ -158,7 +158,7 @@ export const StateVariants = () =>
 
 export const GlassStateVariants = () =>
   withVariants(
-    Checkbox,
+    CheckBox,
     {
       label: "With State",
       checked: true,
@@ -176,17 +176,17 @@ export const GlassStateVariants = () =>
   );
 
 export const SizeVariants = () =>
-  withVariants(Checkbox, { ...defaultArgs }, [
+  withVariants(CheckBox, { ...defaultArgs }, [
     { propName: "size", values: sizeOptions },
   ]);
 
 export const RoundingVariants = () =>
-  withVariants(Checkbox, { ...defaultArgs }, [
+  withVariants(CheckBox, { ...defaultArgs }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
 export const ShadowVariants = () =>
-  withVariants(Checkbox, { ...defaultArgs }, [
+  withVariants(CheckBox, { ...defaultArgs }, [
     { propName: "shadow", values: shadowOptions },
   ]);
 
@@ -194,7 +194,7 @@ export const WithClassName: Story = {
   render: (args) => {
     const [checked, setChecked] = useState(false);
     return (
-      <Checkbox
+      <CheckBox
         {...args}
         className="storybook-checkbox-custom"
         checked={checked}
@@ -208,7 +208,7 @@ export const WithIdAndTestId: Story = {
   render: (args) => {
     const [checked, setChecked] = useState(false);
     return (
-      <Checkbox
+      <CheckBox
         {...args}
         id="custom-checkbox-id"
         data-testid="storybook-checkbox"

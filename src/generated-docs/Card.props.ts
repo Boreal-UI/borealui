@@ -65,7 +65,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "aria-current",
-      "type": "boolean | \"page\" | \"step\" | \"location\" | \"date\" | \"time\"",
+      "type": "boolean | \"time\" | \"page\" | \"step\" | \"location\" | \"date\"",
       "description": "Indicates current item state when the card is used in navigation-like UIs.",
       "required": false,
       "inherited": false,

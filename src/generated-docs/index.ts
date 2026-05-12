@@ -32,7 +32,7 @@ export { modalPropDocs } from "./Modal.props";
 export { navBarPropDocs } from "./NavBar.props";
 export { notificationCenterPropDocs } from "./NotificationCenter.props";
 export { pagerPropDocs } from "./Pager.props";
-export { popoverPropDocs } from "./Popover.props";
+export { popOverPropDocs } from "./PopOver.props";
 export { progressBarPropDocs } from "./ProgressBar.props";
 export { radioButtonPropDocs } from "./RadioButton.props";
 export { radioGroupPropDocs } from "./RadioGroup.props";

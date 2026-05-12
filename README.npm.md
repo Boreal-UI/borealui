@@ -175,7 +175,7 @@ The root `boreal-ui` entry currently points to the core build. For Next.js apps,
 - `TextArea`
 - `Select`
 - `ThemeSelect`
-- `Checkbox`
+- `CheckBox`
 - `RadioButton`
 - `RadioGroup`
 - `Toggle`
@@ -205,14 +205,14 @@ The root `boreal-ui` entry currently points to the core build. For Next.js apps,
 - `Rating`
 - `Tooltip`
 - `MessagePopup`
-- `Popover`
+- `PopOver`
 - `Modal`
 - `NotificationCenter`
 - `EmptyState`
 
 ### Navigation and Layout
 
-- `Navbar`
+- `NavBar`
 - `Sidebar`
 - `Footer`
 - `Breadcrumbs`

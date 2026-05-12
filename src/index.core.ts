@@ -32,7 +32,7 @@ export { default as TagInput } from "./components/TagInput/core/TagInput";
 export { default as RadioButton } from "./components/RadioButton/core/RadioButton";
 export { default as RadioGroup } from "./components/RadioButton/core/RadioGroup";
 export { default as Slider } from "./components/Slider/core/Slider";
-export { default as Checkbox } from "./components/Checkbox/core/Checkbox";
+export { default as CheckBox } from "./components/CheckBox/core/CheckBox";
 export { default as ColorPicker } from "./components/ColorPicker/core/ColorPicker";
 export { default as FormGroup } from "./components/FormGroup/core/FormGroup";
 export { default as DataTable } from "./components/DataTable/core/DataTable";
@@ -50,10 +50,10 @@ export { default as Skeleton } from "./components/Skeleton/core/Skeleton";
 export { default as Spinner } from "./components/Spinner/core/Spinner";
 export { default as Tooltip } from "./components/Tooltip/core/Tooltip";
 export { default as MessagePopup } from "./components/MessagePopup/core/MessagePopup";
-export { default as Popover } from "./components/PopOver/core/PopOver";
+export { default as PopOver } from "./components/PopOver/core/PopOver";
 
 // Navigation & Layout
-export { default as Navbar } from "./components/NavBar/core/NavBar";
+export { default as NavBar } from "./components/NavBar/core/NavBar";
 export { default as Footer } from "./components/Footer/core/Footer";
 export { default as Breadcrumbs } from "./components/Breadcrumbs/core/Breadcrumbs";
 export { default as Tabs } from "./components/Tabs/core/Tabs";

@@ -154,7 +154,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 
 - `TextInput` and `TextArea` support labels, helper/error text, validation state, disabled state, sizing, theming, and accessible descriptions.
 - `Select` and `ThemeSelect` cover option selection and color-scheme switching.
-- `Checkbox`, `RadioButton`, `RadioGroup`, `Toggle`, and `Slider` provide common controlled input patterns.
+- `CheckBox`, `RadioButton`, `RadioGroup`, `Toggle`, and `Slider` provide common controlled input patterns.
 - `ColorPicker` supports color selection flows.
 - `DateTimePicker` handles date and time input.
 - `FileUpload` supports file selection UI.
@@ -173,11 +173,11 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 - `Badge`, `Chip`, and `ChipGroup` cover labels, statuses, and compact selectable or grouped metadata.
 - `ProgressBar`, `CircularProgress`, `Spinner`, and `Skeleton` cover loading and progress states.
 - `Rating` provides star-style rating UI.
-- `Tooltip`, `MessagePopup`, `Popover`, `Modal`, `NotificationCenter`, and `EmptyState` cover contextual help, alerts, overlays, dialogs, notification lists, and no-data states.
+- `Tooltip`, `MessagePopup`, `PopOver`, `Modal`, `NotificationCenter`, and `EmptyState` cover contextual help, alerts, overlays, dialogs, notification lists, and no-data states.
 
 ### Navigation and Layout
 
-- `Navbar`, `Sidebar`, `Footer`, `Breadcrumbs`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Toolbar`, `Dropdown`, and `Divider` cover navigation, page structure, disclosure, pagination, tool rows, menus, and visual separation.
+- `NavBar`, `Sidebar`, `Footer`, `Breadcrumbs`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Toolbar`, `Dropdown`, and `Divider` cover navigation, page structure, disclosure, pagination, tool rows, menus, and visual separation.
 - `Card` supports title, description, icon, header/content/footer customization, loading content, outline, glass, shadow, rounding, theme, and section-level class names.
 - `Avatar` supports image, initials, fallback icon, shape, status, status position, size, theme, and custom styling.
 

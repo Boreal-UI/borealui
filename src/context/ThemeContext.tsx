@@ -178,13 +178,16 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
     window.addEventListener(THEME_CHANGE_EVENT, handleThemeChange);
     window.addEventListener("storage", handleStorageChange);
-    syncSchemeName(readSavedSchemeName(window.localStorage));
+
+    if (!initialSchemeName) {
+      syncSchemeName(readSavedSchemeName(window.localStorage));
+    }
 
     return () => {
       window.removeEventListener(THEME_CHANGE_EVENT, handleThemeChange);
       window.removeEventListener("storage", handleStorageChange);
     };
-  }, [schemes]);
+  }, [initialSchemeName, schemes]);
 
   useEffect(() => {
     if (!hasResolvedInitialScheme) return;

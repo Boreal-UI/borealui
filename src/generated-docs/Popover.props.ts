@@ -5,10 +5,10 @@
 
 import type { GeneratedComponentDoc } from "./types";
 
-export const popoverPropDocs: GeneratedComponentDoc = {
-  "name": "Popover",
-  "interfaceName": "PopoverProps",
-  "description": "Props for the Popover component.",
+export const popOverPropDocs: GeneratedComponentDoc = {
+  "name": "PopOver",
+  "interfaceName": "PopOverProps",
+  "description": "Props for the PopOver component.",
   "sourcePath": "src\\components\\PopOver\\PopOver.types.ts",
   "props": [
     {

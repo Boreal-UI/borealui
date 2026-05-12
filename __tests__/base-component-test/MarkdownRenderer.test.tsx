@@ -233,11 +233,30 @@ describe("BaseMarkdownRenderer", () => {
     });
   });
 
-  it("sanitizes unsafe script tags and inline event handlers", async () => {
+  it("escapes raw HTML by default", async () => {
     render(
       <BaseMarkdownRenderer
         content={`<script>alert("xss")</script><p onclick="alert('xss')">Safe Text</p>`}
         classMap={classNames}
+        data-testid="markdown-renderer"
+      />,
+    );
+
+    await waitFor(() => {
+      const region = screen.getByTestId("markdown-renderer");
+      expect(region.querySelector("script")).not.toBeInTheDocument();
+      expect(region.querySelector("p")).not.toBeInTheDocument();
+      expect(region.innerHTML).toContain("&lt;script");
+      expect(region).toHaveTextContent("Safe Text");
+    });
+  });
+
+  it("sanitizes unsafe script tags and inline event handlers when HTML is allowed", async () => {
+    render(
+      <BaseMarkdownRenderer
+        content={`<script>alert("xss")</script><p onclick="alert('xss')">Safe Text</p>`}
+        classMap={classNames}
+        allowHtml
         data-testid="markdown-renderer"
       />,
     );
@@ -255,6 +274,7 @@ describe("BaseMarkdownRenderer", () => {
       <BaseMarkdownRenderer
         content={`<a href="javascript:alert('xss')">Bad Link</a><img src="javascript:alert('xss')" alt="bad" />`}
         classMap={classNames}
+        allowHtml
         data-testid="markdown-renderer"
       />,
     );
@@ -277,6 +297,7 @@ describe("BaseMarkdownRenderer", () => {
         <BaseMarkdownRenderer
           content={`<p onclick='alert(1)' onmouseover=alert(2)>Safe Text</p><a href=javascript:alert(3)>Bad Link</a>`}
           classMap={classNames}
+          allowHtml
           data-testid="markdown-renderer"
         />,
       );

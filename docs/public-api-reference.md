@@ -37,12 +37,12 @@ The `core` and `next` barrels export the same component names:
 | --- | --- |
 | Providers and text | `ThemeProvider`, `Typography` |
 | Actions | `Button`, `IconButton`, `ScrollToTop` |
-| Forms and inputs | `TextInput`, `TextArea`, `Select`, `ThemeSelect`, `FileUpload`, `TagInput`, `RadioButton`, `RadioGroup`, `Slider`, `Checkbox`, `ColorPicker`, `FormGroup`, `DateTimePicker` |
+| Forms and inputs | `TextInput`, `TextArea`, `Select`, `ThemeSelect`, `FileUpload`, `TagInput`, `RadioButton`, `RadioGroup`, `Slider`, `CheckBox`, `ColorPicker`, `FormGroup`, `DateTimePicker` |
 | Data and content | `DataTable`, `MarkdownRenderer`, `MetricBox`, `Card`, `Avatar` |
-| Feedback and status | `Chip`, `ChipGroup`, `Badge`, `ProgressBar`, `CircularProgress`, `Rating`, `Skeleton`, `Spinner`, `Tooltip`, `MessagePopup`, `Popover`, `EmptyState`, `NotificationCenter` |
-| Navigation and layout | `Navbar`, `Sidebar`, `Footer`, `Breadcrumbs`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Modal`, `Toggle`, `Toolbar`, `Dropdown`, `Divider`, `CommandPalette` |
+| Feedback and status | `Chip`, `ChipGroup`, `Badge`, `ProgressBar`, `CircularProgress`, `Rating`, `Skeleton`, `Spinner`, `Tooltip`, `MessagePopup`, `PopOver`, `EmptyState`, `NotificationCenter` |
+| Navigation and layout | `NavBar`, `Sidebar`, `Footer`, `Breadcrumbs`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Modal`, `Toggle`, `Toolbar`, `Dropdown`, `Divider`, `CommandPalette` |
 
-Some barrel names preserve existing casing for compatibility. The standalone paths below use the casing exposed by the package export map.
+Standalone paths use the same camel-case component names as the barrels.
 
 ## Standalone Component Imports
 
@@ -63,7 +63,7 @@ Standalone component paths:
 | `Breadcrumbs` | `boreal-ui/core/Breadcrumbs` | `boreal-ui/next/Breadcrumbs` |
 | `Button` | `boreal-ui/core/Button` | `boreal-ui/next/Button` |
 | `Card` | `boreal-ui/core/Card` | `boreal-ui/next/Card` |
-| `Checkbox` | `boreal-ui/core/Checkbox` | `boreal-ui/next/Checkbox` |
+| `CheckBox` | `boreal-ui/core/CheckBox` | `boreal-ui/next/CheckBox` |
 | `Chip` | `boreal-ui/core/Chip` | `boreal-ui/next/Chip` |
 | `CircularProgress` | `boreal-ui/core/CircularProgress` | `boreal-ui/next/CircularProgress` |
 | `ColorPicker` | `boreal-ui/core/ColorPicker` | `boreal-ui/next/ColorPicker` |
@@ -81,10 +81,10 @@ Standalone component paths:
 | `MessagePopup` | `boreal-ui/core/MessagePopup` | `boreal-ui/next/MessagePopup` |
 | `MetricBox` | `boreal-ui/core/MetricBox` | `boreal-ui/next/MetricBox` |
 | `Modal` | `boreal-ui/core/Modal` | `boreal-ui/next/Modal` |
-| `Navbar` | `boreal-ui/core/Navbar` | `boreal-ui/next/Navbar` |
+| `NavBar` | `boreal-ui/core/NavBar` | `boreal-ui/next/NavBar` |
 | `NotificationCenter` | `boreal-ui/core/NotificationCenter` | `boreal-ui/next/NotificationCenter` |
 | `Pager` | `boreal-ui/core/Pager` | `boreal-ui/next/Pager` |
-| `Popover` | `boreal-ui/core/Popover` | `boreal-ui/next/Popover` |
+| `PopOver` | `boreal-ui/core/PopOver` | `boreal-ui/next/PopOver` |
 | `ProgressBar` | `boreal-ui/core/ProgressBar` | `boreal-ui/next/ProgressBar` |
 | `RadioButton` | `boreal-ui/core/RadioButton` | `boreal-ui/next/RadioButton` |
 | `RadioGroup` | `boreal-ui/core/RadioGroup` | `boreal-ui/next/RadioGroup` |

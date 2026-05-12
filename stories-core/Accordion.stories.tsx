@@ -180,7 +180,7 @@ export const NonToggleableAccordion: Story = {
     ...defaultArgs,
     title: "Non-Toggleable Accordion",
     initiallyExpanded: true,
-    isToggleable: false,
+    "no-collapse": true,
     children: (
       <p>
         Once opened, this accordion cannot be closed. This is useful for locked

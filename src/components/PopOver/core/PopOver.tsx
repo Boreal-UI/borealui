@@ -1,8 +1,8 @@
 import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
-import BasePopover from "../PopOverBase";
+import BasePopOver from "../PopOverBase";
 import "./PopOver.scss";
-import { PopoverProps } from "../PopOver.types";
+import { PopOverProps } from "../PopOver.types";
 
 const classes = {
   container: "popover_container",
@@ -38,8 +38,8 @@ const classes = {
   roundLarge: "popover_round-Large",
 };
 
-const Popover: React.FC<PopoverProps> = (props) => {
-  return <BasePopover {...props} classMap={expandClassMap(classes)} />;
+const PopOver: React.FC<PopOverProps> = (props) => {
+  return <BasePopOver {...props} classMap={expandClassMap(classes)} />;
 };
-Popover.displayName = "Popover";
-export default Popover;
+PopOver.displayName = "PopOver";
+export default PopOver;

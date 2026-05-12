@@ -8,8 +8,8 @@ import type { GeneratedComponentDoc } from "./types";
 export const checkBoxPropDocs: GeneratedComponentDoc = {
   "name": "CheckBox",
   "interfaceName": "CheckBoxProps",
-  "description": "Props for the Checkbox component.",
-  "sourcePath": "src\\components\\Checkbox\\Checkbox.types.ts",
+  "description": "Props for the CheckBox component.",
+  "sourcePath": "src\\components\\CheckBox\\CheckBox.types.ts",
   "props": [
     {
       "name": "aria-describedby",

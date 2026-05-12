@@ -6,7 +6,7 @@ import {
   useImperativeHandle,
   useMemo,
 } from "react";
-import type { CheckboxBaseProps } from "./Checkbox.types";
+import type { CheckBoxBaseProps } from "./CheckBox.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
@@ -18,7 +18,7 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
-const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
+const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
   (
     {
       checked,
@@ -207,5 +207,5 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
   },
 );
 
-CheckboxBase.displayName = "CheckboxBase";
-export default CheckboxBase;
+CheckBoxBase.displayName = "CheckBoxBase";
+export default CheckBoxBase;

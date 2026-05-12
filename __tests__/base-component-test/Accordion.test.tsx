@@ -408,10 +408,10 @@ describe("AccordionBase (Jest)", () => {
     expect(children[1]).toHaveAttribute("data-testid", "test-title");
   });
 
-  it("prevents collapsing when isToggleable is false and already expanded", () => {
+  it("prevents collapsing when no-collapse is true and already expanded", () => {
     renderAccordion({
       initiallyExpanded: true,
-      isToggleable: false,
+      "no-collapse": true,
     });
 
     const toggle = screen.getByTestId("test-accordion-toggle");
@@ -423,15 +423,28 @@ describe("AccordionBase (Jest)", () => {
     expect(content).toHaveAttribute("data-state", "open");
   });
 
-  it("still allows opening when isToggleable is false and currently collapsed", () => {
+  it("still allows opening when no-collapse is true and currently collapsed", () => {
     renderAccordion({
-      isToggleable: false,
+      "no-collapse": true,
     });
 
     const toggle = screen.getByTestId("test-accordion-toggle");
     const content = screen.getByTestId("test-content");
 
     expect(content).toHaveAttribute("data-state", "collapsed");
+
+    fireEvent.click(toggle);
+    expect(content).toHaveAttribute("data-state", "open");
+  });
+
+  it("uses no-collapse as the single collapse-prevention prop", () => {
+    renderAccordion({
+      initiallyExpanded: true,
+      "no-collapse": true,
+    });
+
+    const toggle = screen.getByTestId("test-accordion-toggle");
+    const content = screen.getByTestId("test-content");
 
     fireEvent.click(toggle);
     expect(content).toHaveAttribute("data-state", "open");

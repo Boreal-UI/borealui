@@ -55,6 +55,14 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
+      "name": "href",
+      "type": "string",
+      "description": "Optional href. When provided, the badge renders as an anchor link.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "icon",
       "type": "IconType",
       "description": "Optional icon to render inside the badge.",

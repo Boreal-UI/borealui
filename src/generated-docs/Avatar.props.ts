@@ -21,7 +21,7 @@ export const avatarPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "aria-current",
-      "type": "boolean | \"page\" | \"step\" | \"location\" | \"date\" | \"time\"",
+      "type": "boolean | \"time\" | \"page\" | \"step\" | \"location\" | \"date\"",
       "description": "Indicates the current state or item within a set when the avatar acts as a link. Example: page, step, location, date, time, true.",
       "required": false,
       "inherited": false,
@@ -225,7 +225,7 @@ export const avatarPropDocs: GeneratedComponentDoc = {
     {
       "name": "status",
       "type": "StatusType",
-      "description": "Optional status indicator for user availability and activity. Useful for chat apps, collaboration tools, or profile displays.",
+      "description": "Optional status indicator for user availability and activity. ( \"online\" | \"offline\" | \"away\" | \"busy\") Useful for chat apps, collaboration tools, or profile displays.",
       "required": false,
       "inherited": false,
       "category": "props"

@@ -37,7 +37,7 @@ export const buttonPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "aria-current",
-      "type": "boolean | \"page\" | \"step\" | \"location\" | \"date\" | \"time\"",
+      "type": "boolean | \"time\" | \"page\" | \"step\" | \"location\" | \"date\"",
       "description": "Indicates that this button represents the current item within a set. Most useful when rendering as a link-like control.",
       "required": false,
       "inherited": false,

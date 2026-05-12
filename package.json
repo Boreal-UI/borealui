@@ -220,10 +220,10 @@
       "import": "./dist/core/Card.js",
       "require": "./dist/core/Card.cjs.js"
     },
-    "./core/Checkbox": {
-      "types": "./dist/types/core/Checkbox.d.ts",
-      "import": "./dist/core/Checkbox.js",
-      "require": "./dist/core/Checkbox.cjs.js"
+    "./core/CheckBox": {
+      "types": "./dist/types/core/CheckBox.d.ts",
+      "import": "./dist/core/CheckBox.js",
+      "require": "./dist/core/CheckBox.cjs.js"
     },
     "./core/Chip": {
       "types": "./dist/types/core/Chip.d.ts",
@@ -325,10 +325,10 @@
       "import": "./dist/core/Modal.js",
       "require": "./dist/core/Modal.cjs.js"
     },
-    "./core/Navbar": {
-      "types": "./dist/types/core/Navbar.d.ts",
-      "import": "./dist/core/Navbar.js",
-      "require": "./dist/core/Navbar.cjs.js"
+    "./core/NavBar": {
+      "types": "./dist/types/core/NavBar.d.ts",
+      "import": "./dist/core/NavBar.js",
+      "require": "./dist/core/NavBar.cjs.js"
     },
     "./core/NotificationCenter": {
       "types": "./dist/types/core/NotificationCenter.d.ts",
@@ -340,10 +340,10 @@
       "import": "./dist/core/Pager.js",
       "require": "./dist/core/Pager.cjs.js"
     },
-    "./core/Popover": {
-      "types": "./dist/types/core/Popover.d.ts",
-      "import": "./dist/core/Popover.js",
-      "require": "./dist/core/Popover.cjs.js"
+    "./core/PopOver": {
+      "types": "./dist/types/core/PopOver.d.ts",
+      "import": "./dist/core/PopOver.js",
+      "require": "./dist/core/PopOver.cjs.js"
     },
     "./core/ProgressBar": {
       "types": "./dist/types/core/ProgressBar.d.ts",
@@ -484,9 +484,9 @@
       "types": "./dist/types/next/Card.d.ts",
       "import": "./dist/next/Card.js"
     },
-    "./next/Checkbox": {
-      "types": "./dist/types/next/Checkbox.d.ts",
-      "import": "./dist/next/Checkbox.js"
+    "./next/CheckBox": {
+      "types": "./dist/types/next/CheckBox.d.ts",
+      "import": "./dist/next/CheckBox.js"
     },
     "./next/Chip": {
       "types": "./dist/types/next/Chip.d.ts",
@@ -568,9 +568,9 @@
       "types": "./dist/types/next/Modal.d.ts",
       "import": "./dist/next/Modal.js"
     },
-    "./next/Navbar": {
-      "types": "./dist/types/next/Navbar.d.ts",
-      "import": "./dist/next/Navbar.js"
+    "./next/NavBar": {
+      "types": "./dist/types/next/NavBar.d.ts",
+      "import": "./dist/next/NavBar.js"
     },
     "./next/NotificationCenter": {
       "types": "./dist/types/next/NotificationCenter.d.ts",
@@ -580,9 +580,9 @@
       "types": "./dist/types/next/Pager.d.ts",
       "import": "./dist/next/Pager.js"
     },
-    "./next/Popover": {
-      "types": "./dist/types/next/Popover.d.ts",
-      "import": "./dist/next/Popover.js"
+    "./next/PopOver": {
+      "types": "./dist/types/next/PopOver.d.ts",
+      "import": "./dist/next/PopOver.js"
     },
     "./next/ProgressBar": {
       "types": "./dist/types/next/ProgressBar.d.ts",

@@ -8,7 +8,7 @@ import {
 import { InputHTMLAttributes, ReactNode } from "react";
 
 /**
- * Props for the Checkbox component.
+ * Props for the CheckBox component.
  */
 export interface CheckBoxProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -187,6 +187,6 @@ export interface CheckBoxProps extends Omit<
   "data-testid"?: string;
 }
 
-export interface CheckboxBaseProps extends CheckBoxProps {
+export interface CheckBoxBaseProps extends CheckBoxProps {
   classMap: Record<string, string>;
 }

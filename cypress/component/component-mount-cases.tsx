@@ -101,7 +101,7 @@ const themeVariantComponents = new Set([
   "Breadcrumbs",
   "Button",
   "Card",
-  "Checkbox",
+  "CheckBox",
   "Chip",
   "CircularProgress",
   "CommandPalette",
@@ -114,9 +114,9 @@ const themeVariantComponents = new Set([
   "Footer",
   "IconButton",
   "MetricBox",
-  "Navbar",
+  "NavBar",
   "Pager",
-  "Popover",
+  "PopOver",
   "ProgressBar",
   "RadioButton",
   "RadioGroup",
@@ -144,7 +144,7 @@ const stateVariantComponents = new Set([
   "Breadcrumbs",
   "Button",
   "Card",
-  "Checkbox",
+  "CheckBox",
   "Chip",
   "CircularProgress",
   "CommandPalette",
@@ -157,7 +157,7 @@ const stateVariantComponents = new Set([
   "IconButton",
   "MetricBox",
   "Pager",
-  "Popover",
+  "PopOver",
   "ProgressBar",
   "RadioButton",
   "RadioGroup",
@@ -347,9 +347,9 @@ export const componentSmokeCases: SmokeCase[] = [
     assert: () => cy.contains("Card title").should("be.visible"),
   },
   {
-    name: "Checkbox",
-    render: ({ Checkbox }, testId) => (
-      <Checkbox
+    name: "CheckBox",
+    render: ({ CheckBox }, testId) => (
+      <CheckBox
         label="Accept terms"
         checked={false}
         onChange={noop}
@@ -584,12 +584,12 @@ export const componentSmokeCases: SmokeCase[] = [
     },
   },
   {
-    name: "Navbar",
-    render: ({ Navbar }, testId) => (
-      <Navbar items={[{ label: "Home", path: "/" }]} data-testid={testId} />
+    name: "NavBar",
+    render: ({ NavBar }, testId) => (
+      <NavBar items={[{ label: "Home", path: "/" }]} data-testid={testId} />
     ),
-    renderA11y: ({ Navbar }, testId) => (
-      <Navbar
+    renderA11y: ({ NavBar }, testId) => (
+      <NavBar
         items={[{ label: "Home", path: "/" }]}
         theme="clear"
         glass={false}
@@ -641,18 +641,18 @@ export const componentSmokeCases: SmokeCase[] = [
     ),
   },
   {
-    name: "Popover",
-    render: ({ Popover }, testId) => (
-      <Popover
+    name: "PopOver",
+    render: ({ PopOver }, testId) => (
+      <PopOver
         trigger="More info"
-        content="Popover content"
+        content="PopOver content"
         data-testid={testId}
       />
     ),
-    renderA11y: ({ Popover }, testId) => (
-      <Popover
+    renderA11y: ({ PopOver }, testId) => (
+      <PopOver
         trigger="More info"
-        content="Popover content"
+        content="PopOver content"
         theme="clear"
         glass={false}
         data-testid={testId}
@@ -1060,7 +1060,7 @@ export function runComponentThemedAccessibilityTests(
           cy.wait(350);
         } else if (componentCase.name === "NotificationCenter") {
           cy.wait(350);
-        } else if (componentCase.name === "Popover") {
+        } else if (componentCase.name === "PopOver") {
           const firstSchemeId = schemeTestId(appThemeSchemes[0].name);
           cy.get(
             `[data-testid="${testId}-${firstSchemeId}-base-trigger"]`,

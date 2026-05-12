@@ -1,8 +1,8 @@
 import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
-import CheckboxBase from "../CheckboxBase";
-import "./Checkbox.scss";
-import { CheckBoxProps } from "../Checkbox.types";
+import CheckBoxBase from "../CheckBoxBase";
+import "./CheckBox.scss";
+import { CheckBoxProps } from "../CheckBox.types";
 
 const classes = {
   checkbox: "checkbox",
@@ -51,8 +51,8 @@ const classes = {
   errorMessage: "checkbox_errorMessage",
 };
 
-const Checkbox = forwardRef<HTMLInputElement, CheckBoxProps>((props, ref) => (
-  <CheckboxBase {...props} classMap={expandClassMap(classes)} ref={ref} />
+const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>((props, ref) => (
+  <CheckBoxBase {...props} classMap={expandClassMap(classes)} ref={ref} />
 ));
-Checkbox.displayName = "Checkbox";
-export default Checkbox;
+CheckBox.displayName = "CheckBox";
+export default CheckBox;

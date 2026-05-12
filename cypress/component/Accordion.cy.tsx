@@ -238,22 +238,28 @@ const runAccordionTests = (
       getContent().should("have.attr", "data-state", "collapsed");
     });
 
-    it("is always expanded when isToggleable is false", () => {
+    it("allows opening but prevents collapsing when no-collapse is true", () => {
       mountAccordion(Accordion, {
-        isToggleable: false,
+        "no-collapse": true,
         onToggle: cy.stub().as("onToggle"),
       });
 
+      getToggle().should("have.attr", "aria-expanded", "false");
+      getContent().should("have.attr", "data-state", "collapsed");
+      getIcon().should("have.text", "+");
+
+      getToggle().click();
+
       getToggle().should("have.attr", "aria-expanded", "true");
       getContent().should("have.attr", "data-state", "open");
-      getIcon().should("have.text", "−");
+      cy.get("@onToggle").should("have.been.calledOnceWith", true);
 
       getToggle().click();
 
       getToggle().should("have.attr", "aria-expanded", "true");
       getContent().should("have.attr", "data-state", "open");
 
-      cy.get("@onToggle").should("not.have.been.called");
+      cy.get("@onToggle").should("have.been.calledOnce");
     });
 
     it("does not toggle when disabled", () => {

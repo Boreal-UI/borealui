@@ -22,7 +22,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   children,
   lazyLoad = false,
   iconPosition = "right",
-  isToggleable = true,
+  "no-collapse": preventCollapse = false,
   asyncContent = false,
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
@@ -55,20 +55,13 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   const isControlled = expanded !== undefined;
   const internalId = useMemo(getUniqueId, []);
 
-  const shouldAlwaysExpand = isToggleable === false;
-  const initiallyResolvedExpanded = shouldAlwaysExpand
-    ? true
-    : initiallyExpanded;
-
-  const [internalExpanded, setInternalExpanded] = useState(
-    initiallyResolvedExpanded,
-  );
+  const [internalExpanded, setInternalExpanded] = useState(initiallyExpanded);
 
   const controlledOrInternalExpanded = isControlled
     ? Boolean(expanded)
     : internalExpanded;
 
-  const isExpanded = shouldAlwaysExpand ? true : controlledOrInternalExpanded;
+  const isExpanded = controlledOrInternalExpanded;
 
   const [hasBeenExpanded, setHasBeenExpanded] = useState(isExpanded);
   const [isLoading, setIsLoading] = useState(asyncContent && isExpanded);
@@ -94,9 +87,11 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       .join(" ") || undefined;
 
   const toggleAccordion = () => {
-    if (disabled || shouldAlwaysExpand) return;
+    if (disabled) return;
 
     const nextExpanded = !isExpanded;
+
+    if (preventCollapse && !nextExpanded) return;
 
     if (!isControlled) {
       setInternalExpanded(nextExpanded);
@@ -113,12 +108,6 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       toggleAccordion();
     }
   };
-
-  useEffect(() => {
-    if (shouldAlwaysExpand && !isControlled) {
-      setInternalExpanded(true);
-    }
-  }, [shouldAlwaysExpand, isControlled]);
 
   useEffect(() => {
     if (isExpanded && !hasBeenExpanded) {

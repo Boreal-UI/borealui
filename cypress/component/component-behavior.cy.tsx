@@ -100,12 +100,12 @@ const behaviorCases: BehaviorCase[] = [
     },
   },
   {
-    name: "Checkbox",
-    run: ({ Checkbox }) => {
+    name: "CheckBox",
+    run: ({ CheckBox }) => {
       const onChange = cy.stub().as("checkboxChange");
 
       mountInFrame(
-        <Checkbox
+        <CheckBox
           label="Accept terms"
           checked={false}
           onChange={onChange}
@@ -460,10 +460,10 @@ const behaviorCases: BehaviorCase[] = [
     },
   },
   {
-    name: "Navbar",
-    run: ({ Navbar }) => {
+    name: "NavBar",
+    run: ({ NavBar }) => {
       mountInFrame(
-        <Navbar
+        <NavBar
           items={[{ icon: <TestIcon />, label: "Home", path: "/home" }]}
           data-testid="navbar"
         />,
@@ -515,12 +515,12 @@ const behaviorCases: BehaviorCase[] = [
     },
   },
   {
-    name: "Popover",
-    run: ({ Popover }) => {
+    name: "PopOver",
+    run: ({ PopOver }) => {
       mountInFrame(
-        <Popover
+        <PopOver
           trigger="More info"
-          content="Popover content"
+          content="PopOver content"
           data-testid="popover"
         />,
       );
@@ -528,7 +528,7 @@ const behaviorCases: BehaviorCase[] = [
       cy.get('[data-testid="popover-trigger"]').click();
       cy.get('[data-testid="popover-content"]').should(
         "contain.text",
-        "Popover content",
+        "PopOver content",
       );
     },
   },
