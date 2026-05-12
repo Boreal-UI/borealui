@@ -31,8 +31,6 @@ const TextAreaBase = forwardRef<
       shadow = getDefaultShadow(),
       state = "",
       resizable = true,
-
-      "aria-label": ariaLabel,
       "aria-description": ariaDescription,
       helperText,
       errorMessage,
@@ -53,9 +51,7 @@ const TextAreaBase = forwardRef<
       testId = dataTestId ?? "text-area",
       id: idProp,
       required,
-
-      // Native accessibility props
-      "aria-label": ariaLabelProp,
+      "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       "aria-describedby": ariaDescribedByProp,
       "aria-errormessage": ariaErrorMessageProp,
@@ -102,9 +98,7 @@ const TextAreaBase = forwardRef<
     const isError = state === "error";
 
     const computedAriaLabel =
-      !ariaLabelledBy && !label
-        ? ariaLabelProp || ariaLabel || placeholder
-        : undefined;
+      !ariaLabelledBy && !label ? ariaLabel || placeholder : undefined;
 
     const describedByIds =
       [

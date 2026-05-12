@@ -25,7 +25,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   titleClassName = "",
   "data-testid": dataTestId,
   testId = dataTestId ?? "toolbar",
-  "aria-label": ariaLabelProp,
+  "aria-label": ariaLabel = "Toolbar",
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
   leftAriaLabel = "Toolbar left section",
@@ -33,7 +33,6 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   rightAriaLabel = "Toolbar right section",
   AvatarComponent,
   classMap,
-  "aria-label": ariaLabel = "Toolbar",
   headingLevel = 1,
 }): JSX.Element => {
   const safeHeading = Math.min(6, Math.max(1, headingLevel));
@@ -53,9 +52,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
     [classMap, theme, glass, attachment, className, shadow, rounding],
   );
 
-  const resolvedAriaLabel = ariaLabelledBy
-    ? undefined
-    : (ariaLabelProp ?? ariaLabel);
+  const resolvedAriaLabel = ariaLabelledBy ? undefined : ariaLabel;
 
   const avatarAriaHidden =
     avatar && !avatar.name && !avatar.onClick && !avatar["aria-label"]
