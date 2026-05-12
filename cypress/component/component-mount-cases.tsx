@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 
 import React from "react";
-import { defaultColorSchemes } from "@/styles/Themes";
-import { buildThemeVariables } from "@/context/themeRuntime";
+import { defaultColorSchemes } from "../../src/styles/Themes";
+import { buildThemeVariables } from "../../src/context/themeRuntime";
 
 type LibraryComponent = React.ComponentType<Record<string, unknown>>;
 
@@ -195,7 +195,10 @@ const outlineVariantComponents = new Set([
 ]);
 
 const schemeTestId = (schemeName: string) =>
-  schemeName.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+  schemeName
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 
 const getScopedSchemeStyle = (scheme: (typeof appThemeSchemes)[number]) =>
   ({
@@ -1062,8 +1065,9 @@ export function runComponentThemedAccessibilityTests(
           cy.get(
             `[data-testid="${testId}-${firstSchemeId}-base-trigger"]`,
           ).click();
-          cy.get(`[data-testid="${testId}-${firstSchemeId}-base-content"]`)
-            .should("exist");
+          cy.get(
+            `[data-testid="${testId}-${firstSchemeId}-base-content"]`,
+          ).should("exist");
           cy.wait(300);
         } else {
           cy.get(a11ySelector).should("exist");

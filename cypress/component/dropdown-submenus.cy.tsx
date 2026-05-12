@@ -1,8 +1,8 @@
 /// <reference types="cypress" />
 
 import React from "react";
-import * as Core from "@/index.core";
-import * as Next from "@/index.next";
+import * as Core from "../../src/index.core";
+import * as Next from "../../src/index.next";
 
 type DropdownComponent = typeof Core.Dropdown;
 
@@ -167,7 +167,9 @@ const runDropdownSubmenuTests = (
       cy.get('[data-testid="dropdown-account-settings"]').should("be.focused");
 
       cy.focused().type("{downArrow}");
-      cy.get('[data-testid="dropdown-workspace-settings"]').should("be.focused");
+      cy.get('[data-testid="dropdown-workspace-settings"]').should(
+        "be.focused",
+      );
 
       cy.focused().type("{downArrow}");
       cy.get('[data-testid="dropdown-advanced"]').should("be.focused");
@@ -303,7 +305,9 @@ const runDropdownSubmenuTests = (
       cy.get('[data-testid="dropdown-developer-formats-submenu"]')
         .should("be.visible")
         .and("have.attr", "data-placement", "left");
-      assertWithinViewport('[data-testid="dropdown-developer-formats-submenu"]');
+      assertWithinViewport(
+        '[data-testid="dropdown-developer-formats-submenu"]',
+      );
     });
 
     it("keeps flipped submenus open while moving from a trigger into child content", () => {
@@ -425,9 +429,7 @@ const runDropdownSubmenuTests = (
         .and("have.attr", "target", "_blank")
         .and("have.attr", "rel", "noopener noreferrer")
         .then(($link) => {
-          $link[0].addEventListener("click", (event) =>
-            event.preventDefault(),
-          );
+          $link[0].addEventListener("click", (event) => event.preventDefault());
         });
 
       cy.get('[data-testid="dropdown-docs"]')

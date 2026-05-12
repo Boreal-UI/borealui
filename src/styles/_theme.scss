@@ -76,7 +76,7 @@ $border-color: #444 !default;
 $background-color-surface: #384b4b !default;
 $error-color: #a6192e !default;
 $success-color: #04b34f !default;
-$warning-color: #ff9900 !default;
+$warning-color: #f90 !default;
 $disabled-color: #b8b8b8dd !default;
 $link-color: #8bb0c7 !default;
 $link-hover-color: #627e8f !default;
@@ -122,8 +122,7 @@ $font-family-ui:
   roboto,
   arial,
   sans-serif !default;
-$font-family-mono:
-  ui-monospace, sfmono-regular, menlo, consolas, "Liberation Mono", monospace !default;
+$font-family-mono: ui-monospace, sfmono-regular, menlo, consolas, "Liberation Mono", monospace !default;
 $font-size-xxs: 10px !default;
 $font-size-xs: 12px !default;
 $font-size-sm: 14px !default;
