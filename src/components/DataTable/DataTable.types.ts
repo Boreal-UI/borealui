@@ -98,6 +98,62 @@ export interface DataTableProps<T> {
   onRowClick?: (row: T) => void;
 
   /**
+   * Enables checkbox row selection.
+   *
+   * @default false
+   */
+  selectableRows?: boolean;
+
+  /** Controlled selected row keys. */
+  selectedRowKeys?: Array<string | number>;
+
+  /** Initial selected row keys for uncontrolled selection. */
+  defaultSelectedRowKeys?: Array<string | number>;
+
+  /** Callback fired when row selection changes. */
+  onSelectionChange?: (selectedKeys: Array<string | number>, selectedRows: T[]) => void;
+
+  /** Accessible label for the select-all checkbox. */
+  selectAllAriaLabel?: string;
+
+  /** Accessible label for a row selection checkbox. */
+  getRowSelectAriaLabel?: (row: T, index: number) => string;
+
+  /**
+   * Enables the built-in client-side filter input.
+   *
+   * @default false
+   */
+  filterable?: boolean;
+
+  /** Controlled filter query. */
+  filterValue?: string;
+
+  /** Initial filter query for uncontrolled filtering. */
+  defaultFilterValue?: string;
+
+  /** Callback fired when the filter query changes. */
+  onFilterChange?: (value: string) => void;
+
+  /** Placeholder for the filter input. */
+  filterPlaceholder?: string;
+
+  /** Accessible label for the filter input. */
+  filterAriaLabel?: string;
+
+  /** Optional toolbar title shown above the table. */
+  toolbarTitle?: React.ReactNode;
+
+  /** Optional actions rendered in the table toolbar. */
+  toolbarActions?: React.ReactNode;
+
+  /** Optional class name for the toolbar. */
+  toolbarClassName?: string;
+
+  /** Optional class name for the filter input. */
+  filterInputClassName?: string;
+
+  /**
    * Optional class name for the table wrapper.
    *
    * @default ""

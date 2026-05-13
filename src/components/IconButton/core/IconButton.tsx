@@ -19,6 +19,7 @@ const classes = {
   quaternary: "icon_button_quaternary",
 
   success: "icon_button_success",
+  info: "icon_button_info",
   warning: "icon_button_warning",
   error: "icon_button_error",
 

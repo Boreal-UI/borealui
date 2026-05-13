@@ -20,6 +20,7 @@ const classes = {
   quaternary: "pagination_quaternary",
   clear: "pagination_clear",
   success: "pagination_success",
+  info: "pagination_info",
   error: "pagination_error",
   warning: "pagination_warning",
 };

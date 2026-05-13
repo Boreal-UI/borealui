@@ -36,6 +36,7 @@ const classes = {
   quaternary: "textInput_quaternary",
 
   success: "textInput_success",
+  info: "textInput_info",
   warning: "textInput_warning",
   error: "textInput_error",
 

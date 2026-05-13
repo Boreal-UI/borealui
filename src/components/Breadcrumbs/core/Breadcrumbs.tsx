@@ -14,6 +14,7 @@ const classes = {
   quaternary: "breadcrumbs_quaternary",
 
   success: "breadcrumbs_success",
+  info: "breadcrumbs_info",
   warning: "breadcrumbs_warning",
   error: "breadcrumbs_error",
 

@@ -21,6 +21,7 @@ const classes = {
   quaternary: "tooltip_quaternary",
 
   success: "tooltip_success",
+  info: "tooltip_info",
   error: "tooltip_error",
   warning: "tooltip_warning",
 

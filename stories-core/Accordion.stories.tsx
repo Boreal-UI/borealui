@@ -10,27 +10,9 @@ import {
   StateType,
   ThemeType,
 } from "../src/types/types";
+import { roundingOptions, shadowOptions, sizeOptions, stateOptions, themeOptions } from "./assets/OptionTypes";
 
 Accordion.displayName = "Accordion";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
 
 const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",

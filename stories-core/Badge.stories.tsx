@@ -9,19 +9,13 @@ import type {
   StateType,
   ThemeType,
 } from "../src/types/types";
-
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions = ["success", "error", "warning"];
-const sizeOptions = ["xs", "small", "medium", "large", "xl"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
-const roundingOptions = ["none", "small", "medium", "large", "full"];
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",

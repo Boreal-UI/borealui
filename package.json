@@ -195,6 +195,11 @@
       "import": "./dist/core/Accordion.js",
       "require": "./dist/core/Accordion.cjs.js"
     },
+    "./core/Alert": {
+      "types": "./dist/types/core/Alert.d.ts",
+      "import": "./dist/core/Alert.js",
+      "require": "./dist/core/Alert.cjs.js"
+    },
     "./core/Avatar": {
       "types": "./dist/types/core/Avatar.d.ts",
       "import": "./dist/core/Avatar.js",
@@ -255,10 +260,20 @@
       "import": "./dist/core/CommandPalette.js",
       "require": "./dist/core/CommandPalette.cjs.js"
     },
+    "./core/ComboBox": {
+      "types": "./dist/types/core/ComboBox.d.ts",
+      "import": "./dist/core/ComboBox.js",
+      "require": "./dist/core/ComboBox.cjs.js"
+    },
     "./core/DataTable": {
       "types": "./dist/types/core/DataTable.d.ts",
       "import": "./dist/core/DataTable.js",
       "require": "./dist/core/DataTable.cjs.js"
+    },
+    "./core/DateRangePicker": {
+      "types": "./dist/types/core/DateRangePicker.d.ts",
+      "import": "./dist/core/DateRangePicker.js",
+      "require": "./dist/core/DateRangePicker.cjs.js"
     },
     "./core/DateTimePicker": {
       "types": "./dist/types/core/DateTimePicker.d.ts",
@@ -274,6 +289,11 @@
       "types": "./dist/types/core/Dropdown.d.ts",
       "import": "./dist/core/Dropdown.js",
       "require": "./dist/core/Dropdown.cjs.js"
+    },
+    "./core/Drawer": {
+      "types": "./dist/types/core/Drawer.d.ts",
+      "import": "./dist/core/Drawer.js",
+      "require": "./dist/core/Drawer.cjs.js"
     },
     "./core/EmptyState": {
       "types": "./dist/types/core/EmptyState.d.ts",
@@ -295,6 +315,11 @@
       "import": "./dist/core/FormGroup.js",
       "require": "./dist/core/FormGroup.cjs.js"
     },
+    "./core/FormField": {
+      "types": "./dist/types/core/FormField.d.ts",
+      "import": "./dist/core/FormField.js",
+      "require": "./dist/core/FormField.cjs.js"
+    },
     "./core/globals": {
       "types": "./dist/types/core/globals.d.ts",
       "import": "./dist/core/globals.js",
@@ -304,6 +329,11 @@
       "types": "./dist/types/core/IconButton.d.ts",
       "import": "./dist/core/IconButton.js",
       "require": "./dist/core/IconButton.cjs.js"
+    },
+    "./core/Layout": {
+      "types": "./dist/types/core/Layout.d.ts",
+      "import": "./dist/core/Layout.js",
+      "require": "./dist/core/Layout.cjs.js"
     },
     "./core/MarkdownRenderer": {
       "types": "./dist/types/core/MarkdownRenderer.d.ts",
@@ -405,6 +435,11 @@
       "import": "./dist/core/Stepper.js",
       "require": "./dist/core/Stepper.cjs.js"
     },
+    "./core/styleConfig": {
+      "types": "./dist/types/core/styleConfig.d.ts",
+      "import": "./dist/core/styleConfig.js",
+      "require": "./dist/core/styleConfig.cjs.js"
+    },
     "./core/Tabs": {
       "types": "./dist/types/core/Tabs.d.ts",
       "import": "./dist/core/Tabs.js",
@@ -445,6 +480,11 @@
       "import": "./dist/core/Toggle.js",
       "require": "./dist/core/Toggle.cjs.js"
     },
+    "./core/ToastProvider": {
+      "types": "./dist/types/core/ToastProvider.d.ts",
+      "import": "./dist/core/ToastProvider.js",
+      "require": "./dist/core/ToastProvider.cjs.js"
+    },
     "./core/Toolbar": {
       "types": "./dist/types/core/Toolbar.d.ts",
       "import": "./dist/core/Toolbar.js",
@@ -463,6 +503,10 @@
     "./next/Accordion": {
       "types": "./dist/types/next/Accordion.d.ts",
       "import": "./dist/next/Accordion.js"
+    },
+    "./next/Alert": {
+      "types": "./dist/types/next/Alert.d.ts",
+      "import": "./dist/next/Alert.js"
     },
     "./next/Avatar": {
       "types": "./dist/types/next/Avatar.d.ts",
@@ -512,9 +556,17 @@
       "types": "./dist/types/next/CommandPalette.d.ts",
       "import": "./dist/next/CommandPalette.js"
     },
+    "./next/ComboBox": {
+      "types": "./dist/types/next/ComboBox.d.ts",
+      "import": "./dist/next/ComboBox.js"
+    },
     "./next/DataTable": {
       "types": "./dist/types/next/DataTable.d.ts",
       "import": "./dist/next/DataTable.js"
+    },
+    "./next/DateRangePicker": {
+      "types": "./dist/types/next/DateRangePicker.d.ts",
+      "import": "./dist/next/DateRangePicker.js"
     },
     "./next/DateTimePicker": {
       "types": "./dist/types/next/DateTimePicker.d.ts",
@@ -527,6 +579,10 @@
     "./next/Dropdown": {
       "types": "./dist/types/next/Dropdown.d.ts",
       "import": "./dist/next/Dropdown.js"
+    },
+    "./next/Drawer": {
+      "types": "./dist/types/next/Drawer.d.ts",
+      "import": "./dist/next/Drawer.js"
     },
     "./next/EmptyState": {
       "types": "./dist/types/next/EmptyState.d.ts",
@@ -544,6 +600,10 @@
       "types": "./dist/types/next/FormGroup.d.ts",
       "import": "./dist/next/FormGroup.js"
     },
+    "./next/FormField": {
+      "types": "./dist/types/next/FormField.d.ts",
+      "import": "./dist/next/FormField.js"
+    },
     "./next/globals": {
       "types": "./dist/types/next/globals.d.ts",
       "import": "./dist/next/globals.js"
@@ -551,6 +611,10 @@
     "./next/IconButton": {
       "types": "./dist/types/next/IconButton.d.ts",
       "import": "./dist/next/IconButton.js"
+    },
+    "./next/Layout": {
+      "types": "./dist/types/next/Layout.d.ts",
+      "import": "./dist/next/Layout.js"
     },
     "./next/MarkdownRenderer": {
       "types": "./dist/types/next/MarkdownRenderer.d.ts",
@@ -632,6 +696,10 @@
       "types": "./dist/types/next/Stepper.d.ts",
       "import": "./dist/next/Stepper.js"
     },
+    "./next/styleConfig": {
+      "types": "./dist/types/next/styleConfig.d.ts",
+      "import": "./dist/next/styleConfig.js"
+    },
     "./next/Tabs": {
       "types": "./dist/types/next/Tabs.d.ts",
       "import": "./dist/next/Tabs.js"
@@ -663,6 +731,10 @@
     "./next/Toggle": {
       "types": "./dist/types/next/Toggle.d.ts",
       "import": "./dist/next/Toggle.js"
+    },
+    "./next/ToastProvider": {
+      "types": "./dist/types/next/ToastProvider.d.ts",
+      "import": "./dist/next/ToastProvider.js"
     },
     "./next/Toolbar": {
       "types": "./dist/types/next/Toolbar.d.ts",

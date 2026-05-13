@@ -1,19 +1,13 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { FaRocket, FaCalendarAlt, FaCheckCircle } from "react-icons/fa";
-import { ThemeType, Timeline } from "../src/index.core";
+import { Timeline } from "../src/index.core";
 import type { TimelineProps } from "../src/components/Timeline/Timeline.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const sampleEvents = [
   {

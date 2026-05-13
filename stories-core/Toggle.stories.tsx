@@ -1,32 +1,14 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-  Toggle,
-} from "../src/index.core";
+import { Toggle } from "../src/index.core";
 import type { ToggleProps } from "../src/components/Toggle/Toggle.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<ToggleProps> = {
   title: "Components/Toggle",

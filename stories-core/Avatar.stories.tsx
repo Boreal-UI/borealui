@@ -10,18 +10,13 @@ import {
   StatusType,
   ThemeType,
 } from "../src/types/types";
+import {
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-const stateOptions = ["success", "error", "warning"];
-const sizeOptions = [...["xs", "small", "medium", "large", "xl"]] as string[];
-const shapeOptions = [...["circle", "rounded", "square"]] as string[];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 const statusOptions = [
   ...["online", "away", "offline", "busy", "custom"],
 ] as string[];
@@ -252,7 +247,7 @@ export const ShapeVariants = () =>
     [
       {
         propName: "shape",
-        values: shapeOptions,
+        values: stateOptions,
       },
     ],
   );

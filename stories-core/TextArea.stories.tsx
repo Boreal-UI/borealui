@@ -1,22 +1,15 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { FaCommentDots, FaInbox } from "react-icons/fa";
-import { StateType, TextArea, ThemeType } from "../src/index.core";
+import { TextArea } from "../src/index.core";
 import type { TextAreaProps } from "../src/components/TextArea/TextArea.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<TextAreaProps> = {
   title: "Components/TextArea",

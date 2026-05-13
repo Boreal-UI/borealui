@@ -36,7 +36,13 @@ export type ThemeType =
 /**
  * UI state indicators typically used for validation or status feedback.
  */
-export type StateType = "success" | "error" | "warning" | "disabled" | "";
+export type StateType =
+  | "success"
+  | "error"
+  | "warning"
+  | "info"
+  | "disabled"
+  | "";
 
 /**
  * Types of notifications that determine visual appearance or icon.

@@ -30,7 +30,7 @@ Common shared types:
 | Type | Values |
 | --- | --- |
 | `ThemeType` | `primary`, `secondary`, `tertiary`, `quaternary`, `clear` |
-| `StateType` | `success`, `error`, `warning`, `disabled`, empty string |
+| `StateType` | `success`, `error`, `warning`, `info`, `disabled`, empty string |
 | `SizeType` | `xs`, `small`, `medium`, `large`, `xl` |
 | `RoundingType` | `none`, `small`, `medium`, `large`, `full` |
 | `ShadowType` | `none`, `light`, `medium`, `strong`, `intense` |

@@ -19,6 +19,7 @@ const classes = {
   quaternary: "toggle_quaternary",
 
   success: "toggle_success",
+  info: "toggle_info",
   warning: "toggle_warning",
   error: "toggle_error",
 

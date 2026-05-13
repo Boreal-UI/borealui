@@ -1,32 +1,13 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  AttachmentType,
-  IconButton,
-  RoundingType,
-  ShadowType,
-  ThemeType,
-  Toolbar,
-} from "../src/index.core";
+import { AttachmentType, IconButton, Toolbar } from "../src/index.core";
 import { FaBell, FaArrowLeft } from "react-icons/fa";
 import type { ToolbarBaseProps } from "../src/components/Toolbar/Toolbar.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const attachmentOptions: AttachmentType[] = ["static", "fixed", "sticky"];
 

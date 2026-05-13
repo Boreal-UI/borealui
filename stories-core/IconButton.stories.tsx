@@ -1,35 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  IconButton,
-  RoundingType,
-  ShadowType,
-  SizeType,
-  StateType,
-  ThemeType,
-} from "../src/index.core";
+import { IconButton } from "../src/index.core";
 import { FaPlus, FaExternalLinkAlt } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "warning", "error"];
-
-const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<typeof IconButton> = {
   title: "Components/IconButton",
@@ -121,7 +100,6 @@ export const GlassStateVariants = () =>
       icon: FaPlus,
       size: "medium",
       "aria-label": "Glass State",
-      state: "" as StateType,
       glass: true,
     },
     [{ propName: "state", values: stateOptions }],

@@ -1,0 +1,319 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
+
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  .combobox_layout {
+    display: grid;
+    gap: var(--spacing-xs);
+    width: 100%;
+    min-width: 0;
+    font-family: var(--font-family-ui);
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "label"
+      "control"
+      "helper"
+      "error";
+  }
+
+  .combobox_label {
+    grid-area: label;
+  }
+
+  .combobox_helper_text {
+    grid-area: helper;
+  }
+
+  .combobox_error_text {
+    grid-area: error;
+  }
+
+  .combobox_label_top {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "label"
+      "control"
+      "helper"
+      "error";
+  }
+
+  .combobox_label_bottom {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "control"
+      "label"
+      "helper"
+      "error";
+  }
+
+  .combobox_label_left {
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--spacing-sm);
+    grid-template-areas:
+      "label control"
+      ". helper"
+      ". error";
+  }
+
+  .combobox_label_right {
+    grid-template-columns: minmax(0, 1fr) max-content;
+    align-items: center;
+    column-gap: var(--spacing-sm);
+    grid-template-areas:
+      "control label"
+      "helper ."
+      "error .";
+  }
+
+  .combobox {
+    --combobox-bg: var(--background-color);
+    --combobox-hover-bg: var(--hover-color, rgb(127 127 127 / 12%));
+    --combobox-border: var(--border-color);
+    --combobox-text: var(--text-color);
+    --combobox-text-hover: var(--text-color);
+    --combobox-listbox-bg: var(--background-color);
+    --combobox-listbox-border: var(--border-color);
+    --combobox-option-hover-bg: var(--hover-color, rgb(127 127 127 / 12%));
+    --combobox-glass-bg: var(--glass-background);
+    --combobox-glass-hover-bg: var(
+      --glass-background-subtle,
+      var(--glass-background)
+    );
+    --combobox-glass-border: var(--glass-border-color);
+    --combobox-glass-text: var(--text-color);
+
+    grid-area: control;
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 2.5rem;
+    width: 100%;
+    min-width: 0;
+    border: 1px solid var(--combobox-border);
+    background: var(--combobox-bg);
+    color: var(--combobox-text);
+  }
+
+  .combobox_input {
+    min-width: 0;
+    min-height: 44px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: 0 var(--spacing-sm);
+    font: inherit;
+  }
+
+  .combobox_input:focus {
+    outline: none;
+  }
+
+  .combobox:focus-within {
+    z-index: 100;
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+  }
+
+  .combobox_toggle {
+    border: 0;
+    border-left: 1px solid var(--combobox-border);
+    background: transparent;
+    color: currentcolor;
+    cursor: pointer;
+  }
+
+  .combobox_listbox {
+    position: absolute;
+    z-index: 101;
+    inset-inline: 0;
+    top: calc(100% + 0.25rem);
+    display: grid;
+    max-height: 16rem;
+    overflow: auto;
+    border: 1px solid var(--combobox-listbox-border);
+    border-radius: var(--border-radius-md);
+    background: var(--combobox-listbox-bg);
+    color: var(--combobox-text);
+    box-shadow: var(--box-shadow-md);
+  }
+
+  .combobox_option {
+    display: grid;
+    gap: 0.125rem;
+    width: 100%;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+    padding: var(--spacing-sm);
+    cursor: pointer;
+  }
+
+  .combobox_option:hover,
+  .combobox_active {
+    background: var(--hover-color, rgb(127 127 127 / 12%));
+  }
+
+  .combobox_selected {
+    font-weight: var(--font-weight-label);
+  }
+
+  .combobox_description,
+  .combobox_helper_text,
+  .combobox_error_text {
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+  }
+
+  .combobox_error_text {
+    color: var(--error-color, #b00020);
+  }
+
+  .combobox_status {
+    padding: var(--spacing-sm);
+    color: var(--text-color-secondary);
+  }
+
+  @each $key, $value in theme.$rounding {
+    .combobox_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .combobox_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @each $name, $values in theme.$themes {
+    .combobox_#{$name} {
+      --combobox-bg: #{map.get($values, bg)};
+      --combobox-hover-bg: #{map.get($values, hover)};
+      --combobox-border: #{map.get($values, border)};
+      --combobox-text: #{map.get($values, text)};
+      --combobox-text-hover: #{map.get($values, text-hover)};
+      --combobox-listbox-bg: #{map.get($values, bg)};
+      --combobox-listbox-border: #{map.get($values, border)};
+      --combobox-option-hover-bg: #{map.get($values, hover)};
+      --combobox-glass-bg: #{map.get($values, glass-bg)};
+      --combobox-glass-hover-bg: #{map.get($values, glass-hover)};
+      --combobox-glass-border: #{map.get($values, glass-border)};
+      --combobox-glass-text: #{map.get($values, text)};
+
+      background: var(--combobox-bg);
+      border-color: var(--combobox-border);
+      color: var(--combobox-text);
+    }
+
+    .combobox_#{$name}:hover {
+      background: var(--combobox-hover-bg);
+      color: var(--combobox-text-hover);
+    }
+
+    .combobox_#{$name}.combobox_glass {
+      background: var(--combobox-glass-bg);
+      border-color: var(--combobox-glass-border);
+      color: var(--combobox-glass-text);
+
+      &:hover {
+        background: var(--combobox-glass-hover-bg);
+      }
+    }
+
+    .combobox_outline.combobox_#{$name} {
+      background: transparent;
+      border: 2px solid map.get($values, border);
+      color: map.get($values, text);
+
+      &:hover {
+        background: map.get($values, hover);
+        color: map.get($values, text-hover);
+      }
+    }
+
+    .combobox_outline.combobox_#{$name}.combobox_glass {
+      @include mixins.glass-surface(
+        transparent,
+        var(--combobox-glass-border),
+        var(--glass-blur)
+      );
+
+      color: var(--combobox-glass-text);
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .combobox_#{$name} {
+      --combobox-bg: #{map.get($values, bg)};
+      --combobox-hover-bg: #{map.get($values, hover)};
+      --combobox-border: #{map.get($values, border)};
+      --combobox-text: #{map.get($values, text)};
+      --combobox-text-hover: #{map.get($values, text-hover)};
+      --combobox-listbox-bg: #{map.get($values, bg)};
+      --combobox-listbox-border: #{map.get($values, border)};
+      --combobox-option-hover-bg: #{map.get($values, hover)};
+      --combobox-glass-bg: #{map.get($values, glass-bg)};
+      --combobox-glass-hover-bg: #{map.get($values, glass-hover)};
+      --combobox-glass-border: #{map.get($values, glass-border)};
+      --combobox-glass-text: #{map.get($values, text)};
+
+      background: var(--combobox-bg);
+      border-color: var(--combobox-border);
+      color: var(--combobox-text);
+    }
+
+    .combobox_#{$name}:hover {
+      background: var(--combobox-hover-bg);
+      color: var(--combobox-text-hover);
+    }
+
+    .combobox_#{$name}.combobox_glass {
+      background: var(--combobox-glass-bg);
+      border-color: var(--combobox-glass-border);
+      color: var(--combobox-glass-text);
+
+      &:hover {
+        background: var(--combobox-glass-hover-bg);
+      }
+    }
+
+    .combobox_outline.combobox_#{$name} {
+      background: transparent;
+      border: 2px solid map.get($values, border);
+      color: map.get($values, text);
+
+      &:hover {
+        background: map.get($values, hover);
+        color: map.get($values, text-hover);
+      }
+    }
+
+    .combobox_outline.combobox_#{$name}.combobox_glass {
+      @include mixins.glass-surface(
+        transparent,
+        var(--combobox-glass-border),
+        var(--glass-blur)
+      );
+
+      color: var(--combobox-glass-text);
+    }
+  }
+
+  .combobox_clear,
+  .combobox_listbox {
+    background-color: var(--background-color);
+  }
+
+  .combobox_disabled,
+  .combobox_toggle:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .combobox_outline {
+    background: transparent;
+  }
+}

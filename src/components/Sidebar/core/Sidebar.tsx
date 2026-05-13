@@ -39,6 +39,7 @@ const classes = {
   quaternary: "sidebar_quaternary",
 
   success: "sidebar_success",
+  info: "sidebar_info",
   error: "sidebar_error",
   warning: "sidebar_warning",
 

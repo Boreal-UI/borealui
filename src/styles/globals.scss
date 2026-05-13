@@ -122,6 +122,9 @@
         $lightness: -10%
       )};
     --warning-text-color: var(--text-color);
+    --info-color: #{theme.$info-color};
+    --info-color-hover: #{color.adjust(theme.$info-color, $lightness: -10%)};
+    --info-text-color: var(--text-color);
     --error-color: #{theme.$error-color};
     --error-color-hover: #{color.adjust(theme.$error-color, $lightness: -10%)};
     --error-text-color: var(--text-color);
@@ -222,6 +225,11 @@
       from var(--warning-color-hover) r g b / 48%
     );
     --warning-glass-border: rgb(from var(--warning-color) r g b / 48%);
+    --info-glass-background: rgb(from var(--info-color) r g b / 40%);
+    --info-glass-background-hover: rgb(
+      from var(--info-color-hover) r g b / 48%
+    );
+    --info-glass-border: rgb(from var(--info-color) r g b / 48%);
     --error-glass-background: rgb(from var(--error-color) r g b / 40%);
     --error-glass-background-hover: rgb(
       from var(--error-color-hover) r g b / 48%

@@ -1,32 +1,20 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import {
-  DateTimePicker,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "../../src/index.next";
+import { DateTimePicker, LabelPositionType } from "../../src/index.next";
 import type { DateTimePickerProps } from "../../src/components/DateTimePicker/DateTimePicker.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "../../stories-core/assets/OptionTypes";
 
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
+const labelPositionOptions: LabelPositionType[] = [
+  "top",
+  "bottom",
+  "left",
+  "right",
 ];
 
 const meta: Meta<DateTimePickerProps> = {
@@ -48,6 +36,15 @@ export const Default: Story = {
   render: (args) => {
     const [value, setValue] = useState("2025-04-15T10:30");
     return <DateTimePicker {...args} value={value} onChange={setValue} />;
+  },
+};
+
+export const FullWidth: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("2025-04-15T10:30");
+    return (
+      <DateTimePicker {...args} fullWidth value={value} onChange={setValue} />
+    );
   },
 };
 
@@ -161,6 +158,27 @@ export const Sizes: Story = {
           onChange={setValue}
           label="xl"
         />
+      </div>
+    );
+  },
+};
+
+export const LabelPositionVariants: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("2025-04-15T11:00");
+
+    return (
+      <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
+        {labelPositionOptions.map((labelPosition) => (
+          <DateTimePicker
+            key={labelPosition}
+            {...args}
+            labelPosition={labelPosition}
+            value={value}
+            onChange={setValue}
+            label={`${labelPosition.charAt(0).toUpperCase() + labelPosition.slice(1)} Label`}
+          />
+        ))}
       </div>
     );
   },

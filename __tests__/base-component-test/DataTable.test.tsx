@@ -37,6 +37,11 @@ const classMap = {
   cell: "cell",
   wrapCell: "wrapCell",
   emptyCell: "emptyCell",
+  toolbar: "toolbar",
+  toolbarTitle: "toolbarTitle",
+  toolbarActions: "toolbarActions",
+  filterInput: "filterInput",
+  selectionCell: "selectionCell",
   outline: "outline",
   glass: "glass",
   primary: "primary",
@@ -70,6 +75,32 @@ describe("DataTableBase", () => {
     expect(screen.getByText("Bob")).toBeInTheDocument();
     expect(screen.getByText("28")).toBeInTheDocument();
     expect(screen.getByText("34")).toBeInTheDocument();
+  });
+
+  it("filters rows with the toolbar search input", () => {
+    renderTable({ filterable: true, toolbarTitle: "People" });
+
+    fireEvent.change(screen.getByRole("searchbox", { name: /filter table/i }), {
+      target: { value: "Alice" },
+    });
+
+    expect(screen.getByText("Alice")).toBeInTheDocument();
+    expect(screen.queryByText("Bob")).not.toBeInTheDocument();
+  });
+
+  it("supports row selection", () => {
+    const onSelectionChange = jest.fn();
+    renderTable({
+      selectableRows: true,
+      rowKey: (row) => row.id ?? row.name,
+      onSelectionChange,
+    });
+
+    fireEvent.click(screen.getByRole("checkbox", { name: /select row 1/i }));
+
+    expect(onSelectionChange).toHaveBeenCalledWith(["a1"], [
+      { id: "a1", name: "Alice", age: 28 },
+    ]);
   });
 
   it("renders the wrapper with default structural classes", () => {

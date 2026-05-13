@@ -12,7 +12,7 @@
  * - Transitions
  * - Z-index layers
  * - Thematic color maps
- * - UI states (success, error, warning)
+ * - UI states (success, error, warning, info)
  * - Rounding and shadow presets
  * 
  * All variables support the `!default` flag to allow overrides via user-defined themes.
@@ -58,7 +58,7 @@
  *  - Each theme includes: bg, hover, text, border, text-hover
  *
  * == State Map ==
- * $states: visual styles for UI feedback states (success, error, warning)
+ * $states: visual styles for UI feedback states (success, error, warning, info)
  *
  * == Rounding / Shadow Maps ==
  * $rounding: key-value pairs for component rounding levels
@@ -77,6 +77,7 @@ $background-color-surface: #384b4b !default;
 $error-color: #a6192e !default;
 $success-color: #04b34f !default;
 $warning-color: #f90 !default;
+$info-color: #1d5ea8 !default;
 $disabled-color: #b8b8b8dd !default;
 $link-color: #8bb0c7 !default;
 $link-hover-color: #627e8f !default;
@@ -122,7 +123,8 @@ $font-family-ui:
   roboto,
   arial,
   sans-serif !default;
-$font-family-mono: ui-monospace, sfmono-regular, menlo, consolas, "Liberation Mono", monospace !default;
+$font-family-mono:
+  ui-monospace, sfmono-regular, menlo, consolas, "Liberation Mono", monospace !default;
 $font-size-xxs: 10px !default;
 $font-size-xs: 12px !default;
 $font-size-sm: 14px !default;
@@ -308,6 +310,16 @@ $states: (
     glass-bg: var(--warning-glass-background),
     glass-hover: var(--warning-glass-background-hover),
     glass-border: var(--warning-glass-border),
+  ),
+  "info": (
+    bg: var(--info-color),
+    hover: var(--info-color-hover),
+    text: var(--info-text-color),
+    border: var(--info-color),
+    text-hover: var(--info-text-color),
+    glass-bg: var(--info-glass-background),
+    glass-hover: var(--info-glass-background-hover),
+    glass-border: var(--info-glass-border),
   ),
 ) !default;
 $rounding: (

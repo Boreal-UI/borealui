@@ -16,6 +16,7 @@ const classes = {
   quaternary: "circular_progress_quaternary",
 
   success: "circular_progress_success",
+  info: "circular_progress_info",
   error: "circular_progress_error",
   warning: "circular_progress_warning",
 

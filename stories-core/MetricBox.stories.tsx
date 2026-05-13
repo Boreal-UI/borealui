@@ -1,33 +1,14 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  MetricBox,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "../src/index.core";
+import { MetricBox } from "../src/index.core";
 import type { MetricBoxProps } from "../src/components/MetricBox/MetricBox.types";
 import { FaChartLine, FaCheckCircle } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<MetricBoxProps> = {
   title: "Components/MetricBox",

@@ -4,17 +4,12 @@ import { FaCode, FaImage, FaMusic } from "react-icons/fa";
 import { Tabs } from "../src/index.core";
 import type { TabsProps, Tab } from "../src/components/Tabs/Tabs.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-] as const;
-const stateOptions = ["success", "error", "warning"] as const;
-const roundingOptions = ["none", "small", "medium", "large"] as const;
-const shadowOptions = ["none", "light", "medium", "strong", "intense"] as const;
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 type PanelMap = Record<number, React.ReactNode>;
 
@@ -58,7 +53,7 @@ function TabsWithPanel({
   const isControlled = typeof value === "number";
   const [active, setActive] = useState<number>(defaultIndex);
 
-  const currentIndex = isControlled ? (value as number) : active;
+  const currentIndex = isControlled ? value : active;
 
   const handleChange = (index: number): void => {
     if (!isControlled) setActive(index);
@@ -250,10 +245,10 @@ export const WithOnChange: Story = {
 
 export const RoundingVariants = (args: TabsProps) =>
   withVariants(Tabs, { ...args, tabs: tabsWithIcons }, [
-    { propName: "rounding", values: roundingOptions as unknown as string[] },
+    { propName: "rounding", values: roundingOptions },
   ]);
 
 export const ShadowVariants = (args: TabsProps) =>
   withVariants(Tabs, { ...args, tabs: tabsWithIcons }, [
-    { propName: "shadow", values: shadowOptions as unknown as string[] },
+    { propName: "shadow", values: shadowOptions },
   ]);

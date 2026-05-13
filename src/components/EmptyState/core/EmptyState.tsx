@@ -21,6 +21,7 @@ const classes = {
   quaternary: "empty_state_quaternary",
 
   success: "empty_state_success",
+  info: "empty_state_info",
   error: "empty_state_error",
   warning: "empty_state_warning",
 

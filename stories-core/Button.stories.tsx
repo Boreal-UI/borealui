@@ -10,26 +10,13 @@ import {
   StateType,
   ThemeType,
 } from "../src/types/types";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<ButtonProps> = {
   title: "Components/Button",

@@ -1,30 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   Dropdown,
-  RoundingType,
-  ShadowType,
   StateType,
-  ThemeType,
 } from "../src/index.core";
 import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import type { DropdownProps } from "../src/components/Dropdown/Dropdown.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
+import { roundingOptions, shadowOptions, stateOptions, themeOptions } from "./assets/OptionTypes";
 
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
 
 const meta: Meta<DropdownProps> = {
   title: "Components/Dropdown",
@@ -224,8 +207,6 @@ export const Themed: Story = {
 
 export const States: Story = {
   render: () => {
-    const stateOptions: StateType[] = ["success", "error", "warning"];
-
     return (
       <StoryGrid title="State Variants">
         {stateOptions.map((state) => (

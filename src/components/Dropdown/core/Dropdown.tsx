@@ -27,6 +27,7 @@ const classes = {
   quaternary: "dropdown_quaternary",
   clear: "dropdown_clear",
   success: "dropdown_success",
+  info: "dropdown_info",
   error: "dropdown_error",
   warning: "dropdown_warning",
   disabled: "dropdown_disabled",

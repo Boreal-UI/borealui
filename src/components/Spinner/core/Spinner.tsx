@@ -16,6 +16,7 @@ const classes = {
   quaternary: "spinner_quaternary",
 
   success: "spinner_success",
+  info: "spinner_info",
   warning: "spinner_warning",
   error: "spinner_error",
 

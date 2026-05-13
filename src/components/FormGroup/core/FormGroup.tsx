@@ -19,6 +19,7 @@ const classes = {
   secondary: "form_group_secondary",
   error: "form_group_error",
   success: "form_group_success",
+  info: "form_group_info",
   warning: "form_group_warning",
   clear: "form_group_clear",
   xs: "form_group_xs",

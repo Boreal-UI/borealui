@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Pager, RoundingType, ShadowType, StateType } from "../src/index.core";
+import { Pager } from "../src/index.core";
 import type { PaginationProps } from "../src/components/Pager/Pager.types";
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<PaginationProps> = {
   title: "Components/Pager",
@@ -14,20 +19,6 @@ const meta: Meta<PaginationProps> = {
     theme: "primary",
   },
 };
-
-const roundingOptions: RoundingType[] = [
-  "none",
-  "small",
-  "medium",
-  "large",
-] as const;
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-] as const;
 
 export default meta;
 
@@ -163,11 +154,9 @@ export const GlassThemeVariants: Story = {
 
 export const StateVariants: Story = {
   render: (args) => {
-    const states: StateType[] = ["success", "error", "warning"];
-
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-        {states.map((state) => {
+        {stateOptions.map((state) => {
           const [page, setPage] = useState(1);
           return (
             <Pager
@@ -186,11 +175,9 @@ export const StateVariants: Story = {
 
 export const GlassStateVariants: Story = {
   render: (args) => {
-    const states: StateType[] = ["success", "error", "warning"];
-
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-        {states.map((state) => {
+        {stateOptions.map((state) => {
           const [page, setPage] = useState(1);
           return (
             <Pager

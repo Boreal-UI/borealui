@@ -1,0 +1,359 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
+@use "../../../styles/animations";
+@use "sass:map";
+
+$drawer-placements: (
+  "right": (
+    justify: end,
+    align: stretch,
+    width: min(100vw, 28rem),
+    height: 100%,
+  ),
+  "left": (
+    justify: start,
+    align: stretch,
+    width: min(100vw, 28rem),
+    height: 100%,
+  ),
+  "top": (
+    justify: stretch,
+    align: start,
+    width: 100%,
+    height: auto,
+  ),
+  "bottom": (
+    justify: stretch,
+    align: end,
+    width: 100%,
+    height: auto,
+  ),
+);
+
+.drawer {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-index-drawer, 1000);
+  display: grid;
+  pointer-events: none;
+}
+
+.open {
+  pointer-events: auto;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: var(--drawer-overlay-bg, rgb(0 0 0 / 45%));
+  cursor: pointer;
+}
+
+.panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  width: min(100vw, 28rem);
+  max-width: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  background: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family-ui);
+  box-shadow: var(--shadow-md, none);
+}
+
+@each $placement, $config in $drawer-placements {
+  .#{$placement} .panel {
+    justify-self: map.get($config, justify);
+    align-self: map.get($config, align);
+    width: map.get($config, width);
+    height: map.get($config, height);
+  }
+}
+
+.top .panel,
+.bottom .panel {
+  min-height: var(--drawer-sheet-min-height, 12rem);
+  max-height: var(--drawer-sheet-max-height, min(80vh, 36rem));
+}
+
+.open .overlay {
+  animation: drawer-overlay-fade-in var(--drawer-animation-duration, 220ms)
+    var(--drawer-animation-easing, ease-out) both;
+}
+
+.open.right .panel {
+  animation: drawer-slide-in-right var(--drawer-animation-duration, 260ms)
+    var(--drawer-animation-easing, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+
+.open.left .panel {
+  animation: drawer-slide-in-left var(--drawer-animation-duration, 260ms)
+    var(--drawer-animation-easing, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+
+.open.top .panel {
+  animation: drawer-slide-in-top var(--drawer-animation-duration, 260ms)
+    var(--drawer-animation-easing, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+
+.open.bottom .panel {
+  animation: drawer-slide-in-bottom var(--drawer-animation-duration, 260ms)
+    var(--drawer-animation-easing, cubic-bezier(0.22, 1, 0.36, 1)) both;
+}
+
+.header,
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  border-color: var(--drawer-border-color, var(--border-color));
+}
+
+.footer {
+  border-top: 1px solid var(--drawer-border-color, var(--border-color));
+}
+
+.header_content {
+  min-width: 0;
+  flex: 1;
+}
+
+.title {
+  margin: 0;
+  color: inherit;
+  font-family: var(--font-family-heading, var(--font-family-ui));
+  font-size: var(--font-size-h5);
+  font-weight: var(--font-weight-heading);
+  line-height: var(--line-height-heading);
+  letter-spacing: var(--letter-spacing-heading, normal);
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  overflow: auto;
+  padding: var(--spacing-md);
+  color: inherit;
+  font-family: var(--font-family-body, var(--font-family-ui));
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-body);
+  letter-spacing: var(--letter-spacing-body, normal);
+}
+
+.closeButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  min-width: 2.5rem;
+  min-height: 2.5rem;
+  border: 0;
+  border-radius: var(--border-radius-sm);
+  background: transparent;
+  color: currentcolor;
+  cursor: pointer;
+  font: inherit;
+  line-height: 1;
+  transition:
+    background-color var(--transition-default),
+    color var(--transition-default),
+    transform var(--transition-default);
+}
+
+.closeButton:hover {
+  background: var(--drawer-close-hover-bg, rgb(255 255 255 / 10%));
+}
+
+.closeButton:active {
+  transform: scale(0.96);
+}
+
+.closeButton:focus-visible {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 2px;
+}
+
+.glass {
+  @include mixins.glass-surface(
+    var(--drawer-glass-bg, var(--glass-background)),
+    var(--drawer-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: var(--drawer-glass-text, currentcolor);
+  box-shadow:
+    inset 0 1px 0 var(--glass-inset-highlight, rgb(255 255 255 / 20%)),
+    var(--drawer-glass-shadow, var(--shadow-md, none));
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    overflow: hidden;
+  }
+
+  .left .round#{$key} {
+    border-top-right-radius: $value;
+    border-bottom-right-radius: $value;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .right .round#{$key} {
+    border-top-left-radius: $value;
+    border-bottom-left-radius: $value;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .top .round#{$key} {
+    border-bottom-left-radius: $value;
+    border-bottom-right-radius: $value;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+  }
+
+  .bottom .round#{$key} {
+    border-top-left-radius: $value;
+    border-top-right-radius: $value;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shaddow#{$key} {
+    box-shadow: $value;
+  }
+}
+
+@each $name, $values in theme.$themes {
+  .#{$name} {
+    background: map.get($values, bg);
+    color: map.get($values, text);
+    border-color: map.get($values, border);
+
+    --drawer-border-color: #{map.get($values, border)};
+    --drawer-close-hover-bg: #{map.get($values, hover)};
+    --drawer-glass-bg: #{map.get($values, glass-bg)};
+    --drawer-glass-hover-bg: #{map.get($values, glass-hover)};
+    --drawer-glass-border: #{map.get($values, glass-border)};
+    --drawer-glass-text: #{map.get($values, text)};
+  }
+
+  .#{$name}.glass {
+    background: var(--drawer-glass-bg);
+    border-color: var(--drawer-glass-border);
+    color: var(--drawer-glass-text);
+  }
+
+  .#{$name}.glass .closeButton:hover {
+    background: var(--drawer-glass-hover-bg);
+  }
+}
+
+@each $name, $values in theme.$states {
+  .#{$name} {
+    background: map.get($values, bg);
+    color: map.get($values, text);
+    border-color: map.get($values, border);
+
+    --drawer-border-color: #{map.get($values, border)};
+    --drawer-close-hover-bg: #{map.get($values, hover)};
+    --drawer-glass-bg: #{map.get($values, glass-bg)};
+    --drawer-glass-hover-bg: #{map.get($values, glass-hover)};
+    --drawer-glass-border: #{map.get($values, glass-border)};
+    --drawer-glass-text: #{map.get($values, text)};
+  }
+
+  .#{$name}.glass {
+    background: var(--drawer-glass-bg);
+    border-color: var(--drawer-glass-border);
+    color: var(--drawer-glass-text);
+  }
+
+  .#{$name}.glass .closeButton:hover {
+    background: var(--drawer-glass-hover-bg);
+  }
+}
+
+.clear {
+  background: var(--background-color);
+  color: var(--text-color);
+  border-color: var(--border-color);
+
+  --drawer-border-color: var(--border-color);
+  --drawer-close-hover-bg: rgb(255 255 255 / 10%);
+}
+
+@include bp.down(sm) {
+  .panel {
+    width: 100%;
+  }
+
+  .right .panel,
+  .left .panel {
+    width: min(100vw, 22rem);
+  }
+
+  .header,
+  .footer,
+  .body {
+    padding: var(--spacing-sm);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .open .overlay,
+  .open .panel {
+    animation: none;
+  }
+
+  .closeButton {
+    transition: none;
+  }
+
+  .closeButton:active {
+    transform: none;
+  }
+}
+
+@media (hover: none) {
+  .closeButton:hover {
+    background: transparent;
+  }
+}
+
+@media (forced-colors: active) {
+  .overlay {
+    background: Canvas;
+    opacity: 0.75;
+  }
+
+  .panel,
+  .glass {
+    border: 1px solid ButtonText;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none !important;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .closeButton {
+    border: 1px solid ButtonText;
+    color: ButtonText;
+  }
+
+  .closeButton:focus-visible {
+    outline-color: Highlight;
+  }
+}

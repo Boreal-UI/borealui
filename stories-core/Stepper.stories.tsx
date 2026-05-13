@@ -1,12 +1,16 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { FaCheckCircle, FaClipboardList, FaFileAlt } from "react-icons/fa";
-import { StateType, Stepper, ThemeType } from "../src/index.core";
+import { Stepper } from "../src/index.core";
 import type { StepperProps } from "../src/components/Stepper/Stepper.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const steps = [
   { label: "Start", icon: FaClipboardList },
@@ -25,16 +29,6 @@ const meta: Meta<StepperProps> = {
     steps,
   },
 };
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
 
 export default meta;
 
@@ -151,11 +145,9 @@ export const GlassStateVariants: Story = {
 
 export const SizeVariants: Story = {
   render: (args) => {
-    const sizes = ["xs", "small", "medium", "large", "xl"] as const;
-
     return (
       <div style={{ display: "grid", gap: "1rem" }}>
-        {sizes.map((size) => {
+        {sizeOptions.map((size) => {
           const [activeStep, setActiveStep] = useState(1);
           return (
             <Stepper

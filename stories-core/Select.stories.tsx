@@ -1,33 +1,14 @@
 import { useCallback, useRef, useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  RoundingType,
-  Select,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "../src/index.core";
+import { RoundingType, Select, ShadowType, ThemeType } from "../src/index.core";
 import type { SelectProps } from "../src/components/Select/Select.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<SelectProps> = {
   title: "Components/Select",

@@ -1,32 +1,14 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  RoundingType,
-  ShadowType,
-  Sidebar,
-  StateType,
-  ThemeType,
-} from "../src/index.core";
+import { Sidebar } from "../src/index.core";
 import { SidebarProps } from "../src/components/Sidebar/Sidebar.types";
 import { FaBook, FaPaperclip, FaCogs, FaCalendar } from "react-icons/fa";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const mockLinks = [
   { label: "Dashboard", href: "/Dashboard", icon: <FaBook /> },

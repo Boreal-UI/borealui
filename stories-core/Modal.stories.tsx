@@ -3,9 +3,8 @@ import { Meta, StoryObj } from "@storybook/react-vite";
 import { Modal, Button } from "../src/index.core";
 import type { ModalProps } from "../src/components/Modal/Modal.types";
 import { RoundingType, ShadowType } from "../src/types/types";
+import { roundingOptions, shadowOptions } from "./assets/OptionTypes";
 
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<ModalProps> = {
   title: "Components/Modal",
@@ -100,7 +99,7 @@ export const RoundingVariants: Story = {
           {roundingOptions.map((rounding) => (
             <button
               key={rounding}
-              onClick={() => setVisibleRounding(rounding as RoundingType)}
+              onClick={() => setVisibleRounding(rounding)}
               className="p-2 border rounded"
             >
               {rounding}
@@ -129,7 +128,7 @@ export const ShadowVariants: Story = {
           {shadowOptions.map((shadow) => (
             <button
               key={shadow}
-              onClick={() => setVisibleShadow(shadow as ShadowType)}
+              onClick={() => setVisibleShadow(shadow)}
               className="p-2 border rounded"
             >
               {shadow}

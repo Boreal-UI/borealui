@@ -14,6 +14,22 @@ function DataTableBase<T extends object>({
   columns,
   data,
   onRowClick,
+  selectableRows = false,
+  selectedRowKeys,
+  defaultSelectedRowKeys = [],
+  onSelectionChange,
+  selectAllAriaLabel = "Select all rows",
+  getRowSelectAriaLabel,
+  filterable = false,
+  filterValue,
+  defaultFilterValue = "",
+  onFilterChange,
+  filterPlaceholder = "Filter table",
+  filterAriaLabel = "Filter table rows",
+  toolbarTitle,
+  toolbarActions,
+  toolbarClassName,
+  filterInputClassName,
   classMap,
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
@@ -54,6 +70,10 @@ function DataTableBase<T extends object>({
   const [sortKey, setSortKey] = useState<keyof T | undefined>(defaultSortKey);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">(defaultSortOrder);
   const [sortAnnouncement, setSortAnnouncement] = useState("");
+  const [internalSelectedKeys, setInternalSelectedKeys] = useState<Array<string | number>>(
+    defaultSelectedRowKeys,
+  );
+  const [internalFilter, setInternalFilter] = useState(defaultFilterValue);
 
   const captionId = `${testId}-caption`;
   const liveRegionId = `${testId}-live-region`;
@@ -66,10 +86,28 @@ function DataTableBase<T extends object>({
     .filter(Boolean)
     .join(" ");
 
-  const sortedData = useMemo(() => {
-    if (serverSort || !sortKey) return data;
+  const selectedKeys = selectedRowKeys ?? internalSelectedKeys;
+  const filterQuery = filterValue ?? internalFilter;
 
-    return [...data].sort((a, b) => {
+  const getResolvedRowKey = (row: T, index: number): string | number =>
+    rowKey ? rowKey(row) : index;
+
+  const filteredData = useMemo(() => {
+    if (!filterable || !filterQuery.trim()) return data;
+
+    const query = filterQuery.toLowerCase();
+    return data.filter((row) =>
+      columns.some((column) => {
+        const value = row[column.key];
+        return String(value ?? "").toLowerCase().includes(query);
+      }),
+    );
+  }, [columns, data, filterable, filterQuery]);
+
+  const sortedData = useMemo(() => {
+    if (serverSort || !sortKey) return filteredData;
+
+    return [...filteredData].sort((a, b) => {
       const valA = a[sortKey];
       const valB = b[sortKey];
 
@@ -91,7 +129,50 @@ function DataTableBase<T extends object>({
 
       return sortOrder === "asc" ? cmp : -cmp;
     });
-  }, [data, sortKey, sortOrder, serverSort]);
+  }, [filteredData, sortKey, sortOrder, serverSort]);
+
+  const updateSelection = (nextKeys: Array<string | number>) => {
+    if (!selectedRowKeys) {
+      setInternalSelectedKeys(nextKeys);
+    }
+
+    const nextRows = sortedData.filter((row, index) =>
+      nextKeys.includes(getResolvedRowKey(row, index)),
+    );
+    onSelectionChange?.(nextKeys, nextRows);
+  };
+
+  const handleFilterChange = (value: string) => {
+    if (filterValue === undefined) {
+      setInternalFilter(value);
+    }
+    onFilterChange?.(value);
+  };
+
+  const allVisibleKeys = selectableRows
+    ? sortedData.map((row, index) => getResolvedRowKey(row, index))
+    : [];
+  const allVisibleSelected =
+    allVisibleKeys.length > 0 &&
+    allVisibleKeys.every((key) => selectedKeys.includes(key));
+
+  const toggleAllRows = () => {
+    if (allVisibleSelected) {
+      updateSelection(selectedKeys.filter((key) => !allVisibleKeys.includes(key)));
+      return;
+    }
+
+    updateSelection(Array.from(new Set([...selectedKeys, ...allVisibleKeys])));
+  };
+
+  const toggleRow = (row: T, index: number) => {
+    const key = getResolvedRowKey(row, index);
+    updateSelection(
+      selectedKeys.includes(key)
+        ? selectedKeys.filter((selectedKey) => selectedKey !== key)
+        : [...selectedKeys, key],
+    );
+  };
 
   const announceSortChange = (
     column: Column<T>,
@@ -243,6 +324,34 @@ function DataTableBase<T extends object>({
 
   return (
     <div className={wrapperClass} data-testid={testId} tabIndex={0}>
+      {toolbarTitle || toolbarActions || filterable ? (
+        <div
+          className={combineClassNames(classMap.toolbar, toolbarClassName)}
+          data-testid={`${testId}-toolbar`}
+        >
+          {toolbarTitle ? (
+            <div className={classMap.toolbarTitle}>{toolbarTitle}</div>
+          ) : null}
+          {filterable ? (
+            <input
+              type="search"
+              value={filterQuery}
+              placeholder={filterPlaceholder}
+              aria-label={filterAriaLabel}
+              onChange={(event) => handleFilterChange(event.target.value)}
+              className={combineClassNames(
+                classMap.filterInput,
+                filterInputClassName,
+              )}
+              data-testid={`${testId}-filter`}
+            />
+          ) : null}
+          {toolbarActions ? (
+            <div className={classMap.toolbarActions}>{toolbarActions}</div>
+          ) : null}
+        </div>
+      ) : null}
+
       <div
         id={liveRegionId}
         className={classMap.srOnly ?? "sr_only"}
@@ -271,6 +380,17 @@ function DataTableBase<T extends object>({
 
         <thead className={theadClassName}>
           <tr>
+            {selectableRows ? (
+              <th scope="col" className={classMap.selectionCell}>
+                <input
+                  type="checkbox"
+                  aria-label={selectAllAriaLabel}
+                  checked={allVisibleSelected}
+                  onChange={toggleAllRows}
+                  data-testid={`${testId}-select-all`}
+                />
+              </th>
+            ) : null}
             {columns.map((column) => {
               const isActive = sortKey === column.key;
 
@@ -327,7 +447,7 @@ function DataTableBase<T extends object>({
             <tr>
               <td
                 className={classMap.emptyCell}
-                colSpan={columns.length}
+                colSpan={columns.length + (selectableRows ? 1 : 0)}
                 aria-live="polite"
               >
                 {loadingMessage}
@@ -337,7 +457,7 @@ function DataTableBase<T extends object>({
             <tr>
               <td
                 className={classMap.emptyCell}
-                colSpan={columns.length}
+                colSpan={columns.length + (selectableRows ? 1 : 0)}
                 aria-live="polite"
               >
                 {emptyMessage}
@@ -345,7 +465,7 @@ function DataTableBase<T extends object>({
             </tr>
           ) : (
             sortedData.map((row, index) => {
-              const key = rowKey ? rowKey(row) : index;
+              const key = getResolvedRowKey(row, index);
               const rowAriaLabel = getRowAriaLabel?.(row, index);
               const rowAriaDescription = getRowAriaDescription?.(row, index);
 
@@ -364,6 +484,24 @@ function DataTableBase<T extends object>({
                   aria-description={onRowClick ? rowAriaDescription : undefined}
                   data-testid={`${testId}-row-${key}`}
                 >
+                  {selectableRows ? (
+                    <td className={classMap.selectionCell}>
+                      <input
+                        type="checkbox"
+                        aria-label={
+                          getRowSelectAriaLabel?.(row, index) ??
+                          `Select row ${index + 1}`
+                        }
+                        checked={selectedKeys.includes(key)}
+                        onChange={(event) => {
+                          event.stopPropagation();
+                          toggleRow(row, index);
+                        }}
+                        onClick={(event) => event.stopPropagation()}
+                        data-testid={`${testId}-select-row-${key}`}
+                      />
+                    </td>
+                  ) : null}
                   {columns.map((column) => {
                     const cellKey = String(column.key);
                     const value = row[column.key];

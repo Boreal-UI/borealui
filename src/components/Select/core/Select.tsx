@@ -22,6 +22,7 @@ const classes = {
   quaternary: "select_quaternary",
 
   success: "select_success",
+  info: "select_info",
   error: "select_error",
   warning: "select_warning",
 

@@ -20,6 +20,7 @@ const classes = {
   quaternary: "card_quaternary",
 
   success: "card_success",
+  info: "card_info",
   warning: "card_warning",
   error: "card_error",
 

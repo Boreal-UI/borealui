@@ -4,375 +4,441 @@
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+
 @layer boreal-ui.components {
+  .wrapper {
+    display: grid;
+    grid-template-areas:
+      "label"
+      "input"
+      "description";
+    gap: var(--spacing-xs);
+    width: fit-content;
+    min-width: 0;
+    font-family: var(--font-family-ui);
 
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  gap: var(--spacing-xs);
-  font-family: var(--font-family-ui);
+    @include bp.down(sm) {
+      gap: var(--spacing-xxs);
+    }
 
-  @include bp.down(sm) {
-    gap: var(--spacing-xxs);
+    @include bp.up(lg) {
+      gap: var(--spacing-sm);
+    }
   }
 
-  @include bp.up(lg) {
-    gap: var(--spacing-sm);
-  }
-}
-
-.input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-  display: none;
-  appearance: none;
-}
-
-.input[type="datetime-local"] {
-  border: 0;
-}
-
-.label {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  margin-bottom: var(--spacing-xs);
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-caption);
+  .fullWidth {
+    width: 100%;
   }
 
-  @include bp.up(lg) {
-    font-size: var(--font-size-body-sm);
+  .input[type="datetime-local"]::-webkit-calendar-picker-indicator,
+  .input[type="time"]::-webkit-calendar-picker-indicator,
+  .input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    appearance: none;
   }
-}
 
-.inputWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  width: fit-content;
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
+  .input[type="datetime-local"],
+  .input[type="date"],
+  .input[type="time"] {
+    border: 0;
   }
-}
 
-.input {
-  z-index: 1;
-  width: fit-content;
-  padding: 0;
-  border: 2px solid transparent;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  background-color: transparent;
-  color: var(--text-color-primary);
-  transition:
-    border-color var(--transition-default),
-    background-color var(--transition-default);
-
-  @include bp.down(sm) {
+  .label {
+    grid-area: label;
+    font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
-    border-width: 1.2px;
-  }
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    margin: 0;
+    color: inherit;
 
-  @include bp.up(lg) {
-    font-size: var(--font-size-h6);
-  }
-
-  &:focus {
-    outline: none;
-    border-color: var(--focus-outline-color, var(--primary-color));
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-  }
-
-  &::-webkit-calendar-picker-indicator {
-    opacity: 1;
-    filter: invert(1);
-    z-index: 2;
-    cursor: pointer;
-  }
-}
-
-.icon {
-  font-size: var(--font-size-body);
-  cursor: pointer;
-  z-index: 2;
-  pointer-events: auto;
-  transition:
-    color var(--transition-default),
-    transform var(--transition-default);
-  color: var(--text-color-primary);
-  line-height: 1em;
-  background-color: transparent;
-  border: none;
-  margin: 0;
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-label);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-h6);
-  }
-
-  &:hover {
-    transform: translateY(-1px);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-}
-
-@each $themeName, $values in theme.$themes {
-  .#{$themeName} {
-    --datetime-picker-glass-bg: #{map.get($values, glass-bg)};
-    --datetime-picker-glass-hover-bg: #{map.get($values, glass-hover)};
-    --datetime-picker-glass-border: #{map.get($values, glass-border)};
-    --datetime-picker-glass-text: #{map.get($values, text)};
-
-    .inputWrapper {
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-
-      &:focus-within {
-        border-color: map.get($values, border);
-      }
+    @include bp.down(sm) {
+      font-size: var(--font-size-caption);
     }
 
-    &.outline {
-      .inputWrapper {
-        border: 2px solid map.get($values, bg);
-
-        @include bp.down(sm) {
-          border-width: 1.5px;
-        }
-
-        &:focus-within {
-          border-color: map.get($values, border);
-        }
-
-        &:hover {
-          border-color: map.get($values, hover);
-        }
-      }
+    @include bp.up(lg) {
+      font-size: var(--font-size-body-sm);
     }
   }
-}
 
-@each $stateName, $values in theme.$states {
-  .#{$stateName} {
-    --datetime-picker-glass-bg: #{map.get($values, glass-bg)};
-    --datetime-picker-glass-hover-bg: #{map.get($values, glass-hover)};
-    --datetime-picker-glass-border: #{map.get($values, glass-border)};
-    --datetime-picker-glass-text: #{map.get($values, text)};
-
-    .inputWrapper {
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-
-      &:focus-within {
-        border-color: map.get($values, border);
-      }
-    }
-
-    &.outline {
-      .inputWrapper {
-        border: 2px solid map.get($values, bg);
-
-        @include bp.down(sm) {
-          border-width: 1.5px;
-        }
-
-        &:focus-within {
-          border-color: map.get($values, border);
-        }
-
-        &:hover {
-          border-color: map.get($values, hover);
-        }
-      }
-    }
-  }
-}
-
-.outline .inputWrapper {
-  background-color: transparent;
-  box-shadow: none;
-}
-
-.glass .inputWrapper {
-  @include mixins.glass-surface(
-    var(--datetime-picker-glass-bg, rgba(255, 255, 255, 0.18)),
-    var(--datetime-picker-glass-border, rgba(255, 255, 255, 0.34)),
-    16px
-  );
-  color: var(--datetime-picker-glass-text, var(--text-color-primary));
-}
-
-.glass .inputWrapper:hover {
-  background: var(
-    --datetime-picker-glass-hover-bg,
-    rgba(255, 255, 255, 0.24)
-  );
-}
-
-.clear.outline .inputWrapper {
-  color: var(--text-color-primary);
-  border: 2px solid var(--text-color-primary);
-
-  @include bp.down(sm) {
-    border-width: 1.5px;
-  }
-}
-
-.disabled {
   .inputWrapper {
-    opacity: 0.6;
-    pointer-events: none;
-    background-color: var(--disabled-color);
-    color: var(--text-color-secondary);
-    cursor: not-allowed;
+    grid-area: input;
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    gap: var(--spacing-xs);
+  }
+
+  .description {
+    grid-area: description;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    color: var(--text-color-primary);
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-label);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body);
+    }
+  }
+
+  .labelTop {
+    grid-template-areas:
+      "label"
+      "input"
+      "description";
+  }
+
+  .labelBottom {
+    grid-template-areas:
+      "input"
+      "label"
+      "description";
+  }
+
+  .labelLeft,
+  .labelRight {
+    grid-template-columns: max-content minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--spacing-sm);
+    row-gap: var(--spacing-xs);
+
+    @include bp.down(sm) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .labelLeft {
+    grid-template-areas:
+      "label input"
+      ". description";
+
+    @include bp.down(sm) {
+      grid-template-areas:
+        "label"
+        "input"
+        "description";
+    }
+  }
+
+  .labelRight {
+    grid-template-areas:
+      "input label"
+      "description .";
+
+    @include bp.down(sm) {
+      grid-template-areas:
+        "input"
+        "label"
+        "description";
+    }
+  }
+
+  .input {
+    z-index: 1;
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    border: 2px solid transparent;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    background-color: transparent;
+    color: var(--text-color-primary);
+    transition:
+      border-color var(--transition-default),
+      background-color var(--transition-default);
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-label);
+      border-width: 1.2px;
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-h6);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--focus-outline-color, var(--primary-color));
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+    }
+
+    &::-webkit-calendar-picker-indicator {
+      opacity: 1;
+      filter: invert(1);
+      z-index: 2;
+      cursor: pointer;
+    }
   }
 
   .icon {
-    opacity: 0.6;
-    pointer-events: none;
-    color: var(--text-color-secondary);
-    cursor: not-allowed;
-  }
-}
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    justify-self: end;
+    flex-shrink: 0;
+    font-size: var(--font-size-body);
+    cursor: pointer;
+    pointer-events: auto;
+    transition:
+      color var(--transition-default),
+      transform var(--transition-default);
+    color: var(--text-color-primary);
+    line-height: 1;
+    background-color: transparent;
+    border: none;
+    margin: 0;
 
-$input-sizes: (
-  "xs": (
-    padding: 4px 3px,
-    font-size: var(--font-size-caption),
-    max-width: 170px,
-    icon-size: 15px,
-  ),
-  "small": (
-    padding: 6px 10px,
-    font-size: var(--font-size-label),
-    max-width: 190px,
-    icon-size: 20px,
-  ),
-  "medium": (
-    padding: 6px 10px,
-    font-size: var(--font-size-body-sm),
-    max-width: 215px,
-    icon-size: 22px,
-  ),
-  "large": (
-    padding: 8px 16px,
-    font-size: var(--font-size-body),
-    max-width: 250px,
-    icon-size: 25px,
-  ),
-  "xl": (
-    padding: 10px 20px,
-    font-size: var(--font-size-h6),
-    max-width: 330px,
-    icon-size: 30px,
-  ),
-);
-
-@each $size, $props in $input-sizes {
-  .#{$size} {
-    .inputWrapper {
-      padding: map.get($props, padding);
+    @include bp.down(sm) {
+      font-size: var(--font-size-label);
     }
 
-    .input {
-      font-size: map.get($props, font-size);
-      max-width: map.get($props, max-width);
+    @include bp.up(lg) {
+      font-size: var(--font-size-h6);
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  }
+
+  @each $themeName, $values in theme.$themes {
+    .#{$themeName} {
+      --datetime-picker-glass-bg: #{map.get($values, glass-bg)};
+      --datetime-picker-glass-hover-bg: #{map.get($values, glass-hover)};
+      --datetime-picker-glass-border: #{map.get($values, glass-border)};
+      --datetime-picker-glass-text: #{map.get($values, text)};
+
+      .inputWrapper {
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+
+        &:focus-within {
+          border-color: map.get($values, border);
+        }
+      }
+
+      &.outline {
+        .inputWrapper {
+          border: 2px solid map.get($values, bg);
+
+          @include bp.down(sm) {
+            border-width: 1.5px;
+          }
+
+          &:focus-within {
+            border-color: map.get($values, border);
+          }
+
+          &:hover {
+            border-color: map.get($values, hover);
+          }
+        }
+      }
+    }
+  }
+
+  @each $stateName, $values in theme.$states {
+    .#{$stateName} {
+      --datetime-picker-glass-bg: #{map.get($values, glass-bg)};
+      --datetime-picker-glass-hover-bg: #{map.get($values, glass-hover)};
+      --datetime-picker-glass-border: #{map.get($values, glass-border)};
+      --datetime-picker-glass-text: #{map.get($values, text)};
+
+      .inputWrapper {
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+
+        &:focus-within {
+          border-color: map.get($values, border);
+        }
+      }
+
+      &.outline {
+        .inputWrapper {
+          border: 2px solid map.get($values, bg);
+
+          @include bp.down(sm) {
+            border-width: 1.5px;
+          }
+
+          &:focus-within {
+            border-color: map.get($values, border);
+          }
+
+          &:hover {
+            border-color: map.get($values, hover);
+          }
+        }
+      }
+    }
+  }
+
+  .outline .inputWrapper {
+    background-color: transparent;
+    box-shadow: none;
+  }
+
+  .glass .inputWrapper {
+    @include mixins.glass-surface(
+      var(--datetime-picker-glass-bg, rgba(255, 255, 255, 0.18)),
+      var(--datetime-picker-glass-border, rgba(255, 255, 255, 0.34)),
+      16px
+    );
+
+    color: var(--datetime-picker-glass-text, var(--text-color-primary));
+  }
+
+  .glass .inputWrapper:hover {
+    background: var(
+      --datetime-picker-glass-hover-bg,
+      rgba(255, 255, 255, 0.24)
+    );
+  }
+
+  .clear.outline .inputWrapper {
+    color: var(--text-color-primary);
+    border: 2px solid var(--text-color-primary);
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
+  }
+
+  .disabled {
+    .inputWrapper {
+      opacity: 0.6;
+      pointer-events: none;
+      background-color: var(--disabled-color);
+      color: var(--text-color-secondary);
+      cursor: not-allowed;
     }
 
     .icon {
-      svg {
-        width: map.get($props, icon-size);
-        height: map.get($props, icon-size);
+      opacity: 0.6;
+      pointer-events: none;
+      color: var(--text-color-secondary);
+      cursor: not-allowed;
+    }
+  }
+
+  $input-sizes: (
+    "xs": (
+      padding: 4px 3px,
+      font-size: var(--font-size-caption),
+      icon-size: 15px,
+    ),
+    "small": (
+      padding: 6px 10px,
+      font-size: var(--font-size-label),
+      icon-size: 20px,
+    ),
+    "medium": (
+      padding: 6px 10px,
+      font-size: var(--font-size-body-sm),
+      icon-size: 22px,
+    ),
+    "large": (
+      padding: 8px 16px,
+      font-size: var(--font-size-body),
+      icon-size: 25px,
+    ),
+    "xl": (
+      padding: 10px 20px,
+      font-size: var(--font-size-h6),
+      icon-size: 30px,
+    ),
+  );
+
+  @each $size, $props in $input-sizes {
+    .#{$size} {
+      .inputWrapper {
+        padding: map.get($props, padding);
+      }
+
+      .input {
+        font-size: map.get($props, font-size);
+      }
+
+      .icon {
+        svg {
+          width: map.get($props, icon-size);
+          height: map.get($props, icon-size);
+        }
       }
     }
   }
-}
 
-.description {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  color: var(--text-color-primary);
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-label);
+  @each $key, $value in theme.$rounding {
+    .round#{$key} .inputWrapper {
+      border-radius: $value;
+    }
   }
 
-  @include bp.up(lg) {
-    font-size: var(--font-size-body);
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .round#{$key} .inputWrapper {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} .inputWrapper {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wrapper,
-  .wrapper * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .icon:hover {
-    transform: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .glass .inputWrapper {
-    background: Canvas;
-    color: CanvasText;
-    border-color: ButtonText;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} .inputWrapper {
+      box-shadow: $value;
+    }
   }
 
-  .inputWrapper {
-    background: Canvas;
-    color: CanvasText;
-    border: 1px solid ButtonText !important;
-    outline-color: Highlight;
-    box-shadow: none !important;
+  @media (prefers-reduced-motion: reduce) {
+    .wrapper,
+    .wrapper * {
+      transition: none !important;
+      animation: none !important;
+    }
   }
 
-  .icon {
-    color: ButtonText;
-    border: 1px solid ButtonText;
-    border-radius: 4px;
+  @media (hover: none) {
+    .icon:hover {
+      transform: none;
+    }
   }
-}
+
+  @media (forced-colors: active) {
+    .glass .inputWrapper {
+      background: Canvas;
+      color: CanvasText;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .inputWrapper {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText !important;
+      outline-color: Highlight;
+      box-shadow: none !important;
+    }
+
+    .icon {
+      color: ButtonText;
+      border: 1px solid ButtonText;
+      border-radius: 4px;
+    }
+  }
 }

@@ -1,12 +1,11 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  PopOver,
-  Button,
-  StateType,
-  RoundingType,
-  ShadowType,
-} from "../src/index.core";
+import { PopOver, Button } from "../src/index.core";
 import type { PopOverProps } from "../src/components/PopOver/PopOver.types";
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<PopOverProps> = {
   title: "Components/PopOver",
@@ -19,15 +18,6 @@ const meta: Meta<PopOverProps> = {
 };
 
 export default meta;
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
 
 type Story = StoryObj<PopOverProps>;
 
@@ -73,8 +63,6 @@ export const ThemedVariants: Story = {
 
 export const StateVariants: Story = {
   render: () => {
-    const stateOptions: StateType[] = ["success", "error", "warning"];
-
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         {stateOptions.map((state) => (
@@ -128,8 +116,6 @@ export const GlassThemeVariants: Story = {
 
 export const GlassStateVariants: Story = {
   render: () => {
-    const stateOptions: StateType[] = ["success", "error", "warning"];
-
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         {stateOptions.map((state) => (

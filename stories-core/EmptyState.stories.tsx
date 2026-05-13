@@ -1,32 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  EmptyState,
-  RoundingType,
-  ShadowType,
-  SizeType,
-  StateType,
-  ThemeType,
-} from "../src/index.core";
+import { EmptyState } from "../src/index.core";
 import type { EmptyStateProps } from "../src/components/EmptyState/EmptyState.types";
 import { FaInbox, FaBug, FaFolderOpen } from "react-icons/fa";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
-const stateOptions: StateType[] = ["success", "error", "warning"];
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<EmptyStateProps> = {
   title: "Components/EmptyState",

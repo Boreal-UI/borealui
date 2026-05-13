@@ -55,7 +55,7 @@
  * - Transitions
  * - Z-index layers
  * - Thematic color maps
- * - UI states (success, error, warning)
+ * - UI states (success, error, warning, info)
  * - Rounding and shadow presets
  * 
  * All variables support the `!default` flag to allow overrides via user-defined themes.
@@ -101,7 +101,7 @@
  *  - Each theme includes: bg, hover, text, border, text-hover
  *
  * == State Map ==
- * $states: visual styles for UI feedback states (success, error, warning)
+ * $states: visual styles for UI feedback states (success, error, warning, info)
  *
  * == Rounding / Shadow Maps ==
  * $rounding: key-value pairs for component rounding levels
@@ -266,7 +266,7 @@
  *   - A `$breakpoints` map from the `breakpoints` module (alias: `bp`)
  *   - `sass:map` module to access map values safely
  */
-@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components;
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.base {
   :root {
     /* ================================
@@ -301,12 +301,18 @@
     /* ================================
        FEEDBACK COLORS
     ================================== */
-    --success-color: #51c703;
-    --success-color-hover: rgb(60.5495049505, 148.7574257426, 2.2425742574);
-    --warning-color: #fca505;
-    --warning-color-hover: rgb(203.557312253, 132.7193675889, 2.442687747);
-    --error-color: #f83838;
-    --error-color-hover: rgb(244.4029126214, 8.5970873786, 8.5970873786);
+    --success-color: #04b34f;
+    --success-color-hover: rgb(2.8852459016, 129.1147540984, 56.9836065574);
+    --success-text-color: var(--text-color);
+    --warning-color: #f90;
+    --warning-color-hover: rgb(204, 122.4, 0);
+    --warning-text-color: var(--text-color);
+    --info-color: #0057b8;
+    --info-color-hover: rgb(0, 62.8858695652, 133);
+    --info-text-color: var(--text-color);
+    --error-color: #a6192e;
+    --error-color-hover: rgb(121.6753926702, 18.3246073298, 33.7172774869);
+    --error-text-color: var(--text-color);
     --disabled-color: rgba(184, 184, 184, 0.8666666667);
     /* ================================
        BACKGROUND COLORS
@@ -348,22 +354,24 @@
     /* ================================
        THEME GLASS COLORS
     ================================== */
-    --primary-glass-background: rgb(from var(--primary-color) r g b / 20%);
+    --primary-glass-background: rgb(from var(--primary-color) r g b / 40%);
     --primary-glass-background-hover: rgb(
       from var(--primary-color-hover) r g b / 38%
     );
     --primary-glass-border: rgb(from var(--primary-color) r g b / 48%);
-    --secondary-glass-background: rgb(from var(--secondary-color) r g b / 20%);
+    --secondary-glass-background: rgb(from var(--secondary-color) r g b / 40%);
     --secondary-glass-background-hover: rgb(
       from var(--secondary-color-hover) r g b / 38%
     );
     --secondary-glass-border: rgb(from var(--secondary-color) r g b / 48%);
-    --tertiary-glass-background: rgb(from var(--tertiary-color) r g b / 20%);
+    --tertiary-glass-background: rgb(from var(--tertiary-color) r g b / 40%);
     --tertiary-glass-background-hover: rgb(
       from var(--tertiary-color-hover) r g b / 38%
     );
     --tertiary-glass-border: rgb(from var(--tertiary-color) r g b / 48%);
-    --quaternary-glass-background: rgb(from var(--quaternary-color) r g b / 20%);
+    --quaternary-glass-background: rgb(
+      from var(--quaternary-color) r g b / 40%
+    );
     --quaternary-glass-background-hover: rgb(
       from var(--quaternary-color-hover) r g b / 38%
     );
@@ -374,19 +382,24 @@
     /* ================================
        STATE GLASS COLORS
     ================================== */
-    --success-glass-background: rgb(from var(--success-color) r g b / 20%);
+    --success-glass-background: rgb(from var(--success-color) r g b / 40%);
     --success-glass-background-hover: rgb(
-      from var(--success-color-hover) r g b / 38%
+      from var(--success-color-hover) r g b / 48%
     );
     --success-glass-border: rgb(from var(--success-color) r g b / 48%);
-    --warning-glass-background: rgb(from var(--warning-color) r g b / 20%);
+    --warning-glass-background: rgb(from var(--warning-color) r g b / 40%);
     --warning-glass-background-hover: rgb(
-      from var(--warning-color-hover) r g b / 38%
+      from var(--warning-color-hover) r g b / 48%
     );
     --warning-glass-border: rgb(from var(--warning-color) r g b / 48%);
-    --error-glass-background: rgb(from var(--error-color) r g b / 20%);
+    --info-glass-background: rgb(from var(--info-color) r g b / 40%);
+    --info-glass-background-hover: rgb(
+      from var(--info-color-hover) r g b / 48%
+    );
+    --info-glass-border: rgb(from var(--info-color) r g b / 48%);
+    --error-glass-background: rgb(from var(--error-color) r g b / 40%);
     --error-glass-background-hover: rgb(
-      from var(--error-color-hover) r g b / 38%
+      from var(--error-color-hover) r g b / 48%
     );
     --error-glass-border: rgb(from var(--error-color) r g b / 48%);
     /* ================================
@@ -619,7 +632,7 @@
     overflow: hidden;
   }
   .errorMessage {
-    color: #f83838;
+    color: #a6192e;
     font-size: 14px;
   }
   .loadingContainer {

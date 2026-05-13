@@ -14,6 +14,7 @@ const classes = {
   clear: "badge_clear",
 
   success: "badge_success",
+  info: "badge_info",
   error: "badge_error",
   warning: "badge_warning",
 

@@ -1,31 +1,12 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  Tooltip,
-  Button,
-  ThemeType,
-  StateType,
-  RoundingType,
-  ShadowType,
-} from "../src/index.core";
+import { Tooltip, Button } from "../src/index.core";
 import type { TooltipProps } from "../src/components/Tooltip/Tooltip.types";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<TooltipProps> = {
   title: "Components/Tooltip",

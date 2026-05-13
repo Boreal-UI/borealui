@@ -1,19 +1,12 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Spinner, StateType, ThemeType } from "../src/index.core";
+import { Spinner } from "../src/index.core";
 import type { SpinnerProps } from "../src/components/Spinner/Spinner.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<SpinnerProps> = {
   title: "Components/Spinner",

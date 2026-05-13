@@ -53,6 +53,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
     success: "var(--success-color)",
     error: "var(--error-color)",
     warning: "var(--warning-color)",
+    info: "var(--info-color)",
   };
 
   const progressColor = stateColorMap[state] ?? getColor(percent);

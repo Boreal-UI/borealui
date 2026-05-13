@@ -13,6 +13,7 @@ const classes = {
   quaternary: "checkbox_quaternary",
 
   success: "checkbox_success",
+  info: "checkbox_info",
   error: "checkbox_error",
   warning: "checkbox_warning",
 

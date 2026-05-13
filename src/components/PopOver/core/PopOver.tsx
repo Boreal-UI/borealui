@@ -20,6 +20,7 @@ const classes = {
   quaternary: "popover_quaternary",
 
   success: "popover_success",
+  info: "popover_info",
   error: "popover_error",
   warning: "popover_warning",
 

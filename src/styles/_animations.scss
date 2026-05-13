@@ -34,6 +34,21 @@
  *
  * 9. skeleton-loading
  *    - Creates a sweeping shimmer effect for skeleton loaders.
+ *
+ * 10. drawer-slide-in-right
+ *    - Slides a drawer in from the right side of the screen.
+ *
+ * 11. drawer-slide-in-left
+ *    - Slides a drawer in from the left side of the screen.
+ *
+ * 12. drawer-slide-in-top
+ *    - Slides a drawer in from the top side of the screen.
+ *
+ * 13. drawer-slide-in-bottom
+ *    - Slides a drawer in from the bottom side of the screen.
+ *
+ * 14. drawer-slide-in-fade-in
+ *    - Combines a fade-in with a slight upward motion (used for tooltips, popups) and a fade-in.
  */
 
 @keyframes fade-in {
@@ -135,5 +150,63 @@
 
   100% {
     left: 100%;
+  }
+}
+
+@keyframes drawer-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes drawer-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes drawer-slide-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drawer-slide-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drawer-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
   }
 }

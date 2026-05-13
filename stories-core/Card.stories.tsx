@@ -6,17 +6,15 @@ import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import testImage from "./assets/test_pattern.jpg";
 import type { CardProps } from "../src/components/Card/Card.types";
 import { StateType, ThemeType } from "../src/types/types";
+import {
+  borderOptions,
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions = ["success", "error", "warning"];
-const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
 const layoutOptions = ["vertical", "horizontal"] as const;
 const alignments: CardProps["align"][] = ["left", "center", "right"];
 const titles = ["Left-Aligned", "Center-Aligned", "Right-Aligned"];
@@ -25,10 +23,6 @@ const descriptions = [
   "This content is centered.",
   "This content is aligned to the right.",
 ];
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const borderOptions = ["none", "xs", "small", "medium", "large", "xl"] as const;
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<CardProps> = {
   title: "Components/Card",
@@ -236,7 +230,7 @@ export const AlignmentGrid: Story = {
           imageAlt={`${titles[index]} image`}
           align={align}
           layout="vertical"
-          theme={themeOptions[index] as ThemeType}
+          theme={themeOptions[index]}
           size="medium"
           cardIcon={FaInfoCircle}
           actionButtons={[
@@ -270,7 +264,7 @@ export const AlignmentGrid: Story = {
           imageAlt={`${titles[index]} image`}
           align={align}
           layout="horizontal"
-          theme={themeOptions[index] as ThemeType}
+          theme={themeOptions[index]}
           size="medium"
           cardIcon={FaInfoCircle}
           actionButtons={[

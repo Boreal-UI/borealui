@@ -1,0 +1,183 @@
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  .container,
+  .section,
+  .stack,
+  .inline,
+  .grid {
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .container,
+  .section {
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .section {
+    position: relative;
+  }
+
+  .container {
+    padding-inline: var(--layout-container-padding, var(--spacing-md));
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .inline {
+    display: flex;
+    flex-direction: row;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(min(100%, var(--layout-min-column-width, 16rem)), 1fr)
+    );
+  }
+
+  .wrap {
+    flex-wrap: wrap;
+  }
+
+  .padded {
+    padding-block: var(--layout-section-padding-block, var(--spacing-xl));
+    padding-inline: var(--layout-section-padding-inline, var(--spacing-md));
+  }
+
+  .gapNone {
+    gap: 0;
+  }
+
+  .gapXs {
+    gap: var(--spacing-xs);
+  }
+
+  .gapSm {
+    gap: var(--spacing-sm);
+  }
+
+  .gapMd {
+    gap: var(--spacing-md);
+  }
+
+  .gapLg {
+    gap: var(--spacing-lg);
+  }
+
+  .gapXl {
+    gap: var(--spacing-xl);
+  }
+
+  .alignStart {
+    align-items: flex-start;
+  }
+
+  .alignCenter {
+    align-items: center;
+  }
+
+  .alignEnd {
+    align-items: flex-end;
+  }
+
+  .alignStretch {
+    align-items: stretch;
+  }
+
+  .justifyStart {
+    justify-content: flex-start;
+  }
+
+  .justifyCenter {
+    justify-content: center;
+  }
+
+  .justifyEnd {
+    justify-content: flex-end;
+  }
+
+  .justifyBetween {
+    justify-content: space-between;
+  }
+
+  .justifyAround {
+    justify-content: space-around;
+  }
+
+  .justifyEvenly {
+    justify-content: space-evenly;
+  }
+
+  .sizeSm {
+    max-width: var(--layout-container-sm, 40rem);
+  }
+
+  .sizeMd {
+    max-width: var(--layout-container-md, 56rem);
+  }
+
+  .sizeLg {
+    max-width: var(--layout-container-lg, 72rem);
+  }
+
+  .sizeXl {
+    max-width: var(--layout-container-xl, 88rem);
+  }
+
+  .sizeFull {
+    max-width: none;
+  }
+
+  .toneDefault {
+    background: var(--background-color);
+  }
+
+  .toneMuted {
+    background: var(
+      --layout-muted-background,
+      color-mix(
+        in srgb,
+        var(--surface-color, var(--background-color)) 92%,
+        var(--text-color) 8%
+      )
+    );
+  }
+
+  .toneAccent {
+    background: var(
+      --layout-accent-background,
+      color-mix(in srgb, var(--primary-color) 12%, var(--background-color))
+    );
+  }
+
+  .toneTransparent {
+    background: transparent;
+  }
+
+  @media (width <= 48rem) {
+    .container {
+      padding-inline: var(--layout-container-padding-mobile, var(--spacing-sm));
+    }
+
+    .padded {
+      padding-block: var(
+        --layout-section-padding-block-mobile,
+        var(--spacing-lg)
+      );
+      padding-inline: var(
+        --layout-section-padding-inline-mobile,
+        var(--spacing-sm)
+      );
+    }
+
+    .inline {
+      row-gap: var(--spacing-sm);
+    }
+  }
+}

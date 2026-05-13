@@ -2,9 +2,7 @@ import { Meta, StoryObj } from "@storybook/react-vite";
 import { Skeleton } from "../src/index.core";
 import type { SkeletonProps } from "../src/components/Skeleton/Skeleton.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import { roundingOptions, shadowOptions } from "./assets/OptionTypes";
 
 const meta: Meta<SkeletonProps> = {
   title: "Components/Skeleton",

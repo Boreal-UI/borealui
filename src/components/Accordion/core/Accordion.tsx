@@ -33,6 +33,7 @@ const classes = {
   quaternary: "accordion_quaternary",
 
   success: "accordion_success",
+  info: "accordion_info",
   error: "accordion_error",
   warning: "accordion_warning",
   clear: "accordion_clear",

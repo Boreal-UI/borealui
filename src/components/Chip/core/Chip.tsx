@@ -29,6 +29,7 @@ const classes = {
   quaternary: "chip_quaternary",
 
   success: "chip_success",
+  info: "chip_info",
   error: "chip_error",
   warning: "chip_warning",
 

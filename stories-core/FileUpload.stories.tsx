@@ -2,31 +2,9 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   FileUpload,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
 } from "../src/index.core";
 import type { FileUploadProps } from "../src/components/FileUpload/FileUpload.types";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import { roundingOptions, shadowOptions, stateOptions, themeOptions } from "./assets/OptionTypes";
 
 const meta: Meta<FileUploadProps> = {
   title: "Components/FileUpload",

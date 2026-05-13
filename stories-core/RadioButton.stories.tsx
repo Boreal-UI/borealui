@@ -1,36 +1,16 @@
 import React, { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  RadioButton,
-  RadioGroup,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "../src/index.core";
+import { RadioButton, RadioGroup } from "../src/index.core";
 import type {
   RadioButtonProps,
   RadioGroupProps,
 } from "../src/components/RadioButton/RadioButton.types";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "./assets/OptionTypes";
 
 const meta: Meta<RadioButtonProps> = {
   title: "Components/RadioButton",

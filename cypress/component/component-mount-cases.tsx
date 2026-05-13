@@ -96,6 +96,7 @@ const appThemeSchemes = defaultColorSchemes;
 
 const themeVariantComponents = new Set([
   "Accordion",
+  "Alert",
   "Avatar",
   "Badge",
   "Breadcrumbs",
@@ -105,12 +106,16 @@ const themeVariantComponents = new Set([
   "Chip",
   "CircularProgress",
   "CommandPalette",
+  "ComboBox",
   "DataTable",
+  "DateRangePicker",
   "DateTimePicker",
   "Divider",
   "Dropdown",
+  "Drawer",
   "EmptyState",
   "FileUpload",
+  "FormField",
   "Footer",
   "IconButton",
   "MetricBox",
@@ -130,6 +135,7 @@ const themeVariantComponents = new Set([
   "TagInput",
   "TextArea",
   "TextInput",
+  "ToastProvider",
   "Timeline",
   "Toggle",
   "Toolbar",
@@ -139,6 +145,7 @@ const themeVariantComponents = new Set([
 
 const stateVariantComponents = new Set([
   "Accordion",
+  "Alert",
   "Avatar",
   "Badge",
   "Breadcrumbs",
@@ -148,10 +155,13 @@ const stateVariantComponents = new Set([
   "Chip",
   "CircularProgress",
   "CommandPalette",
+  "ComboBox",
   "DataTable",
+  "DateRangePicker",
   "DateTimePicker",
   "Divider",
   "Dropdown",
+  "Drawer",
   "EmptyState",
   "FileUpload",
   "IconButton",
@@ -177,12 +187,14 @@ const stateVariantComponents = new Set([
 
 const outlineVariantComponents = new Set([
   "Accordion",
+  "Alert",
   "Avatar",
   "Badge",
   "Breadcrumbs",
   "Button",
   "Card",
   "DataTable",
+  "DateRangePicker",
   "DateTimePicker",
   "EmptyState",
   "FileUpload",
@@ -287,6 +299,20 @@ export const componentSmokeCases: SmokeCase[] = [
       </Accordion>
     ),
     assert: () => cy.contains("Component content").should("be.visible"),
+  },
+  {
+    name: "Alert",
+    render: ({ Alert }, testId) => (
+      <Alert title="Saved" state="success" data-testid={testId}>
+        Changes saved.
+      </Alert>
+    ),
+    renderA11y: ({ Alert }, testId) => (
+      <Alert title="Saved" theme="clear" data-testid={testId}>
+        Changes saved.
+      </Alert>
+    ),
+    assert: () => cy.contains("Changes saved.").should("be.visible"),
   },
   {
     name: "Avatar",
@@ -436,11 +462,38 @@ export const componentSmokeCases: SmokeCase[] = [
     assert: () => cy.contains("Open Settings").should("be.visible"),
   },
   {
+    name: "ComboBox",
+    render: ({ ComboBox }, testId) => (
+      <ComboBox
+        label="Framework"
+        options={basicOptions}
+        data-testid={testId}
+      />
+    ),
+  },
+  {
     name: "DataTable",
     render: ({ DataTable }, testId) => (
-      <DataTable columns={tableColumns} data={tableData} data-testid={testId} />
+      <DataTable
+        columns={tableColumns}
+        data={tableData}
+        filterable
+        selectableRows
+        data-testid={testId}
+      />
     ),
     assert: () => cy.contains("Aurora").should("be.visible"),
+  },
+  {
+    name: "DateRangePicker",
+    render: ({ DateRangePicker }, testId) => (
+      <DateRangePicker
+        label="Report range"
+        value={{ start: "2026-05-01", end: "2026-05-12" }}
+        onChange={noop}
+        data-testid={testId}
+      />
+    ),
   },
   {
     name: "DateTimePicker",
@@ -467,6 +520,36 @@ export const componentSmokeCases: SmokeCase[] = [
         data-testid={testId}
       />
     ),
+  },
+  {
+    name: "Drawer",
+    render: ({ Drawer }, testId) => (
+      <Drawer open title="Filters" onClose={noop} data-testid={testId}>
+        <p>Drawer content</p>
+      </Drawer>
+    ),
+    renderA11y: ({ Drawer }, testId) => (
+      <>
+        <style>
+          {`
+            [data-testid="${testId}"],
+            [data-testid="${testId}-panel"] {
+              opacity: 1 !important;
+              pointer-events: auto !important;
+              transform: none !important;
+            }
+          `}
+        </style>
+        <Drawer open title="Filters" onClose={noop} data-testid={testId}>
+          <p>Drawer content</p>
+        </Drawer>
+      </>
+    ),
+    assert: () => cy.contains("Drawer content").should("be.visible"),
+    a11ySelector: (testId) => `[data-testid="${testId}"]`,
+    waitForA11y: (testId) => {
+      cy.get(`[data-testid="${testId}-panel"]`).should("be.visible");
+    },
   },
   {
     name: "EmptyState",
@@ -505,6 +588,14 @@ export const componentSmokeCases: SmokeCase[] = [
     ),
   },
   {
+    name: "FormField",
+    render: ({ FormField }, testId) => (
+      <FormField label="Email" helperText="Use your work email." data-testid={testId}>
+        <input type="email" />
+      </FormField>
+    ),
+  },
+  {
     name: "IconButton",
     render: ({ IconButton }, testId) => (
       <IconButton icon={TestIcon} aria-label="Refresh" data-testid={testId} />
@@ -516,6 +607,19 @@ export const componentSmokeCases: SmokeCase[] = [
       <MarkdownRenderer content="**Markdown content**" data-testid={testId} />
     ),
     assert: () => cy.contains("Markdown content").should("be.visible"),
+  },
+  {
+    name: "Layout",
+    render: ({ Container, Grid, Stack }, testId) => (
+      <Container data-testid={testId}>
+        <Stack>
+          <Grid>
+            <span>Layout content</span>
+          </Grid>
+        </Stack>
+      </Container>
+    ),
+    assert: () => cy.contains("Layout content").should("be.visible"),
   },
   {
     name: "MessagePopup",
@@ -814,6 +918,14 @@ export const componentSmokeCases: SmokeCase[] = [
       <ThemeProvider>
         <div data-testid={testId}>Theme provider child</div>
       </ThemeProvider>
+    ),
+  },
+  {
+    name: "ToastProvider",
+    render: ({ ToastProvider }, testId) => (
+      <ToastProvider data-testid={testId}>
+        <div>Toast provider child</div>
+      </ToastProvider>
     ),
   },
   {

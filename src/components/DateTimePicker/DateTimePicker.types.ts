@@ -1,5 +1,6 @@
 import type { InputHTMLAttributes, ButtonHTMLAttributes } from "react";
 import {
+  LabelPositionType,
   RoundingType,
   ShadowType,
   SizeType,
@@ -13,6 +14,20 @@ import {
 export interface DateTimePickerProps {
   /** Optional visible label displayed above the input. */
   label?: string;
+
+  /**
+   * Position of the label relative to the input.
+   *
+   * @default "top"
+   */
+  labelPosition?: LabelPositionType;
+
+  /**
+   * Whether the input should take the full width of its container.
+   *
+   * @default false
+   */
+  fullWidth?: boolean;
 
   /** Current value in ISO 8601 format (e.g., "2025-04-10T12:00"). */
   value?: string;
@@ -28,6 +43,14 @@ export interface DateTimePickerProps {
 
   /** Name attribute for form submission. */
   name?: string;
+
+  /**
+   * The type of input element.
+   * ('date' | 'time' | 'datetime-local').
+   *
+   * @default "datetime-local"
+   */
+  type?: "date" | "time" | "datetime-local";
 
   /**
    * Additional class name for custom styling.
@@ -99,7 +122,6 @@ export interface DateTimePickerProps {
 
   /** Whether to use outlined styling. */
   outline?: boolean;
-
 
   /**
    * Optional test ID for testing frameworks.
