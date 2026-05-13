@@ -10,7 +10,6 @@ const classMap = {
   target: "target",
   trigger: "trigger",
   triggerPlain: "triggerPlain",
-  triggerCustom: "triggerCustom",
   menu: "panel",
   item: "item",
   itemWrapper: "itemWrapper",
@@ -139,7 +138,7 @@ describe("BaseMenu", () => {
     expect(screen.getByTestId("menu-menu")).toBeInTheDocument();
   });
 
-  it("uses default styling for text triggers and neutral styling for custom trigger content", () => {
+  it("uses default styling for text triggers and enhances custom trigger content directly", () => {
     const { rerender } = render(
       <BaseMenu
         items={createItems()}
@@ -150,21 +149,23 @@ describe("BaseMenu", () => {
     );
 
     expect(screen.getByTestId("menu-trigger")).toHaveClass("triggerPlain");
-    expect(screen.getByTestId("menu-trigger")).not.toHaveClass(
-      "triggerCustom",
-    );
 
     rerender(
       <BaseMenu
         items={createItems()}
         classMap={classMap}
         data-testid="menu"
-        trigger={<span data-testid="custom-trigger-content">Actions</span>}
+        trigger={<button type="button">Custom actions</button>}
       />,
     );
 
-    expect(screen.getByTestId("menu-trigger")).toHaveClass("triggerCustom");
     expect(screen.getByTestId("menu-trigger")).not.toHaveClass("triggerPlain");
+    expect(screen.getByTestId("menu-trigger")).toHaveTextContent(
+      "Custom actions",
+    );
+    expect(
+      screen.getByTestId("menu-trigger").querySelector("button"),
+    ).not.toBeInTheDocument();
   });
 
   it("calls an item onClick and closes after selection", () => {

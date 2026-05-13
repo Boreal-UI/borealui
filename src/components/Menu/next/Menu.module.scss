@@ -61,16 +61,6 @@
     background: var(--background-color-dark);
   }
 
-  .triggerCustom {
-    padding: 0;
-    border-radius: inherit;
-    line-height: inherit;
-  }
-
-  .triggerCustom:hover {
-    background: transparent;
-  }
-
   .menu {
     position: fixed;
     top: var(--spacing-sm);

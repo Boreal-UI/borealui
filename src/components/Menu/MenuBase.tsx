@@ -93,7 +93,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef<HTMLDivElement>(null);
-  const triggerRef = useRef<HTMLButtonElement>(null);
+  const triggerRef = useRef<HTMLElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const generatedId = useId();
 
@@ -360,8 +360,10 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
     });
   };
 
-  const handleTriggerClick = (event: MouseEvent<HTMLButtonElement>) => {
-    triggerProps?.onClick?.(event);
+  const handleTriggerClick = (event: MouseEvent<HTMLElement>) => {
+    triggerProps?.onClick?.(
+      event as unknown as MouseEvent<HTMLButtonElement>,
+    );
     if (event.defaultPrevented) return;
 
     event.stopPropagation();
@@ -370,6 +372,81 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       x: rect?.left ?? event.clientX,
       y: rect?.bottom ?? event.clientY,
     });
+  };
+
+  const setTriggerNode = useCallback(
+    (node: HTMLElement | null) => {
+      triggerRef.current = node;
+
+      if (!hasCustomTriggerContent) return;
+
+      const triggerElement = trigger as React.ReactElement<{
+        ref?: React.Ref<HTMLElement>;
+      }>;
+      const triggerElementRef = triggerElement.props.ref;
+
+      if (typeof triggerElementRef === "function") {
+        triggerElementRef(node);
+      } else if (triggerElementRef && "current" in triggerElementRef) {
+        (triggerElementRef as React.MutableRefObject<HTMLElement | null>).current =
+          node;
+      }
+    },
+    [hasCustomTriggerContent, trigger],
+  );
+
+  const renderTrigger = () => {
+    if (!trigger) return null;
+
+    if (hasCustomTriggerContent) {
+      const triggerElement = trigger as React.ReactElement<
+        {
+        className?: string;
+        onClick?: (event: MouseEvent<HTMLElement>) => void;
+        ref?: React.Ref<HTMLElement>;
+        } & Record<string, unknown>
+      >;
+
+      return React.cloneElement(triggerElement, {
+        ref: setTriggerNode,
+        className: combineClassNames(
+          triggerElement.props.className,
+          triggerClassName,
+          triggerProps?.className,
+        ),
+        "aria-haspopup": "menu",
+        "aria-expanded": isOpen,
+        "aria-controls": resolvedMenuId,
+        "data-testid": `${testId}-trigger`,
+        onClick: (event: MouseEvent<HTMLElement>) => {
+          triggerElement.props.onClick?.(event);
+          if (event.defaultPrevented) return;
+
+          handleTriggerClick(event);
+        },
+      });
+    }
+
+    return (
+      <button
+        {...triggerProps}
+        ref={setTriggerNode}
+        type={triggerProps?.type ?? "button"}
+        className={combineClassNames(
+          classMap.trigger,
+          classMap.triggerPlain,
+          triggerClassName,
+          triggerProps?.className,
+        )}
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+        aria-controls={resolvedMenuId}
+        data-testid={`${testId}-trigger`}
+        onClick={(event) => handleTriggerClick(event)}
+      >
+        {trigger}
+      </button>
+    );
   };
 
   const handleItemSelect = (
@@ -755,28 +832,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       onClick={handleClick}
       onKeyDown={handleKeyDown}
     >
-      {trigger && (
-        <button
-          {...triggerProps}
-          ref={triggerRef}
-          type={triggerProps?.type ?? "button"}
-          className={combineClassNames(
-            classMap.trigger,
-            hasCustomTriggerContent
-              ? classMap.triggerCustom
-              : classMap.triggerPlain,
-            triggerClassName,
-            triggerProps?.className,
-          )}
-          aria-haspopup="menu"
-          aria-expanded={isOpen}
-          aria-controls={resolvedMenuId}
-          data-testid={`${testId}-trigger`}
-          onClick={handleTriggerClick}
-        >
-          {trigger}
-        </button>
-      )}
+      {renderTrigger()}
 
       {children && (
         <div

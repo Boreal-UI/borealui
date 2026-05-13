@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { FaCopy, FaEdit, FaFolderOpen, FaTrash } from "react-icons/fa";
-import { Menu, StateType } from "../src/index.core";
+import { Button, Menu, StateType } from "../src/index.core";
 import type { MenuProps } from "../src/components/Menu/Menu.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import {
@@ -93,6 +93,15 @@ export const ContextMenu: Story = {
 export const TriggerMenu: Story = {
   args: {
     trigger: "Actions",
+    activation: "click",
+    items: applicationItems,
+    "aria-label": "Action menu",
+  },
+};
+
+export const ComponentTriggerMenu: Story = {
+  args: {
+    trigger: <Button>Actions</Button>,
     activation: "click",
     items: applicationItems,
     "aria-label": "Action menu",
