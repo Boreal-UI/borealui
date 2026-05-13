@@ -559,7 +559,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
         return (
           <div
             key={item.id ?? itemPath}
-            role="presentation"
+            role="none"
             className={combineClassNames(classMap.sectionLabel, item.className)}
             data-testid={itemTestId ?? `${testId}-${itemPath}-label`}
           >
@@ -576,7 +576,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       const openSubmenu = (preserveDescendant = true) => {
         if (hasSubmenu && !item.disabled) {
           setOpenSubmenuPath((currentPath) =>
-            preserveDescendant && currentPath && isPathOpen(currentPath, itemPath)
+            preserveDescendant &&
+            currentPath &&
+            isPathOpen(currentPath, itemPath)
               ? currentPath
               : itemPath,
           );
@@ -600,6 +602,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
         }
 
         closeChildSubmenus();
+      };
+      const handleSubmenuTriggerEnter = () => {
+        openSubmenu();
       };
       const handleSubmenuWrapperOver = (
         event:
@@ -657,6 +662,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
             classMap.itemWrapper,
             hasSubmenu && classMap.hasSubmenu,
           )}
+          role="group"
           data-menu-item-wrapper="true"
           data-menu-item-path={itemPath}
           onMouseEnter={handleDirectItemHover}
@@ -669,9 +675,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
               type="button"
               disabled={item.disabled}
               {...commonProps}
-              onMouseEnter={openSubmenu}
+              onMouseEnter={handleSubmenuTriggerEnter}
               onMouseOver={openDirectSubmenu}
-              onPointerEnter={openSubmenu}
+              onPointerEnter={handleSubmenuTriggerEnter}
               onPointerOver={openDirectSubmenu}
               onClick={(event) => {
                 event.stopPropagation();
