@@ -108,8 +108,6 @@ export interface CircularProgressProps extends Omit<
   /**
    * State of progress
    * ('success' | 'error' | 'warning' | 'disabled' | '').
-   *
-   * @default ""
    */
   state?: StateType;
 
@@ -122,11 +120,8 @@ export interface CircularProgressProps extends Omit<
 
   /**
    * Optional class name for custom styling.
-   *
-   * @default ""
    */
   className?: string;
-
 
   /**
    * Optional test ID for testing frameworks.
@@ -140,5 +135,8 @@ export interface CircularProgressProps extends Omit<
 }
 
 export interface CircularProgressBaseProps extends CircularProgressProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

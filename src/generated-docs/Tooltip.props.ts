@@ -36,6 +36,15 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "className",
+      "type": "string",
+      "description": "Additional CSS class names for the tooltip wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "content",
       "type": "string",
       "description": "The content text displayed inside the tooltip.",

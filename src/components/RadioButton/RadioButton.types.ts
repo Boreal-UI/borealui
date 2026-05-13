@@ -2,7 +2,9 @@ import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import { FieldsetHTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
 
 export type RadioButtonOption = {
-  /** Label displayed beside the radio button. */
+  /** Label displayed beside the radio button.
+   * @default false
+   */
   label: ReactNode;
 
   /** Value selected when this option is chosen. */
@@ -148,6 +150,9 @@ export interface RadioButtonProps extends Omit<
 }
 
 export interface BaseRadioButtonProps extends RadioButtonProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }
 
@@ -217,5 +222,8 @@ export interface RadioGroupProps extends Omit<
 }
 
 export interface BaseRadioGroupProps extends RadioGroupProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

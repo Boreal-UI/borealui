@@ -21,6 +21,15 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"div\""
     },
     {
+      "name": "className",
+      "type": "string",
+      "description": "Additional CSS class names for the divider root.",
+      "required": false,
+      "inherited": false,
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "dashed",
       "type": "boolean",
       "description": "Whether the divider should be dashed instead of solid.",

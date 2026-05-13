@@ -111,7 +111,10 @@ export interface DataTableProps<T> {
   defaultSelectedRowKeys?: Array<string | number>;
 
   /** Callback fired when row selection changes. */
-  onSelectionChange?: (selectedKeys: Array<string | number>, selectedRows: T[]) => void;
+  onSelectionChange?: (
+    selectedKeys: Array<string | number>,
+    selectedRows: T[],
+  ) => void;
 
   /** Accessible label for the select-all checkbox. */
   selectAllAriaLabel?: string;
@@ -155,8 +158,6 @@ export interface DataTableProps<T> {
 
   /**
    * Optional class name for the table wrapper.
-   *
-   * @default ""
    */
   className?: string;
 
@@ -217,8 +218,6 @@ export interface DataTableProps<T> {
   /**
    * State of the table
    * ('success' | 'error' | 'warning' | 'disabled' | '').
-   *
-   * @default ""
    */
   state?: StateType;
 
@@ -374,7 +373,6 @@ export interface DataTableProps<T> {
    */
   rowCount?: number;
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -387,5 +385,8 @@ export interface DataTableProps<T> {
 }
 
 export interface DataTableBaseProps<T> extends DataTableProps<T> {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

@@ -45,7 +45,7 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "aria-current",
-      "type": "boolean | \"time\" | \"page\" | \"step\" | \"location\" | \"date\"",
+      "type": "boolean | \"page\" | \"step\" | \"location\" | \"date\" | \"time\"",
       "description": "Indicates the current active item within a related set, when applicable.",
       "required": false,
       "inherited": false,

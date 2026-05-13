@@ -178,7 +178,16 @@ export interface TagInputProps {
 }
 
 export type TagInputBaseProps = TagInputProps & {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Icon Button component dependency injected by the wrapper.
+   */
   IconButton: React.FC<IconButtonProps>;
+  /**
+   * Text Input component dependency injected by the wrapper.
+   */
   TextInput: React.FC<TextInputProps>;
 };

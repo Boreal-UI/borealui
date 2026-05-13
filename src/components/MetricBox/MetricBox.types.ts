@@ -87,8 +87,6 @@ export interface MetricBoxProps {
 
   /**
    * Optional additional CSS class names for custom styling.
-   *
-   * @default ""
    */
   className?: string;
 
@@ -106,7 +104,6 @@ export interface MetricBoxProps {
 
   /** Additional class names for the subtext element. */
   subtextClassName?: string;
-
 
   /**
    * Optional test ID for testing frameworks.
@@ -168,5 +165,8 @@ export interface MetricBoxProps {
 }
 
 export interface BaseMetricBoxProps extends MetricBoxProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

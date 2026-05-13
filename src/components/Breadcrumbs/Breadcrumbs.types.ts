@@ -123,8 +123,6 @@ export interface BreadcrumbsProps extends Omit<
    * State of the breadcrumbs
    * ('success' | 'error' | 'warning' | 'disabled' | '').
    * Used for visual feedback.
-   *
-   * @default ""
    */
   state?: StateType;
 
@@ -138,8 +136,6 @@ export interface BreadcrumbsProps extends Omit<
 
   /**
    * Additional class name for custom styling.
-   *
-   * @default ""
    */
   className?: string;
 
@@ -162,7 +158,6 @@ export interface BreadcrumbsProps extends Omit<
    */
   maxVisible?: number;
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -175,7 +170,16 @@ export interface BreadcrumbsProps extends Omit<
 }
 
 export interface BreadcrumbsBaseProps extends BreadcrumbsProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Component implementation used to render the link portion.
+   */
   LinkComponent?: ElementType;
+  /**
+   * Component implementation used to render the button portion.
+   */
   ButtonComponent: ElementType;
 }

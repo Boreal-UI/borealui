@@ -64,8 +64,6 @@ export interface FileUploadProps
   /**
    * The state of the file upload
    * ('success' | 'error' | 'warning' | 'disabled' | '').
-   *
-   * @default ""
    */
   state?: StateType;
 
@@ -187,7 +185,6 @@ export interface FileUploadProps
 
   /** Additional class names for the upload button. */
   uploadButtonClassName?: string;
-
 
   /**
    * Optional test ID for testing frameworks.
@@ -332,9 +329,24 @@ export interface FileUploadProps
 }
 
 export interface BaseFileUploadProps extends FileUploadProps {
+  /**
+   * Form Group prop for BaseFileUpload.
+   */
   FormGroup: React.ComponentType<FormGroupProps>;
+  /**
+   * Button component dependency injected by the wrapper.
+   */
   Button: React.ComponentType<ButtonProps>;
+  /**
+   * Icon Button component dependency injected by the wrapper.
+   */
   IconButton: React.ComponentType<IconButtonProps>;
+  /**
+   * Progress Bar component dependency injected by the wrapper.
+   */
   ProgressBar: React.ComponentType<ProgressBarProps>;
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

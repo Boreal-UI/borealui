@@ -11,8 +11,6 @@ export interface MarkdownRendererProps {
 
   /**
    * Optional additional class name for styling.
-   *
-   * @default ""
    */
   className?: string;
 
@@ -89,6 +87,9 @@ export interface MarkdownRendererProps {
 }
 
 export interface BaseMarkdownRendererProps extends MarkdownRendererProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 
   /**

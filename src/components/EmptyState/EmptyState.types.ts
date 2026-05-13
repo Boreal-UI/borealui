@@ -16,6 +16,11 @@ export interface EmptyStateProps extends Omit<
   HTMLAttributes<HTMLElement>,
   "title" | "children"
 > {
+  /**
+   * Additional CSS class names for the empty state root.
+   */
+  className?: string;
+
   /** Optional icon component (e.g., from react-icons). */
   icon?: IconType;
 
@@ -51,8 +56,6 @@ export interface EmptyStateProps extends Omit<
   /**
    * The EmptyState state
    * ('success' | 'error' | 'warning' | 'disabled' | '').
-   *
-   * @default ""
    */
   state?: StateType;
 
@@ -167,6 +170,12 @@ export interface EmptyStateProps extends Omit<
 }
 
 export interface BaseEmptyStateProps extends EmptyStateProps {
+  /**
+   * Button component dependency injected by the wrapper.
+   */
   Button: ComponentType<ButtonProps>;
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

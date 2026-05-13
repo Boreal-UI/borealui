@@ -61,6 +61,15 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "category": "aria"
     },
     {
+      "name": "className",
+      "type": "string",
+      "description": "Additional CSS class names for the empty state root.",
+      "required": false,
+      "inherited": false,
+      "category": "styling",
+      "defaultValue": "\"\""
+    },
+    {
       "name": "data-testid",
       "type": "string",
       "description": "Backward-compatible alias for test ID attributes.",

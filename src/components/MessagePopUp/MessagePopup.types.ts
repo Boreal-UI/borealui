@@ -112,8 +112,6 @@ export interface MessagePopupProps {
 
   /**
    * Optional additional class names for custom styling.
-   *
-   * @default ""
    */
   className?: string;
 
@@ -144,7 +142,6 @@ export interface MessagePopupProps {
   /** Additional class names for the cancel button. */
   cancelButtonClassName?: string;
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -168,7 +165,16 @@ export type IconButtonComponent = React.ForwardRefExoticComponent<
 >;
 
 export interface BaseMessagePopupProps extends MessagePopupProps {
+  /**
+   * Button component dependency injected by the wrapper.
+   */
   Button: ButtonComponent;
+  /**
+   * Icon Button component dependency injected by the wrapper.
+   */
   IconButton: IconButtonComponent;
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

@@ -143,6 +143,15 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "category": "testing"
     },
     {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Whether the input is disabled.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
       "name": "glass",
       "type": "boolean",
       "description": "Adds translucent glass styling to the input wrapper.",
@@ -236,6 +245,15 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "false"
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "description": "Placeholder text shown when the input is empty.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"Enter text\""
     },
     {
       "name": "readOnly",

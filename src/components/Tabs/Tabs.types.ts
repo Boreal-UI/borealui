@@ -9,7 +9,8 @@ import {
 
 /**
  * Represents a single tab with a label, optional icon, and content.
- */
+   * @default "Tabs"
+   */
 export interface Tab {
   /** The label of the tab. */
   label: string;

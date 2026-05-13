@@ -122,7 +122,17 @@ export type IconButtonComponent = React.ForwardRefExoticComponent<
 >;
 
 export interface BaseModalProps extends ModalProps {
+  /**
+   * Icon Button component dependency injected by the wrapper.
+   */
   IconButton: IconButtonComponent;
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Portal Id.
+   * @default "widget-portal"
+   */
   portalId?: string;
 }

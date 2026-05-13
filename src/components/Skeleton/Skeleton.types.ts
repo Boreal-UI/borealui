@@ -100,11 +100,26 @@ export interface SkeletonProps {
 }
 
 export interface SkeletonBaseProps extends SkeletonProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }
 
 export type ExtraProps = {
+  /**
+   * As.
+   * @default "div"
+   */
   as?: keyof JSX.IntrinsicElements;
+  /**
+   * Announce.
+   * @default true
+   */
   announce?: boolean;
+  /**
+   * Animate.
+   * @default true
+   */
   animate?: boolean;
 } & AriaAttributes;

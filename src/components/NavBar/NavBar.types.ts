@@ -133,6 +133,9 @@ export interface NavBarProps {
 }
 
 export interface BaseNavBarProps extends NavBarProps {
+  /**
+   * Link Wrapper component dependency injected by the wrapper.
+   */
   LinkWrapper: (props: {
     href: string;
     target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
@@ -149,5 +152,8 @@ export interface BaseNavBarProps extends NavBarProps {
     "aria-label"?: string;
   }) => JSX.Element;
 
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

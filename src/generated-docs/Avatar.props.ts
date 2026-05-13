@@ -21,7 +21,7 @@ export const avatarPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "aria-current",
-      "type": "boolean | \"time\" | \"page\" | \"step\" | \"location\" | \"date\"",
+      "type": "boolean | \"page\" | \"step\" | \"location\" | \"date\" | \"time\"",
       "description": "Indicates the current state or item within a set when the avatar acts as a link. Example: page, step, location, date, time, true.",
       "required": false,
       "inherited": false,

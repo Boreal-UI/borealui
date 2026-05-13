@@ -157,5 +157,8 @@ export interface ProgressBarProps {
 }
 
 export interface BaseProgressBarProps extends ProgressBarProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

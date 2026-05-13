@@ -72,8 +72,6 @@ export interface FormGroupProps extends Omit<
 
   /**
    * Additional class names for styling.
-   *
-   * @default ""
    */
   className?: string;
 
@@ -124,7 +122,6 @@ export interface FormGroupProps extends Omit<
   /** Optional controller element (e.g., button, icon) beside input. */
   controller?: ReactNode;
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -165,5 +162,8 @@ export interface FormGroupProps extends Omit<
 }
 
 export interface BaseFormGroupProps extends FormGroupProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

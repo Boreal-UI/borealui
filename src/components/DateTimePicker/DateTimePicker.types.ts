@@ -54,8 +54,6 @@ export interface DateTimePickerProps {
 
   /**
    * Additional class name for custom styling.
-   *
-   * @default ""
    */
   className?: string;
 
@@ -91,8 +89,6 @@ export interface DateTimePickerProps {
   /**
    * State of the input
    * ('success' | 'error' | 'warning' | 'disabled' | '').
-   *
-   * @default ""
    */
   state?: StateType;
 
@@ -234,7 +230,16 @@ export interface DateTimePickerProps {
 }
 
 export interface DateTimePickerBaseProps extends DateTimePickerProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Error message or error state displayed with the component.
+   */
   error?: string;
+  /**
+   * Descriptive content rendered by the component.
+   */
   description?: string;
 }

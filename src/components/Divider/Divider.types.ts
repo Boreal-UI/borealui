@@ -9,6 +9,11 @@ export interface DividerProps extends Omit<
   "role" | "children" | "aria-label" | "aria-labelledby"
 > {
   /**
+   * Additional CSS class names for the divider root.
+   */
+  className?: string;
+
+  /**
    * Orientation of the divider
    * ('horizontal' | 'vertical'). Default is 'horizontal'.
    *
@@ -55,8 +60,6 @@ export interface DividerProps extends Omit<
   /**
    * State of the divider
    * ('success' | 'error' | 'warning' | 'disabled' | '').
-   *
-   * @default ""
    */
   state?: StateType;
 
@@ -103,5 +106,8 @@ export interface DividerProps extends Omit<
 }
 
 export interface DividerBaseProps extends DividerProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

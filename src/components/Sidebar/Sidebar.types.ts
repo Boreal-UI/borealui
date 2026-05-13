@@ -4,6 +4,7 @@ import type { AnchorHTMLAttributes } from "react";
 export interface SidebarLink {
   /**
    * Display label for the link.
+   * @default "Sidebar navigation"
    */
   label: string;
 
@@ -323,6 +324,12 @@ export interface SidebarProps {
 }
 
 export interface BaseSidebarProps extends SidebarProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Component implementation used to render the link portion.
+   */
   LinkComponent?: React.ElementType;
 }

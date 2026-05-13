@@ -80,6 +80,20 @@ export interface TextInputProps extends NativeInputProps {
   label?: string;
 
   /**
+   * Placeholder text shown when the input is empty.
+   *
+   * @default "Enter text"
+   */
+  placeholder?: string;
+
+  /**
+   * Whether the input is disabled.
+   *
+   * @default false
+   */
+  disabled?: boolean;
+
+  /**
    * Position of the label.
    * "top" | "left" | "right" | "bottom"
    *
@@ -239,6 +253,12 @@ export interface TextInputProps extends NativeInputProps {
 }
 
 export interface TextInputBaseProps extends TextInputProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Icon Button component dependency injected by the wrapper.
+   */
   IconButton: React.FC<IconButtonProps>;
 }
