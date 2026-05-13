@@ -304,7 +304,19 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   useEffect(() => {
     if (!open) return;
 
-    const handleViewportChange = () => updatePanelLayouts(true);
+    const handleViewportChange = (event?: Event) => {
+      const target = event?.target;
+
+      if (
+        event?.type === "scroll" &&
+        target instanceof Node &&
+        menuRef.current?.contains(target)
+      ) {
+        return;
+      }
+
+      updatePanelLayouts(true);
+    };
 
     window.addEventListener("resize", handleViewportChange);
     window.addEventListener("scroll", handleViewportChange, true);

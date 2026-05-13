@@ -463,6 +463,77 @@ const runDropdownSubmenuTests = (
         .and("have.css", "position", "static");
     });
 
+    it("keeps stacked mobile menus stable while scrolling nested content", () => {
+      cy.viewport(390, 520);
+
+      mountDropdown(
+        Dropdown,
+        {
+          focusFirstItemOnOpen: false,
+          items: [
+            {
+              label: "Settings",
+              "data-testid": "dropdown-mobile-settings",
+              items: [
+                ...Array.from({ length: 14 }, (_, index) => ({
+                  label: `Mobile action ${index + 1}`,
+                  "data-testid": `dropdown-mobile-action-${index + 1}`,
+                  onClick: cy.stub().as(`mobileAction${index + 1}`),
+                })),
+                {
+                  label: "Advanced",
+                  "data-testid": "dropdown-mobile-advanced",
+                  items: Array.from({ length: 8 }, (_, index) => ({
+                    label: `Advanced action ${index + 1}`,
+                    "data-testid": `dropdown-mobile-advanced-action-${index + 1}`,
+                    onClick: cy.stub().as(`mobileAdvancedAction${index + 1}`),
+                  })),
+                },
+              ],
+            },
+          ],
+        },
+        {
+          minHeight: 620,
+        },
+      );
+
+      cy.get('[data-testid="dropdown-trigger"]').click();
+      cy.get('[data-testid="dropdown-mobile-settings"]').click();
+      cy.get('[data-testid="dropdown-mobile-advanced"]')
+        .scrollIntoView()
+        .click({ force: true });
+
+      cy.get('[data-testid="dropdown-menu"]').then(($menu) => {
+        const rect = $menu[0].getBoundingClientRect();
+        cy.wrap({ left: rect.left, top: rect.top }).as("mobileMenuPosition");
+      });
+
+      cy.get('[data-testid="dropdown-menu"]').scrollTo("bottom", {
+        ensureScrollable: false,
+      });
+
+      cy.get("@mobileMenuPosition").then((position) => {
+        const { left, top } = position as unknown as {
+          left: number;
+          top: number;
+        };
+
+        cy.get('[data-testid="dropdown-menu"]').then(($menu) => {
+          const rect = $menu[0].getBoundingClientRect();
+          expect(rect.left).to.be.closeTo(left, 0.5);
+          expect(rect.top).to.be.closeTo(top, 0.5);
+        });
+      });
+
+      cy.get('[data-testid="dropdown-mobile-settings-submenu"]').should(
+        "be.visible",
+      );
+      cy.get('[data-testid="dropdown-mobile-advanced-submenu"]').should(
+        "be.visible",
+      );
+    });
+
     it("preserves link item behavior inside submenus", () => {
       mountDropdown(Dropdown, {
         closeOnSelect: false,
