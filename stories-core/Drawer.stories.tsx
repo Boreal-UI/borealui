@@ -6,7 +6,7 @@ import {
   roundingOptions,
   shadowOptions,
   stateOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 import { DrawerProps } from "../src/components/Drawer/Drawer.types";
 
 const placementOptions = ["left", "right", "top", "bottom"] as const;

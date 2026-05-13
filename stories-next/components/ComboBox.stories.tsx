@@ -5,7 +5,7 @@ import {
   themeOptions,
   shadowOptions,
   roundingOptions,
-} from "../../stories-core/assets/OptionTypes";
+} from "../../shared-story-assets/OptionTypes";
 import {
   ComboBoxOption,
   ComboBoxProps,

@@ -8,7 +8,7 @@ import {
   shadowOptions,
   stateOptions,
   themeOptions,
-} from "../../stories-core/assets/OptionTypes";
+} from "../../shared-story-assets/OptionTypes";
 
 const labelPositionOptions: LabelPositionType[] = [
   "top",

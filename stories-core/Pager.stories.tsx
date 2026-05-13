@@ -6,7 +6,7 @@ import {
   roundingOptions,
   shadowOptions,
   stateOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<PaginationProps> = {
   title: "Components/Pager",

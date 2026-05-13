@@ -15,7 +15,7 @@ import {
   sizeOptions,
   stateOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",

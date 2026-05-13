@@ -10,7 +10,7 @@ import {
   sizeOptions,
   stateOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const steps = [
   { label: "Start", icon: FaClipboardList },

@@ -5,7 +5,7 @@ import {
   roundingOptions,
   shadowOptions,
   stateOptions,
-} from "../../stories-core/assets/OptionTypes";
+} from "../../shared-story-assets/OptionTypes";
 import { ToastProviderProps } from "@/next/ToastProvider";
 
 const placementOptions: ToastProviderProps["placement"][] = [

@@ -118,6 +118,7 @@ const themeVariantComponents = new Set([
   "FormField",
   "Footer",
   "IconButton",
+  "Menu",
   "MetricBox",
   "NavBar",
   "Pager",
@@ -165,6 +166,7 @@ const stateVariantComponents = new Set([
   "EmptyState",
   "FileUpload",
   "IconButton",
+  "Menu",
   "MetricBox",
   "Pager",
   "PopOver",
@@ -607,6 +609,41 @@ export const componentSmokeCases: SmokeCase[] = [
       <MarkdownRenderer content="**Markdown content**" data-testid={testId} />
     ),
     assert: () => cy.contains("Markdown content").should("be.visible"),
+  },
+  {
+    name: "Menu",
+    render: ({ Menu }, testId) => (
+      <Menu
+        trigger="Actions"
+        activation="click"
+        items={[{ label: "Rename", onClick: noop }]}
+        aria-label="Action menu"
+        data-testid={testId}
+      />
+    ),
+    renderA11y: ({ Menu }, testId) => (
+      <Menu
+        open
+        position={{ x: 24, y: 24 }}
+        items={[{ label: "Rename", onClick: noop }]}
+        aria-label="Action menu"
+        data-testid={testId}
+      >
+        <span>Context target</span>
+      </Menu>
+    ),
+    assert: (testId) => {
+      cy.get(`[data-testid="${testId}-trigger"]`).click();
+      cy.get(`[data-testid="${testId}-menu"]`).should("contain.text", "Rename");
+    },
+    waitForA11y: (testId) => {
+      cy.get(`[data-testid="${testId}-menu"]`).should("be.visible");
+      cy.wait(250);
+    },
+    a11yWrapperStyle: {
+      backgroundColor: "var(--background-color)",
+      color: "var(--text-color-primary)",
+    },
   },
   {
     name: "Layout",

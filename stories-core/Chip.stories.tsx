@@ -15,7 +15,7 @@ import {
   shadowOptions,
   stateOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const positions: PositionType[] = [
   "topLeft",

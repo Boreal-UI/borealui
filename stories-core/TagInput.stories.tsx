@@ -8,7 +8,7 @@ import {
   shadowOptions,
   stateOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<TagInputProps> = {
   title: "Components/TagInput",

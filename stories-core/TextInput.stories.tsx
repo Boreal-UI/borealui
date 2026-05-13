@@ -9,7 +9,7 @@ import {
   shadowOptions,
   stateOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const labelPositionOptions: NonNullable<TextInputProps["labelPosition"]>[] = [
   "top",

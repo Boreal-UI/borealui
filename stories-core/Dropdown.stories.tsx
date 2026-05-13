@@ -1,13 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  Dropdown,
-  StateType,
-} from "../src/index.core";
+import { Dropdown, StateType } from "../src/index.core";
 import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import type { DropdownProps } from "../src/components/Dropdown/Dropdown.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
-import { roundingOptions, shadowOptions, stateOptions, themeOptions } from "./assets/OptionTypes";
-
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<DropdownProps> = {
   title: "Components/Dropdown",

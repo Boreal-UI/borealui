@@ -7,7 +7,7 @@ import type { ColorPickerProps } from "../src/components/ColorPicker/ColorPicker
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import { ShadowType } from "../src/types/types";
 import { ShapeType } from "../src/components/ColorPicker/ColorPicker.types";
-import { shadowOptions, sizeOptions } from "./assets/OptionTypes";
+import { shadowOptions, sizeOptions } from "../shared-story-assets/OptionTypes";
 
 const shapeOptions: ShapeType[] = ["square", "round", "pill"];
 

@@ -5,7 +5,7 @@ import {
   roundingOptions,
   shadowOptions,
   stateOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<PopOverProps> = {
   title: "Components/PopOver",

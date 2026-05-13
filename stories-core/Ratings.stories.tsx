@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { Rating } from "../src/index.core";
 import type { RatingProps } from "../src/components/Rating/Rating.types";
-import { stateOptions, themeOptions } from "./assets/OptionTypes";
+import { stateOptions, themeOptions } from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<RatingProps> = {
   title: "Components/Rating",

@@ -13,7 +13,7 @@ import {
   sizeOptions,
   stateOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const layoutOptions = ["vertical", "horizontal"] as const;
 const alignments: CardProps["align"][] = ["left", "center", "right"];

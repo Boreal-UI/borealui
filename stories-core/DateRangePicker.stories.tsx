@@ -6,7 +6,7 @@ import {
   stateOptions,
   roundingOptions,
   shadowOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 import {
   DateRangePickerProps,
   DateRangeValue,

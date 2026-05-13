@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { FormField } from "../../src/index.next";
 import { FormFieldProps } from "../../src/components/FormField/FormField.types";
-import { stateOptions } from "../../stories-core/assets/OptionTypes";
+import { stateOptions } from "../../shared-story-assets/OptionTypes";
 
 const labelPositionOptions = ["top", "bottom", "left", "right"] as const;
 

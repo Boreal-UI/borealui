@@ -16,7 +16,7 @@ import {
   sizeOptions,
   stateOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<ButtonProps> = {
   title: "Components/Button",

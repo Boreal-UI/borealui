@@ -7,7 +7,7 @@ import {
   shadowOptions,
   stateOptions,
   themeOptions,
-} from "../../stories-core/assets/OptionTypes";
+} from "../../shared-story-assets/OptionTypes";
 
 const placementOptions = ["left", "right", "top", "bottom"] as const;
 

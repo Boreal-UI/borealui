@@ -10,7 +10,13 @@ import {
   StateType,
   ThemeType,
 } from "../src/types/types";
-import { roundingOptions, shadowOptions, sizeOptions, stateOptions, themeOptions } from "./assets/OptionTypes";
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 Accordion.displayName = "Accordion";
 

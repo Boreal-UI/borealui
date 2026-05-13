@@ -3,7 +3,10 @@ import { Meta, StoryObj } from "@storybook/react-vite";
 import { MessagePopup } from "../src/index.core";
 import type { MessagePopupProps } from "../src/components/MessagePopup/MessagePopup.types";
 import { RoundingType, ShadowType } from "../src/types/types";
-import { roundingOptions, shadowOptions } from "./assets/OptionTypes";
+import {
+  roundingOptions,
+  shadowOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<MessagePopupProps> = {
   title: "Components/MessagePopup",

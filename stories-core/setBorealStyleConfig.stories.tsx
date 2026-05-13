@@ -12,7 +12,7 @@ import {
   shadowOptions,
   sizeOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 type DemoProps = {
   theme?: ThemeType;

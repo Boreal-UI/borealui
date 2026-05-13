@@ -8,7 +8,7 @@ import {
   sizeOptions,
   stateOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<typeof IconButton> = {
   title: "Components/IconButton",

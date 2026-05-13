@@ -14,7 +14,7 @@ import {
   roundingOptions,
   shadowOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const mockItems: NavBarProps["items"] = [
   { icon: <FaHome />, label: "Home", path: "/" },

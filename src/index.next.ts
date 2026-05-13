@@ -38,6 +38,7 @@ export { default as FormField } from "./next/FormField";
 export { default as IconButton } from "./next/IconButton";
 export { Container, Grid, Inline, Section, Stack } from "./next/Layout";
 export { default as MarkdownRenderer } from "./next/MarkdownRenderer";
+export { default as Menu } from "./next/Menu";
 export { default as MessagePopup } from "./next/MessagePopup";
 export { default as MetricBox } from "./next/MetricBox";
 export { default as Modal } from "./next/Modal";

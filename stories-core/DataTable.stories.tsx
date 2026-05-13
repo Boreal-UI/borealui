@@ -7,7 +7,7 @@ import {
   shadowOptions,
   stateOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 type SampleRow = {
   id: number;

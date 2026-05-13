@@ -1,6 +1,6 @@
 {
   "name": "boreal-ui",
-  "version": "0.0.899-experimental.0",
+  "version": "0.0.899-experimental.2",
   "readme": "README.npm.md",
   "description": "A modern, customizable React/Next.js component library",
   "author": "Davin Chiupka",
@@ -340,6 +340,11 @@
       "import": "./dist/core/MarkdownRenderer.js",
       "require": "./dist/core/MarkdownRenderer.cjs.js"
     },
+    "./core/Menu": {
+      "types": "./dist/types/core/Menu.d.ts",
+      "import": "./dist/core/Menu.js",
+      "require": "./dist/core/Menu.cjs.js"
+    },
     "./core/MessagePopup": {
       "types": "./dist/types/core/MessagePopup.d.ts",
       "import": "./dist/core/MessagePopup.js",
@@ -619,6 +624,10 @@
     "./next/MarkdownRenderer": {
       "types": "./dist/types/next/MarkdownRenderer.d.ts",
       "import": "./dist/next/MarkdownRenderer.js"
+    },
+    "./next/Menu": {
+      "types": "./dist/types/next/Menu.d.ts",
+      "import": "./dist/next/Menu.js"
     },
     "./next/MessagePopup": {
       "types": "./dist/types/next/MessagePopup.d.ts",

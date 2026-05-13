@@ -36,6 +36,7 @@ export { default as FormField } from "./core/FormField";
 export { default as IconButton } from "./core/IconButton";
 export { Container, Grid, Inline, Section, Stack } from "./core/Layout";
 export { default as MarkdownRenderer } from "./core/MarkdownRenderer";
+export { default as Menu } from "./core/Menu";
 export { default as MessagePopup } from "./core/MessagePopup";
 export { default as MetricBox } from "./core/MetricBox";
 export { default as Modal } from "./core/Modal";

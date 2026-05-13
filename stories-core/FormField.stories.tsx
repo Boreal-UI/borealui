@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { FormField } from "../src/index.core";
-import { stateOptions } from "./assets/OptionTypes";
+import { stateOptions } from "../shared-story-assets/OptionTypes";
 import { FormFieldProps } from "../src/components/FormField/FormField.types";
 
 const labelPositionOptions = ["top", "bottom", "left", "right"] as const;

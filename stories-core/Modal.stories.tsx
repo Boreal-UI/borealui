@@ -3,8 +3,10 @@ import { Meta, StoryObj } from "@storybook/react-vite";
 import { Modal, Button } from "../src/index.core";
 import type { ModalProps } from "../src/components/Modal/Modal.types";
 import { RoundingType, ShadowType } from "../src/types/types";
-import { roundingOptions, shadowOptions } from "./assets/OptionTypes";
-
+import {
+  roundingOptions,
+  shadowOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<ModalProps> = {
   title: "Components/Modal",

@@ -1,10 +1,13 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  FileUpload,
-} from "../src/index.core";
+import { FileUpload } from "../src/index.core";
 import type { FileUploadProps } from "../src/components/FileUpload/FileUpload.types";
-import { roundingOptions, shadowOptions, stateOptions, themeOptions } from "./assets/OptionTypes";
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<FileUploadProps> = {
   title: "Components/FileUpload",

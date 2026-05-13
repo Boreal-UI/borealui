@@ -10,7 +10,7 @@ import {
   shadowOptions,
   stateOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<RadioButtonProps> = {
   title: "Components/RadioButton",

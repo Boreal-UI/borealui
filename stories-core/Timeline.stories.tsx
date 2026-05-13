@@ -7,7 +7,7 @@ import {
   roundingOptions,
   shadowOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const sampleEvents = [
   {

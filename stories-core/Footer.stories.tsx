@@ -15,7 +15,7 @@ import {
   roundingOptions,
   shadowOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const defaultLinks: FooterProps["links"] = [
   { label: "Home", href: "/" },

@@ -408,6 +408,49 @@ const behaviorCases: BehaviorCase[] = [
     },
   },
   {
+    name: "Menu",
+    run: ({ Menu }) => {
+      const onRename = cy.stub().as("menuRename");
+      const onArchive = cy.stub().as("menuArchive");
+
+      mountInFrame(
+        <Menu
+          data-testid="menu"
+          aria-label="Project menu"
+          items={[
+            { label: "Rename", onClick: onRename, "data-testid": "menu-rename" },
+            {
+              label: "Move to",
+              "data-testid": "menu-move",
+              items: [
+                {
+                  label: "Archive",
+                  onClick: onArchive,
+                  "data-testid": "menu-archive",
+                },
+              ],
+            },
+          ]}
+        >
+          <div>Project card</div>
+        </Menu>,
+      );
+
+      cy.get('[data-testid="menu-target"]').rightclick();
+      cy.get('[data-testid="menu-rename"]').should("exist").click({
+        force: true,
+      });
+      cy.get("@menuRename").should("have.been.calledOnce");
+
+      cy.get('[data-testid="menu-target"]').rightclick();
+      cy.get('[data-testid="menu-move"]').trigger("mouseover");
+      cy.get('[data-testid="menu-archive"]').should("exist").click({
+        force: true,
+      });
+      cy.get("@menuArchive").should("have.been.calledOnce");
+    },
+  },
+  {
     name: "MessagePopup",
     run: ({ MessagePopup }) => {
       const onClose = cy.stub().as("popupClose");

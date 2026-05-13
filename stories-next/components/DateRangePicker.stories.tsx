@@ -9,7 +9,7 @@ import {
   shadowOptions,
   stateOptions,
   themeOptions,
-} from "../../stories-core/assets/OptionTypes";
+} from "../../shared-story-assets/OptionTypes";
 import { useState } from "react";
 
 const meta: Meta<DateRangePickerProps> = {

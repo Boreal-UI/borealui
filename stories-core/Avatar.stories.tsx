@@ -15,7 +15,7 @@ import {
   sizeOptions,
   stateOptions,
   themeOptions,
-} from "./assets/OptionTypes";
+} from "../shared-story-assets/OptionTypes";
 
 const statusOptions = [
   ...["online", "away", "offline", "busy", "custom"],
