@@ -352,20 +352,82 @@ const runDropdownSubmenuTests = (
       );
 
       cy.get('[data-testid="dropdown-trigger"]').click();
+      cy.get('[data-testid="dropdown-menu"]').then(($menu) => {
+        const rect = $menu[0].getBoundingClientRect();
+        cy.wrap({ left: rect.left, top: rect.top }).as("rootMenuPosition");
+      });
 
       cy.get('[data-testid="dropdown-export"]')
-        .click()
+        .trigger("mouseover")
         .should("have.attr", "aria-expanded", "true");
       cy.get('[data-testid="dropdown-export-submenu"]')
         .should("be.visible")
         .and("have.attr", "data-placement", "left");
+      cy.get("@rootMenuPosition").then((position) => {
+        const { left, top } = position as unknown as {
+          left: number;
+          top: number;
+        };
+
+        cy.get('[data-testid="dropdown-menu"]').then(($menu) => {
+          const rect = $menu[0].getBoundingClientRect();
+          expect(rect.left).to.be.closeTo(left, 0.5);
+          expect(rect.top).to.be.closeTo(top, 0.5);
+        });
+      });
 
       cy.get('[data-testid="dropdown-developer-formats"]')
-        .click()
+        .trigger("mouseover")
         .should("have.attr", "aria-expanded", "true");
       cy.get('[data-testid="dropdown-developer-formats-submenu"]')
         .should("be.visible")
         .and("have.attr", "data-placement", "left");
+      cy.get("@rootMenuPosition").then((position) => {
+        const { left, top } = position as unknown as {
+          left: number;
+          top: number;
+        };
+
+        cy.get('[data-testid="dropdown-menu"]').then(($menu) => {
+          const rect = $menu[0].getBoundingClientRect();
+          expect(rect.left).to.be.closeTo(left, 0.5);
+          expect(rect.top).to.be.closeTo(top, 0.5);
+        });
+      });
+
+      cy.get('[data-testid="dropdown-developer-formats-submenu"]').trigger(
+        "mouseover",
+      );
+      cy.get('[data-testid="dropdown-export-submenu"]').should("be.visible");
+      cy.get('[data-testid="dropdown-developer-formats-submenu"]').should(
+        "be.visible",
+      );
+
+      cy.get('[data-testid="dropdown-archive"]').trigger("mouseover");
+      cy.get('[data-testid="dropdown-export-submenu"]').should("not.exist");
+
+      cy.get('[data-testid="dropdown-export"]')
+        .trigger("mouseover")
+        .should("have.attr", "aria-expanded", "true");
+      cy.get('[data-testid="dropdown-developer-formats"]')
+        .trigger("mouseover")
+        .should("have.attr", "aria-expanded", "true");
+      cy.get('[data-testid="dropdown-developer-formats-submenu"]').should(
+        "be.visible",
+      );
+
+      cy.get('[data-testid="dropdown-export"]').trigger("mouseover");
+      cy.get('[data-testid="dropdown-export-submenu"]').should("be.visible");
+      cy.get('[data-testid="dropdown-developer-formats-submenu"]').should(
+        "not.exist",
+      );
+
+      cy.get('[data-testid="dropdown-developer-formats"]').trigger(
+        "mouseover",
+      );
+      cy.get('[data-testid="dropdown-developer-formats-submenu"]').should(
+        "be.visible",
+      );
 
       cy.get('[data-testid="dropdown-export"]').trigger("mouseleave");
       cy.get('[data-testid="dropdown-export-submenu"]').should("be.visible");

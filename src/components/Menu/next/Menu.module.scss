@@ -63,7 +63,6 @@
     min-width: 12rem;
     max-width: var(--menu-panel-max-width, calc(100vw - 1rem));
     max-height: var(--menu-panel-max-height, calc(100vh - 1rem));
-    overflow: hidden auto;
     padding: var(--spacing-xs) 0;
     border: 1px solid var(--border-color);
     background: var(--background-color-lighter);
@@ -113,6 +112,7 @@
   .itemWrapper {
     position: relative;
     min-width: 100%;
+    overflow: visible;
   }
 
   .item {
@@ -197,7 +197,7 @@
 
   .sectionLabel {
     padding: var(--spacing-xs) var(--spacing-md);
-    color: var(--text-color-secondary);
+    color: var(--text-color-primary);
     font-size: var(--font-size-caption);
     font-weight: var(--font-weight-heading);
     line-height: var(--line-height-caption);
@@ -248,8 +248,14 @@
     background: var(--menu-glass-hover-bg, rgba(255, 255, 255, 0.24));
   }
 
-  .menu.clear .label {
-    color: var(--text-color);
+  .menu.clear {
+    .label {
+      color: var(--text-color);
+    }
+
+    .item:hover {
+      background-color: var(--background-color-dark);
+    }
   }
 
   @each $key, $value in theme.$rounding {

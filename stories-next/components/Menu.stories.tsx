@@ -64,6 +64,14 @@ const applicationItems: MenuProps["items"] = [
   },
 ];
 
+const listItems: MenuProps["items"] = [
+  { label: "Option 1", onClick: () => alert("Option 1") },
+  { label: "Option 2", onClick: () => alert("Option 2") },
+  { label: "Option 3", onClick: () => alert("Option 3") },
+  { label: "Option 4", onClick: () => alert("Option 4") },
+  { label: "Option 5", onClick: () => alert("Option 5") },
+];
+
 const Target = () => (
   <div
     style={{
@@ -147,12 +155,7 @@ export const Themed: Story = {
           activation="click"
           theme={theme}
           aria-label={`${theme} menu`}
-          items={[
-            { label: `1`, onClick: () => {} },
-            { label: `2`, onClick: () => {} },
-            { label: `3`, onClick: () => {} },
-            { label: `4`, onClick: () => {} },
-          ]}
+          items={listItems}
         />
       ))}
     </StoryGrid>
@@ -169,12 +172,7 @@ export const States: Story = {
           activation="click"
           state={state}
           aria-label={`${state} menu`}
-          items={[
-            { label: `1`, onClick: () => {} },
-            { label: `2`, onClick: () => {} },
-            { label: `3`, onClick: () => {} },
-            { label: `4`, onClick: () => {} },
-          ]}
+          items={listItems}
         />
       ))}
     </StoryGrid>
@@ -192,12 +190,7 @@ export const GlassThemeVariants: Story = {
           theme={theme}
           glass
           aria-label={`Glass ${theme} menu`}
-          items={[
-            { label: `1`, onClick: () => {} },
-            { label: `2`, onClick: () => {} },
-            { label: `3`, onClick: () => {} },
-            { label: `4`, onClick: () => {} },
-          ]}
+          items={listItems}
         />
       ))}
     </StoryGrid>
@@ -213,7 +206,7 @@ export const RoundingVariants: Story = {
           trigger={rounding}
           activation="click"
           rounding={rounding}
-          items={[{ label: `Rounding ${rounding}`, onClick: () => {} }]}
+          items={listItems}
         />
       ))}
     </StoryGrid>
@@ -229,7 +222,7 @@ export const ShadowVariants: Story = {
           trigger={shadow}
           activation="click"
           shadow={shadow}
-          items={[{ label: `Shadow ${shadow}`, onClick: () => {} }]}
+          items={listItems}
         />
       ))}
     </StoryGrid>

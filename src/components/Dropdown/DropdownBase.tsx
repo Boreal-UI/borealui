@@ -160,7 +160,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     [focusFirstItemInPanel],
   );
 
-  const updatePanelLayouts = useCallback(() => {
+  const updatePanelLayouts = useCallback((includeRootPanel = true) => {
     if (!open || !menuRef.current) {
       setPanelLayouts({});
       return;
@@ -178,57 +178,68 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
         menuRef.current.querySelectorAll<HTMLElement>("[data-dropdown-panel]"),
       ),
     ];
-    const nextLayouts: Record<string, PanelLayout> = {};
+    setPanelLayouts((previousLayouts) => {
+      const nextLayouts: Record<string, PanelLayout> = includeRootPanel
+        ? {}
+        : {
+            [ROOT_PANEL_PATH]: previousLayouts[ROOT_PANEL_PATH],
+          };
 
-    panels.forEach((panel) => {
-      const path = panel.dataset.dropdownPanelPath ?? ROOT_PANEL_PATH;
-      const rect = panel.getBoundingClientRect();
-      const style: PanelStyle = {
-        "--dropdown-panel-max-height": maxHeight,
-        "--dropdown-panel-max-width": maxWidth,
-      };
+      panels.forEach((panel) => {
+        const path = panel.dataset.dropdownPanelPath ?? ROOT_PANEL_PATH;
 
-      if (path === ROOT_PANEL_PATH) {
+        if (path === ROOT_PANEL_PATH && !includeRootPanel) {
+          return;
+        }
+
+        const rect = panel.getBoundingClientRect();
+        const style: PanelStyle = {
+          "--dropdown-panel-max-height": maxHeight,
+          "--dropdown-panel-max-width": maxWidth,
+        };
+
+        if (path === ROOT_PANEL_PATH) {
+          nextLayouts[path] = {
+            overflowLeft: rect.left < VIEWPORT_MARGIN,
+            overflowRight: rect.right > viewportWidth - VIEWPORT_MARGIN,
+            style,
+          };
+          return;
+        }
+
+        const wrapper = panel.closest<HTMLElement>(
+          '[data-dropdown-item-wrapper="true"]',
+        );
+        const wrapperRect = wrapper?.getBoundingClientRect();
+        const panelWidth = Math.max(rect.width, panel.offsetWidth, 160);
+        const rightSpace = wrapperRect
+          ? viewportWidth - wrapperRect.right - VIEWPORT_MARGIN
+          : viewportWidth - rect.right - VIEWPORT_MARGIN;
+        const leftSpace = wrapperRect
+          ? wrapperRect.left - VIEWPORT_MARGIN
+          : rect.left - VIEWPORT_MARGIN;
+        const placement: PanelPlacement =
+          rightSpace >= panelWidth || rightSpace >= leftSpace ? "right" : "left";
+        let offsetY = 0;
+
+        if (rect.bottom > viewportHeight - VIEWPORT_MARGIN) {
+          offsetY -= rect.bottom - (viewportHeight - VIEWPORT_MARGIN);
+        }
+
+        if (rect.top + offsetY < VIEWPORT_MARGIN) {
+          offsetY += VIEWPORT_MARGIN - (rect.top + offsetY);
+        }
+
+        style["--dropdown-panel-offset-y"] = `${Math.round(offsetY)}px`;
+
         nextLayouts[path] = {
-          overflowLeft: rect.left < VIEWPORT_MARGIN,
-          overflowRight: rect.right > viewportWidth - VIEWPORT_MARGIN,
+          placement,
           style,
         };
-        return;
-      }
+      });
 
-      const wrapper = panel.closest<HTMLElement>(
-        '[data-dropdown-item-wrapper="true"]',
-      );
-      const wrapperRect = wrapper?.getBoundingClientRect();
-      const panelWidth = Math.max(rect.width, panel.offsetWidth, 160);
-      const rightSpace = wrapperRect
-        ? viewportWidth - wrapperRect.right - VIEWPORT_MARGIN
-        : viewportWidth - rect.right - VIEWPORT_MARGIN;
-      const leftSpace = wrapperRect
-        ? wrapperRect.left - VIEWPORT_MARGIN
-        : rect.left - VIEWPORT_MARGIN;
-      const placement: PanelPlacement =
-        rightSpace >= panelWidth || rightSpace >= leftSpace ? "right" : "left";
-      let offsetY = 0;
-
-      if (rect.bottom > viewportHeight - VIEWPORT_MARGIN) {
-        offsetY -= rect.bottom - (viewportHeight - VIEWPORT_MARGIN);
-      }
-
-      if (rect.top + offsetY < VIEWPORT_MARGIN) {
-        offsetY += VIEWPORT_MARGIN - (rect.top + offsetY);
-      }
-
-      style["--dropdown-panel-offset-y"] = `${Math.round(offsetY)}px`;
-
-      nextLayouts[path] = {
-        placement,
-        style,
-      };
+      return nextLayouts;
     });
-
-    setPanelLayouts(nextLayouts);
   }, [open]);
 
   const toggleDropdown = () => {
@@ -281,18 +292,26 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   useLayoutEffect(() => {
     if (!open) return;
 
-    updatePanelLayouts();
-  }, [items, open, openSubmenuPath, updatePanelLayouts]);
+    updatePanelLayouts(true);
+  }, [items, open, updatePanelLayouts]);
+
+  useLayoutEffect(() => {
+    if (!open || !openSubmenuPath) return;
+
+    updatePanelLayouts(false);
+  }, [open, openSubmenuPath, updatePanelLayouts]);
 
   useEffect(() => {
     if (!open) return;
 
-    window.addEventListener("resize", updatePanelLayouts);
-    window.addEventListener("scroll", updatePanelLayouts, true);
+    const handleViewportChange = () => updatePanelLayouts(true);
+
+    window.addEventListener("resize", handleViewportChange);
+    window.addEventListener("scroll", handleViewportChange, true);
 
     return () => {
-      window.removeEventListener("resize", updatePanelLayouts);
-      window.removeEventListener("scroll", updatePanelLayouts, true);
+      window.removeEventListener("resize", handleViewportChange);
+      window.removeEventListener("scroll", handleViewportChange, true);
     };
   }, [open, updatePanelLayouts]);
 
@@ -519,6 +538,55 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       const itemTestId = item["data-testid"] ?? item.testId;
       const submenuId =
         item.submenuId ?? `${resolvedMenuId}-${itemPath}-submenu`;
+      const openCurrentSubmenu = () => {
+        if (hasSubmenu && !item.disabled) {
+          openSubmenu(itemPath);
+        }
+      };
+      const openDirectSubmenu = () => {
+        if (hasSubmenu && !item.disabled) {
+          setOpenSubmenuPath(itemPath);
+        }
+      };
+      const closeChildSubmenus = () => {
+        if (hasSubmenu) return;
+
+        setOpenSubmenuPath((currentPath) => {
+          if (!currentPath) return currentPath;
+          if (!parentPath) return null;
+
+          return isPathOpen(currentPath, parentPath) ? parentPath : currentPath;
+        });
+      };
+      const handleDirectItemHover = () => {
+        if (hasSubmenu) {
+          openCurrentSubmenu();
+          return;
+        }
+
+        closeChildSubmenus();
+      };
+      const handleSubmenuWrapperOver = (
+        event: React.MouseEvent<HTMLDivElement> | React.PointerEvent<HTMLDivElement>,
+      ) => {
+        const target = event.target as HTMLElement;
+        const currentPanel = event.currentTarget.closest(
+          "[data-dropdown-panel]",
+        );
+        const targetPanel = target.closest("[data-dropdown-panel]");
+        const targetWrapper = target.closest(
+          '[data-dropdown-item-wrapper="true"]',
+        );
+
+        if (targetPanel && targetPanel !== currentPanel) return;
+        if (targetWrapper !== event.currentTarget) return;
+
+        if (hasSubmenu) {
+          openDirectSubmenu();
+        } else {
+          closeChildSubmenus();
+        }
+      };
       const itemClassName = combineClassNames(
         classMap.item,
         hasSubmenu && classMap.submenuTrigger,
@@ -550,21 +618,23 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
           )}
           data-dropdown-item-wrapper="true"
           data-dropdown-item-path={itemPath}
-          onMouseEnter={() => {
-            if (hasSubmenu && !item.disabled) {
-              openSubmenu(itemPath);
-            }
-          }}
+          onMouseEnter={handleDirectItemHover}
+          onMouseOver={handleSubmenuWrapperOver}
+          onPointerEnter={handleDirectItemHover}
+          onPointerOver={handleSubmenuWrapperOver}
         >
           {hasSubmenu ? (
             <button
               type="button"
               disabled={item.disabled}
               {...commonProps}
-              onClick={() => {
-                if (!item.disabled) {
-                  openSubmenu(itemPath);
-                }
+              onMouseEnter={openCurrentSubmenu}
+              onMouseOver={openDirectSubmenu}
+              onPointerEnter={openCurrentSubmenu}
+              onPointerOver={openDirectSubmenu}
+              onClick={(event) => {
+                event.stopPropagation();
+                openDirectSubmenu();
               }}
             >
               {renderItemContent(item, true)}
@@ -579,6 +649,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
               }
               {...commonProps}
               onClick={(e) => {
+                e.stopPropagation();
                 if (item.disabled) {
                   e.preventDefault();
                   return;
@@ -596,7 +667,10 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
               type="button"
               disabled={item.disabled}
               {...commonProps}
-              onClick={() => handleItemSelect(item)}
+              onClick={(event) => {
+                event.stopPropagation();
+                handleItemSelect(item);
+              }}
             >
               {renderItemContent(item, false)}
             </button>

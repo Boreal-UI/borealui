@@ -412,6 +412,44 @@ const behaviorCases: BehaviorCase[] = [
     run: ({ Menu }) => {
       const onRename = cy.stub().as("menuRename");
       const onArchive = cy.stub().as("menuArchive");
+      const onDeepArchive = cy.stub().as("menuDeepArchive");
+      const DialogMenuHarness = () => {
+        const [dialogOpen, setDialogOpen] = React.useState(false);
+
+        return (
+          <>
+            <Menu
+              data-testid="click-menu"
+              aria-label="Action menu"
+              activation="click"
+              items={[
+                {
+                  label: "Open dialog",
+                  onClick: () => setDialogOpen(true),
+                  "data-testid": "click-menu-open-dialog",
+                },
+              ]}
+            >
+              <button type="button">Open actions</button>
+            </Menu>
+            {dialogOpen && (
+              <div
+                role="dialog"
+                aria-label="Confirm action"
+                data-testid="menu-dialog"
+              >
+                <button
+                  type="button"
+                  data-testid="menu-dialog-confirm"
+                  onClick={() => setDialogOpen(false)}
+                >
+                  Confirm
+                </button>
+              </div>
+            )}
+          </>
+        );
+      };
 
       mountInFrame(
         <Menu
@@ -423,6 +461,17 @@ const behaviorCases: BehaviorCase[] = [
               label: "Move to",
               "data-testid": "menu-move",
               items: [
+                {
+                  label: "Folder",
+                  "data-testid": "menu-folder",
+                  items: [
+                    {
+                      label: "Deep archive",
+                      onClick: onDeepArchive,
+                      "data-testid": "menu-deep-archive",
+                    },
+                  ],
+                },
                 {
                   label: "Archive",
                   onClick: onArchive,
@@ -444,10 +493,44 @@ const behaviorCases: BehaviorCase[] = [
 
       cy.get('[data-testid="menu-target"]').rightclick();
       cy.get('[data-testid="menu-move"]').trigger("mouseover");
+      cy.get('[data-testid="menu-move-submenu"]').should("exist");
+      cy.get('[data-testid="menu-rename"]').trigger("mouseover");
+      cy.get('[data-testid="menu-move-submenu"]').should("not.exist");
+      cy.get('[data-testid="menu-move"]').trigger("mouseover");
+      cy.get('[data-testid="menu-move-submenu"]').should("exist");
+      cy.get('[data-testid="menu-folder"]').trigger("mouseover");
+      cy.get('[data-testid="menu-folder-submenu"]').should("exist");
+      cy.get('[data-testid="menu-folder-submenu"]').trigger("mouseover");
+      cy.get('[data-testid="menu-move-submenu"]').should("exist");
+      cy.get('[data-testid="menu-folder-submenu"]').should("exist");
+      cy.get('[data-testid="menu-move"]').trigger("mouseover");
+      cy.get('[data-testid="menu-move-submenu"]').should("exist");
+      cy.get('[data-testid="menu-folder-submenu"]').should("not.exist");
+      cy.get('[data-testid="menu-folder"]').trigger("mouseover");
+      cy.get('[data-testid="menu-folder-submenu"]').should("exist");
+      cy.get('[data-testid="menu-deep-archive"]').should("exist").click({
+        force: true,
+      });
+      cy.get("@menuDeepArchive").should("have.been.calledOnce");
+
+      cy.get('[data-testid="menu-target"]').rightclick();
+      cy.get('[data-testid="menu-move"]').trigger("mouseover");
+      cy.get('[data-testid="menu-move-submenu"]').should("exist");
       cy.get('[data-testid="menu-archive"]').should("exist").click({
         force: true,
       });
       cy.get("@menuArchive").should("have.been.calledOnce");
+
+      mountInFrame(<DialogMenuHarness />);
+
+      cy.get('[data-testid="click-menu-target"]').click();
+      cy.get('[data-testid="click-menu-menu"]').should("exist");
+      cy.get('[data-testid="click-menu-open-dialog"]').click({ force: true });
+      cy.get('[data-testid="click-menu-menu"]').should("not.exist");
+      cy.get('[data-testid="menu-dialog"]').should("exist");
+      cy.get('[data-testid="menu-dialog-confirm"]').click();
+      cy.get('[data-testid="menu-dialog"]').should("not.exist");
+      cy.get('[data-testid="click-menu-menu"]').should("not.exist");
     },
   },
   {

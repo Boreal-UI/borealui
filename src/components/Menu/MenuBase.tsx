@@ -87,9 +87,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
     position ?? { x: 0, y: 0 },
   );
   const [openSubmenuPath, setOpenSubmenuPath] = useState<string | null>(null);
-  const [panelLayouts, setPanelLayouts] = useState<
-    Record<string, PanelLayout>
-  >({});
+  const [panelLayouts, setPanelLayouts] = useState<Record<string, PanelLayout>>(
+    {},
+  );
 
   const wrapperRef = useRef<HTMLDivElement>(null);
   const targetRef = useRef<HTMLDivElement>(null);
@@ -202,11 +202,17 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       if (path === ROOT_PANEL_PATH) {
         const left = Math.min(
           Math.max(VIEWPORT_MARGIN, resolvedPosition.x),
-          Math.max(VIEWPORT_MARGIN, viewportWidth - rect.width - VIEWPORT_MARGIN),
+          Math.max(
+            VIEWPORT_MARGIN,
+            viewportWidth - rect.width - VIEWPORT_MARGIN,
+          ),
         );
         const top = Math.min(
           Math.max(VIEWPORT_MARGIN, resolvedPosition.y),
-          Math.max(VIEWPORT_MARGIN, viewportHeight - rect.height - VIEWPORT_MARGIN),
+          Math.max(
+            VIEWPORT_MARGIN,
+            viewportHeight - rect.height - VIEWPORT_MARGIN,
+          ),
         );
 
         style.left = `${Math.round(left)}px`;
@@ -215,7 +221,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
         return;
       }
 
-      const wrapper = panel.closest<HTMLElement>('[data-menu-item-wrapper="true"]');
+      const wrapper = panel.closest<HTMLElement>(
+        '[data-menu-item-wrapper="true"]',
+      );
       const wrapperRect = wrapper?.getBoundingClientRect();
       const panelWidth = Math.max(rect.width, panel.offsetWidth, 160);
       const rightSpace = wrapperRect
@@ -289,7 +297,16 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
         menuClassName,
         menuProps?.className,
       ),
-    [classMap, glass, menuClassName, menuProps?.className, rounding, shadow, state, theme],
+    [
+      classMap,
+      glass,
+      menuClassName,
+      menuProps?.className,
+      rounding,
+      shadow,
+      state,
+      theme,
+    ],
   );
 
   const submenuClassNames = (isSubmenuOpen: boolean) =>
@@ -309,7 +326,10 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
   const handleContextMenu = (event: MouseEvent<HTMLDivElement>) => {
     rest.onContextMenu?.(event);
 
-    if (event.defaultPrevented || !["contextmenu", "both"].includes(activation)) {
+    if (
+      event.defaultPrevented ||
+      !["contextmenu", "both"].includes(activation)
+    ) {
       return;
     }
 
@@ -321,6 +341,14 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
     rest.onClick?.(event);
 
     if (event.defaultPrevented || !["click", "both"].includes(activation)) {
+      return;
+    }
+
+    const eventTarget = event.target as Node;
+    if (
+      menuRef.current?.contains(eventTarget) ||
+      triggerRef.current?.contains(eventTarget)
+    ) {
       return;
     }
 
@@ -347,6 +375,8 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
     event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>,
     item: MenuItem,
   ) => {
+    event.stopPropagation();
+
     if (item.disabled || hasSubmenuItems(item)) return;
 
     item.onSelect?.(event);
@@ -376,7 +406,10 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
     onKeyDown?.(event);
     if (event.defaultPrevented) return;
 
-    if (!isOpen && (event.key === "ContextMenu" || (event.shiftKey && event.key === "F10"))) {
+    if (
+      !isOpen &&
+      (event.key === "ContextMenu" || (event.shiftKey && event.key === "F10"))
+    ) {
       event.preventDefault();
       const rect = targetRef.current?.getBoundingClientRect();
       openAt({
@@ -396,7 +429,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       (activeElement?.closest("[data-menu-panel]") as HTMLElement | null) ??
       menuRef.current;
     const enabledItems = getEnabledItemsInPanel(currentPanel);
-    const currentIndex = activeElement ? enabledItems.indexOf(activeElement) : -1;
+    const currentIndex = activeElement
+      ? enabledItems.indexOf(activeElement)
+      : -1;
 
     if (event.key === "Escape") {
       event.preventDefault();
@@ -417,7 +452,10 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
 
     if (event.key === "ArrowUp") {
       event.preventDefault();
-      focusItemInPanel(currentPanel, currentIndex < 0 ? enabledItems.length - 1 : currentIndex - 1);
+      focusItemInPanel(
+        currentPanel,
+        currentIndex < 0 ? enabledItems.length - 1 : currentIndex - 1,
+      );
       return;
     }
 
@@ -437,7 +475,11 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       const submenuPath = activeElement?.dataset.menuItemPath;
       const submenuId = activeElement?.getAttribute("aria-controls");
 
-      if (activeElement?.dataset.menuHasSubmenu === "true" && submenuPath && submenuId) {
+      if (
+        activeElement?.dataset.menuHasSubmenu === "true" &&
+        submenuPath &&
+        submenuId
+      ) {
         event.preventDefault();
         setOpenSubmenuPath(submenuPath);
         focusSubmenuPanel(submenuId);
@@ -478,9 +520,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
             {item.icon}
           </span>
         )}
-        {item.label && (
-          <span className={classMap.label}>{item.label}</span>
-        )}
+        {item.label && <span className={classMap.label}>{item.label}</span>}
       </span>
       {item.shortcut && (
         <span className={classMap.shortcut} aria-hidden="true">
@@ -495,7 +535,10 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
     </>
   );
 
-  const renderMenuItems = (menuItems: MenuItem[], parentPath = ""): React.ReactNode =>
+  const renderMenuItems = (
+    menuItems: MenuItem[],
+    parentPath = "",
+  ): React.ReactNode =>
     menuItems.map((item, index) => {
       const itemPath = getItemPath(parentPath, index);
       const itemType = item.type ?? "item";
@@ -527,8 +570,56 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
 
       const hasSubmenu = hasSubmenuItems(item);
       const submenuOpen = hasSubmenu && isPathOpen(openSubmenuPath, itemPath);
-      const submenuId = item.submenuId ?? `${resolvedMenuId}-${itemPath}-submenu`;
+      const submenuId =
+        item.submenuId ?? `${resolvedMenuId}-${itemPath}-submenu`;
       const role = item.role ?? "menuitem";
+      const openSubmenu = (preserveDescendant = true) => {
+        if (hasSubmenu && !item.disabled) {
+          setOpenSubmenuPath((currentPath) =>
+            preserveDescendant && currentPath && isPathOpen(currentPath, itemPath)
+              ? currentPath
+              : itemPath,
+          );
+        }
+      };
+      const openDirectSubmenu = () => openSubmenu(false);
+      const closeChildSubmenus = () => {
+        if (hasSubmenu) return;
+
+        setOpenSubmenuPath((currentPath) => {
+          if (!currentPath) return currentPath;
+          if (!parentPath) return null;
+
+          return isPathOpen(currentPath, parentPath) ? parentPath : currentPath;
+        });
+      };
+      const handleDirectItemHover = () => {
+        if (hasSubmenu) {
+          openSubmenu();
+          return;
+        }
+
+        closeChildSubmenus();
+      };
+      const handleSubmenuWrapperOver = (
+        event:
+          | React.MouseEvent<HTMLDivElement>
+          | React.PointerEvent<HTMLDivElement>,
+      ) => {
+        const target = event.target as HTMLElement;
+        const currentPanel = event.currentTarget.closest("[data-menu-panel]");
+        const targetPanel = target.closest("[data-menu-panel]");
+        const targetWrapper = target.closest('[data-menu-item-wrapper="true"]');
+
+        if (targetPanel && targetPanel !== currentPanel) return;
+        if (targetWrapper !== event.currentTarget) return;
+
+        if (hasSubmenu) {
+          openDirectSubmenu();
+        } else {
+          closeChildSubmenus();
+        }
+      };
       const commonProps = {
         id: item.id,
         className: combineClassNames(
@@ -568,21 +659,23 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
           )}
           data-menu-item-wrapper="true"
           data-menu-item-path={itemPath}
-          onMouseEnter={() => {
-            if (hasSubmenu && !item.disabled) {
-              setOpenSubmenuPath(itemPath);
-            }
-          }}
+          onMouseEnter={handleDirectItemHover}
+          onMouseOver={handleSubmenuWrapperOver}
+          onPointerEnter={handleDirectItemHover}
+          onPointerOver={handleSubmenuWrapperOver}
         >
           {hasSubmenu ? (
             <button
               type="button"
               disabled={item.disabled}
               {...commonProps}
-              onClick={() => {
-                if (!item.disabled) {
-                  setOpenSubmenuPath(itemPath);
-                }
+              onMouseEnter={openSubmenu}
+              onMouseOver={openDirectSubmenu}
+              onPointerEnter={openSubmenu}
+              onPointerOver={openDirectSubmenu}
+              onClick={(event) => {
+                event.stopPropagation();
+                openDirectSubmenu();
               }}
             >
               {renderItemContent(item, true)}
@@ -597,6 +690,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
               }
               {...commonProps}
               onClick={(event) => {
+                event.stopPropagation();
                 if (item.disabled) {
                   event.preventDefault();
                   return;
@@ -621,13 +715,18 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
             <div
               id={submenuId}
               role="menu"
-              aria-label={item.submenuAriaLabel ?? (typeof item.label === "string" ? item.label : undefined)}
+              aria-label={
+                item.submenuAriaLabel ??
+                (typeof item.label === "string" ? item.label : undefined)
+              }
               className={submenuClassNames(submenuOpen)}
               data-menu-panel="true"
               data-menu-panel-path={itemPath}
               data-placement={panelLayouts[itemPath]?.placement}
               data-testid={
-                itemTestId ? `${itemTestId}-submenu` : `${testId}-${itemPath}-submenu`
+                itemTestId
+                  ? `${itemTestId}-submenu`
+                  : `${testId}-${itemPath}-submenu`
               }
               style={panelLayouts[itemPath]?.style}
             >

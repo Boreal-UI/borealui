@@ -32,6 +32,7 @@ export { formGroupPropDocs } from "./FormGroup.props";
 export { iconButtonPropDocs } from "./IconButton.props";
 export { layoutPrimitivePropDocs } from "./LayoutPrimitive.props";
 export { markdownRendererPropDocs } from "./MarkdownRenderer.props";
+export { menuPropDocs } from "./Menu.props";
 export { messagePopupPropDocs } from "./MessagePopup.props";
 export { metricBoxPropDocs } from "./MetricBox.props";
 export { modalPropDocs } from "./Modal.props";

@@ -62,7 +62,7 @@
       min-width: 12rem;
       max-width: var(--menu-panel-max-width, calc(100vw - 1rem));
       max-height: var(--menu-panel-max-height, calc(100vh - 1rem));
-      overflow: hidden auto;
+      overflow: visible;
       padding: var(--spacing-xs) 0;
       border: 1px solid var(--border-color);
       background: var(--background-color-lighter);
@@ -85,8 +85,6 @@
           --menu-glass-border: #{map.get($values, glass-border)};
           --menu-glass-text: #{map.get($values, text)};
           --menu-item-hover-bg: #{map.get($values, hover)};
-          --menu-item-hover-text: #fff;
-          color: #fff;
           border-color: map.get($values, border);
         }
       }
@@ -98,8 +96,6 @@
           --menu-glass-border: #{map.get($values, glass-border)};
           --menu-glass-text: #{map.get($values, text)};
           --menu-item-hover-bg: #{map.get($values, hover)};
-          --menu-item-hover-text: #fff;
-          color: #fff;
           border-color: map.get($values, border);
         }
       }
@@ -115,7 +111,6 @@
           var(--menu-glass-border, rgba(255, 255, 255, 0.34)),
           16px
         );
-        color: var(--menu-glass-text, var(--text-color-primary));
       }
     }
 
@@ -134,7 +129,7 @@
       padding: var(--spacing-sm) var(--spacing-md);
       border: 0;
       background: transparent;
-      color: inherit;
+      color: var(--text-color);
       font-family: var(--font-family-ui);
       font-size: var(--font-size-label);
       font-weight: var(--font-weight-label);
@@ -149,7 +144,6 @@
       &:hover,
       &:focus {
         background: var(--menu-item-hover-bg, var(--background-color-dark));
-        color: var(--menu-item-hover-text, var(--text-color-primary));
         outline: none;
       }
 
@@ -185,7 +179,6 @@
     &_label {
       min-width: 0;
       overflow-wrap: anywhere;
-      color: #fff;
     }
 
     &_shortcut {
@@ -204,7 +197,7 @@
 
     &_sectionLabel {
       padding: var(--spacing-xs) var(--spacing-md);
-      color: var(--text-color-secondary);
+      color: var(--text-color-primary);
       font-size: var(--font-size-caption);
       font-weight: var(--font-weight-heading);
       line-height: var(--line-height-caption);
@@ -256,8 +249,14 @@
     background: var(--menu-glass-hover-bg, rgba(255, 255, 255, 0.24));
   }
 
-  .menu_panel.menu_clear .menu_label {
-    color: var(--text-color);
+  .menu_panel.menu_clear {
+    .menu_label {
+      color: var(--text-color);
+    }
+
+    .menu_item:hover {
+      background-color: var(--background-color-dark);
+    }
   }
 
   @each $key, $value in theme.$rounding {
@@ -276,7 +275,9 @@
     .menu_panel {
       min-width: min(16rem, calc(100vw - 1rem));
       max-height: min(50vh, var(--menu-panel-max-height, 50vh));
-      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--spacing-sm));
+      padding-bottom: calc(
+        env(safe-area-inset-bottom, 0px) + var(--spacing-sm)
+      );
     }
 
     .menu_item {
