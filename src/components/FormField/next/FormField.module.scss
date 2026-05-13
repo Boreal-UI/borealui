@@ -108,4 +108,37 @@
   .disabled {
     opacity: 0.6;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .formField,
+    .formField * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .formField {
+      color: CanvasText;
+    }
+
+    .control {
+      forced-color-adjust: auto;
+    }
+
+    .errorText,
+    .error {
+      color: Mark;
+    }
+
+    .warning,
+    .info,
+    .success {
+      color: CanvasText;
+    }
+
+    .disabled {
+      color: GrayText;
+    }
+  }
 }

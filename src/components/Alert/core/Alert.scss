@@ -157,4 +157,35 @@
       border-color: var(--alert-glass-border, var(--alert-border));
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .alert,
+    .alert * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .alert,
+    .alert_soft,
+    .alert_outline,
+    .alert_glass {
+      background: Canvas !important;
+      color: CanvasText !important;
+      border-color: ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    .alert_dismiss_button {
+      color: ButtonText;
+      border: 1px solid ButtonText;
+    }
+
+    .alert_dismiss_button:focus-visible {
+      outline-color: Highlight;
+    }
+  }
 }

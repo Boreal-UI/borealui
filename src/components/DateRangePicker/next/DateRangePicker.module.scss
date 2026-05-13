@@ -313,4 +313,37 @@
       display: none;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dateRangePicker,
+    .dateRangePicker * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .dateRangePicker,
+    .outline,
+    .glass,
+    .group,
+    .input {
+      background: Field !important;
+      color: FieldText !important;
+      border-color: ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    .separator,
+    .label,
+    .fieldLabel {
+      color: CanvasText;
+    }
+
+    .errorText {
+      color: Mark;
+    }
+  }
 }

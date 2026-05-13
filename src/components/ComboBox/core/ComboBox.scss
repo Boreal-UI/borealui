@@ -316,4 +316,42 @@
   .combobox_outline {
     background: transparent;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .combobox_layout,
+    .combobox_layout * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .combobox,
+    .combobox_outline,
+    .combobox_glass,
+    .combobox_listbox {
+      background: Field !important;
+      color: FieldText !important;
+      border-color: ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    .combobox_toggle {
+      color: ButtonText;
+      border-left-color: ButtonText;
+    }
+
+    .combobox_option:hover,
+    .combobox_active,
+    .combobox_selected {
+      background: Highlight !important;
+      color: HighlightText !important;
+    }
+
+    .combobox:focus-within {
+      outline-color: Highlight;
+    }
+  }
 }

@@ -164,4 +164,35 @@
     background: transparent;
     border-color: currentcolor;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .alert,
+    .alert * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .alert,
+    .soft,
+    .outline,
+    .glass {
+      background: Canvas !important;
+      color: CanvasText !important;
+      border-color: ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    .dismissButton {
+      color: ButtonText;
+      border: 1px solid ButtonText;
+    }
+
+    .dismissButton:focus-visible {
+      outline-color: Highlight;
+    }
+  }
 }

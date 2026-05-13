@@ -108,4 +108,37 @@
   .form_field_disabled {
     opacity: 0.6;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .form_field,
+    .form_field * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .form_field {
+      color: CanvasText;
+    }
+
+    .form_field_control {
+      forced-color-adjust: auto;
+    }
+
+    .form_field_error_text,
+    .form_field_error {
+      color: Mark;
+    }
+
+    .form_field_warning,
+    .form_field_info,
+    .form_field_success {
+      color: CanvasText;
+    }
+
+    .form_field_disabled {
+      color: GrayText;
+    }
+  }
 }

@@ -313,4 +313,37 @@
       display: none;
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .date_range_picker,
+    .date_range_picker * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .date_range_picker,
+    .date_range_picker_outline,
+    .date_range_picker_glass,
+    .date_range_picker_group,
+    .date_range_picker_input {
+      background: Field !important;
+      color: FieldText !important;
+      border-color: ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    .date_range_picker_separator,
+    .date_range_picker_label,
+    .date_range_picker_field_label {
+      color: CanvasText;
+    }
+
+    .date_range_picker_error_text {
+      color: Mark;
+    }
+  }
 }

@@ -225,6 +225,13 @@
   white-space: nowrap;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .typography {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
 @media (forced-colors: active) {
   .typography {
     color: CanvasText;

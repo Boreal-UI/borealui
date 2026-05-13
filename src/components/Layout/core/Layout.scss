@@ -180,4 +180,36 @@
       row-gap: var(--spacing-sm);
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .layout_container,
+    .layout_section,
+    .layout_stack,
+    .layout_inline,
+    .layout_grid {
+      transition: none !important;
+      animation: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .layout_container,
+    .layout_section,
+    .layout_stack,
+    .layout_inline,
+    .layout_grid {
+      color: CanvasText;
+    }
+
+    .layout_tone_default,
+    .layout_tone_muted,
+    .layout_tone_accent {
+      background: Canvas !important;
+    }
+
+    .layout_tone_transparent {
+      background: transparent !important;
+    }
+  }
 }

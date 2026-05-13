@@ -180,4 +180,36 @@
       row-gap: var(--spacing-sm);
     }
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .container,
+    .section,
+    .stack,
+    .inline,
+    .grid {
+      transition: none !important;
+      animation: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .container,
+    .section,
+    .stack,
+    .inline,
+    .grid {
+      color: CanvasText;
+    }
+
+    .toneDefault,
+    .toneMuted,
+    .toneAccent {
+      background: Canvas !important;
+    }
+
+    .toneTransparent {
+      background: transparent !important;
+    }
+  }
 }

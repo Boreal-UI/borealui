@@ -112,3 +112,36 @@
     box-shadow: $value;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .viewport,
+  .viewport * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .toast {
+    background: Canvas !important;
+    color: CanvasText !important;
+    border-color: ButtonText !important;
+    box-shadow: none !important;
+  }
+
+  .success,
+  .error,
+  .warning,
+  .info {
+    border-color: Highlight !important;
+  }
+
+  .dismissButton {
+    color: ButtonText;
+    border: 1px solid ButtonText;
+  }
+
+  .dismissButton:focus-visible {
+    outline-color: Highlight;
+  }
+}

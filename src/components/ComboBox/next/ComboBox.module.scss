@@ -320,4 +320,42 @@
   .outline {
     background: transparent;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .layout,
+    .layout * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .comboBox,
+    .outline,
+    .glass,
+    .listbox {
+      background: Field !important;
+      color: FieldText !important;
+      border-color: ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    .toggle {
+      color: ButtonText;
+      border-left-color: ButtonText;
+    }
+
+    .option:hover,
+    .active,
+    .selected {
+      background: Highlight !important;
+      color: HighlightText !important;
+    }
+
+    .comboBox:focus-within {
+      outline-color: Highlight;
+    }
+  }
 }
