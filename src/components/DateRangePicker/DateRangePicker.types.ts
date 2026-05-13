@@ -7,6 +7,18 @@ import {
   ThemeType,
 } from "@/types/types";
 
+export type DateInputChange =
+  | string
+  | React.ChangeEvent<HTMLInputElement>
+  | {
+      target?: {
+        value?: string;
+      };
+      currentTarget?: {
+        value?: string;
+      };
+    };
+
 export interface DateRangeValue {
   /**
    * Start date value.

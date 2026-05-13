@@ -8,7 +8,10 @@ import {
   getDefaultShadow,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-import { DateRangePickerBaseProps } from "./DateRangePicker.types";
+import {
+  DateInputChange,
+  DateRangePickerBaseProps,
+} from "./DateRangePicker.types";
 
 export default function DateRangePickerBase({
   value,
@@ -53,6 +56,12 @@ export default function DateRangePickerBase({
   const describedBy = [ariaDescribedBy, helperId, errorId]
     .filter(Boolean)
     .join(" ");
+
+  const getDateInputValue = (next: DateInputChange): string => {
+    if (typeof next === "string") return next;
+
+    return next.currentTarget?.value ?? next.target?.value ?? "";
+  };
 
   const groupClass = useMemo(
     () =>
@@ -124,9 +133,12 @@ export default function DateRangePickerBase({
             disabled={disabled}
             required={required}
             aria-invalid={Boolean(error) || state === "error" || undefined}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onChange({ ...value, start: e.target.value })
-            }
+            onChange={(next: DateInputChange) => {
+              onChange?.({
+                ...value,
+                start: getDateInputValue(next),
+              });
+            }}
             className={combineClassNames(classMap.input, inputClassName)}
             data-testid={`${resolvedTestId}-start`}
           />
@@ -153,9 +165,12 @@ export default function DateRangePickerBase({
             disabled={disabled}
             required={required}
             aria-invalid={Boolean(error) || state === "error" || undefined}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onChange({ ...value, end: e.target.value })
-            }
+            onChange={(next: DateInputChange) => {
+              onChange?.({
+                ...value,
+                end: getDateInputValue(next),
+              });
+            }}
             className={combineClassNames(classMap.input, inputClassName)}
             data-testid={`${resolvedTestId}-end`}
           />
