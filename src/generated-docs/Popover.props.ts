@@ -58,8 +58,7 @@ export const popOverPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "content",
@@ -75,8 +74,7 @@ export const popOverPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name(s) for the popover content element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "data-testid",
@@ -145,8 +143,7 @@ export const popOverPropDocs: GeneratedComponentDoc = {
       "description": "State of the popover, for feedback styling. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

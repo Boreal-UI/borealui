@@ -104,14 +104,12 @@ export interface RatingProps {
    * State of the rating.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
   /**
    * Optional additional CSS class names for custom styling.
    *
-   * @default ""
    */
   className?: string;
 

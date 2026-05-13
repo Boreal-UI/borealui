@@ -77,7 +77,6 @@ export interface BadgeProps extends BadgeAccessibilityProps {
    * The badge state
    * ('success' | 'error' | 'warning' | 'disabled' | '').
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -132,7 +131,6 @@ export interface BadgeProps extends BadgeAccessibilityProps {
   /**
    * Additional custom class names.
    *
-   * @default ""
    */
   className?: string;
 

@@ -41,7 +41,6 @@ export interface TabsProps {
   /**
    * Custom class names to apply to the tabs container.
    *
-   * @default ""
    */
   className?: string;
 
@@ -90,7 +89,6 @@ export interface TabsProps {
    * State of the tabs.
    * "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 

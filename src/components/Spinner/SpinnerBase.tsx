@@ -13,10 +13,10 @@ const SpinnerBase: React.FC<
 > = ({
   theme = getDefaultTheme(),
   glass = getDefaultGlass(),
-  state = "",
+  state,
   size = 50,
   shadow = getDefaultShadow(),
-  className = "",
+  className,
   "data-testid": dataTestId,
   testId = dataTestId ?? "spinner",
   label,
@@ -44,7 +44,7 @@ const SpinnerBase: React.FC<
       combineClassNames(
         classMap.spinner,
         classMap[theme],
-        classMap[state],
+        state && classMap[state],
         glass && classMap.glass,
       ),
     [classMap, theme, state, glass],

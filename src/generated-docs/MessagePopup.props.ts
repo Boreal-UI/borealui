@@ -17,8 +17,7 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the actions wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "aria-describedby",
@@ -67,8 +66,7 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the body section.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "cancelButtonClassName",
@@ -76,8 +74,7 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the cancel button.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "cancelText",
@@ -94,8 +91,7 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class names for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "closeButtonClassName",
@@ -103,8 +99,7 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the close button.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "confirmButtonClassName",
@@ -112,8 +107,7 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the confirm button.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "confirmText",
@@ -130,8 +124,7 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the dialog content panel.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "controlsRounding",
@@ -165,8 +158,7 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the header section.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "message",
@@ -182,8 +174,7 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the message text.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "onCancel",
@@ -250,8 +241,7 @@ export const messagePopupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the title element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     }
   ]
 };

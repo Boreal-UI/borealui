@@ -50,8 +50,7 @@ export const tabsPropDocs: GeneratedComponentDoc = {
       "description": "Custom class names to apply to the tabs container.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -128,8 +127,7 @@ export const tabsPropDocs: GeneratedComponentDoc = {
       "description": "State of the tabs. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "tabListId",

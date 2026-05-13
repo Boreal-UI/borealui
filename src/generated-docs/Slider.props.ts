@@ -98,8 +98,7 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "Additional CSS class names for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -236,8 +235,7 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "description": "State of the slider. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "step",

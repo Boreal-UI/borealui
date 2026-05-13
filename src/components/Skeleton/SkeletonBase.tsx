@@ -12,7 +12,7 @@ const SkeletonBase: React.FC<SkeletonBaseProps & ExtraProps> = ({
   height = "100%",
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
-  className = "",
+  className,
   label = "Loading content...",
   announce = true,
   animate = true,

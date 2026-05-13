@@ -65,8 +65,7 @@ export const skeletonPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",

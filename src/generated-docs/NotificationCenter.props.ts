@@ -42,8 +42,7 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the live-region/body section.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "className",
@@ -51,8 +50,7 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the notification center wrapper.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "clearAllAriaLabel",
@@ -69,8 +67,7 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the clear-all button.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "clearOldOnOverflow",
@@ -87,8 +84,7 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each dismiss button.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "contentClassName",
@@ -96,8 +92,7 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each notification content wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "controlRounding",
@@ -140,8 +135,7 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the empty state text.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "emptyMessage",
@@ -166,8 +160,7 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the header section.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "iconClassName",
@@ -175,8 +168,7 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each notification icon.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "list-aria-label",
@@ -192,8 +184,7 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the notification list.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "liveRegionAtomic",
@@ -237,8 +228,7 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each notification message.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "notificationClassName",
@@ -246,8 +236,7 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each notification item.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "notificationRounding",
@@ -332,8 +321,7 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each notification timestamp.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     }
   ]
 };

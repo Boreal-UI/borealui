@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import DateRangePickerBase from "../../src/components/DateRangePicker/DateRangePickerBase";
 
@@ -12,6 +12,7 @@ const classMap = {
   labelLeft: "labelLeft",
   labelRight: "labelRight",
 
+  legend: "legend",
   label: "label",
   group: "group",
   field: "field",
@@ -53,10 +54,43 @@ const defaultValue = {
   end: "2026-05-12",
 };
 
+type DummyDatePickerProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  theme?: string;
+  state?: string;
+  fullWidth?: boolean;
+  shadow?: string;
+  glass?: boolean;
+  outline?: boolean;
+  rounding?: string;
+};
+
+const DummyDatePicker = React.forwardRef<
+  HTMLInputElement,
+  DummyDatePickerProps
+>(
+  (
+    {
+      theme,
+      state,
+      fullWidth,
+      shadow,
+      glass,
+      outline,
+      rounding,
+      ...inputProps
+    },
+    ref,
+  ) => <input ref={ref} {...inputProps} />,
+);
+
+DummyDatePicker.displayName = "DummyDatePicker";
+
 function renderDateRangePicker(
   props: Partial<React.ComponentProps<typeof DateRangePickerBase>> = {},
 ) {
   const onChange = jest.fn();
+  const resolvedTestId =
+    props.testId ?? props["data-testid"] ?? "date-range-picker";
 
   render(
     <DateRangePickerBase
@@ -64,21 +98,14 @@ function renderDateRangePicker(
       onChange={onChange}
       label="Date range"
       classMap={classMap}
+      DatePickerComponent={DummyDatePicker}
       {...props}
     />,
   );
 
-  const fieldset = screen.getByTestId(
-    props.testId ?? props["data-testid"] ?? "date-range-picker",
-  );
-
-  const startInput = screen.getByTestId(
-    `${props.testId ?? props["data-testid"] ?? "date-range-picker"}-start`,
-  );
-
-  const endInput = screen.getByTestId(
-    `${props.testId ?? props["data-testid"] ?? "date-range-picker"}-end`,
-  );
+  const fieldset = screen.getByTestId(resolvedTestId);
+  const startInput = screen.getByTestId(`${resolvedTestId}-start`);
+  const endInput = screen.getByTestId(`${resolvedTestId}-end`);
 
   return {
     onChange,
@@ -93,7 +120,10 @@ describe("DateRangePickerBase", () => {
     const { fieldset, startInput, endInput } = renderDateRangePicker();
 
     expect(fieldset.tagName).toBe("FIELDSET");
-    expect(screen.getByText("Date range")).toBeInTheDocument();
+
+    const legend = fieldset.querySelector("legend");
+    expect(legend).toHaveTextContent("Date range");
+
     expect(screen.getByText("Start date")).toBeInTheDocument();
     expect(screen.getByText("End date")).toBeInTheDocument();
 
@@ -112,6 +142,7 @@ describe("DateRangePickerBase", () => {
         label="Date range"
         helperText="Choose a start and end date."
         classMap={classMap}
+        DatePickerComponent={DummyDatePicker}
       />,
     );
 
@@ -371,7 +402,11 @@ describe("DateRangePickerBase", () => {
     });
 
     expect(fieldset).toHaveClass("customRoot");
-    expect(screen.getByText("Date range")).toHaveClass("customLabel");
+
+    const visualLabel = fieldset.querySelector(`.${classMap.label}`);
+    expect(visualLabel).toHaveClass("customLabel");
+    expect(visualLabel).toHaveTextContent("Date range");
+
     expect(
       screen.getByText("Start date").closest(`.${classMap.group}`),
     ).toHaveClass("customGroup");

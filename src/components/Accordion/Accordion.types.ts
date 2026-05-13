@@ -40,7 +40,6 @@ export interface AccordionProps extends Omit<
   /**
    * The state of the accordion ('success' | 'error' | 'warning').
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -94,7 +93,6 @@ export interface AccordionProps extends Omit<
   /**
    * Additional custom class names for the wrapper element.
    *
-   * @default ""
    */
   className?: string;
 

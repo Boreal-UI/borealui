@@ -135,7 +135,6 @@ export interface SidebarProps {
    * Typically used to apply semantic states to the component.
    * - "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -166,7 +165,6 @@ export interface SidebarProps {
   /**
    * Additional class name(s) for applying custom styles.
    *
-   * @default ""
    */
   className?: string;
 

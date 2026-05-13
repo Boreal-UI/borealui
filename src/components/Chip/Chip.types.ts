@@ -127,7 +127,6 @@ export interface ChipProps
    * State of the chip
    * ('success' | 'error' | 'warning' | 'disabled' | '').
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -142,7 +141,6 @@ export interface ChipProps
   /**
    * Additional class name for custom styling.
    *
-   * @default ""
    */
   className?: string;
 

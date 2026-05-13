@@ -77,7 +77,6 @@ export interface RadioButtonProps extends Omit<
    * State of the radio button.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -133,7 +132,6 @@ export interface RadioButtonProps extends Omit<
   /**
    * Additional CSS class names for custom styling.
    *
-   * @default ""
    */
   className?: string;
 

@@ -42,8 +42,7 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Optional extra class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -76,8 +75,7 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each icon wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "isItemActive",
@@ -93,8 +91,7 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each nav link.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "items",
@@ -110,8 +107,7 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each label.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "linkContentClassName",
@@ -119,8 +115,7 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each link content wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "list-aria-label",
@@ -137,8 +132,7 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the navigation list.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "listItemClassName",
@@ -146,8 +140,7 @@ export const navBarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each list item.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "rounding",

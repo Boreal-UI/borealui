@@ -35,7 +35,7 @@ export default function ComboBoxBase({
   name,
   id,
   theme = getDefaultTheme(),
-  state = "",
+  state,
   outline = getDefaultOutline(),
   glass = getDefaultGlass(),
   rounding = getDefaultRounding(),

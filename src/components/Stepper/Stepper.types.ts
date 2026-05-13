@@ -63,7 +63,6 @@ export interface StepperProps {
    * State of the stepper.
    * "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 

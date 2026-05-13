@@ -142,8 +142,7 @@ export const themeSelectPropDocs: GeneratedComponentDoc = {
       "description": "Visual state applied to the component.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

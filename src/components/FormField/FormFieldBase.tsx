@@ -12,7 +12,7 @@ export default function FormFieldBase({
   required = false,
   optionalText = "Optional",
   labelPosition = "top",
-  state = "",
+  state,
   className,
   labelClassName,
   controlClassName,

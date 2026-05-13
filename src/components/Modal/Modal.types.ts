@@ -9,7 +9,6 @@ export interface ModalProps {
   /**
    * Additional class names for custom styling the modal content.
    *
-   * @default ""
    */
   className?: string;
 

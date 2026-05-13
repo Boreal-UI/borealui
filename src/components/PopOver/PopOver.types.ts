@@ -115,7 +115,6 @@ export interface PopOverProps {
    * State of the popover, for feedback styling.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -138,14 +137,12 @@ export interface PopOverProps {
   /**
    * Optional additional class name(s) for custom styling.
    *
-   * @default ""
    */
   className?: string;
 
   /**
    * Optional additional class name(s) for the popover content element.
    *
-   * @default ""
    */
   contentClassName?: string;
 

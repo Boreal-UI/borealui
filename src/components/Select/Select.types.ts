@@ -45,7 +45,6 @@ export interface SelectProps {
    * State variant for styling.
    * "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -209,7 +208,6 @@ export interface SelectProps {
   /**
    * Additional class name(s) for custom styling.
    *
-   * @default ""
    */
   className?: string;
 

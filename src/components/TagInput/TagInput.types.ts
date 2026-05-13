@@ -130,7 +130,6 @@ export interface TagInputProps {
    * State of the input (for feedback/validation).
    * One of: "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 

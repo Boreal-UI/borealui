@@ -45,7 +45,6 @@ export interface TextInputProps extends NativeInputProps {
   /**
    * Additional CSS class names for custom styling.
    *
-   * @default ""
    */
   className?: string;
 
@@ -120,7 +119,6 @@ export interface TextInputProps extends NativeInputProps {
    * State of the input.
    * "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 

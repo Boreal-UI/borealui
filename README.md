@@ -153,13 +153,13 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 ### Forms and Inputs
 
 - `TextInput` and `TextArea` support labels, helper/error text, validation state, disabled state, sizing, theming, and accessible descriptions.
-- `Select` and `ThemeSelect` cover option selection and color-scheme switching.
+- `Select`, `ComboBox`, and `ThemeSelect` cover option selection, searchable selection, and color-scheme switching.
 - `CheckBox`, `RadioButton`, `RadioGroup`, `Toggle`, and `Slider` provide common controlled input patterns.
 - `ColorPicker` supports color selection flows.
-- `DateTimePicker` handles date and time input.
+- `DateRangePicker` and `DateTimePicker` handle date range, date, and time input.
 - `FileUpload` supports file selection UI.
 - `TagInput` supports editable tag lists, async suggestions, debouncing, accessible listbox labeling, and remove-tag controls.
-- `FormGroup` helps compose labels, helper text, and grouped form controls.
+- `FormField` and `FormGroup` help compose labels, helper text, and grouped form controls.
 
 ### Data and Content
 
@@ -173,11 +173,12 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 - `Badge`, `Chip`, and `ChipGroup` cover labels, statuses, and compact selectable or grouped metadata.
 - `ProgressBar`, `CircularProgress`, `Spinner`, and `Skeleton` cover loading and progress states.
 - `Rating` provides star-style rating UI.
-- `Tooltip`, `MessagePopup`, `PopOver`, `Modal`, `NotificationCenter`, and `EmptyState` cover contextual help, alerts, overlays, dialogs, notification lists, and no-data states.
+- `Alert`, `Tooltip`, `MessagePopup`, `PopOver`, `Modal`, `ToastProvider`, `NotificationCenter`, and `EmptyState` cover alerts, contextual help, overlays, dialogs, toast notifications, notification lists, and no-data states.
 
 ### Navigation and Layout
 
-- `NavBar`, `Sidebar`, `Footer`, `Breadcrumbs`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Toolbar`, `Dropdown`, and `Divider` cover navigation, page structure, disclosure, pagination, tool rows, menus, and visual separation.
+- `NavBar`, `Sidebar`, `Footer`, `Breadcrumbs`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Toolbar`, `Dropdown`, `Drawer`, and `Divider` cover navigation, page structure, disclosure, pagination, tool rows, menus, overlays, and visual separation.
+- `Container`, `Grid`, `Inline`, `Section`, and `Stack` provide layout primitives through the `Layout` entry point and the main barrels.
 - `Card` supports title, description, icon, header/content/footer customization, loading content, outline, glass, shadow, rounding, theme, and section-level class names.
 - `Avatar` supports image, initials, fallback icon, shape, status, status position, size, theme, and custom styling.
 

@@ -90,7 +90,6 @@ export interface ToggleProps {
    * State of the toggle.
    * "" | "success" | "error" | "warning" | "disabled"
    *
-   * @default ""
    */
   state?: StateType;
 

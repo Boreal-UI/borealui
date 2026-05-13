@@ -22,7 +22,7 @@ function DataTableBase<T extends object>({
   getRowSelectAriaLabel,
   filterable = false,
   filterValue,
-  defaultFilterValue = "",
+  defaultFilterValue,
   onFilterChange,
   filterPlaceholder = "Filter table",
   filterAriaLabel = "Filter table rows",
@@ -34,10 +34,10 @@ function DataTableBase<T extends object>({
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
-  state = "",
+  state,
   outline = getDefaultOutline(),
   glass = getDefaultGlass(),
-  className = "",
+  className,
   tableClassName,
   theadClassName,
   tbodyClassName,
@@ -73,7 +73,7 @@ function DataTableBase<T extends object>({
   const [internalSelectedKeys, setInternalSelectedKeys] = useState<Array<string | number>>(
     defaultSelectedRowKeys,
   );
-  const [internalFilter, setInternalFilter] = useState(defaultFilterValue);
+  const [internalFilter, setInternalFilter] = useState(defaultFilterValue ?? "");
 
   const captionId = `${testId}-caption`;
   const liveRegionId = `${testId}-live-region`;
@@ -299,7 +299,7 @@ function DataTableBase<T extends object>({
       combineClassNames(
         classMap.table,
         classMap[theme],
-        classMap[state],
+        state && classMap[state],
         outline && classMap.outline,
         glass && classMap.glass,
         tableClassName,
@@ -312,7 +312,7 @@ function DataTableBase<T extends object>({
       combineClassNames(
         classMap.wrapper,
         classMap[theme],
-        classMap[state],
+        state && classMap[state],
         glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],

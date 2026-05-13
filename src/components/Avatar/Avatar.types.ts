@@ -54,7 +54,6 @@ export interface AvatarProps {
   /**
    * Full name used to generate initials when no image is available.
    *
-   * @default ""
    */
   name?: string;
 
@@ -125,7 +124,6 @@ export interface AvatarProps {
   /**
    * State of the avatar ('success' | 'error' | 'warning').
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -166,7 +164,6 @@ export interface AvatarProps {
   /**
    * Custom class names for the avatar container.
    *
-   * @default ""
    */
   className?: string;
 

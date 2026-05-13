@@ -132,8 +132,7 @@ export const formFieldPropDocs: GeneratedComponentDoc = {
       "description": "State.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

@@ -50,8 +50,7 @@ export const markdownRendererPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name for styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "content",

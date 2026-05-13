@@ -58,8 +58,7 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "Additional custom class names for the wrapper element.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "customCollapsedIcon",
@@ -253,8 +252,7 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "The state of the accordion ('success' | 'error' | 'warning').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

@@ -284,8 +284,7 @@ export const comboBoxPropDocs: GeneratedComponentDoc = {
       "description": "State.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

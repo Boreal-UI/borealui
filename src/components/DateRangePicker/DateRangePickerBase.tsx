@@ -154,7 +154,7 @@ export default function DateRangePickerBase({
             required={required}
             aria-invalid={Boolean(error) || state === "error" || undefined}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              onChange({ ...value, start: e.target.value })
+              onChange({ ...value, end: e.target.value })
             }
             className={combineClassNames(classMap.input, inputClassName)}
             data-testid={`${resolvedTestId}-end`}

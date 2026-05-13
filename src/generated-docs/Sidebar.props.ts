@@ -17,8 +17,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name applied when a link/item is active.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "aria-describedby",
@@ -51,8 +50,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for chevron icons.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "chevronOpenClassName",
@@ -60,8 +58,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name applied when the chevron is open.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "childLinkClassName",
@@ -69,8 +66,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for child link-style items.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "childListClassName",
@@ -78,8 +74,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for nested child lists.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "className",
@@ -87,8 +82,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name(s) for applying custom styles.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -104,8 +98,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for expandable parent buttons.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "expandLabelClassName",
@@ -113,8 +106,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for expandable item labels.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "footerAriaLabel",
@@ -139,8 +131,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for the footer wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "footerLinkClassName",
@@ -148,8 +139,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for footer links.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "footerLinks",
@@ -173,8 +163,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for the footer version text.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "getExpandButtonAriaDescription",
@@ -215,8 +204,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for item icons.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "isLinkActive",
@@ -232,8 +220,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for each list item.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "linkClassName",
@@ -241,8 +228,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for link-style items.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "links",
@@ -258,8 +244,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for all sidebar lists.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "navClassName",
@@ -267,8 +252,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for the inner navigation wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "outline",
@@ -312,8 +296,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "State variant for styling. Typically used to apply semantic states to the component. - \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "submenuClassName",
@@ -321,8 +304,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for submenu containers.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "submenuOpenClassName",
@@ -330,8 +312,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name applied when a submenu is open.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "testId",

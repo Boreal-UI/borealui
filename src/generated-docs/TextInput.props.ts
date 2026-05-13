@@ -122,8 +122,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional CSS class names for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "containerClassName",
@@ -131,8 +130,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the outer layout container.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "data-testid",
@@ -174,8 +172,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the icon wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "inputClassName",
@@ -183,8 +180,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the native input.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "label",
@@ -200,8 +196,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the visible label.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "labelPosition",
@@ -296,8 +291,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the screen-reader-only text.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "srOnlyText",
@@ -313,8 +307,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "State of the input. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",
@@ -340,8 +333,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the password toggle button.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     }
   ]
 };

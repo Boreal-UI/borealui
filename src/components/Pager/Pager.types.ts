@@ -34,7 +34,6 @@ export interface PagerProps {
   /**
    * Optional extra class name(s) for custom styling.
    *
-   * @default ""
    */
   className?: string;
 
@@ -65,7 +64,6 @@ export interface PagerProps {
    * Optional state of the component for feedback styling.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 

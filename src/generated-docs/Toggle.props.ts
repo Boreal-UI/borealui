@@ -158,8 +158,7 @@ export const togglePropDocs: GeneratedComponentDoc = {
       "description": "State of the toggle. \"\" | \"success\" | \"error\" | \"warning\" | \"disabled\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "tabIndex",

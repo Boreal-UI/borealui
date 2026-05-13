@@ -76,7 +76,7 @@ const escapeHtml = (s: string) =>
 
 const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
   content,
-  className = "",
+  className,
   language = "en",
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),

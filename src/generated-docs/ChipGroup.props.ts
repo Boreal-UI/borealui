@@ -33,8 +33,7 @@ export const chipGroupPropDocs: GeneratedComponentDoc = {
       "description": "Optional class name for the chip group container.",
       "required": false,
       "inherited": true,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",

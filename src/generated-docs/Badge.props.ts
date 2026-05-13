@@ -25,8 +25,7 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "Additional custom class names.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -128,8 +127,7 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "The badge state ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "target",

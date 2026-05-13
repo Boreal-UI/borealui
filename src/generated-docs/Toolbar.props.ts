@@ -76,8 +76,7 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class names for styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -180,8 +179,7 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name for the toolbar title element. Useful when consumers need to style the title directly.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "titleId",

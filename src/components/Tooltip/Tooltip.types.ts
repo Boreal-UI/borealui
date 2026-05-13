@@ -8,7 +8,6 @@ export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Additional CSS class names for the tooltip wrapper.
    *
-   * @default ""
    */
   className?: string;
 
@@ -44,7 +43,6 @@ export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
    * State of the tooltip for visual feedback.
    * "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 

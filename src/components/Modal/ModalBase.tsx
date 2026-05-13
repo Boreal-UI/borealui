@@ -17,14 +17,14 @@ import {
 } from "../../config/boreal-style-config";
 
 const BaseModal: React.FC<BaseModalProps> = ({
-  className = "",
-  overlayClassName = "",
-  headerClassName = "",
-  headerContentClassName = "",
-  titleClassName = "",
-  closeButtonClassName = "",
-  bodyClassName = "",
-  footerClassName = "",
+  className,
+  overlayClassName,
+  headerClassName,
+  headerContentClassName,
+  titleClassName,
+  closeButtonClassName,
+  bodyClassName,
+  footerClassName,
   children,
   title = "Modal Dialog",
   header,

@@ -60,7 +60,6 @@ export interface NavBarProps {
   /**
    * Optional extra class name(s) for custom styling.
    *
-   * @default ""
    */
   className?: string;
 

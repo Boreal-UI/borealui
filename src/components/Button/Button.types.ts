@@ -82,7 +82,6 @@ export interface ButtonProps extends Pick<
    * State of the button
    * ('success' | 'error' | 'warning' | 'disabled' | '').
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -99,7 +98,6 @@ export interface ButtonProps extends Pick<
   /**
    * Additional class name(s) for custom styling.
    *
-   * @default ""
    */
   className?: string;
 

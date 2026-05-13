@@ -59,8 +59,7 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -162,8 +161,7 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "description": "State of the progress bar. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

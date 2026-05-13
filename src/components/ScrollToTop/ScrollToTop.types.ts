@@ -28,7 +28,6 @@ export interface ScrollToTopProps {
   /**
    * Additional custom class names for the root element of the component.
    *
-   * @default ""
    */
   className?: string;
 

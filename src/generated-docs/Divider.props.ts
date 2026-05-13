@@ -26,8 +26,7 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "description": "Additional CSS class names for the divider root.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "dashed",
@@ -104,8 +103,7 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "description": "State of the divider ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

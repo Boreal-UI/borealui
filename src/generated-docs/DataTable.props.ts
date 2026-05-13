@@ -58,8 +58,7 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Optional class name for the table wrapper.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "colCount",
@@ -99,8 +98,7 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Initial filter query for uncontrolled filtering.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "defaultSelectedRowKeys",
@@ -380,8 +378,7 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "State of the table ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "striped",

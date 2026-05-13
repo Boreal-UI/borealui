@@ -42,8 +42,7 @@ export const scrollToTopPropDocs: GeneratedComponentDoc = {
       "description": "Additional custom class names for the root element of the component.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",

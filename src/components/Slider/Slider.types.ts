@@ -89,7 +89,6 @@ export interface SliderProps {
    * State of the slider.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -126,7 +125,6 @@ export interface SliderProps {
   /**
    * Additional CSS class names for custom styling.
    *
-   * @default ""
    */
   className?: string;
 

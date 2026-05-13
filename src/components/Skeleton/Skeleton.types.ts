@@ -38,7 +38,6 @@ export interface SkeletonProps {
   /**
    * Additional class name(s) for custom styling.
    *
-   * @default ""
    */
   className?: string;
 

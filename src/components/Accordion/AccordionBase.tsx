@@ -29,7 +29,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   description,
   size = getDefaultSize(),
   theme = getDefaultTheme(),
-  state = "",
+  state,
   outline = getDefaultOutline(),
   glass = getDefaultGlass(),
   expanded,
@@ -38,7 +38,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   customExpandedIcon,
   onToggle,
   initiallyExpanded = false,
-  className = "",
+  className,
   getUniqueId,
   classMap,
   regionAriaLabel,
@@ -139,7 +139,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       combineClassNames(
         classMap.accordion,
         classMap[size],
-        classMap[state],
+        state && classMap[state],
         glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
@@ -165,7 +165,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       combineClassNames(
         classMap.header,
         classMap[theme],
-        classMap[state],
+        state && classMap[state],
         outline && classMap.outline,
         glass && classMap.glass,
         disabled && classMap.disabled,
@@ -178,8 +178,8 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
     () =>
       combineClassNames(
         classMap.content,
-        glass && classMap[theme],
-        glass && classMap[state],
+        theme && classMap[theme],
+        state && classMap[state],
         glass && classMap.glass,
         isExpanded && classMap.expanded,
       ),

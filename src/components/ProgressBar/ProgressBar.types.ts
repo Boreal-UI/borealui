@@ -38,7 +38,6 @@ export interface ProgressBarProps {
    * State of the progress bar.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -110,7 +109,6 @@ export interface ProgressBarProps {
   /**
    * Optional additional class name(s) for custom styling.
    *
-   * @default ""
    */
   className?: string;
 
