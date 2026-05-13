@@ -427,8 +427,40 @@ DummyProgressBar.displayName = "DummyProgressBar";
  * Provides a simple select element with a couple of options so components can render
  * and interact with it without depending on the real implementation.
  */
-export const DummyThemeSelect: React.FC<ThemeSelectProps> = (props) => (
-  <select {...props}>
+export const DummyThemeSelect: React.FC<ThemeSelectProps> = ({
+  disabled,
+  glass,
+  id,
+  label,
+  name,
+  labelPosition,
+  rounding,
+  shadow,
+  state,
+  testId,
+  theme,
+  "aria-label": ariaLabel,
+  "aria-describedby": ariaDescribedBy,
+  "aria-description": ariaDescription,
+  "aria-invalid": ariaInvalid,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-required": ariaRequired,
+  ...props
+}) => (
+  <select
+    aria-describedby={ariaDescribedBy}
+    aria-description={ariaDescription}
+    aria-invalid={ariaInvalid}
+    aria-label={ariaLabel}
+    aria-labelledby={ariaLabelledBy}
+    aria-required={ariaRequired}
+    data-testid={testId ?? props["data-testid"]}
+    disabled={disabled}
+    id={id}
+    name={name}
+    required={ariaRequired}
+  >
+    {label ? <option value="">{label}</option> : null}
     <option value="light">Light</option>
     <option value="dark">Dark</option>
   </select>

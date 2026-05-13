@@ -33,7 +33,7 @@ describe("FormFieldBase", () => {
         helperText="Use your school email address."
         classMap={classMap}
       >
-        <input type="email" />
+        <input title="email" type="email" />
       </FormFieldBase>,
     );
 
@@ -59,7 +59,7 @@ describe("FormFieldBase", () => {
   it("connects the label to the input using the generated id", () => {
     const { container } = render(
       <FormFieldBase label="Email" classMap={classMap}>
-        <input type="email" />
+        <input title="email" type="email" />
       </FormFieldBase>,
     );
 
@@ -73,7 +73,7 @@ describe("FormFieldBase", () => {
   it("uses the provided id when available", () => {
     const { container } = render(
       <FormFieldBase id="username" label="Username" classMap={classMap}>
-        <input />
+        <input title="username" id="username" />
       </FormFieldBase>,
     );
 
@@ -87,7 +87,7 @@ describe("FormFieldBase", () => {
   it("uses the child id when no explicit id is provided", () => {
     const { container } = render(
       <FormFieldBase label="Display name" classMap={classMap}>
-        <input id="display-name" />
+        <input title="display name" id="display-name" />
       </FormFieldBase>,
     );
 
@@ -101,7 +101,7 @@ describe("FormFieldBase", () => {
   it("adds required attributes and hides optional text when required", () => {
     const { container } = render(
       <FormFieldBase label="Password" required classMap={classMap}>
-        <input type="password" />
+        <input title="password" type="password" />
       </FormFieldBase>,
     );
 
@@ -119,7 +119,7 @@ describe("FormFieldBase", () => {
         optionalText="Not required"
         classMap={classMap}
       >
-        <input />
+        <input title="phone" />
       </FormFieldBase>,
     );
 
@@ -134,7 +134,7 @@ describe("FormFieldBase", () => {
   it("does not render optional text when optionalText is empty", () => {
     render(
       <FormFieldBase label="Phone" optionalText="" classMap={classMap}>
-        <input />
+        <input title="phone" />
       </FormFieldBase>,
     );
 
@@ -151,7 +151,7 @@ describe("FormFieldBase", () => {
         error="Email is required."
         classMap={classMap}
       >
-        <input />
+        <input title="email" />
       </FormFieldBase>,
     );
 
@@ -187,7 +187,7 @@ describe("FormFieldBase", () => {
           error="Error text"
           classMap={classMap}
         >
-          <input aria-describedby="existing-description" />
+          <input title="email" aria-describedby="existing-description" />
         </FormFieldBase>
       </>,
     );
@@ -208,7 +208,12 @@ describe("FormFieldBase", () => {
         error="Email is required."
         classMap={classMap}
       >
-        <input required={false} aria-required={false} aria-invalid={false} />
+        <input
+          title="email"
+          required={false}
+          aria-required={false}
+          aria-invalid={false}
+        />
       </FormFieldBase>,
     );
 
@@ -234,7 +239,7 @@ describe("FormFieldBase", () => {
         errorClassName="customError"
         classMap={classMap}
       >
-        <input />
+        <input title="search" />
       </FormFieldBase>,
     );
 
@@ -269,7 +274,7 @@ describe("FormFieldBase", () => {
   it("supports custom testId", () => {
     render(
       <FormFieldBase label="Name" testId="name-field" classMap={classMap}>
-        <input />
+        <input title="name" />
       </FormFieldBase>,
     );
 
@@ -284,7 +289,7 @@ describe("FormFieldBase", () => {
         data-testid="profile-name"
         classMap={classMap}
       >
-        <input />
+        <input title="profile name" />
       </FormFieldBase>,
     );
 
@@ -300,7 +305,7 @@ describe("FormFieldBase", () => {
         data-testid="fallback-id"
         classMap={classMap}
       >
-        <input />
+        <input title="name" />
       </FormFieldBase>,
     );
 
@@ -311,7 +316,7 @@ describe("FormFieldBase", () => {
   it("does not render label, helper, or error elements when omitted", () => {
     render(
       <FormFieldBase classMap={classMap}>
-        <input data-testid="plain-input" />
+        <input title="plain input" data-testid="plain-input" />
       </FormFieldBase>,
     );
 
@@ -332,7 +337,7 @@ describe("FormFieldBase", () => {
         helperText="Use your school email address."
         classMap={classMap}
       >
-        <input type="email" />
+        <input title="email" type="email" />
       </FormFieldBase>,
     );
 
@@ -351,7 +356,7 @@ describe("FormFieldBase", () => {
         required
         classMap={classMap}
       >
-        <input type="email" />
+        <input title="email" type="email" />
       </FormFieldBase>,
     );
 

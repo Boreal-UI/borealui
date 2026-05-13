@@ -464,11 +464,7 @@ export const componentSmokeCases: SmokeCase[] = [
   {
     name: "ComboBox",
     render: ({ ComboBox }, testId) => (
-      <ComboBox
-        label="Framework"
-        options={basicOptions}
-        data-testid={testId}
-      />
+      <ComboBox label="Framework" options={basicOptions} data-testid={testId} />
     ),
   },
   {
@@ -590,8 +586,12 @@ export const componentSmokeCases: SmokeCase[] = [
   {
     name: "FormField",
     render: ({ FormField }, testId) => (
-      <FormField label="Email" helperText="Use your work email." data-testid={testId}>
-        <input type="email" />
+      <FormField
+        label="Email"
+        helperText="Use your work email."
+        data-testid={testId}
+      >
+        <input title="email" type="email" />
       </FormField>
     ),
   },

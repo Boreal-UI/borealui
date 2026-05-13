@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen, within } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import DateRangePickerBase from "../../src/components/DateRangePicker/DateRangePickerBase";
 
@@ -67,21 +67,7 @@ type DummyDatePickerProps = React.InputHTMLAttributes<HTMLInputElement> & {
 const DummyDatePicker = React.forwardRef<
   HTMLInputElement,
   DummyDatePickerProps
->(
-  (
-    {
-      theme,
-      state,
-      fullWidth,
-      shadow,
-      glass,
-      outline,
-      rounding,
-      ...inputProps
-    },
-    ref,
-  ) => <input ref={ref} {...inputProps} />,
-);
+>(({ ...inputProps }, ref) => <input ref={ref} {...inputProps} />);
 
 DummyDatePicker.displayName = "DummyDatePicker";
 
