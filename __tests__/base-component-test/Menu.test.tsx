@@ -9,6 +9,8 @@ const classMap = {
   wrapper: "menu",
   target: "target",
   trigger: "trigger",
+  triggerPlain: "triggerPlain",
+  triggerCustom: "triggerCustom",
   menu: "panel",
   item: "item",
   itemWrapper: "itemWrapper",
@@ -135,6 +137,34 @@ describe("BaseMenu", () => {
 
     expect(trigger).toHaveAttribute("aria-expanded", "true");
     expect(screen.getByTestId("menu-menu")).toBeInTheDocument();
+  });
+
+  it("uses default styling for text triggers and neutral styling for custom trigger content", () => {
+    const { rerender } = render(
+      <BaseMenu
+        items={createItems()}
+        classMap={classMap}
+        data-testid="menu"
+        trigger="Actions"
+      />,
+    );
+
+    expect(screen.getByTestId("menu-trigger")).toHaveClass("triggerPlain");
+    expect(screen.getByTestId("menu-trigger")).not.toHaveClass(
+      "triggerCustom",
+    );
+
+    rerender(
+      <BaseMenu
+        items={createItems()}
+        classMap={classMap}
+        data-testid="menu"
+        trigger={<span data-testid="custom-trigger-content">Actions</span>}
+      />,
+    );
+
+    expect(screen.getByTestId("menu-trigger")).toHaveClass("triggerCustom");
+    expect(screen.getByTestId("menu-trigger")).not.toHaveClass("triggerPlain");
   });
 
   it("calls an item onClick and closes after selection", () => {

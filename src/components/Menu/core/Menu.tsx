@@ -8,6 +8,8 @@ const classes = {
   wrapper: "menu",
   target: "menu_target",
   trigger: "menu_trigger",
+  triggerPlain: "menu_triggerPlain",
+  triggerCustom: "menu_triggerCustom",
   menu: "menu_panel",
   item: "menu_item",
   itemWrapper: "menu_itemWrapper",

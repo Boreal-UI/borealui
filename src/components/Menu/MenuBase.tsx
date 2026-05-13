@@ -101,6 +101,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
   const isOpen = open ?? uncontrolledOpen;
   const resolvedMenuId = menuId ?? `${generatedId}-menu`;
   const resolvedPosition = position ?? internalPosition;
+  const hasCustomTriggerContent = React.isValidElement(trigger);
 
   const setOpenState = useCallback(
     (nextOpen: boolean) => {
@@ -761,6 +762,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
           type={triggerProps?.type ?? "button"}
           className={combineClassNames(
             classMap.trigger,
+            hasCustomTriggerContent
+              ? classMap.triggerCustom
+              : classMap.triggerPlain,
             triggerClassName,
             triggerProps?.className,
           )}
