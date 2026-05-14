@@ -63,6 +63,7 @@ export { default as Toggle } from "./core/Toggle";
 export { default as Toolbar } from "./core/Toolbar";
 export { default as Tooltip } from "./core/Tooltip";
 export { default as Typography } from "./core/Typography";
+export { default as ValidationSummary } from "./core/ValidationSummary";
 export * from "./core/colorSchemes";
 export * from "./core/registerColorScheme";
 export * from "./core/styleConfig";

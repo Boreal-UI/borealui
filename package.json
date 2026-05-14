@@ -506,6 +506,11 @@
       "import": "./dist/core/Typography.js",
       "require": "./dist/core/Typography.cjs.js"
     },
+    "./core/ValidationSummary": {
+      "types": "./dist/types/core/ValidationSummary.d.ts",
+      "import": "./dist/core/ValidationSummary.js",
+      "require": "./dist/core/ValidationSummary.cjs.js"
+    },
     "./docs": {
       "types": "./dist/types/generated-docs/index.d.ts",
       "default": "./dist/generated-docs/index.js"
@@ -793,6 +798,10 @@
     "./next/Typography": {
       "types": "./dist/types/next/Typography.d.ts",
       "import": "./dist/next/Typography.js"
+    },
+    "./next/ValidationSummary": {
+      "types": "./dist/types/next/ValidationSummary.d.ts",
+      "import": "./dist/next/ValidationSummary.js"
     }
   },
   "overrides": {

@@ -66,3 +66,4 @@ export { togglePropDocs } from "./Toggle.props";
 export { toolbarPropDocs } from "./Toolbar.props";
 export { tooltipPropDocs } from "./Tooltip.props";
 export { typographyPropDocs } from "./Typography.props";
+export { validationSummaryPropDocs } from "./ValidationSummary.props";

@@ -5,40 +5,16 @@
 
 import type { GeneratedComponentDoc } from "./types";
 
-export const fieldSetPropDocs: GeneratedComponentDoc = {
-  "name": "FieldSet",
-  "interfaceName": "FieldSetProps",
-  "description": "Props for the FieldSet component.",
-  "sourcePath": "src\\components\\FieldSet\\FieldSet.types.ts",
+export const validationSummaryPropDocs: GeneratedComponentDoc = {
+  "name": "ValidationSummary",
+  "interfaceName": "ValidationSummaryProps",
+  "description": "Props for the ValidationSummary component.",
+  "sourcePath": "src\\components\\ValidationSummary\\ValidationSummary.types.ts",
   "props": [
-    {
-      "name": "actions",
-      "type": "ReactNode",
-      "description": "Optional actions rendered in the fieldset footer.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "actionsClassName",
-      "type": "string",
-      "description": "Additional class name for the actions area.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "bodyClassName",
-      "type": "string",
-      "description": "Additional class name for the grouped control body.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
     {
       "name": "children",
       "type": "ReactNode",
-      "description": "Main content rendered inside the component.",
+      "description": "Main content rendered inside the component after the generated validation list.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -62,7 +38,7 @@ export const fieldSetPropDocs: GeneratedComponentDoc = {
     {
       "name": "contentClassName",
       "type": "string",
-      "description": "Additional class name for the content area. Alias for bodyClassName.",
+      "description": "Additional class name for the content area.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -78,7 +54,7 @@ export const fieldSetPropDocs: GeneratedComponentDoc = {
     {
       "name": "description",
       "type": "ReactNode",
-      "description": "Descriptive text rendered beneath the legend and connected with aria-describedby.",
+      "description": "Supporting text rendered beneath the title.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -86,7 +62,7 @@ export const fieldSetPropDocs: GeneratedComponentDoc = {
     {
       "name": "descriptionClassName",
       "type": "string",
-      "description": "Additional class name for the description text.",
+      "description": "Additional class name for the description.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -101,36 +77,38 @@ export const fieldSetPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
-      "name": "error",
-      "type": "ReactNode",
-      "description": "Error message rendered after the grouped controls and announced to assistive technologies.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "errorClassName",
+      "name": "emptyClassName",
       "type": "string",
-      "description": "Additional class name for error text.",
+      "description": "Additional class name for empty-state text.",
       "required": false,
       "inherited": false,
       "category": "props"
     },
     {
-      "name": "footer",
+      "name": "emptyMessage",
       "type": "ReactNode",
-      "description": "Optional footer content rendered after helper and error text.",
+      "description": "Message rendered when there are no validation items and hideWhenEmpty is false.",
       "required": false,
       "inherited": false,
       "category": "props"
     },
     {
-      "name": "footerClassName",
-      "type": "string",
-      "description": "Additional class name for the footer area.",
+      "name": "focusable",
+      "type": "boolean",
+      "description": "Whether the summary should be focusable for programmatic focus.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "true"
+    },
+    {
+      "name": "focusOnMount",
+      "type": "boolean",
+      "description": "Whether the summary should focus itself when validation items are present.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "glass",
@@ -142,34 +120,35 @@ export const fieldSetPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
-      "name": "helperText",
-      "type": "ReactNode",
-      "description": "Supporting text rendered after the grouped controls.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "helperTextClassName",
-      "type": "string",
-      "description": "Additional class name for helper text.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "hideLegend",
+      "name": "hideWhenEmpty",
       "type": "boolean",
-      "description": "Whether the legend should remain available to assistive technologies only.",
+      "description": "Whether nothing should render when there are no items and no children.",
       "required": false,
       "inherited": false,
       "category": "props",
-      "defaultValue": "false"
+      "defaultValue": "true"
+    },
+    {
+      "name": "itemClassName",
+      "type": "string",
+      "description": "Additional class name for each list item.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "items",
+      "type": "(string | ValidationSummaryItem)[]",
+      "description": "Validation items rendered in the summary list.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "[]"
     },
     {
       "name": "label",
       "type": "ReactNode",
-      "description": "Backward-compatible alias for the component legend.",
+      "description": "Optional visible label for the component.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -192,29 +171,29 @@ export const fieldSetPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"top\""
     },
     {
-      "name": "layout",
-      "type": "FieldSetLayoutType",
-      "description": "Layout used for the grouped controls.",
+      "name": "linkClassName",
+      "type": "string",
+      "description": "Additional class name for validation links.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "listClassName",
+      "type": "string",
+      "description": "Additional class name for the list.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "listLabel",
+      "type": "string",
+      "description": "Accessible label for the validation issue list.",
       "required": false,
       "inherited": false,
       "category": "props",
-      "defaultValue": "\"stack\""
-    },
-    {
-      "name": "legend",
-      "type": "ReactNode",
-      "description": "Semantic legend for the grouped controls.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "legendClassName",
-      "type": "string",
-      "description": "Additional class name for the semantic legend.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
+      "defaultValue": "\"Validation issues\""
     },
     {
       "name": "loading",
@@ -232,15 +211,15 @@ export const fieldSetPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props",
-      "defaultValue": "\"Loading\""
+      "defaultValue": "\"Checking validation\""
     },
     {
-      "name": "optionalText",
-      "type": "ReactNode",
-      "description": "Optional text rendered next to the legend when required is false.",
+      "name": "onItemClick",
+      "type": "((item: ValidationSummaryItem, index: number) => void)",
+      "description": "Callback fired when a validation issue is selected.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "events"
     },
     {
       "name": "outline",
@@ -252,22 +231,13 @@ export const fieldSetPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
-      "name": "required",
-      "type": "boolean",
-      "description": "Whether the field group is required.",
+      "name": "role",
+      "type": "\"alert\" | \"region\" | \"status\"",
+      "description": "Role applied to the validation summary root.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "false"
-    },
-    {
-      "name": "requiredIndicator",
-      "type": "ReactNode",
-      "description": "Text or marker rendered next to the legend when required is true.",
-      "required": false,
-      "inherited": false,
-      "category": "props",
-      "defaultValue": "\"*\""
+      "category": "aria",
+      "defaultValue": "\"alert\""
     },
     {
       "name": "rounding",
@@ -286,15 +256,6 @@ export const fieldSetPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "configured default shadow (fallback: \"light\")"
-    },
-    {
-      "name": "spacing",
-      "type": "FieldSetSpacingType",
-      "description": "Spacing used between grouped controls.",
-      "required": false,
-      "inherited": false,
-      "category": "props",
-      "defaultValue": "\"md\""
     },
     {
       "name": "srOnlyClassName",
@@ -318,7 +279,8 @@ export const fieldSetPropDocs: GeneratedComponentDoc = {
       "description": "Visual state for styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "\"error\""
     },
     {
       "name": "testId",
@@ -327,7 +289,7 @@ export const fieldSetPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props",
-      "defaultValue": "dataTestId ?? \"field-set\""
+      "defaultValue": "dataTestId ?? \"validation-summary\""
     },
     {
       "name": "theme",
@@ -337,6 +299,31 @@ export const fieldSetPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "configured default theme (fallback: \"primary\")"
+    },
+    {
+      "name": "title",
+      "type": "ReactNode",
+      "description": "Summary heading rendered inside the alert.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "titleAs",
+      "type": "\"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\"",
+      "description": "Heading element used for the summary title.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"h2\""
+    },
+    {
+      "name": "titleClassName",
+      "type": "string",
+      "description": "Additional class name for the title.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     }
   ]
 };
