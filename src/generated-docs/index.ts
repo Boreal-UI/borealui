@@ -31,6 +31,7 @@ export { footerPropDocs } from "./Footer.props";
 export { formFieldPropDocs } from "./FormField.props";
 export { formGroupPropDocs } from "./FormGroup.props";
 export { iconButtonPropDocs } from "./IconButton.props";
+export { inputGroupPropDocs } from "./InputGroup.props";
 export { layoutPrimitivePropDocs } from "./LayoutPrimitive.props";
 export { markdownRendererPropDocs } from "./MarkdownRenderer.props";
 export { menuPropDocs } from "./Menu.props";

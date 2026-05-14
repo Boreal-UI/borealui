@@ -31,6 +31,7 @@ export { default as Footer } from "./next/Footer";
 export { default as FormField } from "./next/FormField";
 export { default as FormGroup } from "./next/FormGroup";
 export { default as IconButton } from "./next/IconButton";
+export { default as InputGroup } from "./next/InputGroup";
 export { default as MarkdownRenderer } from "./next/MarkdownRenderer";
 export { default as Menu } from "./next/Menu";
 export { default as MessagePopup } from "./next/MessagePopup";

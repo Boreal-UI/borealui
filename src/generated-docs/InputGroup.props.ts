@@ -5,16 +5,16 @@
 
 import type { GeneratedComponentDoc } from "./types";
 
-export const validationSummaryPropDocs: GeneratedComponentDoc = {
-  "name": "ValidationSummary",
-  "interfaceName": "ValidationSummaryProps",
-  "description": "Props for the ValidationSummary component.",
-  "sourcePath": "src\\components\\ValidationSummary\\ValidationSummary.types.ts",
+export const inputGroupPropDocs: GeneratedComponentDoc = {
+  "name": "InputGroup",
+  "interfaceName": "InputGroupProps",
+  "description": "Props for the InputGroup component.",
+  "sourcePath": "src\\components\\InputGroup\\InputGroup.types.ts",
   "props": [
     {
       "name": "children",
       "type": "ReactNode",
-      "description": "Main content rendered inside the component after the generated validation list.",
+      "description": "Main form control rendered inside the group.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -38,7 +38,7 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
     {
       "name": "contentClassName",
       "type": "string",
-      "description": "Additional class name for the content area.",
+      "description": "Additional class name for the content/control area.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -54,7 +54,7 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
     {
       "name": "description",
       "type": "ReactNode",
-      "description": "Supporting text rendered beneath the title.",
+      "description": "Supporting description rendered before the control and connected with aria-describedby.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -62,7 +62,7 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
     {
       "name": "descriptionClassName",
       "type": "string",
-      "description": "Additional class name for the description.",
+      "description": "Additional class name for the description text.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -70,45 +70,60 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
     {
       "name": "disabled",
       "type": "boolean",
-      "description": "Whether the component is disabled.",
+      "description": "Whether the grouped control is disabled.",
       "required": false,
       "inherited": false,
       "category": "props",
       "defaultValue": "false"
     },
     {
-      "name": "emptyClassName",
-      "type": "string",
-      "description": "Additional class name for empty-state text.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "emptyMessage",
+      "name": "endAddon",
       "type": "ReactNode",
-      "description": "Message rendered when there are no validation items and hideWhenEmpty is false.",
+      "description": "Addon content rendered after the shared input frame.",
       "required": false,
       "inherited": false,
       "category": "props"
     },
     {
-      "name": "focusable",
+      "name": "endAddonClassName",
+      "type": "string",
+      "description": "Additional class name for the end addon.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "error",
+      "type": "ReactNode",
+      "description": "Error message rendered after the control and announced to assistive technologies.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "errorClassName",
+      "type": "string",
+      "description": "Additional class name for error text.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "frameClassName",
+      "type": "string",
+      "description": "Additional class name for the input frame.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "fullWidth",
       "type": "boolean",
-      "description": "Whether the summary should be focusable for programmatic focus.",
+      "description": "Whether the group should stretch to the full available width.",
       "required": false,
       "inherited": false,
       "category": "props",
       "defaultValue": "true"
-    },
-    {
-      "name": "focusOnMount",
-      "type": "boolean",
-      "description": "Whether the summary should focus itself when validation items are present.",
-      "required": false,
-      "inherited": false,
-      "category": "props",
-      "defaultValue": "false"
     },
     {
       "name": "glass",
@@ -120,35 +135,25 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
-      "name": "hideWhenEmpty",
-      "type": "boolean",
-      "description": "Whether nothing should render when there are no items and no children.",
-      "required": false,
-      "inherited": false,
-      "category": "props",
-      "defaultValue": "true"
-    },
-    {
-      "name": "itemClassName",
-      "type": "string",
-      "description": "Additional class name for each list item.",
+      "name": "helperText",
+      "type": "ReactNode",
+      "description": "Helper text rendered after the control and connected with aria-describedby.",
       "required": false,
       "inherited": false,
       "category": "props"
     },
     {
-      "name": "items",
-      "type": "(string | ValidationSummaryItem)[]",
-      "description": "Validation items rendered in the summary list.",
+      "name": "helperTextClassName",
+      "type": "string",
+      "description": "Additional class name for helper text.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "[]"
+      "category": "props"
     },
     {
       "name": "label",
       "type": "ReactNode",
-      "description": "Optional visible label for the component.",
+      "description": "Optional visible label for the grouped control.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -171,31 +176,6 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"top\""
     },
     {
-      "name": "linkClassName",
-      "type": "string",
-      "description": "Additional class name for validation links.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "listClassName",
-      "type": "string",
-      "description": "Additional class name for the list.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "listLabel",
-      "type": "string",
-      "description": "Accessible label for the validation issue list.",
-      "required": false,
-      "inherited": false,
-      "category": "props",
-      "defaultValue": "\"Validation issues\""
-    },
-    {
       "name": "loading",
       "type": "boolean",
       "description": "Whether the component should display a loading state.",
@@ -211,15 +191,16 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props",
-      "defaultValue": "\"Checking validation\""
+      "defaultValue": "\"Loading\""
     },
     {
-      "name": "onItemClick",
-      "type": "((item: ValidationSummaryItem, index: number) => void)",
-      "description": "Callback fired when a validation issue is selected.",
+      "name": "optionalText",
+      "type": "ReactNode",
+      "description": "Optional text rendered beside the label when required is false.",
       "required": false,
       "inherited": false,
-      "category": "events"
+      "category": "props",
+      "defaultValue": "\"Optional\""
     },
     {
       "name": "outline",
@@ -231,13 +212,29 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
-      "name": "role",
-      "type": "\"alert\" | \"region\" | \"status\"",
-      "description": "Role applied to the validation summary root.",
+      "name": "prefix",
+      "type": "ReactNode",
+      "description": "Content rendered before the control inside the shared input frame.",
       "required": false,
       "inherited": false,
-      "category": "aria",
-      "defaultValue": "\"alert\""
+      "category": "props"
+    },
+    {
+      "name": "prefixClassName",
+      "type": "string",
+      "description": "Additional class name for prefix content.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "required",
+      "type": "boolean",
+      "description": "Whether the grouped control is required.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "rounding",
@@ -274,6 +271,22 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "startAddon",
+      "type": "ReactNode",
+      "description": "Addon content rendered before the shared input frame.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "startAddonClassName",
+      "type": "string",
+      "description": "Additional class name for the start addon.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "state",
       "type": "StateType",
       "description": "Visual state for styling.",
@@ -282,13 +295,29 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
       "category": "styling"
     },
     {
+      "name": "suffix",
+      "type": "ReactNode",
+      "description": "Content rendered after the control inside the shared input frame.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "suffixClassName",
+      "type": "string",
+      "description": "Additional class name for suffix content.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "testId",
       "type": "string",
       "description": "Optional test ID for testing frameworks.",
       "required": false,
       "inherited": false,
       "category": "props",
-      "defaultValue": "dataTestId ?? \"validation-summary\""
+      "defaultValue": "dataTestId ?? \"input-group\""
     },
     {
       "name": "theme",
@@ -298,31 +327,6 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "configured default theme (fallback: \"primary\")"
-    },
-    {
-      "name": "title",
-      "type": "ReactNode",
-      "description": "Summary heading rendered inside the alert.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "titleAs",
-      "type": "\"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\"",
-      "description": "Heading element used for the summary title.",
-      "required": false,
-      "inherited": false,
-      "category": "props",
-      "defaultValue": "\"h2\""
-    },
-    {
-      "name": "titleClassName",
-      "type": "string",
-      "description": "Additional class name for the title.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
     }
   ]
 };

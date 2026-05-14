@@ -29,6 +29,7 @@ export { default as Footer } from "./core/Footer";
 export { default as FormField } from "./core/FormField";
 export { default as FormGroup } from "./core/FormGroup";
 export { default as IconButton } from "./core/IconButton";
+export { default as InputGroup } from "./core/InputGroup";
 export { default as MarkdownRenderer } from "./core/MarkdownRenderer";
 export { default as Menu } from "./core/Menu";
 export { default as MessagePopup } from "./core/MessagePopup";

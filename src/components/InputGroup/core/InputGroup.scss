@@ -1,0 +1,367 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
+
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  .inputGroup_container {
+    display: inline-grid;
+    gap: var(--spacing-xs);
+    align-items: start;
+    max-width: 100%;
+    font-family: var(--font-family-body);
+  }
+
+  .inputGroup_fullWidth {
+    width: 100%;
+  }
+
+  .inputGroup_label {
+    display: inline-flex;
+    gap: var(--spacing-xs);
+    align-items: baseline;
+    max-width: 100%;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    white-space: nowrap;
+    overflow-wrap: anywhere;
+  }
+
+  .inputGroup_optional {
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-body-xs);
+    font-weight: var(--font-weight-normal);
+  }
+
+  .inputGroup_labelTop {
+    grid-template-areas:
+      "label"
+      "description"
+      "control"
+      "helper"
+      "error";
+  }
+
+  .inputGroup_labelBottom {
+    grid-template-areas:
+      "description"
+      "control"
+      "helper"
+      "error"
+      "label";
+  }
+
+  .inputGroup_labelLeft {
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-areas:
+      "label description"
+      "label control"
+      ". helper"
+      ". error";
+    column-gap: var(--spacing-md);
+    align-items: center;
+  }
+
+  .inputGroup_labelRight {
+    grid-template-columns: minmax(0, 1fr) max-content;
+    grid-template-areas:
+      "description label"
+      "control label"
+      "helper ."
+      "error .";
+    column-gap: var(--spacing-md);
+    align-items: center;
+  }
+
+  .inputGroup_label {
+    grid-area: label;
+  }
+
+  .inputGroup_description {
+    grid-area: description;
+  }
+
+  .inputGroup {
+    --inputGroup-glass-bg: rgba(255, 255, 255, 0.18);
+    --inputGroup-glass-hover-bg: rgba(255, 255, 255, 0.24);
+    --inputGroup-glass-border: rgba(255, 255, 255, 0.28);
+    --inputGroup-glass-text: var(--text-color-primary);
+
+    grid-area: control;
+    display: inline-flex;
+    align-items: stretch;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-md);
+    background: var(--background-color);
+    color: var(--text-color-primary);
+    box-shadow: var(--box-shadow-sm);
+    transition: var(--transition-default);
+  }
+
+  .inputGroup:focus-within {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+  }
+
+  .inputGroup_frame {
+    display: inline-flex;
+    align-items: center;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+  }
+
+  .inputGroup_content {
+    display: flex;
+    align-items: center;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .inputGroup_content > input,
+  .inputGroup_content > select,
+  .inputGroup_content > textarea {
+    min-width: 0;
+    width: 100%;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+  }
+
+  .inputGroup_prefix,
+  .inputGroup_suffix,
+  .inputGroup_addon,
+  .inputGroup_loadingMessage {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    color: inherit;
+    font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body);
+    overflow-wrap: anywhere;
+  }
+
+  .inputGroup_prefix,
+  .inputGroup_suffix {
+    color: var(--text-color-secondary);
+  }
+
+  .inputGroup_addon {
+    padding: var(--spacing-sm);
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  .inputGroup_startAddon {
+    border-start-start-radius: inherit;
+    border-end-start-radius: inherit;
+    border-inline-end: 1px solid currentcolor;
+  }
+
+  .inputGroup_endAddon {
+    border-start-end-radius: inherit;
+    border-end-end-radius: inherit;
+    border-inline-start: 1px solid currentcolor;
+  }
+
+  .inputGroup_loadingContainer {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    gap: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+  }
+
+  .inputGroup_loader {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentcolor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    opacity: 0.72;
+    animation: spin 700ms linear infinite;
+  }
+
+  .inputGroup_description,
+  .inputGroup_helperText,
+  .inputGroup_errorText {
+    max-width: 100%;
+    margin: 0;
+    font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body);
+    overflow-wrap: anywhere;
+  }
+
+  .inputGroup_description,
+  .inputGroup_helperText {
+    color: var(--text-color-secondary);
+  }
+
+  .inputGroup_helperText {
+    grid-area: helper;
+  }
+
+  .inputGroup_errorText {
+    grid-area: error;
+    color: var(--error-color, currentcolor);
+    font-weight: var(--font-weight-ui);
+  }
+
+  .sr_only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @each $themeName, $vals in theme.$themes {
+    .inputGroup_#{$themeName} {
+      --inputGroup-glass-bg: #{map.get($vals, glass-bg)};
+      --inputGroup-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --inputGroup-glass-border: #{map.get($vals, glass-border)};
+      --inputGroup-glass-text: #{map.get($vals, text)};
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+      border-color: map.get($vals, border);
+
+      &:hover {
+        background-color: if(
+          map.has-key($vals, hover),
+          map.get($vals, hover),
+          map.get($vals, bg)
+        );
+      }
+
+      &.inputGroup_outline {
+        background-color: transparent;
+        color: map.get($vals, text);
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
+    }
+  }
+
+  @each $state, $vals in theme.$states {
+    .inputGroup_#{$state} {
+      --inputGroup-glass-bg: #{map.get($vals, glass-bg)};
+      --inputGroup-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --inputGroup-glass-border: #{map.get($vals, glass-border)};
+      --inputGroup-glass-text: #{map.get($vals, text)};
+      border-width: 2px;
+      border-color: map.get($vals, border);
+      color: map.get($vals, text);
+    }
+  }
+
+  .inputGroup_clear {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .inputGroup_glass {
+    @include mixins.glass-surface(
+      var(--inputGroup-glass-bg),
+      var(--inputGroup-glass-border),
+      16px
+    );
+
+    color: var(--inputGroup-glass-text);
+  }
+
+  .inputGroup_glass:hover {
+    background: var(--inputGroup-glass-hover-bg);
+  }
+
+  .inputGroup_glass.inputGroup_outline {
+    border-color: var(--inputGroup-glass-border);
+  }
+
+  .inputGroup_disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--disabled-color);
+    border-color: var(--disabled-color);
+
+    &:hover {
+      background-color: var(--disabled-color);
+    }
+  }
+
+  .inputGroup_loading {
+    cursor: progress;
+  }
+
+  @each $key, $value in theme.$rounding {
+    .inputGroup_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .inputGroup_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @include bp.down(xs) {
+    .inputGroup_container,
+    .inputGroup {
+      width: 100%;
+    }
+
+    .inputGroup_labelLeft,
+    .inputGroup_labelRight {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "label"
+        "description"
+        "control"
+        "helper"
+        "error";
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .inputGroup,
+    .inputGroup * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .inputGroup {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+      box-shadow: none;
+    }
+
+    .inputGroup_glass {
+      background: Canvas;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+}

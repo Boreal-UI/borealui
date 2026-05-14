@@ -312,6 +312,11 @@
       "import": "./dist/core/IconButton.js",
       "require": "./dist/core/IconButton.cjs.js"
     },
+    "./core/InputGroup": {
+      "types": "./dist/types/core/InputGroup.d.ts",
+      "import": "./dist/core/InputGroup.js",
+      "require": "./dist/core/InputGroup.cjs.js"
+    },
     "./core/Layout": {
       "types": "./dist/types/core/Layout.d.ts",
       "import": "./dist/core/Layout.js",
@@ -642,6 +647,10 @@
     "./next/IconButton": {
       "types": "./dist/types/next/IconButton.d.ts",
       "import": "./dist/next/IconButton.js"
+    },
+    "./next/InputGroup": {
+      "types": "./dist/types/next/InputGroup.d.ts",
+      "import": "./dist/next/InputGroup.js"
     },
     "./next/Layout": {
       "types": "./dist/types/next/Layout.d.ts",
