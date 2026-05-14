@@ -68,6 +68,83 @@
       }
     }
 
+    .data_table_bulk_toolbar,
+    .data_table_pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-sm);
+      flex-wrap: wrap;
+      width: 100%;
+      min-width: var(--data-table-min-width);
+      padding: var(--spacing-sm);
+      border-top: 1px solid var(--border-color);
+      background: var(--background-color-light);
+      box-sizing: border-box;
+    }
+
+    .data_table_column_menu {
+      position: relative;
+      font-family: var(--font-family-ui);
+      color: var(--text-color);
+    }
+
+    .data_table_column_menu_trigger,
+    .data_table_pagination_button,
+    .data_table_column_control_button,
+    .data_table_expand_button {
+      min-height: 32px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      background: var(--background-color);
+      color: var(--text-color);
+      padding: 0 var(--spacing-xs);
+      font: inherit;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+    }
+
+    .data_table_column_menu_panel {
+      position: absolute;
+      z-index: 5;
+      top: calc(100% + var(--spacing-xxs));
+      right: 0;
+      display: grid;
+      gap: var(--spacing-xs);
+      min-width: 12rem;
+      padding: var(--spacing-sm);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      background: var(--background-color);
+      box-shadow: var(--box-shadow-md);
+    }
+
+    .data_table_column_menu_item {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      white-space: nowrap;
+    }
+
+    .data_table_viewport {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    &.data_table_virtualized .data_table_viewport {
+      overflow: auto;
+    }
+
     .data_table {
       width: 100%;
       min-width: var(--data-table-min-width);
@@ -88,6 +165,14 @@
       white-space: nowrap;
       color: var(--text-color-primary);
       vertical-align: top;
+    }
+
+    .data_table_header_content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-xs);
+      min-width: 0;
     }
 
     .data_table_selection_cell {
@@ -182,6 +267,33 @@
       }
     }
 
+    .data_table_column_controls {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .data_table_column_control_button,
+    .data_table_expand_button {
+      min-width: 28px;
+      min-height: 28px;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .data_table_cell_pinned {
+      position: sticky;
+      z-index: 2;
+      background: var(--background-color-dark);
+      box-shadow: 1px 0 0 var(--border-color);
+    }
+
+    th.data_table_cell_pinned {
+      z-index: 3;
+      background: var(--background-color);
+    }
+
     .data_table_row_clickable {
       cursor: pointer;
       transition: background-color var(--transition-default);
@@ -203,6 +315,50 @@
 
     .data_table_row_striped:nth-child(even) {
       background-color: var(--background-color-darker);
+    }
+
+    .data_table_expanded_row {
+      background: var(--background-color-light);
+    }
+
+    .data_table_expanded_cell {
+      padding: var(--spacing-sm);
+      border-bottom: 1px solid var(--text-color-primary);
+      color: var(--text-color-primary);
+    }
+
+    .data_table_edit_button {
+      display: inline;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: text;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+      }
+    }
+
+    .data_table_cell_editor {
+      width: min(100%, 16rem);
+      min-height: 32px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      background: var(--background-color);
+      color: var(--text-color);
+      padding: 0 var(--spacing-xs);
+      font: inherit;
+    }
+
+    .data_table_empty_cell {
+      padding: var(--spacing-md);
+      text-align: center;
+      color: var(--text-color-secondary);
     }
 
     tbody tr {

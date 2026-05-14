@@ -16,6 +16,14 @@ type SampleRow = {
   passed: boolean;
 };
 
+type AdminRow = {
+  id: string;
+  project: string;
+  owner: string;
+  status: string;
+  spend: number;
+};
+
 const sampleData: SampleRow[] = [
   { id: 1, name: "Alice", score: 91, passed: true },
   { id: 2, name: "Bob", score: 75, passed: true },
@@ -44,6 +52,33 @@ const sampleColumns: DataTableProps<SampleRow>["columns"] = [
     label: "Status",
     sortable: false,
     render: (value: any) => (value ? "Pass" : "Fail"),
+  },
+];
+
+const adminData: AdminRow[] = [
+  { id: "aurora", project: "Aurora Console", owner: "Ada", status: "Ready", spend: 12400 },
+  { id: "boreal", project: "Boreal Analytics", owner: "Grace", status: "Stable", spend: 9800 },
+  { id: "cascade", project: "Cascade Ops", owner: "Lin", status: "Draft", spend: 6200 },
+  { id: "drift", project: "Drift Billing", owner: "Mina", status: "Review", spend: 14300 },
+];
+
+const adminColumns: DataTableProps<AdminRow>["columns"] = [
+  {
+    key: "project",
+    label: "Project",
+    sortable: true,
+    editable: true,
+    width: "180px",
+    isRowHeader: true,
+  },
+  { key: "owner", label: "Owner", sortable: true, width: "120px" },
+  { key: "status", label: "Status", sortable: true, width: "120px" },
+  {
+    key: "spend",
+    label: "Spend",
+    sortable: true,
+    width: "120px",
+    render: (value) => `$${Number(value).toLocaleString()}`,
   },
 ];
 
@@ -538,4 +573,80 @@ export const WithDataTestid: Story = {
   args: {
     "data-testid": "datatable-storybook",
   },
+};
+
+export const AdminWorkflow: StoryObj<DataTableProps<AdminRow>> = {
+  render: () => (
+    <DataTable
+      data={adminData}
+      columns={adminColumns}
+      rowKey={(row) => row.id}
+      toolbarTitle="Projects"
+      filterable
+      selectableRows
+      pagination
+      itemsPerPage={2}
+      columnVisibility
+      columnReorder
+      columnResize
+      columnPinning
+      bulkActions={(keys) => <button type="button">Archive {keys.length}</button>}
+      renderExpandedRow={(row) => (
+        <div>
+          Owner: {row.owner}. Status: {row.status}. Current monthly spend is $
+          {row.spend.toLocaleString()}.
+        </div>
+      )}
+      onCellEdit={(value, meta) =>
+        console.log("Edited", meta.rowKey, String(meta.column.key), value)
+      }
+      caption="Admin workflow table"
+      theme="primary"
+      striped
+    />
+  ),
+};
+
+export const ServerPaginationWorkflow: StoryObj<DataTableProps<AdminRow>> = {
+  render: () => (
+    <DataTable
+      data={adminData.slice(0, 2)}
+      columns={adminColumns}
+      rowKey={(row) => row.id}
+      toolbarTitle="Server controlled projects"
+      pagination
+      serverPagination
+      currentPage={2}
+      itemsPerPage={2}
+      totalItems={24}
+      serverSort
+      onPageChange={(page, meta) => console.log("Load page", page, meta)}
+      onSortChange={(key, order) => console.log("Load sort", key, order)}
+      caption="Server paginated admin table"
+      theme="secondary"
+    />
+  ),
+};
+
+export const VirtualizedLargeDataset: StoryObj<DataTableProps<AdminRow>> = {
+  render: () => (
+    <DataTable
+      data={Array.from({ length: 250 }, (_, index) => ({
+        id: `row-${index}`,
+        project: `Project ${index + 1}`,
+        owner: ["Ada", "Grace", "Lin", "Mina"][index % 4],
+        status: ["Ready", "Stable", "Draft", "Review"][index % 4],
+        spend: 4000 + index * 75,
+      }))}
+      columns={adminColumns}
+      rowKey={(row) => row.id}
+      toolbarTitle="Virtualized projects"
+      virtualized
+      virtualRowHeight={48}
+      virtualViewportHeight={320}
+      caption="Virtualized project table"
+      theme="tertiary"
+      striped
+    />
+  ),
 };

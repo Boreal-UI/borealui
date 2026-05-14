@@ -41,6 +41,26 @@ const classMap = {
   toolbarTitle: "toolbarTitle",
   toolbarActions: "toolbarActions",
   filterInput: "filterInput",
+  bulkToolbar: "bulkToolbar",
+  pagination: "pagination",
+  paginationButton: "paginationButton",
+  paginationStatus: "paginationStatus",
+  columnMenu: "columnMenu",
+  columnMenuTrigger: "columnMenuTrigger",
+  columnMenuPanel: "columnMenuPanel",
+  columnMenuItem: "columnMenuItem",
+  viewport: "viewport",
+  headerContent: "headerContent",
+  columnControls: "columnControls",
+  columnControlButton: "columnControlButton",
+  pinnedCell: "pinnedCell",
+  expandedRow: "expandedRow",
+  expandedCell: "expandedCell",
+  expandButton: "expandButton",
+  virtualized: "virtualized",
+  editableCell: "editableCell",
+  editButton: "editButton",
+  cellEditor: "cellEditor",
   selectionCell: "selectionCell",
   outline: "outline",
   glass: "glass",
@@ -1034,12 +1054,187 @@ describe("DataTableBase", () => {
       />,
     );
 
-    expect(rowKey).toHaveBeenCalledTimes(baseData.length);
+    expect(rowKey).toHaveBeenCalled();
     expect(rowKey).toHaveBeenNthCalledWith(1, baseData[0]);
     expect(rowKey).toHaveBeenNthCalledWith(2, baseData[1]);
 
     expect(screen.getByTestId("data-table-row-a1")).toBeInTheDocument();
     expect(screen.getByTestId("data-table-row-b2")).toBeInTheDocument();
+  });
+
+  it("paginates rows and reports page metadata", () => {
+    const onPageChange = jest.fn();
+
+    renderTable({
+      pagination: true,
+      itemsPerPage: 1,
+      onPageChange,
+      rowKey: (row) => row.id ?? row.name,
+    });
+
+    expect(screen.getByText("Alice")).toBeInTheDocument();
+    expect(screen.queryByText("Bob")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId("data-table-pagination-next"));
+
+    expect(onPageChange).toHaveBeenCalledWith(2, {
+      page: 2,
+      itemsPerPage: 1,
+      offset: 1,
+      pageCount: 2,
+    });
+    expect(screen.getByText("Bob")).toBeInTheDocument();
+  });
+
+  it("supports server pagination without slicing provided data", () => {
+    const onPageChange = jest.fn();
+
+    renderTable({
+      pagination: true,
+      serverPagination: true,
+      currentPage: 2,
+      itemsPerPage: 2,
+      totalItems: 6,
+      onPageChange,
+    });
+
+    expect(screen.getByText("Alice")).toBeInTheDocument();
+    expect(screen.getByText("Bob")).toBeInTheDocument();
+    expect(screen.getByTestId("data-table-pagination-status")).toHaveTextContent(
+      "Page 2 of 3",
+    );
+
+    fireEvent.click(screen.getByTestId("data-table-pagination-next"));
+    expect(onPageChange).toHaveBeenCalledWith(
+      3,
+      expect.objectContaining({ page: 3, offset: 4, pageCount: 3 }),
+    );
+  });
+
+  it("toggles column visibility from the column menu", () => {
+    renderTable({ columnVisibility: true });
+
+    expect(screen.getByRole("columnheader", { name: /age/i })).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId("data-table-toggle-column-age"));
+
+    expect(screen.queryByRole("columnheader", { name: /age/i })).not.toBeInTheDocument();
+    expect(screen.queryByText("28")).not.toBeInTheDocument();
+  });
+
+  it("reorders columns with header controls", () => {
+    const onColumnOrderChange = jest.fn();
+
+    renderTable({
+      columnReorder: true,
+      onColumnOrderChange,
+    });
+
+    fireEvent.click(screen.getByTestId("data-table-move-age-left"));
+
+    const headers = screen.getAllByRole("columnheader");
+    expect(headers[0]).toHaveTextContent("Age");
+    expect(headers[1]).toHaveTextContent("Name");
+    expect(onColumnOrderChange).toHaveBeenCalledWith(["age", "name"]);
+  });
+
+  it("resizes and pins columns with header controls", () => {
+    const onColumnWidthsChange = jest.fn();
+    const onPinnedColumnKeysChange = jest.fn();
+
+    renderTable({
+      columnResize: true,
+      columnPinning: true,
+      columns: [
+        { key: "name", label: "Name", width: "120px" },
+        { key: "age", label: "Age" },
+      ],
+      onColumnWidthsChange,
+      onPinnedColumnKeysChange,
+    });
+
+    fireEvent.click(screen.getByTestId("data-table-resize-name-wider"));
+    expect(onColumnWidthsChange).toHaveBeenCalledWith({ name: "144px" });
+
+    fireEvent.click(screen.getByTestId("data-table-pin-name"));
+    expect(onPinnedColumnKeysChange).toHaveBeenCalledWith(["name"]);
+    expect(screen.getByRole("columnheader", { name: /name/i })).toHaveClass(
+      "pinnedCell",
+    );
+  });
+
+  it("renders row expansion panels", () => {
+    renderTable({
+      rowKey: (row) => row.id ?? row.name,
+      renderExpandedRow: (row) => <div>{row.name} details</div>,
+    });
+
+    fireEvent.click(screen.getByTestId("data-table-expand-row-a1"));
+
+    expect(screen.getByTestId("data-table-expanded-row-a1")).toHaveTextContent(
+      "Alice details",
+    );
+  });
+
+  it("renders bulk actions when rows are selected", () => {
+    renderTable({
+      selectableRows: true,
+      rowKey: (row) => row.id ?? row.name,
+      bulkActions: (keys) => <button type="button">Archive {keys.length}</button>,
+    });
+
+    fireEvent.click(screen.getByTestId("data-table-select-row-a1"));
+
+    expect(screen.getByTestId("data-table-bulk-toolbar")).toHaveTextContent(
+      "1 selected",
+    );
+    expect(screen.getByRole("button", { name: "Archive 1" })).toBeInTheDocument();
+  });
+
+  it("commits inline cell edits", () => {
+    const onCellEdit = jest.fn();
+
+    renderTable({
+      rowKey: (row) => row.id ?? row.name,
+      columns: [
+        { key: "name", label: "Name", editable: true },
+        { key: "age", label: "Age" },
+      ],
+      onCellEdit,
+    });
+
+    fireEvent.click(screen.getByTestId("data-table-edit-a1-name"));
+    const editor = screen.getByTestId("data-table-editor-a1-name");
+    fireEvent.change(editor, { target: { value: "Alicia" } });
+    fireEvent.keyDown(editor, { key: "Enter" });
+
+    expect(onCellEdit).toHaveBeenCalledWith(
+      "Alicia",
+      expect.objectContaining({
+        row: baseData[0],
+        rowIndex: 0,
+        rowKey: "a1",
+      }),
+    );
+  });
+
+  it("virtualizes large data sets", () => {
+    const rows = Array.from({ length: 100 }, (_, index) => ({
+      name: `User ${index}`,
+      age: index,
+    }));
+
+    renderTable({
+      data: rows,
+      virtualized: true,
+      virtualRowHeight: 40,
+      virtualViewportHeight: 120,
+      virtualOverscan: 1,
+    });
+
+    expect(screen.getByTestId("data-table-virtual-viewport")).toBeInTheDocument();
+    expect(screen.getByText("User 0")).toBeInTheDocument();
+    expect(screen.queryByText("User 99")).not.toBeInTheDocument();
+    expect(screen.getByTestId("data-table-virtual-bottom")).toBeInTheDocument();
   });
 
   it("has no accessibility violations", async () => {

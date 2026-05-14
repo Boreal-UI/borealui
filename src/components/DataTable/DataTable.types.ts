@@ -82,7 +82,44 @@ export interface Column<T> {
    * Example: "12rem", "20%", "240px".
    */
   width?: string;
+
+  /**
+   * Whether this column can be edited inline.
+   *
+   * @default false
+   */
+  editable?: boolean;
+
+  /** Input type used by the default inline editor. */
+  editInputType?: React.InputHTMLAttributes<HTMLInputElement>["type"];
+
+  /** Accessible label for this column's inline editor. */
+  getEditAriaLabel?: (row: T, value: unknown, rowIndex: number) => string;
+
+  /** Optional custom editor for editable cells. */
+  renderEditor?: (args: {
+    value: unknown;
+    row: T;
+    rowIndex: number;
+    column: Column<T>;
+    commit: (value: unknown) => void;
+    cancel: () => void;
+  }) => React.ReactNode;
 }
+
+export type DataTablePageChangeMeta = {
+  page: number;
+  itemsPerPage: number;
+  offset: number;
+  pageCount: number;
+};
+
+export type DataTableCellEditMeta<T> = {
+  row: T;
+  rowIndex: number;
+  column: Column<T>;
+  rowKey: string | number;
+};
 
 /**
  * Props for the DataTable component.
@@ -150,11 +187,26 @@ export interface DataTableProps<T> {
   /** Optional actions rendered in the table toolbar. */
   toolbarActions?: React.ReactNode;
 
+  /** Optional actions shown only when one or more rows are selected. */
+  bulkActions?: (
+    selectedKeys: Array<string | number>,
+    selectedRows: T[],
+  ) => React.ReactNode;
+
   /** Optional class name for the toolbar. */
   toolbarClassName?: string;
 
   /** Optional class name for the filter input. */
   filterInputClassName?: string;
+
+  /** Optional class name for the bulk action toolbar. */
+  bulkToolbarClassName?: string;
+
+  /** Optional class name for the pagination footer. */
+  paginationClassName?: string;
+
+  /** Optional class name for the column visibility menu. */
+  columnMenuClassName?: string;
 
   /**
    * Optional class name for the table wrapper.
@@ -382,6 +434,158 @@ export interface DataTableProps<T> {
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+
+  /**
+   * Enables built-in client-side pagination controls.
+   *
+   * @default false
+   */
+  pagination?: boolean;
+
+  /** Controlled current page, 1-indexed. */
+  currentPage?: number;
+
+  /**
+   * Initial page for uncontrolled pagination.
+   *
+   * @default 1
+   */
+  defaultPage?: number;
+
+  /**
+   * Rows displayed on each page.
+   *
+   * @default 10
+   */
+  itemsPerPage?: number;
+
+  /**
+   * Total rows for server-side pagination. Falls back to the processed row count.
+   */
+  totalItems?: number;
+
+  /**
+   * Enables server-side pagination. The table will not slice data locally.
+   *
+   * @default false
+   */
+  serverPagination?: boolean;
+
+  /** Callback fired when the page changes. */
+  onPageChange?: (page: number, meta: DataTablePageChangeMeta) => void;
+
+  /**
+   * Enables the column visibility menu.
+   *
+   * @default false
+   */
+  columnVisibility?: boolean;
+
+  /** Controlled list of visible column keys. */
+  visibleColumnKeys?: Array<keyof T>;
+
+  /** Initial visible column keys for uncontrolled column visibility. */
+  defaultVisibleColumnKeys?: Array<keyof T>;
+
+  /** Callback fired when visible columns change. */
+  onColumnVisibilityChange?: (keys: Array<keyof T>) => void;
+
+  /**
+   * Enables keyboard/button column reordering controls in each header.
+   *
+   * @default false
+   */
+  columnReorder?: boolean;
+
+  /** Controlled column order. */
+  columnOrder?: Array<keyof T>;
+
+  /** Initial column order for uncontrolled usage. */
+  defaultColumnOrder?: Array<keyof T>;
+
+  /** Callback fired when column order changes. */
+  onColumnOrderChange?: (keys: Array<keyof T>) => void;
+
+  /**
+   * Enables column resizing controls.
+   *
+   * @default false
+   */
+  columnResize?: boolean;
+
+  /** Controlled column widths keyed by column key. */
+  columnWidths?: Partial<Record<keyof T, string>>;
+
+  /** Initial column widths for uncontrolled usage. */
+  defaultColumnWidths?: Partial<Record<keyof T, string>>;
+
+  /** Callback fired when column widths change. */
+  onColumnWidthsChange?: (widths: Partial<Record<keyof T, string>>) => void;
+
+  /**
+   * Enables column pin/unpin controls.
+   *
+   * @default false
+   */
+  columnPinning?: boolean;
+
+  /** Controlled pinned column keys. */
+  pinnedColumnKeys?: Array<keyof T>;
+
+  /** Initial pinned column keys for uncontrolled usage. */
+  defaultPinnedColumnKeys?: Array<keyof T>;
+
+  /** Callback fired when pinned columns change. */
+  onPinnedColumnKeysChange?: (keys: Array<keyof T>) => void;
+
+  /** Render expanded content for a row. Enables row expansion controls. */
+  renderExpandedRow?: (row: T, index: number) => React.ReactNode;
+
+  /** Controlled expanded row keys. */
+  expandedRowKeys?: Array<string | number>;
+
+  /** Initial expanded row keys for uncontrolled usage. */
+  defaultExpandedRowKeys?: Array<string | number>;
+
+  /** Callback fired when expanded rows change. */
+  onExpandedRowsChange?: (
+    keys: Array<string | number>,
+    rows: T[],
+  ) => void;
+
+  /** Callback fired when an editable cell commits a value. */
+  onCellEdit?: (
+    value: unknown,
+    meta: DataTableCellEditMeta<T>,
+  ) => void;
+
+  /**
+   * Enables row virtualization for large client-side data sets.
+   *
+   * @default false
+   */
+  virtualized?: boolean;
+
+  /**
+   * Estimated/fixed row height used by the virtualized renderer.
+   *
+   * @default 48
+   */
+  virtualRowHeight?: number;
+
+  /**
+   * Height of the virtualized viewport.
+   *
+   * @default 360
+   */
+  virtualViewportHeight?: number;
+
+  /**
+   * Extra rows rendered before and after the visible virtualized range.
+   *
+   * @default 4
+   */
+  virtualOverscan?: number;
 }
 
 export interface DataTableBaseProps<T> extends DataTableProps<T> {
