@@ -52,6 +52,7 @@ export { default as RadioButton } from "./next/RadioButton";
 export { default as RadioGroup } from "./next/RadioGroup";
 export { default as Rating } from "./next/Rating";
 export { default as ScrollToTop } from "./next/ScrollToTop";
+export { default as SearchInput } from "./next/SearchInput";
 export { default as Select } from "./next/Select";
 export { default as Sidebar } from "./next/Sidebar";
 export { default as Skeleton } from "./next/Skeleton";

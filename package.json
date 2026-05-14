@@ -46,6 +46,7 @@
     "check:sync": "node scripts/checkSync.cjs",
     "generate:entrypoints": "node scripts/generateEntryPoints.cjs",
     "generate:exports": "node scripts/generateExports.cjs",
+    "generate:component": "node scripts/addComponent.cjs",
     "generate:docs": "ts-node scripts/generate-component-docs.cjs",
     "patch:useClient": "node scripts/patchUseClient.cjs",
     "test": "jest",
@@ -415,6 +416,11 @@
       "import": "./dist/core/ScrollToTop.js",
       "require": "./dist/core/ScrollToTop.cjs.js"
     },
+    "./core/SearchInput": {
+      "types": "./dist/types/core/SearchInput.d.ts",
+      "import": "./dist/core/SearchInput.js",
+      "require": "./dist/core/SearchInput.cjs.js"
+    },
     "./core/Select": {
       "types": "./dist/types/core/Select.d.ts",
       "import": "./dist/core/Select.js",
@@ -689,6 +695,10 @@
     "./next/ScrollToTop": {
       "types": "./dist/types/next/ScrollToTop.d.ts",
       "import": "./dist/next/ScrollToTop.js"
+    },
+    "./next/SearchInput": {
+      "types": "./dist/types/next/SearchInput.d.ts",
+      "import": "./dist/next/SearchInput.js"
     },
     "./next/Select": {
       "types": "./dist/types/next/Select.d.ts",

@@ -50,6 +50,7 @@ export { default as RadioButton } from "./core/RadioButton";
 export { default as RadioGroup } from "./core/RadioGroup";
 export { default as Rating } from "./core/Rating";
 export { default as ScrollToTop } from "./core/ScrollToTop";
+export { default as SearchInput } from "./core/SearchInput";
 export { default as Select } from "./core/Select";
 export { default as Sidebar } from "./core/Sidebar";
 export { default as Skeleton } from "./core/Skeleton";
