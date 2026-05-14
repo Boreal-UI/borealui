@@ -36,7 +36,13 @@ export type ThemeType =
 /**
  * UI state indicators typically used for validation or status feedback.
  */
-export type StateType = "success" | "error" | "warning" | "disabled" | "";
+export type StateType =
+  | "success"
+  | "error"
+  | "warning"
+  | "info"
+  | "disabled"
+  | "";
 
 /**
  * Types of notifications that determine visual appearance or icon.
@@ -136,19 +142,7 @@ export type ShapeType = "circle" | "rounded" | "square";
 /**
  * Status type used to represent presence or activity.
  */
-export type StatusType =
-  | "online"
-  | "idle"
-  | "offline"
-  | "busy"
-  | "in-a-meeting"
-  | "on-vacation"
-  | "streaming"
-  | "recording"
-  | "typing"
-  | "speaking"
-  | "viewing"
-  | "custom";
+export type StatusType = "online" | "offline" | "busy" | "away" | "custom";
 
 /**
  * Position of the status indicator relative to the parent element (e.g., avatar).
@@ -166,13 +160,7 @@ export type StatusPositionType =
 /**
  * How a component should attach to the viewport or page layout.
  */
-export type AttachmentType =
-  | "static"
-  | "st"
-  | "fixed"
-  | "fx"
-  | "sticky"
-  | "sk";
+export type AttachmentType = "static" | "st" | "fixed" | "fx" | "sticky" | "sk";
 
 export type TitlePositionType =
   | "top"

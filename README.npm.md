@@ -174,16 +174,19 @@ The root `boreal-ui` entry currently points to the core build. For Next.js apps,
 - `TextInput`
 - `TextArea`
 - `Select`
+- `ComboBox`
 - `ThemeSelect`
-- `Checkbox`
+- `CheckBox`
 - `RadioButton`
 - `RadioGroup`
 - `Toggle`
 - `Slider`
 - `ColorPicker`
+- `DateRangePicker`
 - `DateTimePicker`
 - `FileUpload`
 - `TagInput`
+- `FormField`
 - `FormGroup`
 
 ### Data and Content
@@ -192,9 +195,12 @@ The root `boreal-ui` entry currently points to the core build. For Next.js apps,
 - `MarkdownRenderer`
 - `Typography`
 - `MetricBox`
+- `Card`
+- `Avatar`
 
 ### Feedback and Status
 
+- `Alert`
 - `Badge`
 - `Chip`
 - `ChipGroup`
@@ -205,14 +211,15 @@ The root `boreal-ui` entry currently points to the core build. For Next.js apps,
 - `Rating`
 - `Tooltip`
 - `MessagePopup`
-- `Popover`
+- `PopOver`
 - `Modal`
+- `ToastProvider`
 - `NotificationCenter`
 - `EmptyState`
 
 ### Navigation and Layout
 
-- `Navbar`
+- `NavBar`
 - `Sidebar`
 - `Footer`
 - `Breadcrumbs`
@@ -223,9 +230,13 @@ The root `boreal-ui` entry currently points to the core build. For Next.js apps,
 - `Pager`
 - `Toolbar`
 - `Dropdown`
+- `Drawer`
 - `Divider`
-- `Card`
-- `Avatar`
+- `Container`
+- `Grid`
+- `Inline`
+- `Section`
+- `Stack`
 
 ## Common Styling Props
 

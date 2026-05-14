@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { axe } from "jest-axe";
 import RadioButton from "../src/components/RadioButton/core/RadioButton";
 import RadioGroup from "../src/components/RadioButton/core/RadioGroup";
-import Checkbox from "../src/components/Checkbox/core/Checkbox";
+import CheckBox from "../src/components/CheckBox/core/CheckBox";
 
 const options = [
   { label: "Email", value: "email" },
@@ -58,7 +58,7 @@ describe("RadioGroup", () => {
   it("keeps checkbox behavior independent from radio group selection", async () => {
     const user = userEvent.setup();
     const handleRadioChange = jest.fn();
-    const handleCheckboxChange = jest.fn();
+    const handleCheckBoxChange = jest.fn();
 
     render(
       <>
@@ -69,17 +69,17 @@ describe("RadioGroup", () => {
           value="email"
           onChange={handleRadioChange}
         />
-        <Checkbox
+        <CheckBox
           label="Subscribe to updates"
           checked={false}
-          onChange={handleCheckboxChange}
+          onChange={handleCheckBoxChange}
         />
       </>,
     );
 
     await user.click(screen.getByRole("checkbox", { name: "Subscribe to updates" }));
 
-    expect(handleCheckboxChange).toHaveBeenCalledWith(true);
+    expect(handleCheckBoxChange).toHaveBeenCalledWith(true);
     expect(handleRadioChange).not.toHaveBeenCalled();
   });
 

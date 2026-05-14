@@ -28,7 +28,7 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
-      state = "",
+      state,
       size = getDefaultSize(),
       disabled = false,
       classMap,
@@ -83,7 +83,7 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
         combineClassNames(
           classMap.container,
           classMap[theme],
-          classMap[state],
+          state && classMap[state],
           classMap[size],
           glass && classMap.glass,
           disabled && classMap.disabled,

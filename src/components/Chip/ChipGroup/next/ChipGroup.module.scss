@@ -89,4 +89,26 @@ $chip-positions: (
   pointer-events: auto;
   align-items: center;
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .container,
+  .container * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .container {
+    color: CanvasText;
+  }
+
+  .list {
+    background: transparent;
+  }
+
+  .chip {
+    forced-color-adjust: auto;
+  }
+}
 }

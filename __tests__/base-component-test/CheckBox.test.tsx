@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe, toHaveNoViolations } from "jest-axe";
-import CheckboxBase from "@/components/Checkbox/CheckboxBase";
+import CheckBoxBase from "@/components/CheckBox/CheckBoxBase";
 
 expect.extend(toHaveNoViolations);
 
@@ -48,12 +48,12 @@ const classMap = {
   glass: "glass",
 };
 
-describe("CheckboxBase", () => {
-  const renderCheckbox = (
-    props: Partial<React.ComponentProps<typeof CheckboxBase>> = {},
+describe("CheckBoxBase", () => {
+  const renderCheckBox = (
+    props: Partial<React.ComponentProps<typeof CheckBoxBase>> = {},
   ) =>
     render(
-      <CheckboxBase
+      <CheckBoxBase
         checked={false}
         onChange={jest.fn()}
         classMap={classMap}
@@ -67,7 +67,7 @@ describe("CheckboxBase", () => {
   });
 
   it("renders with label on right and wires accessible label attributes", () => {
-    renderCheckbox({
+    renderCheckBox({
       checked: true,
       label: "Accept Terms",
       labelPosition: "right",
@@ -93,7 +93,7 @@ describe("CheckboxBase", () => {
   });
 
   it("renders with label on left", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Enable Notifications",
       labelPosition: "left",
     });
@@ -115,7 +115,7 @@ describe("CheckboxBase", () => {
     const onChange = jest.fn();
 
     render(
-      <CheckboxBase
+      <CheckBoxBase
         label="I agree"
         classMap={classMap}
         data-testid="checkbox-toggle"
@@ -133,7 +133,7 @@ describe("CheckboxBase", () => {
     const onChange = jest.fn();
 
     render(
-      <CheckboxBase
+      <CheckBoxBase
         label="Subscribed"
         classMap={classMap}
         data-testid="checkbox-toggle"
@@ -148,7 +148,7 @@ describe("CheckboxBase", () => {
   });
 
   it("handles indeterminate state", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Indeterminate",
       indeterminate: true,
       checked: false,
@@ -162,7 +162,7 @@ describe("CheckboxBase", () => {
   });
 
   it("sets the native indeterminate property on the input", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Partially selected",
       indeterminate: true,
     });
@@ -175,7 +175,7 @@ describe("CheckboxBase", () => {
   });
 
   it("sets aria-checked to false when not indeterminate and unchecked", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Normal checkbox",
       indeterminate: false,
       checked: false,
@@ -186,7 +186,7 @@ describe("CheckboxBase", () => {
   });
 
   it("sets aria-checked to true when checked", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Checked checkbox",
       checked: true,
     });
@@ -200,7 +200,7 @@ describe("CheckboxBase", () => {
     const user = userEvent.setup();
 
     render(
-      <CheckboxBase
+      <CheckBoxBase
         checked={false}
         onChange={onChange}
         disabled
@@ -224,7 +224,7 @@ describe("CheckboxBase", () => {
   });
 
   it("renders without a label", () => {
-    renderCheckbox({
+    renderCheckBox({
       "aria-label": "Standalone checkbox",
     });
 
@@ -239,23 +239,23 @@ describe("CheckboxBase", () => {
   });
 
   it("does not set aria-labelledby when label is absent and aria-label is used", () => {
-    renderCheckbox({
-      "aria-label": "Checkbox without visible label",
+    renderCheckBox({
+      "aria-label": "CheckBox without visible label",
     });
 
     const input = screen.getByRole("checkbox", {
-      name: "Checkbox without visible label",
+      name: "CheckBox without visible label",
     });
 
     expect(input).toHaveAttribute(
       "aria-label",
-      "Checkbox without visible label",
+      "CheckBox without visible label",
     );
     expect(input).not.toHaveAttribute("aria-labelledby");
   });
 
   it("uses a custom id when provided", () => {
-    renderCheckbox({
+    renderCheckBox({
       id: "custom-checkbox-id",
       label: "Custom ID",
     });
@@ -268,7 +268,7 @@ describe("CheckboxBase", () => {
   });
 
   it("forwards extra props to the input element", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Forward props",
       name: "preferences",
       value: "email",
@@ -291,7 +291,7 @@ describe("CheckboxBase", () => {
   ] as const)(
     "applies the %s size class used for checkbox box sizing",
     (size, expectedClass) => {
-      renderCheckbox({
+      renderCheckBox({
         label: `${size} checkbox`,
         size,
       });
@@ -305,7 +305,7 @@ describe("CheckboxBase", () => {
   );
 
   it("uses the native checked state for the filled checkbox indicator", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Filled checkbox",
       checked: true,
     });
@@ -320,7 +320,7 @@ describe("CheckboxBase", () => {
   });
 
   it("does not apply the indeterminate box class when unchecked normally", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Unchecked checkbox",
       checked: false,
       indeterminate: false,
@@ -335,7 +335,7 @@ describe("CheckboxBase", () => {
   });
 
   it("handles indeterminate state", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Indeterminate",
       indeterminate: true,
       checked: false,
@@ -351,7 +351,7 @@ describe("CheckboxBase", () => {
   });
 
   it("applies all visual classes needed by the checkbox styling system", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Visual checkbox",
       theme: "secondary",
       state: "warning",
@@ -380,7 +380,7 @@ describe("CheckboxBase", () => {
   });
 
   it("applies theme, state, label position, size, shadow, rounding, disabled, invalid, glass, and custom className to wrapper", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Styled checkbox",
       theme: "primary",
       state: "success",
@@ -410,7 +410,7 @@ describe("CheckboxBase", () => {
   });
 
   it("applies input, box, and label classes", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Styled parts",
     });
 
@@ -426,7 +426,7 @@ describe("CheckboxBase", () => {
   });
 
   it("applies custom class names to checkbox sections", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Custom parts",
       description: "Helpful detail",
       errorMessage: "Needs attention",
@@ -462,7 +462,7 @@ describe("CheckboxBase", () => {
 
   it("uses the default test id when none is provided", () => {
     render(
-      <CheckboxBase
+      <CheckBoxBase
         checked={false}
         onChange={jest.fn()}
         label="Default test id"
@@ -476,7 +476,7 @@ describe("CheckboxBase", () => {
   });
 
   it("renders description and connects it with aria-describedby", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Email updates",
       description: "Receive occasional product news.",
     });
@@ -494,7 +494,7 @@ describe("CheckboxBase", () => {
   });
 
   it("renders error message and connects it with aria-describedby and aria-errormessage when invalid", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Terms agreement",
       invalid: true,
       errorMessage: "You must accept the terms.",
@@ -518,7 +518,7 @@ describe("CheckboxBase", () => {
   });
 
   it("sets aria-invalid and aria-errormessage when state is error", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Error state checkbox",
       state: "error",
       errorMessage: "Selection required.",
@@ -535,7 +535,7 @@ describe("CheckboxBase", () => {
   });
 
   it("combines external aria-describedby with generated description and error ids", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Combined descriptions",
       description: "Helper text",
       errorMessage: "Error text",
@@ -565,7 +565,7 @@ describe("CheckboxBase", () => {
     render(
       <>
         <span id="external-checkbox-label">External checkbox label</span>
-        <CheckboxBase
+        <CheckBoxBase
           checked={false}
           onChange={jest.fn()}
           label="Internal checkbox label"
@@ -585,7 +585,7 @@ describe("CheckboxBase", () => {
   });
 
   it("uses aria-label when explicitly provided", () => {
-    renderCheckbox({
+    renderCheckBox({
       label: "Visible label",
       "aria-label": "Explicit checkbox label",
     });
@@ -603,7 +603,7 @@ describe("CheckboxBase", () => {
     const ref = { current: null as HTMLInputElement | null };
 
     render(
-      <CheckboxBase
+      <CheckBoxBase
         checked={false}
         onChange={jest.fn()}
         label="Ref checkbox"
@@ -618,7 +618,7 @@ describe("CheckboxBase", () => {
 
   it("has no accessibility violations in normal state", async () => {
     const { container } = render(
-      <CheckboxBase
+      <CheckBoxBase
         checked={false}
         onChange={jest.fn()}
         label="Accessible checkbox"
@@ -633,7 +633,7 @@ describe("CheckboxBase", () => {
 
   it("has no accessibility violations in checked state", async () => {
     const { container } = render(
-      <CheckboxBase
+      <CheckBoxBase
         checked={true}
         onChange={jest.fn()}
         label="Checked accessible checkbox"
@@ -648,7 +648,7 @@ describe("CheckboxBase", () => {
 
   it("has no accessibility violations in indeterminate state", async () => {
     const { container } = render(
-      <CheckboxBase
+      <CheckBoxBase
         checked={false}
         indeterminate
         onChange={jest.fn()}
@@ -664,7 +664,7 @@ describe("CheckboxBase", () => {
 
   it("has no accessibility violations in disabled state", async () => {
     const { container } = render(
-      <CheckboxBase
+      <CheckBoxBase
         checked={false}
         disabled
         onChange={jest.fn()}
@@ -680,7 +680,7 @@ describe("CheckboxBase", () => {
 
   it("has no accessibility violations with description and error content", async () => {
     const { container } = render(
-      <CheckboxBase
+      <CheckBoxBase
         checked={false}
         onChange={jest.fn()}
         label="Accessible checkbox with help"

@@ -122,8 +122,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional CSS class names for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "containerClassName",
@@ -131,8 +130,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the outer layout container.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "data-testid",
@@ -141,6 +139,15 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "testing"
+    },
+    {
+      "name": "disabled",
+      "type": "boolean",
+      "description": "Whether the input is disabled.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "glass",
@@ -165,8 +172,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the icon wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "inputClassName",
@@ -174,8 +180,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the native input.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "label",
@@ -191,8 +196,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the visible label.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "labelPosition",
@@ -238,6 +242,15 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
+      "name": "placeholder",
+      "type": "string",
+      "description": "Placeholder text shown when the input is empty.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"Enter text\""
+    },
+    {
       "name": "readOnly",
       "type": "boolean",
       "description": "If true, the input is rendered in read-only mode.",
@@ -278,8 +291,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the screen-reader-only text.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "srOnlyText",
@@ -295,8 +307,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "State of the input. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",
@@ -322,8 +333,7 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the password toggle button.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     }
   ]
 };

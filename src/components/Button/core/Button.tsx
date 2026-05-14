@@ -26,6 +26,7 @@ const classes = {
   clear: "button_clear",
 
   success: "button_success",
+  info: "button_info",
   warning: "button_warning",
   error: "button_error",
 

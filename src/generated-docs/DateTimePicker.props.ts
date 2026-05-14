@@ -74,8 +74,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -111,6 +110,15 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "fullWidth",
+      "type": "boolean",
+      "description": "Whether the input should take the full width of its container.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
       "name": "glass",
       "type": "boolean",
       "description": "Adds translucent glass styling to the input surface.",
@@ -142,6 +150,15 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "labelPosition",
+      "type": "LabelPositionType",
+      "description": "Position of the label relative to the input.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"top\""
     },
     {
       "name": "max",
@@ -274,8 +291,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "description": "State of the input ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",
@@ -302,6 +318,15 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "type",
+      "type": "\"date\" | \"time\" | \"datetime-local\"",
+      "description": "The type of input element. ('date' | 'time' | 'datetime-local').",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"datetime-local\""
     },
     {
       "name": "value",

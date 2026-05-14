@@ -1,34 +1,15 @@
 import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  CommandPalette,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "../src/index.core";
+import { CommandPalette } from "../src/index.core";
 import type { CommandPaletteProps } from "../src/components/CommandPalette/CommandPalette.types";
 import { FaSearch, FaUser, FaCog } from "react-icons/fa";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<CommandPaletteProps> = {
   title: "Components/CommandPalette",

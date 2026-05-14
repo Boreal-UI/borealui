@@ -146,9 +146,35 @@ export interface SocialLink {
 export type LogoSource =
   | React.ReactNode
   | string
-  | { src: string; width?: number; height?: number };
+  | {
+      /**
+       * Logo image source.
+       */
+      src: string;
+      /**
+       * Intrinsic logo width.
+       */
+      width?: number;
+      /**
+       * Intrinsic logo height.
+       */
+      height?: number;
+    };
 
-export type LogoImage = { src: string; width?: number; height?: number };
+export type LogoImage = {
+  /**
+   * Logo image source.
+   */
+  src: string;
+  /**
+   * Intrinsic logo width.
+   */
+  width?: number;
+  /**
+   * Intrinsic logo height.
+   */
+  height?: number;
+};
 
 /**
  * Props for the Footer component.
@@ -174,8 +200,6 @@ export interface FooterProps extends Omit<
 
   /**
    * Optional class name for custom styles.
-   *
-   * @default ""
    */
   className?: string;
 
@@ -460,34 +484,79 @@ export type LinkWrapperProps = Omit<
   React.AnchorHTMLAttributes<HTMLAnchorElement>,
   "href" | "children" | "className"
 > & {
+  /**
+   * URL used when rendering a link.
+   */
   href: string;
+  /**
+   * Additional CSS class names for the component root.
+   */
   className?: string;
+  /**
+   * Content rendered inside the component.
+   */
   children: React.ReactNode;
 };
 
 export type LinkWrapperComponent = React.ComponentType<LinkWrapperProps>;
 
 export type ImageLikeProps = {
+  /**
+   * Image or media source.
+   */
   src: string;
+  /**
+   * Alternative text for the image.
+   */
   alt: string;
+  /**
+   * Additional CSS class names for the component root.
+   */
   className?: string;
+  /**
+   * Rendered width for the element.
+   */
   width?: number;
+  /**
+   * Rendered height for the element.
+   */
   height?: number;
+  /**
+   * Whether the image should fill its container.
+   */
   fill?: boolean;
   /** Optional test ID for testing frameworks. */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+  /**
+   * ARIA Hidden attribute forwarded to the relevant accessible element.
+   */
   "aria-hidden"?: boolean;
 };
 
 export type ImageComponent = React.ComponentType<ImageLikeProps>;
 
 export interface BaseFooterProps extends FooterProps {
+  /**
+   * Icon Button component dependency injected by the wrapper.
+   */
   IconButton: React.ComponentType<IconButtonProps>;
+  /**
+   * Theme Select component dependency injected by the wrapper.
+   */
   ThemeSelect: React.ComponentType<ThemeSelectProps>;
+  /**
+   * Component implementation used to render the image portion.
+   */
   ImageComponent?: ImageComponent | "img";
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Link Wrapper component dependency injected by the wrapper.
+   */
   LinkWrapper?: LinkWrapperComponent;
 }

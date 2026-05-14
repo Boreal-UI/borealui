@@ -212,7 +212,7 @@ export function DeleteProjectDialog({
 }
 ```
 
-For `Dropdown`, `Popover`, `Tooltip`, `Tabs`, `Accordion`, and `CommandPalette`, prefer the component's public props for labels and state. Avoid adding custom roles to wrapper elements unless the component API asks for them.
+For `Dropdown`, `PopOver`, `Tooltip`, `Tabs`, `Accordion`, and `CommandPalette`, prefer the component's public props for labels and state. Avoid adding custom roles to wrapper elements unless the component API asks for them.
 
 ## Loading and Async States
 

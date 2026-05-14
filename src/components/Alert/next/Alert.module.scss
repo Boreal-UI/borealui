@@ -1,0 +1,198 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
+
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  .alert {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    width: 100%;
+    max-width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    font-family: var(--font-family-ui);
+    color: var(--text-color);
+    background: var(--surface-color, var(--background-color));
+    overflow-wrap: anywhere;
+  }
+
+  .content {
+    min-width: 0;
+    flex: 1;
+    display: grid;
+    gap: var(--spacing-xs);
+  }
+
+  .title {
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-heading);
+  }
+
+  .message {
+    font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body);
+  }
+
+  .icon {
+    display: inline-flex;
+    flex: 0 0 auto;
+    margin-top: 0.125rem;
+  }
+
+  .actions {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    flex-wrap: wrap;
+  }
+
+  .dismissButton {
+    min-width: 2rem;
+    min-height: 2rem;
+    border: 0;
+    border-radius: var(--border-radius-sm);
+    background: transparent;
+    color: currentcolor;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .dismissButton:focus-visible {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+  }
+
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      --alert-bg: #{map.get($values, bg)};
+      --alert-text: #{map.get($values, text)};
+      --alert-border: #{map.get($values, border)};
+      --alert-soft-bg: #{map.get($values, glass-bg)};
+
+      background: var(--alert-bg);
+      color: var(--alert-text);
+      border-color: var(--alert-border);
+
+      --alert-glass-bg: #{map.get($values, glass-bg)};
+      --alert-glass-hover-bg: #{map.get($values, glass-hover)};
+      --alert-glass-border: #{map.get($values, glass-border)};
+      --alert-glass-text: #{map.get($values, text)};
+    }
+    .#{$name}.soft {
+      background: var(--alert-soft-bg);
+      color: var(--alert-text);
+      border-color: var(--alert-border);
+    }
+
+    .#{$name}.outline {
+      background: transparent;
+      color: var(--alert-text);
+      border-color: var(--alert-border);
+    }
+
+    .#{$name}.glass {
+      @include mixins.glass-surface(
+        var(--alert-glass-bg, var(--glass-background)),
+        var(--alert-glass-border, var(--glass-border-color)),
+        var(--glass-blur)
+      );
+
+      color: var(--alert-glass-text, var(--alert-text));
+      border-color: var(--alert-glass-border, var(--alert-border));
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      --alert-bg: #{map.get($values, bg)};
+      --alert-text: #{map.get($values, text)};
+      --alert-border: #{map.get($values, border)};
+      --alert-soft-bg: #{map.get($values, glass-bg)};
+
+      background: var(--alert-bg);
+      color: var(--alert-text);
+      border-color: var(--alert-border);
+
+      --alert-glass-bg: #{map.get($values, glass-bg)};
+      --alert-glass-hover-bg: #{map.get($values, glass-hover)};
+      --alert-glass-border: #{map.get($values, glass-border)};
+      --alert-glass-text: #{map.get($values, text)};
+    }
+    .#{$name}.soft {
+      background: var(--alert-soft-bg);
+      color: var(--alert-text);
+      border-color: var(--alert-border);
+    }
+
+    .#{$name}.outline {
+      background: transparent;
+      color: var(--alert-text);
+      border-color: var(--alert-border);
+    }
+
+    .#{$name}.glass {
+      @include mixins.glass-surface(
+        var(--alert-glass-bg, var(--glass-background)),
+        var(--alert-glass-border, var(--glass-border-color)),
+        var(--glass-blur)
+      );
+
+      color: var(--alert-glass-text, var(--alert-text));
+      border-color: var(--alert-glass-border, var(--alert-border));
+    }
+  }
+
+  .soft {
+    background: color-mix(in srgb, currentcolor 8%, transparent);
+  }
+
+  .outline {
+    background: transparent;
+    border-color: currentcolor;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .alert,
+    .alert * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .alert,
+    .soft,
+    .outline,
+    .glass {
+      background: Canvas !important;
+      color: CanvasText !important;
+      border-color: ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    .dismissButton {
+      color: ButtonText;
+      border: 1px solid ButtonText;
+    }
+
+    .dismissButton:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

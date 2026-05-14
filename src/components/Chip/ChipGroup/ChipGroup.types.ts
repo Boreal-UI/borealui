@@ -4,6 +4,7 @@ import { ChipProps } from "../Chip.types";
 /**
  * Minimal prop surface expected from child components that can be rendered
  * inside a ChipGroup when using children instead of a chips array.
+ * @default "topCenter"
  */
 export type ClosableChildProps = {
   /**
@@ -66,8 +67,6 @@ export interface ChipGroupCommon {
   size?: SizeType;
   /**
    * Optional class name for the chip group container.
-   *
-   * @default ""
    */
   className?: string;
 

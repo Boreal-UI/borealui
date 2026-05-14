@@ -17,8 +17,7 @@ export const radioGroupPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the root fieldset.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -150,8 +149,7 @@ export const radioGroupPropDocs: GeneratedComponentDoc = {
       "description": "State of the radio group.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

@@ -2,7 +2,7 @@ import { ShadowType, SizeType } from "@/types/types";
 
 /**
  * Represents a color option available for selection.
- */
+   */
 export interface ColorOption {
   /** Label to display as a tooltip or for screen readers. */
   label: string;
@@ -141,8 +141,6 @@ export interface ColorPickerProps {
 
   /**
    * Custom class name for the component container.
-   *
-   * @default ""
    */
   className?: string;
 
@@ -159,5 +157,8 @@ export interface ColorPickerProps {
 }
 
 export interface ColorPickerBaseProps extends ColorPickerProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

@@ -1,0 +1,144 @@
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  .formField {
+    display: grid;
+    gap: var(--spacing-xs);
+    width: fit-content;
+    min-width: 0;
+    font-family: var(--font-family-ui);
+    color: var(--text-color);
+  }
+
+  .labelTop {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "label"
+      "control"
+      "helper"
+      "error";
+  }
+
+  .labelBottom {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "control"
+      "label"
+      "helper"
+      "error";
+  }
+
+  .labelLeft,
+  .labelRight {
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-areas:
+      "label control"
+      ". helper"
+      ". error";
+    align-items: start;
+    column-gap: var(--spacing-sm);
+    row-gap: var(--spacing-xs);
+  }
+
+  .labelRight {
+    grid-template-columns: minmax(0, 1fr) max-content;
+    grid-template-areas:
+      "control label"
+      "helper ."
+      "error .";
+  }
+
+  .label {
+    grid-area: label;
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--spacing-xs);
+    min-width: 0;
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label, 1.2);
+  }
+
+  .labelLeft .label,
+  .labelRight .label {
+    padding-block-start: 0.45em;
+  }
+
+  .control {
+    grid-area: control;
+    min-width: 0;
+  }
+
+  .helperText {
+    grid-area: helper;
+    min-width: 0;
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+  }
+
+  .errorText {
+    grid-area: error;
+    min-width: 0;
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+  }
+
+  .optional {
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-caption);
+    font-weight: var(--font-weight-body);
+  }
+
+  .errorText,
+  .error {
+    color: var(--error-color, #b00020);
+  }
+
+  .warning .helperText {
+    color: var(--warning-color, #8a5a00);
+  }
+
+  .info .helperText {
+    color: var(--info-color, #0057b8);
+  }
+
+  .success .helperText {
+    color: var(--success-color, #0a6b35);
+  }
+
+  .disabled {
+    opacity: 0.6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .formField,
+    .formField * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .formField {
+      color: CanvasText;
+    }
+
+    .control {
+      forced-color-adjust: auto;
+    }
+
+    .errorText,
+    .error {
+      color: Mark;
+    }
+
+    .warning,
+    .info,
+    .success {
+      color: CanvasText;
+    }
+
+    .disabled {
+      color: GrayText;
+    }
+  }
+}

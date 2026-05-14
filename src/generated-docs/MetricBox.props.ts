@@ -66,8 +66,7 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional CSS class names for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "contentClassName",
@@ -75,8 +74,7 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the content wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "data-testid",
@@ -126,8 +124,7 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the icon wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "outline",
@@ -179,8 +176,7 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "State of the metric. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "subtext",
@@ -196,8 +192,7 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the subtext element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "testId",
@@ -231,8 +226,7 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the title element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "value",
@@ -248,8 +242,7 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the value element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     }
   ]
 };

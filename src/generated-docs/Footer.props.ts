@@ -170,8 +170,7 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Optional class name for custom styles.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "contentClassName",
@@ -418,6 +417,15 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"Theme selector\""
+    },
+    {
+      "name": "themeSelectLabel",
+      "type": "string",
+      "description": "Label for the theme selector dropdown.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"Theme\""
     },
     {
       "name": "themeToggleClassName",

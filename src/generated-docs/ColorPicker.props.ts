@@ -50,8 +50,7 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the component container.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "colors",

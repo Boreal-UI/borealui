@@ -24,7 +24,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
   errorText,
   customInputAriaLabel = "Custom color picker",
   hideLabel = false,
-  className = "",
+  className,
   classMap,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,

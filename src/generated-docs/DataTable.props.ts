@@ -58,8 +58,7 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "Optional class name for the table wrapper.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "colCount",
@@ -94,6 +93,23 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "category": "testing"
     },
     {
+      "name": "defaultFilterValue",
+      "type": "string",
+      "description": "Initial filter query for uncontrolled filtering.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "defaultSelectedRowKeys",
+      "type": "(string | number)[]",
+      "description": "Initial selected row keys for uncontrolled selection.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "[]"
+    },
+    {
       "name": "defaultSortKey",
       "type": "keyof T",
       "description": "Default key to sort by on initial render.",
@@ -120,6 +136,49 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"No data available\""
     },
     {
+      "name": "filterable",
+      "type": "boolean",
+      "description": "Enables the built-in client-side filter input.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
+      "name": "filterAriaLabel",
+      "type": "string",
+      "description": "Accessible label for the filter input.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"Filter table rows\""
+    },
+    {
+      "name": "filterInputClassName",
+      "type": "string",
+      "description": "Optional class name for the filter input.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "filterPlaceholder",
+      "type": "string",
+      "description": "Placeholder for the filter input.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"Filter table\""
+    },
+    {
+      "name": "filterValue",
+      "type": "string",
+      "description": "Controlled filter query.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "getRowAriaDescription",
       "type": "((row: T, index: number) => string)",
       "description": "Optional row description for screen readers. Only used when rows are interactive.",
@@ -131,6 +190,14 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "name": "getRowAriaLabel",
       "type": "((row: T, index: number) => string)",
       "description": "Optional accessible label for interactive rows. Only used when onRowClick is provided.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
+      "name": "getRowSelectAriaLabel",
+      "type": "((row: T, index: number) => string)",
+      "description": "Accessible label for a row selection checkbox.",
       "required": false,
       "inherited": false,
       "category": "events"
@@ -188,9 +255,25 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"Loading data\""
     },
     {
+      "name": "onFilterChange",
+      "type": "((value: string) => void)",
+      "description": "Callback fired when the filter query changes.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
       "name": "onRowClick",
       "type": "((row: T) => void)",
       "description": "Optional callback when a row is clicked.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
+      "name": "onSelectionChange",
+      "type": "((selectedKeys: Array<string | number>, selectedRows: T[]) => void)",
+      "description": "Callback fired when row selection changes.",
       "required": false,
       "inherited": false,
       "category": "events"
@@ -246,6 +329,32 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "selectableRows",
+      "type": "boolean",
+      "description": "Enables checkbox row selection.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
+      "name": "selectAllAriaLabel",
+      "type": "string",
+      "description": "Accessible label for the select-all checkbox.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"Select all rows\""
+    },
+    {
+      "name": "selectedRowKeys",
+      "type": "(string | number)[]",
+      "description": "Controlled selected row keys.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "serverSort",
       "type": "boolean",
       "description": "Whether to enable server-side sorting.",
@@ -269,8 +378,7 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "description": "State of the table ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "striped",
@@ -322,6 +430,30 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "configured default theme (fallback: \"primary\")"
+    },
+    {
+      "name": "toolbarActions",
+      "type": "ReactNode",
+      "description": "Optional actions rendered in the table toolbar.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "toolbarClassName",
+      "type": "string",
+      "description": "Optional class name for the toolbar.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "toolbarTitle",
+      "type": "ReactNode",
+      "description": "Optional toolbar title shown above the table.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "wrapCells",

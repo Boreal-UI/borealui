@@ -38,7 +38,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   placeholder = "Add a tag...",
   theme = getDefaultTheme(),
   glass = getDefaultGlass(),
-  state = "",
+  state,
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
@@ -203,7 +203,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
       combineClassNames(
         classMap.tagInput,
         classMap[theme],
-        classMap[state],
+        state && classMap[state],
         classMap[size],
         glass && classMap.glass,
       ),

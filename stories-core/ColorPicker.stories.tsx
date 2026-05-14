@@ -5,18 +5,11 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ColorPicker } from "../src/index.core";
 import type { ColorPickerProps } from "../src/components/ColorPicker/ColorPicker.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
-import { ShadowType, SizeType } from "../src/types/types";
+import { ShadowType } from "../src/types/types";
 import { ShapeType } from "../src/components/ColorPicker/ColorPicker.types";
+import { shadowOptions, sizeOptions } from "../shared-story-assets/OptionTypes";
 
-const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
 const shapeOptions: ShapeType[] = ["square", "round", "pill"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
 
 const meta: Meta<ColorPickerProps> = {
   title: "Components/ColorPicker",
@@ -94,11 +87,7 @@ export const ShapeVariants = () => (
 export const ShadowVariants = () => (
   <StoryGrid title="Shadow Variants">
     {shadowOptions.map((shadow) => (
-      <ColorPicker
-        key={shadow}
-        {...defaultArgs}
-        shadow={shadow as ShadowType}
-      />
+      <ColorPicker key={shadow} {...defaultArgs} shadow={shadow} />
     ))}
   </StoryGrid>
 );

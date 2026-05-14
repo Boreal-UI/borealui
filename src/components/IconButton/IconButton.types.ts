@@ -47,8 +47,6 @@ export interface IconButtonProps extends InteractiveProps {
   /**
    * State of the button.
    * One of: "success" | "error" | "warning" | "disabled" | ""
-   *
-   * @default ""
    */
   state?: StateType;
 
@@ -80,29 +78,21 @@ export interface IconButtonProps extends InteractiveProps {
 
   /**
    * Custom class name for the icon.
-   *
-   * @default ""
    */
   iconClassName?: string;
 
   /**
    * Custom class name for the label/loading wrapper.
-   *
-   * @default ""
    */
   labelClassName?: string;
 
   /**
    * Custom class name for the loading indicator.
-   *
-   * @default ""
    */
   loaderClassName?: string;
 
   /**
    * Custom class name for additional styling.
-   *
-   * @default ""
    */
   className?: string;
 
@@ -214,7 +204,6 @@ export interface IconButtonProps extends InteractiveProps {
   /** Optional tab index override. */
   tabIndex?: number;
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -227,6 +216,12 @@ export interface IconButtonProps extends InteractiveProps {
 }
 
 export interface IconButtonBaseProps extends IconButtonProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Component implementation used to render the link portion.
+   */
   LinkComponent?: React.ElementType;
 }

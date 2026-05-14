@@ -11,24 +11,11 @@ import {
 } from "react-icons/fa";
 import ThemeProvider from "../src/context/ThemeContext";
 import image from "./assets/tutorials.svg";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const defaultLinks: FooterProps["links"] = [
   { label: "Home", href: "/" },

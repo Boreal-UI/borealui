@@ -35,7 +35,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
       onRemove,
       position = "topCenter",
       size = getDefaultSize(),
-      className = "",
+      className,
       ChipComponent,
       classMap,
       "data-testid": dataTestId,

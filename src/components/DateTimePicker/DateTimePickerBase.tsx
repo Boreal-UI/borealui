@@ -13,7 +13,9 @@ import {
 
 const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
   label,
+  labelPosition = "top",
   value,
+  fullWidth = false,
   onChange,
   min,
   max,
@@ -22,16 +24,17 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
   disabled = false,
   readOnly = false,
   placeholder,
+  type = "datetime-local",
   autoComplete = "off",
   title,
   size = getDefaultSize(),
   outline,
   theme = getDefaultTheme(),
   glass = getDefaultGlass(),
-  state = "",
+  state,
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
-  className = "",
+  className,
   "data-testid": dataTestId,
   testId = dataTestId ?? "datetime-picker",
   classMap,
@@ -83,22 +86,26 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
     () =>
       combineClassNames(
         classMap.wrapper,
+        classMap[`label${capitalize(labelPosition)}`],
         classMap[theme],
-        classMap[state],
+        state && classMap[state],
         classMap[size],
+        fullWidth && classMap.fullWidth,
         glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         outline && classMap.outline,
         disabled && classMap.disabled,
         readOnly && classMap.readOnly,
-        className,
+        className && className,
       ),
     [
       classMap,
+      labelPosition,
       theme,
       state,
       size,
+      fullWidth,
       glass,
       shadow,
       rounding,
@@ -147,7 +154,7 @@ const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
         <input
           id={inputId}
           ref={inputRef}
-          type="datetime-local"
+          type={type}
           className={classMap.input}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}

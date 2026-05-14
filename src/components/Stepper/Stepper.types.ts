@@ -63,7 +63,6 @@ export interface StepperProps {
    * State of the stepper.
    * "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -146,6 +145,12 @@ export interface StepperProps {
 }
 
 export interface StepperBaseProps extends StepperProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Component implementation used to render the icon button portion.
+   */
   IconButtonComponent: React.FC<IconButtonProps>;
 }

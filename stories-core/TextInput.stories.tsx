@@ -4,35 +4,12 @@ import { FaInbox, FaUser } from "react-icons/fa";
 import { TextInput } from "../src/index.core";
 import type { TextInputProps } from "../src/components/TextInput/TextInput.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const themeOptions: NonNullable<TextInputProps["theme"]>[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: NonNullable<TextInputProps["state"]>[] = [
-  "success",
-  "error",
-  "warning",
-];
-
-const roundingOptions: NonNullable<TextInputProps["rounding"]>[] = [
-  "none",
-  "small",
-  "medium",
-  "large",
-];
-
-const shadowOptions: NonNullable<TextInputProps["shadow"]>[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const labelPositionOptions: NonNullable<TextInputProps["labelPosition"]>[] = [
   "top",

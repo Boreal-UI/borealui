@@ -25,8 +25,7 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "Additional custom class names.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -53,6 +52,14 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "configured default glass setting (fallback: false)"
+    },
+    {
+      "name": "href",
+      "type": "string",
+      "description": "Optional href. When provided, the badge renders as an anchor link.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "icon",
@@ -120,8 +127,7 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "description": "The badge state ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "target",

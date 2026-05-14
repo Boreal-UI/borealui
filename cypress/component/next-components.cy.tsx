@@ -1,4 +1,10 @@
 import * as Next from "@/index.next";
-import { runComponentSmokeTests } from "./component-mount-cases";
+import {
+  runComponentAccessibilityTests,
+  runComponentSmokeTests,
+  runComponentThemedAccessibilityTests,
+} from "./component-mount-cases";
 
 runComponentSmokeTests("next", Next);
+runComponentAccessibilityTests("next", Next);
+runComponentThemedAccessibilityTests("next", Next);

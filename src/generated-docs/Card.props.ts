@@ -17,8 +17,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for each action button.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "actionButtons",
@@ -35,8 +34,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the actions wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "align",
@@ -117,8 +115,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the body section.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "border",
@@ -151,8 +148,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the children wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "className",
@@ -160,8 +156,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the card container.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "contentClassName",
@@ -169,8 +164,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the content wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "data-testid",
@@ -186,8 +180,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Optional description displayed in the body.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "descriptionClassName",
@@ -195,8 +188,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the description text.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "descriptionId",
@@ -221,8 +213,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the footer section.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "glass",
@@ -239,8 +230,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the header section.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "headerId",
@@ -256,8 +246,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the icon wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "id",
@@ -281,8 +270,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the image element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "imageDecorative",
@@ -349,8 +337,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the media/image wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "outline",
@@ -444,8 +431,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "State of the card ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "tabIndex",
@@ -479,8 +465,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Optional card title displayed in the header.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "titleClassName",
@@ -488,8 +473,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the title element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "useIconButtons",

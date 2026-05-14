@@ -6,279 +6,278 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.file_upload {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
-  text-align: center;
-  background-color: var(--background-color-light);
-  border: 2px dashed var(--background-color-darker);
-  transition: var(--transition-default);
-  max-width: 300px;
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-
-  @include bp.down(md) {
+  .file_upload {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-sm);
     padding: var(--spacing-md);
-    max-width: 100%;
-  }
+    text-align: center;
+    background-color: var(--background-color-light);
+    border: 2px dashed var(--background-color-darker);
+    transition: var(--transition-default);
+    max-width: 300px;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
 
-  @include bp.down(xs) {
-    padding: var(--spacing-sm);
-  }
+    @include bp.down(md) {
+      padding: var(--spacing-md);
+      max-width: 100%;
+    }
 
-  @include bp.up(lg) {
-    max-width: 420px;
-  }
+    @include bp.down(xs) {
+      padding: var(--spacing-sm);
+    }
 
-  &:hover {
-    background-color: var(--background-color-lighter);
-  }
+    @include bp.up(lg) {
+      max-width: 420px;
+    }
 
-  &:focus-visible,
-  &:focus-within {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-  }
+    &:hover {
+      background-color: var(--background-color-lighter);
+    }
 
-  &.file_upload_dragover,
-  &[data-drag-active="true"] {
-    background-color: var(--background-color-lighter);
-    border-color: var(--focus-outline-color, var(--primary-color));
+    &:focus-visible,
+    &:focus-within {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+    }
+
+    &.file_upload_dragover,
+    &[data-drag-active="true"] {
+      background-color: var(--background-color-lighter);
+      border-color: var(--focus-outline-color, var(--primary-color));
+    }
+
+    @each $key, $value in theme.$rounding {
+      &_round-#{$key} {
+        border-radius: $value;
+      }
+    }
+
+    @each $key, $value in theme.$shadow {
+      &_shadow-#{$key} {
+        box-shadow: $value;
+      }
+    }
+
+    @each $theme-name, $values in theme.$themes {
+      &_#{$theme-name} {
+        --file-upload-glass-bg: #{map.get($values, glass-bg)};
+        --file-upload-glass-hover-bg: #{map.get($values, glass-hover)};
+        --file-upload-glass-border: #{map.get($values, glass-border)};
+        --file-upload-glass-text: #{map.get($values, text)};
+      }
+
+      &_#{$theme-name}:hover {
+        border-color: map.get($values, border);
+      }
+    }
+
+    @each $state-name, $values in theme.$states {
+      &_#{$state-name} {
+        --file-upload-glass-bg: #{map.get($values, glass-bg)};
+        --file-upload-glass-hover-bg: #{map.get($values, glass-hover)};
+        --file-upload-glass-border: #{map.get($values, glass-border)};
+        --file-upload-glass-text: #{map.get($values, text)};
+        border-color: map.get($values, border);
+      }
+
+      &_#{$state-name}:hover {
+        border-color: map.get($values, hover);
+      }
+    }
+
+    &_glass {
+      @include mixins.glass-surface(
+        var(--file-upload-glass-bg, rgba(255, 255, 255, 0.16)),
+        var(--file-upload-glass-border, rgba(255, 255, 255, 0.34)),
+        16px
+      );
+      color: var(--file-upload-glass-text, var(--text-color-primary));
+    }
+
+    &_glass:hover,
+    &_glass.file_upload_dragover,
+    &_glass[data-drag-active="true"] {
+      background: var(--file-upload-glass-hover-bg, rgba(255, 255, 255, 0.24));
+    }
+
+    &_disabled {
+      background-color: var(--background-color-light);
+      border-color: var(--background-color-darker);
+      cursor: not-allowed;
+      pointer-events: none;
+      opacity: 0.6;
+    }
+
+    &_upload_actions {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &_upload_controls {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      align-items: center;
+      width: 100%;
+
+      @include bp.up(lg) {
+        gap: var(--spacing-md);
+      }
+    }
+
+    &_upload_progress {
+      width: 100%;
+      margin-top: var(--spacing-sm);
+    }
+
+    &_upload_button {
+      align-self: center;
+    }
+
+    &_remove_button {
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    &_hidden_input {
+      display: none;
+    }
+
+    &_file_list {
+      margin: var(--spacing-sm) 0;
+      padding: 0;
+      list-style: none;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-sm);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+      color: var(--text-color-secondary);
+
+      @include bp.down(xs) {
+        font-size: var(--font-size-label);
+      }
+
+      @include bp.up(lg) {
+        font-size: var(--font-size-body);
+      }
+    }
+
+    &_file_list_item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--spacing-sm);
+      padding: 2px 0;
+      font-family: inherit;
+      font-size: inherit;
+      text-overflow: ellipsis;
+
+      > :first-child {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        @include bp.down(xs) {
+          white-space: normal;
+        }
+      }
+
+      @include bp.down(xs) {
+        gap: var(--spacing-xxs);
+      }
+    }
+
+    &_rejected_files {
+      margin-top: var(--spacing-sm);
+      color: var(--error-color);
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-sm);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+
+      @include bp.down(xs) {
+        font-size: var(--font-size-label);
+      }
+    }
+
+    &_rejected_label {
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    &_rejected_list {
+      list-style: disc;
+      padding-left: var(--spacing-md);
+    }
+
+    &_rejected_item {
+      margin-bottom: 2px;
+    }
   }
 
   @each $key, $value in theme.$rounding {
-    &_round-#{$key} {
+    .file_upload_round-#{$key} {
       border-radius: $value;
     }
   }
 
   @each $key, $value in theme.$shadow {
-    &_shadow-#{$key} {
+    .file_upload_shadow-#{$key} {
       box-shadow: $value;
     }
   }
 
-  @each $theme-name, $values in theme.$themes {
-    &_#{$theme-name} {
-      --file-upload-glass-bg: #{map.get($values, glass-bg)};
-      --file-upload-glass-hover-bg: #{map.get($values, glass-hover)};
-      --file-upload-glass-border: #{map.get($values, glass-border)};
-      --file-upload-glass-text: #{map.get($values, text)};
-    }
-
-    &_#{$theme-name}:hover {
-      border-color: map.get($values, border);
+  @media (prefers-reduced-motion: reduce) {
+    .file_upload,
+    .file_upload * {
+      transition: none !important;
+      animation: none !important;
     }
   }
 
-  @each $state-name, $values in theme.$states {
-    &_#{$state-name} {
-      --file-upload-glass-bg: #{map.get($values, glass-bg)};
-      --file-upload-glass-hover-bg: #{map.get($values, glass-hover)};
-      --file-upload-glass-border: #{map.get($values, glass-border)};
-      --file-upload-glass-text: #{map.get($values, text)};
-      border-color: map.get($values, border);
-    }
-
-    &_#{$state-name}:hover {
-      border-color: map.get($values, hover);
+  @media (hover: none) {
+    .file_upload:hover {
+      background-color: var(--background-color-light);
     }
   }
 
-  &_glass {
-    @include mixins.glass-surface(
-      var(--file-upload-glass-bg, rgba(255, 255, 255, 0.16)),
-      var(--file-upload-glass-border, rgba(255, 255, 255, 0.34)),
-      16px
-    );
-    color: var(--file-upload-glass-text, var(--text-color-primary));
-  }
-
-  &_glass:hover,
-  &_glass.file_upload_dragover,
-  &_glass[data-drag-active="true"] {
-    background: var(--file-upload-glass-hover-bg, rgba(255, 255, 255, 0.24));
-  }
-
-  &_disabled {
-    background-color: var(--background-color-light);
-    border-color: var(--background-color-darker);
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
-  }
-
-  &_upload_actions {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  &_upload_controls {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    align-items: center;
-    width: 100%;
-
-    @include bp.up(lg) {
-      gap: var(--spacing-md);
-    }
-  }
-
-  &_upload_progress {
-    width: 100%;
-    margin-top: var(--spacing-sm);
-  }
-
-  &_upload_button {
-    align-self: center;
-  }
-
-  &_remove_button {
-    border: none !important;
-    box-shadow: none !important;
-  }
-
-  &_hidden_input {
-    display: none;
-  }
-
-  &_file_list {
-    margin: var(--spacing-sm) 0;
-    padding: 0;
-    list-style: none;
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-    color: var(--text-color-secondary);
-
-    @include bp.down(xs) {
-      font-size: var(--font-size-label);
+  @media (forced-colors: active) {
+    .file_upload_glass {
+      background: Canvas;
+      color: CanvasText;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
     }
 
-    @include bp.up(lg) {
-      font-size: var(--font-size-body);
-    }
-  }
-
-  &_file_list_item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: 2px 0;
-    font-family: inherit;
-    font-size: inherit;
-    text-overflow: ellipsis;
-
-    > :first-child {
-      flex: 1 1 auto;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-
-      @include bp.down(xs) {
-        white-space: normal;
-      }
+    .file_upload {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px dashed ButtonText;
+      outline-color: Highlight;
     }
 
-    @include bp.down(xs) {
-      gap: var(--spacing-xxs);
+    .file_upload:focus-visible,
+    .file_upload:focus-within {
+      outline: 2px solid Highlight;
+      outline-offset: 3px;
     }
   }
-
-  &_rejected_files {
-    margin-top: var(--spacing-sm);
-    color: var(--error-color);
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-
-    @include bp.down(xs) {
-      font-size: var(--font-size-label);
-    }
-  }
-
-  &_rejected_label {
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
-    margin-bottom: var(--spacing-xs);
-  }
-
-  &_rejected_list {
-    list-style: disc;
-    padding-left: var(--spacing-md);
-  }
-
-  &_rejected_item {
-    margin-bottom: 2px;
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .file_upload_round-#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .file_upload_shadow-#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .file_upload,
-  .file_upload * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .file_upload:hover {
-    background-color: var(--background-color-light);
-  }
-}
-
-@media (forced-colors: active) {
-  .file_upload_glass {
-    background: Canvas;
-    color: CanvasText;
-    border-color: ButtonText;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-
-  .file_upload {
-    background: Canvas;
-    color: CanvasText;
-    border: 1px dashed ButtonText;
-    outline-color: Highlight;
-  }
-
-  .file_upload:focus-visible,
-  .file_upload:focus-within {
-    outline: 2px solid Highlight;
-    outline-offset: 3px;
-  }
-}
 }

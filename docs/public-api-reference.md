@@ -35,14 +35,14 @@ The `core` and `next` barrels export the same component names:
 
 | Category | Exports |
 | --- | --- |
-| Providers and text | `ThemeProvider`, `Typography` |
+| Providers and text | `ThemeProvider`, `ToastProvider`, `useToast`, `Typography` |
 | Actions | `Button`, `IconButton`, `ScrollToTop` |
-| Forms and inputs | `TextInput`, `TextArea`, `Select`, `ThemeSelect`, `FileUpload`, `TagInput`, `RadioButton`, `RadioGroup`, `Slider`, `Checkbox`, `ColorPicker`, `FormGroup`, `DateTimePicker` |
+| Forms and inputs | `TextInput`, `TextArea`, `Select`, `ThemeSelect`, `ComboBox`, `FileUpload`, `TagInput`, `RadioButton`, `RadioGroup`, `Slider`, `CheckBox`, `Toggle`, `ColorPicker`, `FormField`, `FormGroup`, `DateRangePicker`, `DateTimePicker` |
 | Data and content | `DataTable`, `MarkdownRenderer`, `MetricBox`, `Card`, `Avatar` |
-| Feedback and status | `Chip`, `ChipGroup`, `Badge`, `ProgressBar`, `CircularProgress`, `Rating`, `Skeleton`, `Spinner`, `Tooltip`, `MessagePopup`, `Popover`, `EmptyState`, `NotificationCenter` |
-| Navigation and layout | `Navbar`, `Sidebar`, `Footer`, `Breadcrumbs`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Modal`, `Toggle`, `Toolbar`, `Dropdown`, `Divider`, `CommandPalette` |
+| Feedback and status | `Alert`, `Chip`, `ChipGroup`, `Badge`, `ProgressBar`, `CircularProgress`, `Rating`, `Skeleton`, `Spinner`, `Tooltip`, `MessagePopup`, `PopOver`, `EmptyState`, `NotificationCenter`, `ToastProvider`, `useToast` |
+| Navigation, overlays, and layout | `NavBar`, `Sidebar`, `Footer`, `Breadcrumbs`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Modal`, `Drawer`, `Toolbar`, `Dropdown`, `Divider`, `CommandPalette`, `Container`, `Grid`, `Inline`, `Section`, `Stack` |
 
-Some barrel names preserve existing casing for compatibility. The standalone paths below use the casing exposed by the package export map.
+Standalone paths use the same camel-case component names as the barrels.
 
 ## Standalone Component Imports
 
@@ -58,33 +58,40 @@ Standalone component paths:
 | Component path | Core | Next |
 | --- | --- | --- |
 | `Accordion` | `boreal-ui/core/Accordion` | `boreal-ui/next/Accordion` |
+| `Alert` | `boreal-ui/core/Alert` | `boreal-ui/next/Alert` |
 | `Avatar` | `boreal-ui/core/Avatar` | `boreal-ui/next/Avatar` |
 | `Badge` | `boreal-ui/core/Badge` | `boreal-ui/next/Badge` |
 | `Breadcrumbs` | `boreal-ui/core/Breadcrumbs` | `boreal-ui/next/Breadcrumbs` |
 | `Button` | `boreal-ui/core/Button` | `boreal-ui/next/Button` |
 | `Card` | `boreal-ui/core/Card` | `boreal-ui/next/Card` |
-| `Checkbox` | `boreal-ui/core/Checkbox` | `boreal-ui/next/Checkbox` |
+| `CheckBox` | `boreal-ui/core/CheckBox` | `boreal-ui/next/CheckBox` |
 | `Chip` | `boreal-ui/core/Chip` | `boreal-ui/next/Chip` |
+| `ChipGroup` | `boreal-ui/core/ChipGroup` | `boreal-ui/next/ChipGroup` |
 | `CircularProgress` | `boreal-ui/core/CircularProgress` | `boreal-ui/next/CircularProgress` |
 | `ColorPicker` | `boreal-ui/core/ColorPicker` | `boreal-ui/next/ColorPicker` |
+| `ComboBox` | `boreal-ui/core/ComboBox` | `boreal-ui/next/ComboBox` |
 | `CommandPalette` | `boreal-ui/core/CommandPalette` | `boreal-ui/next/CommandPalette` |
 | `DataTable` | `boreal-ui/core/DataTable` | `boreal-ui/next/DataTable` |
+| `DateRangePicker` | `boreal-ui/core/DateRangePicker` | `boreal-ui/next/DateRangePicker` |
 | `DateTimePicker` | `boreal-ui/core/DateTimePicker` | `boreal-ui/next/DateTimePicker` |
 | `Divider` | `boreal-ui/core/Divider` | `boreal-ui/next/Divider` |
+| `Drawer` | `boreal-ui/core/Drawer` | `boreal-ui/next/Drawer` |
 | `Dropdown` | `boreal-ui/core/Dropdown` | `boreal-ui/next/Dropdown` |
 | `EmptyState` | `boreal-ui/core/EmptyState` | `boreal-ui/next/EmptyState` |
 | `FileUpload` | `boreal-ui/core/FileUpload` | `boreal-ui/next/FileUpload` |
 | `Footer` | `boreal-ui/core/Footer` | `boreal-ui/next/Footer` |
+| `FormField` | `boreal-ui/core/FormField` | `boreal-ui/next/FormField` |
 | `FormGroup` | `boreal-ui/core/FormGroup` | `boreal-ui/next/FormGroup` |
 | `IconButton` | `boreal-ui/core/IconButton` | `boreal-ui/next/IconButton` |
+| `Layout` | `boreal-ui/core/Layout` | `boreal-ui/next/Layout` |
 | `MarkdownRenderer` | `boreal-ui/core/MarkdownRenderer` | `boreal-ui/next/MarkdownRenderer` |
 | `MessagePopup` | `boreal-ui/core/MessagePopup` | `boreal-ui/next/MessagePopup` |
 | `MetricBox` | `boreal-ui/core/MetricBox` | `boreal-ui/next/MetricBox` |
 | `Modal` | `boreal-ui/core/Modal` | `boreal-ui/next/Modal` |
-| `Navbar` | `boreal-ui/core/Navbar` | `boreal-ui/next/Navbar` |
+| `NavBar` | `boreal-ui/core/NavBar` | `boreal-ui/next/NavBar` |
 | `NotificationCenter` | `boreal-ui/core/NotificationCenter` | `boreal-ui/next/NotificationCenter` |
 | `Pager` | `boreal-ui/core/Pager` | `boreal-ui/next/Pager` |
-| `Popover` | `boreal-ui/core/Popover` | `boreal-ui/next/Popover` |
+| `PopOver` | `boreal-ui/core/PopOver` | `boreal-ui/next/PopOver` |
 | `ProgressBar` | `boreal-ui/core/ProgressBar` | `boreal-ui/next/ProgressBar` |
 | `RadioButton` | `boreal-ui/core/RadioButton` | `boreal-ui/next/RadioButton` |
 | `RadioGroup` | `boreal-ui/core/RadioGroup` | `boreal-ui/next/RadioGroup` |
@@ -101,13 +108,15 @@ Standalone component paths:
 | `TextArea` | `boreal-ui/core/TextArea` | `boreal-ui/next/TextArea` |
 | `TextInput` | `boreal-ui/core/TextInput` | `boreal-ui/next/TextInput` |
 | `ThemeProvider` | `boreal-ui/core/ThemeProvider` | `boreal-ui/next/ThemeProvider` |
+| `ThemeSelect` | `boreal-ui/core/ThemeSelect` | `boreal-ui/next/ThemeSelect` |
 | `Timeline` | `boreal-ui/core/Timeline` | `boreal-ui/next/Timeline` |
 | `Toggle` | `boreal-ui/core/Toggle` | `boreal-ui/next/Toggle` |
+| `ToastProvider` | `boreal-ui/core/ToastProvider` | `boreal-ui/next/ToastProvider` |
 | `Toolbar` | `boreal-ui/core/Toolbar` | `boreal-ui/next/Toolbar` |
 | `Tooltip` | `boreal-ui/core/Tooltip` | `boreal-ui/next/Tooltip` |
 | `Typography` | `boreal-ui/core/Typography` | `boreal-ui/next/Typography` |
 
-`ThemeSelect` and `ChipGroup` are barrel exports. Import them from `boreal-ui/core` or `boreal-ui/next`.
+`Layout` standalone paths export the layout primitives: `Container`, `Grid`, `Inline`, `Section`, and `Stack`.
 
 ## Theme and Configuration APIs
 
@@ -137,6 +146,6 @@ import {
 
 Prop-doc exports:
 
-`accordionPropDocs`, `avatarPropDocs`, `badgePropDocs`, `breadcrumbsPropDocs`, `buttonPropDocs`, `cardPropDocs`, `checkBoxPropDocs`, `chipPropDocs`, `chipGroupPropDocs`, `circularProgressPropDocs`, `colorPickerPropDocs`, `commandPalettePropDocs`, `dataTablePropDocs`, `dateTimePickerPropDocs`, `dividerPropDocs`, `dropdownPropDocs`, `emptyStatePropDocs`, `fileUploadPropDocs`, `footerPropDocs`, `formGroupPropDocs`, `iconButtonPropDocs`, `markdownRendererPropDocs`, `messagePopupPropDocs`, `metricBoxPropDocs`, `modalPropDocs`, `navBarPropDocs`, `notificationCenterPropDocs`, `pagerPropDocs`, `popoverPropDocs`, `progressBarPropDocs`, `radioButtonPropDocs`, `radioGroupPropDocs`, `ratingPropDocs`, `scrollToTopPropDocs`, `selectPropDocs`, `sidebarPropDocs`, `skeletonPropDocs`, `sliderPropDocs`, `spinnerPropDocs`, `stepperPropDocs`, `tabsPropDocs`, `tagInputPropDocs`, `textAreaPropDocs`, `textInputPropDocs`, `themeSelectPropDocs`, `timelinePropDocs`, `togglePropDocs`, `toolbarPropDocs`, `tooltipPropDocs`, and `typographyPropDocs`.
+`accordionPropDocs`, `alertPropDocs`, `avatarPropDocs`, `badgePropDocs`, `breadcrumbsPropDocs`, `buttonPropDocs`, `cardPropDocs`, `checkBoxPropDocs`, `chipPropDocs`, `chipGroupPropDocs`, `circularProgressPropDocs`, `colorPickerPropDocs`, `comboBoxPropDocs`, `commandPalettePropDocs`, `dataTablePropDocs`, `dateRangePickerPropDocs`, `dateTimePickerPropDocs`, `dividerPropDocs`, `drawerPropDocs`, `dropdownPropDocs`, `emptyStatePropDocs`, `fileUploadPropDocs`, `footerPropDocs`, `formFieldPropDocs`, `formGroupPropDocs`, `iconButtonPropDocs`, `layoutPrimitivePropDocs`, `markdownRendererPropDocs`, `messagePopupPropDocs`, `metricBoxPropDocs`, `modalPropDocs`, `navBarPropDocs`, `notificationCenterPropDocs`, `pagerPropDocs`, `popOverPropDocs`, `progressBarPropDocs`, `radioButtonPropDocs`, `radioGroupPropDocs`, `ratingPropDocs`, `scrollToTopPropDocs`, `selectPropDocs`, `sidebarPropDocs`, `skeletonPropDocs`, `sliderPropDocs`, `spinnerPropDocs`, `stepperPropDocs`, `tabsPropDocs`, `tagInputPropDocs`, `textAreaPropDocs`, `textInputPropDocs`, `themeSelectPropDocs`, `timelinePropDocs`, `toastProviderPropDocs`, `togglePropDocs`, `toolbarPropDocs`, `tooltipPropDocs`, and `typographyPropDocs`.
 
 Use the generated prop docs for exhaustive prop tables. Use this markdown guide for import paths and usage-level orientation.

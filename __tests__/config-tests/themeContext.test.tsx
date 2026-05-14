@@ -59,6 +59,9 @@ const Consumer = () => {
   return (
     <div>
       <div data-testid="selected-scheme">{context.selectedScheme}</div>
+      <div data-testid="selected-scheme-name">
+        {context.selectedSchemeName}
+      </div>
       <div data-testid="scheme-count">{context.schemes.length}</div>
       <div data-testid="scheme-names">
         {context.schemes.map((scheme) => scheme.name).join(", ")}
@@ -128,6 +131,9 @@ describe("ThemeProvider", () => {
 
     await waitFor(() => {
       expect(screen.getByTestId("selected-scheme")).toHaveTextContent("1");
+      expect(screen.getByTestId("selected-scheme-name")).toHaveTextContent(
+        "Ocean Breeze",
+      );
       expect(
         document.documentElement.style.getPropertyValue("--primary-color"),
       ).toBe("#005577");
@@ -413,11 +419,34 @@ describe("ThemeProvider", () => {
       "page-theme-select-input",
     ) as HTMLSelectElement;
 
-    fireEvent.change(footerSelect, { target: { value: "1" } });
+    fireEvent.change(footerSelect, { target: { value: "Ocean Breeze" } });
 
     await waitFor(() => {
-      expect(footerSelect.value).toBe("1");
-      expect(pageSelect.value).toBe("1");
+      expect(footerSelect.value).toBe("Ocean Breeze");
+      expect(pageSelect.value).toBe("Ocean Breeze");
+      expect(localStorage.getItem(STORAGE_KEY)).toBe("Ocean Breeze");
+      expect(document.documentElement.dataset.borealTheme).toBe(
+        "Ocean Breeze",
+      );
+    });
+  });
+
+  it("shows the saved theme in ThemeSelect after reload instead of the default option", async () => {
+    localStorage.setItem(STORAGE_KEY, "Ocean Breeze");
+
+    render(
+      <ThemeProvider>
+        <ThemeSelect testId="theme-select" />
+      </ThemeProvider>,
+    );
+
+    const select = screen.getByTestId(
+      "theme-select-input",
+    ) as HTMLSelectElement;
+
+    await waitFor(() => {
+      expect(select.value).toBe("Ocean Breeze");
+      expect(select.selectedOptions[0]).toHaveTextContent("Ocean Breeze");
       expect(localStorage.getItem(STORAGE_KEY)).toBe("Ocean Breeze");
       expect(document.documentElement.dataset.borealTheme).toBe(
         "Ocean Breeze",

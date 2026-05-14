@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Navbar } from "../src/index.core";
+import { NavBar } from "../src/index.core";
 import {
   FaHome,
   FaCompactDisc,
@@ -10,17 +10,11 @@ import {
   FaPaintBrush,
 } from "react-icons/fa";
 import type { NavBarProps } from "../src/components/NavBar/NavBar.types";
-
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-] as const;
-
-const roundingOptions = ["full", "none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const mockItems: NavBarProps["items"] = [
   { icon: <FaHome />, label: "Home", path: "/" },
@@ -33,7 +27,7 @@ const mockItems: NavBarProps["items"] = [
 
 const meta: Meta<NavBarProps> = {
   title: "Components/NavBar",
-  component: Navbar,
+  component: NavBar,
   tags: ["autodocs"],
   decorators: [
     (Story) => (
@@ -109,7 +103,7 @@ export const Default: Story = {
           </label>
         </div>
 
-        <Navbar {...args} theme={theme} rounding={rounding} shadow={shadow} />
+        <NavBar {...args} theme={theme} rounding={rounding} shadow={shadow} />
       </div>
     );
   },
@@ -119,7 +113,7 @@ export const GlassThemeVariants: Story = {
   render: (args) => (
     <div style={{ paddingTop: "5rem", display: "grid", gap: "7rem" }}>
       {themeOptions.map((theme) => (
-        <Navbar
+        <NavBar
           key={theme}
           {...args}
           theme={theme}

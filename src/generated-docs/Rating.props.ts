@@ -41,8 +41,7 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional CSS class names for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -145,8 +144,7 @@ export const ratingPropDocs: GeneratedComponentDoc = {
       "description": "State of the rating. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

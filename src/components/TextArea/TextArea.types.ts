@@ -52,7 +52,6 @@ export interface TextAreaProps extends Omit<
   /**
    * Additional custom CSS class name(s) to apply to the wrapper.
    *
-   * @default ""
    */
   className?: string;
 
@@ -139,7 +138,6 @@ export interface TextAreaProps extends Omit<
   /**
    * State of the text area.
    *
-   * @default ""
    */
   state?: StateType;
 

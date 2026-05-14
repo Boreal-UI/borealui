@@ -3,31 +3,68 @@ import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props that can be injected into a trigger element when using `asChild`.
- */
+   * @default dataTestId ?? "popover"
+   */
 export type TriggerElementProps = {
+  /**
+   * Callback fired when click occurs.
+   */
   onClick?: (event: React.MouseEvent) => void;
+  /**
+   * Additional CSS class names for the component root.
+   */
   className?: string;
+  /**
+   * Title content rendered by the component.
+   */
   title?: string;
+  /**
+   * Whether the component is disabled.
+   */
   disabled?: boolean;
+  /**
+   * Content rendered inside the component.
+   */
   children?: React.ReactNode;
+  /**
+   * Ref forwarded to the underlying element.
+   */
   ref?: React.Ref<HTMLElement>;
+  /**
+   * ARIA Label attribute forwarded to the relevant accessible element.
+   */
   "aria-label"?: string;
+  /**
+   * ARIA Describedby attribute forwarded to the relevant accessible element.
+   */
   "aria-describedby"?: string;
+  /**
+   * ARIA Expanded attribute forwarded to the relevant accessible element.
+   */
   "aria-expanded"?: boolean;
+  /**
+   * ARIA Controls attribute forwarded to the relevant accessible element.
+   */
   "aria-controls"?: string;
+  /**
+   * ARIA Haspopup attribute forwarded to the relevant accessible element.
+   */
   "aria-haspopup"?: React.AriaAttributes["aria-haspopup"];
   /** Optional test ID for testing frameworks. */
   testId?: string;
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+  /**
+   * Additional custom attributes supported by this prop bag.
+   */
   [key: string]: unknown;
 };
 
 /**
- * Props for the Popover component.
+ * Props for the PopOver component.
  */
-export interface PopoverProps {
+export interface PopOverProps {
   /**
    * Trigger content for the popover.
    *
@@ -78,7 +115,6 @@ export interface PopoverProps {
    * State of the popover, for feedback styling.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -101,14 +137,12 @@ export interface PopoverProps {
   /**
    * Optional additional class name(s) for custom styling.
    *
-   * @default ""
    */
   className?: string;
 
   /**
    * Optional additional class name(s) for the popover content element.
    *
-   * @default ""
    */
   contentClassName?: string;
 
@@ -152,7 +186,10 @@ export interface PopoverProps {
   id?: string;
 }
 
-export interface BasePopoverProps extends PopoverProps {
+export interface BasePopOverProps extends PopOverProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 
   /**

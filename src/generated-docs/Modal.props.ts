@@ -41,8 +41,7 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the modal body section.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "children",
@@ -58,8 +57,7 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for custom styling the modal content.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "closeButtonAriaLabel",
@@ -76,8 +74,7 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the modal close button.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "data-testid",
@@ -101,8 +98,7 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the modal footer section.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "header",
@@ -118,8 +114,7 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the modal header section.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "headerContentClassName",
@@ -127,8 +122,7 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the modal header content wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "onClose",
@@ -152,8 +146,7 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the modal overlay/backdrop.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "rounding",
@@ -197,8 +190,7 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the modal title element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     }
   ]
 };

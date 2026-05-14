@@ -104,14 +104,12 @@ export interface RatingProps {
    * State of the rating.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
   /**
    * Optional additional CSS class names for custom styling.
    *
-   * @default ""
    */
   className?: string;
 
@@ -128,5 +126,8 @@ export interface RatingProps {
 }
 
 export interface BaseRatingProps extends RatingProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

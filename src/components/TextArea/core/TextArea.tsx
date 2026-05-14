@@ -22,6 +22,7 @@ const classes = {
   quaternary: "textArea_quaternary",
 
   success: "textArea_success",
+  info: "textArea_info",
   error: "textArea_error",
   warning: "textArea_warning",
 

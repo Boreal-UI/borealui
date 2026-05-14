@@ -217,7 +217,16 @@ export interface NotificationCenterProps {
 }
 
 export interface BaseNotificationCenterProps extends NotificationCenterProps {
+  /**
+   * Button component dependency injected by the wrapper.
+   */
   Button: React.ComponentType<ButtonProps>;
+  /**
+   * Icon Button component dependency injected by the wrapper.
+   */
   IconButton: React.ComponentType<IconButtonProps>;
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

@@ -137,8 +137,7 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for additional styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -188,8 +187,7 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the icon.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "id",
@@ -214,8 +212,7 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the label/loading wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "loaderClassName",
@@ -223,8 +220,7 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the loading indicator.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "loading",
@@ -301,8 +297,7 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "description": "State of the button. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "tabIndex",

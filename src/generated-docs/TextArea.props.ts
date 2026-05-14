@@ -42,8 +42,7 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Additional custom CSS class name(s) to apply to the wrapper.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "containerClassName",
@@ -51,8 +50,7 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the outer layout container.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "data-testid",
@@ -93,8 +91,7 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the error message.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "glass",
@@ -127,8 +124,7 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for helper text.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "icon",
@@ -144,8 +140,7 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the icon wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "inputClassName",
@@ -153,8 +148,7 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the textarea element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "label",
@@ -170,8 +164,7 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the visible label.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "labelPosition",
@@ -232,8 +225,7 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the resize handle.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "rounding",
@@ -259,8 +251,7 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for screen-reader-only description text.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "state",
@@ -268,8 +259,7 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "State of the text area.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

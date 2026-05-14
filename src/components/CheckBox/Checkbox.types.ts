@@ -8,7 +8,7 @@ import {
 import { InputHTMLAttributes, ReactNode } from "react";
 
 /**
- * Props for the Checkbox component.
+ * Props for the CheckBox component.
  */
 export interface CheckBoxProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -16,8 +16,6 @@ export interface CheckBoxProps extends Omit<
 > {
   /**
    * Label text displayed beside the checkbox.
-   *
-   * @default ""
    */
   label?: ReactNode;
 
@@ -45,8 +43,6 @@ export interface CheckBoxProps extends Omit<
   /**
    * State of the checkbox
    * ('success' | 'error' | 'warning' | 'disabled' | '').
-   *
-   * @default ""
    */
   state?: StateType;
 
@@ -117,8 +113,6 @@ export interface CheckBoxProps extends Omit<
 
   /**
    * Custom class name for additional styling.
-   *
-   * @default ""
    */
   className?: string;
 
@@ -175,7 +169,6 @@ export interface CheckBoxProps extends Omit<
   /** Optional role override, though checkbox is the default semantic role. */
   role?: "checkbox";
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -187,6 +180,9 @@ export interface CheckBoxProps extends Omit<
   "data-testid"?: string;
 }
 
-export interface CheckboxBaseProps extends CheckBoxProps {
+export interface CheckBoxBaseProps extends CheckBoxProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

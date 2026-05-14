@@ -77,7 +77,6 @@ export interface BadgeProps extends BadgeAccessibilityProps {
    * The badge state
    * ('success' | 'error' | 'warning' | 'disabled' | '').
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -132,7 +131,6 @@ export interface BadgeProps extends BadgeAccessibilityProps {
   /**
    * Additional custom class names.
    *
-   * @default ""
    */
   className?: string;
 
@@ -154,6 +152,8 @@ export interface BadgeProps extends BadgeAccessibilityProps {
   /** Optional rel attribute when the badge renders as a link. */
   rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
 
+  /** Optional href. When provided, the badge renders as an anchor link. */
+  href?: AnchorHTMLAttributes<HTMLAnchorElement>["href"];
 
   /**
    * Optional test ID for testing frameworks.
@@ -168,7 +168,14 @@ export interface BadgeProps extends BadgeAccessibilityProps {
 
 type AnchorExtras = Omit<
   AnchorHTMLAttributes<HTMLAnchorElement>,
-  "href" | "children" | "className" | "onClick" | "title" | "role" | "tabIndex" | keyof BadgeProps
+  | "href"
+  | "children"
+  | "className"
+  | "onClick"
+  | "title"
+  | "role"
+  | "tabIndex"
+  | keyof BadgeProps
 >;
 
 type ButtonExtras = Omit<

@@ -17,6 +17,7 @@ const classes = {
   quaternary: "tabs_quaternary",
 
   success: "tabs_success",
+  info: "tabs_info",
   error: "tabs_error",
   warning: "tabs_warning",
 

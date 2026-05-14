@@ -29,10 +29,8 @@ const TextAreaBase = forwardRef<
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
-      state = "",
+      state,
       resizable = true,
-
-      "aria-label": ariaLabel,
       "aria-description": ariaDescription,
       helperText,
       errorMessage,
@@ -40,22 +38,20 @@ const TextAreaBase = forwardRef<
       disabled = false,
       height,
       classMap,
-      className = "",
-      containerClassName = "",
-      labelClassName = "",
-      iconClassName = "",
-      inputClassName = "",
-      resizeHandleClassName = "",
-      helperTextClassName = "",
-      errorMessageClassName = "",
-      srOnlyClassName = "",
+      className,
+      containerClassName,
+      labelClassName,
+      iconClassName,
+      inputClassName,
+      resizeHandleClassName,
+      helperTextClassName,
+      errorMessageClassName,
+      srOnlyClassName,
       "data-testid": dataTestId,
       testId = dataTestId ?? "text-area",
       id: idProp,
       required,
-
-      // Native accessibility props
-      "aria-label": ariaLabelProp,
+      "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       "aria-describedby": ariaDescribedByProp,
       "aria-errormessage": ariaErrorMessageProp,
@@ -78,7 +74,7 @@ const TextAreaBase = forwardRef<
         combineClassNames(
           classMap.textArea,
           classMap[theme],
-          classMap[state],
+          state && classMap[state],
           outline && classMap.outline,
           glass && classMap.glass,
           disabled && classMap.disabled,
@@ -102,9 +98,7 @@ const TextAreaBase = forwardRef<
     const isError = state === "error";
 
     const computedAriaLabel =
-      !ariaLabelledBy && !label
-        ? ariaLabelProp || ariaLabel || placeholder
-        : undefined;
+      !ariaLabelledBy && !label ? ariaLabel || placeholder : undefined;
 
     const describedByIds =
       [

@@ -3,9 +3,10 @@ import { MarkdownRenderer } from "../src/index.core";
 import type { MarkdownRendererProps } from "../src/components/MarkdownRenderer/MarkdownRenderer.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { BaseMarkdownRendererProps } from "../src/components/MarkdownRenderer/MarkdownRenderer.types";
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<BaseMarkdownRendererProps> = {
   title: "Components/MarkdownRenderer",

@@ -25,8 +25,7 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the action button.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "actionLabel",
@@ -59,6 +58,14 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "aria"
+    },
+    {
+      "name": "className",
+      "type": "string",
+      "description": "Additional CSS class names for the empty state root.",
+      "required": false,
+      "inherited": false,
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -99,8 +106,7 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the icon wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "iconDecorative",
@@ -134,8 +140,7 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the message element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "onActionClick",
@@ -195,8 +200,7 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "The EmptyState state ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",
@@ -231,8 +235,7 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the title element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     }
   ]
 };

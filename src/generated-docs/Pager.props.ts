@@ -42,8 +42,7 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Optional extra class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "currentPage",
@@ -182,8 +181,7 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Optional state of the component for feedback styling. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

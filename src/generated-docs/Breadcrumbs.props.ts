@@ -42,8 +42,7 @@ export const breadcrumbsPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -137,8 +136,7 @@ export const breadcrumbsPropDocs: GeneratedComponentDoc = {
       "description": "State of the breadcrumbs ('success' | 'error' | 'warning' | 'disabled' | ''). Used for visual feedback.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

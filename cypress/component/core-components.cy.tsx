@@ -1,4 +1,10 @@
 import * as Core from "@/index.core";
-import { runComponentSmokeTests } from "./component-mount-cases";
+import {
+  runComponentAccessibilityTests,
+  runComponentSmokeTests,
+  runComponentThemedAccessibilityTests,
+} from "./component-mount-cases";
 
 runComponentSmokeTests("core", Core);
+runComponentAccessibilityTests("core", Core);
+runComponentThemedAccessibilityTests("core", Core);

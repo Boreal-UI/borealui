@@ -13,7 +13,7 @@ const ScrollToTopBase: React.FC<ScrollToTopBaseProps> = ({
   shadow = getDefaultShadow(),
   IconComponent,
   offset = 300,
-  className = "",
+  className,
   "aria-label": ariaLabel = "Scroll to top",
   "aria-describedby": ariaDescribedBy,
   "aria-labelledby": ariaLabelledBy,

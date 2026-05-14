@@ -9,7 +9,8 @@ import {
 
 /**
  * Represents a single option in the Select component.
- */
+   * @default false
+   */
 export interface Option {
   /** The value to be used for the option. */
   value: string;
@@ -44,7 +45,6 @@ export interface SelectProps {
    * State variant for styling.
    * "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -208,7 +208,6 @@ export interface SelectProps {
   /**
    * Additional class name(s) for custom styling.
    *
-   * @default ""
    */
   className?: string;
 
@@ -242,14 +241,32 @@ export interface SelectProps {
 }
 
 export interface BaseSelectProps extends SelectProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }
 
 export interface ThemeSelectProps {
+  /**
+   * Theme variant applied to the component.
+   */
   theme?: ThemeType;
+  /**
+   * Whether to apply the glass visual treatment.
+   */
   glass?: boolean;
+  /**
+   * Shadow style applied to the component.
+   */
   shadow?: ShadowType;
+  /**
+   * Corner rounding applied to the component.
+   */
   rounding?: RoundingType;
+  /**
+   * Visual state applied to the component.
+   */
   state?: StateType;
   /** Optional test ID for testing frameworks. */
   testId?: string;
@@ -287,9 +304,24 @@ export interface ThemeSelectProps {
    */
   "aria-required"?: boolean;
 
+  /**
+   * Whether the component is disabled.
+   */
   disabled?: boolean;
+  /**
+   * Visible label content for the component.
+   */
   label?: ReactNode;
+  /**
+   * Label Position prop for ThemeSelect.
+   */
   labelPosition?: LabelPositionType;
+  /**
+   * HTML name applied to the relevant form element.
+   */
   name?: string;
+  /**
+   * HTML id applied to the relevant element.
+   */
   id?: string;
 }

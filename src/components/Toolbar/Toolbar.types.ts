@@ -11,7 +11,8 @@ import { AvatarProps } from "../Avatar/Avatar.types";
 /**
  * Props for the ToolbarBase component (unstyled, internal implementation).
  * Extends ToolbarProps with internal utility/customization props.
- */
+   * @default configured default theme (fallback: "primary")
+   */
 export interface ToolbarBaseProps extends ToolbarProps {
   /**
    * The Avatar component to use for rendering the toolbar avatar.
@@ -125,7 +126,6 @@ export interface ToolbarProps {
    * Optional additional class name for the toolbar title element.
    * Useful when consumers need to style the title directly.
    *
-   * @default ""
    */
   titleClassName?: string;
 
@@ -171,7 +171,6 @@ export interface ToolbarProps {
   /**
    * Optional additional class names for styling.
    *
-   * @default ""
    */
   className?: string;
 

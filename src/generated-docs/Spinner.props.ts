@@ -59,8 +59,7 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for styling customization.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -120,8 +119,7 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
       "description": "The state of the spinner. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

@@ -58,8 +58,7 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "Optional class name for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -147,8 +146,7 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "description": "State of progress ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",
