@@ -38,6 +38,7 @@ export { metricBoxPropDocs } from "./MetricBox.props";
 export { modalPropDocs } from "./Modal.props";
 export { navBarPropDocs } from "./NavBar.props";
 export { notificationCenterPropDocs } from "./NotificationCenter.props";
+export { numberInputPropDocs } from "./NumberInput.props";
 export { pagerPropDocs } from "./Pager.props";
 export { popOverPropDocs } from "./PopOver.props";
 export { progressBarPropDocs } from "./ProgressBar.props";

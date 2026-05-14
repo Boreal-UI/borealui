@@ -370,6 +370,11 @@
       "import": "./dist/core/NotificationCenter.js",
       "require": "./dist/core/NotificationCenter.cjs.js"
     },
+    "./core/NumberInput": {
+      "types": "./dist/types/core/NumberInput.d.ts",
+      "import": "./dist/core/NumberInput.js",
+      "require": "./dist/core/NumberInput.cjs.js"
+    },
     "./core/Pager": {
       "types": "./dist/types/core/Pager.d.ts",
       "import": "./dist/core/Pager.js",
@@ -648,6 +653,10 @@
     "./next/NotificationCenter": {
       "types": "./dist/types/next/NotificationCenter.d.ts",
       "import": "./dist/next/NotificationCenter.js"
+    },
+    "./next/NumberInput": {
+      "types": "./dist/types/next/NumberInput.d.ts",
+      "import": "./dist/next/NumberInput.js"
     },
     "./next/Pager": {
       "types": "./dist/types/next/Pager.d.ts",

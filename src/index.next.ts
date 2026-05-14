@@ -44,6 +44,7 @@ export { default as MetricBox } from "./next/MetricBox";
 export { default as Modal } from "./next/Modal";
 export { default as NavBar } from "./next/NavBar";
 export { default as NotificationCenter } from "./next/NotificationCenter";
+export { default as NumberInput } from "./next/NumberInput";
 export { default as Pager } from "./next/Pager";
 export { default as PopOver } from "./next/PopOver";
 export { default as ProgressBar } from "./next/ProgressBar";
