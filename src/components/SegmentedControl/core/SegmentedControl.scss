@@ -1,0 +1,297 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
+@use "../../../styles/animations" as animations;
+@use "sass:map";
+
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  .segmentedControl_container {
+    display: inline-flex;
+    gap: var(--spacing-xs);
+    align-items: flex-start;
+    max-width: 100%;
+    font-family: var(--font-family-body);
+  }
+
+  .segmentedControl_label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-ui);
+    line-height: var(--line-height-label);
+    color: var(--text-color-primary);
+  }
+
+  .segmentedControl_labelTop {
+    flex-direction: column;
+  }
+
+  .segmentedControl_labelBottom {
+    flex-direction: column-reverse;
+  }
+
+  .segmentedControl_labelLeft {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .segmentedControl_labelRight {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  .segmentedControl {
+    --segmentedControl-glass-bg: rgba(255, 255, 255, 0.18);
+    --segmentedControl-glass-hover-bg: rgba(255, 255, 255, 0.24);
+    --segmentedControl-glass-border: rgba(255, 255, 255, 0.28);
+    --segmentedControl-glass-text: var(--text-color-primary);
+    --segmentedControl-option-bg: transparent;
+    --segmentedControl-option-hover-bg: var(--background-color-surface);
+    --segmentedControl-option-selected-bg: var(--background-color);
+    --segmentedControl-option-selected-text: var(--text-color-primary);
+
+    display: inline-flex;
+    align-items: center;
+    min-width: 0;
+    max-width: 100%;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-md);
+    background: var(--background-color);
+    color: var(--text-color-primary);
+    box-shadow: var(--box-shadow-sm);
+    padding: var(--spacing-xxs);
+    transition: var(--transition-default);
+  }
+
+  .segmentedControl_content {
+    display: inline-flex;
+    align-items: stretch;
+    gap: var(--spacing-xxs);
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .segmentedControl_option {
+    appearance: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    min-width: 0;
+    border: 1px solid transparent;
+    border-radius: calc(var(--border-radius-md) - 2px);
+    background: var(--segmentedControl-option-bg);
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-ui);
+    line-height: var(--line-height-label);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    text-align: center;
+    transition: var(--transition-default);
+    white-space: nowrap;
+  }
+
+  .segmentedControl_option:hover {
+    background: var(--segmentedControl-option-hover-bg);
+  }
+
+  .segmentedControl_option:focus-visible {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+  }
+
+  .segmentedControl_optionSelected {
+    background: var(--segmentedControl-option-selected-bg);
+    color: var(--segmentedControl-option-selected-text);
+    box-shadow: var(--box-shadow-sm);
+  }
+
+  .segmentedControl_optionDisabled {
+    cursor: not-allowed;
+    opacity: 0.58;
+  }
+
+  .segmentedControl_optionIcon {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .segmentedControl_optionLabel {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .segmentedControl_loader {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentcolor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    opacity: 0.72;
+    animation: spin 700ms linear infinite;
+  }
+
+  @each $themeName, $vals in theme.$themes {
+    .segmentedControl_#{$themeName} {
+      --segmentedControl-glass-bg: #{map.get($vals, glass-bg)};
+      --segmentedControl-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --segmentedControl-glass-border: #{map.get($vals, glass-border)};
+      --segmentedControl-glass-text: #{map.get($vals, text)};
+      --segmentedControl-option-hover-bg: #{map.get($vals, hover)};
+      --segmentedControl-option-selected-bg: #{map.get($vals, text)};
+      --segmentedControl-option-selected-text: #{map.get($vals, bg)};
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+      border-color: map.get($vals, border);
+
+      &:hover {
+        background-color: if(
+          map.has-key($vals, hover),
+          map.get($vals, hover),
+          map.get($vals, bg)
+        );
+      }
+
+      &.segmentedControl_outline {
+        background-color: transparent;
+        color: map.get($vals, text);
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
+    }
+  }
+
+  @each $state, $vals in theme.$states {
+    .segmentedControl_#{$state} {
+      --segmentedControl-glass-bg: #{map.get($vals, glass-bg)};
+      --segmentedControl-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --segmentedControl-glass-border: #{map.get($vals, glass-border)};
+      --segmentedControl-glass-text: #{map.get($vals, text)};
+      --segmentedControl-option-selected-bg: #{map.get($vals, text)};
+      --segmentedControl-option-selected-text: #{map.get($vals, bg)};
+      border-width: 2px;
+      border-color: map.get($vals, border);
+      color: map.get($vals, text);
+    }
+  }
+
+  .segmentedControl_clear {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+    .segmentedControl_optionSelected {
+      color: var(--background-color-lighter);
+    }
+  }
+
+  .segmentedControl_glass {
+    @include mixins.glass-surface(
+      var(--segmentedControl-glass-bg),
+      var(--segmentedControl-glass-border),
+      16px
+    );
+
+    color: var(--segmentedControl-glass-text);
+  }
+
+  .segmentedControl_glass:hover {
+    background: var(--segmentedControl-glass-hover-bg);
+  }
+
+  .segmentedControl_glass.segmentedControl_outline {
+    border-color: var(--segmentedControl-glass-border);
+  }
+
+  .segmentedControl_disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--disabled-color);
+    border-color: var(--disabled-color);
+
+    &:hover {
+      background-color: var(--disabled-color);
+    }
+
+    .segmentedControl_optionSelected {
+      color: var(--disabled-color);
+    }
+  }
+
+  .segmentedControl_loading {
+    cursor: progress;
+  }
+
+  .segmentedControl_vertical,
+  .segmentedControl_vertical .segmentedControl_content {
+    flex-direction: column;
+  }
+
+  .segmentedControl_fullWidth {
+    width: 100%;
+  }
+
+  .segmentedControl_fullWidth .segmentedControl_content {
+    width: 100%;
+  }
+
+  .segmentedControl_equalWidth .segmentedControl_option {
+    flex: 1 1 0;
+  }
+
+  @each $key, $value in theme.$rounding {
+    .segmentedControl_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .segmentedControl_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @include bp.down(xs) {
+    .segmentedControl_container,
+    .segmentedControl {
+      width: 100%;
+    }
+
+    .segmentedControl_labelLeft,
+    .segmentedControl_labelRight {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .segmentedControl,
+    .segmentedControl * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .segmentedControl {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+      box-shadow: none;
+    }
+
+    .segmentedControl_glass {
+      background: Canvas;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+}

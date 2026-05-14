@@ -73,34 +73,16 @@ function simplifyTypeText(typeText) {
 }
 
 const knownDefaultAccessors = new Map([
-  [
-    "getDefaultTheme()",
-    'configured default theme (fallback: "primary")',
-  ],
-  [
-    "getDefaultRounding()",
-    'configured default rounding (fallback: "medium")',
-  ],
-  [
-    "getDefaultShadow()",
-    'configured default shadow (fallback: "light")',
-  ],
-  [
-    "getDefaultSize()",
-    'configured default size (fallback: "medium")',
-  ],
-  [
-    "getDefaultGlass()",
-    "configured default glass setting (fallback: false)",
-  ],
+  ["getDefaultTheme()", 'configured default theme (fallback: "primary")'],
+  ["getDefaultRounding()", 'configured default rounding (fallback: "medium")'],
+  ["getDefaultShadow()", 'configured default shadow (fallback: "light")'],
+  ["getDefaultSize()", 'configured default size (fallback: "medium")'],
+  ["getDefaultGlass()", "configured default glass setting (fallback: false)"],
   [
     "getDefaultOutline()",
     "configured default outline setting (fallback: false)",
   ],
-  [
-    "getDefaultBorder()",
-    'configured default border width (fallback: "none")',
-  ],
+  ["getDefaultBorder()", 'configured default border width (fallback: "none")'],
   [
     "getDefaultColorSchemeName()",
     'configured default color scheme (fallback: "Forest Dusk")',
@@ -148,7 +130,10 @@ function getBindingElementPropName(bindingElement) {
   const propertyName = bindingElement.getPropertyNameNode();
 
   if (propertyName) {
-    if (Node.isStringLiteral(propertyName) || Node.isNumericLiteral(propertyName)) {
+    if (
+      Node.isStringLiteral(propertyName) ||
+      Node.isNumericLiteral(propertyName)
+    ) {
       return propertyName.getLiteralText();
     }
 
@@ -161,7 +146,11 @@ function getBindingElementPropName(bindingElement) {
   return nameNode.getText();
 }
 
-async function getComponentDefaultValues(project, typesFilePath, componentName) {
+async function getComponentDefaultValues(
+  project,
+  typesFilePath,
+  componentName,
+) {
   const baseComponentPath = getBaseComponentPath(typesFilePath, componentName);
 
   try {
@@ -280,7 +269,6 @@ function shouldSkipPropsLikeName(name) {
     /^Base[A-Z]/.test(name) ||
     /BaseProps$/.test(name) ||
     /AccessibilityProps$/.test(name) ||
-    /ControlProps$/.test(name) ||
     /InternalProps$/.test(name) ||
     /InjectedProps$/.test(name) ||
     /ElementProps$/.test(name) ||

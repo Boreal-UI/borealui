@@ -412,6 +412,11 @@
       "import": "./dist/core/SearchInput.js",
       "require": "./dist/core/SearchInput.cjs.js"
     },
+    "./core/SegmentedControl": {
+      "types": "./dist/types/core/SegmentedControl.d.ts",
+      "import": "./dist/core/SegmentedControl.js",
+      "require": "./dist/core/SegmentedControl.cjs.js"
+    },
     "./core/Select": {
       "types": "./dist/types/core/Select.d.ts",
       "import": "./dist/core/Select.js",
@@ -727,6 +732,10 @@
     "./next/SearchInput": {
       "types": "./dist/types/next/SearchInput.d.ts",
       "import": "./dist/next/SearchInput.js"
+    },
+    "./next/SegmentedControl": {
+      "types": "./dist/types/next/SegmentedControl.d.ts",
+      "import": "./dist/next/SegmentedControl.js"
     },
     "./next/Select": {
       "types": "./dist/types/next/Select.d.ts",

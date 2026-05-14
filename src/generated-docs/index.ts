@@ -50,6 +50,7 @@ export { radioGroupPropDocs } from "./RadioGroup.props";
 export { ratingPropDocs } from "./Rating.props";
 export { scrollToTopPropDocs } from "./ScrollToTop.props";
 export { searchInputPropDocs } from "./SearchInput.props";
+export { segmentedControlPropDocs } from "./SegmentedControl.props";
 export { selectPropDocs } from "./Select.props";
 export { sidebarPropDocs } from "./Sidebar.props";
 export { skeletonPropDocs } from "./Skeleton.props";
