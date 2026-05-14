@@ -129,8 +129,7 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -189,8 +188,7 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the rendered icon.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "iconPosition",
@@ -207,8 +205,7 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the icon wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "isExternal",
@@ -225,8 +222,7 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the label/content wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "loaderClassName",
@@ -234,8 +230,7 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the loading indicator.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "loading",
@@ -313,8 +308,7 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "description": "State of the button ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "target",

@@ -1,3 +1,3 @@
-import "../components/Checkbox/next/Checkbox.module.scss";
-export { default } from "../components/Checkbox/next/Checkbox";
-export * from "../components/Checkbox/Checkbox.types";
+import "../components/CheckBox/next/CheckBox.module.scss";
+export { default } from "../components/CheckBox/next/CheckBox";
+export * from "../components/CheckBox/CheckBox.types";

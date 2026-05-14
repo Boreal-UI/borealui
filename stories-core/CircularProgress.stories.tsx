@@ -3,21 +3,12 @@ import CircularProgress from "../src/components/CircularProgress/core/CircularPr
 import type { CircularProgressProps } from "../src/components/CircularProgress/CircularProgress.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
-import { StateType, ThemeType } from "@/types";
-
-const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<CircularProgressProps> = {
   title: "Components/CircularProgress",

@@ -30,7 +30,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
-  state = "",
+  state,
   glass = getDefaultGlass(),
   classMap,
   TextInputComponent,
@@ -319,7 +319,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
         className={combineClassNames(
           classMap.command_palette,
           classMap[theme],
-          classMap[state],
+          state && classMap[state],
           shadow && classMap[`shadow${capitalize(shadow)}`],
           rounding && classMap[`round${capitalize(rounding)}`],
           glass && classMap.glass,

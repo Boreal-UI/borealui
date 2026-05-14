@@ -22,6 +22,7 @@ const classes = {
   quaternary: "command_palette_quaternary",
 
   success: "command_palette_success",
+  info: "command_palette_info",
   error: "command_palette_error",
   warning: "command_palette_warning",
 

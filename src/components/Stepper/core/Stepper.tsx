@@ -15,6 +15,7 @@ const classes = {
   quaternary: "stepper_quaternary",
   glass: "stepper_glass",
   success: "stepper_success",
+  info: "stepper_info",
   warning: "stepper_warning",
   error: "stepper_error",
   clear: "stepper_clear",

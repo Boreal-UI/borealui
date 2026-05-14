@@ -65,8 +65,7 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "Custom class names for the avatar container.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -133,8 +132,7 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "Full name used to generate initials when no image is available.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "onClick",
@@ -219,13 +217,12 @@ export const avatarPropDocs: GeneratedComponentDoc = {
       "description": "State of the avatar ('success' | 'error' | 'warning').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "status",
       "type": "StatusType",
-      "description": "Optional status indicator for user availability and activity. Useful for chat apps, collaboration tools, or profile displays.",
+      "description": "Optional status indicator for user availability and activity. ( \"online\" | \"offline\" | \"away\" | \"busy\") Useful for chat apps, collaboration tools, or profile displays.",
       "required": false,
       "inherited": false,
       "category": "props"

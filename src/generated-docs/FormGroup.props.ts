@@ -49,8 +49,7 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "controller",
@@ -66,8 +65,7 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the optional controller wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "data-testid",
@@ -91,8 +89,7 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the helper description.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "error",
@@ -108,8 +105,7 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the error message.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "hideLabel",
@@ -134,8 +130,7 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each input field wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "inputWrapperClassName",
@@ -143,8 +138,7 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for each input wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "label",
@@ -160,8 +154,7 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the label element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "layout",
@@ -187,8 +180,7 @@ export const formGroupPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the required marker.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "role",

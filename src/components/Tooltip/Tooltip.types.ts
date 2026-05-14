@@ -6,6 +6,12 @@ import { ReactNode, HTMLAttributes } from "react";
  */
 export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
   /**
+   * Additional CSS class names for the tooltip wrapper.
+   *
+   */
+  className?: string;
+
+  /**
    * The content text displayed inside the tooltip.
    */
   content: string;
@@ -37,7 +43,6 @@ export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
    * State of the tooltip for visual feedback.
    * "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -122,14 +127,41 @@ export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export type TriggerElementProps = React.HTMLAttributes<HTMLElement> & {
+  /**
+   * Tab order index applied to the trigger element.
+   */
   tabIndex?: number;
+  /**
+   * HTML id applied to the relevant element.
+   */
   id?: string;
+  /**
+   * ARIA Describedby attribute forwarded to the relevant accessible element.
+   */
   "aria-describedby"?: string;
+  /**
+   * ARIA Label attribute forwarded to the relevant accessible element.
+   */
   "aria-label"?: string;
+  /**
+   * ARIA Labelledby attribute forwarded to the relevant accessible element.
+   */
   "aria-labelledby"?: string;
+  /**
+   * Callback fired when mouse enter occurs.
+   */
   onMouseEnter?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * Callback fired when mouse leave occurs.
+   */
   onMouseLeave?: React.MouseEventHandler<HTMLElement>;
+  /**
+   * Callback fired when focus occurs.
+   */
   onFocus?: React.FocusEventHandler<HTMLElement>;
+  /**
+   * Callback fired when blur occurs.
+   */
   onBlur?: React.FocusEventHandler<HTMLElement>;
   /** Optional test ID for testing frameworks. */
   testId?: string;

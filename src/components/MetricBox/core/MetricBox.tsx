@@ -15,6 +15,7 @@ const classes = {
   quaternary: "metricBox_quaternary",
 
   success: "metricBox_success",
+  info: "metricBox_info",
   error: "metricBox_error",
   warning: "metricBox_warning",
 

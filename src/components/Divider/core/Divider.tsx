@@ -16,6 +16,7 @@ const classes = {
   quaternary: "divider_quaternary",
   clear: "divider_clear",
   success: "divider_success",
+  info: "divider_info",
   warning: "divider_warning",
   error: "divider_error",
 };

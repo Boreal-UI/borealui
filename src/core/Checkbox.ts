@@ -1,3 +1,3 @@
-import "../components/Checkbox/core/Checkbox.scss";
-export { default } from "../components/Checkbox/core/Checkbox";
-export * from "../components/Checkbox/Checkbox.types";
+import "../components/CheckBox/core/CheckBox.scss";
+export { default } from "../components/CheckBox/core/CheckBox";
+export * from "../components/CheckBox/CheckBox.types";

@@ -17,6 +17,7 @@ const classes = {
   quaternary: "rating_quaternary",
 
   success: "rating_success",
+  info: "rating_info",
   error: "rating_error",
   warning: "rating_warning",
 

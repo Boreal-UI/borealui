@@ -58,8 +58,7 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "Additional custom class names for the wrapper element.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "customCollapsedIcon",
@@ -99,7 +98,8 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "If true, disables user interaction and styles the accordion as disabled.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "expanded",
@@ -145,15 +145,6 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
-      "name": "isToggleable",
-      "type": "boolean",
-      "description": "If true, the accordion can be toggled open or closed. If false, the accordion is always expanded.",
-      "required": false,
-      "inherited": false,
-      "category": "props",
-      "defaultValue": "true"
-    },
-    {
       "name": "lazyLoad",
       "type": "boolean",
       "description": "If true, the accordion content will be loaded lazily.",
@@ -169,6 +160,15 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "no-collapse",
+      "type": "boolean",
+      "description": "If true, the accordion can be opened but cannot be collapsed by user action.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "onToggle",
@@ -252,8 +252,7 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "The state of the accordion ('success' | 'error' | 'warning').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

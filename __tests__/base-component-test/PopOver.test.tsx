@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import BasePopover from "@/components/PopOver/PopOverBase";
+import BasePopOver from "@/components/PopOver/PopOverBase";
 import { axe, toHaveNoViolations } from "jest-axe";
 
 expect.extend(toHaveNoViolations);
@@ -22,12 +22,12 @@ const classNames = {
   srOnly: "srOnly",
 };
 
-describe("BasePopover", () => {
-  const renderPopover = (props = {}) =>
+describe("BasePopOver", () => {
+  const renderPopOver = (props = {}) =>
     render(
-      <BasePopover
-        trigger={<span>Open Popover</span>}
-        content={<div>Popover Content</div>}
+      <BasePopOver
+        trigger={<span>Open PopOver</span>}
+        content={<div>PopOver Content</div>}
         classMap={classNames}
         data-testid="popover"
         {...props}
@@ -35,7 +35,7 @@ describe("BasePopover", () => {
     );
 
   it("renders the trigger button with default accessible name", () => {
-    renderPopover();
+    renderPopOver();
 
     const trigger = screen.getByRole("button", { name: /toggle popover/i });
     expect(trigger).toBeInTheDocument();
@@ -45,7 +45,7 @@ describe("BasePopover", () => {
   });
 
   it("renders a custom trigger aria-label and title when provided", () => {
-    renderPopover({
+    renderPopOver({
       triggerAriaLabel: "Show details",
       triggerTitle: "Open the details popover",
     });
@@ -56,7 +56,7 @@ describe("BasePopover", () => {
   });
 
   it("toggles popover open and closed on click", () => {
-    renderPopover();
+    renderPopOver();
 
     const trigger = screen.getByTestId("popover-trigger");
 
@@ -72,7 +72,7 @@ describe("BasePopover", () => {
   });
 
   it("closes on Escape key and returns focus to the trigger", () => {
-    renderPopover();
+    renderPopOver();
 
     const trigger = screen.getByTestId("popover-trigger");
 
@@ -88,9 +88,9 @@ describe("BasePopover", () => {
   it("closes when clicking outside the popover", () => {
     render(
       <div>
-        <BasePopover
-          trigger={<span>Open Popover</span>}
-          content={<div>Popover Content</div>}
+        <BasePopOver
+          trigger={<span>Open PopOver</span>}
+          content={<div>PopOver Content</div>}
           classMap={classNames}
           data-testid="popover"
         />
@@ -108,7 +108,7 @@ describe("BasePopover", () => {
   });
 
   it("does not close when clicking inside the popover", () => {
-    renderPopover({
+    renderPopOver({
       content: (
         <div>
           <button type="button">Inner Action</button>
@@ -126,7 +126,7 @@ describe("BasePopover", () => {
   });
 
   it("moves focus into the popover when opened for dialog role", () => {
-    renderPopover({
+    renderPopOver({
       content: (
         <div>
           <button type="button">Focusable Action</button>
@@ -142,7 +142,7 @@ describe("BasePopover", () => {
   });
 
   it("focuses the popover container when no focusable child exists", () => {
-    renderPopover({
+    renderPopOver({
       content: <div>Read only content</div>,
     });
 
@@ -152,7 +152,7 @@ describe("BasePopover", () => {
   });
 
   it("does not force focus into the popover when role is tooltip", () => {
-    renderPopover({
+    renderPopOver({
       role: "tooltip",
       content: <div>Helpful tooltip text</div>,
     });
@@ -168,7 +168,7 @@ describe("BasePopover", () => {
   });
 
   it("uses tooltip-specific trigger aria-describedby only when open", () => {
-    renderPopover({
+    renderPopOver({
       role: "tooltip",
       content: <div>Helpful tooltip text</div>,
     });
@@ -185,7 +185,7 @@ describe("BasePopover", () => {
   });
 
   it("uses menu aria-haspopup when role is menu", () => {
-    renderPopover({
+    renderPopOver({
       role: "menu",
       content: <div>Menu content</div>,
     });
@@ -196,7 +196,7 @@ describe("BasePopover", () => {
   });
 
   it("renders dialog role by default", () => {
-    renderPopover();
+    renderPopOver();
 
     fireEvent.click(screen.getByTestId("popover-trigger"));
 
@@ -207,7 +207,7 @@ describe("BasePopover", () => {
   });
 
   it("renders a custom id on the popover content when provided", () => {
-    renderPopover({ id: "custom-popover-id" });
+    renderPopOver({ id: "custom-popover-id" });
 
     const trigger = screen.getByTestId("popover-trigger");
     fireEvent.click(trigger);
@@ -218,7 +218,7 @@ describe("BasePopover", () => {
   });
 
   it("applies aria-label directly to the popover content when provided", () => {
-    renderPopover({
+    renderPopOver({
       "aria-label": "Additional details",
     });
 
@@ -227,16 +227,16 @@ describe("BasePopover", () => {
     const content = screen.getByRole("dialog", { name: /additional details/i });
     expect(content).toBeInTheDocument();
     expect(content).toHaveAttribute("aria-label", "Additional details");
-    expect(screen.queryByText("Popover Content")).toBeInTheDocument();
+    expect(screen.queryByText("PopOver Content")).toBeInTheDocument();
   });
 
   it("uses external aria-labelledby when provided", () => {
     render(
       <>
-        <span id="external-popover-label">External Popover Label</span>
-        <BasePopover
-          trigger={<span>Open Popover</span>}
-          content={<div>Popover Content</div>}
+        <span id="external-popover-label">External PopOver Label</span>
+        <BasePopOver
+          trigger={<span>Open PopOver</span>}
+          content={<div>PopOver Content</div>}
           classMap={classNames}
           data-testid="popover"
           aria-labelledby="external-popover-label"
@@ -258,7 +258,7 @@ describe("BasePopover", () => {
   });
 
   it("uses the fallback screen-reader label when no aria-label or aria-labelledby is provided", () => {
-    renderPopover();
+    renderPopOver();
 
     fireEvent.click(screen.getByTestId("popover-trigger"));
 
@@ -269,16 +269,16 @@ describe("BasePopover", () => {
 
     const fallbackLabel = document.getElementById(labelledBy as string);
     expect(fallbackLabel).toBeInTheDocument();
-    expect(fallbackLabel).toHaveTextContent("Popover Content");
+    expect(fallbackLabel).toHaveTextContent("PopOver Content");
   });
 
   it("applies aria-describedby to the popover content when provided", () => {
     render(
       <>
         <p id="popover-description">This popover provides more context.</p>
-        <BasePopover
-          trigger={<span>Open Popover</span>}
-          content={<div>Popover Content</div>}
+        <BasePopOver
+          trigger={<span>Open PopOver</span>}
+          content={<div>PopOver Content</div>}
           classMap={classNames}
           data-testid="popover"
           aria-describedby="popover-description"
@@ -296,9 +296,9 @@ describe("BasePopover", () => {
 
   it("applies aria-modal when role is dialog", () => {
     render(
-      <BasePopover
-        trigger={<span>Open Popover</span>}
-        content={<div>Popover Content</div>}
+      <BasePopOver
+        trigger={<span>Open PopOver</span>}
+        content={<div>PopOver Content</div>}
         classMap={classNames}
         data-testid="popover"
         aria-modal={true}
@@ -316,9 +316,9 @@ describe("BasePopover", () => {
 
   it("does not apply aria-modal when role is not dialog", () => {
     render(
-      <BasePopover
-        trigger={<span>Open Popover</span>}
-        content={<div>Popover Content</div>}
+      <BasePopOver
+        trigger={<span>Open PopOver</span>}
+        content={<div>PopOver Content</div>}
         classMap={classNames}
         data-testid="popover"
         aria-modal={true}
@@ -334,7 +334,7 @@ describe("BasePopover", () => {
   });
 
   it("does not open when disabled", () => {
-    renderPopover({ disabled: true });
+    renderPopOver({ disabled: true });
 
     const trigger = screen.getByTestId("popover-trigger");
     expect(trigger).toBeDisabled();
@@ -344,7 +344,7 @@ describe("BasePopover", () => {
   });
 
   it("applies placement, theme, rounding, shadow, and state classes", () => {
-    renderPopover({
+    renderPopOver({
       placement: "bottom",
       theme: "primary",
       rounding: "medium",
@@ -367,7 +367,7 @@ describe("BasePopover", () => {
   });
 
   it("keeps the popover open when clicking the trigger again only if toggled intentionally", () => {
-    renderPopover();
+    renderPopOver();
 
     const trigger = screen.getByTestId("popover-trigger");
 
@@ -380,11 +380,11 @@ describe("BasePopover", () => {
 
   it("has no accessibility violations when open as a dialog", async () => {
     const { container } = render(
-      <BasePopover
-        trigger={<span>Open Popover</span>}
+      <BasePopOver
+        trigger={<span>Open PopOver</span>}
         content={
           <div>
-            <p>Popover Content</p>
+            <p>PopOver Content</p>
             <button type="button">Confirm</button>
           </div>
         }
@@ -402,7 +402,7 @@ describe("BasePopover", () => {
 
   it("has no accessibility violations when open as a tooltip", async () => {
     const { container } = render(
-      <BasePopover
+      <BasePopOver
         trigger={<span>Info</span>}
         content={<div>Helpful tooltip text</div>}
         classMap={classNames}

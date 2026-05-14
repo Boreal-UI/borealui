@@ -24,6 +24,7 @@ const classes = {
   quaternary: "progress_quaternary",
 
   success: "progress_success",
+  info: "progress_info",
   error: "progress_error",
   warning: "progress_warning",
 

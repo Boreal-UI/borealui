@@ -1,17 +1,8 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Rating, StateType, ThemeType } from "../src/index.core";
+import { Rating } from "../src/index.core";
 import type { RatingProps } from "../src/components/Rating/Rating.types";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
+import { stateOptions, themeOptions } from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<RatingProps> = {
   title: "Components/Rating",

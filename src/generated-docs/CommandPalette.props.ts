@@ -211,8 +211,7 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "The state of the command palette ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

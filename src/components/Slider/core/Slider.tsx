@@ -25,6 +25,7 @@ const coreStyles = {
   quaternary: "slider_quaternary",
 
   success: "slider_success",
+  info: "slider_info",
   error: "slider_error",
   warning: "slider_warning",
 

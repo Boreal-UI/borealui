@@ -1,0 +1,149 @@
+@use "../../../styles/theme" as theme;
+
+@layer boreal-ui.components {
+  .toast_viewport {
+    position: fixed;
+    z-index: 1100;
+    display: grid;
+    gap: var(--spacing-sm);
+    width: min(100% - 2rem, 24rem);
+    pointer-events: none;
+  }
+
+  .toast_top_right {
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .toast_top_left {
+    top: 1rem;
+    left: 1rem;
+  }
+
+  .toast_top_center {
+    top: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .toast_bottom_center {
+    bottom: 1rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .toast_bottom_right {
+    right: 1rem;
+    bottom: 1rem;
+  }
+
+  .toast_bottom_left {
+    left: 1rem;
+    bottom: 1rem;
+  }
+
+  .toast {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border: 1px solid var(--border-color);
+    background: var(--background-color);
+    color: var(--text-color);
+    font-family: var(--font-family-ui);
+    pointer-events: auto;
+    overflow-wrap: anywhere;
+  }
+
+  .toast_content {
+    min-width: 0;
+    display: grid;
+    gap: 0.125rem;
+  }
+
+  .toast_title {
+    font-weight: var(--font-weight-heading);
+  }
+
+  .toast_message {
+    font-size: var(--font-size-body-sm);
+  }
+
+  .toast_dismiss_button {
+    min-width: 2rem;
+    min-height: 2rem;
+    border: 0;
+    border-radius: var(--border-radius-sm);
+    background: transparent;
+    color: currentcolor;
+    cursor: pointer;
+    font: inherit;
+  }
+
+  .toast_dismiss_button:focus-visible {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+  }
+
+  .toast_success {
+    border-color: var(--success-color, #0a6b35);
+  }
+
+  .toast_error {
+    border-color: var(--error-color, #b00020);
+  }
+
+  .toast_warning {
+    border-color: var(--warning-color, #8a5a00);
+  }
+
+  .toast_info {
+    border-color: var(--info-color, #0057b8);
+  }
+
+  @each $key, $value in theme.$rounding {
+    .toast_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .toast_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toast_viewport,
+    .toast_viewport * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .toast {
+      background: Canvas !important;
+      color: CanvasText !important;
+      border-color: ButtonText !important;
+      box-shadow: none !important;
+    }
+
+    .toast_success,
+    .toast_error,
+    .toast_warning,
+    .toast_info {
+      border-color: Highlight !important;
+    }
+
+    .toast_dismiss_button {
+      color: ButtonText;
+      border: 1px solid ButtonText;
+    }
+
+    .toast_dismiss_button:focus-visible {
+      outline-color: Highlight;
+    }
+  }
+}

@@ -23,7 +23,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   shadow = "none",
   rounding = "none",
   layout = "inline",
-  className = "",
+  className,
   "data-testid": dataTestId,
   testId = dataTestId ?? "footer",
 

@@ -1,6 +1,6 @@
 {
   "name": "boreal-ui",
-  "version": "0.0.896",
+  "version": "0.0.899",
   "readme": "README.npm.md",
   "description": "A modern, customizable React/Next.js component library",
   "author": "Davin Chiupka",
@@ -106,10 +106,11 @@
     "@typescript-eslint/eslint-plugin": "^8.40.0",
     "@typescript-eslint/parser": "^8.40.0",
     "@vitejs/plugin-react": "^4.3.4",
-    "axe-core": "^4.10.3",
+    "axe-core": "^4.11.4",
     "babel-loader": "^10.0.0",
     "css-loader": "^7.1.2",
     "cypress": "^15.14.2",
+    "cypress-axe": "^1.7.0",
     "eslint": "^9.34.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.5",
@@ -194,6 +195,11 @@
       "import": "./dist/core/Accordion.js",
       "require": "./dist/core/Accordion.cjs.js"
     },
+    "./core/Alert": {
+      "types": "./dist/types/core/Alert.d.ts",
+      "import": "./dist/core/Alert.js",
+      "require": "./dist/core/Alert.cjs.js"
+    },
     "./core/Avatar": {
       "types": "./dist/types/core/Avatar.d.ts",
       "import": "./dist/core/Avatar.js",
@@ -219,10 +225,10 @@
       "import": "./dist/core/Card.js",
       "require": "./dist/core/Card.cjs.js"
     },
-    "./core/Checkbox": {
-      "types": "./dist/types/core/Checkbox.d.ts",
-      "import": "./dist/core/Checkbox.js",
-      "require": "./dist/core/Checkbox.cjs.js"
+    "./core/CheckBox": {
+      "types": "./dist/types/core/CheckBox.d.ts",
+      "import": "./dist/core/CheckBox.js",
+      "require": "./dist/core/CheckBox.cjs.js"
     },
     "./core/Chip": {
       "types": "./dist/types/core/Chip.d.ts",
@@ -254,10 +260,20 @@
       "import": "./dist/core/CommandPalette.js",
       "require": "./dist/core/CommandPalette.cjs.js"
     },
+    "./core/ComboBox": {
+      "types": "./dist/types/core/ComboBox.d.ts",
+      "import": "./dist/core/ComboBox.js",
+      "require": "./dist/core/ComboBox.cjs.js"
+    },
     "./core/DataTable": {
       "types": "./dist/types/core/DataTable.d.ts",
       "import": "./dist/core/DataTable.js",
       "require": "./dist/core/DataTable.cjs.js"
+    },
+    "./core/DateRangePicker": {
+      "types": "./dist/types/core/DateRangePicker.d.ts",
+      "import": "./dist/core/DateRangePicker.js",
+      "require": "./dist/core/DateRangePicker.cjs.js"
     },
     "./core/DateTimePicker": {
       "types": "./dist/types/core/DateTimePicker.d.ts",
@@ -273,6 +289,11 @@
       "types": "./dist/types/core/Dropdown.d.ts",
       "import": "./dist/core/Dropdown.js",
       "require": "./dist/core/Dropdown.cjs.js"
+    },
+    "./core/Drawer": {
+      "types": "./dist/types/core/Drawer.d.ts",
+      "import": "./dist/core/Drawer.js",
+      "require": "./dist/core/Drawer.cjs.js"
     },
     "./core/EmptyState": {
       "types": "./dist/types/core/EmptyState.d.ts",
@@ -294,6 +315,11 @@
       "import": "./dist/core/FormGroup.js",
       "require": "./dist/core/FormGroup.cjs.js"
     },
+    "./core/FormField": {
+      "types": "./dist/types/core/FormField.d.ts",
+      "import": "./dist/core/FormField.js",
+      "require": "./dist/core/FormField.cjs.js"
+    },
     "./core/globals": {
       "types": "./dist/types/core/globals.d.ts",
       "import": "./dist/core/globals.js",
@@ -304,10 +330,20 @@
       "import": "./dist/core/IconButton.js",
       "require": "./dist/core/IconButton.cjs.js"
     },
+    "./core/Layout": {
+      "types": "./dist/types/core/Layout.d.ts",
+      "import": "./dist/core/Layout.js",
+      "require": "./dist/core/Layout.cjs.js"
+    },
     "./core/MarkdownRenderer": {
       "types": "./dist/types/core/MarkdownRenderer.d.ts",
       "import": "./dist/core/MarkdownRenderer.js",
       "require": "./dist/core/MarkdownRenderer.cjs.js"
+    },
+    "./core/Menu": {
+      "types": "./dist/types/core/Menu.d.ts",
+      "import": "./dist/core/Menu.js",
+      "require": "./dist/core/Menu.cjs.js"
     },
     "./core/MessagePopup": {
       "types": "./dist/types/core/MessagePopup.d.ts",
@@ -324,10 +360,10 @@
       "import": "./dist/core/Modal.js",
       "require": "./dist/core/Modal.cjs.js"
     },
-    "./core/Navbar": {
-      "types": "./dist/types/core/Navbar.d.ts",
-      "import": "./dist/core/Navbar.js",
-      "require": "./dist/core/Navbar.cjs.js"
+    "./core/NavBar": {
+      "types": "./dist/types/core/NavBar.d.ts",
+      "import": "./dist/core/NavBar.js",
+      "require": "./dist/core/NavBar.cjs.js"
     },
     "./core/NotificationCenter": {
       "types": "./dist/types/core/NotificationCenter.d.ts",
@@ -339,10 +375,10 @@
       "import": "./dist/core/Pager.js",
       "require": "./dist/core/Pager.cjs.js"
     },
-    "./core/Popover": {
-      "types": "./dist/types/core/Popover.d.ts",
-      "import": "./dist/core/Popover.js",
-      "require": "./dist/core/Popover.cjs.js"
+    "./core/PopOver": {
+      "types": "./dist/types/core/PopOver.d.ts",
+      "import": "./dist/core/PopOver.js",
+      "require": "./dist/core/PopOver.cjs.js"
     },
     "./core/ProgressBar": {
       "types": "./dist/types/core/ProgressBar.d.ts",
@@ -404,6 +440,11 @@
       "import": "./dist/core/Stepper.js",
       "require": "./dist/core/Stepper.cjs.js"
     },
+    "./core/styleConfig": {
+      "types": "./dist/types/core/styleConfig.d.ts",
+      "import": "./dist/core/styleConfig.js",
+      "require": "./dist/core/styleConfig.cjs.js"
+    },
     "./core/Tabs": {
       "types": "./dist/types/core/Tabs.d.ts",
       "import": "./dist/core/Tabs.js",
@@ -444,6 +485,11 @@
       "import": "./dist/core/Toggle.js",
       "require": "./dist/core/Toggle.cjs.js"
     },
+    "./core/ToastProvider": {
+      "types": "./dist/types/core/ToastProvider.d.ts",
+      "import": "./dist/core/ToastProvider.js",
+      "require": "./dist/core/ToastProvider.cjs.js"
+    },
     "./core/Toolbar": {
       "types": "./dist/types/core/Toolbar.d.ts",
       "import": "./dist/core/Toolbar.js",
@@ -462,6 +508,10 @@
     "./next/Accordion": {
       "types": "./dist/types/next/Accordion.d.ts",
       "import": "./dist/next/Accordion.js"
+    },
+    "./next/Alert": {
+      "types": "./dist/types/next/Alert.d.ts",
+      "import": "./dist/next/Alert.js"
     },
     "./next/Avatar": {
       "types": "./dist/types/next/Avatar.d.ts",
@@ -483,9 +533,9 @@
       "types": "./dist/types/next/Card.d.ts",
       "import": "./dist/next/Card.js"
     },
-    "./next/Checkbox": {
-      "types": "./dist/types/next/Checkbox.d.ts",
-      "import": "./dist/next/Checkbox.js"
+    "./next/CheckBox": {
+      "types": "./dist/types/next/CheckBox.d.ts",
+      "import": "./dist/next/CheckBox.js"
     },
     "./next/Chip": {
       "types": "./dist/types/next/Chip.d.ts",
@@ -511,9 +561,17 @@
       "types": "./dist/types/next/CommandPalette.d.ts",
       "import": "./dist/next/CommandPalette.js"
     },
+    "./next/ComboBox": {
+      "types": "./dist/types/next/ComboBox.d.ts",
+      "import": "./dist/next/ComboBox.js"
+    },
     "./next/DataTable": {
       "types": "./dist/types/next/DataTable.d.ts",
       "import": "./dist/next/DataTable.js"
+    },
+    "./next/DateRangePicker": {
+      "types": "./dist/types/next/DateRangePicker.d.ts",
+      "import": "./dist/next/DateRangePicker.js"
     },
     "./next/DateTimePicker": {
       "types": "./dist/types/next/DateTimePicker.d.ts",
@@ -526,6 +584,10 @@
     "./next/Dropdown": {
       "types": "./dist/types/next/Dropdown.d.ts",
       "import": "./dist/next/Dropdown.js"
+    },
+    "./next/Drawer": {
+      "types": "./dist/types/next/Drawer.d.ts",
+      "import": "./dist/next/Drawer.js"
     },
     "./next/EmptyState": {
       "types": "./dist/types/next/EmptyState.d.ts",
@@ -543,6 +605,10 @@
       "types": "./dist/types/next/FormGroup.d.ts",
       "import": "./dist/next/FormGroup.js"
     },
+    "./next/FormField": {
+      "types": "./dist/types/next/FormField.d.ts",
+      "import": "./dist/next/FormField.js"
+    },
     "./next/globals": {
       "types": "./dist/types/next/globals.d.ts",
       "import": "./dist/next/globals.js"
@@ -551,9 +617,17 @@
       "types": "./dist/types/next/IconButton.d.ts",
       "import": "./dist/next/IconButton.js"
     },
+    "./next/Layout": {
+      "types": "./dist/types/next/Layout.d.ts",
+      "import": "./dist/next/Layout.js"
+    },
     "./next/MarkdownRenderer": {
       "types": "./dist/types/next/MarkdownRenderer.d.ts",
       "import": "./dist/next/MarkdownRenderer.js"
+    },
+    "./next/Menu": {
+      "types": "./dist/types/next/Menu.d.ts",
+      "import": "./dist/next/Menu.js"
     },
     "./next/MessagePopup": {
       "types": "./dist/types/next/MessagePopup.d.ts",
@@ -567,9 +641,9 @@
       "types": "./dist/types/next/Modal.d.ts",
       "import": "./dist/next/Modal.js"
     },
-    "./next/Navbar": {
-      "types": "./dist/types/next/Navbar.d.ts",
-      "import": "./dist/next/Navbar.js"
+    "./next/NavBar": {
+      "types": "./dist/types/next/NavBar.d.ts",
+      "import": "./dist/next/NavBar.js"
     },
     "./next/NotificationCenter": {
       "types": "./dist/types/next/NotificationCenter.d.ts",
@@ -579,9 +653,9 @@
       "types": "./dist/types/next/Pager.d.ts",
       "import": "./dist/next/Pager.js"
     },
-    "./next/Popover": {
-      "types": "./dist/types/next/Popover.d.ts",
-      "import": "./dist/next/Popover.js"
+    "./next/PopOver": {
+      "types": "./dist/types/next/PopOver.d.ts",
+      "import": "./dist/next/PopOver.js"
     },
     "./next/ProgressBar": {
       "types": "./dist/types/next/ProgressBar.d.ts",
@@ -631,6 +705,10 @@
       "types": "./dist/types/next/Stepper.d.ts",
       "import": "./dist/next/Stepper.js"
     },
+    "./next/styleConfig": {
+      "types": "./dist/types/next/styleConfig.d.ts",
+      "import": "./dist/next/styleConfig.js"
+    },
     "./next/Tabs": {
       "types": "./dist/types/next/Tabs.d.ts",
       "import": "./dist/next/Tabs.js"
@@ -662,6 +740,10 @@
     "./next/Toggle": {
       "types": "./dist/types/next/Toggle.d.ts",
       "import": "./dist/next/Toggle.js"
+    },
+    "./next/ToastProvider": {
+      "types": "./dist/types/next/ToastProvider.d.ts",
+      "import": "./dist/next/ToastProvider.js"
     },
     "./next/Toolbar": {
       "types": "./dist/types/next/Toolbar.d.ts",

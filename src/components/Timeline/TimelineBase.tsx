@@ -15,7 +15,6 @@ const TimelineBase: React.FC<
   items,
   orientation = "vertical",
   "aria-label": ariaLabel = "Timeline",
-  "aria-label": ariaLabelOverride,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
   role = "list",
@@ -84,7 +83,7 @@ const TimelineBase: React.FC<
       className={outerWrapper}
       data-testid={testId}
       role={role}
-      aria-label={ariaLabelledBy ? undefined : (ariaLabelOverride ?? ariaLabel)}
+      aria-label={ariaLabelledBy ? undefined : ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       {...rest}

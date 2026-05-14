@@ -98,8 +98,7 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "data-testid",
@@ -141,8 +140,7 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the dropdown icon wrapper.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "id",
@@ -166,8 +164,7 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the visible label.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "labelPosition",
@@ -184,8 +181,7 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the outer layout container.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "loadingClassName",
@@ -193,8 +189,7 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for async loading text.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "name",
@@ -278,8 +273,7 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the native select element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "shadow",
@@ -296,8 +290,7 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for screen-reader-only description text.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "state",
@@ -305,8 +298,7 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "description": "State variant for styling. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "tabIndex",

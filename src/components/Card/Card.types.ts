@@ -11,34 +11,88 @@ import {
 } from "../../types/types";
 
 export interface StaticCardImage {
+  /**
+   * Static image source path.
+   */
   src: string;
+  /**
+   * Intrinsic image width.
+   */
   width?: number;
+  /**
+   * Intrinsic image height.
+   */
   height?: number;
+  /**
+   * Optional blurred placeholder data URL.
+   */
   blurDataURL?: string;
 }
 
 export type CardImageSource = string | StaticCardImage;
 
 export type HtmlImgLikeProps = React.ImgHTMLAttributes<HTMLImageElement> & {
+  /**
+   * Image or media source.
+   */
   src: string;
+  /**
+   * Alternative text for the image.
+   */
   alt: string;
 };
 
 export type NextLikeImageProps = {
+  /**
+   * Image or media source.
+   */
   src: string;
+  /**
+   * Alternative text for the image.
+   */
   alt: string;
+  /**
+   * Class Name.
+   */
   className?: string;
+  /**
+   * Whether the image should fill its container.
+   */
   fill?: boolean;
+  /**
+   * Responsive image sizes attribute.
+   */
   sizes?: string;
+  /**
+   * Whether the image should be loaded with priority.
+   */
   priority?: boolean;
 };
 
 export type CardImageComponentProps = {
+  /**
+   * Image or media source.
+   */
   src: string;
+  /**
+   * Alternative text for the image.
+   */
   alt: string;
+  /**
+   * Additional CSS class names for the component root.
+   */
   className?: string;
+  /**
+   * Rendered width for the element.
+   */
   width?: number;
+  /**
+   * Rendered height for the element.
+   */
   height?: number;
+  /**
+   * Whether the image should fill its container.
+   */
   fill?: boolean;
 };
 
@@ -143,8 +197,6 @@ export interface CardProps {
   /**
    * State of the card
    * ('success' | 'error' | 'warning' | 'disabled' | '').
-   *
-   * @default ""
    */
   state?: StateType;
 
@@ -174,15 +226,11 @@ export interface CardProps {
 
   /**
    * Optional card title displayed in the header.
-   *
-   * @default ""
    */
   title?: string;
 
   /**
    * Optional description displayed in the body.
-   *
-   * @default ""
    */
   description?: string;
 
@@ -213,92 +261,66 @@ export interface CardProps {
 
   /**
    * Custom class name for the card container.
-   *
-   * @default ""
    */
   className?: string;
 
   /**
    * Custom class name for the content wrapper.
-   *
-   * @default ""
    */
   contentClassName?: string;
 
   /**
    * Custom class name for the media/image wrapper.
-   *
-   * @default ""
    */
   mediaClassName?: string;
 
   /**
    * Custom class name for the image element.
-   *
-   * @default ""
    */
   imageClassName?: string;
 
   /**
    * Custom class name for the header section.
-   *
-   * @default ""
    */
   headerClassName?: string;
 
   /**
    * Custom class name for the title element.
-   *
-   * @default ""
    */
   titleClassName?: string;
 
   /**
    * Custom class name for the icon wrapper.
-   *
-   * @default ""
    */
   iconClassName?: string;
 
   /**
    * Custom class name for the description text.
-   *
-   * @default ""
    */
   descriptionClassName?: string;
 
   /**
    * Custom class name for the children wrapper.
-   *
-   * @default ""
    */
   childrenClassName?: string;
 
   /**
    * Custom class name for the actions wrapper.
-   *
-   * @default ""
    */
   actionsClassName?: string;
 
   /**
    * Custom class name for each action button.
-   *
-   * @default ""
    */
   actionButtonClassName?: string;
 
   /**
    * Custom class name for the body section.
-   *
-   * @default ""
    */
   bodyClassName?: string;
 
   /**
    * Custom class name for the footer section.
-   *
-   * @default ""
    */
   footerClassName?: string;
 
@@ -448,17 +470,35 @@ export interface CardProps {
 }
 
 export type ExtendedActionButton = ActionButton & {
+  /**
+   * Button component used to render the action.
+   */
   buttonComponent: React.ElementType;
+  /**
+   * Icon button component used when the action renders icon-only.
+   */
   iconButtonComponent: React.ElementType;
 };
 
 export interface CardBaseProps extends CardProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Component implementation used to render the skeleton portion.
+   */
   SkeletonComponent: React.FC<{
     width: string;
     height: string;
     ["data-testid"]?: string;
   }>;
+  /**
+   * Component implementation used to render the image portion.
+   */
   ImageComponent?: React.ComponentType<CardImageComponentProps>;
+  /**
+   * Action Buttons prop for Card.
+   */
   actionButtons: ExtendedActionButton[];
 }

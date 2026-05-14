@@ -8,7 +8,7 @@ import React, {
   isValidElement,
   cloneElement,
 } from "react";
-import { BasePopoverProps, TriggerElementProps } from "./PopOver.types";
+import { BasePopOverProps, TriggerElementProps } from "./PopOver.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -18,7 +18,7 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
-const BasePopover: React.FC<BasePopoverProps> = ({
+const BasePopOver: React.FC<BasePopOverProps> = ({
   trigger,
   content,
   asChild = false,
@@ -27,9 +27,9 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
-  state = "",
-  className = "",
-  contentClassName = "",
+  state,
+  className,
+  contentClassName,
   role = "dialog",
   triggerAriaLabel,
   triggerTitle,
@@ -182,7 +182,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
         classMap.popover,
         classMap[dynamicPlacement],
         classMap[theme],
-        classMap[state],
+        state && classMap[state],
         glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
@@ -293,7 +293,7 @@ const BasePopover: React.FC<BasePopoverProps> = ({
         >
           {!ariaLabel && !ariaLabelledBy && (
             <span id={fallbackLabelId} className={classMap.srOnly ?? "sr_only"}>
-              Popover Content
+              PopOver Content
             </span>
           )}
           {content}
@@ -303,5 +303,5 @@ const BasePopover: React.FC<BasePopoverProps> = ({
   );
 };
 
-BasePopover.displayName = "BasePopover";
-export default BasePopover;
+BasePopOver.displayName = "BasePopOver";
+export default BasePopOver;

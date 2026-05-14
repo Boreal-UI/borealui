@@ -36,6 +36,14 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "className",
+      "type": "string",
+      "description": "Additional CSS class names for the tooltip wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "styling"
+    },
+    {
       "name": "content",
       "type": "string",
       "description": "The content text displayed inside the tooltip.",
@@ -110,8 +118,7 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
       "description": "State of the tooltip for visual feedback. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

@@ -12,7 +12,7 @@
  * - Transitions
  * - Z-index layers
  * - Thematic color maps
- * - UI states (success, error, warning)
+ * - UI states (success, error, warning, info)
  * - Rounding and shadow presets
  * 
  * All variables support the `!default` flag to allow overrides via user-defined themes.
@@ -58,7 +58,7 @@
  *  - Each theme includes: bg, hover, text, border, text-hover
  *
  * == State Map ==
- * $states: visual styles for UI feedback states (success, error, warning)
+ * $states: visual styles for UI feedback states (success, error, warning, info)
  *
  * == Rounding / Shadow Maps ==
  * $rounding: key-value pairs for component rounding levels
@@ -74,9 +74,10 @@ $quaternary-color: #a1733a !default;
 $background-color: #222e2e !default;
 $border-color: #444 !default;
 $background-color-surface: #384b4b !default;
-$error-color: #f83838 !default;
-$success-color: #51c703 !default;
-$warning-color: #fca505 !default;
+$error-color: #a6192e !default;
+$success-color: #04b34f !default;
+$warning-color: #f90 !default;
+$info-color: #1d5ea8 !default;
 $disabled-color: #b8b8b8dd !default;
 $link-color: #8bb0c7 !default;
 $link-hover-color: #627e8f !default;
@@ -122,7 +123,13 @@ $font-family-ui:
   roboto,
   arial,
   sans-serif !default;
-$font-family-mono: ui-monospace, sfmono-regular, menlo, consolas, "Liberation Mono", monospace !default;
+$font-family-mono:
+  ui-monospace,
+  sfmono-regular,
+  menlo,
+  consolas,
+  "Liberation Mono",
+  monospace !default;
 $font-size-xxs: 10px !default;
 $font-size-xs: 12px !default;
 $font-size-sm: 14px !default;
@@ -247,9 +254,9 @@ $themes: (
     bg: var(--tertiary-color),
     bg-light: var(--tertiary-color-light),
     hover: var(--tertiary-color-hover),
-    text: var(--text-color-primary),
+    text: var(--text-color-tertiary),
     border: var(--tertiary-color),
-    text-hover: var(--text-color-primary),
+    text-hover: var(--text-color-tertiary),
     glass-bg: var(--tertiary-glass-background),
     glass-hover: var(--tertiary-glass-background-hover),
     glass-border: var(--tertiary-glass-border),
@@ -258,9 +265,9 @@ $themes: (
     bg: var(--quaternary-color),
     bg-light: var(--quaternary-color-light),
     hover: var(--quaternary-color-hover),
-    text: var(--text-color-primary),
+    text: var(--text-color-quaternary),
     border: var(--quaternary-color),
-    text-hover: var(--text-color-primary),
+    text-hover: var(--text-color-quaternary),
     glass-bg: var(--quaternary-glass-background),
     glass-hover: var(--quaternary-glass-background-hover),
     glass-border: var(--quaternary-glass-border),
@@ -268,11 +275,11 @@ $themes: (
   "clear": (
     bg: transparent,
     bg-light: rgb(0 0 0 / 40%),
-    color: var(--text-color-primary),
-    text: var(--text-color-primary),
+    color: var(--text-color),
+    text: var(--text-color),
     hover: rgb(0 0 0 / 20%),
-    border: var(--text-color-primary),
-    text-hover: var(--disabled-color),
+    border: var(--border-color),
+    text-hover: var(--link-hover-color),
     glass-bg: var(--clear-glass-background),
     glass-hover: var(--clear-glass-background-hover),
     glass-border: var(--clear-glass-border),
@@ -282,9 +289,9 @@ $states: (
   "success": (
     bg: var(--success-color),
     hover: var(--success-color-hover),
-    text: var(--text-color-primary),
+    text: var(--success-text-color),
     border: var(--success-color),
-    text-hover: var(--text-color-primary),
+    text-hover: var(--success-text-color),
     glass-bg: var(--success-glass-background),
     glass-hover: var(--success-glass-background-hover),
     glass-border: var(--success-glass-border),
@@ -292,9 +299,9 @@ $states: (
   "error": (
     bg: var(--error-color),
     hover: var(--error-color-hover),
-    text: var(--text-color-primary),
+    text: var(--error-text-color),
     border: var(--error-color),
-    text-hover: var(--text-color-primary),
+    text-hover: var(--error-text-color),
     glass-bg: var(--error-glass-background),
     glass-hover: var(--error-glass-background-hover),
     glass-border: var(--error-glass-border),
@@ -302,12 +309,22 @@ $states: (
   "warning": (
     bg: var(--warning-color),
     hover: var(--warning-color-hover),
-    text: var(--text-color-primary),
+    text: var(--warning-text-color),
     border: var(--warning-color),
-    text-hover: var(--text-color-primary),
+    text-hover: var(--warning-text-color),
     glass-bg: var(--warning-glass-background),
     glass-hover: var(--warning-glass-background-hover),
     glass-border: var(--warning-glass-border),
+  ),
+  "info": (
+    bg: var(--info-color),
+    hover: var(--info-color-hover),
+    text: var(--info-text-color),
+    border: var(--info-color),
+    text-hover: var(--info-text-color),
+    glass-bg: var(--info-glass-background),
+    glass-hover: var(--info-glass-background-hover),
+    glass-border: var(--info-glass-border),
   ),
 ) !default;
 $rounding: (

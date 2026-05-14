@@ -5,171 +5,443 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .wrapper {
+    --data-table-min-width: 600px;
 
-.wrapper {
-  width: 100%;
-  overflow-x: auto;
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  border-radius: inherit;
-  -webkit-overflow-scrolling: touch;
-
-  .table {
     width: 100%;
-    min-width: 600px;
-    border-collapse: collapse;
-    table-layout: auto;
-    font-size: inherit;
-
-    @include bp.down(md) {
-      min-width: 520px;
-    }
-
-    @include bp.up(lg) {
-      min-width: 720px;
-    }
-  }
-
-  .headerCell {
-    text-align: left;
-    padding: var(--spacing-sm);
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
-    white-space: nowrap;
-    color: var(--text-color-primary);
-    vertical-align: top;
-  }
-
-  .cell {
-    padding: var(--spacing-sm);
-    border-bottom: 1px solid var(--text-color-primary);
-    text-align: left;
-    white-space: nowrap;
-    color: var(--text-color-primary);
+    overflow-x: auto;
     font-family: var(--font-family-body);
-    font-size: var(--font-size-body-sm);
+    font-size: var(--font-size-body);
     font-weight: var(--font-weight-body);
     line-height: var(--line-height-body);
     letter-spacing: var(--letter-spacing-body);
-    vertical-align: top;
-  }
+    border-radius: inherit;
+    -webkit-overflow-scrolling: touch;
 
-  .wrapCell {
-    white-space: normal;
-    overflow-wrap: anywhere;
-    word-break: normal;
-    line-height: 1.5;
-  }
-
-  .headerCell.wrapCell,
-  .cell.wrapCell {
-    min-width: 0;
-  }
-
-  .sortable {
-    cursor: pointer;
-
-    &:focus-visible,
-    &:focus {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 0.5px;
-    }
-  }
-
-  .sortButton {
-    margin: 0;
-    padding: 0;
-    background-color: transparent;
-    border: none;
-    color: inherit;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-xs);
-    font: inherit;
-    text-align: inherit;
-    cursor: pointer;
-
-    &:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 2px;
-      border-radius: var(--border-radius-sm);
-    }
-  }
-
-  .sort_icon {
-    margin-left: var(--spacing-xs);
-    font-size: 0.9em;
-    flex-shrink: 0;
-
-    @include bp.down(sm) {
-      font-size: 0.85em;
+    @include bp.down(md) {
+      --data-table-min-width: 520px;
     }
 
     @include bp.up(lg) {
-      font-size: 1em;
+      --data-table-min-width: 720px;
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-sm);
+      flex-wrap: wrap;
+      width: 100%;
+      min-width: var(--data-table-min-width);
+      padding: var(--spacing-sm);
+      box-sizing: border-box;
+    }
+
+    .toolbarTitle {
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-heading);
+      color: var(--text-color-primary);
+    }
+
+    .toolbarActions {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      flex-wrap: wrap;
+    }
+
+    .filterInput {
+      min-width: min(100%, 14rem);
+      min-height: 40px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      background: var(--background-color);
+      color: var(--text-color);
+      padding: 0 var(--spacing-sm);
+      font: inherit;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+      }
+    }
+
+    .table {
+      width: 100%;
+      min-width: var(--data-table-min-width);
+      border-collapse: collapse;
+      table-layout: auto;
+      font-size: inherit;
+    }
+
+    .headerCell {
+      text-align: left;
+      padding: var(--spacing-sm);
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
+      border-bottom: 1px solid var(--text-color-primary);
+      white-space: nowrap;
+      color: var(--text-color-primary);
+      vertical-align: top;
+    }
+
+    .selectionCell {
+      width: 3rem;
+      min-width: 3rem;
+      padding: var(--spacing-sm);
+      border-bottom: 1px solid var(--text-color-primary);
+      text-align: center;
+      vertical-align: middle;
+      color: var(--text-color-primary);
+      background: inherit;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-sm);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+    }
+
+    .selectionCell input {
+      min-width: 1.125rem;
+      min-height: 1.125rem;
+    }
+
+    .cell {
+      padding: var(--spacing-sm);
+      border-bottom: 1px solid var(--text-color-primary);
+      text-align: left;
+      white-space: nowrap;
+      color: var(--text-color-primary);
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-sm);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+      vertical-align: top;
+    }
+
+    .wrapCell {
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: normal;
+      line-height: 1.5;
+    }
+
+    .headerCell.wrapCell,
+    .cell.wrapCell {
+      min-width: 0;
+    }
+
+    .sortable {
+      cursor: pointer;
+
+      &:focus-visible,
+      &:focus {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 0.5px;
+      }
+    }
+
+    .sortButton {
+      margin: 0;
+      padding: 0;
+      background-color: transparent;
+      border: none;
+      color: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-xs);
+      font: inherit;
+      text-align: inherit;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+        border-radius: var(--border-radius-sm);
+      }
+    }
+
+    .sortIcon,
+    .sort_icon {
+      margin-left: var(--spacing-xs);
+      font-size: 0.9em;
+      flex-shrink: 0;
+
+      @include bp.down(sm) {
+        font-size: 0.85em;
+      }
+
+      @include bp.up(lg) {
+        font-size: 1em;
+      }
+    }
+
+    .clickable {
+      cursor: pointer;
+      transition: background-color var(--transition-default);
+
+      &:hover {
+        background-color: var(--background-color-light);
+      }
+
+      &:hover:nth-child(even) {
+        background-color: var(--background-color);
+      }
+
+      &:focus-visible,
+      &:focus {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 0;
+      }
+    }
+
+    .striped:nth-child(even) {
+      background-color: var(--background-color-darker);
+    }
+
+    tbody tr {
+      background-color: var(--background-color-dark);
+    }
+
+    tbody tr:last-child .cell,
+    tbody tr:last-child th.cell,
+    tbody tr:last-child .selectionCell {
+      border-bottom: none;
+    }
+
+    &.clear {
+      box-shadow: none;
+
+      .headerCell {
+        background-color: transparent;
+      }
+    }
+
+    @include bp.down(md) {
+      .table {
+        font-size: var(--font-size-label);
+      }
+
+      .headerCell,
+      .cell {
+        padding: var(--spacing-xs);
+      }
+
+      .headerCell {
+        font-size: var(--font-size-caption);
+      }
+
+      .cell,
+      .selectionCell {
+        font-size: var(--font-size-label);
+      }
+    }
+
+    @include bp.down(xs) {
+      overflow-x: visible;
+
+      .table {
+        min-width: 0;
+        width: 100%;
+        font-size: var(--font-size-caption);
+      }
+
+      .table thead {
+        display: none;
+      }
+
+      .table tbody {
+        display: block;
+      }
+
+      .table tbody tr {
+        display: block;
+        margin-bottom: var(--spacing-sm);
+        background-color: var(--background-color-dark);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+      }
+
+      .headerCell,
+      .cell,
+      .selectionCell {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        text-align: left;
+        padding: var(--spacing-xs);
+        border-bottom: 1px solid var(--text-color-primary);
+        white-space: normal;
+        overflow-wrap: anywhere;
+      }
+
+      .selectionCell {
+        text-align: left;
+      }
+
+      .selectionCell::before {
+        content: "Select";
+        display: inline-block;
+        margin-right: var(--spacing-xs);
+        font-family: var(--font-family-ui);
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-label);
+        line-height: var(--line-height-label);
+        letter-spacing: var(--letter-spacing-label);
+        color: var(--text-color-secondary);
+      }
+
+      .cell::before {
+        content: attr(data-label);
+        display: block;
+        font-family: var(--font-family-ui);
+        font-size: var(--font-size-label);
+        font-weight: var(--font-weight-label);
+        line-height: var(--line-height-label);
+        letter-spacing: var(--letter-spacing-label);
+        margin-bottom: 2px;
+        color: var(--text-color-secondary);
+      }
+
+      tbody tr:last-child .cell,
+      tbody tr:last-child th.cell,
+      tbody tr:last-child .selectionCell {
+        border-bottom: 1px solid var(--text-color-primary);
+      }
+
+      tbody tr .cell:last-child,
+      tbody tr th.cell:last-child,
+      tbody tr .selectionCell:last-child {
+        border-bottom: none;
+      }
     }
   }
 
-  .clickable {
-    cursor: pointer;
-    transition: background-color var(--transition-default);
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      --data-table-glass-bg: #{map.get($values, glass-bg)};
+      --data-table-glass-hover-bg: #{map.get($values, glass-hover)};
+      --data-table-glass-border: #{map.get($values, glass-border)};
+      --data-table-glass-text: #{map.get($values, text)};
 
-    &:hover {
-      background-color: var(--background-color-light);
+      th.selectionCell {
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+      }
+
+      .headerCell {
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+      }
+
+      .toolbar {
+        background-color: map.get($values, bg);
+      }
     }
 
-    &:hover:nth-child(even) {
-      background-color: var(--background-color);
+    .#{$name}.outline {
+      .headerCell {
+        border: 2px solid map.get($values, border);
+        background-color: transparent;
+        color: map.get($values, text);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      --data-table-glass-bg: #{map.get($values, glass-bg)};
+      --data-table-glass-hover-bg: #{map.get($values, glass-hover)};
+      --data-table-glass-border: #{map.get($values, glass-border)};
+      --data-table-glass-text: #{map.get($values, text)};
+
+      th.selectionCell {
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+      }
+
+      .headerCell {
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+      }
+
+      .toolbar {
+        background-color: map.get($values, bg);
+      }
     }
 
-    &:focus-visible,
-    &:focus {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 0;
+    .#{$name}.outline {
+      .headerCell {
+        border: 2px solid map.get($values, border);
+        background-color: transparent;
+        color: map.get($values, text);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
     }
   }
 
-  .striped:nth-child(even) {
-    background-color: var(--background-color-darker);
-  }
-
-  tbody tr {
-    background-color: var(--background-color-dark);
-  }
-
-  tbody tr:last-child .cell {
-    border-bottom: none;
-  }
-
-  tbody tr:last-child th.cell {
-    border-bottom: none;
-  }
-
-  &.glass {
+  .wrapper.glass {
     @include mixins.glass-surface(
       var(--data-table-glass-bg, rgba(255, 255, 255, 0.16)),
       var(--data-table-glass-border, rgba(255, 255, 255, 0.28)),
       18px
     );
+
     color: var(--data-table-glass-text, var(--text-color-primary));
 
     .table {
       background: transparent;
     }
 
-    .headerCell {
-      background-color: var(
-        --data-table-glass-hover-bg,
-        rgba(255, 255, 255, 0.22)
-      );
+    .toolbar {
+      background: var(--data-table-glass-hover-bg, rgba(255, 255, 255, 0.22));
       color: var(--data-table-glass-text, var(--text-color-primary));
+      border-bottom: 1px solid
+        var(--data-table-glass-border, rgba(255, 255, 255, 0.28));
+    }
+
+    .toolbarTitle {
+      color: var(--data-table-glass-text, var(--text-color-primary));
+    }
+
+    .filterInput {
+      background: var(--data-table-glass-bg, rgba(255, 255, 255, 0.16));
+      border-color: var(--data-table-glass-border, rgba(255, 255, 255, 0.28));
+      color: var(--data-table-glass-text, var(--text-color-primary));
+    }
+
+    .headerCell,
+    th.selectionCell {
+      background: var(--data-table-glass-hover-bg, rgba(255, 255, 255, 0.22));
+      color: var(--data-table-glass-text, var(--text-color-primary));
+      border-bottom-color: var(
+        --data-table-glass-border,
+        var(--text-color-primary)
+      );
+    }
+
+    .selectionCell,
+    .cell {
+      background: unset;
+      color: var(--data-table-glass-text, var(--text-color-primary));
+      border-bottom-color: var(
+        --data-table-glass-border,
+        var(--text-color-primary)
+      );
     }
 
     tbody tr {
@@ -185,225 +457,60 @@
     }
   }
 
-  &.clear {
-    box-shadow: none;
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
+    }
+  }
 
-    .headerCell {
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wrapper,
+    .wrapper * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .clickable:hover {
       background-color: transparent;
     }
   }
 
-  @include bp.down(md) {
-    .table {
-      font-size: var(--font-size-label);
+  @media (forced-colors: active) {
+    .wrapper .table {
+      color: CanvasText;
+      background: Canvas;
     }
 
-    .headerCell,
-    .cell {
-      padding: var(--spacing-xs);
+    .wrapper.glass {
+      background: Canvas;
+      border-color: ButtonText;
+      box-shadow: none;
     }
 
-    .headerCell {
-      font-size: var(--font-size-caption);
+    .wrapper .headerCell,
+    .wrapper .cell,
+    .wrapper .selectionCell {
+      border-bottom: 1px solid ButtonText;
     }
 
-    .cell {
-      font-size: var(--font-size-label);
-    }
-  }
-
-  @include bp.down(xs) {
-    overflow-x: visible;
-
-    .table {
-      min-width: 0;
-      width: 100%;
-      font-size: var(--font-size-caption);
+    .wrapper .headerCell {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
     }
 
-    .table thead {
-      display: none;
-    }
-
-    .table tbody {
-      display: block;
-    }
-
-    .table tbody tr {
-      display: block;
-      margin-bottom: var(--spacing-sm);
-      background-color: var(--background-color-dark);
-      border-radius: var(--border-radius-md);
-      overflow: hidden;
-    }
-
-    .headerCell,
-    .cell {
-      display: block;
-      width: 100%;
-      box-sizing: border-box;
-      text-align: left;
-      padding: var(--spacing-xs);
-      border-bottom: 1px solid var(--text-color-primary);
-      white-space: normal;
-      overflow-wrap: anywhere;
-    }
-
-    .cell::before {
-      content: attr(data-label);
-      display: block;
-      font-family: var(--font-family-ui);
-      font-size: var(--font-size-label);
-      font-weight: var(--font-weight-label);
-      line-height: var(--line-height-label);
-      letter-spacing: var(--letter-spacing-label);
-      margin-bottom: 2px;
-      color: var(--text-color-secondary);
-    }
-
-    tbody tr:last-child .cell,
-    tbody tr:last-child th.cell {
-      border-bottom: 1px solid var(--text-color-primary);
-    }
-
-    tbody tr .cell:last-child,
-    tbody tr th.cell:last-child {
-      border-bottom: none;
+    .wrapper .clickable:focus-visible,
+    .wrapper .sortButton:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
     }
   }
-}
-
-@each $name, $values in theme.$themes {
-  .#{$name} {
-    --data-table-glass-bg: #{map.get($values, glass-bg)};
-    --data-table-glass-hover-bg: #{map.get($values, glass-hover)};
-    --data-table-glass-border: #{map.get($values, glass-border)};
-    --data-table-glass-text: #{map.get($values, text)};
-
-    .headerCell {
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-    }
-  }
-
-  .#{$name}.outline {
-    .headerCell {
-      border: 2px solid map.get($values, border);
-      background-color: transparent;
-      color: map.get($values, text);
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-    }
-  }
-}
-
-@each $name, $values in theme.$states {
-  .#{$name} {
-    --data-table-glass-bg: #{map.get($values, glass-bg)};
-    --data-table-glass-hover-bg: #{map.get($values, glass-hover)};
-    --data-table-glass-border: #{map.get($values, glass-border)};
-    --data-table-glass-text: #{map.get($values, text)};
-
-    .headerCell {
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-    }
-  }
-
-  .#{$name}.outline {
-    .headerCell {
-      border: 2px solid map.get($values, border);
-      background-color: transparent;
-      color: map.get($values, text);
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-    }
-  }
-}
-
-.wrapper.glass {
-  .table {
-    background: transparent;
-  }
-
-  .headerCell {
-    background-color: var(
-      --data-table-glass-hover-bg,
-      rgba(255, 255, 255, 0.22)
-    );
-    color: var(--data-table-glass-text, var(--text-color-primary));
-  }
-
-  tbody tr {
-    background-color: transparent;
-  }
-
-  .striped:nth-child(even),
-  .clickable:hover {
-    background-color: var(
-      --data-table-glass-hover-bg,
-      rgba(255, 255, 255, 0.22)
-    );
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wrapper,
-  .wrapper * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .clickable:hover {
-    background-color: transparent;
-  }
-}
-
-@media (forced-colors: active) {
-  .wrapper .table {
-    color: CanvasText;
-    background: Canvas;
-  }
-
-  .wrapper.glass {
-    background: Canvas;
-    border-color: ButtonText;
-    box-shadow: none;
-  }
-
-  .wrapper .headerCell,
-  .wrapper .cell {
-    border-bottom: 1px solid ButtonText;
-  }
-
-  .wrapper .headerCell {
-    background: Canvas;
-    color: CanvasText;
-    border: 1px solid ButtonText;
-  }
-
-  .wrapper .clickable:focus-visible,
-  .wrapper .sortButton:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 2px;
-  }
-}
 }

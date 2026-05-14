@@ -90,7 +90,6 @@ export interface ToggleProps {
    * State of the toggle.
    * "" | "success" | "error" | "warning" | "disabled"
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -143,5 +142,8 @@ export interface ToggleProps {
 }
 
 export interface ToggleBaseProps extends ToggleProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

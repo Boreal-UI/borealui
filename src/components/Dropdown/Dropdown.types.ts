@@ -80,6 +80,24 @@ export interface DropdownItem {
    * Optional id for the rendered menu item.
    */
   id?: string;
+
+  /**
+   * Nested menu items rendered as a submenu.
+   * Items with submenus render as submenu triggers and do not call `onClick`
+   * unless one of their child items is selected.
+   */
+  items?: DropdownItem[];
+
+  /**
+   * Accessible label for the submenu panel.
+   * Falls back to the parent item label when omitted.
+   */
+  submenuAriaLabel?: string;
+
+  /**
+   * Optional id for the rendered submenu panel.
+   */
+  submenuId?: string;
 }
 
 /**
@@ -109,15 +127,11 @@ export interface DropdownProps extends Omit<
 
   /**
    * Custom class name for the dropdown wrapper.
-   *
-   * @default ""
    */
   className?: string;
 
   /**
    * Custom class name for the dropdown menu.
-   *
-   * @default ""
    */
   menuClassName?: string;
 
@@ -240,14 +254,11 @@ export interface DropdownProps extends Omit<
   /**
    * State of the dropdown
    * ('success' | 'error' | 'warning' | 'disabled' | '').
-   *
-   * @default ""
    */
   state?: StateType;
 
   /** Optional title/tooltip text for the trigger. */
   title?: string;
-
 
   /**
    * Optional test ID for testing frameworks.
@@ -293,6 +304,12 @@ export type IconButtonComponent = React.ForwardRefExoticComponent<
 >;
 
 export interface BaseDropdownProps extends DropdownProps {
+  /**
+   * Icon Button component dependency injected by the wrapper.
+   */
   IconButton: IconButtonComponent;
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
 }

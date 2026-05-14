@@ -12,7 +12,7 @@ const BaseRadioGroup = ({
   orientation = "vertical",
   theme,
   glass,
-  state = "",
+  state,
   rounding,
   shadow,
   disabled = false,
@@ -20,7 +20,7 @@ const BaseRadioGroup = ({
   invalid = false,
   description,
   errorMessage,
-  className = "",
+  className,
   optionsClassName,
   id,
   "aria-describedby": ariaDescribedBy,
@@ -42,7 +42,7 @@ const BaseRadioGroup = ({
     () =>
       combineClassNames(
         classMap.group,
-        classMap[state],
+        state && classMap[state],
         disabled && classMap.disabled,
         invalid && classMap.invalid,
         className,

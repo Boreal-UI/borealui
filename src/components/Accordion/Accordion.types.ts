@@ -40,7 +40,6 @@ export interface AccordionProps extends Omit<
   /**
    * The state of the accordion ('success' | 'error' | 'warning').
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -94,7 +93,6 @@ export interface AccordionProps extends Omit<
   /**
    * Additional custom class names for the wrapper element.
    *
-   * @default ""
    */
   className?: string;
 
@@ -117,12 +115,11 @@ export interface AccordionProps extends Omit<
   asyncContent?: boolean;
 
   /**
-   * If true, the accordion can be toggled open or closed.
-   * If false, the accordion is always expanded.
+   * If true, the accordion can be opened but cannot be collapsed by user action.
    *
-   * @default true
+   * @default false
    */
-  isToggleable?: boolean;
+  "no-collapse"?: boolean;
 
   /**
    * Custom icon to display when the accordion is expanded.

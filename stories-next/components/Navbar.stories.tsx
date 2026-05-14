@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Navbar } from "../../src/index.next";
+import { NavBar } from "../../src/index.next";
 import {
   FaHome,
   FaCompactDisc,
@@ -33,7 +33,7 @@ const mockItems: NavBarProps["items"] = [
 
 const meta: Meta<NavBarProps> = {
   title: "Components/NavBar",
-  component: Navbar,
+  component: NavBar,
   tags: ["autodocs"],
   decorators: [
     (Story) => (
@@ -109,7 +109,7 @@ export const Default: Story = {
           </label>
         </div>
 
-        <Navbar {...args} theme={theme} rounding={rounding} shadow={shadow} />
+        <NavBar {...args} theme={theme} rounding={rounding} shadow={shadow} />
       </div>
     );
   },
@@ -119,7 +119,7 @@ export const GlassThemeVariants: Story = {
   render: (args) => (
     <div style={{ paddingTop: "5rem", display: "grid", gap: "7rem" }}>
       {themeOptions.map((theme) => (
-        <Navbar
+        <NavBar
           key={theme}
           {...args}
           theme={theme}

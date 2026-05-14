@@ -93,8 +93,6 @@ export interface CommandPaletteProps
   /**
    * The state of the command palette
    * ('success' | 'error' | 'warning' | 'disabled' | '').
-   *
-   * @default ""
    */
   state?: StateType;
 
@@ -177,7 +175,6 @@ export interface CommandPaletteProps
    */
   restoreFocusOnClose?: boolean;
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -190,6 +187,12 @@ export interface CommandPaletteProps
 }
 
 export interface CommandPaletteBaseProps extends CommandPaletteProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Component implementation used to render the text input portion.
+   */
   TextInputComponent: React.ElementType;
 }

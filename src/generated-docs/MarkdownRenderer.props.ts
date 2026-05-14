@@ -12,6 +12,15 @@ export const markdownRendererPropDocs: GeneratedComponentDoc = {
   "sourcePath": "src\\components\\MarkdownRenderer\\MarkdownRenderer.types.ts",
   "props": [
     {
+      "name": "allowHtml",
+      "type": "boolean",
+      "description": "Allows raw HTML embedded in markdown before sanitization. Leave false for untrusted content.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
       "name": "aria-describedby",
       "type": "string",
       "description": "ID of an element that describes the markdown region.",
@@ -41,8 +50,7 @@ export const markdownRendererPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name for styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "content",

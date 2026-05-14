@@ -22,23 +22,23 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   children,
   lazyLoad = false,
   iconPosition = "right",
-  isToggleable = true,
+  "no-collapse": preventCollapse = false,
   asyncContent = false,
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   description,
   size = getDefaultSize(),
   theme = getDefaultTheme(),
-  state = "",
+  state,
   outline = getDefaultOutline(),
   glass = getDefaultGlass(),
   expanded,
-  disabled,
+  disabled = false,
   customCollapsedIcon,
   customExpandedIcon,
   onToggle,
   initiallyExpanded = false,
-  className = "",
+  className,
   getUniqueId,
   classMap,
   regionAriaLabel,
@@ -54,11 +54,17 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
 }) => {
   const isControlled = expanded !== undefined;
   const internalId = useMemo(getUniqueId, []);
-  const [internalExpanded, setInternalExpanded] = useState(initiallyExpanded);
-  const [hasBeenExpanded, setHasBeenExpanded] = useState(initiallyExpanded);
-  const [isLoading, setIsLoading] = useState(asyncContent && initiallyExpanded);
 
-  const isExpanded = isControlled ? expanded : internalExpanded;
+  const [internalExpanded, setInternalExpanded] = useState(initiallyExpanded);
+
+  const controlledOrInternalExpanded = isControlled
+    ? Boolean(expanded)
+    : internalExpanded;
+
+  const isExpanded = controlledOrInternalExpanded;
+
+  const [hasBeenExpanded, setHasBeenExpanded] = useState(isExpanded);
+  const [isLoading, setIsLoading] = useState(asyncContent && isExpanded);
 
   const baseId = id || internalId;
   const contentId = `${baseId}-content`;
@@ -82,13 +88,16 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
 
   const toggleAccordion = () => {
     if (disabled) return;
-    if (!isToggleable && isExpanded) return;
 
-    if (isControlled) {
-      onToggle?.(!expanded);
-    } else {
-      setInternalExpanded((prev) => !prev);
+    const nextExpanded = !isExpanded;
+
+    if (preventCollapse && !nextExpanded) return;
+
+    if (!isControlled) {
+      setInternalExpanded(nextExpanded);
     }
+
+    onToggle?.(nextExpanded);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
@@ -110,13 +119,14 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
     if (asyncContent && isExpanded) {
       setIsLoading(true);
 
-      const timer = setTimeout(() => {
+      const timer = window.setTimeout(() => {
         setIsLoading(false);
       }, 1000);
 
-      return () => clearTimeout(timer);
+      return () => window.clearTimeout(timer);
     }
 
+    setIsLoading(false);
     return undefined;
   }, [asyncContent, isExpanded]);
 
@@ -129,7 +139,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       combineClassNames(
         classMap.accordion,
         classMap[size],
-        classMap[state],
+        state && classMap[state],
         glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
@@ -155,7 +165,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       combineClassNames(
         classMap.header,
         classMap[theme],
-        classMap[state],
+        state && classMap[state],
         outline && classMap.outline,
         glass && classMap.glass,
         disabled && classMap.disabled,
@@ -168,8 +178,8 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
     () =>
       combineClassNames(
         classMap.content,
-        glass && classMap[theme],
-        glass && classMap[state],
+        theme && classMap[theme],
+        state && classMap[state],
         glass && classMap.glass,
         isExpanded && classMap.expanded,
       ),

@@ -51,8 +51,7 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the dropdown wrapper.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "closeOnSelect",
@@ -127,8 +126,7 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Custom class name for the dropdown menu.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "menuId",
@@ -162,8 +160,7 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "State of the dropdown ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

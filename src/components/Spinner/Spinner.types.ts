@@ -24,7 +24,6 @@ export interface SpinnerProps {
    * The state of the spinner.
    * One of: "success" | "error" | "warning" | "disabled" | ""
    *
-   * @default ""
    */
   state?: StateType;
 
@@ -46,7 +45,6 @@ export interface SpinnerProps {
   /**
    * Additional class names for styling customization.
    *
-   * @default ""
    */
   className?: string;
 

@@ -25,6 +25,7 @@ const classes = {
   quaternary: "tag_input_quaternary",
 
   success: "tag_input_success",
+  info: "tag_input_info",
   warning: "tag_input_warning",
   error: "tag_input_error",
 

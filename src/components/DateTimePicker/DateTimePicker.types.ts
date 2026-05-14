@@ -1,5 +1,6 @@
 import type { InputHTMLAttributes, ButtonHTMLAttributes } from "react";
 import {
+  LabelPositionType,
   RoundingType,
   ShadowType,
   SizeType,
@@ -13,6 +14,20 @@ import {
 export interface DateTimePickerProps {
   /** Optional visible label displayed above the input. */
   label?: string;
+
+  /**
+   * Position of the label relative to the input.
+   *
+   * @default "top"
+   */
+  labelPosition?: LabelPositionType;
+
+  /**
+   * Whether the input should take the full width of its container.
+   *
+   * @default false
+   */
+  fullWidth?: boolean;
 
   /** Current value in ISO 8601 format (e.g., "2025-04-10T12:00"). */
   value?: string;
@@ -30,9 +45,15 @@ export interface DateTimePickerProps {
   name?: string;
 
   /**
-   * Additional class name for custom styling.
+   * The type of input element.
+   * ('date' | 'time' | 'datetime-local').
    *
-   * @default ""
+   * @default "datetime-local"
+   */
+  type?: "date" | "time" | "datetime-local";
+
+  /**
+   * Additional class name for custom styling.
    */
   className?: string;
 
@@ -68,8 +89,6 @@ export interface DateTimePickerProps {
   /**
    * State of the input
    * ('success' | 'error' | 'warning' | 'disabled' | '').
-   *
-   * @default ""
    */
   state?: StateType;
 
@@ -99,7 +118,6 @@ export interface DateTimePickerProps {
 
   /** Whether to use outlined styling. */
   outline?: boolean;
-
 
   /**
    * Optional test ID for testing frameworks.
@@ -212,7 +230,16 @@ export interface DateTimePickerProps {
 }
 
 export interface DateTimePickerBaseProps extends DateTimePickerProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Error message or error state displayed with the component.
+   */
   error?: string;
+  /**
+   * Descriptive content rendered by the component.
+   */
   description?: string;
 }

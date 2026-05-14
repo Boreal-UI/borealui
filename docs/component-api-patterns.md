@@ -168,7 +168,7 @@ Use `serverSort` with `onSortChange` when sorting is handled by your API.
 
 ## Overlays and Interactive Components
 
-Components such as `Modal`, `Dropdown`, `Popover`, `Tooltip`, `Tabs`, `Accordion`, `CommandPalette`, and `NotificationCenter` include keyboard and ARIA behavior. Prefer their public props instead of rebuilding focus or disclosure state around their internals.
+Components such as `Modal`, `Dropdown`, `PopOver`, `Tooltip`, `Tabs`, `Accordion`, `CommandPalette`, and `NotificationCenter` include keyboard and ARIA behavior. Prefer their public props instead of rebuilding focus or disclosure state around their internals.
 
 ```tsx
 import { Modal, Button } from "boreal-ui/core";

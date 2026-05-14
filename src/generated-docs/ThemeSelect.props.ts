@@ -70,7 +70,7 @@ export const themeSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "disabled",
       "type": "boolean",
-      "description": "",
+      "description": "Whether the component is disabled.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -79,7 +79,7 @@ export const themeSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "glass",
       "type": "boolean",
-      "description": "",
+      "description": "Whether to apply the glass visual treatment.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -88,7 +88,7 @@ export const themeSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "id",
       "type": "string",
-      "description": "",
+      "description": "HTML id applied to the relevant element.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -96,7 +96,7 @@ export const themeSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "label",
       "type": "ReactNode",
-      "description": "",
+      "description": "Visible label content for the component.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -104,7 +104,7 @@ export const themeSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "labelPosition",
       "type": "LabelPositionType",
-      "description": "",
+      "description": "Label Position prop for ThemeSelect.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -113,7 +113,7 @@ export const themeSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "name",
       "type": "string",
-      "description": "",
+      "description": "HTML name applied to the relevant form element.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -121,7 +121,7 @@ export const themeSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "rounding",
       "type": "RoundingType",
-      "description": "",
+      "description": "Corner rounding applied to the component.",
       "required": false,
       "inherited": false,
       "category": "styling",
@@ -130,7 +130,7 @@ export const themeSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "shadow",
       "type": "ShadowType",
-      "description": "",
+      "description": "Shadow style applied to the component.",
       "required": false,
       "inherited": false,
       "category": "styling",
@@ -139,11 +139,10 @@ export const themeSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "",
+      "description": "Visual state applied to the component.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",
@@ -157,7 +156,7 @@ export const themeSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "theme",
       "type": "ThemeType",
-      "description": "",
+      "description": "Theme variant applied to the component.",
       "required": false,
       "inherited": false,
       "category": "styling",

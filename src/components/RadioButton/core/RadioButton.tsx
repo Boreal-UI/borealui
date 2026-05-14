@@ -28,6 +28,7 @@ export const classes = {
   quaternary: "radio_quaternary",
 
   success: "radio_success",
+  info: "radio_info",
   error: "radio_error",
   warning: "radio_warning",
 

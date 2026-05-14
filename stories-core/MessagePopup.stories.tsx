@@ -3,9 +3,10 @@ import { Meta, StoryObj } from "@storybook/react-vite";
 import { MessagePopup } from "../src/index.core";
 import type { MessagePopupProps } from "../src/components/MessagePopup/MessagePopup.types";
 import { RoundingType, ShadowType } from "../src/types/types";
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<MessagePopupProps> = {
   title: "Components/MessagePopup",
@@ -151,7 +152,7 @@ export const RoundingVariants: Story = {
           {roundingOptions.map((rounding) => (
             <button
               key={rounding}
-              onClick={() => setVisibleRounding(rounding as RoundingType)}
+              onClick={() => setVisibleRounding(rounding)}
               className="p-2 border rounded"
             >
               {rounding}
@@ -181,7 +182,7 @@ export const ShadowVariants: Story = {
           {shadowOptions.map((shadow) => (
             <button
               key={shadow}
-              onClick={() => setVisibleShadow(shadow as ShadowType)}
+              onClick={() => setVisibleShadow(shadow)}
               className="p-2 border rounded"
             >
               {shadow}

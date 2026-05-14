@@ -1,38 +1,13 @@
 import { useState, useEffect } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  ProgressBar,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "../src/index.core";
+import { ProgressBar } from "../src/index.core";
 import type { ProgressBarProps } from "../src/components/ProgressBar/ProgressBar.types";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions: RoundingType[] = [
-  "none",
-  "small",
-  "medium",
-  "large",
-  "full",
-];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<ProgressBarProps> = {
   title: "Components/ProgressBar",

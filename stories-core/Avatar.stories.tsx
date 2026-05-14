@@ -2,16 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Avatar } from "../src/index.core";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
-import {
-  FaVideo,
-  FaMicrophone,
-  FaUsers,
-  FaUmbrellaBeach,
-  FaKeyboard,
-  FaVolumeUp,
-  FaEye,
-  FaStar,
-} from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import {
   SizeType,
   StateType,
@@ -19,46 +10,21 @@ import {
   StatusType,
   ThemeType,
 } from "../src/types/types";
+import {
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-const stateOptions = ["success", "error", "warning"];
-const sizeOptions = [...["xs", "small", "medium", "large", "xl"]] as string[];
-const shapeOptions = [...["circle", "rounded", "square"]] as string[];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 const statusOptions = [
-  ...[
-    "online",
-    "away",
-    "offline",
-    "busy",
-    "in-a-meeting",
-    "on-vacation",
-    "streaming",
-    "recording",
-    "typing",
-    "speaking",
-    "viewing",
-    "custom",
-  ],
+  ...["online", "away", "offline", "busy", "custom"],
 ] as string[];
 const statusPositionOptions = [
   ...["topLeft", "topRight", "bottomLeft", "bottomRight"],
 ] as string[];
 
 const iconMap = {
-  streaming: <FaVideo />,
-  recording: <FaMicrophone />,
-  "in-a-meeting": <FaUsers />,
-  "on-vacation": <FaUmbrellaBeach />,
-  typing: <FaKeyboard />,
-  speaking: <FaVolumeUp />,
-  viewing: <FaEye />,
   custom: <FaStar />,
 };
 
@@ -281,7 +247,7 @@ export const ShapeVariants = () =>
     [
       {
         propName: "shape",
-        values: shapeOptions,
+        values: stateOptions,
       },
     ],
   );

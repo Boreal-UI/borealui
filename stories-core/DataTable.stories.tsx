@@ -1,31 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  DataTable,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "../src/index.core";
+import { DataTable } from "../src/index.core";
 import type { DataTableProps } from "../src/components/DataTable/DataTable.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 type SampleRow = {
   id: number;
@@ -204,6 +186,84 @@ export default meta;
 type Story = StoryObj<DataTableProps<SampleRow>>;
 
 export const Default: Story = {};
+
+export const ThemeVariantsWithToolbarSelectionAndFilter = () => {
+  return (
+    <StoryGrid title="Theme Variants">
+      {themeOptions.map((theme) => (
+        <div key={theme}>
+          <DataTable
+            toolbarTitle={theme}
+            filterable={true}
+            selectableRows={true}
+            rowKey={(row) => String(row.name)}
+            toolbarActions={<button type="button">Export</button>}
+            data={sampleData}
+            columns={sampleColumns}
+            theme={theme}
+            striped={true}
+          />
+        </div>
+      ))}
+
+      {stateOptions.map((state) => (
+        <div key={state}>
+          <DataTable
+            toolbarTitle={state}
+            filterable={true}
+            selectableRows={true}
+            rowKey={(row) => String(row.name)}
+            toolbarActions={<button type="button">Export</button>}
+            data={sampleData}
+            columns={sampleColumns}
+            state={state}
+            striped={true}
+          />
+        </div>
+      ))}
+    </StoryGrid>
+  );
+};
+
+export const GlassThemeVariantsWithToolbarSelectionAndFilter = () => {
+  return (
+    <StoryGrid title="Theme Variants">
+      {themeOptions.map((theme) => (
+        <div key={theme}>
+          <DataTable
+            toolbarTitle={theme}
+            filterable={true}
+            glass
+            selectableRows={true}
+            rowKey={(row) => String(row.name)}
+            toolbarActions={<button type="button">Export</button>}
+            data={sampleData}
+            columns={sampleColumns}
+            theme={theme}
+            striped={true}
+          />
+        </div>
+      ))}
+
+      {stateOptions.map((state) => (
+        <div key={state}>
+          <DataTable
+            toolbarTitle={state}
+            filterable={true}
+            glass
+            selectableRows={true}
+            rowKey={(row) => String(row.name)}
+            toolbarActions={<button type="button">Export</button>}
+            data={sampleData}
+            columns={sampleColumns}
+            state={state}
+            striped={true}
+          />
+        </div>
+      ))}
+    </StoryGrid>
+  );
+};
 
 export const WithRowClick: Story = {
   args: {

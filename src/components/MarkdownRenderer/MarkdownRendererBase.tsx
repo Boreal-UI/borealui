@@ -14,7 +14,7 @@ function safeSanitize(html: string): string {
       .replace(/\s+on[\w:-]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?/gi, "")
       .replace(/\s+(?:style|srcdoc)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+)/gi, "")
       .replace(
-        /\s+(href|src|xlink:href|formaction)\s*=\s*(["']?)\s*(?:javascript|vbscript|data(?!:image\/(?:png|gif|jpeg|jpg|webp|avif|svg\+xml))):[^"'\s>]*/gi,
+        /\s+(href|src|xlink:href|formaction)\s*=\s*(["']?)\s*(?:javascript|vbscript|data(?!:image\/(?:png|gif|jpeg|jpg|webp|avif))):[^"'\s>]*/gi,
         "",
       );
 
@@ -41,7 +41,7 @@ function safeSanitize(html: string): string {
               name === "src" ||
               name === "xlink:href" ||
               name === "formaction") &&
-            /^\s*(?:javascript|vbscript|data(?!:image\/(?:png|gif|jpeg|jpg|webp|avif|svg\+xml))):/i.test(
+            /^\s*(?:javascript|vbscript|data(?!:image\/(?:png|gif|jpeg|jpg|webp|avif))):/i.test(
               val,
             )
           ) {
@@ -76,12 +76,13 @@ const escapeHtml = (s: string) =>
 
 const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
   content,
-  className = "",
+  className,
   language = "en",
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   role = "region",
   tabIndex,
+  allowHtml = false,
   "aria-label": ariaLabel,
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
@@ -92,6 +93,10 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
 }) => {
   const renderer = useMemo(() => {
     const r = new marked.Renderer();
+
+    if (!allowHtml) {
+      r.html = ({ text }) => escapeHtml(text);
+    }
 
     r.link = ({ href, title, text }) => {
       const url = href ?? "#";
@@ -110,7 +115,7 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
     };
 
     return r;
-  }, []);
+  }, [allowHtml]);
 
   const html = useMemo(() => {
     const trimmed = (content ?? "").trim();

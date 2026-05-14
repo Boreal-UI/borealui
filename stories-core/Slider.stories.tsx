@@ -1,21 +1,14 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { Slider, StateType, ThemeType } from "../src/index.core";
+import { Slider } from "../src/index.core";
 import type { SliderProps } from "../src/components/Slider/Slider.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 const meta: Meta<SliderProps> = {
   title: "Components/Slider",

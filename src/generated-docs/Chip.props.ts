@@ -26,8 +26,7 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Additional class name for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "closeButtonAriaLabel",
@@ -180,8 +179,7 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "State of the chip ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

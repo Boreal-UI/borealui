@@ -21,6 +21,14 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"div\""
     },
     {
+      "name": "className",
+      "type": "string",
+      "description": "Additional CSS class names for the divider root.",
+      "required": false,
+      "inherited": false,
+      "category": "styling"
+    },
+    {
       "name": "dashed",
       "type": "boolean",
       "description": "Whether the divider should be dashed instead of solid.",
@@ -95,8 +103,7 @@ export const dividerPropDocs: GeneratedComponentDoc = {
       "description": "State of the divider ('success' | 'error' | 'warning' | 'disabled' | '').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

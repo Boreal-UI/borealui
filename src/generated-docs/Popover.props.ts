@@ -5,10 +5,10 @@
 
 import type { GeneratedComponentDoc } from "./types";
 
-export const popoverPropDocs: GeneratedComponentDoc = {
-  "name": "Popover",
-  "interfaceName": "PopoverProps",
-  "description": "Props for the Popover component.",
+export const popOverPropDocs: GeneratedComponentDoc = {
+  "name": "PopOver",
+  "interfaceName": "PopOverProps",
+  "description": "Props for the PopOver component.",
   "sourcePath": "src\\components\\PopOver\\PopOver.types.ts",
   "props": [
     {
@@ -58,8 +58,7 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name(s) for custom styling.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "content",
@@ -75,8 +74,7 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "Optional additional class name(s) for the popover content element.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"\""
+      "category": "props"
     },
     {
       "name": "data-testid",
@@ -145,8 +143,7 @@ export const popoverPropDocs: GeneratedComponentDoc = {
       "description": "State of the popover, for feedback styling. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "testId",

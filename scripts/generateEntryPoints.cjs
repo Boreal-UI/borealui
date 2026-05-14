@@ -52,7 +52,25 @@ function writeEntrypoint({
     : "";
 
   const content =
-    `
+    name === "Layout"
+      ? `
+${styleImport}
+export {
+  Container,
+  Grid,
+  Inline,
+  Section,
+  Stack,
+} from "../components/${componentPath}/${type}/${name}";
+export * from "../components/${typesPath}";
+`.trim() + "\n"
+      : name === "ToastProvider"
+        ? `
+${styleImport}
+export { default, useToast } from "../components/${componentPath}/${type}/${name}";
+export * from "../components/${typesPath}";
+`.trim() + "\n"
+        : `
 ${styleImport}
 export { default } from "../components/${componentPath}/${type}/${name}";
 export * from "../components/${typesPath}";

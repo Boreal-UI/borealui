@@ -7,6 +7,14 @@ import type { DateTimePickerProps } from "../DateTimePicker.types";
 const classes = {
   wrapper: "datetime_picker_wrapper",
   label: "datetime_picker_label",
+  labelTop: "datetime_picker_label_top",
+  labelBottom: "datetime_picker_label_bottom",
+  labelLeft: "datetime_picker_label_left",
+  labelRight: "datetime_picker_label_right",
+  description: "datetime_picker_description",
+
+  fullWidth: "datetime_picker_full_width",
+
   inputWrapper: "datetime_picker_input_wrapper",
   input: "datetime_picker_input",
 
@@ -16,6 +24,7 @@ const classes = {
   quaternary: "datetime_picker_quaternary",
 
   success: "datetime_picker_success",
+  info: "datetime_picker_info",
   error: "datetime_picker_error",
   warning: "datetime_picker_warning",
 

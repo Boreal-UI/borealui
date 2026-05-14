@@ -35,7 +35,8 @@
     "vite.config.core.ts",
     "vite.config.next.ts",
     "global.d.ts",
-    "vite-env.d.ts"
+    "vite-env.d.ts",
+    "shared-story-assets/OptionTypes.ts"
   ],
   "exclude": [
     "dist",

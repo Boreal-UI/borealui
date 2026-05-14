@@ -1,0 +1,326 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
+
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  .menu {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+    font-family: var(--font-family-ui);
+
+    &_target {
+      min-width: 0;
+      max-width: 100%;
+      outline: none;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+        border-radius: var(--border-radius-sm);
+      }
+    }
+
+    &_trigger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-xs);
+      min-width: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+      }
+    }
+
+    &_triggerPlain {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      background: var(--background-color-lighter);
+      color: var(--text-color-primary);
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      line-height: var(--line-height-label);
+      cursor: pointer;
+      transition:
+        background-color var(--transition-default),
+        border-color var(--transition-default),
+        box-shadow var(--transition-default);
+
+      &:hover {
+        background: var(--background-color-dark);
+      }
+    }
+
+    &_panel {
+      position: fixed;
+      top: var(--spacing-sm);
+      left: var(--spacing-sm);
+      z-index: theme.$z-index-drawer;
+      width: max-content;
+      min-width: 12rem;
+      max-width: var(--menu-panel-max-width, calc(100vw - 1rem));
+      max-height: var(--menu-panel-max-height, calc(100vh - 1rem));
+      overflow: visible;
+      padding: var(--spacing-xs) 0;
+      border: 1px solid var(--border-color);
+      background: var(--background-color-lighter);
+      color: var(--text-color-primary);
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      line-height: var(--line-height-label);
+      box-shadow: var(--box-shadow-md);
+      animation: fade-in 0.16s ease-in-out;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+      }
+
+      @each $name, $values in theme.$themes {
+        &.menu_#{$name} {
+          --menu-glass-bg: #{map.get($values, glass-bg)};
+          --menu-glass-hover-bg: #{map.get($values, glass-hover)};
+          --menu-glass-border: #{map.get($values, glass-border)};
+          --menu-glass-text: #{map.get($values, text)};
+          --menu-item-hover-bg: #{map.get($values, hover)};
+          border-color: map.get($values, border);
+        }
+      }
+
+      @each $name, $values in theme.$states {
+        &.menu_#{$name} {
+          --menu-glass-bg: #{map.get($values, glass-bg)};
+          --menu-glass-hover-bg: #{map.get($values, glass-hover)};
+          --menu-glass-border: #{map.get($values, glass-border)};
+          --menu-glass-text: #{map.get($values, text)};
+          --menu-item-hover-bg: #{map.get($values, hover)};
+          border-color: map.get($values, border);
+        }
+      }
+
+      &.menu_clear {
+        --menu-item-hover-text: var(--text-color-primary);
+        color: var(--text-color);
+      }
+
+      &.menu_glass {
+        @include mixins.glass-surface(
+          var(--menu-glass-bg, rgba(255, 255, 255, 0.18)),
+          var(--menu-glass-border, rgba(255, 255, 255, 0.34)),
+          16px
+        );
+      }
+    }
+
+    &_itemWrapper {
+      position: relative;
+      min-width: 100%;
+    }
+
+    &_item {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: var(--spacing-sm);
+      width: 100%;
+      min-width: 0;
+      padding: var(--spacing-sm) var(--spacing-md);
+      border: 0;
+      background: transparent;
+      color: var(--text-color);
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      text-align: left;
+      text-decoration: none;
+      cursor: pointer;
+      transition:
+        background-color var(--transition-default),
+        color var(--transition-default);
+
+      &:hover,
+      &:focus {
+        background: var(--menu-item-hover-bg, var(--background-color-dark));
+        outline: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: -2px;
+      }
+
+      &[aria-disabled="true"],
+      &.menu_disabled {
+        opacity: 0.58;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+
+    &_itemContent {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      min-width: 0;
+      flex: 1 1 auto;
+      overflow-wrap: anywhere;
+    }
+
+    &_icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 auto;
+    }
+
+    &_label {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    &_shortcut {
+      flex: 0 0 auto;
+      margin-left: var(--spacing-md);
+      color: var(--text-color-secondary);
+      font-size: var(--font-size-caption);
+      white-space: nowrap;
+    }
+
+    &_separator {
+      height: 1px;
+      margin: var(--spacing-xs) var(--spacing-sm);
+      background: var(--border-color);
+    }
+
+    &_sectionLabel {
+      padding: var(--spacing-xs) var(--spacing-md);
+      color: var(--text-color-primary);
+      font-size: var(--font-size-caption);
+      font-weight: var(--font-weight-heading);
+      line-height: var(--line-height-caption);
+      overflow-wrap: anywhere;
+    }
+
+    &_submenuTrigger {
+      justify-content: space-between;
+    }
+
+    &_submenuIndicator {
+      flex: 0 0 auto;
+      margin-left: auto;
+      padding-left: var(--spacing-sm);
+      line-height: 1;
+    }
+
+    &_submenu {
+      position: absolute;
+      top: var(--menu-panel-offset-y, 0);
+      left: 100%;
+      min-width: max(100%, 12rem);
+      margin-left: var(--spacing-xs);
+
+      &[data-placement="left"] {
+        right: 100%;
+        left: auto;
+        margin-right: var(--spacing-xs);
+        margin-left: 0;
+      }
+    }
+
+    &_submenu_open,
+    &_hasSubmenu {
+      min-width: 100%;
+    }
+
+    &_destructive {
+      color: var(--danger-color, var(--error-color));
+    }
+
+    &_inset .menu_itemContent {
+      padding-left: calc(var(--spacing-md) + var(--spacing-sm));
+    }
+  }
+
+  .menu_panel.menu_glass .menu_item:hover,
+  .menu_panel.menu_glass .menu_item:focus {
+    background: var(--menu-glass-hover-bg, rgba(255, 255, 255, 0.24));
+  }
+
+  .menu_panel.menu_clear {
+    .menu_label {
+      color: var(--text-color);
+    }
+
+    .menu_item:hover {
+      background-color: var(--background-color-dark);
+    }
+  }
+
+  @each $key, $value in theme.$rounding {
+    .menu_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .menu_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @include bp.down(sm) {
+    .menu_panel {
+      min-width: min(16rem, calc(100vw - 1rem));
+      max-height: min(50vh, var(--menu-panel-max-height, 50vh));
+      padding-bottom: calc(
+        env(safe-area-inset-bottom, 0px) + var(--spacing-sm)
+      );
+    }
+
+    .menu_item {
+      padding: var(--spacing-md);
+    }
+
+    .menu_submenu {
+      position: static;
+      width: 100%;
+      min-width: 100%;
+      margin: var(--spacing-xxs) 0 0;
+      box-shadow: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .menu_panel,
+    .menu_item {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .menu_panel,
+    .menu_panel.menu_glass {
+      background: Canvas;
+      color: CanvasText;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .menu_item:focus-visible {
+      outline: 2px solid Highlight;
+    }
+  }
+}

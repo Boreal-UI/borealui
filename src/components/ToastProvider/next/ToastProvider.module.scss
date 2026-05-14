@@ -1,0 +1,147 @@
+@use "../../../styles/theme" as theme;
+
+.viewport {
+  position: fixed;
+  z-index: 1100;
+  display: grid;
+  gap: var(--spacing-sm);
+  width: min(100% - 2rem, 24rem);
+  pointer-events: none;
+}
+
+.topRight {
+  top: 1rem;
+  right: 1rem;
+}
+
+.topLeft {
+  top: 1rem;
+  left: 1rem;
+}
+
+.bottomRight {
+  right: 1rem;
+  bottom: 1rem;
+}
+
+.bottomLeft {
+  left: 1rem;
+  bottom: 1rem;
+}
+
+.topCenter {
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.bottomCenter {
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-color);
+  background: var(--background-color);
+  color: var(--text-color);
+  font-family: var(--font-family-ui);
+  pointer-events: auto;
+  overflow-wrap: anywhere;
+}
+
+.content {
+  min-width: 0;
+  display: grid;
+  gap: 0.125rem;
+}
+
+.title {
+  font-weight: var(--font-weight-heading);
+}
+
+.message {
+  font-size: var(--font-size-body-sm);
+}
+
+.dismissButton {
+  min-width: 2rem;
+  min-height: 2rem;
+  border: 0;
+  border-radius: var(--border-radius-sm);
+  background: transparent;
+  color: currentcolor;
+  cursor: pointer;
+  font: inherit;
+}
+
+.dismissButton:focus-visible {
+  outline: 2px solid var(--focus-outline-color);
+  outline-offset: 2px;
+}
+
+.success {
+  border-color: var(--success-color, #0a6b35);
+}
+
+.error {
+  border-color: var(--error-color, #b00020);
+}
+
+.warning {
+  border-color: var(--warning-color, #8a5a00);
+}
+
+.info {
+  border-color: var(--info-color, #0057b8);
+}
+
+@each $key, $value in theme.$rounding {
+  .round#{$key} {
+    border-radius: $value;
+  }
+}
+
+@each $key, $value in theme.$shadow {
+  .shadow#{$key} {
+    box-shadow: $value;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .viewport,
+  .viewport * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .toast {
+    background: Canvas !important;
+    color: CanvasText !important;
+    border-color: ButtonText !important;
+    box-shadow: none !important;
+  }
+
+  .success,
+  .error,
+  .warning,
+  .info {
+    border-color: Highlight !important;
+  }
+
+  .dismissButton {
+    color: ButtonText;
+    border: 1px solid ButtonText;
+  }
+
+  .dismissButton:focus-visible {
+    outline-color: Highlight;
+  }
+}

@@ -190,6 +190,10 @@
   color: var(--warning-color);
 }
 
+.info {
+  color: var(--info-color);
+}
+
 .error {
   color: var(--error-color);
 }
@@ -219,6 +223,13 @@
 
 .noWrap {
   white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .typography {
+    transition: none !important;
+    animation: none !important;
+  }
 }
 
 @media (forced-colors: active) {

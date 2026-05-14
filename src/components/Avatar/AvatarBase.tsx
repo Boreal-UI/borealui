@@ -27,7 +27,7 @@ export const AvatarBase = forwardRef<
   {
     src,
     alt,
-    name = "",
+    name,
     label,
     onClick,
     disabled = false,
@@ -46,8 +46,8 @@ export const AvatarBase = forwardRef<
     outline = getDefaultOutline(),
     glass = getDefaultGlass(),
     theme = getDefaultTheme(),
-    state = "",
-    className = "",
+    state,
+    className,
     priority = false,
     imageFill = false,
     ImageComponent = "img",
@@ -113,7 +113,7 @@ export const AvatarBase = forwardRef<
       combineClassNames(
         classMap.avatar,
         classMap[theme],
-        classMap[state],
+        state && classMap[state],
         classMap[shape],
         classMap[size],
         shadow && classMap[`shadow${capitalize(shadow)}`],

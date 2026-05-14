@@ -10,27 +10,15 @@ import {
   StateType,
   ThemeType,
 } from "../src/types/types";
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 Accordion.displayName = "Accordion";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
 
 const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",
@@ -180,7 +168,7 @@ export const NonToggleableAccordion: Story = {
     ...defaultArgs,
     title: "Non-Toggleable Accordion",
     initiallyExpanded: true,
-    isToggleable: false,
+    "no-collapse": true,
     children: (
       <p>
         Once opened, this accordion cannot be closed. This is useful for locked

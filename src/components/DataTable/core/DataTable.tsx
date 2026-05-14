@@ -6,8 +6,13 @@ import { DataTableProps } from "../DataTable.types";
 const classes = {
   wrapper: "data_table_wrapper",
   table: "data_table",
+  toolbar: "data_table_toolbar",
+  toolbarTitle: "data_table_toolbar_title",
+  toolbarActions: "data_table_toolbar_actions",
+  filterInput: "data_table_filter_input",
 
   headerCell: "data_table_header_cell",
+  selectionCell: "data_table_selection_cell",
   sortable: "data_table_header_sortable",
   sortButton: "data_table_sort_button",
   sortIcon: "data_table_sort_icon",
@@ -24,6 +29,7 @@ const classes = {
   quaternary: "data_table_quaternary",
 
   success: "data_table_success",
+  info: "data_table_info",
   error: "data_table_error",
   warning: "data_table_warning",
 

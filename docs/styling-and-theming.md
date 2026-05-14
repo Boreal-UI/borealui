@@ -63,7 +63,7 @@ Many components support a common styling vocabulary.
 | Prop | Values |
 | --- | --- |
 | `theme` | `primary`, `secondary`, `tertiary`, `quaternary`, `clear` |
-| `state` | `success`, `error`, `warning`, `disabled`, empty string |
+| `state` | `success`, `error`, `warning`, `info`, `disabled`, empty string |
 | `size` | `xs`, `small`, `medium`, `large`, `xl` |
 | `rounding` | `none`, `small`, `medium`, `large`, `full` |
 | `shadow` | `none`, `light`, `medium`, `strong`, `intense` |

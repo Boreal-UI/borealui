@@ -32,6 +32,7 @@ const classes = {
   disabled: "file_upload_disabled",
   error: "file_upload_error",
   success: "file_upload_success",
+  info: "file_upload_info",
   warning: "file_upload_warning",
 
   shadowNone: "file_upload_shadow-None",

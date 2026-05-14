@@ -170,8 +170,7 @@ export const footerPropDocs: GeneratedComponentDoc = {
       "description": "Optional class name for custom styles.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "\"\""
+      "category": "styling"
     },
     {
       "name": "contentClassName",

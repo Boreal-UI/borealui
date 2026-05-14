@@ -11,6 +11,7 @@ const classes = {
   tertiary: "avatar_tertiary",
   quaternary: "avatar_quaternary",
   success: "avatar_success",
+  info: "avatar_info",
   warning: "avatar_warning",
   error: "avatar_error",
   clear: "avatar_clear",

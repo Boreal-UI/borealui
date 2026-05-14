@@ -195,7 +195,13 @@ export interface TypographyProps {
 }
 
 export interface TypographyBaseProps extends TypographyProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Combine Class Names callback used by the component.
+   */
   combineClassNames: (
     ...classes: Array<string | false | null | undefined>
   ) => string;

@@ -28,7 +28,6 @@ export interface ScrollToTopProps {
   /**
    * Additional custom class names for the root element of the component.
    *
-   * @default ""
    */
   className?: string;
 
@@ -84,6 +83,12 @@ export interface ScrollToTopProps {
 }
 
 export interface ScrollToTopBaseProps extends ScrollToTopProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
   classMap: Record<string, string>;
+  /**
+   * Component implementation used to render the icon portion.
+   */
   IconComponent: React.ElementType;
 }

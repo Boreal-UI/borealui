@@ -6,7 +6,7 @@ import {
   useImperativeHandle,
   useMemo,
 } from "react";
-import type { CheckboxBaseProps } from "./Checkbox.types";
+import type { CheckBoxBaseProps } from "./CheckBox.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
@@ -18,7 +18,7 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
-const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
+const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
   (
     {
       checked,
@@ -28,22 +28,22 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
       rounding = getDefaultRounding(),
       size = getDefaultSize(),
       shadow = getDefaultShadow(),
-      state = "",
+      state,
       glass = getDefaultGlass(),
       disabled = false,
       required = false,
       invalid = false,
-      label = "",
+      label,
       description,
       errorMessage,
       labelPosition = "right",
-      className = "",
-      labelWrapperClassName = "",
-      inputClassName = "",
-      boxClassName = "",
-      labelClassName = "",
-      descriptionClassName = "",
-      errorMessageClassName = "",
+      className,
+      labelWrapperClassName,
+      inputClassName,
+      boxClassName,
+      labelClassName,
+      descriptionClassName,
+      errorMessageClassName,
       id,
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
@@ -78,7 +78,7 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
         combineClassNames(
           classMap.checkbox,
           classMap[theme],
-          classMap[state],
+          state && classMap[state],
           classMap[resolvedLabelPosition],
           classMap[size],
           shadow && classMap[`shadow${capitalize(shadow)}`],
@@ -207,5 +207,5 @@ const CheckboxBase = forwardRef<HTMLInputElement, CheckboxBaseProps>(
   },
 );
 
-CheckboxBase.displayName = "CheckboxBase";
-export default CheckboxBase;
+CheckBoxBase.displayName = "CheckBoxBase";
+export default CheckBoxBase;

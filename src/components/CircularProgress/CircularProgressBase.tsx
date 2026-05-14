@@ -25,9 +25,9 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   showRaw = false,
   size = getDefaultSize(),
   theme = getDefaultTheme(),
-  state = "",
+  state,
   glass = getDefaultGlass(),
-  className = "",
+  className,
   classMap,
   decorative = false,
   announceInnerValue = false,
@@ -53,9 +53,10 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
     success: "var(--success-color)",
     error: "var(--error-color)",
     warning: "var(--warning-color)",
+    info: "var(--info-color)",
   };
 
-  const progressColor = stateColorMap[state] ?? getColor(percent);
+  const progressColor = state ? (stateColorMap[state] ?? getColor(percent)) : getColor(percent);
 
   const angle = Math.min(360, (percent / 100) * 360);
 
@@ -65,7 +66,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
         classMap.circular_progress,
         classMap[theme],
         classMap[size],
-        classMap[state],
+        state && classMap[state],
         glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         className,

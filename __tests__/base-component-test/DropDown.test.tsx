@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import BaseDropdown from "@/components/Dropdown/DropdownBase";
 import { FaEllipsisV, FaUser, FaSignOutAlt, FaCog } from "react-icons/fa";
 import { axe, toHaveNoViolations } from "jest-axe";
@@ -12,7 +12,13 @@ const classMap = {
   menu: "dropdownMenu",
   item: "dropdownItem",
   itemWrapper: "dropdownItemWrapper",
+  itemContent: "dropdownItemContent",
   icon: "dropdownIcon",
+  hasSubmenu: "hasSubmenu",
+  submenu: "submenu",
+  submenuOpen: "submenuOpen",
+  submenuTrigger: "submenuTrigger",
+  submenuIndicator: "submenuIndicator",
   disabled: "disabled",
   alignLeft: "alignLeft",
   alignRight: "alignRight",
@@ -66,6 +72,16 @@ const renderDropdown = (
 describe("BaseDropdown", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 1024,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      writable: true,
+      value: 768,
+    });
   });
 
   it("renders the trigger button with expected default aria attributes", () => {
@@ -493,6 +509,179 @@ describe("BaseDropdown", () => {
 
     expect(clickSpy).toHaveBeenCalledTimes(1);
     expect(screen.getByTestId("dropdown-menu")).toBeInTheDocument();
+  });
+
+  it("renders submenus from nested items and closes after selecting a child item", () => {
+    const childClick = jest.fn();
+
+    renderDropdown({
+      items: [
+        {
+          label: "Settings",
+          icon: <FaCog />,
+          "data-testid": "dropdown-settings",
+          submenuAriaLabel: "Settings sections",
+          items: [
+            {
+              label: "Profile settings",
+              onClick: childClick,
+              "data-testid": "dropdown-profile-settings",
+            },
+          ],
+        },
+      ],
+    });
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+
+    const settings = screen.getByTestId("dropdown-settings");
+    expect(settings).toHaveAttribute("aria-haspopup", "menu");
+    expect(settings).toHaveAttribute("aria-expanded", "false");
+    expect(
+      screen.queryByTestId("dropdown-settings-submenu"),
+    ).not.toBeInTheDocument();
+
+    fireEvent.click(settings);
+
+    const submenu = screen.getByTestId("dropdown-settings-submenu");
+    expect(settings).toHaveAttribute("aria-expanded", "true");
+    expect(submenu).toHaveClass("dropdownMenu");
+    expect(submenu).toHaveClass("submenu");
+    expect(submenu).toHaveAttribute("aria-label", "Settings sections");
+
+    fireEvent.click(screen.getByTestId("dropdown-profile-settings"));
+
+    expect(childClick).toHaveBeenCalledTimes(1);
+    expect(screen.queryByTestId("dropdown-menu")).not.toBeInTheDocument();
+  });
+
+  it("opens a focused submenu with ArrowRight and returns to its trigger with ArrowLeft", async () => {
+    renderDropdown({
+      items: [
+        {
+          label: "Settings",
+          "data-testid": "dropdown-settings",
+          items: [
+            {
+              label: "Profile settings",
+              "data-testid": "dropdown-profile-settings",
+            },
+          ],
+        },
+      ],
+    });
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+
+    const settings = screen.getByTestId("dropdown-settings");
+    settings.focus();
+
+    fireEvent.keyDown(screen.getByTestId("dropdown"), { key: "ArrowRight" });
+
+    await waitFor(() => {
+      expect(screen.getByTestId("dropdown-profile-settings")).toHaveFocus();
+    });
+
+    fireEvent.keyDown(screen.getByTestId("dropdown"), { key: "ArrowLeft" });
+
+    expect(settings).toHaveFocus();
+    expect(
+      screen.queryByTestId("dropdown-settings-submenu"),
+    ).not.toBeInTheDocument();
+  });
+
+  it("marks the root menu when it would overflow the viewport", async () => {
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 320,
+    });
+
+    renderDropdown();
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+
+    const menu = screen.getByTestId("dropdown-menu");
+    jest.spyOn(menu, "getBoundingClientRect").mockReturnValue({
+      x: 280,
+      y: 40,
+      width: 180,
+      height: 120,
+      top: 40,
+      right: 460,
+      bottom: 160,
+      left: 280,
+      toJSON: () => ({}),
+    });
+
+    fireEvent(window, new Event("resize"));
+
+    await waitFor(() => {
+      expect(menu).toHaveAttribute("data-overflow-right", "true");
+    });
+    expect(menu.style.getPropertyValue("--dropdown-panel-max-width")).toBe(
+      "304px",
+    );
+  });
+
+  it("places submenus to the left when there is not enough right-side space", async () => {
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 320,
+    });
+
+    renderDropdown({
+      items: [
+        {
+          label: "Settings",
+          "data-testid": "dropdown-settings",
+          items: [
+            {
+              label: "Profile settings",
+              "data-testid": "dropdown-profile-settings",
+            },
+          ],
+        },
+      ],
+    });
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+    fireEvent.click(screen.getByTestId("dropdown-settings"));
+
+    const settingsWrapper = screen
+      .getByTestId("dropdown-settings")
+      .closest('[data-dropdown-item-wrapper="true"]') as HTMLElement;
+    const submenu = screen.getByTestId("dropdown-settings-submenu");
+
+    jest.spyOn(settingsWrapper, "getBoundingClientRect").mockReturnValue({
+      x: 260,
+      y: 80,
+      width: 48,
+      height: 40,
+      top: 80,
+      right: 308,
+      bottom: 120,
+      left: 260,
+      toJSON: () => ({}),
+    });
+    jest.spyOn(submenu, "getBoundingClientRect").mockReturnValue({
+      x: 308,
+      y: 80,
+      width: 180,
+      height: 160,
+      top: 80,
+      right: 488,
+      bottom: 240,
+      left: 308,
+      toJSON: () => ({}),
+    });
+
+    fireEvent(window, new Event("resize"));
+
+    await waitFor(() => {
+      expect(submenu).toHaveAttribute("data-placement", "left");
+    });
   });
 
   it("closes the menu on Escape and returns focus to the trigger", () => {

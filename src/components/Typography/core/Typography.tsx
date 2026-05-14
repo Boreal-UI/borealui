@@ -39,6 +39,7 @@ const classMap = {
   quaternary: "typography_quaternary",
   clear: "typography_clear",
   success: "typography_success",
+  info: "typography_info",
   warning: "typography_warning",
   error: "typography_error",
   themeInherit: "typography_theme-inherit",

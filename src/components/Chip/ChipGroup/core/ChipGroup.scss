@@ -90,4 +90,26 @@ $chip-positions: (
     pointer-events: auto;
   }
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .chip_group,
+  .chip_group * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+@media (forced-colors: active) {
+  .chip_group {
+    color: CanvasText;
+  }
+
+  .chip_group_list {
+    background: transparent;
+  }
+
+  .chip_group_list .chip {
+    forced-color-adjust: auto;
+  }
+}
 }

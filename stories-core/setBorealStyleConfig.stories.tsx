@@ -7,6 +7,12 @@ import {
   ThemeType,
 } from "../src/types/types";
 import { Button, Card, Typography, setBorealStyleConfig } from "boreal-ui";
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+  themeOptions,
+} from "../shared-story-assets/OptionTypes";
 
 type DemoProps = {
   theme?: ThemeType;
@@ -115,19 +121,19 @@ const meta: Meta<typeof SetBorealStyleConfigDemo> = {
   argTypes: {
     theme: {
       control: "select",
-      options: ["primary", "secondary", "tertiary", "quaternary"],
+      options: themeOptions,
     },
     size: {
       control: "select",
-      options: ["xs", "small", "medium", "large", "xl"],
+      options: sizeOptions,
     },
     rounding: {
       control: "select",
-      options: ["none", "small", "medium", "large", "full"],
+      options: roundingOptions,
     },
     shadow: {
       control: "select",
-      options: ["none", "light", "medium", "strong", "intense"],
+      options: shadowOptions,
     },
   },
   args: {
