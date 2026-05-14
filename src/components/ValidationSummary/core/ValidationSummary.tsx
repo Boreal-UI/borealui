@@ -12,6 +12,8 @@ const classes = {
   labelLeft: "validationSummary_labelLeft",
   labelRight: "validationSummary_labelRight",
 
+  header: "validationSummary_header",
+  icon: "validationSummary_icon",
   root: "validationSummary",
   title: "validationSummary_title",
   description: "validationSummary_description",

@@ -1,6 +1,7 @@
 import {
   ForwardRefExoticComponent,
   HTMLAttributes,
+  ReactElement,
   ReactNode,
   RefAttributes,
 } from "react";
@@ -55,6 +56,28 @@ export interface ValidationSummaryProps extends NativeValidationSummaryProps {
    * Validation items rendered in the summary list.
    */
   items?: Array<ValidationSummaryItem | string>;
+
+  /**
+   * Optional icon rendered before the summary title.
+   * Accepts Font Awesome icons, SVG elements, or custom React elements.
+   */
+  icon?: ReactElement;
+
+  /**
+   * Accessible label for the icon when it communicates meaning.
+   * If omitted, the icon is treated as decorative.
+   */
+  iconAriaLabel?: string;
+
+  /**
+   * Additional class name for the title/icon header row.
+   */
+  headerClassName?: string;
+
+  /**
+   * Additional class name for the icon wrapper.
+   */
+  iconClassName?: string;
 
   /**
    * Optional visible label for the component.

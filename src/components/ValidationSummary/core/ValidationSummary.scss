@@ -21,6 +21,8 @@
   }
 
   .validationSummary {
+    --validationSummary-text-color: var(--validationSummary-accent-color);
+    --validationSummary-border-color: var(--validationSummary-accent-color);
     --validationSummary-glass-bg: rgba(255, 255, 255, 0.18);
     --validationSummary-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --validationSummary-glass-border: rgba(255, 255, 255, 0.28);
@@ -31,12 +33,13 @@
     min-width: 0;
     width: 100%;
     max-width: 100%;
-    border: 1px solid transparent;
+    padding: var(--spacing-lg);
+    border: 0;
+    border-left: 5px solid var(--validationSummary-border-color);
     border-radius: var(--border-radius-md);
-    background: var(--background-color);
-    color: var(--text-color-primary);
+    background: var(--validationSummary-soft-bg);
     box-shadow: var(--box-shadow-sm);
-    padding: var(--spacing-md);
+    font-family: var(--font-family-body);
     transition: var(--transition-default);
   }
 
@@ -45,15 +48,36 @@
     outline-offset: 2px;
   }
 
+  .validationSummary_header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    min-width: 0;
+  }
+
+  .validationSummary_icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .validationSummary_icon svg {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
   .validationSummary_title,
   .validationSummary_label {
     margin: 0;
     max-width: 100%;
     font-family: var(--font-family-ui);
-    font-size: var(--font-size-body-md);
-    font-weight: var(--font-weight-ui);
+    font-size: var(--font-size-body-lg, 1.25rem);
+    font-weight: var(--font-weight-heading, 700);
     line-height: var(--line-height-heading);
-    color: inherit;
     overflow-wrap: anywhere;
   }
 
@@ -64,7 +88,6 @@
     min-width: 0;
     max-width: 100%;
     margin: 0;
-    color: inherit;
     font-size: var(--font-size-body-sm);
     line-height: var(--line-height-body);
     overflow-wrap: anywhere;
@@ -74,27 +97,35 @@
     display: grid;
     gap: var(--spacing-xs);
     margin: 0;
-    padding-inline-start: var(--spacing-lg);
+    padding-inline-start: calc(var(--spacing-lg) + var(--spacing-md));
+    list-style: none;
   }
 
   .validationSummary_item {
+    position: relative;
     min-width: 0;
-    padding-inline-start: var(--spacing-2xs, 0.25rem);
+    padding-inline-start: var(--spacing-md);
     overflow-wrap: anywhere;
+  }
+
+  .validationSummary_item::before {
+    content: "→";
+    position: absolute;
+    inset-inline-start: 0;
   }
 
   .validationSummary_link,
   .validationSummary_button {
-    color: inherit;
     font: inherit;
     text-align: start;
-    text-decoration: underline;
-    text-underline-offset: 0.18em;
+    text-decoration: none;
+    color: inherit;
   }
 
   .validationSummary_link:hover,
   .validationSummary_button:hover {
-    text-decoration-thickness: 2px;
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
   }
 
   .validationSummary_button {
@@ -140,67 +171,76 @@
     opacity: 0.92;
   }
 
-  .sr_only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
-
   @each $themeName, $vals in theme.$themes {
     .validationSummary_#{$themeName} {
+      --validationSummary-accent-color: #{map.get($vals, border)};
+      --validationSummary-border-color: #{map.get($vals, border)};
+      --validationSummary-soft-bg: color-mix(
+        in srgb,
+        #{map.get($vals, border)} 30%,
+        transparent
+      );
       --validationSummary-glass-bg: #{map.get($vals, glass-bg)};
       --validationSummary-glass-hover-bg: #{map.get($vals, glass-hover)};
       --validationSummary-glass-border: #{map.get($vals, glass-border)};
-      --validationSummary-glass-text: #{map.get($vals, text)};
-      background-color: map.get($vals, bg);
-      color: map.get($vals, text);
-      border-color: map.get($vals, border);
+
+      background: var(--validationSummary-soft-bg);
+      border-left-color: var(--validationSummary-border-color);
+      color: var(--validationSummary-border-color);
 
       &:hover {
-        background-color: if(
-          map.has-key($vals, hover),
-          map.get($vals, hover),
-          map.get($vals, bg)
+        background: color-mix(
+          in srgb,
+          #{map.get($vals, border)} 40%,
+          transparent
         );
       }
 
       &.validationSummary_outline {
-        background-color: transparent;
-        color: map.get($vals, text);
+        background: transparent;
         box-shadow: none;
-        border: 2px solid map.get($vals, border);
+        border: 1px solid var(--validationSummary-border-color);
+        border-left-width: 5px;
       }
     }
   }
 
   @each $state, $vals in theme.$states {
     .validationSummary_#{$state} {
+      --validationSummary-accent-color: #{map.get($vals, border)};
+      --validationSummary-border-color: #{map.get($vals, border)};
+      --validationSummary-soft-bg: color-mix(
+        in srgb,
+        #{map.get($vals, border)} 30%,
+        transparent
+      );
       --validationSummary-glass-bg: #{map.get($vals, glass-bg)};
       --validationSummary-glass-hover-bg: #{map.get($vals, glass-hover)};
       --validationSummary-glass-border: #{map.get($vals, glass-border)};
-      --validationSummary-glass-text: #{map.get($vals, text)};
-      border-width: 2px;
-      border-color: map.get($vals, border);
-      color: map.get($vals, text);
+
+      background: var(--validationSummary-soft-bg);
+      border-left-color: var(--validationSummary-border-color);
+
+      &:hover {
+        background: color-mix(
+          in srgb,
+          #{map.get($vals, border)} 40%,
+          transparent
+        );
+      }
     }
   }
 
   .validationSummary_clear {
     background: transparent;
-    border-color: transparent;
+    border-left-color: transparent;
     box-shadow: none;
   }
 
   .validationSummary_glass {
     @include mixins.glass-surface(var(--validationSummary-glass-border), 16px);
 
-    color: var(--validationSummary-glass-text);
+    border-left-color: var(--validationSummary-glass-border);
   }
 
   .validationSummary_glass:hover {
@@ -209,16 +249,29 @@
 
   .validationSummary_glass.validationSummary_outline {
     border-color: var(--validationSummary-glass-border);
+    border-left-width: 5px;
   }
 
   .validationSummary_disabled {
     cursor: not-allowed;
     opacity: 0.6;
-    background-color: var(--disabled-color);
-    border-color: var(--disabled-color);
+    background: color-mix(in srgb, var(--disabled-color) 16%, transparent);
+    color: var(--disabled-color);
+    border-left-color: var(--disabled-color);
+
+    a {
+      cursor: not-allowed;
+      color: var(--disabled-color);
+    }
+
+    a:hover {
+      text-decoration: none;
+      text-underline-offset: 0;
+      color: var(--disabled-color);
+    }
 
     &:hover {
-      background-color: var(--disabled-color);
+      background: color-mix(in srgb, var(--disabled-color) 16%, transparent);
     }
   }
 

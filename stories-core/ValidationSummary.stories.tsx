@@ -8,6 +8,7 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import { FaStop, FaStopCircle } from "react-icons/fa";
 
 const validationItems = [
   {
@@ -53,6 +54,17 @@ export const CallbackItems: Story = {
       "Select a billing contact.",
     ],
     onItemClick: () => undefined,
+  },
+};
+
+export const Icon: Story = {
+  args: {
+    items: [
+      "Choose an account type.",
+      "Add at least one workspace member.",
+      "Select a billing contact.",
+    ],
+    icon: <FaStop />,
   },
 };
 

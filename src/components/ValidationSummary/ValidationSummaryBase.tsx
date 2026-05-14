@@ -37,6 +37,10 @@ const ValidationSummaryBase = forwardRef<
       items = [],
       label,
       title,
+      icon,
+      iconAriaLabel,
+      headerClassName,
+      iconClassName,
       description,
       labelPosition = "top",
       titleAs: TitleTag = "h2",
@@ -191,19 +195,38 @@ const ValidationSummaryBase = forwardRef<
             </div>
           ) : null}
 
-          {resolvedTitle ? (
-            <TitleTag
-              id={titleId}
-              className={combineClassNames(
-                classMap.title,
-                classMap.label,
-                labelClassName,
-                titleClassName,
-              )}
-              data-testid={`${testId}-label`}
+          {resolvedTitle || icon ? (
+            <div
+              className={combineClassNames(classMap.header, headerClassName)}
+              data-testid={`${testId}-header`}
             >
-              {resolvedTitle}
-            </TitleTag>
+              {icon ? (
+                <span
+                  className={combineClassNames(classMap.icon, iconClassName)}
+                  aria-hidden={iconAriaLabel ? undefined : true}
+                  aria-label={iconAriaLabel}
+                  role={iconAriaLabel ? "img" : undefined}
+                  data-testid={`${testId}-icon`}
+                >
+                  {icon}
+                </span>
+              ) : null}
+
+              {resolvedTitle ? (
+                <TitleTag
+                  id={titleId}
+                  className={combineClassNames(
+                    classMap.title,
+                    classMap.label,
+                    labelClassName,
+                    titleClassName,
+                  )}
+                  data-testid={`${testId}-label`}
+                >
+                  {resolvedTitle}
+                </TitleTag>
+              ) : null}
+            </div>
           ) : null}
 
           {description ? (
