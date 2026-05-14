@@ -120,6 +120,14 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
+      "name": "headerClassName",
+      "type": "string",
+      "description": "Additional class name for the title/icon header row.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "hideWhenEmpty",
       "type": "boolean",
       "description": "Whether nothing should render when there are no items and no children.",
@@ -127,6 +135,30 @@ export const validationSummaryPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "true"
+    },
+    {
+      "name": "icon",
+      "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
+      "description": "Optional icon rendered before the summary title. Accepts Font Awesome icons, SVG elements, or custom React elements.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "iconAriaLabel",
+      "type": "string",
+      "description": "Accessible label for the icon when it communicates meaning. If omitted, the icon is treated as decorative.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "iconClassName",
+      "type": "string",
+      "description": "Additional class name for the icon wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "itemClassName",

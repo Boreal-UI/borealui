@@ -1,0 +1,311 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
+
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  .datePicker_container {
+    display: inline-flex;
+    gap: var(--spacing-xs);
+    align-items: flex-start;
+    max-width: 100%;
+    font-family: var(--font-family-body);
+  }
+
+  .datePicker_label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-ui);
+    line-height: var(--line-height-label);
+    color: var(--text-color-primary);
+  }
+
+  .datePicker_labelTop {
+    flex-direction: column;
+  }
+
+  .datePicker_labelBottom {
+    flex-direction: column-reverse;
+  }
+
+  .datePicker_labelLeft {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .datePicker_labelRight {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  .datePicker {
+    --datePicker-glass-bg: rgba(255, 255, 255, 0.18);
+    --datePicker-glass-hover-bg: rgba(255, 255, 255, 0.24);
+    --datePicker-glass-border: rgba(255, 255, 255, 0.28);
+    --datePicker-glass-text: var(--text-color-primary);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    min-width: 0;
+    max-width: 100%;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-md);
+    background: var(--background-color);
+    color: var(--text-color-primary);
+    box-shadow: var(--box-shadow-sm);
+    padding: var(--spacing-sm);
+    transition: var(--transition-default);
+  }
+
+  .datePicker_content {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .datePicker_fullWidth {
+    width: 100%;
+  }
+
+  .datePicker_fullWidth .datePicker_inputWrapper {
+    width: 100%;
+  }
+
+  .datePicker_inputWrapper {
+    display: flex;
+    align-items: stretch;
+    width: min(100%, 18rem);
+    min-width: 0;
+    overflow: hidden;
+    color: inherit;
+    border-radius: inherit;
+  }
+
+  .datePicker_inputWrapper:focus-within {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+  }
+
+  .datePicker_input {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    border: 0;
+    outline: 0;
+    color-scheme: dark;
+  }
+
+  .datePicker_input::-webkit-calendar-picker-indicator {
+    display: none;
+    opacity: 0;
+  }
+
+  .datePicker_button {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    min-width: 2.25rem;
+    color: inherit;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    border-left: 1px solid var(--border-color);
+  }
+
+  .datePicker_button svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .datePicker_button:focus-visible {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: -2px;
+  }
+
+  .datePicker_button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .datePicker_description,
+  .datePicker_helperText,
+  .datePicker_errorText {
+    max-width: 100%;
+    margin: 0;
+    font-size: var(--font-size-body-sm);
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+  }
+
+  .datePicker_description,
+  .datePicker_helperText {
+    color: var(--text-color-secondary);
+  }
+
+  .datePicker_errorText {
+    color: var(--error-color);
+  }
+
+  .datePicker_loader {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentcolor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    opacity: 0.72;
+    animation: datePicker-spin 700ms linear infinite;
+  }
+
+  @keyframes datePicker-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @each $themeName, $vals in theme.$themes {
+    .datePicker_#{$themeName} {
+      --datePicker-glass-bg: #{map.get($vals, glass-bg)};
+      --datePicker-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --datePicker-glass-border: #{map.get($vals, glass-border)};
+      --datePicker-glass-text: #{map.get($vals, text)};
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+      border-color: map.get($vals, border);
+
+      &:hover {
+        background-color: if(
+          map.has-key($vals, hover),
+          map.get($vals, hover),
+          map.get($vals, bg)
+        );
+      }
+
+      &.datePicker_outline {
+        background-color: transparent;
+        color: map.get($vals, text);
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
+    }
+  }
+
+  @each $state, $vals in theme.$states {
+    .datePicker_#{$state} {
+      --datePicker-glass-bg: #{map.get($vals, glass-bg)};
+      --datePicker-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --datePicker-glass-border: #{map.get($vals, glass-border)};
+      --datePicker-glass-text: #{map.get($vals, text)};
+      border-width: 2px;
+      border-color: map.get($vals, border);
+      color: map.get($vals, text);
+    }
+  }
+
+  .datePicker_clear {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .datePicker_glass {
+    @include mixins.glass-surface(
+      var(--datePicker-glass-bg),
+      var(--datePicker-glass-border),
+      16px
+    );
+
+    color: var(--datePicker-glass-text);
+  }
+
+  .datePicker_glass:hover {
+    background: var(--datePicker-glass-hover-bg);
+  }
+
+  .datePicker_glass.datePicker_outline {
+    border-color: var(--datePicker-glass-border);
+  }
+
+  .datePicker_disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--disabled-color);
+    border-color: var(--disabled-color);
+
+    &:hover {
+      background-color: var(--disabled-color);
+    }
+  }
+
+  .datePicker_loading {
+    cursor: progress;
+  }
+
+  .datePicker_disabled .datePicker_inputWrapper,
+  .datePicker_loading .datePicker_inputWrapper {
+    opacity: 0.72;
+  }
+
+  .datePicker_readOnly .datePicker_button {
+    cursor: default;
+  }
+
+  @each $key, $value in theme.$rounding {
+    .datePicker_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .datePicker_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @include bp.down(xs) {
+    .datePicker_container,
+    .datePicker {
+      width: 100%;
+    }
+
+    .datePicker_labelLeft,
+    .datePicker_labelRight {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .datePicker,
+    .datePicker * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .datePicker {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+      box-shadow: none;
+    }
+
+    .datePicker_glass {
+      background: Canvas;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+}

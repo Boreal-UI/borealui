@@ -243,6 +243,11 @@
       "import": "./dist/core/DataTable.js",
       "require": "./dist/core/DataTable.cjs.js"
     },
+    "./core/DatePicker": {
+      "types": "./dist/types/core/DatePicker.d.ts",
+      "import": "./dist/core/DatePicker.js",
+      "require": "./dist/core/DatePicker.cjs.js"
+    },
     "./core/DateRangePicker": {
       "types": "./dist/types/core/DateRangePicker.d.ts",
       "import": "./dist/core/DateRangePicker.js",
@@ -487,6 +492,11 @@
       "import": "./dist/core/Timeline.js",
       "require": "./dist/core/Timeline.cjs.js"
     },
+    "./core/TimePicker": {
+      "types": "./dist/types/core/TimePicker.d.ts",
+      "import": "./dist/core/TimePicker.js",
+      "require": "./dist/core/TimePicker.cjs.js"
+    },
     "./core/ToastProvider": {
       "types": "./dist/types/core/ToastProvider.d.ts",
       "import": "./dist/core/ToastProvider.js",
@@ -596,6 +606,10 @@
     "./next/DataTable": {
       "types": "./dist/types/next/DataTable.d.ts",
       "import": "./dist/next/DataTable.js"
+    },
+    "./next/DatePicker": {
+      "types": "./dist/types/next/DatePicker.d.ts",
+      "import": "./dist/next/DatePicker.js"
     },
     "./next/DateRangePicker": {
       "types": "./dist/types/next/DateRangePicker.d.ts",
@@ -792,6 +806,10 @@
     "./next/Timeline": {
       "types": "./dist/types/next/Timeline.d.ts",
       "import": "./dist/next/Timeline.js"
+    },
+    "./next/TimePicker": {
+      "types": "./dist/types/next/TimePicker.d.ts",
+      "import": "./dist/next/TimePicker.js"
     },
     "./next/ToastProvider": {
       "types": "./dist/types/next/ToastProvider.d.ts",

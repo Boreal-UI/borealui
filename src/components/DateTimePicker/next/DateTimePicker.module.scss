@@ -154,6 +154,7 @@
     font-weight: var(--font-weight-body);
     line-height: var(--line-height-body);
     letter-spacing: var(--letter-spacing-body);
+    border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
     background-color: transparent;
     color: var(--text-color-primary);
     transition:
@@ -205,6 +206,8 @@
     background-color: transparent;
     border: none;
     margin: 0;
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    border-left: 1px solid var(--border-color);
 
     @include bp.down(sm) {
       font-size: var(--font-size-label);
@@ -221,7 +224,6 @@
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
-      border-radius: 4px;
     }
   }
 

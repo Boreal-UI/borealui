@@ -5,16 +5,25 @@
 
 import type { GeneratedComponentDoc } from "./types";
 
-export const segmentedControlPropDocs: GeneratedComponentDoc = {
-  "name": "SegmentedControl",
-  "interfaceName": "SegmentedControlProps",
-  "description": "Props for the SegmentedControl component.",
-  "sourcePath": "src\\components\\SegmentedControl\\SegmentedControl.types.ts",
+export const timePickerPropDocs: GeneratedComponentDoc = {
+  "name": "TimePicker",
+  "interfaceName": "TimePickerProps",
+  "description": "Props for the TimePicker component.",
+  "sourcePath": "src\\components\\TimePicker\\TimePicker.types.ts",
   "props": [
     {
-      "name": "children",
-      "type": "ReactNode",
-      "description": "Main content rendered inside the component.",
+      "name": "autoComplete",
+      "type": "React.HTMLInputAutoCompleteAttribute",
+      "description": "Optional autocomplete value.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"off\""
+    },
+    {
+      "name": "buttonClassName",
+      "type": "string",
+      "description": "Additional class name for the picker trigger button.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -36,14 +45,6 @@ export const segmentedControlPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
-      "name": "contentClassName",
-      "type": "string",
-      "description": "Additional class name for the content area.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "data-testid",
       "type": "string",
       "description": "Backward-compatible alias for test ID attributes.",
@@ -54,7 +55,23 @@ export const segmentedControlPropDocs: GeneratedComponentDoc = {
     {
       "name": "defaultValue",
       "type": "string",
-      "description": "Initial selected value for uncontrolled usage.",
+      "description": "Initial time value in HH:mm or HH:mm:ss format for uncontrolled usage.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "description",
+      "type": "ReactNode",
+      "description": "Supporting description connected with aria-describedby.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "descriptionClassName",
+      "type": "string",
+      "description": "Additional class name for description text.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -69,18 +86,25 @@ export const segmentedControlPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
-      "name": "equalWidth",
-      "type": "boolean",
-      "description": "Whether options should share available width evenly.",
+      "name": "error",
+      "type": "ReactNode",
+      "description": "Error text connected with aria-errormessage and announced as an alert.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "false"
+      "category": "props"
+    },
+    {
+      "name": "errorClassName",
+      "type": "string",
+      "description": "Additional class name for error text.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "fullWidth",
       "type": "boolean",
-      "description": "Whether the control should stretch to the full available width.",
+      "description": "Whether the picker should stretch to the full available width.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -96,9 +120,41 @@ export const segmentedControlPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
+      "name": "helperText",
+      "type": "ReactNode",
+      "description": "Helper text connected with aria-describedby.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "helperTextClassName",
+      "type": "string",
+      "description": "Additional class name for helper text.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "inputClassName",
+      "type": "string",
+      "description": "Additional class name for the native input.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "inputWrapperClassName",
+      "type": "string",
+      "description": "Additional class name for the input/button wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "label",
       "type": "ReactNode",
-      "description": "Optional visible label for the component.",
+      "description": "Optional visible label for the input.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -130,71 +186,36 @@ export const segmentedControlPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
-      "name": "loopNavigation",
-      "type": "boolean",
-      "description": "Whether arrow-key navigation wraps from last to first option.",
+      "name": "max",
+      "type": "string",
+      "description": "Maximum selectable time.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "true"
+      "category": "props"
+    },
+    {
+      "name": "min",
+      "type": "string",
+      "description": "Minimum selectable time.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "name",
       "type": "string",
-      "description": "Name submitted by the hidden form input.",
+      "description": "Name attribute used for form submission.",
       "required": false,
       "inherited": false,
       "category": "props"
     },
     {
-      "name": "onValueChange",
-      "type": "((value: string, option: SegmentedControlOption) => void)",
-      "description": "Callback fired when a segment is selected.",
+      "name": "onChange",
+      "type": "((value: string) => void)",
+      "description": "Callback fired when the time value changes.",
       "required": false,
       "inherited": false,
       "category": "events"
-    },
-    {
-      "name": "optionClassName",
-      "type": "string",
-      "description": "Additional class name applied to every option.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "optionIconClassName",
-      "type": "string",
-      "description": "Additional class name for option icons.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "optionLabelClassName",
-      "type": "string",
-      "description": "Additional class name for option labels.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "options",
-      "type": "SegmentedControlOption[]",
-      "description": "Options rendered as selectable segments.",
-      "required": false,
-      "inherited": false,
-      "category": "props",
-      "defaultValue": "[]"
-    },
-    {
-      "name": "orientation",
-      "type": "\"horizontal\" | \"vertical\"",
-      "description": "Layout direction for the segment list.",
-      "required": false,
-      "inherited": false,
-      "category": "props",
-      "defaultValue": "\"horizontal\""
     },
     {
       "name": "outline",
@@ -206,9 +227,43 @@ export const segmentedControlPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
+      "name": "pickerButtonAriaLabel",
+      "type": "string",
+      "description": "Accessible label for the picker trigger button.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"Open time picker\""
+    },
+    {
+      "name": "pickerButtonTitle",
+      "type": "string",
+      "description": "Optional title for the picker trigger button.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "placeholder",
+      "type": "string",
+      "description": "Optional placeholder text.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "readOnly",
+      "type": "boolean",
+      "description": "Whether the input is read-only.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
       "name": "required",
       "type": "boolean",
-      "description": "Whether the hidden form input should be required.",
+      "description": "Whether the input is required.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -222,14 +277,6 @@ export const segmentedControlPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "configured default rounding (fallback: \"medium\")"
-    },
-    {
-      "name": "selectedOptionClassName",
-      "type": "string",
-      "description": "Additional class name for selected options.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
     },
     {
       "name": "shadow",
@@ -265,13 +312,21 @@ export const segmentedControlPropDocs: GeneratedComponentDoc = {
       "category": "styling"
     },
     {
+      "name": "step",
+      "type": "number",
+      "description": "Time step in seconds.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "testId",
       "type": "string",
       "description": "Optional test ID for testing frameworks.",
       "required": false,
       "inherited": false,
       "category": "props",
-      "defaultValue": "dataTestId ?? \"segmented-control\""
+      "defaultValue": "dataTestId ?? \"time-picker\""
     },
     {
       "name": "theme",
@@ -283,9 +338,17 @@ export const segmentedControlPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
+      "name": "title",
+      "type": "string",
+      "description": "Optional input title.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "value",
       "type": "string",
-      "description": "Controlled selected value.",
+      "description": "Current time value in HH:mm or HH:mm:ss format.",
       "required": false,
       "inherited": false,
       "category": "props"
