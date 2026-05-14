@@ -23,6 +23,7 @@ export { default as Divider } from "./core/Divider";
 export { default as Drawer } from "./core/Drawer";
 export { default as Dropdown } from "./core/Dropdown";
 export { default as EmptyState } from "./core/EmptyState";
+export { default as FieldSet } from "./core/FieldSet";
 export { default as FileUpload } from "./core/FileUpload";
 export { default as Footer } from "./core/Footer";
 export { default as FormField } from "./core/FormField";

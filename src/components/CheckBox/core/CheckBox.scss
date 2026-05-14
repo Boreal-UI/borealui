@@ -6,453 +6,455 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-$checkbox-sizes: (
-  xs: 1rem,
-  small: 1.125rem,
-  medium: 1.25rem,
-  large: 1.5rem,
-  xl: 1.75rem,
-);
-
-$checkbox-fill-sizes: (
-  xs: 0.45rem,
-  small: 0.55rem,
-  medium: 0.65rem,
-  large: 0.8rem,
-  xl: 0.95rem,
-);
-
-$checkmark-sizes: (
-  xs: (
-    width: 0.42em,
-    height: 0.22em,
-    border-width: 0.14em,
-  ),
-  small: (
-    width: 0.46em,
-    height: 0.25em,
-    border-width: 0.15em,
-  ),
-  medium: (
-    width: 0.52em,
-    height: 0.28em,
-    border-width: 0.16em,
-  ),
-  large: (
-    width: 0.64em,
-    height: 0.36em,
-    border-width: 0.18em,
-  ),
-  xl: (
-    width: 0.76em,
-    height: 0.42em,
-    border-width: 0.2em,
-  ),
-);
-
-$label-font-sizes: (
-  xs: var(--font-size-caption),
-  small: var(--font-size-label),
-  medium: var(--font-size-body-sm),
-  large: var(--font-size-body),
-  xl: var(--font-size-h6),
-);
-
-.checkbox,
-.checkbox_label-wrapper {
-  cursor: pointer;
-}
-
-.checkbox {
-  display: inline-flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  gap: var(--spacing-sm);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  user-select: none;
-  position: relative;
-  transition: all var(--transition-default);
-  background-color: transparent;
-
-  @include bp.down(sm) {
-    gap: var(--spacing-xs);
-    font-size: var(--font-size-label);
-  }
-
-  @include bp.up(lg) {
-    gap: var(--spacing-md);
-    font-size: var(--font-size-body);
-  }
-}
-
-.checkbox_input {
-  position: absolute;
-  inline-size: 1px;
-  block-size: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-  opacity: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.checkbox_glass .checkbox_box {
-  @include mixins.glass-surface(
-    var(--checkbox-glass-bg, var(--glass-background)),
-    var(--checkbox-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
+  $checkbox-sizes: (
+    xs: 1rem,
+    small: 1.125rem,
+    medium: 1.25rem,
+    large: 1.5rem,
+    xl: 1.75rem,
   );
 
-  border-width: 2px;
-  border-color: var(--checkbox-glass-border, var(--glass-border-color));
-}
+  $checkbox-fill-sizes: (
+    xs: 0.45rem,
+    small: 0.55rem,
+    medium: 0.65rem,
+    large: 0.8rem,
+    xl: 0.95rem,
+  );
 
-.checkbox_glass.checkbox_disabled .checkbox_box {
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-}
+  $checkmark-sizes: (
+    xs: (
+      width: 0.42em,
+      height: 0.22em,
+      border-width: 0.14em,
+    ),
+    small: (
+      width: 0.46em,
+      height: 0.25em,
+      border-width: 0.15em,
+    ),
+    medium: (
+      width: 0.52em,
+      height: 0.28em,
+      border-width: 0.16em,
+    ),
+    large: (
+      width: 0.64em,
+      height: 0.36em,
+      border-width: 0.18em,
+    ),
+    xl: (
+      width: 0.76em,
+      height: 0.42em,
+      border-width: 0.2em,
+    ),
+  );
 
-@each $key, $value in theme.$rounding {
-  .checkbox_round-#{$key} .checkbox_box {
-    border-radius: $value;
-  }
-}
+  $label-font-sizes: (
+    xs: var(--font-size-caption),
+    small: var(--font-size-label),
+    medium: var(--font-size-body-sm),
+    large: var(--font-size-body),
+    xl: var(--font-size-h6),
+  );
 
-@each $key, $value in theme.$shadow {
-  .checkbox_shadow-#{$key} .checkbox_box {
-    box-shadow: $value;
-  }
-}
-
-@each $size, $dimension in $checkbox-sizes {
-  .checkbox_#{$size} .checkbox_box {
-    width: $dimension;
-    height: $dimension;
-    min-width: $dimension;
-    min-height: $dimension;
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
-
-    @include bp.up(lg) {
-      border-width: 2px;
-    }
-  }
-
-  .checkbox_#{$size} .checkbox_box::after {
-    width: map.get(map.get($checkmark-sizes, $size), width);
-    height: map.get(map.get($checkmark-sizes, $size), height);
-    border-width: 0
-      0
-      map.get(map.get($checkmark-sizes, $size), border-width)
-      map.get(map.get($checkmark-sizes, $size), border-width);
-
-    @include bp.up(lg) {
-      width: calc(#{map.get(map.get($checkmark-sizes, $size), width)} * 1.05);
-      height: calc(#{map.get(map.get($checkmark-sizes, $size), height)} * 1.05);
-    }
-  }
-
-  .checkbox_#{$size} .checkbox_box.checkbox_indeterminate::after {
-    width: calc(#{map.get($checkbox-fill-sizes, $size)} * 1.25);
-    height: 2px;
-
-    @include bp.up(lg) {
-      height: 3px;
-    }
-  }
-
-  .checkbox_#{$size} .checkbox_label {
-    font-size: map.get($label-font-sizes, $size);
-
-    @include bp.down(sm) {
-      font-size: map.get($label-font-sizes, $size);
-    }
-
-    @include bp.up(lg) {
-      font-size: calc(#{map.get($label-font-sizes, $size)} * 1.05);
-    }
-  }
-}
-
-.checkbox_box {
-  border: 2px solid currentcolor;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  position: relative;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  overflow: hidden;
-  transition:
-    background-color var(--transition-default),
-    border-color var(--transition-default),
-    box-shadow var(--transition-default),
-    transform var(--transition-default);
-
-  &::before {
-    content: "";
-    position: absolute;
-    inset: -6px;
-
-    @include bp.up(lg) {
-      inset: -4px;
-    }
-  }
-}
-
-.checkbox_input:focus-visible + .checkbox_box {
-  outline: 2px solid var(--focus-outline-color, var(--primary-color));
-  outline-offset: 3px;
-}
-
-.checkbox_box::after {
-  content: "";
-  position: absolute;
-  top: 48%;
-  left: 50%;
-  display: block;
-  box-sizing: border-box;
-  border: solid var(--checkbox-check-color, var(--text-color));
-  border-width: 0 0 0.16em 0.16em;
-  background-color: transparent;
-  opacity: 0;
-  transform: translate(-50%, -55%) rotate(-45deg) scale(0.7);
-  transform-origin: center;
-  transition:
-    opacity var(--transition-default),
-    transform var(--transition-default);
-}
-
-.checkbox_input:checked + .checkbox_box {
-  background-color: var(--checkbox-fill-color, currentcolor);
-  border-color: var(--checkbox-fill-color, currentcolor);
-  color: var(--checkbox-check-color, var(--text-color));
-}
-
-.checkbox_input:checked + .checkbox_box::after {
-  opacity: 1;
-  border-color: var(--checkbox-check-color, var(--text-color));
-  transform: translate(-50%, -55%) rotate(-45deg) scale(1);
-}
-
-.checkbox_box.checkbox_indeterminate::after {
-  opacity: 1;
-  background-color: var(--checkbox-check-color, var(--text-color));
-  border: none;
-  border-radius: 999px;
-  transform: translate(-50%, -50%);
-}
-
-.checkbox_label-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-xs);
-  cursor: pointer;
-}
-
-.checkbox_label {
-  color: var(--text-color-primary);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  cursor: pointer;
-
-  @include bp.down(sm) {
-    line-height: 1.15;
-  }
-
-  @include bp.up(lg) {
-    line-height: 1.25;
-  }
-}
-
-@each $name, $props in theme.$themes {
-  .checkbox_#{$name} {
-    color: map.get($props, border);
-
-    --checkbox-fill-color: #{map.get($props, border)};
-    --checkbox-check-color: var(--text-color);
-
-    --checkbox-glass-bg: #{map.get($props, glass-bg)};
-    --checkbox-glass-hover-bg: #{map.get($props, glass-hover)};
-    --checkbox-glass-border: #{map.get($props, glass-border)};
-  }
-
-  .checkbox_#{$name} .checkbox_box,
-  .checkbox_box.checkbox_#{$name} {
-    border-color: map.get($props, border);
-  }
-
-  .checkbox_#{$name} .checkbox_input:checked + .checkbox_box,
-  .checkbox_input:checked + .checkbox_box.checkbox_#{$name} {
-    background-color: map.get($props, border);
-    border-color: map.get($props, border);
-    color: var(--text-color);
-  }
-
-  .checkbox_#{$name} .checkbox_input:checked + .checkbox_box::after,
-  .checkbox_input:checked + .checkbox_box.checkbox_#{$name}::after {
-    border-color: var(--text-color);
-  }
-
-  .checkbox_#{$name}.checkbox_glass .checkbox_input:checked + .checkbox_box,
-  .checkbox_glass.checkbox_#{$name} .checkbox_input:checked + .checkbox_box {
-    background-color: var(--checkbox-glass-bg);
-    border-color: var(--checkbox-glass-border);
-  }
-
-  .checkbox_#{$name}.checkbox_glass
-    .checkbox_input:checked
-    + .checkbox_box::after,
-  .checkbox_glass.checkbox_#{$name}
-    .checkbox_input:checked
-    + .checkbox_box::after {
-    border-color: var(--text-color);
-  }
-}
-
-@each $state, $props in theme.$states {
-  .checkbox_#{$state} {
-    color: map.get($props, bg);
-
-    --checkbox-fill-color: #{map.get($props, bg)};
-    --checkbox-check-color: var(--text-color);
-
-    --checkbox-glass-bg: #{map.get($props, glass-bg)};
-    --checkbox-glass-hover-bg: #{map.get($props, glass-hover)};
-    --checkbox-glass-border: #{map.get($props, glass-border)};
-  }
-
-  .checkbox_#{$state} .checkbox_box,
-  .checkbox_box.checkbox_#{$state} {
-    border-color: map.get($props, bg);
-  }
-
-  .checkbox_#{$state} .checkbox_input:checked + .checkbox_box,
-  .checkbox_input:checked + .checkbox_box.checkbox_#{$state} {
-    background-color: map.get($props, bg);
-    border-color: map.get($props, bg);
-    color: var(--text-color);
-  }
-
-  .checkbox_#{$state} .checkbox_input:checked + .checkbox_box::after,
-  .checkbox_input:checked + .checkbox_box.checkbox_#{$state}::after {
-    border-color: var(--text-color);
-  }
-
-  .checkbox_#{$state}.checkbox_glass .checkbox_input:checked + .checkbox_box,
-  .checkbox_glass.checkbox_#{$state} .checkbox_input:checked + .checkbox_box {
-    background-color: var(--checkbox-glass-bg);
-    border-color: var(--checkbox-glass-border);
-  }
-
-  .checkbox_#{$state}.checkbox_glass
-    .checkbox_input:checked
-    + .checkbox_box::after,
-  .checkbox_glass.checkbox_#{$state}
-    .checkbox_input:checked
-    + .checkbox_box::after {
-    border-color: var(--text-color);
-  }
-}
-
-.checkbox_clear .checkbox_input:checked + .checkbox_box,
-.checkbox_input:checked + .checkbox_box.checkbox_clear {
-  background-color: transparent;
-}
-
-.checkbox_disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  color: var(--disabled-color);
-
-  .checkbox_box {
-    box-shadow: none;
-  }
-
-  .checkbox_box::before {
-    background-color: var(--disabled-color);
-  }
-
-  .checkbox_label,
-  .checkbox_label-wrapper {
-    cursor: not-allowed;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
   .checkbox,
-  .checkbox * {
-    transition: none !important;
-    animation: none !important;
+  .checkbox_label-wrapper {
+    cursor: pointer;
   }
-}
 
-@media (hover: none) {
-  .checkbox:hover .checkbox_box {
-    transform: none;
-    box-shadow: none;
+  .checkbox {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    gap: var(--spacing-sm);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    user-select: none;
+    position: relative;
+    transition: all var(--transition-default);
+    background-color: transparent;
+
+    @include bp.down(sm) {
+      gap: var(--spacing-xs);
+      font-size: var(--font-size-label);
+    }
+
+    @include bp.up(lg) {
+      gap: var(--spacing-md);
+      font-size: var(--font-size-body);
+    }
   }
-}
 
-@media (forced-colors: active) {
+  .checkbox_input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
   .checkbox_glass .checkbox_box {
-    background: Canvas;
-    border: 1px solid ButtonText;
-    box-shadow: none !important;
+    @include mixins.glass-surface(
+      var(--checkbox-glass-bg, var(--glass-background)),
+      var(--checkbox-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    border-width: 2px;
+    border-color: var(--checkbox-glass-border, var(--glass-border-color));
+  }
+
+  .checkbox_glass.checkbox_disabled .checkbox_box {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
 
+  @each $key, $value in theme.$rounding {
+    .checkbox_round-#{$key} .checkbox_box {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .checkbox_shadow-#{$key} .checkbox_box {
+      box-shadow: $value;
+    }
+  }
+
+  @each $size, $dimension in $checkbox-sizes {
+    .checkbox_#{$size} .checkbox_box {
+      width: $dimension;
+      height: $dimension;
+      min-width: $dimension;
+      min-height: $dimension;
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+
+      @include bp.up(lg) {
+        border-width: 2px;
+      }
+    }
+
+    .checkbox_#{$size} .checkbox_box::after {
+      width: map.get(map.get($checkmark-sizes, $size), width);
+      height: map.get(map.get($checkmark-sizes, $size), height);
+      border-width: 0
+        0
+        map.get(map.get($checkmark-sizes, $size), border-width)
+        map.get(map.get($checkmark-sizes, $size), border-width);
+
+      @include bp.up(lg) {
+        width: calc(#{map.get(map.get($checkmark-sizes, $size), width)} * 1.05);
+        height: calc(
+          #{map.get(map.get($checkmark-sizes, $size), height)} * 1.05
+        );
+      }
+    }
+
+    .checkbox_#{$size} .checkbox_box.checkbox_indeterminate::after {
+      width: calc(#{map.get($checkbox-fill-sizes, $size)} * 1.25);
+      height: 2px;
+
+      @include bp.up(lg) {
+        height: 3px;
+      }
+    }
+
+    .checkbox_#{$size} .checkbox_label {
+      font-size: map.get($label-font-sizes, $size);
+
+      @include bp.down(sm) {
+        font-size: map.get($label-font-sizes, $size);
+      }
+
+      @include bp.up(lg) {
+        font-size: calc(#{map.get($label-font-sizes, $size)} * 1.05);
+      }
+    }
+  }
+
   .checkbox_box {
-    border-color: ButtonText;
-    background: Canvas;
-    color: CanvasText;
-    outline-color: Highlight;
-    box-shadow: none !important;
+    border: 2px solid currentcolor;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    position: relative;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    overflow: hidden;
+    transition:
+      background-color var(--transition-default),
+      border-color var(--transition-default),
+      box-shadow var(--transition-default),
+      transform var(--transition-default);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: -6px;
+
+      @include bp.up(lg) {
+        inset: -4px;
+      }
+    }
+  }
+
+  .checkbox_input:focus-visible + .checkbox_box {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
   }
 
   .checkbox_box::after {
-    border-color: ButtonText;
-    background: transparent;
+    content: "";
+    position: absolute;
+    top: 48%;
+    left: 50%;
+    display: block;
+    box-sizing: border-box;
+    border: solid var(--checkbox-check-color, var(--text-color));
+    border-width: 0 0 0.16em 0.16em;
+    background-color: transparent;
+    opacity: 0;
+    transform: translate(-50%, -55%) rotate(-45deg) scale(0.7);
+    transform-origin: center;
+    transition:
+      opacity var(--transition-default),
+      transform var(--transition-default);
+  }
+
+  .checkbox_input:checked + .checkbox_box {
+    background-color: var(--checkbox-fill-color, currentcolor);
+    border-color: var(--checkbox-fill-color, currentcolor);
+    color: var(--checkbox-check-color, var(--text-color));
+  }
+
+  .checkbox_input:checked + .checkbox_box::after {
+    opacity: 1;
+    border-color: var(--checkbox-check-color, var(--text-color));
+    transform: translate(-50%, -55%) rotate(-45deg) scale(1);
   }
 
   .checkbox_box.checkbox_indeterminate::after {
-    background: ButtonText;
+    opacity: 1;
+    background-color: var(--checkbox-check-color, var(--text-color));
+    border: none;
+    border-radius: 999px;
+    transform: translate(-50%, -50%);
   }
-}
 
-.checkbox_description {
-  margin-top: var(--spacing-xxs);
-  color: var(--text-color-primary);
-  font-size: var(--font-size-label);
-}
+  .checkbox_label-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    cursor: pointer;
+  }
 
-.checkbox_errorMessage {
-  margin-top: var(--spacing-xxs);
-  color: var(--error-color);
-  font-size: var(--font-size-label);
-}
+  .checkbox_label {
+    color: var(--text-color-primary);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    white-space: nowrap;
+    cursor: pointer;
 
-.checkbox_invalid .checkbox_box {
-  border-color: var(--error-color);
-  color: var(--error-color);
-}
+    @include bp.down(sm) {
+      line-height: 1.15;
+    }
+
+    @include bp.up(lg) {
+      line-height: 1.25;
+    }
+  }
+
+  @each $name, $props in theme.$themes {
+    .checkbox_#{$name} {
+      color: map.get($props, border);
+
+      --checkbox-fill-color: #{map.get($props, border)};
+      --checkbox-check-color: var(--text-color);
+
+      --checkbox-glass-bg: #{map.get($props, glass-bg)};
+      --checkbox-glass-hover-bg: #{map.get($props, glass-hover)};
+      --checkbox-glass-border: #{map.get($props, glass-border)};
+    }
+
+    .checkbox_#{$name} .checkbox_box,
+    .checkbox_box.checkbox_#{$name} {
+      border-color: map.get($props, border);
+    }
+
+    .checkbox_#{$name} .checkbox_input:checked + .checkbox_box,
+    .checkbox_input:checked + .checkbox_box.checkbox_#{$name} {
+      background-color: map.get($props, border);
+      border-color: map.get($props, border);
+      color: var(--text-color);
+    }
+
+    .checkbox_#{$name} .checkbox_input:checked + .checkbox_box::after,
+    .checkbox_input:checked + .checkbox_box.checkbox_#{$name}::after {
+      border-color: var(--text-color);
+    }
+
+    .checkbox_#{$name}.checkbox_glass .checkbox_input:checked + .checkbox_box,
+    .checkbox_glass.checkbox_#{$name} .checkbox_input:checked + .checkbox_box {
+      background-color: var(--checkbox-glass-bg);
+      border-color: var(--checkbox-glass-border);
+    }
+
+    .checkbox_#{$name}.checkbox_glass
+      .checkbox_input:checked
+      + .checkbox_box::after,
+    .checkbox_glass.checkbox_#{$name}
+      .checkbox_input:checked
+      + .checkbox_box::after {
+      border-color: var(--text-color);
+    }
+  }
+
+  @each $state, $props in theme.$states {
+    .checkbox_#{$state} {
+      color: map.get($props, bg);
+
+      --checkbox-fill-color: #{map.get($props, bg)};
+      --checkbox-check-color: var(--text-color);
+
+      --checkbox-glass-bg: #{map.get($props, glass-bg)};
+      --checkbox-glass-hover-bg: #{map.get($props, glass-hover)};
+      --checkbox-glass-border: #{map.get($props, glass-border)};
+    }
+
+    .checkbox_#{$state} .checkbox_box,
+    .checkbox_box.checkbox_#{$state} {
+      border-color: map.get($props, bg);
+    }
+
+    .checkbox_#{$state} .checkbox_input:checked + .checkbox_box,
+    .checkbox_input:checked + .checkbox_box.checkbox_#{$state} {
+      background-color: map.get($props, bg);
+      border-color: map.get($props, bg);
+      color: var(--text-color);
+    }
+
+    .checkbox_#{$state} .checkbox_input:checked + .checkbox_box::after,
+    .checkbox_input:checked + .checkbox_box.checkbox_#{$state}::after {
+      border-color: var(--text-color);
+    }
+
+    .checkbox_#{$state}.checkbox_glass .checkbox_input:checked + .checkbox_box,
+    .checkbox_glass.checkbox_#{$state} .checkbox_input:checked + .checkbox_box {
+      background-color: var(--checkbox-glass-bg);
+      border-color: var(--checkbox-glass-border);
+    }
+
+    .checkbox_#{$state}.checkbox_glass
+      .checkbox_input:checked
+      + .checkbox_box::after,
+    .checkbox_glass.checkbox_#{$state}
+      .checkbox_input:checked
+      + .checkbox_box::after {
+      border-color: var(--text-color);
+    }
+  }
+
+  .checkbox_clear .checkbox_input:checked + .checkbox_box,
+  .checkbox_input:checked + .checkbox_box.checkbox_clear {
+    background-color: transparent;
+  }
+
+  .checkbox_disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    color: var(--disabled-color);
+
+    .checkbox_box {
+      box-shadow: none;
+    }
+
+    .checkbox_box::before {
+      background-color: var(--disabled-color);
+    }
+
+    .checkbox_label,
+    .checkbox_label-wrapper {
+      cursor: not-allowed;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .checkbox,
+    .checkbox * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .checkbox:hover .checkbox_box {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .checkbox_glass .checkbox_box {
+      background: Canvas;
+      border: 1px solid ButtonText;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .checkbox_box {
+      border-color: ButtonText;
+      background: Canvas;
+      color: CanvasText;
+      outline-color: Highlight;
+      box-shadow: none !important;
+    }
+
+    .checkbox_box::after {
+      border-color: ButtonText;
+      background: transparent;
+    }
+
+    .checkbox_box.checkbox_indeterminate::after {
+      background: ButtonText;
+    }
+  }
+
+  .checkbox_description {
+    margin-top: var(--spacing-xxs);
+    color: var(--text-color-primary);
+    font-size: var(--font-size-label);
+  }
+
+  .checkbox_errorMessage {
+    margin-top: var(--spacing-xxs);
+    color: var(--error-color);
+    font-size: var(--font-size-label);
+  }
+
+  .checkbox_invalid .checkbox_box {
+    border-color: var(--error-color);
+    color: var(--error-color);
+  }
 }

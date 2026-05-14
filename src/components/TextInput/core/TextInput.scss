@@ -6,307 +6,313 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.container {
-  display: flex;
-  gap: var(--spacing-xs);
-  width: fit-content;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.label {
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-ui);
-}
-
-.labelTop {
-  flex-direction: column;
-}
-
-.labelBottom {
-  flex-direction: column-reverse;
-}
-
-.labelLeft {
-  flex-direction: row;
-  align-items: center;
-}
-
-.labelRight {
-  flex-direction: row-reverse;
-  align-items: center;
-}
-
-.textInput {
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: center;
-  width: fit-content;
-  height: max-content;
-  margin: var(--spacing-sm);
-  padding-left: var(--spacing-sm);
-  padding-right: var(--spacing-sm);
-  transition: var(--transition-default);
-  background: transparent;
-  outline: none;
-  margin: var(--spacing-sm);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  border: none;
-  border-radius: var(--border-radius-lg);
-  background-color: transparent;
-  color: var(--text-color-primary);
-
-  input {
-    width: 100%;
-    padding: var(--spacing-sm);
-    border: none;
-    height: 100%;
-    background-color: transparent;
-    color: var(--text-color-primary);
-
-    &[type="password"] {
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    &[type="password"]::-ms-reveal,
-    &[type="password"]::-ms-clear {
-      display: none;
-      width: 0;
-      height: 0;
-    }
-
-    &[type="password"]::-webkit-credentials-auto-fill-button,
-    &[type="password"]::-webkit-caps-lock-indicator,
-    &[type="password"]::-webkit-contacts-auto-fill-button {
-      visibility: hidden;
-      display: none !important;
-      pointer-events: none;
-      position: absolute;
-      right: 0;
-    }
-
-    &:hover {
-      background-color: transparent;
-    }
-
-    &:focus,
-    &:focus-within {
-      outline: none;
-    }
-  }
-
-  &:focus-within {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-    border-radius: var(--border-radius-md);
-  }
-
-  &::placeholder {
-    color: var(--text-color-primary);
-    opacity: 0.8;
-    font: inherit;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: var(--border-radius-lg);
-  }
-
-  @include bp.down(xs) {
-    width: 100%;
-    font-size: var(--font-size-body-sm);
-    margin: var(--spacing-xs);
-  }
-
-  &_icon_container {
-    display: flex;
+  .textInput {
     box-sizing: border-box;
-    margin: 0.5rem;
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: fit-content;
+    height: max-content;
+    margin: var(--spacing-sm);
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+    transition: var(--transition-default);
+    background: transparent;
+    outline: none;
+    margin: var(--spacing-sm);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    border: none;
+    border-radius: var(--border-radius-lg);
     background-color: transparent;
-    box-shadow: none;
+    color: var(--text-color-primary);
 
-    @include bp.down(xs) {
-      margin: 0.1rem;
+    &_container {
+      display: flex;
+      gap: var(--spacing-xs);
+      width: fit-content;
+      align-items: center;
+      justify-content: flex-start;
     }
 
-    svg {
-      width: 1em;
-      height: 1em;
+    &_label {
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
+      white-space: nowrap;
+    }
+
+    &_labelTop {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    &_labelBottom {
+      flex-direction: column-reverse;
+      align-items: flex-start;
+    }
+
+    &_labelLeft {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    &_labelRight {
+      flex-direction: row-reverse;
+      align-items: center;
+    }
+
+    input {
+      width: 100%;
+      padding: var(--spacing-sm);
+      border: none;
+      height: 100%;
+      background-color: transparent;
       color: var(--text-color-primary);
 
-      @include bp.down(xs) {
-        width: 15px;
-        height: 15px;
+      &[type="password"] {
+        -webkit-appearance: none;
+        appearance: none;
+      }
+
+      &[type="password"]::-ms-reveal,
+      &[type="password"]::-ms-clear {
+        display: none;
+        width: 0;
+        height: 0;
+      }
+
+      &[type="password"]::-webkit-credentials-auto-fill-button,
+      &[type="password"]::-webkit-caps-lock-indicator,
+      &[type="password"]::-webkit-contacts-auto-fill-button {
+        visibility: hidden;
+        display: none !important;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+      }
+
+      &:hover {
+        background-color: transparent;
+      }
+
+      &:focus,
+      &:focus-within {
+        outline: none;
       }
     }
-  }
 
-  &_togglePassword {
-    padding: var(--spacing-xs);
-    box-sizing: border-box;
-    background: transparent;
-    border: none;
-    color: inherit;
-    cursor: pointer;
+    &:focus-within {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+      border-radius: var(--border-radius-md);
+    }
+
+    &::placeholder {
+      color: var(--text-color-primary);
+      opacity: 0.8;
+      font: inherit;
+    }
 
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
-      border-radius: var(--border-radius-xs);
+      border-radius: var(--border-radius-lg);
     }
 
     @include bp.down(xs) {
-      margin-top: var(--spacing-xs);
-    }
-  }
-
-  &_clear {
-    box-shadow: none;
-
-    .textInput {
-      border: none;
-    }
-  }
-}
-
-@each $state, $vals in theme.$states {
-  .textInput_#{$state} {
-    --textInput-glass-bg: #{map.get($vals, glass-bg)};
-    --textInput-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --textInput-glass-border: #{map.get($vals, glass-border)};
-    --textInput-glass-text: #{map.get($vals, text)};
-    border: 2px solid map.get($vals, border);
-  }
-}
-
-@each $themeName, $vals in theme.$themes {
-  .textInput_#{$themeName} {
-    --textInput-glass-bg: #{map.get($vals, glass-bg)};
-    --textInput-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --textInput-glass-border: #{map.get($vals, glass-border)};
-    --textInput-glass-text: #{map.get($vals, text)};
-    background-color: map.get($vals, bg);
-    color: map.get($vals, text);
-    box-shadow: if(
-      map.has-key($vals, shadow),
-      map.get($vals, shadow),
-      var(--box-shadow-medium)
-    );
-
-    &:hover {
-      background-color: if(
-        map.has-key($vals, hover),
-        map.get($vals, hover),
-        map.get($vals, bg)
-      );
+      width: 100%;
+      font-size: var(--font-size-body-sm);
+      margin: var(--spacing-xs);
     }
 
-    .textInput::placeholder {
-      color: map.get($vals, text);
-    }
-
-    .textInput_icon_container svg {
-      color: map.get($vals, text);
-    }
-
-    &.textInput_outline {
+    &_icon_container {
+      display: flex;
+      box-sizing: border-box;
+      margin: 0.5rem;
       background-color: transparent;
-      color: map.get($vals, text);
       box-shadow: none;
+
+      @include bp.down(xs) {
+        margin: 0.1rem;
+      }
+
+      svg {
+        width: 1em;
+        height: 1em;
+        color: var(--text-color-primary);
+
+        @include bp.down(xs) {
+          width: 15px;
+          height: 15px;
+        }
+      }
+    }
+
+    &_togglePassword {
+      padding: var(--spacing-xs);
+      box-sizing: border-box;
+      background: transparent;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+        border-radius: var(--border-radius-xs);
+      }
+
+      @include bp.down(xs) {
+        margin-top: var(--spacing-xs);
+      }
+    }
+
+    &_clear {
+      box-shadow: none;
+
+      .textInput {
+        border: none;
+      }
+    }
+  }
+
+  @each $state, $vals in theme.$states {
+    .textInput_#{$state} {
+      --textInput-glass-bg: #{map.get($vals, glass-bg)};
+      --textInput-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --textInput-glass-border: #{map.get($vals, glass-border)};
+      --textInput-glass-text: #{map.get($vals, text)};
       border: 2px solid map.get($vals, border);
     }
   }
-}
 
-.textInput_glass {
-  @include mixins.glass-surface(
-    var(--textInput-glass-bg, rgba(255, 255, 255, 0.18)),
-    inherit,
-    16px
-  );
-  color: var(--textInput-glass-text, var(--text-color-primary));
-  box-shadow: var(--box-shadow-sm);
-}
+  @each $themeName, $vals in theme.$themes {
+    .textInput_#{$themeName} {
+      --textInput-glass-bg: #{map.get($vals, glass-bg)};
+      --textInput-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --textInput-glass-border: #{map.get($vals, glass-border)};
+      --textInput-glass-text: #{map.get($vals, text)};
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+      box-shadow: if(
+        map.has-key($vals, shadow),
+        map.get($vals, shadow),
+        var(--box-shadow-medium)
+      );
 
-.textInput_glass:hover {
-  background: var(--textInput-glass-hover-bg, rgba(255, 255, 255, 0.24));
-}
+      &:hover {
+        background-color: if(
+          map.has-key($vals, hover),
+          map.get($vals, hover),
+          map.get($vals, bg)
+        );
+      }
 
-.textInput_glass.textInput_outline {
-  border-color: var(--textInput-glass-border);
-}
+      .textInput::placeholder {
+        color: map.get($vals, text);
+      }
 
-.textInput_icon_container,
-.textInput_togglePassword {
-  background-color: transparent;
-}
+      .textInput_icon_container svg {
+        color: map.get($vals, text);
+      }
 
-.textInput_disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-  background-color: var(--disabled-color);
-}
-
-@each $key, $value in theme.$rounding {
-  .textInput_round-#{$key} {
-    border-radius: $value;
-
-    input {
-      border-radius: $value;
+      &.textInput_outline {
+        background-color: transparent;
+        color: map.get($vals, text);
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
     }
   }
-}
 
-@each $key, $value in theme.$shadow {
-  .textInput_shadow-#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .textInput_container,
-  .textInput_container * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (forced-colors: active) {
   .textInput_glass {
-    background: Canvas;
-    color: CanvasText;
-    border-color: ButtonText;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+    @include mixins.glass-surface(
+      var(--textInput-glass-bg, rgba(255, 255, 255, 0.18)),
+      inherit,
+      16px
+    );
+    color: var(--textInput-glass-text, var(--text-color-primary));
+    box-shadow: var(--box-shadow-sm);
   }
 
-  .textInput_container {
-    background: Canvas;
-    color: CanvasText;
-    border: 1px solid ButtonText;
+  .textInput_glass:hover {
+    background: var(--textInput-glass-hover-bg, rgba(255, 255, 255, 0.24));
   }
 
-  .textInput {
-    color: CanvasText;
-    background: Canvas;
+  .textInput_glass.textInput_outline {
+    border-color: var(--textInput-glass-border);
   }
 
-  .textInput::placeholder {
-    color: CanvasText;
+  .textInput_icon_container,
+  .textInput_togglePassword {
+    background-color: transparent;
   }
 
-  .textInput:focus-visible,
-  .textInput_container:focus-within {
-    outline: 2px solid Highlight !important;
-    outline-offset: 2px !important;
+  .textInput_disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+    background-color: var(--disabled-color);
   }
-}
+
+  @each $key, $value in theme.$rounding {
+    .textInput_round-#{$key} {
+      border-radius: $value;
+
+      input {
+        border-radius: $value;
+      }
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .textInput_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .textInput_container,
+    .textInput_container * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .textInput_glass {
+      background: Canvas;
+      color: CanvasText;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .textInput_container {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+    }
+
+    .textInput {
+      color: CanvasText;
+      background: Canvas;
+    }
+
+    .textInput::placeholder {
+      color: CanvasText;
+    }
+
+    .textInput:focus-visible,
+    .textInput_container:focus-within {
+      outline: 2px solid Highlight !important;
+      outline-offset: 2px !important;
+    }
+  }
 }

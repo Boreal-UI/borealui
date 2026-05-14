@@ -273,6 +273,11 @@
       "import": "./dist/core/EmptyState.js",
       "require": "./dist/core/EmptyState.cjs.js"
     },
+    "./core/FieldSet": {
+      "types": "./dist/types/core/FieldSet.d.ts",
+      "import": "./dist/core/FieldSet.js",
+      "require": "./dist/core/FieldSet.cjs.js"
+    },
     "./core/FileUpload": {
       "types": "./dist/types/core/FileUpload.d.ts",
       "import": "./dist/core/FileUpload.js",
@@ -600,6 +605,10 @@
     "./next/EmptyState": {
       "types": "./dist/types/next/EmptyState.d.ts",
       "import": "./dist/next/EmptyState.js"
+    },
+    "./next/FieldSet": {
+      "types": "./dist/types/next/FieldSet.d.ts",
+      "import": "./dist/next/FieldSet.js"
     },
     "./next/FileUpload": {
       "types": "./dist/types/next/FileUpload.d.ts",

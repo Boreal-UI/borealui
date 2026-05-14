@@ -25,6 +25,7 @@ export { dividerPropDocs } from "./Divider.props";
 export { drawerPropDocs } from "./Drawer.props";
 export { dropdownPropDocs } from "./Dropdown.props";
 export { emptyStatePropDocs } from "./EmptyState.props";
+export { fieldSetPropDocs } from "./FieldSet.props";
 export { fileUploadPropDocs } from "./FileUpload.props";
 export { footerPropDocs } from "./Footer.props";
 export { formFieldPropDocs } from "./FormField.props";

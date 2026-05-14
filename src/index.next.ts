@@ -25,6 +25,7 @@ export { default as Divider } from "./next/Divider";
 export { default as Drawer } from "./next/Drawer";
 export { default as Dropdown } from "./next/Dropdown";
 export { default as EmptyState } from "./next/EmptyState";
+export { default as FieldSet } from "./next/FieldSet";
 export { default as FileUpload } from "./next/FileUpload";
 export { default as Footer } from "./next/Footer";
 export { default as FormField } from "./next/FormField";

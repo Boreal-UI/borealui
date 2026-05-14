@@ -6,12 +6,12 @@ import TextInputBase from "../TextInputBase";
 import IconButton from "../../IconButton/core/IconButton";
 
 const classes = {
-  container: "container",
-  label: "label",
-  labelTop: "labelTop",
-  labelBottom: "labelBottom",
-  labelLeft: "labelLeft",
-  labelRight: "labelRight",
+  container: "textInput_container",
+  label: "textInput_label",
+  labelTop: "textInput_labelTop",
+  labelBottom: "textInput_labelBottom",
+  labelLeft: "textInput_labelLeft",
+  labelRight: "textInput_labelRight",
 
   textInput: "textInput",
   iconContainer: "textInput_icon_container",
