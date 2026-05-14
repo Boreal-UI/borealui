@@ -1,0 +1,444 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
+
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  .multiSelect_container {
+    display: inline-flex;
+    gap: var(--spacing-xs);
+    align-items: flex-start;
+    max-width: 100%;
+    font-family: var(--font-family-body);
+  }
+
+  .multiSelect_label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-ui);
+    line-height: var(--line-height-label);
+    color: var(--text-color-primary);
+  }
+
+  .multiSelect_labelTop {
+    flex-direction: column;
+  }
+
+  .multiSelect_labelBottom {
+    flex-direction: column-reverse;
+  }
+
+  .multiSelect_labelLeft {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .multiSelect_labelRight {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  .multiSelect {
+    --multiSelect-glass-bg: rgba(255, 255, 255, 0.18);
+    --multiSelect-glass-hover-bg: rgba(255, 255, 255, 0.24);
+    --multiSelect-glass-border: rgba(255, 255, 255, 0.28);
+    --multiSelect-glass-text: var(--text-color-primary);
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    min-width: min(100%, 16rem);
+    max-width: 100%;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-md);
+    background: var(--background-color);
+    color: var(--text-color-primary);
+    box-shadow: var(--box-shadow-sm);
+    transition: var(--transition-default);
+  }
+
+  .multiSelect:focus-within {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+  }
+
+  .multiSelect_trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    width: 100%;
+    min-width: 0;
+    min-height: 2.5rem;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .multiSelect_trigger:focus {
+    outline: none;
+  }
+
+  .multiSelect_valueList {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    gap: var(--spacing-2xs, 0.25rem);
+    align-items: center;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .multiSelect_chip {
+    display: inline-flex;
+    align-items: center;
+    max-width: 100%;
+    border: 1px solid currentcolor;
+    border-radius: var(--border-radius-sm);
+    padding: 0.125rem var(--spacing-xs);
+    font-size: var(--font-size-body-xs);
+    line-height: var(--line-height-body);
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  .multiSelect_chipLabel {
+    max-width: 10rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .multiSelect_placeholder {
+    opacity: 0.72;
+  }
+
+  .multiSelect_summary {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .multiSelect_icon {
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    transition: transform var(--transition-default);
+  }
+
+  .multiSelect_open .multiSelect_icon {
+    transform: rotate(180deg);
+  }
+
+  .multiSelect_clearButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 2rem;
+    min-height: 2rem;
+    margin-right: var(--spacing-xs);
+    border: 0;
+    border-radius: var(--border-radius-sm);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .multiSelect_clearButton svg {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .multiSelect_clearButton:hover:not(:disabled) {
+    background: var(--background-color-light);
+  }
+
+  .multiSelect_clearButton:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: -2px;
+  }
+
+  .multiSelect_popover {
+    position: absolute;
+    z-index: 20;
+    top: calc(100% + var(--spacing-xs));
+    left: 0;
+    width: min(100vw, 100%);
+    min-width: 16rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    background: var(--background-color);
+    color: var(--text-color-primary);
+    box-shadow: var(--box-shadow-lg);
+    padding: var(--spacing-xs);
+  }
+
+  .multiSelect_searchInput {
+    width: 100%;
+    min-width: 0;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    background: var(--background-color);
+    color: var(--text-color-primary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font: inherit;
+  }
+
+  .multiSelect_searchInput:focus {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+  }
+
+  .multiSelect_listbox {
+    display: grid;
+    gap: var(--spacing-2xs, 0.25rem);
+    max-height: 16rem;
+    margin-top: var(--spacing-xs);
+    overflow-y: auto;
+  }
+
+  .multiSelect_option {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: var(--spacing-xs);
+    align-items: start;
+    width: 100%;
+    border: 0;
+    border-radius: var(--border-radius-sm);
+    background: transparent;
+    color: inherit;
+    padding: var(--spacing-xs);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+  }
+
+  .multiSelect_option:hover:not(:disabled),
+  .multiSelect_active {
+    background: var(--background-color-light);
+  }
+
+  .multiSelect_selected {
+    font-weight: var(--font-weight-ui);
+  }
+
+  .multiSelect_option:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: -2px;
+  }
+
+  .multiSelect_optionDisabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+  }
+
+  .multiSelect_checkbox {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    height: 1rem;
+    border: 1px solid currentcolor;
+    border-radius: var(--border-radius-xs, 0.25rem);
+    margin-top: 0.125rem;
+    font-size: 0.75rem;
+    line-height: 1;
+  }
+
+  .multiSelect_optionText {
+    display: grid;
+    gap: 0.125rem;
+    min-width: 0;
+  }
+
+  .multiSelect_description {
+    opacity: 0.72;
+    font-size: var(--font-size-body-xs);
+  }
+
+  .multiSelect_status {
+    padding: var(--spacing-sm);
+    opacity: 0.72;
+  }
+
+  .multiSelect_loader {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    margin-right: var(--spacing-sm);
+    border: 2px solid currentcolor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    opacity: 0.72;
+    animation: multiSelect-spin 700ms linear infinite;
+  }
+
+  .multiSelect_nativeRequired {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  @keyframes multiSelect-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  @each $themeName, $vals in theme.$themes {
+    .multiSelect_#{$themeName} {
+      --multiSelect-glass-bg: #{map.get($vals, glass-bg)};
+      --multiSelect-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --multiSelect-glass-border: #{map.get($vals, glass-border)};
+      --multiSelect-glass-text: #{map.get($vals, text)};
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+      border-color: map.get($vals, border);
+
+      &:hover {
+        background-color: if(
+          map.has-key($vals, hover),
+          map.get($vals, hover),
+          map.get($vals, bg)
+        );
+      }
+
+      &.multiSelect_outline {
+        background-color: transparent;
+        color: map.get($vals, text);
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
+    }
+  }
+
+  @each $state, $vals in theme.$states {
+    .multiSelect_#{$state} {
+      --multiSelect-glass-bg: #{map.get($vals, glass-bg)};
+      --multiSelect-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --multiSelect-glass-border: #{map.get($vals, glass-border)};
+      --multiSelect-glass-text: #{map.get($vals, text)};
+      border-width: 2px;
+      border-color: map.get($vals, border);
+      color: map.get($vals, text);
+    }
+  }
+
+  .multiSelect_clear {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .multiSelect_glass {
+    @include mixins.glass-surface(
+      var(--multiSelect-glass-bg),
+      var(--multiSelect-glass-border),
+      16px
+    );
+
+    color: var(--multiSelect-glass-text);
+  }
+
+  .multiSelect_glass:hover {
+    background: var(--multiSelect-glass-hover-bg);
+  }
+
+  .multiSelect_glass.multiSelect_outline {
+    border-color: var(--multiSelect-glass-border);
+  }
+
+  .multiSelect_disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--disabled-color);
+    border-color: var(--disabled-color);
+
+    &:hover {
+      background-color: var(--disabled-color);
+    }
+
+    .multiSelect_trigger,
+    .multiSelect_clearButton {
+      cursor: not-allowed;
+    }
+  }
+
+  .multiSelect_loading {
+    cursor: progress;
+  }
+
+  @each $key, $value in theme.$rounding {
+    .multiSelect_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .multiSelect_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @include bp.down(xs) {
+    .multiSelect_container,
+    .multiSelect {
+      width: 100%;
+    }
+
+    .multiSelect_labelLeft,
+    .multiSelect_labelRight {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .multiSelect_popover {
+      min-width: 0;
+      width: 100%;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .multiSelect,
+    .multiSelect * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .multiSelect,
+    .multiSelect_popover,
+    .multiSelect_searchInput {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+      box-shadow: none;
+    }
+
+    .multiSelect_glass {
+      background: Canvas;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .multiSelect:focus-within,
+    .multiSelect_clearButton:focus-visible,
+    .multiSelect_option:focus-visible {
+      outline: 2px solid Highlight;
+    }
+  }
+}

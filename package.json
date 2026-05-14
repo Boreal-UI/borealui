@@ -44,10 +44,10 @@
     "lint:styles:fix": "stylelint '**/*.{css,scss}' --fix",
     "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
     "check:sync": "node scripts/checkSync.cjs",
-    "generate:entrypoints": "node scripts/generateEntryPoints.cjs",
-    "generate:exports": "node scripts/generateExports.cjs",
-    "generate:component": "node scripts/addComponent.cjs",
-    "generate:docs": "ts-node scripts/generate-component-docs.cjs",
+    "gen:entrypoints": "node scripts/generateEntryPoints.cjs",
+    "gen:exports": "node scripts/generateExports.cjs",
+    "gen:component": "node scripts/addComponent.cjs",
+    "gen:docs": "ts-node scripts/generate-component-docs.cjs",
     "patch:useClient": "node scripts/patchUseClient.cjs",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -163,34 +163,6 @@
       "import": "./dist/core/index.js",
       "require": "./dist/core/index.cjs.js"
     },
-    "./core/types": {
-      "types": "./dist/types/public.types.d.ts",
-      "default": "./dist/types/public.types.d.ts"
-    },
-    "./core/globals.css": {
-      "style": "./dist/core/globals.css",
-      "default": "./dist/core/globals.css"
-    },
-    "./next": {
-      "types": "./dist/types/index.next.d.ts",
-      "import": "./dist/next/index.js"
-    },
-    "./next/types": {
-      "types": "./dist/types/public.types.d.ts",
-      "default": "./dist/types/public.types.d.ts"
-    },
-    "./next/globals.css": {
-      "style": "./dist/next/globals.css",
-      "default": "./dist/next/globals.css"
-    },
-    "./docs": {
-      "types": "./dist/types/generated-docs/index.d.ts",
-      "default": "./dist/generated-docs/index.js"
-    },
-    "./docs/*": {
-      "types": "./dist/types/generated-docs/*.d.ts",
-      "default": "./dist/generated-docs/*.js"
-    },
     "./core/Accordion": {
       "types": "./dist/types/core/Accordion.d.ts",
       "import": "./dist/core/Accordion.js",
@@ -256,15 +228,15 @@
       "import": "./dist/core/colorSchemes.js",
       "require": "./dist/core/colorSchemes.cjs.js"
     },
-    "./core/CommandPalette": {
-      "types": "./dist/types/core/CommandPalette.d.ts",
-      "import": "./dist/core/CommandPalette.js",
-      "require": "./dist/core/CommandPalette.cjs.js"
-    },
     "./core/ComboBox": {
       "types": "./dist/types/core/ComboBox.d.ts",
       "import": "./dist/core/ComboBox.js",
       "require": "./dist/core/ComboBox.cjs.js"
+    },
+    "./core/CommandPalette": {
+      "types": "./dist/types/core/CommandPalette.d.ts",
+      "import": "./dist/core/CommandPalette.js",
+      "require": "./dist/core/CommandPalette.cjs.js"
     },
     "./core/DataTable": {
       "types": "./dist/types/core/DataTable.d.ts",
@@ -286,15 +258,15 @@
       "import": "./dist/core/Divider.js",
       "require": "./dist/core/Divider.cjs.js"
     },
-    "./core/Dropdown": {
-      "types": "./dist/types/core/Dropdown.d.ts",
-      "import": "./dist/core/Dropdown.js",
-      "require": "./dist/core/Dropdown.cjs.js"
-    },
     "./core/Drawer": {
       "types": "./dist/types/core/Drawer.d.ts",
       "import": "./dist/core/Drawer.js",
       "require": "./dist/core/Drawer.cjs.js"
+    },
+    "./core/Dropdown": {
+      "types": "./dist/types/core/Dropdown.d.ts",
+      "import": "./dist/core/Dropdown.js",
+      "require": "./dist/core/Dropdown.cjs.js"
     },
     "./core/EmptyState": {
       "types": "./dist/types/core/EmptyState.d.ts",
@@ -311,20 +283,24 @@
       "import": "./dist/core/Footer.js",
       "require": "./dist/core/Footer.cjs.js"
     },
-    "./core/FormGroup": {
-      "types": "./dist/types/core/FormGroup.d.ts",
-      "import": "./dist/core/FormGroup.js",
-      "require": "./dist/core/FormGroup.cjs.js"
-    },
     "./core/FormField": {
       "types": "./dist/types/core/FormField.d.ts",
       "import": "./dist/core/FormField.js",
       "require": "./dist/core/FormField.cjs.js"
     },
+    "./core/FormGroup": {
+      "types": "./dist/types/core/FormGroup.d.ts",
+      "import": "./dist/core/FormGroup.js",
+      "require": "./dist/core/FormGroup.cjs.js"
+    },
     "./core/globals": {
       "types": "./dist/types/core/globals.d.ts",
       "import": "./dist/core/globals.js",
       "require": "./dist/core/globals.cjs.js"
+    },
+    "./core/globals.css": {
+      "style": "./dist/core/globals.css",
+      "default": "./dist/core/globals.css"
     },
     "./core/IconButton": {
       "types": "./dist/types/core/IconButton.d.ts",
@@ -360,6 +336,11 @@
       "types": "./dist/types/core/Modal.d.ts",
       "import": "./dist/core/Modal.js",
       "require": "./dist/core/Modal.cjs.js"
+    },
+    "./core/MultiSelect": {
+      "types": "./dist/types/core/MultiSelect.d.ts",
+      "import": "./dist/core/MultiSelect.js",
+      "require": "./dist/core/MultiSelect.cjs.js"
     },
     "./core/NavBar": {
       "types": "./dist/types/core/NavBar.d.ts",
@@ -491,15 +472,15 @@
       "import": "./dist/core/Timeline.js",
       "require": "./dist/core/Timeline.cjs.js"
     },
-    "./core/Toggle": {
-      "types": "./dist/types/core/Toggle.d.ts",
-      "import": "./dist/core/Toggle.js",
-      "require": "./dist/core/Toggle.cjs.js"
-    },
     "./core/ToastProvider": {
       "types": "./dist/types/core/ToastProvider.d.ts",
       "import": "./dist/core/ToastProvider.js",
       "require": "./dist/core/ToastProvider.cjs.js"
+    },
+    "./core/Toggle": {
+      "types": "./dist/types/core/Toggle.d.ts",
+      "import": "./dist/core/Toggle.js",
+      "require": "./dist/core/Toggle.cjs.js"
     },
     "./core/Toolbar": {
       "types": "./dist/types/core/Toolbar.d.ts",
@@ -511,10 +492,26 @@
       "import": "./dist/core/Tooltip.js",
       "require": "./dist/core/Tooltip.cjs.js"
     },
+    "./core/types": {
+      "types": "./dist/types/public.types.d.ts",
+      "default": "./dist/types/public.types.d.ts"
+    },
     "./core/Typography": {
       "types": "./dist/types/core/Typography.d.ts",
       "import": "./dist/core/Typography.js",
       "require": "./dist/core/Typography.cjs.js"
+    },
+    "./docs": {
+      "types": "./dist/types/generated-docs/index.d.ts",
+      "default": "./dist/generated-docs/index.js"
+    },
+    "./docs/*": {
+      "types": "./dist/types/generated-docs/*.d.ts",
+      "default": "./dist/generated-docs/*.js"
+    },
+    "./next": {
+      "types": "./dist/types/index.next.d.ts",
+      "import": "./dist/next/index.js"
     },
     "./next/Accordion": {
       "types": "./dist/types/next/Accordion.d.ts",
@@ -568,13 +565,13 @@
       "types": "./dist/types/next/colorSchemes.d.ts",
       "import": "./dist/next/colorSchemes.js"
     },
-    "./next/CommandPalette": {
-      "types": "./dist/types/next/CommandPalette.d.ts",
-      "import": "./dist/next/CommandPalette.js"
-    },
     "./next/ComboBox": {
       "types": "./dist/types/next/ComboBox.d.ts",
       "import": "./dist/next/ComboBox.js"
+    },
+    "./next/CommandPalette": {
+      "types": "./dist/types/next/CommandPalette.d.ts",
+      "import": "./dist/next/CommandPalette.js"
     },
     "./next/DataTable": {
       "types": "./dist/types/next/DataTable.d.ts",
@@ -592,13 +589,13 @@
       "types": "./dist/types/next/Divider.d.ts",
       "import": "./dist/next/Divider.js"
     },
-    "./next/Dropdown": {
-      "types": "./dist/types/next/Dropdown.d.ts",
-      "import": "./dist/next/Dropdown.js"
-    },
     "./next/Drawer": {
       "types": "./dist/types/next/Drawer.d.ts",
       "import": "./dist/next/Drawer.js"
+    },
+    "./next/Dropdown": {
+      "types": "./dist/types/next/Dropdown.d.ts",
+      "import": "./dist/next/Dropdown.js"
     },
     "./next/EmptyState": {
       "types": "./dist/types/next/EmptyState.d.ts",
@@ -612,17 +609,21 @@
       "types": "./dist/types/next/Footer.d.ts",
       "import": "./dist/next/Footer.js"
     },
-    "./next/FormGroup": {
-      "types": "./dist/types/next/FormGroup.d.ts",
-      "import": "./dist/next/FormGroup.js"
-    },
     "./next/FormField": {
       "types": "./dist/types/next/FormField.d.ts",
       "import": "./dist/next/FormField.js"
     },
+    "./next/FormGroup": {
+      "types": "./dist/types/next/FormGroup.d.ts",
+      "import": "./dist/next/FormGroup.js"
+    },
     "./next/globals": {
       "types": "./dist/types/next/globals.d.ts",
       "import": "./dist/next/globals.js"
+    },
+    "./next/globals.css": {
+      "style": "./dist/next/globals.css",
+      "default": "./dist/next/globals.css"
     },
     "./next/IconButton": {
       "types": "./dist/types/next/IconButton.d.ts",
@@ -651,6 +652,10 @@
     "./next/Modal": {
       "types": "./dist/types/next/Modal.d.ts",
       "import": "./dist/next/Modal.js"
+    },
+    "./next/MultiSelect": {
+      "types": "./dist/types/next/MultiSelect.d.ts",
+      "import": "./dist/next/MultiSelect.js"
     },
     "./next/NavBar": {
       "types": "./dist/types/next/NavBar.d.ts",
@@ -756,13 +761,13 @@
       "types": "./dist/types/next/Timeline.d.ts",
       "import": "./dist/next/Timeline.js"
     },
-    "./next/Toggle": {
-      "types": "./dist/types/next/Toggle.d.ts",
-      "import": "./dist/next/Toggle.js"
-    },
     "./next/ToastProvider": {
       "types": "./dist/types/next/ToastProvider.d.ts",
       "import": "./dist/next/ToastProvider.js"
+    },
+    "./next/Toggle": {
+      "types": "./dist/types/next/Toggle.d.ts",
+      "import": "./dist/next/Toggle.js"
     },
     "./next/Toolbar": {
       "types": "./dist/types/next/Toolbar.d.ts",
@@ -771,6 +776,10 @@
     "./next/Tooltip": {
       "types": "./dist/types/next/Tooltip.d.ts",
       "import": "./dist/next/Tooltip.js"
+    },
+    "./next/types": {
+      "types": "./dist/types/public.types.d.ts",
+      "default": "./dist/types/public.types.d.ts"
     },
     "./next/Typography": {
       "types": "./dist/types/next/Typography.d.ts",

@@ -80,9 +80,34 @@ export const searchInputPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
+      "name": "icon",
+      "type": "SearchInputIconComponent | null",
+      "description": "Optional icon component to render inside the search input. Pass null to hide the default search icon.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "iconClassName",
       "type": "string",
-      "description": "Additional class name for the leading search icon wrapper.",
+      "description": "Additional class name for the rendered icon.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "iconPosition",
+      "type": "\"left\" | \"right\"",
+      "description": "Position of the icon relative to the input text.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"left\""
+    },
+    {
+      "name": "iconWrapperClassName",
+      "type": "string",
+      "description": "Additional class name for the icon wrapper.",
       "required": false,
       "inherited": false,
       "category": "props"

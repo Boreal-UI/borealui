@@ -36,6 +36,7 @@ export { menuPropDocs } from "./Menu.props";
 export { messagePopupPropDocs } from "./MessagePopup.props";
 export { metricBoxPropDocs } from "./MetricBox.props";
 export { modalPropDocs } from "./Modal.props";
+export { multiSelectPropDocs } from "./MultiSelect.props";
 export { navBarPropDocs } from "./NavBar.props";
 export { notificationCenterPropDocs } from "./NotificationCenter.props";
 export { numberInputPropDocs } from "./NumberInput.props";
