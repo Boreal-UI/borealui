@@ -5,225 +5,224 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .container {
+    position: fixed;
+    transform: translateX(-45%);
+    flex-direction: column;
+    justify-content: center;
+    top: 10px;
+    left: 10px;
+    gap: 10px;
+    background-color: transparent;
+    transition: var(--transition-default);
+    z-index: 1001;
+    font-family: var(--font-family-ui);
 
-.container {
-  position: fixed;
-  transform: translateX(-45%);
-  flex-direction: column;
-  justify-content: center;
-  top: 10px;
-  left: 10px;
-  gap: 10px;
-  background-color: transparent;
-  transition: var(--transition-default);
-  z-index: 1001;
-  font-family: var(--font-family-ui);
-
-  a {
-    text-decoration: none;
-    color: inherit;
-
-    &:hover {
+    a {
       text-decoration: none;
+      color: inherit;
+
+      &:hover {
+        text-decoration: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+        border-radius: 6px;
+      }
     }
+
+    @include bp.down(lg) {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+  }
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      --nav-glass-bg: #{map.get($values, glass-bg)};
+      --nav-glass-hover-bg: #{map.get($values, glass-hover)};
+      --nav-glass-border: #{map.get($values, glass-border)};
+      --nav-glass-text: #{map.get($values, text)};
+
+      .item {
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+        transition: var(--transition-default);
+
+        &:hover {
+          background-color: map.get($values, hover);
+          transform: scale(1.1);
+
+          @include bp.down(md) {
+            transform: scale(1.05);
+          }
+        }
+      }
+
+      .item_active,
+      .item[aria-current="page"] {
+        background-color: map.get($values, bg-light);
+        color: map.get($values, text);
+        font-weight: var(--font-weight-label);
+      }
+    }
+  }
+
+  .glass .item {
+    @include mixins.glass-surface(
+      var(--nav-glass-bg, rgba(255, 255, 255, 0.16)),
+      var(--nav-glass-border, rgba(255, 255, 255, 0.32)),
+      16px
+    );
+    color: var(--nav-glass-text, var(--text-color-primary));
+  }
+
+  .glass .item:hover,
+  .glass .item_active,
+  .glass .item[aria-current="page"] {
+    background: var(--nav-glass-hover-bg, rgba(255, 255, 255, 0.24));
+  }
+
+  .list {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    top: 10px;
+    left: 10px;
+    gap: 1em;
+    list-style: none;
+
+    @include bp.down(lg) {
+      position: absolute;
+      transform: translateX(-50%);
+      flex-direction: row;
+      justify-content: center;
+      padding: 0px;
+      gap: var(--spacing-sm);
+      top: 0;
+      left: 50%;
+    }
+  }
+
+  .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    padding: 15px;
+    color: var(--text-color-primary);
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition-default);
 
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
-      border-radius: 6px;
+      border-radius: 8px;
+    }
+
+    @include bp.down(md) {
+      width: 35px;
+      height: 35px;
+      padding: 5px;
     }
   }
 
-  @include bp.down(lg) {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    flex-direction: row;
-    justify-content: center;
+  .linkContent {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .icon {
+    display: flex;
     align-items: center;
-    gap: var(--spacing-sm);
-  }
-}
-
-@each $name, $values in theme.$themes {
-  .#{$name} {
-    --nav-glass-bg: #{map.get($values, glass-bg)};
-    --nav-glass-hover-bg: #{map.get($values, glass-hover)};
-    --nav-glass-border: #{map.get($values, glass-border)};
-    --nav-glass-text: #{map.get($values, text)};
-
-    .item {
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-      transition: var(--transition-default);
-
-      &:hover {
-        background-color: map.get($values, hover);
-        transform: scale(1.1);
-
-        @include bp.down(md) {
-          transform: scale(1.05);
-        }
-      }
-    }
-
-    .item_active,
-    .item[aria-current="page"] {
-      background-color: map.get($values, bg-light);
-      color: map.get($values, text);
-      font-weight: var(--font-weight-label);
-    }
-  }
-}
-
-.glass .item {
-  @include mixins.glass-surface(
-    var(--nav-glass-bg, rgba(255, 255, 255, 0.16)),
-    var(--nav-glass-border, rgba(255, 255, 255, 0.32)),
-    16px
-  );
-  color: var(--nav-glass-text, var(--text-color-primary));
-}
-
-.glass .item:hover,
-.glass .item_active,
-.glass .item[aria-current="page"] {
-  background: var(--nav-glass-hover-bg, rgba(255, 255, 255, 0.24));
-}
-
-.list {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  top: 10px;
-  left: 10px;
-  gap: 1em;
-  list-style: none;
-
-  @include bp.down(lg) {
-    position: absolute;
-    transform: translateX(-50%);
-    flex-direction: row;
     justify-content: center;
-    padding: 0px;
-    gap: var(--spacing-sm);
-    top: 0;
-    left: 50%;
-  }
-}
-
-.item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  height: 80px;
-  padding: 15px;
-  color: var(--text-color-primary);
-  text-decoration: none;
-  cursor: pointer;
-  transition: var(--transition-default);
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 8px;
-  }
-
-  @include bp.down(md) {
-    width: 35px;
-    height: 35px;
-    padding: 5px;
-  }
-}
-
-.linkContent {
-  display: flex;
-  flex-direction: column;
-}
-
-.icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.5s ease-in-out;
-
-  svg {
-    width: 0.9em;
-    height: 0.9em;
-    object-fit: contain;
-  }
-
-  @include bp.down(md) {
-    transition: none;
+    transition: all 0.5s ease-in-out;
 
     svg {
-      width: 1em;
-      height: 1em;
+      width: 0.9em;
+      height: 0.9em;
+      object-fit: contain;
+    }
+
+    @include bp.down(md) {
+      transition: none;
+
+      svg {
+        width: 1em;
+        height: 1em;
+      }
     }
   }
-}
 
-.label {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  margin-top: 5px;
-  display: none;
-  transition: opacity 0.5s ease-in-out;
+  .label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    margin-top: 5px;
+    display: none;
+    transition: opacity 0.5s ease-in-out;
 
-  @include bp.up(md) {
-    display: block;
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .container,
-  .container * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .item:hover {
-    transform: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .glass .item {
-    background: Canvas;
-    color: CanvasText;
-    border-color: ButtonText;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    @include bp.up(md) {
+      display: block;
+    }
   }
 
-  .item {
-    background: Canvas;
-    color: CanvasText;
-    border: 1px solid ButtonText;
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
+    }
   }
 
-  .item:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 2px;
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
+    }
   }
-}
+
+  @media (prefers-reduced-motion: reduce) {
+    .container,
+    .container * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .item:hover {
+      transform: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .glass .item {
+      background: Canvas;
+      color: CanvasText;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .item {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+    }
+
+    .item:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+  }
 }
