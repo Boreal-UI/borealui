@@ -5,13 +5,6 @@ import SplitPaneBase from "../SplitPaneBase";
 import { SplitPaneProps } from "../SplitPane.types";
 
 const classes = {
-  container: "splitPane_container",
-  label: "splitPane_label",
-  labelTop: "splitPane_labelTop",
-  labelBottom: "splitPane_labelBottom",
-  labelLeft: "splitPane_labelLeft",
-  labelRight: "splitPane_labelRight",
-
   root: "splitPane",
   startPane: "splitPane_startPane",
   endPane: "splitPane_endPane",
@@ -19,7 +12,6 @@ const classes = {
   horizontal: "splitPane_horizontal",
   vertical: "splitPane_vertical",
   static: "splitPane_static",
-  content: "splitPane_content",
   loader: "splitPane_loader",
   srOnly: "sr_only",
 

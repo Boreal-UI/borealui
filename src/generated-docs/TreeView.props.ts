@@ -28,17 +28,9 @@ export const treeViewPropDocs: GeneratedComponentDoc = {
       "category": "styling"
     },
     {
-      "name": "containerClassName",
-      "type": "string",
-      "description": "Legacy class name for the outer container.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "contentClassName",
       "type": "string",
-      "description": "Legacy class name for the content area.",
+      "description": "Additional class name for fallback child content.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -111,22 +103,6 @@ export const treeViewPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"Tree\""
-    },
-    {
-      "name": "labelClassName",
-      "type": "string",
-      "description": "Legacy class name for the visible label.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "labelPosition",
-      "type": "string",
-      "description": "Legacy label position retained for scaffold compatibility.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
     },
     {
       "name": "loading",

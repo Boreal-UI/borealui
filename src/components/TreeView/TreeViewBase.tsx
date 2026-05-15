@@ -35,7 +35,6 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
       onSelectionChange,
       onExpandedChange,
       label = "Tree",
-      labelPosition: _labelPosition,
       disabled = false,
       loading = false,
       theme = getDefaultTheme(),
@@ -46,8 +45,6 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
       shadow = getDefaultShadow(),
       classMap,
       className,
-      containerClassName: _containerClassName,
-      labelClassName: _labelClassName,
       contentClassName,
       srOnlyText,
       srOnlyClassName,
@@ -57,10 +54,6 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
     },
     ref,
   ) => {
-    void _labelPosition;
-    void _containerClassName;
-    void _labelClassName;
-
     const [internalSelectedId, setInternalSelectedId] =
       useState(defaultSelectedId);
     const [internalExpandedIds, setInternalExpandedIds] =

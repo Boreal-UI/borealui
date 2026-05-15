@@ -5,40 +5,6 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  .container {
-    display: inline-flex;
-    gap: var(--spacing-xs);
-    align-items: flex-start;
-    max-width: 100%;
-    font-family: var(--font-family-body);
-  }
-
-  .label {
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-ui);
-    line-height: var(--line-height-label);
-    color: var(--text-color-primary);
-  }
-
-  .labelTop {
-    flex-direction: column;
-  }
-
-  .labelBottom {
-    flex-direction: column-reverse;
-  }
-
-  .labelLeft {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .labelRight {
-    flex-direction: row-reverse;
-    align-items: center;
-  }
-
   .root {
     --appShell-glass-bg: rgba(255, 255, 255, 0.18);
     --appShell-glass-hover-bg: rgba(255, 255, 255, 0.24);
@@ -57,12 +23,6 @@
     box-shadow: var(--box-shadow-sm);
     padding: var(--spacing-sm);
     transition: var(--transition-default);
-  }
-
-  .content {
-    min-width: 0;
-    max-width: 100%;
-    overflow-wrap: anywhere;
   }
 
   .loader {
@@ -179,15 +139,8 @@
   }
 
   @include bp.down(xs) {
-    .container,
     .root {
       width: 100%;
-    }
-
-    .labelLeft,
-    .labelRight {
-      align-items: flex-start;
-      flex-direction: column;
     }
   }
 

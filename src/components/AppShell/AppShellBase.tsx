@@ -15,7 +15,6 @@ const AppShellBase = forwardRef<HTMLDivElement, AppShellBaseProps>(
     {
       header,
       label,
-      labelPosition: _labelPosition,
       sidebar,
       aside,
       footer,
@@ -34,8 +33,6 @@ const AppShellBase = forwardRef<HTMLDivElement, AppShellBaseProps>(
       loading = false,
       classMap,
       className,
-      containerClassName: _containerClassName,
-      labelClassName: _labelClassName,
       contentClassName,
       mainClassName,
       srOnlyText,
@@ -47,10 +44,6 @@ const AppShellBase = forwardRef<HTMLDivElement, AppShellBaseProps>(
     },
     ref,
   ) => {
-    void _labelPosition;
-    void _containerClassName;
-    void _labelClassName;
-
     const rootClass = useMemo(
       () =>
         combineClassNames(

@@ -5,40 +5,6 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  .splitPane_container {
-    display: inline-flex;
-    gap: var(--spacing-xs);
-    align-items: flex-start;
-    max-width: 100%;
-    font-family: var(--font-family-body);
-  }
-
-  .splitPane_label {
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-ui);
-    line-height: var(--line-height-label);
-    color: var(--text-color-primary);
-  }
-
-  .splitPane_labelTop {
-    flex-direction: column;
-  }
-
-  .splitPane_labelBottom {
-    flex-direction: column-reverse;
-  }
-
-  .splitPane_labelLeft {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .splitPane_labelRight {
-    flex-direction: row-reverse;
-    align-items: center;
-  }
-
   .splitPane {
     --splitPane-glass-bg: rgba(255, 255, 255, 0.18);
     --splitPane-glass-hover-bg: rgba(255, 255, 255, 0.24);
@@ -57,12 +23,6 @@
     box-shadow: var(--box-shadow-sm);
     padding: var(--spacing-sm);
     transition: var(--transition-default);
-  }
-
-  .splitPane_content {
-    min-width: 0;
-    max-width: 100%;
-    overflow-wrap: anywhere;
   }
 
   .splitPane_loader {
@@ -174,15 +134,8 @@
   }
 
   @include bp.down(xs) {
-    .splitPane_container,
     .splitPane {
       width: 100%;
-    }
-
-    .splitPane_labelLeft,
-    .splitPane_labelRight {
-      align-items: flex-start;
-      flex-direction: column;
     }
   }
 

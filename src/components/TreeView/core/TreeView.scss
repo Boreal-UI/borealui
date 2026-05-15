@@ -6,40 +6,6 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  .treeView_container {
-    display: inline-flex;
-    gap: var(--spacing-xs);
-    align-items: flex-start;
-    max-width: 100%;
-    font-family: var(--font-family-body);
-  }
-
-  .treeView_label {
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-ui);
-    line-height: var(--line-height-label);
-    color: var(--text-color-primary);
-  }
-
-  .treeView_labelTop {
-    flex-direction: column;
-  }
-
-  .treeView_labelBottom {
-    flex-direction: column-reverse;
-  }
-
-  .treeView_labelLeft {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .treeView_labelRight {
-    flex-direction: row-reverse;
-    align-items: center;
-  }
-
   .treeView {
     --treeView-glass-bg: rgba(255, 255, 255, 0.18);
     --treeView-glass-hover-bg: rgba(255, 255, 255, 0.24);
@@ -223,15 +189,8 @@
   }
 
   @include bp.down(xs) {
-    .treeView_container,
     .treeView {
       width: 100%;
-    }
-
-    .treeView_labelLeft,
-    .treeView_labelRight {
-      align-items: flex-start;
-      flex-direction: column;
     }
   }
 

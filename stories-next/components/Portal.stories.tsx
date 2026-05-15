@@ -1,14 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Portal } from "../../src/index.next";
 import type { PortalProps } from "../../src/components/Portal/Portal.types";
-import {
-  renderThemeVariants,
-  renderStateVariants,
-  renderOutlineVariants,
-  renderGlassVariants,
-  renderGlassOutlineVariants,
-  renderStateOutlineVariants,
-} from "../../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<PortalProps> = {
   title: "Components/Portal",
@@ -60,28 +52,4 @@ export const WithAccessibleContext: Story = {
       </div>
     ),
   },
-};
-
-export const ThemeMatrix: Story = {
-  render: (args) => renderThemeVariants({ component: Portal, args }),
-};
-
-export const StateMatrix: Story = {
-  render: (args) => renderStateVariants({ component: Portal, args }),
-};
-
-export const OutlineMatrix: Story = {
-  render: (args) => renderOutlineVariants({ component: Portal, args }),
-};
-
-export const GlassMatrix: Story = {
-  render: (args) => renderGlassVariants({ component: Portal, args }),
-};
-
-export const GlassOutlineMatrix: Story = {
-  render: (args) => renderGlassOutlineVariants({ component: Portal, args }),
-};
-
-export const StateOutlineMatrix: Story = {
-  render: (args) => renderStateOutlineVariants({ component: Portal, args }),
 };

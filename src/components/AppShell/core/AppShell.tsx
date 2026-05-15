@@ -5,13 +5,6 @@ import AppShellBase from "../AppShellBase";
 import { AppShellProps } from "../AppShell.types";
 
 const classes = {
-  container: "appShell_container",
-  label: "appShell_label",
-  labelTop: "appShell_labelTop",
-  labelBottom: "appShell_labelBottom",
-  labelLeft: "appShell_labelLeft",
-  labelRight: "appShell_labelRight",
-
   root: "appShell",
   header: "appShell_header",
   body: "appShell_body",
@@ -21,7 +14,6 @@ const classes = {
   footer: "appShell_footer",
   sidebarCollapsed: "appShell_sidebarCollapsed",
   stickyHeader: "appShell_stickyHeader",
-  content: "appShell_content",
   loader: "appShell_loader",
   srOnly: "sr_only",
 

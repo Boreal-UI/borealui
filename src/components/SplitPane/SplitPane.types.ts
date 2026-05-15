@@ -23,16 +23,6 @@ export interface SplitPaneProps extends NativeSplitPaneProps {
   endPane?: ReactNode;
 
   /**
-   * Legacy visible label retained for scaffold compatibility.
-   */
-  label?: ReactNode;
-
-  /**
-   * Legacy label position retained for scaffold compatibility.
-   */
-  labelPosition?: string;
-
-  /**
    * Fallback children. When two children are supplied, they are used as start/end panes.
    */
   children?: ReactNode;
@@ -147,21 +137,6 @@ export interface SplitPaneProps extends NativeSplitPaneProps {
    * Additional class name for the end pane.
    */
   endPaneClassName?: string;
-
-  /**
-   * Legacy class name for the outer container.
-   */
-  containerClassName?: string;
-
-  /**
-   * Legacy class name for the visible label.
-   */
-  labelClassName?: string;
-
-  /**
-   * Legacy class name for the content area.
-   */
-  contentClassName?: string;
 
   /**
    * Optional content rendered for assistive technologies only.

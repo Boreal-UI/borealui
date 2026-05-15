@@ -53,11 +53,6 @@ export interface TreeViewProps extends NativeTreeViewProps {
   children?: ReactNode;
 
   /**
-   * Legacy label position retained for scaffold compatibility.
-   */
-  labelPosition?: string;
-
-  /**
    * Controlled selected node id.
    */
   selectedId?: string;
@@ -140,17 +135,7 @@ export interface TreeViewProps extends NativeTreeViewProps {
   className?: string;
 
   /**
-   * Legacy class name for the outer container.
-   */
-  containerClassName?: string;
-
-  /**
-   * Legacy class name for the visible label.
-   */
-  labelClassName?: string;
-
-  /**
-   * Legacy class name for the content area.
+   * Additional class name for fallback child content.
    */
   contentClassName?: string;
 

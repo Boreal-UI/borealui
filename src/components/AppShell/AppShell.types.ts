@@ -23,11 +23,6 @@ export interface AppShellProps extends NativeAppShellProps {
   label?: ReactNode;
 
   /**
-   * Legacy label position retained for scaffold compatibility.
-   */
-  labelPosition?: string;
-
-  /**
    * Navigation/sidebar region rendered before the main content.
    */
   sidebar?: ReactNode;
@@ -128,16 +123,6 @@ export interface AppShellProps extends NativeAppShellProps {
    * Additional class name for the main content region.
    */
   mainClassName?: string;
-
-  /**
-   * Legacy class name for the outer container.
-   */
-  containerClassName?: string;
-
-  /**
-   * Legacy class name for the visible label.
-   */
-  labelClassName?: string;
 
   /**
    * Additional class name for the main content area.

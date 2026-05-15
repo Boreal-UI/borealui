@@ -5,13 +5,6 @@ import TreeViewBase from "../TreeViewBase";
 import { TreeViewProps } from "../TreeView.types";
 
 const classes = {
-  container: "treeView_container",
-  label: "treeView_label",
-  labelTop: "treeView_labelTop",
-  labelBottom: "treeView_labelBottom",
-  labelLeft: "treeView_labelLeft",
-  labelRight: "treeView_labelRight",
-
   root: "treeView",
   list: "treeView_list",
   group: "treeView_group",

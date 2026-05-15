@@ -45,14 +45,6 @@ export const appShellPropDocs: GeneratedComponentDoc = {
       "category": "styling"
     },
     {
-      "name": "containerClassName",
-      "type": "string",
-      "description": "Legacy class name for the outer container.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "contentClassName",
       "type": "string",
       "description": "Additional class name for the main content area.",
@@ -106,22 +98,6 @@ export const appShellPropDocs: GeneratedComponentDoc = {
       "name": "label",
       "type": "ReactNode",
       "description": "Legacy alias for header content retained for scaffold compatibility.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "labelClassName",
-      "type": "string",
-      "description": "Legacy class name for the visible label.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "labelPosition",
-      "type": "string",
-      "description": "Legacy label position retained for scaffold compatibility.",
       "required": false,
       "inherited": false,
       "category": "props"

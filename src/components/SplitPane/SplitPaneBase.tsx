@@ -27,8 +27,6 @@ const SplitPaneBase = forwardRef<HTMLDivElement, SplitPaneBaseProps>(
     {
       startPane,
       endPane,
-      label: _label,
-      labelPosition: _labelPosition,
       children,
       orientation = "horizontal",
       size,
@@ -48,9 +46,6 @@ const SplitPaneBase = forwardRef<HTMLDivElement, SplitPaneBaseProps>(
       loading = false,
       classMap,
       className,
-      containerClassName: _containerClassName,
-      labelClassName: _labelClassName,
-      contentClassName,
       startPaneClassName,
       endPaneClassName,
       srOnlyText,
@@ -62,11 +57,6 @@ const SplitPaneBase = forwardRef<HTMLDivElement, SplitPaneBaseProps>(
     },
     ref,
   ) => {
-    void _label;
-    void _labelPosition;
-    void _containerClassName;
-    void _labelClassName;
-
     const rootRef = useRef<HTMLDivElement | null>(null);
     const [internalSize, setInternalSize] = useState(defaultSize);
     const paneSize = clamp(size ?? internalSize, minSize, maxSize);
@@ -181,11 +171,7 @@ const SplitPaneBase = forwardRef<HTMLDivElement, SplitPaneBaseProps>(
           />
         ) : null}
         <section
-          className={combineClassNames(
-            classMap.startPane,
-            startPaneClassName,
-            contentClassName,
-          )}
+          className={combineClassNames(classMap.startPane, startPaneClassName)}
           data-testid={`${testId}-start-pane`}
         >
           {resolvedStartPane}

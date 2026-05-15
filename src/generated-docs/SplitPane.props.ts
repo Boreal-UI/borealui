@@ -28,22 +28,6 @@ export const splitPanePropDocs: GeneratedComponentDoc = {
       "category": "styling"
     },
     {
-      "name": "containerClassName",
-      "type": "string",
-      "description": "Legacy class name for the outer container.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "contentClassName",
-      "type": "string",
-      "description": "Legacy class name for the content area.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "data-testid",
       "type": "string",
       "description": "Backward-compatible alias for test ID attributes.",
@@ -93,30 +77,6 @@ export const splitPanePropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "configured default glass setting (fallback: false)"
-    },
-    {
-      "name": "label",
-      "type": "ReactNode",
-      "description": "Legacy visible label retained for scaffold compatibility.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "labelClassName",
-      "type": "string",
-      "description": "Legacy class name for the visible label.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "labelPosition",
-      "type": "string",
-      "description": "Legacy label position retained for scaffold compatibility.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
     },
     {
       "name": "loading",

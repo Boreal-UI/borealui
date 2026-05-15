@@ -23,11 +23,6 @@ export interface PageHeaderProps extends NativePageHeaderProps {
   label?: ReactNode;
 
   /**
-   * Legacy label position retained for scaffold compatibility.
-   */
-  labelPosition?: string;
-
-  /**
    * Supporting subtitle or description.
    */
   subtitle?: ReactNode;
@@ -151,16 +146,6 @@ export interface PageHeaderProps extends NativePageHeaderProps {
    * Additional class name for the actions area.
    */
   actionsClassName?: string;
-
-  /**
-   * Legacy class name for the outer container.
-   */
-  containerClassName?: string;
-
-  /**
-   * Legacy class name for the visible label.
-   */
-  labelClassName?: string;
 
   /**
    * Additional class name for the content area.

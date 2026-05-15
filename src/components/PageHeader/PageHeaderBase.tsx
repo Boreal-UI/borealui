@@ -15,7 +15,6 @@ const PageHeaderBase = forwardRef<HTMLElement, PageHeaderBaseProps>(
     {
       title,
       label,
-      labelPosition: _labelPosition,
       subtitle,
       eyebrow,
       icon,
@@ -37,8 +36,6 @@ const PageHeaderBase = forwardRef<HTMLElement, PageHeaderBaseProps>(
       loading = false,
       classMap,
       className,
-      containerClassName: _containerClassName,
-      labelClassName: _labelClassName,
       contentClassName,
       titleClassName,
       subtitleClassName,
@@ -51,10 +48,6 @@ const PageHeaderBase = forwardRef<HTMLElement, PageHeaderBaseProps>(
     },
     ref,
   ) => {
-    void _labelPosition;
-    void _containerClassName;
-    void _labelClassName;
-
     const rootClass = useMemo(
       () =>
         combineClassNames(

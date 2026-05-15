@@ -36,22 +36,6 @@ export const portalPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
-      "name": "containerClassName",
-      "type": "string",
-      "description": "Legacy class name for the outer container.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "contentClassName",
-      "type": "string",
-      "description": "Legacy class name for the content area.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "data-testid",
       "type": "string",
       "description": "Backward-compatible alias for test ID attributes.",
@@ -69,54 +53,6 @@ export const portalPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
-      "name": "glass",
-      "type": "boolean",
-      "description": "Whether to render glass styling.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "label",
-      "type": "ReactNode",
-      "description": "Legacy visible label retained for scaffold compatibility.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "labelClassName",
-      "type": "string",
-      "description": "Legacy class name for the visible label.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "labelPosition",
-      "type": "LabelPositionType",
-      "description": "Legacy label position retained for scaffold compatibility.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "loading",
-      "type": "boolean",
-      "description": "Whether the component should display a loading state.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "outline",
-      "type": "boolean",
-      "description": "Whether to render outlined styling.",
-      "required": false,
-      "inherited": false,
-      "category": "styling"
-    },
-    {
       "name": "renderInlineUntilMounted",
       "type": "boolean",
       "description": "Whether children should render before the target is available.",
@@ -124,22 +60,6 @@ export const portalPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "false"
-    },
-    {
-      "name": "rounding",
-      "type": "RoundingType",
-      "description": "Rounding style for the component.",
-      "required": false,
-      "inherited": false,
-      "category": "styling"
-    },
-    {
-      "name": "shadow",
-      "type": "ShadowType",
-      "description": "Shadow style for the component.",
-      "required": false,
-      "inherited": false,
-      "category": "styling"
     },
     {
       "name": "srOnlyClassName",
@@ -158,14 +78,6 @@ export const portalPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
-      "name": "state",
-      "type": "StateType",
-      "description": "Visual state for styling.",
-      "required": false,
-      "inherited": false,
-      "category": "styling"
-    },
-    {
       "name": "testId",
       "type": "string",
       "description": "Optional test ID for testing frameworks.",
@@ -173,14 +85,6 @@ export const portalPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "dataTestId ?? \"portal\""
-    },
-    {
-      "name": "theme",
-      "type": "ThemeType",
-      "description": "Theme used for styling.",
-      "required": false,
-      "inherited": false,
-      "category": "styling"
     }
   ]
 };

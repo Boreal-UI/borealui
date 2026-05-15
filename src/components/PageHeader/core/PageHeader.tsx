@@ -5,13 +5,6 @@ import PageHeaderBase from "../PageHeaderBase";
 import { PageHeaderProps } from "../PageHeader.types";
 
 const classes = {
-  container: "pageHeader_container",
-  label: "pageHeader_label",
-  labelTop: "pageHeader_labelTop",
-  labelBottom: "pageHeader_labelBottom",
-  labelLeft: "pageHeader_labelLeft",
-  labelRight: "pageHeader_labelRight",
-
   root: "pageHeader",
   main: "pageHeader_main",
   before: "pageHeader_before",

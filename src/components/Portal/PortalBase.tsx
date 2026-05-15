@@ -16,23 +16,11 @@ const PortalBase = forwardRef<HTMLDivElement, PortalBaseProps>(
   (
     {
       children,
-      label: _label,
-      labelPosition: _labelPosition,
       container,
       disabled = false,
-      theme: _theme,
-      state: _state,
-      outline: _outline,
-      glass: _glass,
-      rounding: _rounding,
-      shadow: _shadow,
-      loading: _loading,
       renderInlineUntilMounted = false,
       classMap,
       className,
-      containerClassName: _containerClassName,
-      labelClassName: _labelClassName,
-      contentClassName: _contentClassName,
       srOnlyText,
       srOnlyClassName,
       "data-testid": dataTestId,
@@ -41,19 +29,6 @@ const PortalBase = forwardRef<HTMLDivElement, PortalBaseProps>(
     },
     ref,
   ) => {
-    void _label;
-    void _labelPosition;
-    void _theme;
-    void _state;
-    void _outline;
-    void _glass;
-    void _rounding;
-    void _shadow;
-    void _loading;
-    void _containerClassName;
-    void _labelClassName;
-    void _contentClassName;
-
     const [target, setTarget] = useState<Element | DocumentFragment | null>(
       null,
     );

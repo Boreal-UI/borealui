@@ -4,13 +4,6 @@ import {
   ReactNode,
   RefAttributes,
 } from "react";
-import {
-  LabelPositionType,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "@/types/types";
 
 type NativePortalProps = Omit<HTMLAttributes<HTMLDivElement>, "children">;
 
@@ -22,16 +15,6 @@ export interface PortalProps extends NativePortalProps {
    * Content rendered into the target container.
    */
   children?: ReactNode;
-
-  /**
-   * Legacy visible label retained for scaffold compatibility.
-   */
-  label?: ReactNode;
-
-  /**
-   * Legacy label position retained for scaffold compatibility.
-   */
-  labelPosition?: LabelPositionType;
 
   /**
    * Element, selector, or null target for the portal.
@@ -48,41 +31,6 @@ export interface PortalProps extends NativePortalProps {
   disabled?: boolean;
 
   /**
-   * Theme used for styling.
-   */
-  theme?: ThemeType;
-
-  /**
-   * Visual state for styling.
-   */
-  state?: StateType;
-
-  /**
-   * Whether to render outlined styling.
-   */
-  outline?: boolean;
-
-  /**
-   * Whether to render glass styling.
-   */
-  glass?: boolean;
-
-  /**
-   * Rounding style for the component.
-   */
-  rounding?: RoundingType;
-
-  /**
-   * Shadow style for the component.
-   */
-  shadow?: ShadowType;
-
-  /**
-   * Whether the component should display a loading state.
-   */
-  loading?: boolean;
-
-  /**
    * Whether children should render before the target is available.
    *
    * @default false
@@ -93,21 +41,6 @@ export interface PortalProps extends NativePortalProps {
    * Optional class name for the portal wrapper.
    */
   className?: string;
-
-  /**
-   * Legacy class name for the outer container.
-   */
-  containerClassName?: string;
-
-  /**
-   * Legacy class name for the visible label.
-   */
-  labelClassName?: string;
-
-  /**
-   * Legacy class name for the content area.
-   */
-  contentClassName?: string;
 
   /**
    * Optional content rendered for assistive technologies only.
