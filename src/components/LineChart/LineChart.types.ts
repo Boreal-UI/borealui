@@ -4,7 +4,7 @@ import {
   ReactNode,
   RefAttributes,
 } from "react";
-import { ChartDatum, ChartValueFormatter } from "../chartUtils";
+import { ChartDatum, ChartValueFormatter } from "../../utils/chartUtils";
 import { StateType, ThemeType } from "@/types/types";
 
 type NativeLineChartProps = Omit<HTMLAttributes<HTMLDivElement>, "children">;

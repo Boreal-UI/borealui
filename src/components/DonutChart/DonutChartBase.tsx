@@ -5,7 +5,7 @@ import {
   describeData,
   formatDefaultValue,
   formatValueText,
-} from "../chartUtils";
+} from "../../utils/chartUtils";
 import { combineClassNames } from "../../utils/classNames";
 
 const polarToCartesian = (

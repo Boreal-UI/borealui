@@ -572,11 +572,6 @@
       "import": "./dist/core/TreeView.js",
       "require": "./dist/core/TreeView.cjs.js"
     },
-    "./core/TrendBadge": {
-      "types": "./dist/types/core/TrendBadge.d.ts",
-      "import": "./dist/core/TrendBadge.js",
-      "require": "./dist/core/TrendBadge.cjs.js"
-    },
     "./core/types": {
       "types": "./dist/types/public.types.d.ts",
       "default": "./dist/types/public.types.d.ts"
@@ -930,10 +925,6 @@
     "./next/TreeView": {
       "types": "./dist/types/next/TreeView.d.ts",
       "import": "./dist/next/TreeView.js"
-    },
-    "./next/TrendBadge": {
-      "types": "./dist/types/next/TrendBadge.d.ts",
-      "import": "./dist/next/TrendBadge.js"
     },
     "./next/types": {
       "types": "./dist/types/public.types.d.ts",

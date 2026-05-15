@@ -177,7 +177,7 @@
       --validationSummary-border-color: #{map.get($vals, border)};
       --validationSummary-soft-bg: color-mix(
         in srgb,
-        #{map.get($vals, border)} 30%,
+        #{map.get($vals, border)} 8%,
         transparent
       );
       --validationSummary-glass-bg: #{map.get($vals, glass-bg)};
@@ -211,7 +211,7 @@
       --validationSummary-border-color: #{map.get($vals, border)};
       --validationSummary-soft-bg: color-mix(
         in srgb,
-        #{map.get($vals, border)} 30%,
+        #{map.get($vals, border)} 10%,
         transparent
       );
       --validationSummary-glass-bg: #{map.get($vals, glass-bg)};
@@ -239,7 +239,7 @@
 
   .validationSummary_glass {
     @include mixins.glass-surface(var(--validationSummary-glass-border), 16px);
-
+    background-color: var(--validationSummary-glass-bg);
     border-left-color: var(--validationSummary-glass-border);
   }
 

@@ -6,7 +6,7 @@ import {
   formatDefaultValue,
   formatValueText,
   getValueRange,
-} from "../chartUtils";
+} from "../../utils/chartUtils";
 import { combineClassNames } from "../../utils/classNames";
 
 const BarChartBase = forwardRef<HTMLDivElement, BarChartBaseProps>(

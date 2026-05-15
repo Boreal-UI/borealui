@@ -1,6 +1,3 @@
-
-
-
 export { Container, Grid, Inline, Section, Stack } from "./core/Layout";
 export { default as Accordion } from "./core/Accordion";
 export { default as Alert } from "./core/Alert";
@@ -77,7 +74,6 @@ export { default as Toggle } from "./core/Toggle";
 export { default as Toolbar } from "./core/Toolbar";
 export { default as Tooltip } from "./core/Tooltip";
 export { default as TreeView } from "./core/TreeView";
-export { default as TrendBadge } from "./core/TrendBadge";
 export { default as Typography } from "./core/Typography";
 export { default as ValidationSummary } from "./core/ValidationSummary";
 export * from "./core/colorSchemes";

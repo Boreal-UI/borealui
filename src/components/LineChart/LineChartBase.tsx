@@ -7,7 +7,7 @@ import {
   formatValueText,
   getValueRange,
   pointsToPath,
-} from "../chartUtils";
+} from "../../utils/chartUtils";
 import { combineClassNames } from "../../utils/classNames";
 
 const LineChartBase = forwardRef<HTMLDivElement, LineChartBaseProps>(

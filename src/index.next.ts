@@ -1,7 +1,3 @@
-
-
-
-
 "use client";
 export { Container, Grid, Inline, Section, Stack } from "./next/Layout";
 export { default as Accordion } from "./next/Accordion";
@@ -79,7 +75,6 @@ export { default as Toggle } from "./next/Toggle";
 export { default as Toolbar } from "./next/Toolbar";
 export { default as Tooltip } from "./next/Tooltip";
 export { default as TreeView } from "./next/TreeView";
-export { default as TrendBadge } from "./next/TrendBadge";
 export { default as Typography } from "./next/Typography";
 export { default as ValidationSummary } from "./next/ValidationSummary";
 export * from "./generated-docs/index";

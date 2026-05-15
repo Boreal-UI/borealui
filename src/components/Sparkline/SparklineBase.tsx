@@ -6,7 +6,7 @@ import {
   formatDefaultValue,
   normalizeData,
   pointsToPath,
-} from "../chartUtils";
+} from "../../utils/chartUtils";
 import { combineClassNames } from "../../utils/classNames";
 
 const SparklineBase = forwardRef<HTMLDivElement, SparklineBaseProps>(

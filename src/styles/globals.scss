@@ -186,23 +186,23 @@
     /* ================================
    THEME GLASS COLORS
 ================================== */
-    --primary-glass-background: rgb(from var(--primary-color) r g b / 40%);
+    --primary-glass-background: rgb(from var(--primary-color) r g b / 10%);
     --primary-glass-background-hover: rgb(
       from var(--primary-color-hover) r g b / 38%
     );
     --primary-glass-border: rgb(from var(--primary-color) r g b / 48%);
-    --secondary-glass-background: rgb(from var(--secondary-color) r g b / 40%);
+    --secondary-glass-background: rgb(from var(--secondary-color) r g b / 10%);
     --secondary-glass-background-hover: rgb(
       from var(--secondary-color-hover) r g b / 38%
     );
     --secondary-glass-border: rgb(from var(--secondary-color) r g b / 48%);
-    --tertiary-glass-background: rgb(from var(--tertiary-color) r g b / 40%);
+    --tertiary-glass-background: rgb(from var(--tertiary-color) r g b / 10%);
     --tertiary-glass-background-hover: rgb(
       from var(--tertiary-color-hover) r g b / 38%
     );
     --tertiary-glass-border: rgb(from var(--tertiary-color) r g b / 48%);
     --quaternary-glass-background: rgb(
-      from var(--quaternary-color) r g b / 40%
+      from var(--quaternary-color) r g b / 10%
     );
     --quaternary-glass-background-hover: rgb(
       from var(--quaternary-color-hover) r g b / 38%
