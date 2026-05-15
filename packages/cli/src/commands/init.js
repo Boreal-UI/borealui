@@ -3,10 +3,11 @@ import {
   existsSync,
   mkdirSync,
   readFileSync,
+  realpathSync,
   statSync,
   writeFileSync,
 } from "node:fs";
-import { basename, dirname, join, relative, resolve } from "node:path";
+import { basename, dirname, isAbsolute, relative, resolve } from "node:path";
 import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 import { VERSION } from "../utils/constants.js";
@@ -43,19 +44,14 @@ body {
 
 export async function initCommand(rawOptions) {
   const options = await promptForOptions(rawOptions);
-  const root = resolve(options.cwd);
+  const root = resolveProjectRoot(options.cwd);
+  const packageJsonPath = resolveProjectPath(root, "package.json");
 
-  if (!existsSync(root) || !statSync(root).isDirectory()) {
-    fail(`Project directory does not exist: ${root}`);
-  }
-
-  const packageJsonPath = join(root, "package.json");
-
-  if (!existsSync(packageJsonPath)) {
+  if (!projectFileExists(root, packageJsonPath)) {
     fail("Could not find package.json. Run this inside an existing React or Next.js project.");
   }
 
-  const packageJson = readPackageJson(packageJsonPath);
+  const packageJson = readPackageJson(root, packageJsonPath);
   const framework = resolveFramework(root, packageJson, options.framework);
   const packageManager = resolvePackageManager(root, options.packageManager);
   options.recommendedGlobals = await resolveRecommendedGlobalsOption(options, framework);
@@ -77,13 +73,15 @@ export async function initCommand(rawOptions) {
 
   try {
     for (const change of plan) {
+      const changePath = resolveProjectPath(root, change.path);
+
       if (await shouldApplyChange(rl, change, options.yes)) {
-        mkdirSync(dirname(change.path), { recursive: true });
-        writeFileSync(change.path, change.nextContents, "utf8");
+        mkdirSync(dirname(changePath), { recursive: true });
+        writeFileSync(changePath, change.nextContents, "utf8");
         appliedCount += 1;
-        console.log(`Updated ${relative(root, change.path) || basename(change.path)}`);
+        console.log(`Updated ${relative(root, changePath) || basename(changePath)}`);
       } else {
-        console.log(`Skipped ${relative(root, change.path) || basename(change.path)}`);
+        console.log(`Skipped ${relative(root, changePath) || basename(changePath)}`);
       }
     }
   } finally {
@@ -98,9 +96,74 @@ export async function initCommand(rawOptions) {
   printSuccess(root, framework, packageManager, options.install);
 }
 
-function readPackageJson(packageJsonPath) {
+function resolveProjectRoot(cwd) {
+  const root = resolve(cwd);
+
+  if (!existsSync(root) || !statSync(root).isDirectory()) {
+    fail(`Project directory does not exist: ${root}`);
+  }
+
+  return realpathSync(root);
+}
+
+function isInsideProject(root, targetPath) {
+  const relativePath = relative(root, targetPath);
+
+  return (
+    relativePath === "" ||
+    (relativePath !== "" &&
+      !relativePath.startsWith("..") &&
+      !isAbsolute(relativePath))
+  );
+}
+
+function resolveProjectPath(root, ...segments) {
+  const resolvedRoot = resolve(root);
+  const resolvedPath = resolve(resolvedRoot, ...segments);
+
+  if (!isInsideProject(resolvedRoot, resolvedPath)) {
+    fail(`Refusing to access a path outside the project directory: ${resolvedPath}`);
+  }
+
+  return resolvedPath;
+}
+
+function resolveExistingProjectPath(root, filePath) {
+  const resolvedRoot = resolve(root);
+  const resolvedPath = resolveProjectPath(resolvedRoot, filePath);
+
+  if (!existsSync(resolvedPath)) {
+    return resolvedPath;
+  }
+
+  const realRoot = realpathSync(resolvedRoot);
+  const realPath = realpathSync(resolvedPath);
+
+  if (!isInsideProject(realRoot, realPath)) {
+    fail(`Refusing to read a file outside the project directory: ${resolvedPath}`);
+  }
+
+  return resolvedPath;
+}
+
+function projectFileExists(root, filePath) {
+  const resolvedPath = resolveProjectPath(root, filePath);
+
+  if (!existsSync(resolvedPath)) {
+    return false;
+  }
+
+  resolveExistingProjectPath(root, resolvedPath);
+  return true;
+}
+
+function readProjectFile(root, filePath) {
+  return readFileSync(resolveExistingProjectPath(root, filePath), "utf8");
+}
+
+function readPackageJson(root, packageJsonPath) {
   try {
-    return JSON.parse(readFileSync(packageJsonPath, "utf8"));
+    return JSON.parse(readProjectFile(root, packageJsonPath));
   } catch {
     fail("Could not parse package.json.");
   }
@@ -128,8 +191,8 @@ function resolveFramework(root, packageJson, requestedFramework) {
 
 function resolvePackageManager(root, requestedPackageManager) {
   if (requestedPackageManager) return requestedPackageManager;
-  if (existsSync(join(root, "pnpm-lock.yaml"))) return "pnpm";
-  if (existsSync(join(root, "yarn.lock"))) return "yarn";
+  if (projectFileExists(root, resolveProjectPath(root, "pnpm-lock.yaml"))) return "pnpm";
+  if (projectFileExists(root, resolveProjectPath(root, "yarn.lock"))) return "yarn";
   return "npm";
 }
 
@@ -196,7 +259,7 @@ function addReactChanges(changes, root) {
     fail("Could not find a React entry file such as src/main.tsx or src/index.jsx.");
   }
 
-  let source = readFileSync(entryPath, "utf8");
+  let source = readProjectFile(root, entryPath);
   let nextSource = source;
 
   nextSource = ensureSideEffectImport(nextSource, "boreal-ui/core/globals.css");
@@ -223,7 +286,7 @@ function addNextChanges(changes, root, options) {
   if (pagesAppPath) {
     const globalsPath = resolveNextGlobalsPath(root, pagesAppPath, "pages", options);
 
-    addNextPagesRouterChange(changes, pagesAppPath, globalsPath);
+    addNextPagesRouterChange(changes, root, pagesAppPath, globalsPath);
     addNextRecommendedGlobalsChange(changes, root, {
       enabled: options.recommendedGlobals,
       globalsPath,
@@ -239,14 +302,15 @@ function addNextChanges(changes, root, options) {
     fail("Could not find a Next.js app/layout file or pages/_app file.");
   }
 
-  const providerPath = findFirst(root, nextProviderCandidates(dirname(layoutPath)));
+  const providerPath = findFirst(root, nextProviderCandidates(root, dirname(layoutPath)));
   const resolvedProviderPath =
-    providerPath ?? join(dirname(layoutPath), `boreal-provider.${extensionFor(layoutPath)}`);
+    providerPath ??
+    resolveProjectPath(root, dirname(layoutPath), `boreal-provider.${extensionFor(layoutPath)}`);
   const providerImportPath = `./${basename(resolvedProviderPath).replace(/\.[^.]+$/, "")}`;
   const globalsPath = resolveNextGlobalsPath(root, layoutPath, "app", options);
 
-  addNextProviderChange(changes, resolvedProviderPath);
-  addNextLayoutChange(changes, layoutPath, providerImportPath, globalsPath);
+  addNextProviderChange(changes, root, resolvedProviderPath);
+  addNextLayoutChange(changes, root, layoutPath, providerImportPath, globalsPath);
   addNextRecommendedGlobalsChange(changes, root, {
     enabled: options.recommendedGlobals,
     globalsPath,
@@ -255,8 +319,8 @@ function addNextChanges(changes, root, options) {
   });
 }
 
-function addNextPagesRouterChange(changes, pagesAppPath, globalsPath) {
-  const source = readFileSync(pagesAppPath, "utf8");
+function addNextPagesRouterChange(changes, root, pagesAppPath, globalsPath) {
+  const source = readProjectFile(root, pagesAppPath);
   let nextSource = source;
 
   nextSource = ensureSideEffectImport(nextSource, "boreal-ui/next/globals.css");
@@ -284,8 +348,8 @@ function addNextPagesRouterChange(changes, pagesAppPath, globalsPath) {
   }
 }
 
-function addNextLayoutChange(changes, layoutPath, providerImportPath, globalsPath) {
-  const source = readFileSync(layoutPath, "utf8");
+function addNextLayoutChange(changes, root, layoutPath, providerImportPath, globalsPath) {
+  const source = readProjectFile(root, layoutPath);
   let nextSource = source;
   const providerImportName =
     getDefaultImportName(source, providerImportPath) ?? "BorealProvider";
@@ -311,9 +375,9 @@ function addNextLayoutChange(changes, layoutPath, providerImportPath, globalsPat
   }
 }
 
-function addNextProviderChange(changes, providerPath) {
-  const exists = existsSync(providerPath);
-  const source = exists ? readFileSync(providerPath, "utf8") : "";
+function addNextProviderChange(changes, root, providerPath) {
+  const exists = projectFileExists(root, providerPath);
+  const source = exists ? readProjectFile(root, providerPath) : "";
   let nextSource = source;
 
   if (!source.trim()) {
@@ -350,8 +414,8 @@ function addNextRecommendedGlobalsChange(
 
   const resolvedGlobalsPath =
     globalsPath ?? defaultNextGlobalsPath(root, routerEntryPath, routerType);
-  const exists = existsSync(resolvedGlobalsPath);
-  const source = exists ? readFileSync(resolvedGlobalsPath, "utf8") : "";
+  const exists = projectFileExists(root, resolvedGlobalsPath);
+  const source = exists ? readProjectFile(root, resolvedGlobalsPath) : "";
   const nextSource = ensureRecommendedNextGlobals(source);
 
   if (nextSource !== source) {
@@ -679,27 +743,33 @@ function nextGlobalsCandidates() {
 
 function defaultNextGlobalsPath(root, routerEntryPath, routerType) {
   if (routerType === "app") {
-    return join(dirname(routerEntryPath), "globals.css");
+    return resolveProjectPath(root, dirname(routerEntryPath), "globals.css");
   }
 
   const pagesDirectory = dirname(routerEntryPath);
   const sourceDirectory = basename(pagesDirectory) === "pages" ? dirname(pagesDirectory) : root;
 
-  return join(sourceDirectory, "styles", "globals.css");
+  return resolveProjectPath(root, sourceDirectory, "styles", "globals.css");
 }
 
-function nextProviderCandidates(layoutDirectory) {
+function nextProviderCandidates(root, layoutDirectory) {
   return SOURCE_EXTENSIONS.flatMap((extension) => [
-    join(layoutDirectory, `providers.${extension}`),
-    join(layoutDirectory, `provider.${extension}`),
-    join(layoutDirectory, `boreal-provider.${extension}`),
+    resolveProjectPath(root, layoutDirectory, `providers.${extension}`),
+    resolveProjectPath(root, layoutDirectory, `provider.${extension}`),
+    resolveProjectPath(root, layoutDirectory, `boreal-provider.${extension}`),
   ]);
 }
 
 function findFirst(root, candidates) {
-  return candidates
-    .map((candidate) => (candidate.includes(root) ? candidate : join(root, candidate)))
-    .find((candidate) => existsSync(candidate));
+  for (const candidate of candidates) {
+    const resolvedCandidate = resolveProjectPath(root, candidate);
+
+    if (projectFileExists(root, resolvedCandidate)) {
+      return resolvedCandidate;
+    }
+  }
+
+  return undefined;
 }
 
 function extensionFor(filePath) {
@@ -752,3 +822,7 @@ ${installWasRun ? "" : `Run ${installCommand} if dependencies have not been inst
 Use components from ${framework === "next" ? "boreal-ui/next" : "boreal-ui/core"}.
 `);
 }
+
+export const __testing = {
+  resolveProjectPath,
+};
