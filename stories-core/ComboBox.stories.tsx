@@ -11,6 +11,14 @@ import {
   ComboBoxOption,
   ComboBoxProps,
 } from "../src/components/ComboBox/ComboBox.types";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const options = [
   { value: "react", label: "React", description: "UI library" },
@@ -357,4 +365,28 @@ export const CustomClassNames: Story = {
     errorClassName: "storybook-combobox-error",
     helperText: "Custom class names are applied for styling hooks.",
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: ComboBox, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: ComboBox, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: ComboBox, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: ComboBox, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: ComboBox, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: ComboBox, args }),
 };

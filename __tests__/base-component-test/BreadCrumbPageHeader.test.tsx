@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BreadCrumbPageHeaderBase from "@/components/BreadCrumbPageHeader/BreadCrumbPageHeaderBase";
+import { BreadcrumbsProps } from "@/components/Breadcrumbs/Breadcrumbs.types";
 
 expect.extend(toHaveNoViolations);
 
@@ -37,17 +38,35 @@ const breadcrumbs = [
   { label: "Page header" },
 ];
 
+const MockBreadcrumbs = ({ items }: BreadcrumbsProps) => (
+  <nav aria-label="Breadcrumbs">
+    <ol>
+      {items.map((item) => (
+        <li key={item.label}>{item.label}</li>
+      ))}
+    </ol>
+  </nav>
+);
+
+const renderHeader = (
+  props: Partial<React.ComponentProps<typeof BreadCrumbPageHeaderBase>> = {},
+) =>
+  render(
+    <BreadCrumbPageHeaderBase
+      classMap={classMap}
+      BreadCrumbsComponent={MockBreadcrumbs}
+      {...props}
+    />,
+  );
+
 describe("BreadCrumbPageHeaderBase", () => {
   it("renders breadcrumbs, title, subtitle, and actions", () => {
-    render(
-      <BreadCrumbPageHeaderBase
-        classMap={classMap}
-        breadcrumbs={breadcrumbs}
-        title="Page header"
-        subtitle="Combines navigation and page context"
-        actions={<button type="button">Edit</button>}
-      />,
-    );
+    renderHeader({
+      breadcrumbs,
+      title: "Page header",
+      subtitle: "Combines navigation and page context",
+      actions: <button type="button">Edit</button>,
+    });
 
     expect(
       screen.getByRole("navigation", { name: "Breadcrumbs" }),
@@ -63,34 +82,41 @@ describe("BreadCrumbPageHeaderBase", () => {
     ).toHaveTextContent("Edit");
   });
 
-  it("collapses breadcrumbs when maxVisibleBreadcrumbs is set", () => {
+  it("passes breadcrumb props to the breadcrumb component", () => {
+    const BreadcrumbsWithProps = ({ items, maxVisible }: BreadcrumbsProps) => (
+      <nav aria-label="Breadcrumbs" data-max-visible={maxVisible}>
+        {items.map((item) => item.label).join(" / ")}
+      </nav>
+    );
+
     render(
       <BreadCrumbPageHeaderBase
         classMap={classMap}
+        BreadCrumbsComponent={BreadcrumbsWithProps}
         breadcrumbs={breadcrumbs}
-        maxVisibleBreadcrumbs={2}
+        breadcrumbProps={{ maxVisible: 2 }}
         title="Page header"
       />,
     );
 
-    expect(screen.getByText("...")).toBeInTheDocument();
+    expect(screen.getByRole("navigation")).toHaveAttribute(
+      "data-max-visible",
+      "2",
+    );
   });
 
   it("applies visual classes and loading semantics", () => {
-    render(
-      <BreadCrumbPageHeaderBase
-        classMap={classMap}
-        title="Page header"
-        theme="secondary"
-        state="success"
-        outline
-        glass
-        rounding="large"
-        shadow="strong"
-        loading
-        disabled
-      />,
-    );
+    renderHeader({
+      title: "Page header",
+      theme: "secondary",
+      state: "success",
+      outline: true,
+      glass: true,
+      rounding: "large",
+      shadow: "strong",
+      loading: true,
+      disabled: true,
+    });
 
     const root = screen.getByTestId("bread-crumb-page-header");
     expect(root).toHaveClass(
@@ -112,6 +138,7 @@ describe("BreadCrumbPageHeaderBase", () => {
     render(
       <BreadCrumbPageHeaderBase
         classMap={classMap}
+        BreadCrumbsComponent={MockBreadcrumbs}
         title="Page header"
         ref={ref}
       />,
@@ -121,13 +148,10 @@ describe("BreadCrumbPageHeaderBase", () => {
   });
 
   it("has no accessibility violations", async () => {
-    const { container } = render(
-      <BreadCrumbPageHeaderBase
-        classMap={classMap}
-        breadcrumbs={breadcrumbs}
-        title="Page header"
-      />,
-    );
+    const { container } = renderHeader({
+      breadcrumbs,
+      title: "Page header",
+    });
 
     expect(await axe(container)).toHaveNoViolations();
   });

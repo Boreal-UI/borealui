@@ -8,6 +8,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 type SampleRow = {
   id: number;
@@ -56,10 +64,34 @@ const sampleColumns: DataTableProps<SampleRow>["columns"] = [
 ];
 
 const adminData: AdminRow[] = [
-  { id: "aurora", project: "Aurora Console", owner: "Ada", status: "Ready", spend: 12400 },
-  { id: "boreal", project: "Boreal Analytics", owner: "Grace", status: "Stable", spend: 9800 },
-  { id: "cascade", project: "Cascade Ops", owner: "Lin", status: "Draft", spend: 6200 },
-  { id: "drift", project: "Drift Billing", owner: "Mina", status: "Review", spend: 14300 },
+  {
+    id: "aurora",
+    project: "Aurora Console",
+    owner: "Ada",
+    status: "Ready",
+    spend: 12400,
+  },
+  {
+    id: "boreal",
+    project: "Boreal Analytics",
+    owner: "Grace",
+    status: "Stable",
+    spend: 9800,
+  },
+  {
+    id: "cascade",
+    project: "Cascade Ops",
+    owner: "Lin",
+    status: "Draft",
+    spend: 6200,
+  },
+  {
+    id: "drift",
+    project: "Drift Billing",
+    owner: "Mina",
+    status: "Review",
+    spend: 14300,
+  },
 ];
 
 const adminColumns: DataTableProps<AdminRow>["columns"] = [
@@ -590,7 +622,9 @@ export const AdminWorkflow: StoryObj<DataTableProps<AdminRow>> = {
       columnReorder
       columnResize
       columnPinning
-      bulkActions={(keys) => <button type="button">Archive {keys.length}</button>}
+      bulkActions={(keys) => (
+        <button type="button">Archive {keys.length}</button>
+      )}
       renderExpandedRow={(row) => (
         <div>
           Owner: {row.owner}. Status: {row.status}. Current monthly spend is $
@@ -649,4 +683,28 @@ export const VirtualizedLargeDataset: StoryObj<DataTableProps<AdminRow>> = {
       striped
     />
   ),
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: DataTable, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: DataTable, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: DataTable, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: DataTable, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: DataTable, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: DataTable, args }),
 };

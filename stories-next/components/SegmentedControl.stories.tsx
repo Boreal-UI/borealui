@@ -8,6 +8,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const rangeOptions = [
   { value: "day", label: "Day" },
@@ -166,4 +174,31 @@ export const Disabled: Story = {
   args: {
     disabled: true,
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: SegmentedControl, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: SegmentedControl, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) =>
+    renderOutlineVariants({ component: SegmentedControl, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: SegmentedControl, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) =>
+    renderGlassOutlineVariants({ component: SegmentedControl, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) =>
+    renderStateOutlineVariants({ component: SegmentedControl, args }),
 };

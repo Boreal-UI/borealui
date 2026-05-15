@@ -10,6 +10,14 @@ import {
   StateType,
   ThemeType,
 } from "../../src/types/types";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 Accordion.displayName = "Accordion";
 
@@ -277,3 +285,27 @@ export const GlassOutlineVariants = () =>
     },
     [{ propName: "theme", values: themeOptions }],
   );
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: Accordion, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: Accordion, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: Accordion, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: Accordion, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: Accordion, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: Accordion, args }),
+};

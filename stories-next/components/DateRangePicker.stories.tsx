@@ -11,6 +11,14 @@ import {
   themeOptions,
 } from "../../shared-story-assets/OptionTypes";
 import { useState } from "react";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<DateRangePickerProps> = {
   title: "Components/DateRangePicker",
@@ -282,4 +290,30 @@ export const VisualVariants: Story = {
       />
     </div>
   ),
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: DateRangePicker, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: DateRangePicker, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: DateRangePicker, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: DateRangePicker, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) =>
+    renderGlassOutlineVariants({ component: DateRangePicker, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) =>
+    renderStateOutlineVariants({ component: DateRangePicker, args }),
 };

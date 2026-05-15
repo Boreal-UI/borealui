@@ -12,6 +12,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const componentOptions: MultiSelectOption[] = [
   {
@@ -172,4 +180,30 @@ export const Disabled: Story = {
     disabled: true,
     defaultValue: ["button", "card"],
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: MultiSelect, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: MultiSelect, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: MultiSelect, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: MultiSelect, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) =>
+    renderGlassOutlineVariants({ component: MultiSelect, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) =>
+    renderStateOutlineVariants({ component: MultiSelect, args }),
 };

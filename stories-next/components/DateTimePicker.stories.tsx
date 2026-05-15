@@ -9,6 +9,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const labelPositionOptions: LabelPositionType[] = [
   "top",
@@ -300,4 +308,30 @@ export const WithDataTestid: Story = {
     value: "2025-04-15T15:30",
     onChange: () => {},
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: DateTimePicker, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: DateTimePicker, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: DateTimePicker, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: DateTimePicker, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) =>
+    renderGlassOutlineVariants({ component: DateTimePicker, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) =>
+    renderStateOutlineVariants({ component: DateTimePicker, args }),
 };

@@ -9,6 +9,14 @@ import {
   StateType,
   ThemeType,
 } from "../../src/types/types";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const themeOptions: ThemeType[] = [
   "primary",
@@ -151,4 +159,30 @@ export const WithClassName: Story = {
     ...defaultArgs,
     className: "storybook-breadcrumbs-custom",
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: Breadcrumbs, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: Breadcrumbs, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: Breadcrumbs, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: Breadcrumbs, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) =>
+    renderGlassOutlineVariants({ component: Breadcrumbs, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) =>
+    renderStateOutlineVariants({ component: Breadcrumbs, args }),
 };

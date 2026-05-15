@@ -1,6 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { SplitPane } from "../../src/index.next";
 import type { SplitPaneProps } from "../../src/components/SplitPane/SplitPane.types";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const paneStyle = {
   minHeight: "12rem",
@@ -54,4 +62,28 @@ export const ChildrenFallback: Story = {
       </div>,
     ],
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: SplitPane, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: SplitPane, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: SplitPane, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: SplitPane, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: SplitPane, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: SplitPane, args }),
 };

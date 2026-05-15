@@ -4,6 +4,14 @@ import type {
   TreeViewNode,
   TreeViewProps,
 } from "../src/components/TreeView/TreeView.types";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const items: TreeViewNode[] = [
   {
@@ -59,4 +67,28 @@ export const Disabled: Story = {
   args: {
     disabled: true,
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: TreeView, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: TreeView, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: TreeView, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: TreeView, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: TreeView, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: TreeView, args }),
 };

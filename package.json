@@ -188,6 +188,11 @@
       "import": "./dist/core/Badge.js",
       "require": "./dist/core/Badge.cjs.js"
     },
+    "./core/BarChart": {
+      "types": "./dist/types/core/BarChart.d.ts",
+      "import": "./dist/core/BarChart.js",
+      "require": "./dist/core/BarChart.cjs.js"
+    },
     "./core/BreadCrumbPageHeader": {
       "types": "./dist/types/core/BreadCrumbPageHeader.d.ts",
       "import": "./dist/core/BreadCrumbPageHeader.js",
@@ -273,6 +278,11 @@
       "import": "./dist/core/Divider.js",
       "require": "./dist/core/Divider.cjs.js"
     },
+    "./core/DonutChart": {
+      "types": "./dist/types/core/DonutChart.d.ts",
+      "import": "./dist/core/DonutChart.js",
+      "require": "./dist/core/DonutChart.cjs.js"
+    },
     "./core/Drawer": {
       "types": "./dist/types/core/Drawer.d.ts",
       "import": "./dist/core/Drawer.js",
@@ -336,6 +346,16 @@
       "types": "./dist/types/core/Layout.d.ts",
       "import": "./dist/core/Layout.js",
       "require": "./dist/core/Layout.cjs.js"
+    },
+    "./core/Legend": {
+      "types": "./dist/types/core/Legend.d.ts",
+      "import": "./dist/core/Legend.js",
+      "require": "./dist/core/Legend.cjs.js"
+    },
+    "./core/LineChart": {
+      "types": "./dist/types/core/LineChart.d.ts",
+      "import": "./dist/core/LineChart.js",
+      "require": "./dist/core/LineChart.cjs.js"
     },
     "./core/MarkdownRenderer": {
       "types": "./dist/types/core/MarkdownRenderer.d.ts",
@@ -462,6 +482,11 @@
       "import": "./dist/core/Slider.js",
       "require": "./dist/core/Slider.cjs.js"
     },
+    "./core/Sparkline": {
+      "types": "./dist/types/core/Sparkline.d.ts",
+      "import": "./dist/core/Sparkline.js",
+      "require": "./dist/core/Sparkline.cjs.js"
+    },
     "./core/Spinner": {
       "types": "./dist/types/core/Spinner.d.ts",
       "import": "./dist/core/Spinner.js",
@@ -547,6 +572,11 @@
       "import": "./dist/core/TreeView.js",
       "require": "./dist/core/TreeView.cjs.js"
     },
+    "./core/TrendBadge": {
+      "types": "./dist/types/core/TrendBadge.d.ts",
+      "import": "./dist/core/TrendBadge.js",
+      "require": "./dist/core/TrendBadge.cjs.js"
+    },
     "./core/types": {
       "types": "./dist/types/public.types.d.ts",
       "default": "./dist/types/public.types.d.ts"
@@ -592,6 +622,10 @@
     "./next/Badge": {
       "types": "./dist/types/next/Badge.d.ts",
       "import": "./dist/next/Badge.js"
+    },
+    "./next/BarChart": {
+      "types": "./dist/types/next/BarChart.d.ts",
+      "import": "./dist/next/BarChart.js"
     },
     "./next/BreadCrumbPageHeader": {
       "types": "./dist/types/next/BreadCrumbPageHeader.d.ts",
@@ -661,6 +695,10 @@
       "types": "./dist/types/next/Divider.d.ts",
       "import": "./dist/next/Divider.js"
     },
+    "./next/DonutChart": {
+      "types": "./dist/types/next/DonutChart.d.ts",
+      "import": "./dist/next/DonutChart.js"
+    },
     "./next/Drawer": {
       "types": "./dist/types/next/Drawer.d.ts",
       "import": "./dist/next/Drawer.js"
@@ -712,6 +750,14 @@
     "./next/Layout": {
       "types": "./dist/types/next/Layout.d.ts",
       "import": "./dist/next/Layout.js"
+    },
+    "./next/Legend": {
+      "types": "./dist/types/next/Legend.d.ts",
+      "import": "./dist/next/Legend.js"
+    },
+    "./next/LineChart": {
+      "types": "./dist/types/next/LineChart.d.ts",
+      "import": "./dist/next/LineChart.js"
     },
     "./next/MarkdownRenderer": {
       "types": "./dist/types/next/MarkdownRenderer.d.ts",
@@ -813,6 +859,10 @@
       "types": "./dist/types/next/Slider.d.ts",
       "import": "./dist/next/Slider.js"
     },
+    "./next/Sparkline": {
+      "types": "./dist/types/next/Sparkline.d.ts",
+      "import": "./dist/next/Sparkline.js"
+    },
     "./next/Spinner": {
       "types": "./dist/types/next/Spinner.d.ts",
       "import": "./dist/next/Spinner.js"
@@ -880,6 +930,10 @@
     "./next/TreeView": {
       "types": "./dist/types/next/TreeView.d.ts",
       "import": "./dist/next/TreeView.js"
+    },
+    "./next/TrendBadge": {
+      "types": "./dist/types/next/TrendBadge.d.ts",
+      "import": "./dist/next/TrendBadge.js"
     },
     "./next/types": {
       "types": "./dist/types/public.types.d.ts",

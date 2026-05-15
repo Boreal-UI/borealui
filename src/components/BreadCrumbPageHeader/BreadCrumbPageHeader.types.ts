@@ -15,7 +15,7 @@ type NativeBreadCrumbPageHeaderProps = Omit<
 
 export type BreadCrumbPageHeaderBreadcrumbProps = Omit<
   BreadcrumbsProps,
-  "breadcrumbs"
+  "items"
 >;
 
 /**

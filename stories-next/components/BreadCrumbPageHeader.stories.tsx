@@ -1,6 +1,14 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { BreadCrumbPageHeader, Button } from "../../src/index.next";
 import type { BreadCrumbPageHeaderProps } from "../../src/components/BreadCrumbPageHeader/BreadCrumbPageHeader.types";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const breadcrumbs = [
   { label: "Home", href: "#" },
@@ -35,14 +43,14 @@ export const Default: Story = {};
 
 export const CollapsedBreadcrumbs: Story = {
   args: {
+    breadcrumbs: [
+      { label: "Home", href: "#" },
+      { label: "Organization", href: "#" },
+      { label: "Departments", href: "#" },
+      { label: "Engineering", href: "#" },
+      { label: "Platform" },
+    ],
     breadcrumbProps: {
-      items: [
-        { label: "Home", href: "#" },
-        { label: "Organization", href: "#" },
-        { label: "Departments", href: "#" },
-        { label: "Engineering", href: "#" },
-        { label: "Platform" },
-      ],
       maxVisible: 3,
     },
   },
@@ -52,7 +60,36 @@ export const CustomSeparator: Story = {
   args: {
     breadcrumbProps: {
       separator: "/",
-      items: breadcrumbs,
     },
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) =>
+    renderThemeVariants({ component: BreadCrumbPageHeader, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) =>
+    renderStateVariants({ component: BreadCrumbPageHeader, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) =>
+    renderOutlineVariants({ component: BreadCrumbPageHeader, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) =>
+    renderGlassVariants({ component: BreadCrumbPageHeader, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) =>
+    renderGlassOutlineVariants({ component: BreadCrumbPageHeader, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) =>
+    renderStateOutlineVariants({ component: BreadCrumbPageHeader, args }),
 };

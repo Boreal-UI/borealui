@@ -10,6 +10,14 @@ import {
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import { FaTree } from "react-icons/fa";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const iconOptions = ["left", "right", undefined] as const;
 
@@ -173,4 +181,30 @@ export const Disabled: Story = {
     disabled: true,
     showSearchButton: true,
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: SearchInput, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: SearchInput, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: SearchInput, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: SearchInput, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) =>
+    renderGlassOutlineVariants({ component: SearchInput, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) =>
+    renderStateOutlineVariants({ component: SearchInput, args }),
 };

@@ -9,6 +9,14 @@ import {
 import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import type { DropdownProps } from "../../src/components/Dropdown/Dropdown.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
+import {
+  renderGlassOutlineVariants,
+  renderGlassVariants,
+  renderOutlineVariants,
+  renderStateOutlineVariants,
+  renderStateVariants,
+  renderThemeVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const themeOptions: ThemeType[] = [
   "primary",
@@ -330,3 +338,49 @@ export const MenuShadowVariants = () => (
     ))}
   </StoryGrid>
 );
+
+const getVariantArgs = ({
+  triggerIcon = FaEllipsisV,
+  items = [{ label: "Variant item", onClick: () => {} }],
+  ...args
+}: DropdownProps): DropdownProps => ({
+  ...args,
+  triggerIcon,
+  items,
+});
+
+export const ThemeMatrix: Story = {
+  render: (args) =>
+    renderThemeVariants({ component: Dropdown, args: getVariantArgs(args) }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) =>
+    renderStateVariants({ component: Dropdown, args: getVariantArgs(args) }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) =>
+    renderOutlineVariants({ component: Dropdown, args: getVariantArgs(args) }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) =>
+    renderGlassVariants({ component: Dropdown, args: getVariantArgs(args) }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) =>
+    renderGlassOutlineVariants({
+      component: Dropdown,
+      args: getVariantArgs(args),
+    }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) =>
+    renderStateOutlineVariants({
+      component: Dropdown,
+      args: getVariantArgs(args),
+    }),
+};

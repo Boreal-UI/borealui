@@ -21,6 +21,14 @@ import {
   FaClock,
   FaQuestionCircle,
 } from "react-icons/fa";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const shellDemoStyles = `
   .demo {
@@ -506,4 +514,28 @@ export const MainOnly: Story = {
       </div>
     ),
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: AppShell, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: AppShell, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: AppShell, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: AppShell, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: AppShell, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: AppShell, args }),
 };

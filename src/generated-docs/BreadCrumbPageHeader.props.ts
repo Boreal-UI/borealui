@@ -45,14 +45,6 @@ export const breadCrumbPageHeaderPropDocs: GeneratedComponentDoc = {
       "category": "styling"
     },
     {
-      "name": "containerClassName",
-      "type": "string",
-      "description": "Legacy class name for the outer container.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "contentClassName",
       "type": "string",
       "description": "Additional class name for the content area.",
@@ -87,30 +79,6 @@ export const breadCrumbPageHeaderPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
-      "name": "label",
-      "type": "ReactNode",
-      "description": "Legacy alias for title retained for scaffold compatibility.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "labelClassName",
-      "type": "string",
-      "description": "Legacy class name for the visible label.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
-      "name": "labelPosition",
-      "type": "string",
-      "description": "Legacy label position retained for scaffold compatibility.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
-    },
-    {
       "name": "loading",
       "type": "boolean",
       "description": "Whether the component should display a loading state.",
@@ -118,14 +86,6 @@ export const breadCrumbPageHeaderPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "false"
-    },
-    {
-      "name": "maxVisibleBreadcrumbs",
-      "type": "number",
-      "description": "Maximum visible breadcrumbs before collapsing the middle.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
     },
     {
       "name": "outline",
@@ -144,14 +104,6 @@ export const breadCrumbPageHeaderPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "configured default rounding (fallback: \"medium\")"
-    },
-    {
-      "name": "separator",
-      "type": "ReactNode",
-      "description": "Separator rendered between breadcrumb items.",
-      "required": false,
-      "inherited": false,
-      "category": "props"
     },
     {
       "name": "shadow",

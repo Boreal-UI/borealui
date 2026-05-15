@@ -10,6 +10,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<TextAreaProps> = {
   title: "Components/TextArea",
@@ -259,3 +267,27 @@ export const ShadowVariants = (args: React.ComponentProps<typeof TextArea>) =>
   withVariants(TextArea, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: TextArea, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: TextArea, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: TextArea, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: TextArea, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: TextArea, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: TextArea, args }),
+};

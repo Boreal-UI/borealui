@@ -3,6 +3,14 @@ import { PageHeader } from "../../src/index.next";
 import type { PageHeaderProps } from "../../src/components/PageHeader/PageHeader.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
 import { themeOptions } from "../../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<PageHeaderProps> = {
   title: "Components/PageHeader",
@@ -58,3 +66,27 @@ export const ThemeVariants = () => (
     ))}
   </StoryGrid>
 );
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: PageHeader, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: PageHeader, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: PageHeader, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: PageHeader, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: PageHeader, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: PageHeader, args }),
+};

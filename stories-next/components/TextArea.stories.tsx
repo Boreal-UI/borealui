@@ -4,6 +4,14 @@ import { FaCommentDots, FaInbox } from "react-icons/fa";
 import { StateType, TextArea, ThemeType } from "../../src/index.next";
 import type { TextAreaProps } from "../../src/components/TextArea/TextArea.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const themeOptions: ThemeType[] = [
   "primary",
@@ -266,3 +274,27 @@ export const ShadowVariants = (args: React.ComponentProps<typeof TextArea>) =>
   withVariants(TextArea, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: TextArea, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: TextArea, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: TextArea, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: TextArea, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: TextArea, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: TextArea, args }),
+};

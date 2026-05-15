@@ -9,6 +9,14 @@ import {
 } from "../../src/index.next";
 import { FaPlus, FaExternalLinkAlt } from "react-icons/fa";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const themeOptions: ThemeType[] = [
   "primary",
@@ -216,3 +224,27 @@ export const ShadowVariants = () =>
     },
     [{ propName: "shadow", values: shadowOptions }],
   );
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: IconButton, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: IconButton, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: IconButton, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: IconButton, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: IconButton, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: IconButton, args }),
+};

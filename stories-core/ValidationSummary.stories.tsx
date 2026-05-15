@@ -9,6 +9,14 @@ import {
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import { FaStop, FaStopCircle } from "react-icons/fa";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const validationItems = [
   {
@@ -175,4 +183,31 @@ export const Disabled: Story = {
   args: {
     disabled: true,
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: ValidationSummary, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: ValidationSummary, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) =>
+    renderOutlineVariants({ component: ValidationSummary, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: ValidationSummary, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) =>
+    renderGlassOutlineVariants({ component: ValidationSummary, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) =>
+    renderStateOutlineVariants({ component: ValidationSummary, args }),
 };

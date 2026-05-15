@@ -8,6 +8,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<FileUploadProps> = {
   title: "Components/FileUpload",
@@ -262,4 +270,28 @@ export const OutlineShadowVariants: Story = {
       ))}
     </div>
   ),
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: FileUpload, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: FileUpload, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: FileUpload, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: FileUpload, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: FileUpload, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: FileUpload, args }),
 };
