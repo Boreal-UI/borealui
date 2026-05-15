@@ -173,6 +173,11 @@
       "import": "./dist/core/Alert.js",
       "require": "./dist/core/Alert.cjs.js"
     },
+    "./core/AppShell": {
+      "types": "./dist/types/core/AppShell.d.ts",
+      "import": "./dist/core/AppShell.js",
+      "require": "./dist/core/AppShell.cjs.js"
+    },
     "./core/Avatar": {
       "types": "./dist/types/core/Avatar.d.ts",
       "import": "./dist/core/Avatar.js",
@@ -182,6 +187,11 @@
       "types": "./dist/types/core/Badge.d.ts",
       "import": "./dist/core/Badge.js",
       "require": "./dist/core/Badge.cjs.js"
+    },
+    "./core/BreadCrumbPageHeader": {
+      "types": "./dist/types/core/BreadCrumbPageHeader.d.ts",
+      "import": "./dist/core/BreadCrumbPageHeader.js",
+      "require": "./dist/core/BreadCrumbPageHeader.cjs.js"
     },
     "./core/Breadcrumbs": {
       "types": "./dist/types/core/Breadcrumbs.d.ts",
@@ -372,6 +382,11 @@
       "import": "./dist/core/NumberInput.js",
       "require": "./dist/core/NumberInput.cjs.js"
     },
+    "./core/PageHeader": {
+      "types": "./dist/types/core/PageHeader.d.ts",
+      "import": "./dist/core/PageHeader.js",
+      "require": "./dist/core/PageHeader.cjs.js"
+    },
     "./core/Pager": {
       "types": "./dist/types/core/Pager.d.ts",
       "import": "./dist/core/Pager.js",
@@ -381,6 +396,11 @@
       "types": "./dist/types/core/PopOver.d.ts",
       "import": "./dist/core/PopOver.js",
       "require": "./dist/core/PopOver.cjs.js"
+    },
+    "./core/Portal": {
+      "types": "./dist/types/core/Portal.d.ts",
+      "import": "./dist/core/Portal.js",
+      "require": "./dist/core/Portal.cjs.js"
     },
     "./core/ProgressBar": {
       "types": "./dist/types/core/ProgressBar.d.ts",
@@ -446,6 +466,11 @@
       "types": "./dist/types/core/Spinner.d.ts",
       "import": "./dist/core/Spinner.js",
       "require": "./dist/core/Spinner.cjs.js"
+    },
+    "./core/SplitPane": {
+      "types": "./dist/types/core/SplitPane.d.ts",
+      "import": "./dist/core/SplitPane.js",
+      "require": "./dist/core/SplitPane.cjs.js"
     },
     "./core/Stepper": {
       "types": "./dist/types/core/Stepper.d.ts",
@@ -517,6 +542,11 @@
       "import": "./dist/core/Tooltip.js",
       "require": "./dist/core/Tooltip.cjs.js"
     },
+    "./core/TreeView": {
+      "types": "./dist/types/core/TreeView.d.ts",
+      "import": "./dist/core/TreeView.js",
+      "require": "./dist/core/TreeView.cjs.js"
+    },
     "./core/types": {
       "types": "./dist/types/public.types.d.ts",
       "default": "./dist/types/public.types.d.ts"
@@ -551,6 +581,10 @@
       "types": "./dist/types/next/Alert.d.ts",
       "import": "./dist/next/Alert.js"
     },
+    "./next/AppShell": {
+      "types": "./dist/types/next/AppShell.d.ts",
+      "import": "./dist/next/AppShell.js"
+    },
     "./next/Avatar": {
       "types": "./dist/types/next/Avatar.d.ts",
       "import": "./dist/next/Avatar.js"
@@ -558,6 +592,10 @@
     "./next/Badge": {
       "types": "./dist/types/next/Badge.d.ts",
       "import": "./dist/next/Badge.js"
+    },
+    "./next/BreadCrumbPageHeader": {
+      "types": "./dist/types/next/BreadCrumbPageHeader.d.ts",
+      "import": "./dist/next/BreadCrumbPageHeader.js"
     },
     "./next/Breadcrumbs": {
       "types": "./dist/types/next/Breadcrumbs.d.ts",
@@ -711,6 +749,10 @@
       "types": "./dist/types/next/NumberInput.d.ts",
       "import": "./dist/next/NumberInput.js"
     },
+    "./next/PageHeader": {
+      "types": "./dist/types/next/PageHeader.d.ts",
+      "import": "./dist/next/PageHeader.js"
+    },
     "./next/Pager": {
       "types": "./dist/types/next/Pager.d.ts",
       "import": "./dist/next/Pager.js"
@@ -718,6 +760,10 @@
     "./next/PopOver": {
       "types": "./dist/types/next/PopOver.d.ts",
       "import": "./dist/next/PopOver.js"
+    },
+    "./next/Portal": {
+      "types": "./dist/types/next/Portal.d.ts",
+      "import": "./dist/next/Portal.js"
     },
     "./next/ProgressBar": {
       "types": "./dist/types/next/ProgressBar.d.ts",
@@ -770,6 +816,10 @@
     "./next/Spinner": {
       "types": "./dist/types/next/Spinner.d.ts",
       "import": "./dist/next/Spinner.js"
+    },
+    "./next/SplitPane": {
+      "types": "./dist/types/next/SplitPane.d.ts",
+      "import": "./dist/next/SplitPane.js"
     },
     "./next/Stepper": {
       "types": "./dist/types/next/Stepper.d.ts",
@@ -826,6 +876,10 @@
     "./next/Tooltip": {
       "types": "./dist/types/next/Tooltip.d.ts",
       "import": "./dist/next/Tooltip.js"
+    },
+    "./next/TreeView": {
+      "types": "./dist/types/next/TreeView.d.ts",
+      "import": "./dist/next/TreeView.js"
     },
     "./next/types": {
       "types": "./dist/types/public.types.d.ts",
