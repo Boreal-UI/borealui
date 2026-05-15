@@ -206,7 +206,6 @@ The root `boreal-ui` entry currently points to the core build. For Next.js apps,
 - `LineChart`
 - `DonutChart`
 - `Legend`
-- `TrendBadge`
 - `MarkdownRenderer`
 - `Typography`
 - `MetricBox`

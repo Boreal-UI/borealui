@@ -166,7 +166,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 
 - `DataTable` supports generic row data, typed columns, sorting, server-side sorting hooks, interactive rows, captions, loading and empty states, row/cell class customization, wrapping cells, striped rows, theme, outline, glass, rounding, shadow, and accessible sort announcements.
 - `DataTable` also covers admin/SaaS workflows with pagination, column visibility, column resize/reorder/pinning, row expansion, bulk actions, inline editing, server pagination contracts, and virtualization.
-- `Sparkline`, `BarChart`, `LineChart`, `DonutChart`, `Legend`, and `TrendBadge` provide dashboard charting and trend summaries.
+- `Sparkline`, `BarChart`, `LineChart`, `DonutChart`, and `Legend` provide dashboard charting and data summaries.
 - `MarkdownRenderer` renders markdown content.
 - `Typography` provides semantic text rendering with variants and theme-aware color.
 - `MetricBox` displays key values and supporting content.

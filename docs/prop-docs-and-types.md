@@ -179,7 +179,7 @@ const docs: GeneratedComponentDoc[] = [
 export const componentNames = docs.map((doc) => doc.name);
 ```
 
-The docs package currently exports metadata for every documented public component, including public components that share a type file such as `RadioButton`/`RadioGroup` and `Select`/`ThemeSelect`, plus newer workflow and chart components such as `InputGroup`, `ValidationSummary`, `AppShell`, `TreeView`, `Sparkline`, `BarChart`, `LineChart`, `DonutChart`, `Legend`, and `TrendBadge`.
+The docs package currently exports metadata for every documented public component, including public components that share a type file such as `RadioButton`/`RadioGroup` and `Select`/`ThemeSelect`, plus newer workflow and chart components such as `InputGroup`, `ValidationSummary`, `AppShell`, `TreeView`, `Sparkline`, `BarChart`, `LineChart`, `DonutChart`, and `Legend`.
 
 ## Keeping Docs Current
 

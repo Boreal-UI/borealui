@@ -247,14 +247,12 @@ import {
   DonutChart,
   Legend,
   Sparkline,
-  TrendBadge,
 } from "boreal-ui/core";
 
 export function RevenueSnapshot() {
   return (
     <>
       <Sparkline data={[12, 18, 16, 24, 28]} label="Revenue trend" />
-      <TrendBadge value={12.4} direction="up" label="Revenue" />
       <BarChart
         label="Quarterly revenue"
         data={[

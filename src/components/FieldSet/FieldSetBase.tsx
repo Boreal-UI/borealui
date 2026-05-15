@@ -108,6 +108,7 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
       [
         classMap,
         theme,
+        resolvedState,
         resolvedLabelPosition,
         outline,
         glass,

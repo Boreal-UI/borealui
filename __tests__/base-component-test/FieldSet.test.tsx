@@ -147,14 +147,18 @@ describe("FieldSetBase", () => {
       shadow: "strong",
     });
 
+    const container = screen.getByTestId("field-set");
     const root = screen.getByTestId("field-set-root");
+
+    expect(container).toHaveClass("container");
+    expect(container).toHaveClass("secondary");
+    expect(container).toHaveClass("success");
+    expect(container).toHaveClass("outline");
+    expect(container).toHaveClass("glass");
+    expect(container).toHaveClass("roundLarge");
+    expect(container).toHaveClass("shadowStrong");
+
     expect(root).toHaveClass("root");
-    expect(root).toHaveClass("secondary");
-    expect(root).toHaveClass("success");
-    expect(root).toHaveClass("outline");
-    expect(root).toHaveClass("glass");
-    expect(root).toHaveClass("roundLarge");
-    expect(root).toHaveClass("shadowStrong");
   });
 
   it("applies layout, spacing, hidden legend, and custom class names", () => {
@@ -205,9 +209,12 @@ describe("FieldSetBase", () => {
   it("disables the fieldset and descendant controls", () => {
     renderFieldSet({ disabled: true });
 
+    const container = screen.getByTestId("field-set");
     const root = screen.getByTestId("field-set-root");
-    expect(root).toHaveClass("disabled");
+
+    expect(container).toHaveClass("disabled");
     expect(root).toBeDisabled();
+
     expect(
       screen.getByRole("checkbox", { name: "Email updates" }),
     ).toBeDisabled();

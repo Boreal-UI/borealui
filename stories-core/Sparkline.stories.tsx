@@ -1,12 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import {
-  Sparkline,
-  BarChart,
-  LineChart,
-  DonutChart,
-  Legend,
-  TrendBadge,
-} from "../src/index.core";
+import { Sparkline } from "../src/index.core";
 import type { SparklineProps } from "../src/components/Sparkline/Sparkline.types";
 
 const data = [4, 8, 6, 12, 10, 16];
