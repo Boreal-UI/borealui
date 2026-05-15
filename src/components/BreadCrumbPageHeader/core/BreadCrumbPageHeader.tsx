@@ -3,6 +3,7 @@ import { forwardRef } from "react";
 import "./BreadCrumbPageHeader.scss";
 import BreadCrumbPageHeaderBase from "../BreadCrumbPageHeaderBase";
 import { BreadCrumbPageHeaderProps } from "../BreadCrumbPageHeader.types";
+import { Breadcrumbs } from "@/index.core";
 
 const classes = {
   container: "breadCrumbPageHeader_container",
@@ -63,6 +64,7 @@ const BreadCrumbPageHeader = forwardRef<HTMLElement, BreadCrumbPageHeaderProps>(
       {...props}
       ref={ref}
       classMap={expandClassMap(classes)}
+      BreadCrumbsComponent={Breadcrumbs}
     />
   ),
 );

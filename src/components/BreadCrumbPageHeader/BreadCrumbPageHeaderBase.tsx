@@ -2,7 +2,6 @@ import { forwardRef } from "react";
 import { BreadCrumbPageHeaderBaseProps } from "./BreadCrumbPageHeader.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
-import { ArrowRightIcon } from "../../Icons";
 import {
   getDefaultGlass,
   getDefaultOutline,
@@ -19,25 +18,21 @@ const BreadCrumbPageHeaderBase = forwardRef<
     {
       breadcrumbs = [],
       title,
-      label,
-      labelPosition: _labelPosition,
       subtitle,
       actions,
       children,
-      separator,
-      maxVisibleBreadcrumbs,
       theme = getDefaultTheme(),
       state,
       outline = getDefaultOutline(),
       glass = getDefaultGlass(),
+      BreadCrumbsComponent,
+      breadcrumbProps,
       rounding = getDefaultRounding(),
       shadow = getDefaultShadow(),
       disabled = false,
       loading = false,
       classMap,
       className,
-      containerClassName: _containerClassName,
-      labelClassName: _labelClassName,
       contentClassName,
       srOnlyText,
       srOnlyClassName,
@@ -47,10 +42,6 @@ const BreadCrumbPageHeaderBase = forwardRef<
     },
     ref,
   ) => {
-    void _labelPosition;
-    void _containerClassName;
-    void _labelClassName;
-
     const rootClass = combineClassNames(
       classMap.root,
       classMap[theme],
@@ -63,17 +54,6 @@ const BreadCrumbPageHeaderBase = forwardRef<
       rounding && classMap[`round${capitalize(rounding)}`],
       className,
     );
-
-    const visibleBreadcrumbs =
-      maxVisibleBreadcrumbs && breadcrumbs.length > maxVisibleBreadcrumbs
-        ? [
-            breadcrumbs[0],
-            { label: "..." },
-            ...breadcrumbs.slice(
-              breadcrumbs.length - (maxVisibleBreadcrumbs - 2),
-            ),
-          ]
-        : breadcrumbs;
 
     return (
       <header
@@ -91,53 +71,24 @@ const BreadCrumbPageHeaderBase = forwardRef<
             data-testid={`${testId}-loader`}
           />
         ) : null}
-        {visibleBreadcrumbs.length ? (
-          <nav
+        {breadcrumbs.length > 0 ? (
+          <div
             className={classMap.breadcrumbs}
-            aria-label="Breadcrumbs"
             data-testid={`${testId}-breadcrumbs`}
           >
-            <ol className={classMap.breadcrumbList}>
-              {visibleBreadcrumbs.map((item, index) => {
-                const isLast = index === visibleBreadcrumbs.length - 1;
-                const key = `${item.label}-${item.href ?? index}`;
-                return (
-                  <li
-                    key={key}
-                    className={classMap.breadcrumbItem}
-                    data-testid={`${testId}-breadcrumb`}
-                  >
-                    {item.href && !isLast && item.label !== "..." ? (
-                      <a className={classMap.breadcrumbLink} href={item.href}>
-                        {item.label}
-                      </a>
-                    ) : (
-                      <span
-                        className={combineClassNames(
-                          classMap.breadcrumbCurrent,
-                          isLast && classMap.current,
-                        )}
-                        aria-current={isLast ? "page" : undefined}
-                      >
-                        {item.label}
-                      </span>
-                    )}
-                    {!isLast ? (
-                      <span className={classMap.separator} aria-hidden="true">
-                        {separator ?? <ArrowRightIcon />}
-                      </span>
-                    ) : null}
-                  </li>
-                );
-              })}
-            </ol>
-          </nav>
+            <BreadCrumbsComponent
+              {...breadcrumbProps}
+              items={breadcrumbs}
+              theme={"clear"}
+              shadow={"none"}
+            />
+          </div>
         ) : null}
         <div className={classMap.main} data-testid={`${testId}-main`}>
           <div className={classMap.content} data-testid={`${testId}-content`}>
-            {title || label ? (
+            {title ? (
               <h1 className={classMap.title} data-testid={`${testId}-title`}>
-                {title ?? label}
+                {title}
               </h1>
             ) : null}
             {subtitle ? (

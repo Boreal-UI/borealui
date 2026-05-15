@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
+@use "../../../styles/_animations" as animations;
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
@@ -59,9 +60,58 @@
     transition: var(--transition-default);
   }
 
+  .treeView_node {
+    display: grid;
+    grid-template-columns: 1rem 1.25rem minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--spacing-xs);
+    width: 100%;
+    min-height: 2rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    color: inherit;
+    text-align: left;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: var(--border-radius-sm);
+  }
+
+  .treeView_disclosure {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+    min-width: 1rem;
+    height: 1rem;
+    line-height: 1;
+  }
+
+  .treeView_icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    min-width: 1.25rem;
+    height: 1.25rem;
+    line-height: 1;
+    fill: currentColor;
+    color: currentColor;
+    transition: var(--transition-default);
+  }
+
+  .treeView_icon > svg,
+  .treeView_disclosure > svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
   .treeView_content {
+    display: inline-flex;
+    align-items: center;
     min-width: 0;
     max-width: 100%;
+    line-height: var(--line-height-body);
     overflow-wrap: anywhere;
   }
 
@@ -74,13 +124,7 @@
     border-right-color: transparent;
     border-radius: 50%;
     opacity: 0.72;
-    animation: treeView-spin 700ms linear infinite;
-  }
-
-  @keyframes treeView-spin {
-    to {
-      transform: rotate(360deg);
-    }
+    animation: spin 700ms linear infinite;
   }
 
   @each $themeName, $vals in theme.$themes {
@@ -154,6 +198,11 @@
 
     &:hover {
       background-color: var(--disabled-color);
+    }
+
+    .treeView_node {
+      cursor: not-allowed;
+      opacity: 0.6;
     }
   }
 

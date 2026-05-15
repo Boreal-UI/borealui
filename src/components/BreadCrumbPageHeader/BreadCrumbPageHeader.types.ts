@@ -1,15 +1,21 @@
 import {
+  ComponentType,
   ForwardRefExoticComponent,
   HTMLAttributes,
   ReactNode,
   RefAttributes,
 } from "react";
-import { Breadcrumb } from "../Breadcrumbs/Breadcrumbs.types";
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
+import { Breadcrumb, BreadcrumbsProps } from "../Breadcrumbs/Breadcrumbs.types";
 
 type NativeBreadCrumbPageHeaderProps = Omit<
   HTMLAttributes<HTMLElement>,
   "title"
+>;
+
+export type BreadCrumbPageHeaderBreadcrumbProps = Omit<
+  BreadcrumbsProps,
+  "breadcrumbs"
 >;
 
 /**
@@ -27,16 +33,6 @@ export interface BreadCrumbPageHeaderProps extends NativeBreadCrumbPageHeaderPro
   title?: ReactNode;
 
   /**
-   * Legacy alias for title retained for scaffold compatibility.
-   */
-  label?: ReactNode;
-
-  /**
-   * Legacy label position retained for scaffold compatibility.
-   */
-  labelPosition?: string;
-
-  /**
    * Supporting subtitle or description.
    */
   subtitle?: ReactNode;
@@ -52,14 +48,16 @@ export interface BreadCrumbPageHeaderProps extends NativeBreadCrumbPageHeaderPro
   children?: ReactNode;
 
   /**
-   * Separator rendered between breadcrumb items.
+   * Props forwarded to the framework-specific Breadcrumbs component.
+   *
+   * Example:
+   * breadcrumbProps={{
+   *   separator: "/",
+   *   ariaLabel: "Page path",
+   *   maxVisibleItems: 4
+   * }}
    */
-  separator?: ReactNode;
-
-  /**
-   * Maximum visible breadcrumbs before collapsing the middle.
-   */
-  maxVisibleBreadcrumbs?: number;
+  breadcrumbProps?: BreadCrumbPageHeaderBreadcrumbProps;
 
   /**
    * Theme used for styling.
@@ -111,16 +109,6 @@ export interface BreadCrumbPageHeaderProps extends NativeBreadCrumbPageHeaderPro
   className?: string;
 
   /**
-   * Legacy class name for the outer container.
-   */
-  containerClassName?: string;
-
-  /**
-   * Legacy class name for the visible label.
-   */
-  labelClassName?: string;
-
-  /**
    * Additional class name for the content area.
    */
   contentClassName?: string;
@@ -151,6 +139,10 @@ export interface BreadCrumbPageHeaderBaseProps extends BreadCrumbPageHeaderProps
    * Framework-specific class name map supplied by the core or Next wrapper.
    */
   classMap: Record<string, string>;
+  /**
+   * Custom component for rendering breadcrumbs.
+   */
+  BreadCrumbsComponent: ComponentType<BreadcrumbsProps>;
 }
 
 export type BreadCrumbPageHeaderComponent = ForwardRefExoticComponent<

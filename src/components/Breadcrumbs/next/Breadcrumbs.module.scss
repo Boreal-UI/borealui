@@ -5,392 +5,396 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.breadcrumbs {
-  display: flex;
-  align-items: center;
-  width: fit-content;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  gap: var(--spacing-xs);
-  list-style: none;
-  overflow-x: auto;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-label);
-    gap: var(--spacing-xxs);
-    padding: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body);
-    gap: var(--spacing-sm);
-    padding: var(--spacing-sm) var(--spacing-md);
-  }
-}
-
-.ellipsis {
-  padding: 0;
-}
-
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
-  }
-}
-
-.glass {
-  @include mixins.glass-surface(
-    var(--breadcrumbs-glass-bg, var(--glass-background)),
-    var(--breadcrumbs-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
-  );
-
-  color: var(--breadcrumbs-glass-text, currentcolor);
-  isolation: isolate;
-
-  &:hover {
-    background: var(
-      --breadcrumbs-glass-hover-bg,
-      var(--glass-background-strong)
-    );
-  }
-
-  &.outline {
-    border-color: var(--breadcrumbs-glass-border, var(--glass-border-color));
-
-    &:hover {
-      background: var(--breadcrumbs-glass-hover-bg, var(--glass-background));
-    }
-  }
-}
-
-@each $name, $values in theme.$themes {
-  .#{$name} {
-    color: map.get($values, text);
-    background-color: map.get($values, bg);
-
-    --breadcrumbs-glass-bg: #{map.get($values, glass-bg)};
-    --breadcrumbs-glass-hover-bg: #{map.get($values, glass-hover)};
-    --breadcrumbs-glass-border: #{map.get($values, glass-border)};
-    --breadcrumbs-glass-text: #{map.get($values, text)};
-
-    &:focus {
-      outline: 2px solid map.get($values, border);
-      outline-offset: 2px;
-    }
-  }
-
-  .#{$name}.glass {
-    background-color: transparent;
-    background: var(--breadcrumbs-glass-bg);
-    border: 1px solid var(--breadcrumbs-glass-border);
-    color: var(--breadcrumbs-glass-text);
-
-    &:hover {
-      background-color: transparent;
-      background: var(--breadcrumbs-glass-hover-bg);
-    }
-  }
-
-  .#{$name}.outline {
-    color: map.get($values, text);
-    background-color: transparent;
-    border: 2px solid map.get($values, border);
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
-
-    &:hover {
-      color: map.get($values, text-hover);
-      background-color: map.get($values, hover);
-    }
-
-    &:focus {
-      outline: 2px solid map.get($values, hover);
-      outline-offset: 2px;
-    }
-  }
-
-  .#{$name}.outline.glass {
-    @include mixins.glass-surface(
-      transparent,
-      var(--breadcrumbs-glass-border),
-      var(--glass-blur)
-    );
-
-    color: var(--breadcrumbs-glass-text);
-  }
-}
-
-.clear {
-  box-shadow: none;
-}
-
-@each $name, $values in theme.$states {
-  .#{$name} {
-    color: map.get($values, text);
-    background-color: map.get($values, bg);
-
-    --breadcrumbs-glass-bg: #{map.get($values, glass-bg)};
-    --breadcrumbs-glass-hover-bg: #{map.get($values, glass-hover)};
-    --breadcrumbs-glass-border: #{map.get($values, glass-border)};
-    --breadcrumbs-glass-text: #{map.get($values, text)};
-
-    &:focus {
-      outline: 2px solid map.get($values, border);
-      outline-offset: 2px;
-    }
-  }
-
-  .#{$name}.glass {
-    background-color: transparent;
-    background: var(--breadcrumbs-glass-bg);
-    border: 1px solid var(--breadcrumbs-glass-border);
-    color: var(--breadcrumbs-glass-text);
-
-    &:hover {
-      background-color: transparent;
-      background: var(--breadcrumbs-glass-hover-bg);
-    }
-  }
-
-  .#{$name}.outline {
-    color: map.get($values, text);
-    background-color: transparent;
-    border: 2px solid map.get($values, border);
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
-
-    &:hover {
-      color: map.get($values, text-hover);
-      background-color: map.get($values, hover);
-    }
-
-    &:focus {
-      outline: 2px solid map.get($values, hover);
-      outline-offset: 2px;
-    }
-  }
-
-  .#{$name}.outline.glass {
-    @include mixins.glass-surface(
-      transparent,
-      var(--breadcrumbs-glass-border),
-      var(--glass-blur)
-    );
-
-    color: var(--breadcrumbs-glass-text);
-  }
-}
-
-.xs {
-  font-size: var(--font-size-caption);
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-xxs);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-label);
-  }
-}
-
-.small {
-  font-size: var(--font-size-label);
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-caption);
-  }
-
-  @include bp.up(lg) {
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    gap: var(--spacing-xs);
+    list-style: none;
+    overflow-x: auto;
+    font-family: var(--font-family-ui);
     font-size: var(--font-size-body-sm);
-  }
-}
-
-.medium {
-  font-size: var(--font-size-body-sm);
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-label);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body);
-  }
-}
-
-.large {
-  font-size: var(--font-size-body);
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-body-sm);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-h6);
-  }
-}
-
-.xl {
-  font-size: var(--font-size-h6);
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-body);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-h5);
-  }
-}
-
-.list {
-  display: inline-flex;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-xs);
-  padding: 0;
-  margin: 0;
-  list-style: none;
-  flex-wrap: nowrap;
-
-  @include bp.down(sm) {
-    gap: var(--spacing-xxs);
-  }
-
-  @include bp.up(lg) {
-    gap: var(--spacing-sm);
-  }
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  white-space: nowrap;
-  color: inherit;
-  transition:
-    color var(--transition-default),
-    opacity var(--transition-default),
-    transform var(--transition-default),
-    box-shadow var(--transition-default);
-}
-
-.item_animate {
-  animation: fade-in 0.3s ease-in-out;
-}
-
-.item_active {
-  font-weight: var(--font-weight-semibold);
-  color: var(--disabled-color);
-}
-
-.disabled {
-  background-color: var(--disabled-color);
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-.link {
-  text-decoration: none;
-  color: inherit;
-  font: inherit;
-}
-
-.link_label {
-  display: inline-block;
-  line-height: inherit;
-  letter-spacing: inherit;
-
-  .link:hover & {
-    text-decoration: none;
-    opacity: 0.8;
-  }
-}
-
-.current {
-  font-weight: var(--font-weight-bold);
-  color: var(--disabled-color);
-}
-
-.separator {
-  display: flex;
-  align-items: center;
-  padding: 0 var(--spacing-xs);
-  color: var(--text-color-primary);
-  margin-top: -1px;
-  line-height: 1;
-
-  svg {
-    width: 1.2em;
-    height: 1.2em;
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
 
     @include bp.down(sm) {
-      width: 1em;
-      height: 1em;
+      font-size: var(--font-size-label);
+      gap: var(--spacing-xxs);
+      padding: var(--spacing-xs);
     }
 
     @include bp.up(lg) {
-      width: 1.3em;
-      height: 1.3em;
+      font-size: var(--font-size-body);
+      gap: var(--spacing-sm);
+      padding: var(--spacing-sm) var(--spacing-md);
     }
   }
 
-  @include bp.down(sm) {
-    padding: 0 var(--spacing-xxs);
+  .breadcrumbs .ellipsis {
+    min-height: unset;
+    min-width: unset;
+    height: 2em;
+    width: 2em;
+    padding: var(--spacing-xs);
+    line-height: normal;
   }
 
-  @include bp.up(lg) {
-    padding: 0 var(--spacing-sm);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .breadcrumbs,
-  .item {
-    transition: none;
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
+    }
   }
 
-  .breadcrumbs:hover,
-  .item:hover {
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-@media (hover: none) {
-  .breadcrumbs:hover,
-  .item:hover {
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .breadcrumbs {
-    border: 1px solid ButtonText;
-    outline-color: Highlight;
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
+    }
   }
 
   .glass {
-    background: Canvas;
-    border: 1px solid ButtonText;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+    @include mixins.glass-surface(
+      var(--breadcrumbs-glass-bg, var(--glass-background)),
+      var(--breadcrumbs-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--breadcrumbs-glass-text, currentcolor);
+    isolation: isolate;
+
+    &:hover {
+      background: var(
+        --breadcrumbs-glass-hover-bg,
+        var(--glass-background-strong)
+      );
+    }
+
+    &.outline {
+      border-color: var(--breadcrumbs-glass-border, var(--glass-border-color));
+
+      &:hover {
+        background: var(--breadcrumbs-glass-hover-bg, var(--glass-background));
+      }
+    }
   }
-}
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      color: map.get($values, text);
+      background-color: map.get($values, bg);
+
+      --breadcrumbs-glass-bg: #{map.get($values, glass-bg)};
+      --breadcrumbs-glass-hover-bg: #{map.get($values, glass-hover)};
+      --breadcrumbs-glass-border: #{map.get($values, glass-border)};
+      --breadcrumbs-glass-text: #{map.get($values, text)};
+
+      &:focus {
+        outline: 2px solid map.get($values, border);
+        outline-offset: 2px;
+      }
+    }
+
+    .#{$name}.glass {
+      background-color: transparent;
+      background: var(--breadcrumbs-glass-bg);
+      border: 1px solid var(--breadcrumbs-glass-border);
+      color: var(--breadcrumbs-glass-text);
+
+      &:hover {
+        background-color: transparent;
+        background: var(--breadcrumbs-glass-hover-bg);
+      }
+    }
+
+    .#{$name}.outline {
+      color: map.get($values, text);
+      background-color: transparent;
+      border: 2px solid map.get($values, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+
+      &:hover {
+        color: map.get($values, text-hover);
+        background-color: map.get($values, hover);
+      }
+
+      &:focus {
+        outline: 2px solid map.get($values, hover);
+        outline-offset: 2px;
+      }
+    }
+
+    .#{$name}.outline.glass {
+      @include mixins.glass-surface(
+        transparent,
+        var(--breadcrumbs-glass-border),
+        var(--glass-blur)
+      );
+
+      color: var(--breadcrumbs-glass-text);
+    }
+  }
+
+  .clear {
+    box-shadow: none;
+  }
+
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      color: map.get($values, text);
+      background-color: map.get($values, bg);
+
+      --breadcrumbs-glass-bg: #{map.get($values, glass-bg)};
+      --breadcrumbs-glass-hover-bg: #{map.get($values, glass-hover)};
+      --breadcrumbs-glass-border: #{map.get($values, glass-border)};
+      --breadcrumbs-glass-text: #{map.get($values, text)};
+
+      &:focus {
+        outline: 2px solid map.get($values, border);
+        outline-offset: 2px;
+      }
+    }
+
+    .#{$name}.glass {
+      background-color: transparent;
+      background: var(--breadcrumbs-glass-bg);
+      border: 1px solid var(--breadcrumbs-glass-border);
+      color: var(--breadcrumbs-glass-text);
+
+      &:hover {
+        background-color: transparent;
+        background: var(--breadcrumbs-glass-hover-bg);
+      }
+    }
+
+    .#{$name}.outline {
+      color: map.get($values, text);
+      background-color: transparent;
+      border: 2px solid map.get($values, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+
+      &:hover {
+        color: map.get($values, text-hover);
+        background-color: map.get($values, hover);
+      }
+
+      &:focus {
+        outline: 2px solid map.get($values, hover);
+        outline-offset: 2px;
+      }
+    }
+
+    .#{$name}.outline.glass {
+      @include mixins.glass-surface(
+        transparent,
+        var(--breadcrumbs-glass-border),
+        var(--glass-blur)
+      );
+
+      color: var(--breadcrumbs-glass-text);
+    }
+  }
+
+  .xs {
+    font-size: var(--font-size-caption);
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-xxs);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-label);
+    }
+  }
+
+  .small {
+    font-size: var(--font-size-label);
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-caption);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body-sm);
+    }
+  }
+
+  .medium {
+    font-size: var(--font-size-body-sm);
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-label);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body);
+    }
+  }
+
+  .large {
+    font-size: var(--font-size-body);
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-body-sm);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-h6);
+    }
+  }
+
+  .xl {
+    font-size: var(--font-size-h6);
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-body);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-h5);
+    }
+  }
+
+  .list {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    flex-wrap: nowrap;
+
+    @include bp.down(sm) {
+      gap: var(--spacing-xxs);
+    }
+
+    @include bp.up(lg) {
+      gap: var(--spacing-sm);
+    }
+  }
+
+  .item {
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    color: inherit;
+    transition:
+      color var(--transition-default),
+      opacity var(--transition-default),
+      transform var(--transition-default),
+      box-shadow var(--transition-default);
+  }
+
+  .item_animate {
+    animation: fade-in 0.3s ease-in-out;
+  }
+
+  .item_active {
+    font-weight: var(--font-weight-semibold);
+    color: var(--disabled-color);
+  }
+
+  .disabled {
+    background-color: var(--disabled-color);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .link {
+    text-decoration: none;
+    color: inherit;
+    font: inherit;
+  }
+
+  .link_label {
+    display: inline-block;
+    line-height: inherit;
+    letter-spacing: inherit;
+
+    .link:hover & {
+      text-decoration: none;
+      opacity: 0.8;
+    }
+  }
+
+  .current {
+    font-weight: var(--font-weight-bold);
+    color: var(--disabled-color);
+  }
+
+  .separator {
+    display: flex;
+    align-items: center;
+    padding: 0 var(--spacing-xs);
+    color: var(--text-color-primary);
+    margin-top: -1px;
+    line-height: 1;
+
+    svg {
+      width: 1.2em;
+      height: 1.2em;
+
+      @include bp.down(sm) {
+        width: 1em;
+        height: 1em;
+      }
+
+      @include bp.up(lg) {
+        width: 1.3em;
+        height: 1.3em;
+      }
+    }
+
+    @include bp.down(sm) {
+      padding: 0 var(--spacing-xxs);
+    }
+
+    @include bp.up(lg) {
+      padding: 0 var(--spacing-sm);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .breadcrumbs,
+    .item {
+      transition: none;
+    }
+
+    .breadcrumbs:hover,
+    .item:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  @media (hover: none) {
+    .breadcrumbs:hover,
+    .item:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .breadcrumbs {
+      border: 1px solid ButtonText;
+      outline-color: Highlight;
+    }
+
+    .glass {
+      background: Canvas;
+      border: 1px solid ButtonText;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
 }

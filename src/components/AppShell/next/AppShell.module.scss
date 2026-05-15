@@ -157,6 +157,11 @@
     }
   }
 
+  .footer {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-xs);
+  }
+
   .loading {
     cursor: progress;
   }
@@ -223,6 +228,7 @@
 
   .header {
     z-index: 1;
+    padding: var(--spacing-sm);
     border-bottom: 1px solid currentcolor;
   }
 

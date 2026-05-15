@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
+@use "../../../styles./_animations" as animations;
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
@@ -74,13 +75,7 @@
     border-right-color: transparent;
     border-radius: 50%;
     opacity: 0.72;
-    animation: breadCrumbPageHeader-spin 700ms linear infinite;
-  }
-
-  @keyframes breadCrumbPageHeader-spin {
-    to {
-      transform: rotate(360deg);
-    }
+    animation: spin 700ms linear infinite;
   }
 
   @each $themeName, $vals in theme.$themes {

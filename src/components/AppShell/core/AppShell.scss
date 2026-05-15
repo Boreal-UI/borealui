@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
+@use "../../../styles/_animations" as animations;
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
@@ -74,13 +75,7 @@
     border-right-color: transparent;
     border-radius: 50%;
     opacity: 0.72;
-    animation: appShell-spin 700ms linear infinite;
-  }
-
-  @keyframes appShell-spin {
-    to {
-      transform: rotate(360deg);
-    }
+    animation: spin 700ms linear infinite;
   }
 
   @each $themeName, $vals in theme.$themes {
@@ -157,6 +152,11 @@
     }
   }
 
+  .appShell_footer {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-xs);
+  }
+
   .appShell_loading {
     cursor: progress;
   }
@@ -223,6 +223,7 @@
 
   .appShell_header {
     z-index: 1;
+    padding: var(--spacing-sm);
     border-bottom: 1px solid currentcolor;
   }
 
