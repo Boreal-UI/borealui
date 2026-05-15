@@ -2,6 +2,7 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
+@use "../../../styles/_animations";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
@@ -40,13 +41,7 @@
     border-right-color: transparent;
     border-radius: 50%;
     opacity: 0.72;
-    animation: pageHeader-spin 700ms linear infinite;
-  }
-
-  @keyframes pageHeader-spin {
-    to {
-      transform: rotate(360deg);
-    }
+    animation: spin 700ms linear infinite;
   }
 
   @each $themeName, $vals in theme.$themes {

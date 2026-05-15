@@ -1,3 +1,6 @@
+@use "../../../styles/_animations";
+
+
 @layer boreal-ui.components {
   .root,
   .root {
@@ -58,7 +61,7 @@
     border: 2px solid currentcolor;
     border-right-color: transparent;
     border-radius: 50%;
-    animation: legend-spin 700ms linear infinite;
+    animation: spin 700ms linear infinite;
   }
   .primary,
   .primary {
@@ -99,10 +102,5 @@
   .loading,
   .loading {
     cursor: progress;
-  }
-  @keyframes legend-spin {
-    to {
-      transform: rotate(360deg);
-    }
   }
 }

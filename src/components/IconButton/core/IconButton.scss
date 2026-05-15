@@ -3,6 +3,8 @@
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
+@use "../../../styles/_animations";
+
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
 

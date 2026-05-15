@@ -1,3 +1,6 @@
+@use "../../../styles/_animations";
+
+
 @layer boreal-ui.components {
   .donutChart,
   .root {
@@ -87,7 +90,7 @@
     border: 2px solid currentcolor;
     border-right-color: transparent;
     border-radius: 50%;
-    animation: donutChart-spin 700ms linear infinite;
+    animation: spin 700ms linear infinite;
   }
   .donutChart_primary,
   .primary {
@@ -128,10 +131,5 @@
   .donutChart_loading,
   .loading {
     cursor: progress;
-  }
-  @keyframes donutChart-spin {
-    to {
-      transform: rotate(360deg);
-    }
   }
 }

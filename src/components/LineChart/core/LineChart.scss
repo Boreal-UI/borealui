@@ -1,3 +1,6 @@
+@use "../../../styles/_animations";
+
+
 @layer boreal-ui.components {
   .lineChart,
   .root {
@@ -48,7 +51,7 @@
     border: 2px solid currentcolor;
     border-right-color: transparent;
     border-radius: 50%;
-    animation: lineChart-spin 700ms linear infinite;
+    animation: spin 700ms linear infinite;
   }
   .lineChart_primary,
   .primary {
@@ -89,10 +92,5 @@
   .lineChart_loading,
   .loading {
     cursor: progress;
-  }
-  @keyframes lineChart-spin {
-    to {
-      transform: rotate(360deg);
-    }
   }
 }

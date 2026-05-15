@@ -1,3 +1,6 @@
+@use "../../../styles/_animations";
+
+
 @layer boreal-ui.components {
   .sparkline,
   .root {
@@ -53,7 +56,7 @@
     border: 2px solid currentcolor;
     border-right-color: transparent;
     border-radius: 50%;
-    animation: sparkline-spin 700ms linear infinite;
+    animation: spin 700ms linear infinite;
   }
   .sparkline_primary,
   .primary {
@@ -94,10 +97,5 @@
   .sparkline_loading,
   .loading {
     cursor: progress;
-  }
-  @keyframes sparkline-spin {
-    to {
-      transform: rotate(360deg);
-    }
   }
 }
