@@ -172,18 +172,27 @@ The root `boreal-ui` entry currently points to the core build. For Next.js apps,
 ### Forms and Inputs
 
 - `TextInput`
+- `SearchInput`
+- `NumberInput`
 - `TextArea`
 - `Select`
+- `MultiSelect`
 - `ComboBox`
 - `ThemeSelect`
+- `InputGroup`
+- `FieldSet`
+- `SegmentedControl`
+- `ValidationSummary`
 - `CheckBox`
 - `RadioButton`
 - `RadioGroup`
 - `Toggle`
 - `Slider`
 - `ColorPicker`
+- `DatePicker`
 - `DateRangePicker`
 - `DateTimePicker`
+- `TimePicker`
 - `FileUpload`
 - `TagInput`
 - `FormField`
@@ -192,6 +201,12 @@ The root `boreal-ui` entry currently points to the core build. For Next.js apps,
 ### Data and Content
 
 - `DataTable`
+- `Sparkline`
+- `BarChart`
+- `LineChart`
+- `DonutChart`
+- `Legend`
+- `TrendBadge`
 - `MarkdownRenderer`
 - `Typography`
 - `MetricBox`
@@ -219,10 +234,14 @@ The root `boreal-ui` entry currently points to the core build. For Next.js apps,
 
 ### Navigation and Layout
 
+- `AppShell`
+- `PageHeader`
+- `BreadCrumbPageHeader`
 - `NavBar`
 - `Sidebar`
 - `Footer`
 - `Breadcrumbs`
+- `TreeView`
 - `Tabs`
 - `Stepper`
 - `Timeline`
@@ -230,7 +249,10 @@ The root `boreal-ui` entry currently points to the core build. For Next.js apps,
 - `Pager`
 - `Toolbar`
 - `Dropdown`
+- `Menu`
 - `Drawer`
+- `Portal`
+- `SplitPane`
 - `Divider`
 - `Container`
 - `Grid`

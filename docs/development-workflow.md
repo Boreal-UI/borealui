@@ -30,7 +30,7 @@ When changing a public component, update the full surface:
 4. Next wrapper and SCSS Module.
 5. Tests in `__tests__`.
 6. Stories, if the behavior is user-facing.
-7. Generated prop docs with `npm run generate:docs`.
+7. Generated prop docs with `npm run gen:docs`.
 8. Public entry points or package exports, if the import surface changes.
 
 Use `combineClassNames` from `src/utils/classNames.ts` for class composition.
@@ -40,7 +40,7 @@ Use `combineClassNames` from `src/utils/classNames.ts` for class composition.
 Generated docs live in `src/generated-docs` and are built from component `.types.ts` files.
 
 ```bash
-npm run generate:docs
+npm run gen:docs
 ```
 
 The generator emits one `*PropDocs` object per public component props interface with a matching core or next wrapper. This includes multi-component type files such as:
@@ -95,7 +95,7 @@ Use `npm run check:sync` after adding, moving, or renaming components. It verifi
 Before merging public API changes:
 
 - JSDoc on public props explains the behavior and default where useful.
-- `npm run generate:docs` has been run.
+- `npm run gen:docs` has been run.
 - `docs/public-api-reference.md` is updated when import paths, barrel exports, or standalone exports change.
 - `docs/installation-and-imports.md` is updated when setup or package entry points change.
 - `docs/styling-and-theming.md` is updated when style config, theme, color-scheme, or CSS variable APIs change.
