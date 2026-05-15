@@ -6,404 +6,461 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $sizes: (
+    "xs": (
+      header-padding: (
+        var(--spacing-xs),
+        var(--spacing-sm),
+      ),
+      header-font-size: var(--font-size-caption),
+      icon-size: 1rem,
+    ),
+    "small": (
+      header-padding: (
+        var(--spacing-xs),
+        var(--spacing-md),
+      ),
+      header-font-size: var(--font-size-label),
+      icon-size: 1.2rem,
+    ),
+    "medium": (
+      header-padding: (
+        var(--spacing-xs),
+        var(--spacing-md),
+      ),
+      header-font-size: var(--font-size-body-sm),
+      icon-size: 1.5rem,
+    ),
+    "large": (
+      header-padding: (
+        var(--spacing-xs),
+        var(--spacing-md),
+      ),
+      header-font-size: var(--font-size-body),
+      icon-size: 1.8rem,
+    ),
+    "xl": (
+      header-padding: (
+        var(--spacing-xs),
+        var(--spacing-md),
+      ),
+      header-font-size: var(--font-size-h6),
+      icon-size: 2rem,
+    ),
+  );
 
-$sizes: (
-  "xs": (
-    header-padding: (
-      var(--spacing-xs),
-      var(--spacing-sm),
-    ),
-    header-font-size: var(--font-size-caption),
-    icon-size: 1rem,
-  ),
-  "small": (
-    header-padding: (
-      var(--spacing-xs),
-      var(--spacing-md),
-    ),
-    header-font-size: var(--font-size-label),
-    icon-size: 1.2rem,
-  ),
-  "medium": (
-    header-padding: (
-      var(--spacing-sm),
-      var(--spacing-lg),
-    ),
-    header-font-size: var(--font-size-body-sm),
-    icon-size: 1.5rem,
-  ),
-  "large": (
-    header-padding: (
-      var(--spacing-sm),
-      var(--spacing-xl),
-    ),
-    header-font-size: var(--font-size-body),
-    icon-size: 1.8rem,
-  ),
-  "xl": (
-    header-padding: (
-      var(--spacing-sm),
-      var(--spacing-xl),
-    ),
-    header-font-size: var(--font-size-h6),
-    icon-size: 2rem,
-  ),
-);
+  .accordion {
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-sm);
+    background-color: transparent !important;
+    transition: box-shadow var(--transition-default);
+  }
 
-.accordion {
-  border-radius: var(--border-radius-md);
-  margin-bottom: var(--spacing-sm);
-  background-color: transparent !important;
-  transition: box-shadow var(--transition-default);
-}
-
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-
-    .header {
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
       border-radius: $value;
-    }
 
-    .content,
-    &.expanded .content {
-      border-bottom-left-radius: $value;
-      border-bottom-right-radius: $value;
-    }
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    .header {
-      box-shadow: $value;
-    }
-  }
-}
-
-.clear {
-  box-shadow: none !important;
-}
-
-.glass {
-  .header,
-  &.content {
-    @include mixins.glass-surface(
-      transparent,
-      var(--accordion-glass-border, var(--glass-border-color)),
-      var(--glass-blur)
-    );
-
-    color: var(--accordion-glass-text, currentcolor);
-  }
-
-  &.content {
-    border-top: 0;
-    box-shadow: inset 0 1px 0 var(--glass-inset-highlight);
-  }
-}
-
-.expanded .header {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  min-width: 250px;
-  width: 100%;
-  min-height: 44px;
-  color: var(--text-color-primary);
-  padding: var(--spacing-sm) var(--spacing-md);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  text-align: left;
-  cursor: pointer;
-  background-color: transparent;
-  border: none;
-  border-radius: var(--border-radius-md);
-  outline: none;
-  transition:
-    background-color var(--transition-default),
-    border-radius var(--transition-default);
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-  }
-
-  @include bp.down(sm) {
-    padding: var(--spacing-xs) var(--spacing-sm);
-  }
-
-  @include bp.between(sm, md) {
-    padding: var(--spacing-sm) var(--spacing-md);
-  }
-
-  @include bp.up(lg) {
-    padding: var(--spacing-sm) var(--spacing-lg);
-  }
-}
-
-@each $name, $values in theme.$themes {
-  .#{$name} {
-    background-color: map.get($values, bg);
-    color: var(--text-color-primary);
-
-    --accordion-glass-bg: #{map.get($values, glass-bg)};
-    --accordion-glass-hover-bg: #{map.get($values, glass-hover)};
-    --accordion-glass-border: #{map.get($values, glass-border)};
-    --accordion-glass-text: #{map.get($values, text)};
-
-    &:hover {
-      background-color: map.get($values, hover);
-    }
-
-    &.glass.header {
-      background: var(--accordion-glass-bg);
-      color: var(--accordion-glass-text);
-
-      &:hover {
-        background: var(--accordion-glass-hover-bg);
-      }
-    }
-
-    &.outline {
-      background-color: transparent;
-      border: 2px solid map.get($values, border);
-      color: map.get($values, text);
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
+      .header {
+        border-radius: $value;
       }
 
-      &:hover {
-        background-color: map.get($values, hover);
-        color: map.get($values, text-hover);
-      }
-    }
-
-    &.outline.glass {
-      @include mixins.glass-surface(
-        transparent,
-        var(--accordion-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--accordion-glass-text);
-    }
-  }
-}
-
-@each $name, $values in theme.$states {
-  .#{$name} {
-    background-color: map.get($values, bg);
-    color: var(--text-color-primary);
-
-    --accordion-glass-bg: #{map.get($values, glass-bg)};
-    --accordion-glass-hover-bg: #{map.get($values, glass-hover)};
-    --accordion-glass-border: #{map.get($values, glass-border)};
-    --accordion-glass-text: #{map.get($values, text)};
-
-    &:hover {
-      background-color: map.get($values, hover);
-    }
-
-    &.glass.header {
-      background: var(--accordion-glass-bg);
-      color: var(--accordion-glass-text);
-
-      &:hover {
-        background: var(--accordion-glass-hover-bg);
-      }
-    }
-
-    &.outline {
-      background-color: transparent;
-      border: 2px solid map.get($values, border);
-      color: map.get($values, text);
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-
-      &:hover {
-        background-color: map.get($values, hover);
-        color: map.get($values, text-hover);
-      }
-    }
-
-    &.outline.glass {
-      @include mixins.glass-surface(
-        transparent,
-        var(--accordion-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--accordion-glass-text);
-    }
-  }
-}
-
-.disabled {
-  background-color: var(--disabled-color);
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-.content {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition:
-    grid-template-rows 300ms ease,
-    padding var(--transition-default),
-    border-radius var(--transition-default),
-    opacity var(--transition-default),
-    transform var(--transition-default);
-  overflow: hidden;
-  box-sizing: border-box;
-  padding: 0 var(--spacing-md);
-  background-color: var(--background-color-lighter);
-  color: var(--text-color-primary);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  opacity: 0;
-
-  @include bp.down(sm) {
-    padding: 0 var(--spacing-sm);
-  }
-
-  @include bp.up(lg) {
-    padding: 0 var(--spacing-lg);
-  }
-}
-
-.content_inner {
-  min-height: 0;
-  overflow: hidden;
-}
-
-.expanded .content {
-  grid-template-rows: 1fr;
-  opacity: 1;
-  padding: var(--spacing-xl);
-  border-bottom-left-radius: var(--border-radius-md);
-  border-bottom-right-radius: var(--border-radius-md);
-
-  @include bp.down(sm) {
-    padding: var(--spacing-md);
-  }
-
-  @include bp.up(lg) {
-    padding: var(--spacing-xl) calc(var(--spacing-xl) * 1.1);
-  }
-}
-
-.content.loaded {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.content.loading {
-  opacity: 0.5;
-}
-
-.content_clear {
-  background-color: transparent;
-  border: 1px solid var(--text-color-primary);
-
-  @include bp.down(sm) {
-    border-width: 1px;
-  }
-}
-
-.title {
-  flex-grow: 1;
-  font: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-}
-
-.icon {
-  font-size: 1.5rem;
-  margin-right: var(--spacing-sm);
-  transition: transform var(--transition-default);
-
-  @include bp.down(sm) {
-    margin-right: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    margin-right: var(--spacing-sm);
-  }
-}
-
-.expanded .icon {
-  transform: rotate(180deg);
-}
-
-@each $size, $config in $sizes {
-  .#{$size} {
-    .header {
-      padding: list.nth(map.get($config, header-padding), 1)
-        list.nth(map.get($config, header-padding), 2);
-
-      font-size: map.get($config, header-font-size);
-    }
-
-    .title {
-      font-size: inherit;
-    }
-
-    .icon {
-      $is: map.get($config, icon-size);
-
-      font-size: $is;
-
-      @include bp.up(lg) {
-        font-size: calc(#{$is} * 1.05);
+      .content,
+      &.expanded .content {
+        border-bottom-left-radius: $value;
+        border-bottom-right-radius: $value;
       }
     }
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .header,
-  .content,
-  .icon {
-    transition: none;
-  }
-}
-
-@media (hover: none) {
-  .header:hover {
-    background: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .header {
-    border: 1px solid ButtonText;
-    outline-color: Highlight;
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      .header {
+        box-shadow: $value;
+      }
+    }
   }
 
-  .glass,
-  .glass .header,
-  .glass.content {
-    background: Canvas;
-    border: 1px solid ButtonText;
+  .clear {
     box-shadow: none !important;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
   }
-}
+
+  .glass {
+    .header,
+    &.content {
+      @include mixins.glass-surface(
+        transparent,
+        var(--accordion-glass-border, var(--glass-border-color)),
+        var(--glass-blur)
+      );
+
+      color: var(--accordion-glass-text, currentcolor);
+    }
+
+    &.content {
+      border-top: 0;
+      box-shadow: inset 0 1px 0 var(--glass-inset-highlight);
+    }
+  }
+
+  .expanded .header {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 1.25em;
+    align-items: center;
+    column-gap: var(--spacing-xs);
+
+    width: 100%;
+    min-width: 0;
+    padding: var(--spacing-sm) var(--spacing-md);
+
+    color: var(--text-color-primary);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    text-align: left;
+
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    border-radius: var(--border-radius-md);
+    outline: none;
+
+    transition:
+      background-color var(--transition-default),
+      border-radius var(--transition-default);
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+    }
+
+    @include bp.down(sm) {
+      grid-template-columns: minmax(0, 1fr) 1.25em;
+      column-gap: var(--spacing-xs);
+      row-gap: var(--spacing-xs);
+      padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    @include bp.between(sm, md) {
+      padding: var(--spacing-sm) var(--spacing-md);
+    }
+
+    @include bp.up(lg) {
+      padding: var(--spacing-sm) var(--spacing-lg);
+    }
+  }
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      background-color: map.get($values, bg);
+      color: var(--text-color-primary);
+
+      --accordion-glass-bg: #{map.get($values, glass-bg)};
+      --accordion-glass-hover-bg: #{map.get($values, glass-hover)};
+      --accordion-glass-border: #{map.get($values, glass-border)};
+      --accordion-glass-text: #{map.get($values, text)};
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+
+      &.glass.header {
+        background: var(--accordion-glass-bg);
+        color: var(--accordion-glass-text);
+
+        &:hover {
+          background: var(--accordion-glass-hover-bg);
+        }
+      }
+
+      &.outline {
+        background-color: transparent;
+        border: 2px solid map.get($values, border);
+        color: map.get($values, text);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+
+        &:hover {
+          background-color: map.get($values, hover);
+          color: map.get($values, text-hover);
+        }
+      }
+
+      &.outline.glass {
+        @include mixins.glass-surface(
+          transparent,
+          var(--accordion-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--accordion-glass-text);
+      }
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      background-color: map.get($values, bg);
+      color: var(--text-color-primary);
+
+      --accordion-glass-bg: #{map.get($values, glass-bg)};
+      --accordion-glass-hover-bg: #{map.get($values, glass-hover)};
+      --accordion-glass-border: #{map.get($values, glass-border)};
+      --accordion-glass-text: #{map.get($values, text)};
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+
+      &.glass.header {
+        background: var(--accordion-glass-bg);
+        color: var(--accordion-glass-text);
+
+        &:hover {
+          background: var(--accordion-glass-hover-bg);
+        }
+      }
+
+      &.outline {
+        background-color: transparent;
+        border: 2px solid map.get($values, border);
+        color: map.get($values, text);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+
+        &:hover {
+          background-color: map.get($values, hover);
+          color: map.get($values, text-hover);
+        }
+      }
+
+      &.outline.glass {
+        @include mixins.glass-surface(
+          transparent,
+          var(--accordion-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--accordion-glass-text);
+      }
+    }
+  }
+
+  .disabled {
+    background-color: var(--disabled-color);
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition:
+      grid-template-rows 300ms ease,
+      padding var(--transition-default),
+      border-radius var(--transition-default),
+      opacity var(--transition-default),
+      transform var(--transition-default);
+    overflow: hidden;
+    box-sizing: border-box;
+    padding: 0 var(--spacing-md);
+    background-color: var(--background-color-lighter);
+    color: var(--text-color-primary);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    opacity: 0;
+
+    @include bp.down(sm) {
+      padding: 0 var(--spacing-sm);
+    }
+
+    @include bp.up(lg) {
+      padding: 0 var(--spacing-lg);
+    }
+  }
+
+  .content_inner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .expanded .content {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    padding: var(--spacing-xl);
+    border-bottom-left-radius: var(--border-radius-md);
+    border-bottom-right-radius: var(--border-radius-md);
+
+    @include bp.down(sm) {
+      padding: var(--spacing-md);
+    }
+
+    @include bp.up(lg) {
+      padding: var(--spacing-xl) calc(var(--spacing-xl) * 1.1);
+    }
+  }
+
+  .content.loaded {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .content.loading {
+    opacity: 0.5;
+  }
+
+  .content_clear {
+    background-color: transparent;
+    border: 1px solid var(--text-color-primary);
+
+    @include bp.down(sm) {
+      border-width: 1px;
+    }
+  }
+
+  .title {
+    min-width: 0;
+    max-width: 100%;
+    display: block;
+    justify-self: start;
+
+    font: inherit;
+    line-height: var(--line-height-label);
+    letter-spacing: inherit;
+
+    white-space: nowrap;
+    overflow-wrap: normal;
+    word-break: normal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    @include bp.down(sm) {
+      white-space: normal;
+      overflow-wrap: normal;
+      word-break: normal;
+      line-height: var(--line-height-body-sm, 1.35);
+    }
+  }
+
+  .icon {
+    grid-column: 2;
+    display: inline-grid;
+    place-items: center;
+    justify-self: center;
+    align-self: center;
+
+    width: 1.25em;
+    height: 1.25em;
+    min-width: 1.25em;
+    margin: 0;
+    line-height: 1;
+
+    font-size: 1.25em;
+    transition: transform var(--transition-default);
+
+    svg {
+      display: block;
+      width: 1em;
+      height: 1em;
+    }
+
+    @include bp.down(sm) {
+      align-self: center;
+      width: 1.25em;
+      height: 1.25em;
+    }
+
+    @include bp.up(lg) {
+      width: 1.5em;
+      height: 1.5em;
+    }
+  }
+
+  .expanded .icon {
+    transform: rotate(180deg);
+  }
+
+  @each $size, $config in $sizes {
+    .#{$size} {
+      .header {
+        padding: list.nth(map.get($config, header-padding), 1)
+          list.nth(map.get($config, header-padding), 2);
+
+        font-size: map.get($config, header-font-size);
+      }
+
+      .title {
+        font-size: inherit;
+      }
+
+      .icon {
+        $is: map.get($config, icon-size);
+
+        font-size: $is;
+
+        @include bp.up(lg) {
+          font-size: calc(#{$is} * 1.05);
+        }
+      }
+    }
+  }
+
+  .xs .header,
+  .small .header {
+    grid-template-columns: minmax(0, 1fr) 1em;
+    column-gap: 0.25rem;
+    padding-inline: var(--spacing-sm);
+  }
+
+  .xs .icon,
+  .small .icon {
+    width: 1em;
+    height: 1em;
+    min-width: 1em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header,
+    .content,
+    .icon {
+      transition: none;
+    }
+  }
+
+  @media (hover: none) {
+    .header:hover {
+      background: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .header {
+      border: 1px solid ButtonText;
+      outline-color: Highlight;
+    }
+
+    .glass,
+    .glass .header,
+    .glass.content {
+      background: Canvas;
+      border: 1px solid ButtonText;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
 }
