@@ -6,293 +6,292 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $positions: (
+    "top": (
+      tooltip: (
+        bottom: 100%,
+        left: 50%,
+        transform: translateX(-50%),
+        margin-bottom: 8px,
+      ),
+      arrow: (
+        top: 100%,
+        left: 50%,
+        transform: translateX(-50%),
+      ),
+    ),
+    "bottom": (
+      tooltip: (
+        top: 100%,
+        left: 50%,
+        transform: translateX(-50%),
+        margin-top: 8px,
+      ),
+      arrow: (
+        bottom: 100%,
+        left: 50%,
+        transform: translateX(-50%),
+      ),
+    ),
+    "left": (
+      tooltip: (
+        right: 100%,
+        top: 50%,
+        transform: translateY(-50%),
+        margin-right: 8px,
+      ),
+      arrow: (
+        left: 100%,
+        top: 50%,
+        transform: translateY(-50%),
+      ),
+    ),
+    "right": (
+      tooltip: (
+        left: 100%,
+        top: 50%,
+        transform: translateY(-50%),
+        margin-left: 8px,
+      ),
+      arrow: (
+        right: 100%,
+        top: 50%,
+        transform: translateY(-50%),
+      ),
+    ),
+  );
 
-$positions: (
-  "top": (
-    tooltip: (
-      bottom: 100%,
-      left: 50%,
-      transform: translateX(-50%),
-      margin-bottom: 8px,
-    ),
-    arrow: (
-      top: 100%,
-      left: 50%,
-      transform: translateX(-50%),
-    ),
-  ),
-  "bottom": (
-    tooltip: (
-      top: 100%,
-      left: 50%,
-      transform: translateX(-50%),
-      margin-top: 8px,
-    ),
-    arrow: (
-      bottom: 100%,
-      left: 50%,
-      transform: translateX(-50%),
-    ),
-  ),
-  "left": (
-    tooltip: (
-      right: 100%,
-      top: 50%,
-      transform: translateY(-50%),
-      margin-right: 8px,
-    ),
-    arrow: (
-      left: 100%,
-      top: 50%,
-      transform: translateY(-50%),
-    ),
-  ),
-  "right": (
-    tooltip: (
-      left: 100%,
-      top: 50%,
-      transform: translateY(-50%),
-      margin-left: 8px,
-    ),
-    arrow: (
-      right: 100%,
-      top: 50%,
-      transform: translateY(-50%),
-    ),
-  ),
-);
+  .tooltip_container {
+    position: relative;
+    display: inline-block;
 
-.tooltip_container {
-  position: relative;
-  display: inline-block;
-
-  &:hover .tooltip {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-.tooltip {
-  position: absolute;
-  color: var(--text-color-primary);
-  background-color: var(--primary-color);
-  padding: var(--spacing-xs) var(--spacing-sm);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  white-space: nowrap;
-  opacity: 0;
-  visibility: hidden;
-  z-index: 100;
-  transition:
-    opacity 0.3s ease-in-out,
-    transform 0.2s ease-in-out;
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-caption);
-    padding: var(--spacing-xxs) var(--spacing-xs);
-    white-space: normal;
+    &:hover .tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
   }
 
-  &::after {
-    content: "";
+  .tooltip {
     position: absolute;
-    border-style: solid;
-    border-width: 6px;
-  }
+    color: var(--text-color-primary);
+    background-color: var(--primary-color);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 100;
+    transition:
+      opacity 0.3s ease-in-out,
+      transform 0.2s ease-in-out;
 
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: var(--border-radius-sm);
-  }
-}
-
-@each $position, $config in $positions {
-  .tooltip_#{$position} {
-    @each $prop, $val in map.get($config, tooltip) {
-      #{$prop}: $val;
+    @include bp.down(xs) {
+      font-size: var(--font-size-caption);
+      padding: var(--spacing-xxs) var(--spacing-xs);
+      white-space: normal;
     }
 
     &::after {
-      @each $prop, $val in map.get($config, arrow) {
+      content: "";
+      position: absolute;
+      border-style: solid;
+      border-width: 6px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: var(--border-radius-sm);
+    }
+  }
+
+  @each $position, $config in $positions {
+    .tooltip_#{$position} {
+      @each $prop, $val in map.get($config, tooltip) {
         #{$prop}: $val;
+      }
+
+      &::after {
+        @each $prop, $val in map.get($config, arrow) {
+          #{$prop}: $val;
+        }
       }
     }
   }
-}
 
-@each $name, $color in theme.$themes {
-  .tooltip_#{$name} {
-    --tooltip-glass-bg: #{map.get($color, glass-bg)};
-    --tooltip-glass-hover-bg: #{map.get($color, glass-hover)};
-    --tooltip-glass-border: #{map.get($color, glass-border)};
-    --tooltip-glass-text: #{map.get($color, text)};
+  @each $name, $color in theme.$themes {
+    .tooltip_#{$name} {
+      --tooltip-glass-bg: #{map.get($color, glass-bg)};
+      --tooltip-glass-hover-bg: #{map.get($color, glass-hover)};
+      --tooltip-glass-border: #{map.get($color, glass-border)};
+      --tooltip-glass-text: #{map.get($color, text)};
 
-    background-color: map.get($color, bg);
-    color: map.get($color, text);
+      background-color: map.get($color, bg);
+      color: map.get($color, text);
+    }
+
+    .tooltip_#{$name}::after {
+      border-color: map.get($color, bg) transparent transparent transparent;
+    }
+
+    .tooltip_bottom.tooltip_#{$name}::after {
+      border-color: transparent transparent map.get($color, bg) transparent;
+    }
+
+    .tooltip_left.tooltip_#{$name}::after {
+      border-color: transparent transparent transparent map.get($color, bg);
+    }
+
+    .tooltip_right.tooltip_#{$name}::after {
+      border-color: transparent map.get($color, bg) transparent transparent;
+    }
   }
 
-  .tooltip_#{$name}::after {
-    border-color: map.get($color, bg) transparent transparent transparent;
-  }
+  @each $name, $color in theme.$states {
+    .tooltip_#{$name} {
+      --tooltip-glass-bg: #{map.get($color, glass-bg)};
+      --tooltip-glass-hover-bg: #{map.get($color, glass-hover)};
+      --tooltip-glass-border: #{map.get($color, glass-border)};
+      --tooltip-glass-text: #{map.get($color, text)};
 
-  .tooltip_bottom.tooltip_#{$name}::after {
-    border-color: transparent transparent map.get($color, bg) transparent;
-  }
+      background-color: map.get($color, bg);
+      color: map.get($color, text);
+    }
 
-  .tooltip_left.tooltip_#{$name}::after {
-    border-color: transparent transparent transparent map.get($color, bg);
-  }
+    .tooltip_#{$name}::after {
+      border-color: map.get($color, bg) transparent transparent transparent;
+    }
 
-  .tooltip_right.tooltip_#{$name}::after {
-    border-color: transparent map.get($color, bg) transparent transparent;
-  }
-}
+    .tooltip_bottom.tooltip_#{$name}::after {
+      border-color: transparent transparent map.get($color, bg) transparent;
+    }
 
-@each $name, $color in theme.$states {
-  .tooltip_#{$name} {
-    --tooltip-glass-bg: #{map.get($color, glass-bg)};
-    --tooltip-glass-hover-bg: #{map.get($color, glass-hover)};
-    --tooltip-glass-border: #{map.get($color, glass-border)};
-    --tooltip-glass-text: #{map.get($color, text)};
+    .tooltip_left.tooltip_#{$name}::after {
+      border-color: transparent map.get($color, bg) transparent transparent;
+    }
 
-    background-color: map.get($color, bg);
-    color: map.get($color, text);
-  }
-
-  .tooltip_#{$name}::after {
-    border-color: map.get($color, bg) transparent transparent transparent;
-  }
-
-  .tooltip_bottom.tooltip_#{$name}::after {
-    border-color: transparent transparent map.get($color, bg) transparent;
-  }
-
-  .tooltip_left.tooltip_#{$name}::after {
-    border-color: transparent map.get($color, bg) transparent transparent;
-  }
-
-  .tooltip_right.tooltip_#{$name}::after {
-    border-color: transparent transparent transparent map.get($color, bg);
-  }
-}
-
-.tooltip_glass {
-  @include mixins.glass-surface(
-    var(--tooltip-glass-bg, var(--glass-background)),
-    var(--tooltip-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
-  );
-
-  color: var(--tooltip-glass-text, currentcolor);
-}
-
-.tooltip_glass::after {
-  border-color: var(--tooltip-glass-bg, var(--glass-background)) transparent
-    transparent transparent;
-}
-
-.tooltip_bottom.tooltip_glass::after {
-  border-color: transparent transparent
-    var(--tooltip-glass-bg, var(--glass-background)) transparent;
-}
-
-.tooltip_left.tooltip_glass::after {
-  border-color: transparent var(--tooltip-glass-bg, var(--glass-background))
-    transparent transparent;
-}
-
-.tooltip_right.tooltip_glass::after {
-  border-color: transparent transparent transparent
-    var(--tooltip-glass-bg, var(--glass-background));
-}
-
-.tooltip_clear {
-  box-shadow: none;
-  border: 2px solid var(--text-color-primary);
-  background-color: map.get(map.get(theme.$themes, "clear"), bg-light);
-  color: var(--text-color-primary);
-}
-
-.tooltip_clear::after {
-  border-color: map.get(map.get(theme.$themes, "clear"), bg-light) transparent
-    transparent transparent;
-}
-
-.tooltip_bottom.tooltip_clear::after {
-  border-color: transparent transparent
-    map.get(map.get(theme.$themes, "clear"), bg-light) transparent;
-}
-
-.tooltip_left.tooltip_clear::after {
-  border-color: transparent map.get(map.get(theme.$themes, "clear"), bg-light)
-    transparent transparent;
-}
-
-.tooltip_right.tooltip_clear::after {
-  border-color: transparent transparent transparent
-    map.get(map.get(theme.$themes, "clear"), bg-light);
-}
-
-@each $key, $value in theme.$rounding {
-  .tooltip_round-#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .tooltip_shadow-#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tooltip,
-  .tooltip_container * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .tooltip_container:hover .tooltip {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-
-@media (forced-colors: active) {
-  .tooltip {
-    background: CanvasText !important;
-    color: Canvas !important;
-    border: 1px solid ButtonText;
-  }
-
-  .tooltip::after {
-    border-color: CanvasText transparent transparent transparent !important;
-  }
-
-  .tooltip_bottom::after {
-    border-color: transparent transparent CanvasText transparent !important;
-  }
-
-  .tooltip_left::after {
-    border-color: transparent CanvasText transparent transparent !important;
-  }
-
-  .tooltip_right::after {
-    border-color: transparent transparent transparent CanvasText !important;
+    .tooltip_right.tooltip_#{$name}::after {
+      border-color: transparent transparent transparent map.get($color, bg);
+    }
   }
 
   .tooltip_glass {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+    @include mixins.glass-surface(
+      var(--tooltip-glass-bg, var(--glass-background)),
+      transparent,
+      var(--glass-blur)
+    );
+
+    color: var(--tooltip-glass-text, currentcolor);
   }
-}
+
+  .tooltip_glass::after {
+    border-color: var(--tooltip-glass-bg, var(--glass-background)) transparent
+      transparent transparent;
+  }
+
+  .tooltip_bottom.tooltip_glass::after {
+    border-color: transparent transparent
+      var(--tooltip-glass-bg, var(--glass-background)) transparent;
+  }
+
+  .tooltip_left.tooltip_glass::after {
+    border-color: transparent var(--tooltip-glass-bg, var(--glass-background))
+      transparent transparent;
+  }
+
+  .tooltip_right.tooltip_glass::after {
+    border-color: transparent transparent transparent
+      var(--tooltip-glass-bg, var(--glass-background));
+  }
+
+  .tooltip_clear {
+    box-shadow: none;
+    border: none;
+    background-color: map.get(map.get(theme.$themes, "clear"), bg-light);
+    color: var(--text-color-primary);
+  }
+
+  .tooltip_clear::after {
+    border-color: map.get(map.get(theme.$themes, "clear"), bg-light) transparent
+      transparent transparent;
+  }
+
+  .tooltip_bottom.tooltip_clear::after {
+    border-color: transparent transparent
+      map.get(map.get(theme.$themes, "clear"), bg-light) transparent;
+  }
+
+  .tooltip_left.tooltip_clear::after {
+    border-color: transparent map.get(map.get(theme.$themes, "clear"), bg-light)
+      transparent transparent;
+  }
+
+  .tooltip_right.tooltip_clear::after {
+    border-color: transparent transparent transparent
+      map.get(map.get(theme.$themes, "clear"), bg-light);
+  }
+
+  @each $key, $value in theme.$rounding {
+    .tooltip_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .tooltip_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tooltip,
+    .tooltip_container * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .tooltip_container:hover .tooltip {
+      opacity: 0;
+      visibility: hidden;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .tooltip {
+      background: CanvasText !important;
+      color: Canvas !important;
+      border: 1px solid ButtonText;
+    }
+
+    .tooltip::after {
+      border-color: CanvasText transparent transparent transparent !important;
+    }
+
+    .tooltip_bottom::after {
+      border-color: transparent transparent CanvasText transparent !important;
+    }
+
+    .tooltip_left::after {
+      border-color: transparent CanvasText transparent transparent !important;
+    }
+
+    .tooltip_right::after {
+      border-color: transparent transparent transparent CanvasText !important;
+    }
+
+    .tooltip_glass {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+  }
 }

@@ -12,6 +12,7 @@
   .label {
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
+    color: var(--text-color-primary);
   }
   .lineChart_svg,
   .svg {
@@ -21,7 +22,7 @@
   }
   .lineChart_gridLine,
   .gridLine {
-    stroke: currentcolor;
+    stroke: var(--border-color);
     stroke-width: 1;
     opacity: 0.16;
   }
@@ -36,7 +37,7 @@
   }
   .lineChart_axisLabel,
   .axisLabel {
-    fill: currentcolor;
+    fill: var(--text-color-primary);
     font-size: 0.7rem;
     opacity: 0.72;
   }

@@ -12,6 +12,7 @@
   .label {
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
+    color: var(--text-color-primary);
   }
   .legend_list,
   .list {
@@ -45,11 +46,13 @@
   .text {
     min-width: 0;
     overflow-wrap: anywhere;
+    color: var(--text-color-primary);
   }
   .legend_value,
   .value {
     font-variant-numeric: tabular-nums;
     opacity: 0.76;
+    color: var(--text-color-primary);
   }
   .legend_loader,
   .loader {

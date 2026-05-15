@@ -210,7 +210,8 @@
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
     gap: var(--spacing-xs);
-    align-items: start;
+    align-items: center;
+    justify-content: start;
     width: 100%;
     border: 0;
     border-radius: var(--border-radius-sm);

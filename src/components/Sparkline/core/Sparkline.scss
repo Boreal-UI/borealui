@@ -12,7 +12,7 @@
   .label {
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
-    color: inherit;
+    color: var(--text-color-primary);
   }
   .sparkline_chart,
   .chart {
@@ -44,6 +44,7 @@
   .value {
     font-size: var(--font-size-body-sm);
     font-variant-numeric: tabular-nums;
+    color: var(--text-color-primary);
   }
   .sparkline_loader,
   .loader {
