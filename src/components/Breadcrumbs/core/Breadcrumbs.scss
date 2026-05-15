@@ -11,6 +11,7 @@
     display: flex;
     align-items: center;
     width: fit-content;
+    min-width: 0;
     height: fit-content;
     padding: var(--spacing-xs) var(--spacing-sm);
     gap: var(--spacing-xs);
@@ -24,14 +25,11 @@
 
     @include bp.down(sm) {
       font-size: var(--font-size-label);
-      gap: var(--spacing-xxs);
-      padding: var(--spacing-xs);
     }
 
     @include bp.up(lg) {
       font-size: var(--font-size-body);
       gap: var(--spacing-sm);
-      padding: var(--spacing-sm) var(--spacing-md);
     }
   }
 
@@ -278,6 +276,8 @@
 
   .breadcrumbs_list {
     display: flex;
+    justify-content: center;
+    align-items: center;
     gap: var(--spacing-xs);
     padding: 0;
     margin: 0;
@@ -296,6 +296,7 @@
   .breadcrumbs_item {
     display: flex;
     align-items: center;
+    justify-content: center;
     white-space: nowrap;
     color: inherit;
     transition:
@@ -344,34 +345,44 @@
   }
 
   .breadcrumbs_separator {
-    display: flex;
-    align-items: center;
-    padding: 0 var(--spacing-xs);
-    margin-top: -1px;
-    color: var(--text-color-primary);
+    display: inline-grid;
+    place-items: center;
+    align-self: center;
+
+    width: 1em;
+    height: 1em;
+
+    padding: 0;
+    margin: 0;
+
+    color: currentcolor;
     line-height: 1;
+    flex: 0 0 auto;
 
     svg {
-      width: 1.2em;
-      height: 1.2em;
-
-      @include bp.down(sm) {
-        width: 1em;
-        height: 1em;
-      }
-
-      @include bp.up(lg) {
-        width: 1.3em;
-        height: 1.3em;
-      }
+      display: block;
+      width: 0.85em;
+      height: 0.85em;
     }
 
     @include bp.down(sm) {
-      padding: 0 var(--spacing-xxs);
+      width: 0.9em;
+      height: 0.9em;
+
+      svg {
+        width: 0.75em;
+        height: 0.75em;
+      }
     }
 
     @include bp.up(lg) {
-      padding: 0 var(--spacing-sm);
+      width: 1.05em;
+      height: 1.05em;
+
+      svg {
+        width: 0.9em;
+        height: 0.9em;
+      }
     }
   }
 
