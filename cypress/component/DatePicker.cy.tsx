@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import React from "react";
 import { DatePicker as CoreDatePicker } from "../../src/index.core";
 import { DatePicker as NextDatePicker } from "../../src/index.next";
 

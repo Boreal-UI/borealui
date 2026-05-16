@@ -8,7 +8,6 @@
 @layer boreal-ui.components {
   .root {
     --splitPane-glass-bg: rgba(255, 255, 255, 0.18);
-    --splitPane-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --splitPane-glass-border: rgba(255, 255, 255, 0.28);
     --splitPane-glass-text: var(--text-color-primary);
 
@@ -41,20 +40,11 @@
   @each $themeName, $vals in theme.$themes {
     .#{$themeName} {
       --splitPane-glass-bg: #{map.get($vals, glass-bg)};
-      --splitPane-glass-hover-bg: #{map.get($vals, glass-hover)};
       --splitPane-glass-border: #{map.get($vals, glass-border)};
       --splitPane-glass-text: #{map.get($vals, text)};
       background-color: map.get($vals, bg);
       color: map.get($vals, text);
       border-color: map.get($vals, border);
-
-      &:hover {
-        background-color: if(
-          map.has-key($vals, hover),
-          map.get($vals, hover),
-          map.get($vals, bg)
-        );
-      }
 
       &.outline {
         background-color: transparent;
@@ -68,7 +58,6 @@
   @each $state, $vals in theme.$states {
     .#{$state} {
       --splitPane-glass-bg: #{map.get($vals, glass-bg)};
-      --splitPane-glass-hover-bg: #{map.get($vals, glass-hover)};
       --splitPane-glass-border: #{map.get($vals, glass-border)};
       --splitPane-glass-text: #{map.get($vals, text)};
       border-width: 2px;
@@ -91,10 +80,6 @@
     );
 
     color: var(--splitPane-glass-text);
-  }
-
-  .glass:hover {
-    background: var(--splitPane-glass-hover-bg);
   }
 
   .glass.outline {

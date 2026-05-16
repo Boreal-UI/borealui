@@ -112,7 +112,6 @@ const TimelineBase: React.FC<
         return (
           <li
             key={index}
-            role="listitem"
             className={itemClassName}
             data-testid={itemTestId}
             aria-labelledby={hasTitle ? labelId : undefined}

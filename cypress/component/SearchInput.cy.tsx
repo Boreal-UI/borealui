@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import React from "react";
 import { SearchInput as CoreSearchInput } from "../../src/index.core";
 import { SearchInput as NextSearchInput } from "../../src/index.next";
 

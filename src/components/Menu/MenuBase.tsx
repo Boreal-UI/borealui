@@ -785,8 +785,6 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
           role="group"
           data-menu-item-wrapper="true"
           data-menu-item-path={itemPath}
-          onMouseEnter={handleDirectItemHover}
-          onMouseOver={handleSubmenuWrapperOver}
           onPointerEnter={handleDirectItemHover}
           onPointerOver={handleSubmenuWrapperOver}
         >
@@ -795,10 +793,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
               type="button"
               disabled={item.disabled}
               {...commonProps}
-              onMouseEnter={handleSubmenuTriggerEnter}
-              onMouseOver={handleSubmenuTriggerOver}
               onPointerEnter={handleSubmenuTriggerEnter}
               onPointerOver={handleSubmenuTriggerOver}
+              onFocus={handleSubmenuTriggerEnter}
               onClick={(event) => {
                 event.stopPropagation();
                 openDirectSubmenu();
@@ -869,6 +866,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       id={id}
       ref={wrapperRef}
       className={combineClassNames(classMap.wrapper, className)}
+      role="presentation"
       data-testid={testId}
       onContextMenu={handleContextMenu}
       onClick={handleClick}
@@ -877,11 +875,13 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       {renderTrigger()}
 
       {children && (
-        <div
-          ref={targetRef}
-          className={combineClassNames(classMap.target, targetClassName)}
-          tabIndex={activation === "manual" ? undefined : 0}
-          data-testid={`${testId}-target`}
+          <div
+            ref={targetRef}
+            className={combineClassNames(classMap.target, targetClassName)}
+            role={activation === "manual" ? undefined : "button"}
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex={activation === "manual" ? undefined : 0}
+            data-testid={`${testId}-target`}
         >
           {children}
         </div>

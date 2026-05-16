@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useState } from "react";
+import { useState } from "react";
 import "../src/components/Accordion/core/Accordion.scss";
 import { Accordion } from "../src/index.core";
 import type { Meta, StoryObj } from "@storybook/react-vite";

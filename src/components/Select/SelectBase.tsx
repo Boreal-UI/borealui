@@ -154,7 +154,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       onChange(event.target.value);
     };
 
-    const handleWrapperClick = (event: MouseEvent<HTMLDivElement>) => {
+    const handleWrapperMouseDown = (event: MouseEvent<HTMLDivElement>) => {
       if (disabled || event.target === selectRef.current) return;
 
       selectRef.current?.focus();
@@ -216,10 +216,11 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           resolvedLabelPosition === "left") &&
           labelNode}
 
+        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
         <div
           className={wrapperClasses}
           data-testid={testId}
-          onClick={handleWrapperClick}
+          onMouseDown={handleWrapperMouseDown}
         >
           <select
             ref={selectRef}

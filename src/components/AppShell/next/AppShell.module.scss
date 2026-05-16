@@ -8,7 +8,6 @@
 @layer boreal-ui.components {
   .root {
     --appShell-glass-bg: rgba(255, 255, 255, 0.18);
-    --appShell-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --appShell-glass-border: rgba(255, 255, 255, 0.28);
     --appShell-glass-text: var(--text-color-primary);
 
@@ -41,20 +40,11 @@
   @each $themeName, $vals in theme.$themes {
     .#{$themeName} {
       --appShell-glass-bg: #{map.get($vals, glass-bg)};
-      --appShell-glass-hover-bg: #{map.get($vals, glass-hover)};
       --appShell-glass-border: #{map.get($vals, glass-border)};
       --appShell-glass-text: #{map.get($vals, text)};
       background-color: map.get($vals, bg);
       color: map.get($vals, text);
       border-color: map.get($vals, border);
-
-      &:hover {
-        background-color: if(
-          map.has-key($vals, hover),
-          map.get($vals, hover),
-          map.get($vals, bg)
-        );
-      }
 
       &.outline {
         background-color: transparent;
@@ -68,12 +58,18 @@
   @each $state, $vals in theme.$states {
     .#{$state} {
       --appShell-glass-bg: #{map.get($vals, glass-bg)};
-      --appShell-glass-hover-bg: #{map.get($vals, glass-hover)};
       --appShell-glass-border: #{map.get($vals, glass-border)};
       --appShell-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
       color: map.get($vals, text);
+
+      &.outline {
+        background-color: transparent;
+        color: map.get($vals, text);
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
     }
   }
 
@@ -91,10 +87,6 @@
     );
 
     color: var(--appShell-glass-text);
-  }
-
-  .glass:hover {
-    background: var(--appShell-glass-hover-bg);
   }
 
   .glass.outline {

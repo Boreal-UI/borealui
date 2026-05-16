@@ -1,16 +1,6 @@
-import {
-  forwardRef,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { forwardRef, useEffect, useId, useMemo, useRef, useState } from "react";
 import { ChevronDownIcon, CloseIcon } from "../../Icons";
-import {
-  MultiSelectBaseProps,
-  MultiSelectOption,
-} from "./MultiSelect.types";
+import { MultiSelectBaseProps, MultiSelectOption } from "./MultiSelect.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
@@ -112,8 +102,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
     const listboxId = `${rootId}-listbox`;
     const srDescriptionId = srOnlyText ? `${rootId}-sr-description` : undefined;
     const computedAriaDescribedBy =
-      [ariaDescribedBy, srDescriptionId].filter(Boolean).join(" ") ||
-      undefined;
+      [ariaDescribedBy, srDescriptionId].filter(Boolean).join(" ") || undefined;
     const computedAriaLabelledBy =
       [ariaLabelledBy, labelId].filter(Boolean).join(" ") || undefined;
     const computedAriaLabel = computedAriaLabelledBy
@@ -198,7 +187,9 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
       if (!isSelected && reachedMax) return;
 
       const nextValues = isSelected
-        ? selectedValues.filter((selectedValue) => selectedValue !== option.value)
+        ? selectedValues.filter(
+            (selectedValue) => selectedValue !== option.value,
+          )
         : [...selectedValues, option.value];
 
       emitChange(nextValues);
@@ -223,7 +214,9 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
       ) {
         event.preventDefault();
         setOpen(true);
-        setActiveIndex(event.key === "ArrowUp" ? filteredOptions.length - 1 : 0);
+        setActiveIndex(
+          event.key === "ArrowUp" ? filteredOptions.length - 1 : 0,
+        );
       }
     };
 
@@ -321,8 +314,8 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
             aria-controls={listboxId}
             aria-expanded={open}
             aria-haspopup="listbox"
-            aria-invalid={isInvalid}
-            aria-required={isRequired}
+            data-invalid={isInvalid || undefined}
+            data-required={isRequired || undefined}
             disabled={disabled || loading}
             onClick={() => setOpen((isOpen) => !isOpen)}
             onKeyDown={handleTriggerKeyDown}
@@ -384,10 +377,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
 
           {open ? (
             <div
-              className={combineClassNames(
-                classMap.popover,
-                popoverClassName,
-              )}
+              className={combineClassNames(classMap.popover, popoverClassName)}
               data-testid={`${testId}-popover`}
             >
               {searchable ? (
@@ -429,13 +419,14 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
                 <div
                   id={listboxId}
                   role="listbox"
+                  title="Options"
                   aria-multiselectable="true"
                   className={combineClassNames(
                     classMap.listbox,
                     listboxClassName,
                   )}
                   onKeyDown={handleListKeyDown}
-                  tabIndex={searchable ? undefined : -1}
+                  tabIndex={-1}
                   data-testid={`${testId}-listbox`}
                 >
                   {filteredOptions.map((option, index) => {
@@ -462,10 +453,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
                         onClick={() => toggleOption(option)}
                         data-testid={`${testId}-option-${option.value}`}
                       >
-                        <span
-                          className={classMap.checkbox}
-                          aria-hidden="true"
-                        >
+                        <span className={classMap.checkbox} aria-hidden="true">
                           {selected ? "✓" : ""}
                         </span>
                         <span className={classMap.optionText}>

@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import React from "react";
 import { ValidationSummary as CoreValidationSummary } from "../../src/index.core";
 import { ValidationSummary as NextValidationSummary } from "../../src/index.next";
 

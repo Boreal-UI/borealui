@@ -35,6 +35,7 @@ export default tseslint.config(
       ".storybook/**/*.{ts,tsx}",
       ".storybook-core/**/*.{ts,tsx}",
       ".storybook-next/**/*.{ts,tsx}",
+      "cypress/**/*.{ts,tsx}",
       "shared-story-assets/**/*.{ts,tsx}",
     ],
 
@@ -146,6 +147,21 @@ export default tseslint.config(
       "no-console": "off",
       "no-alert": "off",
       "react-refresh/only-export-components": "off",
+    },
+  },
+
+  {
+    files: ["cypress/**/*.{ts,tsx}"],
+
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-misused-promises": "off",
+      "@typescript-eslint/no-namespace": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unused-expressions": "off",
+      "@typescript-eslint/unbound-method": "off",
     },
   },
 );

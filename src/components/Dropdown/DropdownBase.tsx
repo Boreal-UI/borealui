@@ -630,8 +630,6 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
           )}
           data-dropdown-item-wrapper="true"
           data-dropdown-item-path={itemPath}
-          onMouseEnter={handleDirectItemHover}
-          onMouseOver={handleSubmenuWrapperOver}
           onPointerEnter={handleDirectItemHover}
           onPointerOver={handleSubmenuWrapperOver}
         >
@@ -640,10 +638,9 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
               type="button"
               disabled={item.disabled}
               {...commonProps}
-              onMouseEnter={openCurrentSubmenu}
-              onMouseOver={openDirectSubmenu}
               onPointerEnter={openCurrentSubmenu}
               onPointerOver={openDirectSubmenu}
+              onFocus={openCurrentSubmenu}
               onClick={(event) => {
                 event.stopPropagation();
                 openDirectSubmenu();
@@ -713,6 +710,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     <div
       ref={dropdownRef}
       className={combineClassNames(classMap.wrapper, className)}
+      role="presentation"
       onKeyDown={handleKeyDown}
       data-testid={testId}
       {...rest}

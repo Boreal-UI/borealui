@@ -149,13 +149,14 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   return ReactDOM.createPortal(
     <div
       className={wrapperClass}
-      onClick={onClose}
+      onMouseDown={onClose}
       role="presentation"
       data-testid={testId}
     >
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         className={combineClassNames(classMap.content, contentClassName)}
-        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
         role={resolvedDialogRole}
         aria-modal={true}
         aria-label={ariaLabel}

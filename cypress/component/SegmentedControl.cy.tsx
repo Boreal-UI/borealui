@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import React from "react";
 import { SegmentedControl as CoreSegmentedControl } from "../../src/index.core";
 import { SegmentedControl as NextSegmentedControl } from "../../src/index.next";
 

@@ -40,8 +40,6 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   rel: relProp,
   ...rest
 }: BadgeBaseProps) => {
-  if (children == null && !Icon) return null;
-
   const isTextContent =
     typeof children === "string" || typeof children === "number";
 
@@ -77,6 +75,8 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       classMap,
     ],
   );
+
+  if (children == null && !Icon) return null;
 
   const handleClick = (e: MouseEvent<HTMLElement>) => {
     if (disabled) {

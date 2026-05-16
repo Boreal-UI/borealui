@@ -120,14 +120,14 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
         aria-live="polite"
         data-testid={testId}
       >
-        <ul role="list" className={classMap.list}>
+        <ul className={classMap.list}>
           {!isChildrenMode &&
             visibleChips.map((chip, index) => {
               const chipPosition = chip.position || position;
               const chipPositionClass = classMap[chipPosition];
 
               return (
-                <li key={chip.id} role="listitem">
+                <li key={chip.id}>
                   <ChipComponent
                     id={chip.id}
                     message={chip.message}
@@ -157,10 +157,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
 
           {isChildrenMode &&
             Children.map(renderedChildren, (child, index) => (
-              <li
-                key={(isValidElement(child) ? child.key : null) ?? index}
-                role="listitem"
-              >
+              <li key={(isValidElement(child) ? child.key : null) ?? index}>
                 {child}
               </li>
             ))}

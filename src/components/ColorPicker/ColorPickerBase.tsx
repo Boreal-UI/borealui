@@ -104,9 +104,8 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
                 onChange={() => onChange(color.value)}
                 className={classMap.radio_input}
                 disabled={optionDisabled}
+                required={required}
                 aria-describedby={describedBy}
-                aria-invalid={invalid || undefined}
-                aria-required={required || undefined}
                 aria-labelledby={optionLabelId}
               />
 

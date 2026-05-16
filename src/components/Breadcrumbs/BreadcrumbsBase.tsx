@@ -43,8 +43,6 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
     setIsExpanded(true);
   };
 
-  if (!items || items.length === 0) return null;
-
   const visibleItems: Breadcrumb[] = useMemo(() => {
     if (isExpanded || !maxVisible || items.length <= maxVisible) return items;
 
@@ -81,6 +79,8 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
       classMap,
     ],
   );
+
+  if (!items || items.length === 0) return null;
 
   return (
     <nav

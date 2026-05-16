@@ -202,6 +202,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
         aria-live={ariaLive}
         role="tablist"
         aria-orientation={resolvedOrientation}
+        tabIndex={-1}
         onKeyDown={onKeyDown}
         data-testid={`${testId}-tablist`}
       >

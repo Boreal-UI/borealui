@@ -251,6 +251,7 @@ const SegmentedControlBase = forwardRef<
           </div>
         ) : null}
 
+        {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
         <div
           ref={ref}
           id={rootId}
@@ -262,6 +263,7 @@ const SegmentedControlBase = forwardRef<
           aria-busy={loading || undefined}
           aria-orientation={orientation}
           className={rootClass}
+          tabIndex={-1}
           data-testid={`${testId}-root`}
           onKeyDown={handleKeyDown}
           {...restRoot}

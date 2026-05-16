@@ -42,7 +42,6 @@
 
   .breadCrumbPageHeader {
     --breadCrumbPageHeader-glass-bg: rgba(255, 255, 255, 0.18);
-    --breadCrumbPageHeader-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --breadCrumbPageHeader-glass-border: rgba(255, 255, 255, 0.28);
     --breadCrumbPageHeader-glass-text: var(--text-color-primary);
 
@@ -81,20 +80,11 @@
   @each $themeName, $vals in theme.$themes {
     .breadCrumbPageHeader_#{$themeName} {
       --breadCrumbPageHeader-glass-bg: #{map.get($vals, glass-bg)};
-      --breadCrumbPageHeader-glass-hover-bg: #{map.get($vals, glass-hover)};
       --breadCrumbPageHeader-glass-border: #{map.get($vals, glass-border)};
       --breadCrumbPageHeader-glass-text: #{map.get($vals, text)};
       background-color: map.get($vals, bg);
       color: map.get($vals, text);
       border-color: map.get($vals, border);
-
-      &:hover {
-        background-color: if(
-          map.has-key($vals, hover),
-          map.get($vals, hover),
-          map.get($vals, bg)
-        );
-      }
 
       &.breadCrumbPageHeader_outline {
         background-color: transparent;
@@ -108,12 +98,18 @@
   @each $state, $vals in theme.$states {
     .breadCrumbPageHeader_#{$state} {
       --breadCrumbPageHeader-glass-bg: #{map.get($vals, glass-bg)};
-      --breadCrumbPageHeader-glass-hover-bg: #{map.get($vals, glass-hover)};
       --breadCrumbPageHeader-glass-border: #{map.get($vals, glass-border)};
       --breadCrumbPageHeader-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
       color: map.get($vals, text);
+
+      &.breadCrumbPageHeader_outline {
+        background-color: transparent;
+        color: map.get($vals, text);
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
     }
   }
 
@@ -131,10 +127,6 @@
     );
 
     color: var(--breadCrumbPageHeader-glass-text);
-  }
-
-  .breadCrumbPageHeader_glass:hover {
-    background: var(--breadCrumbPageHeader-glass-hover-bg);
   }
 
   .breadCrumbPageHeader_glass.breadCrumbPageHeader_outline {

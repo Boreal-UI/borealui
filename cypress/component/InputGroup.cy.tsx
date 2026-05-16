@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import React from "react";
 import { InputGroup as CoreInputGroup } from "../../src/index.core";
 import { InputGroup as NextInputGroup } from "../../src/index.next";
 

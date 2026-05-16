@@ -310,6 +310,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       error,
       isDragging,
       disabled,
+      dropzoneClassName,
       className,
     ],
   );
@@ -342,6 +343,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       errorMessageClassName={errorMessageClassName}
       data-testid={testId}
     >
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         {...rest}
         className={containerClassName}

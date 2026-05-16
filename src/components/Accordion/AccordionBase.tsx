@@ -53,7 +53,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   ...rest
 }) => {
   const isControlled = expanded !== undefined;
-  const internalId = useMemo(getUniqueId, []);
+  const internalId = useMemo(() => getUniqueId(), [getUniqueId]);
 
   const [internalExpanded, setInternalExpanded] = useState(initiallyExpanded);
 
