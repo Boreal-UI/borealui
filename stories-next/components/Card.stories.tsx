@@ -8,6 +8,14 @@ import testImagePng from "../assets/test_pattern.png";
 import testImageSvg from "../assets/test_pattern.svg";
 import type { CardProps } from "../../src/components/Card/Card.types";
 import { StateType, ThemeType } from "../../src/types/types";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const themeOptions = [
   "primary",
@@ -115,30 +123,6 @@ export const WithCustomRender: Story = {
     ),
   },
 };
-
-export const ThemeVariants = () =>
-  withVariants(Card, defaultArgs, [
-    { propName: "theme", values: [...themeOptions] },
-  ]);
-
-export const GlassThemeVariants = () =>
-  withVariants(Card, { ...defaultArgs, glass: true }, [
-    { propName: "theme", values: [...themeOptions] },
-  ]);
-
-export const StateVariants = () =>
-  withVariants(Card, defaultArgs, [
-    { propName: "state", values: [...stateOptions] },
-  ]);
-
-export const GlassStateVariants = () =>
-  withVariants(Card, { ...defaultArgs, glass: true }, [
-    { propName: "state", values: [...stateOptions] },
-  ]);
-export const OutlineThemeVariants = () =>
-  withVariants(Card, { ...defaultArgs, outline: true }, [
-    { propName: "theme", values: [...themeOptions, ...stateOptions] },
-  ]);
 
 export const SizeVariants = () =>
   withVariants(
@@ -339,4 +323,28 @@ export const WithAccessibilityProps: Story = {
     "aria-label": "Aria label for the card",
     "data-testid": "storybook-card",
   },
+};
+
+export const ThemeVariants: Story = {
+  render: (args) => renderThemeVariants({ component: Card, args }),
+};
+
+export const StateVariants: Story = {
+  render: (args) => renderStateVariants({ component: Card, args }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => renderOutlineVariants({ component: Card, args }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) => renderGlassVariants({ component: Card, args }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: Card, args }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) => renderStateOutlineVariants({ component: Card, args }),
 };

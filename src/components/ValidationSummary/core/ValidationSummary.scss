@@ -1,0 +1,323 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
+@use "../../../styles/_animations";
+
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  .validationSummary_container {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    font-family: var(--font-family-body);
+  }
+
+  .validationSummary_labelTop,
+  .validationSummary_labelBottom,
+  .validationSummary_labelLeft,
+  .validationSummary_labelRight {
+    min-width: 0;
+  }
+
+  .validationSummary {
+    --validationSummary-text-color: var(--validationSummary-accent-color);
+    --validationSummary-border-color: var(--validationSummary-accent-color);
+    --validationSummary-glass-bg: rgba(255, 255, 255, 0.18);
+    --validationSummary-glass-hover-bg: rgba(255, 255, 255, 0.24);
+    --validationSummary-glass-border: rgba(255, 255, 255, 0.28);
+    --validationSummary-glass-text: var(--text-color-primary);
+
+    display: grid;
+    gap: var(--spacing-sm);
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: var(--spacing-lg);
+    border: 0;
+    border-left: 5px solid var(--validationSummary-border-color);
+    border-radius: var(--border-radius-md);
+    background: var(--validationSummary-soft-bg);
+    box-shadow: var(--box-shadow-sm);
+    font-family: var(--font-family-body);
+    transition: var(--transition-default);
+  }
+
+  .validationSummary:focus-visible {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+  }
+
+  .validationSummary_header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    min-width: 0;
+  }
+
+  .validationSummary_icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .validationSummary_icon svg {
+    display: block;
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+
+  .validationSummary_title,
+  .validationSummary_label {
+    margin: 0;
+    max-width: 100%;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-lg, 1.25rem);
+    font-weight: var(--font-weight-heading, 700);
+    line-height: var(--line-height-heading);
+    overflow-wrap: anywhere;
+  }
+
+  .validationSummary_description,
+  .validationSummary_content,
+  .validationSummary_emptyMessage,
+  .validationSummary_loadingMessage {
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body);
+    overflow-wrap: anywhere;
+  }
+
+  .validationSummary_list {
+    display: grid;
+    gap: var(--spacing-xs);
+    margin: 0;
+    padding-inline-start: calc(var(--spacing-lg) + var(--spacing-md));
+    list-style: none;
+  }
+
+  .validationSummary_item {
+    position: relative;
+    min-width: 0;
+    padding-inline-start: var(--spacing-md);
+    overflow-wrap: anywhere;
+  }
+
+  .validationSummary_item::before {
+    content: "→";
+    position: absolute;
+    inset-inline-start: 0;
+  }
+
+  .validationSummary_link,
+  .validationSummary_button {
+    font: inherit;
+    text-align: start;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .validationSummary_link:hover,
+  .validationSummary_button:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .validationSummary_button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+  }
+
+  .validationSummary_button:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  .validationSummary_link:focus-visible,
+  .validationSummary_button:focus-visible {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+    border-radius: var(--border-radius-sm);
+  }
+
+  .validationSummary_loadingRow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    min-width: 0;
+  }
+
+  .validationSummary_loader {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentcolor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    opacity: 0.72;
+    animation: spin 700ms linear infinite;
+  }
+
+  .validationSummary_empty {
+    opacity: 0.92;
+  }
+
+  @each $themeName, $vals in theme.$themes {
+    .validationSummary_#{$themeName} {
+      --validationSummary-accent-color: #{map.get($vals, border)};
+      --validationSummary-border-color: #{map.get($vals, border)};
+      --validationSummary-soft-bg: color-mix(
+        in srgb,
+        #{map.get($vals, border)} 8%,
+        transparent
+      );
+      --validationSummary-glass-bg: #{map.get($vals, glass-bg)};
+      --validationSummary-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --validationSummary-glass-border: #{map.get($vals, glass-border)};
+
+      background: var(--validationSummary-soft-bg);
+      border-left-color: var(--validationSummary-border-color);
+      color: var(--validationSummary-border-color);
+
+      &:hover {
+        background: color-mix(
+          in srgb,
+          #{map.get($vals, border)} 40%,
+          transparent
+        );
+      }
+
+      &.validationSummary_outline {
+        background: transparent;
+        box-shadow: none;
+        border: 1px solid var(--validationSummary-border-color);
+        border-left-width: 5px;
+      }
+    }
+  }
+
+  @each $state, $vals in theme.$states {
+    .validationSummary_#{$state} {
+      --validationSummary-accent-color: #{map.get($vals, border)};
+      --validationSummary-border-color: #{map.get($vals, border)};
+      --validationSummary-soft-bg: color-mix(
+        in srgb,
+        #{map.get($vals, border)} 10%,
+        transparent
+      );
+      --validationSummary-glass-bg: #{map.get($vals, glass-bg)};
+      --validationSummary-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --validationSummary-glass-border: #{map.get($vals, glass-border)};
+
+      background: var(--validationSummary-soft-bg);
+      border-left-color: var(--validationSummary-border-color);
+
+      &:hover {
+        background: color-mix(
+          in srgb,
+          #{map.get($vals, border)} 40%,
+          transparent
+        );
+      }
+    }
+  }
+
+  .validationSummary_clear {
+    background: transparent;
+    border-left-color: transparent;
+    box-shadow: none;
+  }
+
+  .validationSummary_glass {
+    @include mixins.glass-surface(var(--validationSummary-glass-border), 16px);
+    background-color: var(--validationSummary-glass-bg);
+    border-left-color: var(--validationSummary-glass-border);
+  }
+
+  .validationSummary_glass:hover {
+    background: var(--validationSummary-glass-hover-bg);
+  }
+
+  .validationSummary_glass.validationSummary_outline {
+    border-color: var(--validationSummary-glass-border);
+    border-left-width: 5px;
+  }
+
+  .validationSummary_disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background: color-mix(in srgb, var(--disabled-color) 16%, transparent);
+    color: var(--disabled-color);
+    border-left-color: var(--disabled-color);
+
+    a {
+      cursor: not-allowed;
+      color: var(--disabled-color);
+    }
+
+    a:hover {
+      text-decoration: none;
+      text-underline-offset: 0;
+      color: var(--disabled-color);
+    }
+
+    &:hover {
+      background: color-mix(in srgb, var(--disabled-color) 16%, transparent);
+    }
+  }
+
+  .validationSummary_loading {
+    cursor: progress;
+  }
+
+  @each $key, $value in theme.$rounding {
+    .validationSummary_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .validationSummary_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @include bp.down(xs) {
+    .validationSummary {
+      padding: var(--spacing-sm);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .validationSummary,
+    .validationSummary * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .validationSummary {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+      box-shadow: none;
+    }
+
+    .validationSummary_glass {
+      background: Canvas;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+}

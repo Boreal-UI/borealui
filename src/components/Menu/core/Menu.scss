@@ -2,6 +2,7 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
+@use "../../../styles/_animations";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
@@ -282,7 +283,13 @@
   @include bp.down(sm) {
     .menu_panel {
       min-width: min(16rem, calc(100vw - 1rem));
-      max-height: min(50vh, var(--menu-panel-max-height, 50vh));
+      max-height: min(
+        calc(50vh - 1rem),
+        var(--menu-panel-max-height, calc(50vh - 1rem))
+      );
+      overflow-x: hidden;
+      overflow-y: auto;
+      overscroll-behavior: contain;
       padding-bottom: calc(
         env(safe-area-inset-bottom, 0px) + var(--spacing-sm)
       );
@@ -296,7 +303,10 @@
       position: static;
       width: 100%;
       min-width: 100%;
+      max-height: none;
       margin: var(--spacing-xxs) 0 0;
+      overflow: visible;
+      padding-bottom: 0;
       box-shadow: none;
     }
   }

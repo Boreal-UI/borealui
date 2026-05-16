@@ -180,14 +180,15 @@ const BaseModal: React.FC<BaseModalProps> = ({
         isVisible ? classMap.visible : classMap.hidden,
         overlayClassName,
       )}
-      onClick={handleClose}
+      onMouseDown={handleClose}
       role="presentation"
       data-testid={testId}
     >
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
         ref={dialogRef}
         className={contentClassName}
-        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
         aria-label={ariaLabel}

@@ -44,6 +44,8 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
     const uid = useId();
     const inputId = id ?? `${testId}-input-${uid}`;
     const labelId = `${testId}-label-${uid}`;
+    const resolvedRequired =
+      required || ariaRequired === true || ariaRequired === "true";
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (disabled) return;
@@ -106,12 +108,11 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
             checked={checked}
             onChange={handleChange}
             disabled={disabled}
-            required={required}
+            required={resolvedRequired}
             aria-label={ariaLabel}
             aria-labelledby={resolvedAriaLabelledBy}
             aria-describedby={ariaDescribedBy}
-            aria-invalid={ariaInvalid}
-            aria-required={ariaRequired ?? required}
+            data-invalid={ariaInvalid || undefined}
             data-testid={testId}
             {...props}
           />

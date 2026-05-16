@@ -11,6 +11,14 @@ import {
   themeOptions,
 } from "../../shared-story-assets/OptionTypes";
 import { useState } from "react";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<DateRangePickerProps> = {
   title: "Components/DateRangePicker",
@@ -159,92 +167,6 @@ export const LabelBottom: Story = {
   },
 };
 
-export const Outline: Story = {
-  render: (args) => <DateRangePickerDemo {...args} />,
-  args: {
-    outline: true,
-    shadow: "light",
-  },
-};
-
-export const Glass: Story = {
-  render: (args) => (
-    <div
-      style={{
-        padding: "2rem",
-        borderRadius: "1rem",
-        background:
-          "linear-gradient(135deg, rgba(120, 119, 198, 0.35), rgba(255, 255, 255, 0.08))",
-      }}
-    >
-      <DateRangePickerDemo {...args} />
-    </div>
-  ),
-  args: {
-    glass: true,
-    outline: true,
-    shadow: "medium",
-  },
-};
-
-export const States: Story = {
-  render: () => (
-    <div style={{ display: "grid", gap: "1rem", maxWidth: "42rem" }}>
-      <DateRangePickerDemo
-        label="Success range"
-        value={{ start: "2026-05-01", end: "2026-05-12" }}
-        onChange={() => undefined}
-        state="success"
-        helperText="This range is available."
-      />
-
-      <DateRangePickerDemo
-        label="Warning range"
-        value={{ start: "2026-05-01", end: "2026-05-12" }}
-        onChange={() => undefined}
-        state="warning"
-        helperText="This range includes incomplete data."
-      />
-
-      <DateRangePickerDemo
-        label="Error range"
-        value={{ start: "2026-05-12", end: "2026-05-01" }}
-        onChange={() => undefined}
-        state="error"
-        helperText="Start dates cannot be later than end dates."
-        error="End date must be after start date."
-      />
-
-      <DateRangePickerDemo
-        label="Info range"
-        value={{ start: "2026-05-12", end: "2026-05-01" }}
-        onChange={() => undefined}
-        state="info"
-        helperText="This range provides informational context."
-      />
-    </div>
-  ),
-};
-
-export const Themes: Story = {
-  render: () => (
-    <div style={{ display: "grid", gap: "1rem", maxWidth: "42rem" }}>
-      {themeOptions.map((theme) => (
-        <DateRangePickerDemo
-          key={theme}
-          label={`${theme} range`}
-          value={{ start: "2026-05-01", end: "2026-05-12" }}
-          onChange={() => undefined}
-          theme={theme}
-          rounding="medium"
-          shadow="light"
-          helperText={`Date range using the ${theme} theme.`}
-        />
-      ))}
-    </div>
-  ),
-};
-
 export const VisualVariants: Story = {
   render: () => (
     <div style={{ display: "grid", gap: "1rem", maxWidth: "42rem" }}>
@@ -282,4 +204,30 @@ export const VisualVariants: Story = {
       />
     </div>
   ),
+};
+
+export const ThemeVariants: Story = {
+  render: (args) => renderThemeVariants({ component: DateRangePicker, args }),
+};
+
+export const StateVariants: Story = {
+  render: (args) => renderStateVariants({ component: DateRangePicker, args }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => renderOutlineVariants({ component: DateRangePicker, args }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) => renderGlassVariants({ component: DateRangePicker, args }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) =>
+    renderGlassOutlineVariants({ component: DateRangePicker, args }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) =>
+    renderStateOutlineVariants({ component: DateRangePicker, args }),
 };

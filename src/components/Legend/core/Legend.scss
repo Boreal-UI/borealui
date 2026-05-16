@@ -1,0 +1,109 @@
+@use "../../../styles/_animations";
+
+
+@layer boreal-ui.components {
+  .legend,
+  .root {
+    display: inline-flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    max-width: 100%;
+    color: var(--text-color-primary);
+    font-family: var(--font-family-ui);
+  }
+  .legend_label,
+  .label {
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-ui);
+    color: var(--text-color-primary);
+  }
+  .legend_list,
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs) var(--spacing-md);
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .legend_vertical .legend_list,
+  .vertical .list {
+    flex-direction: column;
+  }
+  .legend_item,
+  .item {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    min-width: 0;
+    font-size: var(--font-size-body-sm);
+  }
+  .legend_swatch,
+  .swatch {
+    width: 0.75rem;
+    height: 0.75rem;
+    flex: 0 0 auto;
+    border-radius: var(--border-radius-full);
+  }
+  .legend_text,
+  .text {
+    min-width: 0;
+    overflow-wrap: anywhere;
+    color: var(--text-color-primary);
+  }
+  .legend_value,
+  .value {
+    font-variant-numeric: tabular-nums;
+    opacity: 0.76;
+    color: var(--text-color-primary);
+  }
+  .legend_loader,
+  .loader {
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentcolor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    animation: spin 700ms linear infinite;
+  }
+  .legend_primary,
+  .primary {
+    color: var(--primary-color);
+  }
+  .legend_secondary,
+  .secondary {
+    color: var(--secondary-color);
+  }
+  .legend_tertiary,
+  .tertiary {
+    color: var(--tertiary-color);
+  }
+  .legend_quaternary,
+  .quaternary {
+    color: var(--quaternary-color);
+  }
+  .legend_clear,
+  .clear {
+    color: var(--text-color-primary);
+  }
+  .legend_success,
+  .success {
+    color: var(--success-color);
+  }
+  .legend_info,
+  .info {
+    color: var(--info-color);
+  }
+  .legend_warning,
+  .warning {
+    color: var(--warning-color);
+  }
+  .legend_error,
+  .error {
+    color: var(--error-color);
+  }
+  .legend_loading,
+  .loading {
+    cursor: progress;
+  }
+}

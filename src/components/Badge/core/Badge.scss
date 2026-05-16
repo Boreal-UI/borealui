@@ -5,92 +5,67 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    width: fit-content;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    padding: var(--spacing-xs) var(--spacing-md);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    white-space: nowrap;
+    transition: all var(--transition-default);
+    cursor: default;
 
-.badge {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-  width: fit-content;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  padding: var(--spacing-xs) var(--spacing-md);
-  border: none;
-  border-radius: var(--border-radius-sm);
-  white-space: nowrap;
-  transition: all var(--transition-default);
-  cursor: default;
+    &.badge_clickable:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 12px rgb(0 0 0 / 15%);
+      cursor: pointer;
 
-  &.badge_clickable:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 12px rgb(0 0 0 / 15%);
-    cursor: pointer;
+      @include bp.down(sm) {
+        transform: scale(1.03);
+        box-shadow: 0 4px 8px rgb(0 0 0 / 12%);
+      }
+    }
+
+    &.badge_clickable:focus {
+      outline: 2px solid var(--focus-outline-color);
+      outline-offset: 2px;
+    }
 
     @include bp.down(sm) {
-      transform: scale(1.03);
-      box-shadow: 0 4px 8px rgb(0 0 0 / 12%);
+      font-size: var(--font-size-caption);
+      padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body-sm);
+      padding: var(--spacing-xs) calc(var(--spacing-md) - 2px);
     }
   }
 
-  &.badge_clickable:focus {
-    outline: 2px solid var(--focus-outline-color);
-    outline-offset: 2px;
-  }
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-caption);
-    padding: var(--spacing-xs) var(--spacing-sm);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body-sm);
-    padding: var(--spacing-xs) calc(var(--spacing-md) - 2px);
-  }
-}
-
-.badge_icon {
-  font-size: 1.2em;
-  line-height: 1;
-  margin-top: -0.1em;
-
-  @include bp.down(sm) {
-    font-size: 1em;
-  }
-
-  @include bp.up(lg) {
-    font-size: 1.3em;
-  }
-}
-
-.badge_clear {
-  background-color: transparent;
-  color: var(--text-color-primary);
-
-  &.badge_clickable:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--box-shadow-heavy);
+  .badge_icon {
+    font-size: 1.2em;
+    line-height: 1;
+    margin-top: -0.1em;
 
     @include bp.down(sm) {
-      transform: translateY(-1px);
-      box-shadow: var(--box-shadow-medium);
+      font-size: 1em;
+    }
+
+    @include bp.up(lg) {
+      font-size: 1.3em;
     }
   }
 
-  &.badge_clickable:focus {
-    outline: 2px solid var(--text-color-primary);
-    outline-offset: 2px;
-  }
-
-  &_outline {
+  .badge_clear {
     background-color: transparent;
     color: var(--text-color-primary);
-    border: 2px solid var(--text-color-primary);
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
 
     &.badge_clickable:hover {
       transform: translateY(-2px);
@@ -106,286 +81,316 @@
       outline: 2px solid var(--text-color-primary);
       outline-offset: 2px;
     }
-  }
-}
 
-.badge_glass {
-  @include mixins.glass-surface(
-    var(--badge-glass-bg, var(--glass-background)),
-    var(--badge-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
-  );
-
-  color: var(--badge-glass-text, currentcolor);
-  isolation: isolate;
-
-  &.badge_clickable:hover {
-    background: var(--badge-glass-hover-bg, var(--glass-background-strong));
-  }
-
-  &.badge_outline {
-    border-color: var(--badge-glass-border, var(--glass-border-color));
-
-    &.badge_clickable:hover {
-      background: var(--badge-glass-hover-bg, var(--glass-background));
-    }
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .badge_shadow-#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .badge_round-#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $name, $values in theme.$themes {
-  .badge_#{$name} {
-    background-color: map.get($values, bg);
-    color: map.get($values, text);
-
-    --badge-glass-bg: #{map.get($values, glass-bg)};
-    --badge-glass-hover-bg: #{map.get($values, glass-hover)};
-    --badge-glass-border: #{map.get($values, glass-border)};
-    --badge-glass-text: #{map.get($values, text)};
-
-    &.badge_clickable:hover {
-      background-color: map.get($values, hover);
-      transform: translateY(-2px);
-      box-shadow: var(--box-shadow-heavy);
+    &_outline {
+      background-color: transparent;
+      color: var(--text-color-primary);
+      border: 2px solid var(--text-color-primary);
 
       @include bp.down(sm) {
-        transform: translateY(-1px);
-        box-shadow: var(--box-shadow-medium);
+        border-width: 1.5px;
+      }
+
+      &.badge_clickable:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--box-shadow-heavy);
+
+        @include bp.down(sm) {
+          transform: translateY(-1px);
+          box-shadow: var(--box-shadow-medium);
+        }
+      }
+
+      &.badge_clickable:focus {
+        outline: 2px solid var(--text-color-primary);
+        outline-offset: 2px;
       }
     }
-
-    &.badge_clickable:focus {
-      outline: 2px solid map.get($values, border);
-      outline-offset: 2px;
-    }
-
-    .loader {
-      border-top-color: map.get($values, text);
-    }
-  }
-
-  .badge_#{$name}.badge_glass {
-    background-color: transparent;
-    background: var(--badge-glass-bg);
-    border: 1px solid var(--badge-glass-border);
-    color: var(--badge-glass-text);
-
-    &.badge_clickable:hover {
-      background-color: transparent;
-      background: var(--badge-glass-hover-bg);
-    }
-  }
-
-  .badge_#{$name}.badge_outline {
-    background-color: transparent;
-    color: map.get($values, text);
-    border: 2px solid map.get($values, border);
-    box-shadow: none;
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
-
-    &.badge_clickable:hover {
-      border-color: map.get($values, hover);
-      color: map.get($values, text-hover);
-    }
-  }
-
-  .badge_#{$name}.badge_outline.badge_glass {
-    @include mixins.glass-surface(
-      transparent,
-      var(--badge-glass-border),
-      var(--glass-blur)
-    );
-
-    color: var(--badge-glass-text);
-  }
-}
-
-@each $name, $values in theme.$states {
-  .badge_#{$name} {
-    background-color: map.get($values, bg);
-    color: map.get($values, text);
-
-    --badge-glass-bg: #{map.get($values, glass-bg)};
-    --badge-glass-hover-bg: #{map.get($values, glass-hover)};
-    --badge-glass-border: #{map.get($values, glass-border)};
-    --badge-glass-text: #{map.get($values, text)};
-
-    &.badge_clickable:hover {
-      background-color: map.get($values, hover);
-      transform: translateY(-2px);
-      box-shadow: var(--box-shadow-heavy);
-
-      @include bp.down(sm) {
-        transform: translateY(-1px);
-        box-shadow: var(--box-shadow-medium);
-      }
-    }
-
-    &.badge_clickable:focus {
-      outline: 2px solid map.get($values, border);
-      outline-offset: 2px;
-    }
-
-    .loader {
-      border-top-color: map.get($values, text);
-    }
-  }
-
-  .badge_#{$name}.badge_glass {
-    background-color: transparent;
-    background: var(--badge-glass-bg);
-    border: 1px solid var(--badge-glass-border);
-    color: var(--badge-glass-text);
-
-    &.badge_clickable:hover {
-      background-color: transparent;
-      background: var(--badge-glass-hover-bg);
-    }
-  }
-
-  .badge_#{$name}.badge_outline {
-    background-color: transparent;
-    color: map.get($values, text);
-    border: 2px solid map.get($values, border);
-    box-shadow: none;
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
-
-    &.badge_clickable:hover {
-      border-color: map.get($values, hover);
-      color: map.get($values, text-hover);
-    }
-  }
-
-  .badge_#{$name}.badge_outline.badge_glass {
-    @include mixins.glass-surface(
-      transparent,
-      var(--badge-glass-border),
-      var(--glass-blur)
-    );
-
-    color: var(--badge-glass-text);
-  }
-}
-
-.badge_disabled {
-  background-color: var(--disabled-color);
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-}
-
-.badge_xs {
-  font-size: var(--font-size-xxs);
-  padding: 2px var(--spacing-sm);
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-xs);
-    padding: 3px 10px;
-  }
-}
-
-.badge_small {
-  font-size: var(--font-size-caption);
-  padding: var(--spacing-xs) var(--spacing-sm);
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-label);
-    padding: var(--spacing-xs) 10px;
-  }
-}
-
-.badge_medium {
-  font-size: var(--font-size-label);
-  padding: var(--spacing-xs) 10px;
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-caption);
-    padding: 3px var(--spacing-sm);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body-sm);
-    padding: 5px 12px;
-  }
-}
-
-.badge_large {
-  font-size: var(--font-size-body-sm);
-  padding: var(--spacing-xs) 12px;
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-label);
-    padding: var(--spacing-xs) 10px;
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body);
-    padding: 6px 14px;
-  }
-}
-
-.badge_xl {
-  font-size: var(--font-size-body);
-  padding: var(--spacing-xs) 14px;
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-body-sm);
-    padding: var(--spacing-xs) 12px;
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-h6);
-    padding: 6px 16px;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .badge {
-    transition: none;
-  }
-
-  .badge.badge_clickable:hover {
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-@media (hover: none) {
-  .badge.badge_clickable:hover {
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .badge {
-    border: 1px solid ButtonText;
-    outline-color: Highlight;
   }
 
   .badge_glass {
-    background: Canvas;
-    border: 1px solid ButtonText;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+    @include mixins.glass-surface(
+      var(--badge-glass-bg, var(--glass-background)),
+      var(--badge-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--badge-glass-text, currentcolor);
+    isolation: isolate;
+
+    &.badge_clickable:hover {
+      background: var(--badge-glass-hover-bg, var(--glass-background-strong));
+    }
+
+    &.badge_outline {
+      border-color: var(--badge-glass-border, var(--glass-border-color));
+
+      &.badge_clickable:hover {
+        background: var(--badge-glass-hover-bg, var(--glass-background));
+      }
+    }
   }
-}
+
+  @each $key, $value in theme.$shadow {
+    .badge_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @each $key, $value in theme.$rounding {
+    .badge_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $name, $values in theme.$themes {
+    .badge_#{$name} {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+
+      --badge-glass-bg: #{map.get($values, glass-bg)};
+      --badge-glass-hover-bg: #{map.get($values, glass-hover)};
+      --badge-glass-border: #{map.get($values, glass-border)};
+      --badge-glass-text: #{map.get($values, text)};
+
+      &.badge_clickable:hover {
+        background-color: map.get($values, hover);
+        transform: translateY(-2px);
+        box-shadow: var(--box-shadow-heavy);
+
+        @include bp.down(sm) {
+          transform: translateY(-1px);
+          box-shadow: var(--box-shadow-medium);
+        }
+      }
+
+      &.badge_clickable:focus {
+        outline: 2px solid map.get($values, border);
+        outline-offset: 2px;
+      }
+
+      .loader {
+        border-top-color: map.get($values, text);
+      }
+    }
+
+    .badge_#{$name}.badge_glass {
+      background-color: transparent;
+      background: var(--badge-glass-bg);
+      border: 1px solid var(--badge-glass-border);
+      color: var(--badge-glass-text);
+
+      &.badge_clickable:hover {
+        background-color: transparent;
+        background: var(--badge-glass-hover-bg);
+      }
+    }
+
+    .badge_#{$name}.badge_outline {
+      background-color: transparent;
+      color: map.get($values, text);
+      border: 2px solid map.get($values, border);
+      box-shadow: none;
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+
+      &.badge_clickable:hover {
+        border-color: map.get($values, hover);
+        color: map.get($values, text-hover);
+      }
+    }
+
+    .badge_#{$name}.badge_outline.badge_glass {
+      @include mixins.glass-surface(
+        transparent,
+        var(--badge-glass-border),
+        var(--glass-blur)
+      );
+
+      color: var(--badge-glass-text);
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .badge_#{$name} {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+
+      --badge-glass-bg: #{map.get($values, glass-bg)};
+      --badge-glass-hover-bg: #{map.get($values, glass-hover)};
+      --badge-glass-border: #{map.get($values, glass-border)};
+      --badge-glass-text: #{map.get($values, text)};
+
+      &.badge_clickable:hover {
+        background-color: map.get($values, hover);
+        transform: translateY(-2px);
+        box-shadow: var(--box-shadow-heavy);
+
+        @include bp.down(sm) {
+          transform: translateY(-1px);
+          box-shadow: var(--box-shadow-medium);
+        }
+      }
+
+      &.badge_clickable:focus {
+        outline: 2px solid map.get($values, border);
+        outline-offset: 2px;
+      }
+
+      .loader {
+        border-top-color: map.get($values, text);
+      }
+    }
+
+    .badge_#{$name}.badge_glass {
+      background-color: transparent;
+      background: var(--badge-glass-bg);
+      border: 1px solid var(--badge-glass-border);
+      color: var(--badge-glass-text);
+
+      &.badge_clickable:hover {
+        background-color: transparent;
+        background: var(--badge-glass-hover-bg);
+      }
+    }
+
+    .badge_#{$name}.badge_outline {
+      background-color: transparent;
+      color: map.get($values, text);
+      border: 2px solid map.get($values, border);
+      box-shadow: none;
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+
+      &.badge_clickable:hover {
+        border-color: map.get($values, hover);
+        color: map.get($values, text-hover);
+      }
+    }
+
+    .badge_#{$name}.badge_outline.badge_glass {
+      @include mixins.glass-surface(
+        transparent,
+        var(--badge-glass-border),
+        var(--glass-blur)
+      );
+
+      color: var(--badge-glass-text);
+    }
+  }
+
+  .badge_xs {
+    font-size: var(--font-size-xxs);
+    padding: 2px var(--spacing-sm);
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-xs);
+      padding: 3px 10px;
+    }
+  }
+
+  .badge_small {
+    font-size: var(--font-size-caption);
+    padding: var(--spacing-xs) var(--spacing-sm);
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-label);
+      padding: var(--spacing-xs) 10px;
+    }
+  }
+
+  .badge_medium {
+    font-size: var(--font-size-label);
+    padding: var(--spacing-xs) 10px;
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-caption);
+      padding: 3px var(--spacing-sm);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body-sm);
+      padding: 5px 12px;
+    }
+  }
+
+  .badge_large {
+    font-size: var(--font-size-body-sm);
+    padding: var(--spacing-xs) 12px;
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-label);
+      padding: var(--spacing-xs) 10px;
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body);
+      padding: 6px 14px;
+    }
+  }
+
+  .badge_xl {
+    font-size: var(--font-size-body);
+    padding: var(--spacing-xs) 14px;
+
+    @include bp.down(sm) {
+      font-size: var(--font-size-body-sm);
+      padding: var(--spacing-xs) 12px;
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-h6);
+      padding: 6px 16px;
+    }
+  }
+
+  .badge_disabled,
+  .badge:disabled {
+    background-color: var(--disabled-color);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .badge_disabled.badge_clickable:hover {
+    background-color: var(--disabled-color);
+    transform: none;
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .badge {
+      transition: none;
+    }
+
+    .badge.badge_clickable:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  @media (hover: none) {
+    .badge.badge_clickable:hover {
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .badge {
+      border: 1px solid ButtonText;
+      outline-color: Highlight;
+    }
+
+    .badge_glass {
+      background: Canvas;
+      border: 1px solid ButtonText;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
 }

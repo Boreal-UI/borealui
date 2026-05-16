@@ -22,6 +22,7 @@ import {
 
 const ROOT_PANEL_PATH = "root";
 const VIEWPORT_MARGIN = 8;
+const STACKED_MENU_QUERY = "(max-width: 479.98px)";
 
 type PanelStyle = React.CSSProperties & Record<string, string>;
 type PanelLayout = {
@@ -46,6 +47,11 @@ const isPathOpen = (openPath: string | null, path: string) =>
 const isDisabledElement = (element: HTMLElement) =>
   element.getAttribute("aria-disabled") === "true" ||
   (element instanceof HTMLButtonElement && element.disabled);
+
+const isStackedMenuViewport = () =>
+  window.innerWidth <= 479.98 ||
+  (typeof window.matchMedia === "function" &&
+    window.matchMedia(STACKED_MENU_QUERY).matches);
 
 const BaseMenu: React.FC<BaseMenuProps> = ({
   items,
@@ -256,6 +262,32 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
     if (!isOpen) return;
     updatePanelLayouts();
   }, [isOpen, items, openSubmenuPath, updatePanelLayouts]);
+
+  useLayoutEffect(() => {
+    if (
+      !isOpen ||
+      !openSubmenuPath ||
+      !menuRef.current ||
+      !isStackedMenuViewport()
+    ) {
+      return;
+    }
+
+    const scrollOpenedSubmenuIntoView = () => {
+      const openedSubmenu = Array.from(
+        menuRef.current?.querySelectorAll<HTMLElement>("[data-menu-panel]") ??
+          [],
+      ).find((panel) => panel.dataset.menuPanelPath === openSubmenuPath);
+
+      openedSubmenu?.scrollIntoView?.({ block: "nearest" });
+    };
+
+    if (window.requestAnimationFrame) {
+      window.requestAnimationFrame(scrollOpenedSubmenuIntoView);
+    } else {
+      window.setTimeout(scrollOpenedSubmenuIntoView);
+    }
+  }, [isOpen, openSubmenuPath]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -664,6 +696,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       };
       const openDirectSubmenu = () => openSubmenu(false);
       const closeChildSubmenus = () => {
+        if (isStackedMenuViewport()) return;
         if (hasSubmenu) return;
 
         setOpenSubmenuPath((currentPath) => {
@@ -674,6 +707,8 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
         });
       };
       const handleDirectItemHover = () => {
+        if (isStackedMenuViewport()) return;
+
         if (hasSubmenu) {
           openSubmenu();
           return;
@@ -682,13 +717,20 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
         closeChildSubmenus();
       };
       const handleSubmenuTriggerEnter = () => {
+        if (isStackedMenuViewport()) return;
         openSubmenu();
+      };
+      const handleSubmenuTriggerOver = () => {
+        if (isStackedMenuViewport()) return;
+        openDirectSubmenu();
       };
       const handleSubmenuWrapperOver = (
         event:
           | React.MouseEvent<HTMLDivElement>
           | React.PointerEvent<HTMLDivElement>,
       ) => {
+        if (isStackedMenuViewport()) return;
+
         const target = event.target as HTMLElement;
         const currentPanel = event.currentTarget.closest("[data-menu-panel]");
         const targetPanel = target.closest("[data-menu-panel]");
@@ -740,11 +782,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
             classMap.itemWrapper,
             hasSubmenu && classMap.hasSubmenu,
           )}
-          role="group"
+          role="presentation"
           data-menu-item-wrapper="true"
           data-menu-item-path={itemPath}
-          onMouseEnter={handleDirectItemHover}
-          onMouseOver={handleSubmenuWrapperOver}
           onPointerEnter={handleDirectItemHover}
           onPointerOver={handleSubmenuWrapperOver}
         >
@@ -753,10 +793,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
               type="button"
               disabled={item.disabled}
               {...commonProps}
-              onMouseEnter={handleSubmenuTriggerEnter}
-              onMouseOver={openDirectSubmenu}
               onPointerEnter={handleSubmenuTriggerEnter}
-              onPointerOver={openDirectSubmenu}
+              onPointerOver={handleSubmenuTriggerOver}
+              onFocus={handleSubmenuTriggerEnter}
               onClick={(event) => {
                 event.stopPropagation();
                 openDirectSubmenu();
@@ -827,6 +866,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       id={id}
       ref={wrapperRef}
       className={combineClassNames(classMap.wrapper, className)}
+      role="presentation"
       data-testid={testId}
       onContextMenu={handleContextMenu}
       onClick={handleClick}
@@ -835,11 +875,13 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       {renderTrigger()}
 
       {children && (
-        <div
-          ref={targetRef}
-          className={combineClassNames(classMap.target, targetClassName)}
-          tabIndex={activation === "manual" ? undefined : 0}
-          data-testid={`${testId}-target`}
+          <div
+            ref={targetRef}
+            className={combineClassNames(classMap.target, targetClassName)}
+            role={activation === "manual" ? undefined : "button"}
+            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+            tabIndex={activation === "manual" ? undefined : 0}
+            data-testid={`${testId}-target`}
         >
           {children}
         </div>

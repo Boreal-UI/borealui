@@ -2,7 +2,20 @@ type ClassMap = Record<string, string>;
 
 const expandedClassMapCache = new WeakMap<ClassMap, ClassMap>();
 
-const propAliases: Record<string, string> = {
+const unsafeObjectKeys = new Set(["__proto__", "constructor", "prototype"]);
+
+const isSafeObjectKey = (key: string) => !unsafeObjectKeys.has(key);
+
+const assignSafeClass = (
+  target: ClassMap,
+  key: string,
+  value: string | undefined,
+) => {
+  if (!value || !isSafeObjectKey(key)) return;
+  target[key] = value;
+};
+
+const propAliases: Record<string, string> = Object.freeze({
   p: "primary",
   s: "secondary",
   t: "tertiary",
@@ -30,9 +43,9 @@ const propAliases: Record<string, string> = {
   st: "static",
   fx: "fixed",
   sk: "sticky",
-};
+});
 
-const runtimeAliases: Record<string, string> = {
+const runtimeAliases: Record<string, string> = Object.freeze({
   h: "horizontal",
   v: "vertical",
   t: "top",
@@ -48,15 +61,15 @@ const runtimeAliases: Record<string, string> = {
   st: "static",
   fx: "fixed",
   sk: "sticky",
-};
+});
 
-const themeAliases: Record<string, string> = {
+const themeAliases: Record<string, string> = Object.freeze({
   p: "primary",
   s: "secondary",
   t: "tertiary",
   q: "quaternary",
   c: "clear",
-};
+});
 
 const prefixedAliases: Array<[string, string, string]> = [
   ["shadowSm", "shadowSmall", "shadowLight"],
@@ -82,6 +95,7 @@ const prefixedAliases: Array<[string, string, string]> = [
 
 const resolveClass = (classMap: ClassMap, ...keys: string[]) => {
   for (const key of keys) {
+    if (!isSafeObjectKey(key)) continue;
     if (classMap[key]) return classMap[key];
   }
 
@@ -116,11 +130,15 @@ export const expandClassMap = <T extends ClassMap>(classMap: T): T => {
   const cached = expandedClassMapCache.get(classMap);
   if (cached) return cached as T;
 
-  const expanded: ClassMap = { ...classMap };
+  const expanded = Object.create(null) as ClassMap;
+
+  for (const [key, value] of Object.entries(classMap)) {
+    assignSafeClass(expanded, key, value);
+  }
 
   for (const [alias, canonical] of Object.entries(propAliases)) {
     const resolved = resolveClass(classMap, canonical, alias);
-    if (resolved) expanded[alias] = resolved;
+    assignSafeClass(expanded, alias, resolved);
   }
 
   for (const [aliasKey, canonicalKey, fallbackKey] of prefixedAliases) {
@@ -130,7 +148,7 @@ export const expandClassMap = <T extends ClassMap>(classMap: T): T => {
       fallbackKey,
       aliasKey,
     );
-    if (resolved) expanded[aliasKey] = resolved;
+    assignSafeClass(expanded, aliasKey, resolved);
   }
 
   expandedClassMapCache.set(classMap, expanded);

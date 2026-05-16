@@ -17,6 +17,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<ButtonProps> = {
   title: "Components/Button",
@@ -93,73 +101,6 @@ export const FullWidth: Story = {
     children: "Full Width Button",
   },
 };
-
-export const OutlineVariants = () => (
-  <StoryGrid title="Outline Buttons">
-    {themeOptions.map((theme) => (
-      <Button key={theme} theme={theme} outline>
-        {theme} Outline
-      </Button>
-    ))}
-    {stateOptions.map((state) => (
-      <Button key={state} state={state} outline>
-        {state} Outline
-      </Button>
-    ))}
-  </StoryGrid>
-);
-
-export const ThemeVariants = () => (
-  <StoryGrid title="Theme Variants">
-    {themeOptions.map((theme) => (
-      <Button key={theme} theme={theme}>
-        {theme}
-      </Button>
-    ))}
-  </StoryGrid>
-);
-
-export const StateVariants = () => (
-  <StoryGrid title="State Variants">
-    {stateOptions.map((state) => (
-      <Button key={state} state={state}>
-        {state}
-      </Button>
-    ))}
-  </StoryGrid>
-);
-
-export const GlassVariants = () => (
-  <StoryGrid title="Glass Buttons">
-    {themeOptions.map((theme) => (
-      <Button key={theme} theme={theme} glass>
-        {theme} Glass
-      </Button>
-    ))}
-
-    {stateOptions.map((state) => (
-      <Button key={state} state={state} glass>
-        {state} Glass
-      </Button>
-    ))}
-  </StoryGrid>
-);
-
-export const OutlineGlassVariants = () => (
-  <StoryGrid title="Glass Outline Buttons">
-    {themeOptions.map((theme) => (
-      <Button key={theme} theme={theme} outline glass>
-        {theme} Glass Outline
-      </Button>
-    ))}
-
-    {stateOptions.map((state) => (
-      <Button key={state} state={state} outline glass>
-        {state} Glass Outline
-      </Button>
-    ))}
-  </StoryGrid>
-);
 
 export const SizeVariants = () => (
   <StoryGrid title="Size Variants">
@@ -239,4 +180,28 @@ export const WithAriaLabel: Story = {
     "aria-label": "Custom Aria Label",
     children: "Accessible Button",
   },
+};
+
+export const ThemeVariants: Story = {
+  render: (args) => renderThemeVariants({ component: Button, args }),
+};
+
+export const StateVariants: Story = {
+  render: (args) => renderStateVariants({ component: Button, args }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => renderOutlineVariants({ component: Button, args }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) => renderGlassVariants({ component: Button, args }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: Button, args }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) => renderStateOutlineVariants({ component: Button, args }),
 };

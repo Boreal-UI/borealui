@@ -133,6 +133,7 @@ const TooltipBase = forwardRef<
     trigger = (
       <span
         id={triggerId}
+        role="button"
         tabIndex={0}
         className={classMap.triggerWrapper}
         aria-label={triggerAriaLabel}

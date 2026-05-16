@@ -27,15 +27,15 @@ import type { SizeType } from "boreal-ui/next/types";
 
 Common shared types:
 
-| Type | Values |
-| --- | --- |
-| `ThemeType` | `primary`, `secondary`, `tertiary`, `quaternary`, `clear` |
-| `StateType` | `success`, `error`, `warning`, `info`, `disabled`, empty string |
-| `SizeType` | `xs`, `small`, `medium`, `large`, `xl` |
-| `RoundingType` | `none`, `small`, `medium`, `large`, `full` |
-| `ShadowType` | `none`, `light`, `medium`, `strong`, `intense` |
-| `BorderType` | `none`, `xs`, `small`, `medium`, `large`, `xl` |
-| `ColorScheme` | Named color scheme object used by theming APIs. |
+| Type           | Values                                                          |
+| -------------- | --------------------------------------------------------------- |
+| `ThemeType`    | `primary`, `secondary`, `tertiary`, `quaternary`, `clear`       |
+| `StateType`    | `success`, `error`, `warning`, `info`, `disabled`, empty string |
+| `SizeType`     | `xs`, `small`, `medium`, `large`, `xl`                          |
+| `RoundingType` | `none`, `small`, `medium`, `large`, `full`                      |
+| `ShadowType`   | `none`, `light`, `medium`, `strong`, `intense`                  |
+| `BorderType`   | `none`, `xs`, `small`, `medium`, `large`, `xl`                  |
+| `ColorScheme`  | Named color scheme object used by theming APIs.                 |
 
 ## Component Types
 
@@ -44,6 +44,8 @@ Component prop types are available through component entry points.
 ```ts
 import type { ButtonProps } from "boreal-ui/core/Button";
 import type { DataTableProps, Column } from "boreal-ui/core/DataTable";
+import type { NumberInputProps } from "boreal-ui/core/NumberInput";
+import type { SparklineProps } from "boreal-ui/core/Sparkline";
 ```
 
 For Next.js consumers:
@@ -81,6 +83,9 @@ import {
   buttonPropDocs,
   cardPropDocs,
   dataTablePropDocs,
+  numberInputPropDocs,
+  sparklinePropDocs,
+  validationSummaryPropDocs,
   radioGroupPropDocs,
   themeSelectPropDocs,
   type GeneratedComponentDoc,
@@ -137,7 +142,9 @@ export function ButtonPropTable() {
             <td>
               <code>{prop.type}</code>
             </td>
-            <td>{prop.defaultValue ? <code>{prop.defaultValue}</code> : "-"}</td>
+            <td>
+              {prop.defaultValue ? <code>{prop.defaultValue}</code> : "-"}
+            </td>
             <td>{prop.required ? "Yes" : "No"}</td>
             <td>{prop.description}</td>
           </tr>
@@ -162,6 +169,9 @@ const docs: GeneratedComponentDoc[] = [
   buttonPropDocs,
   cardPropDocs,
   dataTablePropDocs,
+  numberInputPropDocs,
+  sparklinePropDocs,
+  validationSummaryPropDocs,
   radioGroupPropDocs,
   themeSelectPropDocs,
 ];
@@ -169,14 +179,14 @@ const docs: GeneratedComponentDoc[] = [
 export const componentNames = docs.map((doc) => doc.name);
 ```
 
-The docs package currently exports metadata for every documented public component, including public components that share a type file such as `RadioButton`/`RadioGroup` and `Select`/`ThemeSelect`.
+The docs package currently exports metadata for every documented public component, including public components that share a type file such as `RadioButton`/`RadioGroup` and `Select`/`ThemeSelect`, plus newer workflow and chart components such as `InputGroup`, `ValidationSummary`, `AppShell`, `TreeView`, `Sparkline`, `BarChart`, `LineChart`, `DonutChart`, and `Legend`.
 
 ## Keeping Docs Current
 
 Prop metadata is generated from source types. In the Boreal UI repo, run:
 
 ```bash
-npm run generate:docs
+npm run gen:docs
 ```
 
 Consumers of the package do not need to run this command. They can import the generated metadata shipped with the package.

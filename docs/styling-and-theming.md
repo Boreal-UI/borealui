@@ -60,19 +60,19 @@ Interactive Next.js setup prompts for this by default. Use `--recommended-global
 
 Many components support a common styling vocabulary.
 
-| Prop | Values |
-| --- | --- |
-| `theme` | `primary`, `secondary`, `tertiary`, `quaternary`, `clear` |
-| `state` | `success`, `error`, `warning`, `info`, `disabled`, empty string |
-| `size` | `xs`, `small`, `medium`, `large`, `xl` |
-| `rounding` | `none`, `small`, `medium`, `large`, `full` |
-| `shadow` | `none`, `light`, `medium`, `strong`, `intense` |
-| `borderWidth` | `none`, `xs`, `small`, `medium`, `large`, `xl` |
-| `outline` | Boolean outline treatment where supported. |
-| `glass` | Boolean translucent surface treatment where supported. |
-| `className` | Consumer class hook on the root element. |
+| Prop          | Values                                                          |
+| ------------- | --------------------------------------------------------------- |
+| `theme`       | `primary`, `secondary`, `tertiary`, `quaternary`, `clear`       |
+| `state`       | `success`, `error`, `warning`, `info`, `disabled`, empty string |
+| `size`        | `xs`, `small`, `medium`, `large`, `xl`                          |
+| `rounding`    | `none`, `small`, `medium`, `large`, `full`                      |
+| `shadow`      | `none`, `light`, `medium`, `strong`, `intense`                  |
+| `borderWidth` | `none`, `xs`, `small`, `medium`, `large`, `xl`                  |
+| `outline`     | Boolean outline treatment where supported.                      |
+| `glass`       | Boolean translucent surface treatment where supported.          |
+| `className`   | Consumer class hook on the root element.                        |
 
-Exact support varies by component. Use TypeScript or generated prop docs to confirm a component's full API.
+Exact support varies by component. Use TypeScript or generated prop docs to confirm a component's full API. Structural utilities such as `Portal` intentionally keep a smaller styling surface because they render content into another DOM container rather than owning a themed visual surface.
 
 ```tsx
 import { Button, Card } from "boreal-ui/core";
@@ -129,7 +129,9 @@ Component props override global defaults.
 import { ThemeProvider } from "boreal-ui/core";
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
-  return <ThemeProvider initialSchemeName="Forest Dusk">{children}</ThemeProvider>;
+  return (
+    <ThemeProvider initialSchemeName="Forest Dusk">{children}</ThemeProvider>
+  );
 }
 ```
 
@@ -156,7 +158,11 @@ To reduce first-paint color flashing outside that stricter hydration-safe setup,
 ```tsx
 import { getThemeInitializationScript } from "boreal-ui/next";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
@@ -172,13 +178,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 `ThemeProvider` props:
 
-| Prop | Description |
-| --- | --- |
-| `children` | Application or subtree to theme. |
-| `customSchemes` | Registers additional color schemes. |
-| `enableThemeScript` | Renders the pre-hydration theme script. Defaults to `true` for core and `false` for Next. |
-| `initialSchemeName` | Selects the starting scheme by name. |
-| `useOnlyCustomSchemes` | Uses only custom schemes instead of built-in schemes. |
+| Prop                   | Description                                                                               |
+| ---------------------- | ----------------------------------------------------------------------------------------- |
+| `children`             | Application or subtree to theme.                                                          |
+| `customSchemes`        | Registers additional color schemes.                                                       |
+| `enableThemeScript`    | Renders the pre-hydration theme script. Defaults to `true` for core and `false` for Next. |
+| `initialSchemeName`    | Selects the starting scheme by name.                                                      |
+| `useOnlyCustomSchemes` | Uses only custom schemes instead of built-in schemes.                                     |
 
 When `initialSchemeName` is provided, it is preferred over the saved theme name. Without it, the saved theme name is used when available, then the configured Boreal default, then the first available scheme.
 

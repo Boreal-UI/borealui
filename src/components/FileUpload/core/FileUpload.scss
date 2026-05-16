@@ -1,6 +1,5 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/_animations";
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
@@ -111,8 +110,12 @@
       background-color: var(--background-color-light);
       border-color: var(--background-color-darker);
       cursor: not-allowed;
-      pointer-events: none;
       opacity: 0.6;
+
+      &:hover {
+        background-color: var(--background-color-light);
+        border-color: var(--background-color-darker);
+      }
     }
 
     &_upload_actions {

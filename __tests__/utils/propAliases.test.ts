@@ -37,4 +37,27 @@ describe("prop aliases", () => {
 
     expect(expandClassMap(classMap)).toBe(expandClassMap(classMap));
   });
+
+  it("does not copy prototype pollution keys while expanding class maps", () => {
+    const classMap = Object.create(null) as Record<string, string>;
+    classMap.primary = "component_primary";
+    classMap.__proto__ = "polluted";
+    classMap["constructor"] = "polluted";
+    classMap.prototype = "polluted";
+
+    const expanded = expandClassMap(classMap);
+
+    expect(expanded.p).toBe("component_primary");
+    expect(Object.prototype.hasOwnProperty.call(expanded, "__proto__")).toBe(
+      false,
+    );
+    expect(Object.prototype.hasOwnProperty.call(expanded, "constructor")).toBe(
+      false,
+    );
+    expect(Object.prototype.hasOwnProperty.call(expanded, "prototype")).toBe(
+      false,
+    );
+    expect(Object.getPrototypeOf(expanded)).toBeNull();
+    expect(({} as Record<string, unknown>).polluted).toBeUndefined();
+  });
 });

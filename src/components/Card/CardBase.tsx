@@ -88,7 +88,7 @@ const CardBase: React.FC<CardBaseProps> = ({
     (selectable ? "button" : hasTitle || ariaLabel ? "region" : undefined);
 
   const FallbackImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
-    <img {...props} />
+    <img alt="" {...props} />
   );
 
   function isStaticCardImage(value: unknown): value is StaticCardImage {

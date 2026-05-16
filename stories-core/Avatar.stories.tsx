@@ -16,6 +16,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const statusOptions = [
   ...["online", "away", "offline", "busy", "custom"],
@@ -145,88 +153,6 @@ export const Disabled: Story = {
   },
 };
 
-export const OutlineVariants = () =>
-  withVariants(
-    Avatar,
-    {
-      name: "Outlined Avatar",
-      size: "medium",
-      shape: "circle",
-      outline: true,
-    },
-    [
-      {
-        propName: "theme",
-        values: [...themeOptions, ...stateOptions],
-      },
-    ],
-  );
-
-export const ThemeVariants = () =>
-  withVariants(Avatar, { ...defaultArgs }, [
-    {
-      propName: "theme",
-      values: themeOptions,
-    },
-  ]);
-
-export const StateVariants = () =>
-  withVariants(Avatar, { ...defaultArgs }, [
-    { propName: "state", values: stateOptions },
-  ]);
-
-export const GlassThemeVariants = () =>
-  withVariants(
-    Avatar,
-    {
-      ...defaultArgs,
-      name: "Glass Theme",
-      glass: true,
-      shape: "circle",
-    },
-    [
-      {
-        propName: "theme",
-        values: themeOptions,
-      },
-    ],
-  );
-
-export const GlassStateVariants = () =>
-  withVariants(
-    Avatar,
-    {
-      ...defaultArgs,
-      name: "Glass State",
-      glass: true,
-      shape: "circle",
-    },
-    [
-      {
-        propName: "state",
-        values: stateOptions,
-      },
-    ],
-  );
-
-export const GlassOutlineVariants = () =>
-  withVariants(
-    Avatar,
-    {
-      ...defaultArgs,
-      name: "Glass Outline",
-      glass: true,
-      outline: true,
-      shape: "circle",
-    },
-    [
-      {
-        propName: "theme",
-        values: themeOptions,
-      },
-    ],
-  );
-
 export const SizeVariants = () =>
   withVariants(Avatar, { ...defaultArgs }, [
     {
@@ -267,4 +193,28 @@ export const AllStatuses: Story = {
       ))}
     </div>
   ),
+};
+
+export const ThemeVariants: Story = {
+  render: (args) => renderThemeVariants({ component: Avatar, args }),
+};
+
+export const StateVariants: Story = {
+  render: (args) => renderStateVariants({ component: Avatar, args }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => renderOutlineVariants({ component: Avatar, args }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) => renderGlassVariants({ component: Avatar, args }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: Avatar, args }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) => renderStateOutlineVariants({ component: Avatar, args }),
 };

@@ -9,6 +9,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<EmptyStateProps> = {
   title: "Components/EmptyState",
@@ -50,124 +58,6 @@ export const WithActionButton: Story = {
     actionLabel: "Retry",
     onActionClick: () => alert("Retry clicked"),
   },
-};
-
-export const ThemeVariants: Story = {
-  render: () => (
-    <div style={{ display: "grid", gap: "1.5rem" }}>
-      {themeOptions.map((theme) => (
-        <EmptyState
-          key={theme}
-          theme={theme}
-          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`}
-          message={`This is a standard ${theme} variant.`}
-        />
-      ))}
-    </div>
-  ),
-};
-
-export const StateVariants: Story = {
-  render: () => (
-    <div style={{ display: "grid", gap: "1.5rem" }}>
-      {stateOptions.map((state) => (
-        <EmptyState
-          key={state}
-          state={state}
-          title={`${state.charAt(0).toUpperCase() + state.slice(1)} state`}
-          message={`This is a standard ${state} variant.`}
-        />
-      ))}
-    </div>
-  ),
-};
-
-export const GlassThemeVariants: Story = {
-  render: () => (
-    <div style={{ display: "grid", gap: "1.5rem" }}>
-      {themeOptions.map((theme) => (
-        <EmptyState
-          key={`glass-${theme}`}
-          theme={theme}
-          glass
-          icon={FaInbox}
-          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
-          message={`This is a glass ${theme} variant.`}
-          actionLabel="Review"
-          onActionClick={() => undefined}
-        />
-      ))}
-    </div>
-  ),
-};
-
-export const GlassStateVariants: Story = {
-  render: () => (
-    <div style={{ display: "grid", gap: "1.5rem" }}>
-      {stateOptions.map((state) => (
-        <EmptyState
-          key={`glass-${state}`}
-          state={state}
-          glass
-          icon={FaBug}
-          title={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
-          message={`This is a glass ${state} variant.`}
-        />
-      ))}
-    </div>
-  ),
-};
-
-export const GlassOutlineVariants: Story = {
-  render: () => (
-    <div style={{ display: "grid", gap: "1.5rem" }}>
-      {themeOptions.map((theme) => (
-        <EmptyState
-          key={`outline-${theme}`}
-          theme={theme}
-          glass
-          outline
-          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
-          message={`This is an outlined ${theme} variant.`}
-        />
-      ))}
-      {stateOptions.map((state) => (
-        <EmptyState
-          key={`outline-${state}`}
-          state={state}
-          outline
-          glass
-          title={`${state.charAt(0).toUpperCase() + state.slice(1)} Outline`}
-          message={`This is an outlined ${state} variant.`}
-        />
-      ))}
-    </div>
-  ),
-};
-
-export const OutlineVariants: Story = {
-  render: () => (
-    <div style={{ display: "grid", gap: "1.5rem" }}>
-      {themeOptions.map((theme) => (
-        <EmptyState
-          key={`outline-${theme}`}
-          theme={theme}
-          outline
-          title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
-          message={`This is an outlined ${theme} variant.`}
-        />
-      ))}
-      {stateOptions.map((state) => (
-        <EmptyState
-          key={`outline-${state}`}
-          state={state}
-          outline
-          title={`${state.charAt(0).toUpperCase() + state.slice(1)} Outline`}
-          message={`This is an outlined ${state} variant.`}
-        />
-      ))}
-    </div>
-  ),
 };
 
 export const SizeVariants: Story = {
@@ -213,4 +103,28 @@ export const ShadowVariants: Story = {
       ))}
     </div>
   ),
+};
+
+export const ThemeVariants: Story = {
+  render: (args) => renderThemeVariants({ component: EmptyState, args }),
+};
+
+export const StateVariants: Story = {
+  render: (args) => renderStateVariants({ component: EmptyState, args }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => renderOutlineVariants({ component: EmptyState, args }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) => renderGlassVariants({ component: EmptyState, args }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: EmptyState, args }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) => renderStateOutlineVariants({ component: EmptyState, args }),
 };

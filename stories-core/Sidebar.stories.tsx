@@ -9,6 +9,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const mockLinks = [
   { label: "Dashboard", href: "/Dashboard", icon: <FaBook /> },
@@ -42,49 +50,6 @@ type Story = StoryObj<SidebarProps>;
 
 export const Default: Story = {};
 
-export const OutlineVariants = () => (
-  <StoryGrid title="Outline Sidebars">
-    {themeOptions.map((theme) => (
-      <Sidebar key={theme} theme={theme} outline links={mockLinks} />
-    ))}
-    {stateOptions.map((state) => (
-      <Sidebar key={state} state={state} outline links={mockLinks} />
-    ))}
-  </StoryGrid>
-);
-
-export const ThemeVariants = () => (
-  <StoryGrid title="Theme Variants">
-    {themeOptions.map((theme) => (
-      <Sidebar key={theme} theme={theme} links={mockLinks} />
-    ))}
-  </StoryGrid>
-);
-
-export const StateVariants = () => (
-  <StoryGrid title="State Variants">
-    {stateOptions.map((state) => (
-      <Sidebar key={state} state={state} links={mockLinks} />
-    ))}
-  </StoryGrid>
-);
-
-export const GlassThemeVariants = () => (
-  <StoryGrid title="Glass Theme Variants">
-    {themeOptions.map((theme) => (
-      <Sidebar key={theme} theme={theme} glass links={mockLinks} />
-    ))}
-  </StoryGrid>
-);
-
-export const GlassStateVariants = () => (
-  <StoryGrid title="Glass State Variants">
-    {stateOptions.map((state) => (
-      <Sidebar key={state} state={state} glass links={mockLinks} />
-    ))}
-  </StoryGrid>
-);
-
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (
@@ -100,3 +65,27 @@ export const ShadowVariants = () => (
     ))}
   </StoryGrid>
 );
+
+export const ThemeVariants: Story = {
+  render: (args) => renderThemeVariants({ component: Sidebar, args }),
+};
+
+export const StateVariants: Story = {
+  render: (args) => renderStateVariants({ component: Sidebar, args }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => renderOutlineVariants({ component: Sidebar, args }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) => renderGlassVariants({ component: Sidebar, args }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: Sidebar, args }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) => renderStateOutlineVariants({ component: Sidebar, args }),
+};

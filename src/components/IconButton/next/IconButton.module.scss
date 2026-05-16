@@ -1,328 +1,392 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/_animations";
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
+@use "../../../styles/_animations";
+
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.iconButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  border: none;
-  text-decoration: none;
-  color: inherit;
-  font-family: var(--font-family-ui);
-  transition: var(--transition-default);
-  transform-origin: center;
-  background: transparent;
-
-  &:hover {
+  .iconButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    border: none;
     text-decoration: none;
-    transform: scale(1.05);
-    cursor: pointer;
-
-    @include bp.down(sm) {
-      transform: scale(1.03);
-    }
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-  }
-
-  svg {
-    width: 20px;
-    height: 20px;
-
-    @include bp.down(sm) {
-      width: 18px;
-      height: 18px;
-    }
-
-    @include bp.up(lg) {
-      width: 22px;
-      height: 22px;
-    }
-  }
-}
-
-@each $k, $v in theme.$rounding {
-  .round#{$k} {
-    border-radius: $v;
-  }
-}
-
-@each $k, $v in theme.$shadow {
-  .shadow#{$k} {
-    box-shadow: $v;
-  }
-}
-
-.clear {
-  box-shadow: none;
-}
-
-.glass {
-  @include mixins.glass-surface(
-    var(--icon-button-glass-bg, var(--glass-background)),
-    var(--icon-button-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
-  );
-
-  color: var(--icon-button-glass-text, currentcolor);
-  isolation: isolate;
-
-  &:hover {
-    background: var(
-      --icon-button-glass-hover-bg,
-      var(--glass-background-strong)
-    );
-  }
-
-  &.outline {
-    border-color: var(--icon-button-glass-border, var(--glass-border-color));
+    color: inherit;
+    font-family: var(--font-family-ui);
+    transition: var(--transition-default);
+    transform-origin: center;
+    background: transparent;
 
     &:hover {
-      background: var(--icon-button-glass-hover-bg, var(--glass-background));
-    }
-  }
-}
+      text-decoration: none;
+      transform: scale(1.05);
+      cursor: pointer;
 
-@each $name, $vals in theme.$themes {
-  .#{$name} {
-    background-color: map.get($vals, bg);
-    color: map.get($vals, text);
-
-    --icon-button-glass-bg: #{map.get($vals, glass-bg)};
-    --icon-button-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --icon-button-glass-border: #{map.get($vals, glass-border)};
-    --icon-button-glass-text: #{map.get($vals, text)};
-
-    &:hover {
-      background-color: map.get($vals, hover);
+      @include bp.down(sm) {
+        transform: scale(1.03);
+      }
     }
 
     &:focus-visible {
-      outline: 2px solid map.get($vals, border);
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
     }
-
-    &.glass {
-      background-color: transparent;
-      background: var(--icon-button-glass-bg);
-      border: 1px solid var(--icon-button-glass-border);
-      color: var(--icon-button-glass-text);
-
-      &:hover {
-        background-color: transparent;
-        background: var(--icon-button-glass-hover-bg);
-      }
-    }
-
-    &.outline {
-      background-color: transparent;
-      color: map.get($vals, border);
-      border: 2px solid map.get($vals, border);
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-
-      &:hover {
-        border-color: map.get($vals, hover);
-        color: map.get($vals, text);
-      }
-    }
-
-    &.outline.glass {
-      @include mixins.glass-surface(
-        transparent,
-        var(--icon-button-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--icon-button-glass-text);
-    }
-  }
-}
-
-@each $name, $vals in theme.$states {
-  .#{$name} {
-    background-color: map.get($vals, bg);
-    color: map.get($vals, text);
-
-    --icon-button-glass-bg: #{map.get($vals, glass-bg)};
-    --icon-button-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --icon-button-glass-border: #{map.get($vals, glass-border)};
-    --icon-button-glass-text: #{map.get($vals, text)};
-
-    &:hover {
-      background-color: map.get($vals, hover);
-    }
-
-    &:focus-visible {
-      outline: 2px solid map.get($vals, border);
-      outline-offset: 2px;
-    }
-
-    &.glass {
-      background-color: transparent;
-      background: var(--icon-button-glass-bg);
-      border: 1px solid var(--icon-button-glass-border);
-      color: var(--icon-button-glass-text);
-
-      &:hover {
-        background-color: transparent;
-        background: var(--icon-button-glass-hover-bg);
-      }
-    }
-
-    &.outline {
-      background-color: transparent;
-      color: map.get($vals, border);
-      border: 2px solid map.get($vals, border);
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-
-      &:hover {
-        border-color: map.get($vals, hover);
-        color: map.get($vals, text);
-      }
-    }
-
-    &.outline.glass {
-      @include mixins.glass-surface(
-        transparent,
-        var(--icon-button-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--icon-button-glass-text);
-    }
-  }
-}
-
-$sizes: (
-  "xs": (
-    size: 25px,
-    icon: 0.7rem,
-  ),
-  "small": (
-    size: 30px,
-    icon: 1rem,
-  ),
-  "medium": (
-    size: 40px,
-    icon: 1.2rem,
-  ),
-  "large": (
-    size: 50px,
-    icon: 1.3rem,
-  ),
-  "xl": (
-    size: 60px,
-    icon: 1.5rem,
-  ),
-);
-
-@each $sz, $vals in $sizes {
-  .#{$sz} {
-    $dim: map.get($vals, size);
-    $ico: map.get($vals, icon);
-
-    width: $dim;
-    height: $dim;
 
     svg {
-      width: $ico;
-      height: $ico;
-    }
+      width: 20px;
+      height: 20px;
 
-    @include bp.down(sm) {
-      width: calc(#{$dim} * 0.9);
-      height: calc(#{$dim} * 0.9);
-
-      svg {
-        width: calc(#{$ico} * 0.9);
-        height: calc(#{$ico} * 0.9);
+      @include bp.down(sm) {
+        width: 18px;
+        height: 18px;
       }
-    }
 
-    @include bp.up(lg) {
-      width: calc(#{$dim} * 1.1);
-      height: calc(#{$dim} * 1.1);
-
-      svg {
-        width: calc(#{$ico} * 1.05);
-        height: calc(#{$ico} * 1.05);
+      @include bp.up(lg) {
+        width: 22px;
+        height: 22px;
       }
     }
   }
-}
 
-.disabled {
-  background-color: var(--disabled-color);
-  color: var(--text-color-primary);
-  cursor: not-allowed;
-  pointer-events: none;
-  box-shadow: none;
-}
-
-.loader {
-  width: 1.2rem;
-  height: 1.2rem;
-  border: 2px solid transparent;
-  border-top-color: var(--text-color-primary);
-  border-radius: 50%;
-  animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .iconButton,
-  .iconButton * {
-    transition: none !important;
+  @each $k, $v in theme.$rounding {
+    .round#{$k} {
+      border-radius: $v;
+    }
   }
 
-  .iconButton:hover {
-    transform: none !important;
+  @each $k, $v in theme.$shadow {
+    .shadow#{$k} {
+      box-shadow: $v;
+    }
   }
 
-  .loader {
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .iconButton:hover {
-    transform: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .iconButton {
-    background: Canvas;
-    color: CanvasText;
-    border-color: ButtonText;
-    outline-color: Highlight;
-  }
-
-  .outline {
-    border: 1px solid ButtonText;
+  .clear {
+    box-shadow: none;
   }
 
   .glass {
-    background: Canvas;
-    border: 1px solid ButtonText;
-    box-shadow: none !important;
+    @include mixins.glass-surface(
+      var(--icon-button-glass-bg, var(--glass-background)),
+      var(--icon-button-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--icon-button-glass-text, currentcolor);
+    isolation: isolate;
+
+    &:hover {
+      background: var(
+        --icon-button-glass-hover-bg,
+        var(--glass-background-strong)
+      );
+    }
+
+    &.outline {
+      border-color: var(--icon-button-glass-border, var(--glass-border-color));
+
+      &:hover {
+        background: var(--icon-button-glass-hover-bg, var(--glass-background));
+      }
+    }
+  }
+
+  @each $name, $vals in theme.$themes {
+    .#{$name} {
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+
+      --icon-button-glass-bg: #{map.get($vals, glass-bg)};
+      --icon-button-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --icon-button-glass-border: #{map.get($vals, glass-border)};
+      --icon-button-glass-text: #{map.get($vals, text)};
+
+      &:hover {
+        background-color: map.get($vals, hover);
+      }
+
+      &:focus-visible {
+        outline: 2px solid map.get($vals, border);
+        outline-offset: 2px;
+      }
+
+      &.glass {
+        background-color: transparent;
+        background: var(--icon-button-glass-bg);
+        border: 1px solid var(--icon-button-glass-border);
+        color: var(--icon-button-glass-text);
+
+        &:hover {
+          background-color: transparent;
+          background: var(--icon-button-glass-hover-bg);
+        }
+      }
+
+      &.outline {
+        background-color: transparent;
+        color: map.get($vals, border);
+        border: 2px solid map.get($vals, border);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+
+        &:hover {
+          border-color: map.get($vals, hover);
+          color: map.get($vals, text);
+        }
+      }
+
+      &.outline.glass {
+        @include mixins.glass-surface(
+          transparent,
+          var(--icon-button-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--icon-button-glass-text);
+      }
+    }
+  }
+
+  @each $name, $vals in theme.$states {
+    .#{$name} {
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+
+      --icon-button-glass-bg: #{map.get($vals, glass-bg)};
+      --icon-button-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --icon-button-glass-border: #{map.get($vals, glass-border)};
+      --icon-button-glass-text: #{map.get($vals, text)};
+
+      &:hover {
+        background-color: map.get($vals, hover);
+      }
+
+      &:focus-visible {
+        outline: 2px solid map.get($vals, border);
+        outline-offset: 2px;
+      }
+
+      &.glass {
+        background-color: transparent;
+        background: var(--icon-button-glass-bg);
+        border: 1px solid var(--icon-button-glass-border);
+        color: var(--icon-button-glass-text);
+
+        &:hover {
+          background-color: transparent;
+          background: var(--icon-button-glass-hover-bg);
+        }
+      }
+
+      &.outline {
+        background-color: transparent;
+        color: map.get($vals, border);
+        border: 2px solid map.get($vals, border);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+
+        &:hover {
+          border-color: map.get($vals, hover);
+          color: map.get($vals, text);
+        }
+      }
+
+      &.outline.glass {
+        @include mixins.glass-surface(
+          transparent,
+          var(--icon-button-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--icon-button-glass-text);
+      }
+    }
+  }
+
+  .clear.outline:hover {
+    border-color: var(--text-color-primary);
+  }
+
+  $sizes: (
+    "xs": (
+      size: 25px,
+      icon: 0.7rem,
+    ),
+    "small": (
+      size: 30px,
+      icon: 1rem,
+    ),
+    "medium": (
+      size: 40px,
+      icon: 1.2rem,
+    ),
+    "large": (
+      size: 50px,
+      icon: 1.3rem,
+    ),
+    "xl": (
+      size: 60px,
+      icon: 1.5rem,
+    ),
+  );
+
+  @each $sz, $vals in $sizes {
+    .#{$sz} {
+      $dim: map.get($vals, size);
+      $ico: map.get($vals, icon);
+
+      width: $dim;
+      height: $dim;
+
+      svg {
+        width: $ico;
+        height: $ico;
+      }
+
+      @include bp.down(sm) {
+        width: calc(#{$dim} * 0.9);
+        height: calc(#{$dim} * 0.9);
+
+        svg {
+          width: calc(#{$ico} * 0.9);
+          height: calc(#{$ico} * 0.9);
+        }
+      }
+
+      @include bp.up(lg) {
+        width: calc(#{$dim} * 1.1);
+        height: calc(#{$dim} * 1.1);
+
+        svg {
+          width: calc(#{$ico} * 1.05);
+          height: calc(#{$ico} * 1.05);
+        }
+      }
+    }
+  }
+
+  .disabled {
+    background-color: var(--disabled-color);
+    color: var(--text-color-primary);
+    cursor: not-allowed;
+    box-shadow: none;
+
+    &:hover {
+      background-color: var(--disabled-color);
+      color: var(--text-color-primary);
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+  }
+
+  .disabled:hover,
+  .iconButton:disabled:hover {
+    background-color: var(--disabled-color);
+    background: var(--disabled-color);
+    color: var(--text-color-primary);
+    border-color: var(--disabled-color);
+    transform: none;
+  }
+
+  .disabled.glass,
+  .iconButton:disabled.glass {
+    background-color: var(--disabled-color);
+    background: var(--disabled-color);
+    border-color: var(--disabled-color);
+    color: var(--text-color-primary);
+    box-shadow: none;
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
   }
-}
+
+  .disabled.glass:hover,
+  .iconButton:disabled.glass:hover {
+    background-color: var(--disabled-color);
+    background: var(--disabled-color);
+    border-color: var(--disabled-color);
+    color: var(--text-color-primary);
+    transform: none;
+  }
+
+  .disabled.outline,
+  .iconButton:disabled.outline {
+    background-color: transparent;
+    background: transparent;
+    border-color: var(--disabled-color);
+    color: var(--disabled-color);
+
+    &:hover {
+      border-color: var(--disabled-color);
+      color: var(--disabled-color);
+    }
+  }
+
+  .disabled.outline.glass,
+  .iconButton:disabled.outline.glass {
+    background-color: transparent;
+    background: transparent;
+    border-color: var(--disabled-color);
+    color: var(--disabled-color);
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .loader {
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid transparent;
+    border-top-color: var(--text-color-primary);
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .iconButton,
+    .iconButton * {
+      transition: none !important;
+    }
+
+    .iconButton:hover {
+      transform: none !important;
+    }
+
+    .loader {
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .iconButton:hover {
+      transform: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .iconButton {
+      background: Canvas;
+      color: CanvasText;
+      border-color: ButtonText;
+      outline-color: Highlight;
+    }
+
+    .outline {
+      border: 1px solid ButtonText;
+    }
+
+    .glass {
+      background: Canvas;
+      border: 1px solid ButtonText;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
 }

@@ -9,6 +9,14 @@ import {
 import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
 import type { DropdownProps } from "../../src/components/Dropdown/Dropdown.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
+import {
+  renderGlassOutlineVariants,
+  renderGlassVariants,
+  renderOutlineVariants,
+  renderStateOutlineVariants,
+  renderStateVariants,
+  renderThemeVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const themeOptions: ThemeType[] = [
   "primary",
@@ -201,98 +209,6 @@ export const AlignmentVariants: Story = {
   ),
 };
 
-export const Themed: Story = {
-  render: () => {
-    return (
-      <div style={{ display: "flex", gap: "1rem", padding: "1rem" }}>
-        {themeOptions.map((theme) => (
-          <div key={theme} style={{ textAlign: "center" }}>
-            <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
-              {theme}
-            </p>
-            <Dropdown
-              triggerIcon={FaEllipsisV}
-              theme={theme}
-              items={[{ label: `Item (${theme})`, onClick: () => {} }]}
-            />
-          </div>
-        ))}
-      </div>
-    );
-  },
-};
-
-export const States: Story = {
-  render: () => {
-    const stateOptions: StateType[] = ["success", "error", "warning"];
-
-    return (
-      <StoryGrid title="State Variants">
-        {stateOptions.map((state) => (
-          <div key={state} style={{ textAlign: "center" }}>
-            <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
-              {state}
-            </p>
-            <Dropdown
-              triggerIcon={FaEllipsisV}
-              state={state}
-              items={[{ label: `Item (${state})`, onClick: () => {} }]}
-            />
-          </div>
-        ))}
-      </StoryGrid>
-    );
-  },
-};
-
-export const GlassThemeVariants: Story = {
-  render: () => {
-    return (
-      <StoryGrid title="Glass Theme Variants">
-        {themeOptions.map((theme) => (
-          <div key={theme} style={{ textAlign: "center" }}>
-            <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
-              {theme}
-            </p>
-            <Dropdown
-              triggerIcon={FaEllipsisV}
-              theme={theme}
-              glass
-              items={[{ label: `Glass item (${theme})`, onClick: () => {} }]}
-              aria-label={`Glass ${theme} actions`}
-            />
-          </div>
-        ))}
-      </StoryGrid>
-    );
-  },
-};
-
-export const GlassStateVariants: Story = {
-  render: () => {
-    const stateOptions: StateType[] = ["success", "error", "warning"];
-
-    return (
-      <StoryGrid title="Glass State Variants">
-        {stateOptions.map((state) => (
-          <div key={state} style={{ textAlign: "center" }}>
-            <p style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
-              {state}
-            </p>
-            <Dropdown
-              triggerIcon={FaEllipsisV}
-              state={state}
-              glass
-              items={[{ label: `Glass item (${state})`, onClick: () => {} }]}
-              aria-label={`Glass ${state} actions`}
-            />
-          </div>
-        ))}
-      </StoryGrid>
-    );
-  },
-};
-
 export const MenuRoundingVariants = () => (
   <StoryGrid title="Menu Rounding Variants">
     {roundingOptions.map((rounding) => (
@@ -330,3 +246,49 @@ export const MenuShadowVariants = () => (
     ))}
   </StoryGrid>
 );
+
+const getVariantArgs = ({
+  triggerIcon = FaEllipsisV,
+  items = [{ label: "Variant item", onClick: () => {} }],
+  ...args
+}: DropdownProps): DropdownProps => ({
+  ...args,
+  triggerIcon,
+  items,
+});
+
+export const ThemeVariants: Story = {
+  render: (args) =>
+    renderThemeVariants({ component: Dropdown, args: getVariantArgs(args) }),
+};
+
+export const StateVariants: Story = {
+  render: (args) =>
+    renderStateVariants({ component: Dropdown, args: getVariantArgs(args) }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) =>
+    renderOutlineVariants({ component: Dropdown, args: getVariantArgs(args) }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) =>
+    renderGlassVariants({ component: Dropdown, args: getVariantArgs(args) }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) =>
+    renderGlassOutlineVariants({
+      component: Dropdown,
+      args: getVariantArgs(args),
+    }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) =>
+    renderStateOutlineVariants({
+      component: Dropdown,
+      args: getVariantArgs(args),
+    }),
+};

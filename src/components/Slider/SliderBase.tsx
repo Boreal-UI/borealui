@@ -40,7 +40,6 @@ const SliderBase: React.FC<
   "aria-valuemax": ariaValueMax,
   "aria-valuenow": ariaValueNow,
   "aria-invalid": ariaInvalid,
-  "aria-required": ariaRequired,
   "aria-orientation": ariaOrientation = "horizontal",
   "data-testid": dataTestId,
   testId = dataTestId ?? "slider",
@@ -95,9 +94,6 @@ const SliderBase: React.FC<
         ? true
         : undefined;
 
-  const computedAriaRequired =
-    ariaRequired !== undefined ? ariaRequired : required ? true : undefined;
-
   return (
     <div className={containerClasses} data-testid={`${testId}-container`}>
       {label && (
@@ -134,7 +130,6 @@ const SliderBase: React.FC<
           aria-valuemax={ariaValueMax ?? safeMax}
           aria-valuenow={ariaValueNow ?? clamped}
           aria-invalid={computedAriaInvalid}
-          aria-required={computedAriaRequired}
           aria-orientation={ariaOrientation}
           data-testid={testId}
           {...rest}

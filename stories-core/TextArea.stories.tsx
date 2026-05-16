@@ -10,6 +10,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<TextAreaProps> = {
   title: "Components/TextArea",
@@ -47,122 +55,6 @@ export const WithIcon: Story = {
         value={value}
         onChange={(value) => setValue(value)}
       />
-    );
-  },
-};
-
-export const ThemedVariants: Story = {
-  render: (args) => {
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {themeOptions.map((theme) => {
-          const [value, setValue] = useState("");
-          return (
-            <TextArea
-              key={theme}
-              {...args}
-              theme={theme}
-              placeholder={`${theme} theme`}
-              value={value}
-              onChange={(value) => setValue(value)}
-            />
-          );
-        })}
-      </div>
-    );
-  },
-};
-
-export const StateVariants: Story = {
-  render: (args) => {
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {stateOptions.map((state) => {
-          const [value, setValue] = useState("");
-          return (
-            <TextArea
-              key={state}
-              {...args}
-              state={state}
-              placeholder={`${state} state`}
-              value={value}
-              onChange={(value) => setValue(value)}
-            />
-          );
-        })}
-      </div>
-    );
-  },
-};
-
-export const OutlineVariants: Story = {
-  render: (args) => {
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {themeOptions.map((theme) => {
-          const [value, setValue] = useState("");
-          return (
-            <TextArea
-              key={theme}
-              {...args}
-              outline
-              theme={theme}
-              icon={FaInbox}
-              placeholder={`${theme} outline`}
-              value={value}
-              onChange={(value) => setValue(value)}
-            />
-          );
-        })}
-      </div>
-    );
-  },
-};
-
-export const GlassThemeVariants: Story = {
-  render: (args) => {
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {themeOptions.map((theme) => {
-          const [value, setValue] = useState("");
-          return (
-            <TextArea
-              key={`glass-${theme}`}
-              {...args}
-              icon={FaInbox}
-              glass
-              theme={theme}
-              placeholder={`${theme} glass`}
-              value={value}
-              onChange={(value) => setValue(value)}
-            />
-          );
-        })}
-      </div>
-    );
-  },
-};
-
-export const GlassStateVariants: Story = {
-  render: (args) => {
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {stateOptions.map((state) => {
-          const [value, setValue] = useState("");
-          return (
-            <TextArea
-              key={`glass-${state}`}
-              {...args}
-              icon={FaInbox}
-              glass
-              state={state}
-              placeholder={`${state} glass`}
-              value={value}
-              onChange={(value) => setValue(value)}
-            />
-          );
-        })}
-      </div>
     );
   },
 };
@@ -259,3 +151,27 @@ export const ShadowVariants = (args: React.ComponentProps<typeof TextArea>) =>
   withVariants(TextArea, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+export const ThemeVariants: Story = {
+  render: (args) => renderThemeVariants({ component: TextArea, args }),
+};
+
+export const StateVariants: Story = {
+  render: (args) => renderStateVariants({ component: TextArea, args }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => renderOutlineVariants({ component: TextArea, args }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) => renderGlassVariants({ component: TextArea, args }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: TextArea, args }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) => renderStateOutlineVariants({ component: TextArea, args }),
+};

@@ -1,6 +1,6 @@
 /// <reference types="cypress" />
 
-import React, { forwardRef } from "react";
+import React from "react";
 import * as Core from "../../src/index.core";
 import * as Next from "../../src/index.next";
 

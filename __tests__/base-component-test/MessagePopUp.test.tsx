@@ -151,7 +151,7 @@ describe("BaseMessagePopup", () => {
       />,
     );
 
-    fireEvent.click(await screen.findByTestId("message-popup"));
+    fireEvent.mouseDown(await screen.findByTestId("message-popup"));
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 

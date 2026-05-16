@@ -153,10 +153,11 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 ### Forms and Inputs
 
 - `TextInput` and `TextArea` support labels, helper/error text, validation state, disabled state, sizing, theming, and accessible descriptions.
-- `Select`, `ComboBox`, and `ThemeSelect` cover option selection, searchable selection, and color-scheme switching.
+- `SearchInput`, `NumberInput`, `Select`, `MultiSelect`, `ComboBox`, and `ThemeSelect` cover search, numeric entry, single selection, multi-selection, searchable selection, and color-scheme switching.
+- `InputGroup`, `FieldSet`, `SegmentedControl`, and `ValidationSummary` help compose form controls, grouped fields, segmented choices, and form-level errors.
 - `CheckBox`, `RadioButton`, `RadioGroup`, `Toggle`, and `Slider` provide common controlled input patterns.
 - `ColorPicker` supports color selection flows.
-- `DateRangePicker` and `DateTimePicker` handle date range, date, and time input.
+- `DatePicker`, `DateRangePicker`, `DateTimePicker`, and `TimePicker` handle date, date range, date-time, and time input.
 - `FileUpload` supports file selection UI.
 - `TagInput` supports editable tag lists, async suggestions, debouncing, accessible listbox labeling, and remove-tag controls.
 - `FormField` and `FormGroup` help compose labels, helper text, and grouped form controls.
@@ -164,6 +165,8 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 ### Data and Content
 
 - `DataTable` supports generic row data, typed columns, sorting, server-side sorting hooks, interactive rows, captions, loading and empty states, row/cell class customization, wrapping cells, striped rows, theme, outline, glass, rounding, shadow, and accessible sort announcements.
+- `DataTable` also covers admin/SaaS workflows with pagination, column visibility, column resize/reorder/pinning, row expansion, bulk actions, inline editing, server pagination contracts, and virtualization.
+- `Sparkline`, `BarChart`, `LineChart`, `DonutChart`, and `Legend` provide dashboard charting and data summaries.
 - `MarkdownRenderer` renders markdown content.
 - `Typography` provides semantic text rendering with variants and theme-aware color.
 - `MetricBox` displays key values and supporting content.
@@ -177,7 +180,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 
 ### Navigation and Layout
 
-- `NavBar`, `Sidebar`, `Footer`, `Breadcrumbs`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Toolbar`, `Dropdown`, `Drawer`, and `Divider` cover navigation, page structure, disclosure, pagination, tool rows, menus, overlays, and visual separation.
+- `AppShell`, `PageHeader`, `BreadCrumbPageHeader`, `NavBar`, `Sidebar`, `Footer`, `Breadcrumbs`, `TreeView`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Toolbar`, `Dropdown`, `Menu`, `Drawer`, `Portal`, `SplitPane`, and `Divider` cover application shells, headers, navigation, page structure, disclosure, pagination, tool rows, menus, overlays, portals, split layouts, and visual separation.
 - `Container`, `Grid`, `Inline`, `Section`, and `Stack` provide layout primitives through the `Layout` entry point and the main barrels.
 - `Card` supports title, description, icon, header/content/footer customization, loading content, outline, glass, shadow, rounding, theme, and section-level class names.
 - `Avatar` supports image, initials, fallback icon, shape, status, status position, size, theme, and custom styling.
@@ -406,17 +409,17 @@ npm run build
 
 Useful scripts:
 
-| Script                         | Purpose                                                 |
-| ------------------------------ | ------------------------------------------------------- |
-| `npm run build`                | Build core, Next, docs, and public types.               |
-| `npm run test`                 | Run Jest tests.                                         |
-| `npm run test:coverage`        | Run Jest with coverage.                                 |
-| `npm run lint`                 | Lint TypeScript and TSX files.                          |
-| `npm run lint:styles`          | Lint CSS and SCSS files.                                |
-| `npm run audit`                | Run type, lint, style, test, build, and package checks. |
-| `npm run generate:docs`        | Regenerate component prop docs.                         |
-| `npm run generate:entrypoints` | Regenerate component entry points.                      |
-| `npm run generate:exports`     | Regenerate package exports.                             |
+| Script                    | Purpose                                                 |
+| ------------------------- | ------------------------------------------------------- |
+| `npm run build`           | Build core, Next, docs, and public types.               |
+| `npm run test`            | Run Jest tests.                                         |
+| `npm run test:coverage`   | Run Jest with coverage.                                 |
+| `npm run lint`            | Lint TypeScript and TSX files.                          |
+| `npm run lint:styles`     | Lint CSS and SCSS files.                                |
+| `npm run audit`           | Run type, lint, style, test, build, and package checks. |
+| `npm run gen:docs`        | Regenerate component prop docs.                         |
+| `npm run gen:entrypoints` | Regenerate component entry points.                      |
+| `npm run gen:exports`     | Regenerate package exports.                             |
 
 Contributor documentation for component structure, generated docs, package output, and release checks lives in [Development Workflow](./docs/development-workflow.md).
 

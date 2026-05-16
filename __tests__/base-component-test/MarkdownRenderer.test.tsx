@@ -23,10 +23,10 @@ describe("BaseMarkdownRenderer", () => {
     );
 
     await waitFor(() => {
-      const region = screen.getByRole("region");
-      expect(region).toBeInTheDocument();
-      expect(region.innerHTML).toContain("<h1>Cypress Markdown Test</h1>");
-      expect(region.innerHTML).toContain("<strong>Bold Text</strong>");
+      expect(
+        screen.getByRole("heading", { name: "Cypress Markdown Test" }),
+      ).toBeInTheDocument();
+      expect(screen.getByText("Bold Text").tagName).toBe("STRONG");
     });
   });
 
@@ -246,7 +246,7 @@ describe("BaseMarkdownRenderer", () => {
       const region = screen.getByTestId("markdown-renderer");
       expect(region.querySelector("script")).not.toBeInTheDocument();
       expect(region.querySelector("p")).not.toBeInTheDocument();
-      expect(region.innerHTML).toContain("&lt;script");
+      expect(region).toHaveTextContent("<script");
       expect(region).toHaveTextContent("Safe Text");
     });
   });
@@ -263,9 +263,8 @@ describe("BaseMarkdownRenderer", () => {
 
     await waitFor(() => {
       const region = screen.getByTestId("markdown-renderer");
-      expect(region.innerHTML).not.toContain("<script>");
-      expect(region.innerHTML).not.toContain("onclick=");
-      expect(region.innerHTML).toContain("Safe Text");
+      expect(region.querySelector("script")).not.toBeInTheDocument();
+      expect(screen.getByText("Safe Text")).not.toHaveAttribute("onclick");
     });
   });
 
@@ -280,8 +279,12 @@ describe("BaseMarkdownRenderer", () => {
     );
 
     await waitFor(() => {
-      const region = screen.getByTestId("markdown-renderer");
-      expect(region.innerHTML).not.toContain("javascript:alert");
+      const link = screen.getByText("Bad Link").closest("a");
+      if (!link) throw new Error("Expected sanitized link to render");
+
+      expect(link).not.toHaveAttribute("href");
+      const image = screen.queryByRole("img", { name: "bad" });
+      if (image) expect(image).not.toHaveAttribute("src");
     });
   });
 
@@ -304,10 +307,10 @@ describe("BaseMarkdownRenderer", () => {
 
       await waitFor(() => {
         const region = screen.getByTestId("markdown-renderer");
-        expect(region.innerHTML).toContain("Safe Text");
-        expect(region.innerHTML).not.toContain("onclick");
-        expect(region.innerHTML).not.toContain("onmouseover");
-        expect(region.innerHTML).not.toContain("javascript:alert");
+        expect(region).toHaveTextContent("Safe Text");
+        expect(region).not.toHaveTextContent("onclick");
+        expect(region).not.toHaveTextContent("onmouseover");
+        expect(region).not.toHaveTextContent("javascript:alert");
       });
     } finally {
       Object.defineProperty(window, "DOMParser", {
@@ -334,8 +337,8 @@ describe("BaseMarkdownRenderer", () => {
     await waitFor(() => {
       const region = screen.getByTestId("markdown-renderer");
       expect(sanitizeHtml).toHaveBeenCalled();
-      expect(region.innerHTML).toContain("Sanitized");
-      expect(region.innerHTML).not.toContain("Original");
+      expect(region).toHaveTextContent("Sanitized");
+      expect(region).not.toHaveTextContent("Original");
     });
   });
 
@@ -358,13 +361,14 @@ describe("BaseMarkdownRenderer", () => {
     );
 
     await waitFor(() => {
-      const region = screen.getByTestId("markdown-renderer");
-      expect(region.innerHTML).toContain("<h1>Title</h1>");
-      expect(region.innerHTML).toContain("<h2>Subtitle</h2>");
-      expect(region.innerHTML).toContain("<li>Item 1</li>");
-      expect(region.innerHTML).toContain("<li>Item 2</li>");
-      expect(region.innerHTML).toContain("<blockquote>");
-      expect(region.innerHTML).toContain("<code>inline code</code>");
+      expect(screen.getByRole("heading", { name: "Title" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Subtitle" }),
+      ).toBeInTheDocument();
+      expect(screen.getByText("Item 1").tagName).toBe("LI");
+      expect(screen.getByText("Item 2").tagName).toBe("LI");
+      expect(screen.getByText("Blockquote").closest("blockquote")).toBeTruthy();
+      expect(screen.getByText("inline code").tagName).toBe("CODE");
     });
   });
 

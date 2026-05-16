@@ -1,0 +1,318 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
+@use "../../../styles/_animations";
+
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  .container {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-md);
+    background: var(--background-color);
+    color: var(--text-color-primary);
+    font-family: var(--font-family-body);
+  }
+
+  .labelTop,
+  .labelBottom,
+  .labelLeft,
+  .labelRight {
+    min-width: 0;
+  }
+
+  .root {
+    --fieldSet-glass-bg: rgba(255, 255, 255, 0.18);
+    --fieldSet-glass-hover-bg: rgba(255, 255, 255, 0.24);
+    --fieldSet-glass-border: rgba(255, 255, 255, 0.28);
+    --fieldSet-glass-text: var(--text-color-primary);
+    --fieldSet-gap: var(--spacing-md);
+
+    display: grid;
+    gap: var(--fieldSet-gap);
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border: none;
+    color: var(--text-color-primary);
+    box-shadow: var(--box-shadow-sm);
+    padding: var(--spacing-sm);
+    transition: var(--transition-default);
+  }
+
+  .legend,
+  .label {
+    float: none;
+    width: auto;
+    max-width: 100%;
+    margin: 0;
+    padding: 0 var(--spacing-xs);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-body);
+    color: inherit;
+  }
+
+  .legendText {
+    overflow-wrap: anywhere;
+  }
+
+  .required {
+    margin-inline-start: var(--spacing-2xs, 0.25rem);
+    font-size: var(--font-size-ui);
+    font-weight: var(--font-weight-label);
+  }
+
+  .optional {
+    margin-inline-start: var(--spacing-xs);
+    color: var(--text-color-secondary);
+    font-size: var(--font-size-body-xs);
+    font-weight: var(--font-weight-normal);
+  }
+
+  .description,
+  .helperText,
+  .errorText,
+  .loadingMessage {
+    margin: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body);
+  }
+
+  .description,
+  .helperText,
+  .loadingMessage {
+    color: var(--text-color-secondary);
+  }
+
+  .errorText {
+    color: var(--error-color, currentcolor);
+    background: rgb(from var(--background-color-darker) r g b / 50%);
+    padding: 5px;
+    border-radius: 2px;
+    font-weight: var(--font-weight-ui);
+    width: fit-content;
+  }
+
+  .content {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .layoutStack {
+    display: grid;
+    gap: var(--fieldSet-gap);
+  }
+
+  .layoutGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: var(--fieldSet-gap);
+    align-items: start;
+  }
+
+  .layoutInline {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--fieldSet-gap);
+    align-items: center;
+  }
+
+  .spacingNone {
+    --fieldSet-gap: 0;
+  }
+
+  .spacingXs {
+    --fieldSet-gap: var(--spacing-xs);
+  }
+
+  .spacingSm {
+    --fieldSet-gap: var(--spacing-sm);
+  }
+
+  .spacingMd {
+    --fieldSet-gap: var(--spacing-md);
+  }
+
+  .spacingLg {
+    --fieldSet-gap: var(--spacing-lg);
+  }
+
+  .loadingRow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    min-width: 0;
+  }
+
+  .loader {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentcolor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    opacity: 0.72;
+    animation: spin 700ms linear infinite;
+  }
+
+  .actions,
+  .footer {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .legendHidden,
+  .srOnly {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @each $themeName, $vals in theme.$themes {
+    .#{$themeName} {
+      --fieldSet-glass-bg: #{map.get($vals, glass-bg)};
+      --fieldSet-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --fieldSet-glass-border: #{map.get($vals, glass-border)};
+      --fieldSet-glass-text: #{map.get($vals, text)};
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+      border-color: map.get($vals, border);
+
+      &:hover {
+        background-color: if(
+          map.has-key($vals, hover),
+          map.get($vals, hover),
+          map.get($vals, bg)
+        );
+      }
+
+      &.outline {
+        background-color: transparent;
+        color: map.get($vals, text);
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
+    }
+  }
+
+  @each $state, $vals in theme.$states {
+    .#{$state} {
+      --fieldSet-glass-bg: #{map.get($vals, glass-bg)};
+      --fieldSet-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --fieldSet-glass-border: #{map.get($vals, glass-border)};
+      --fieldSet-glass-text: #{map.get($vals, text)};
+      border-width: 2px;
+      border-color: map.get($vals, border);
+      color: map.get($vals, text);
+    }
+  }
+
+  .clear {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .glass {
+    @include mixins.glass-surface(
+      var(--fieldSet-glass-bg),
+      var(--fieldSet-glass-border),
+      16px
+    );
+
+    color: var(--fieldSet-glass-text);
+  }
+
+  .glass:hover {
+    background: var(--fieldSet-glass-hover-bg);
+  }
+
+  .glass.outline {
+    border-color: var(--fieldSet-glass-border);
+  }
+
+  .disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--disabled-color);
+    border-color: var(--disabled-color);
+
+    &:hover {
+      background-color: var(--disabled-color);
+    }
+  }
+
+  .loading {
+    cursor: progress;
+  }
+
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @include bp.down(xs) {
+    .root {
+      padding: var(--spacing-sm);
+    }
+
+    .actions {
+      justify-content: flex-start;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .root,
+    .root * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .root {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+      box-shadow: none;
+    }
+
+    .glass {
+      background: Canvas;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+}

@@ -193,7 +193,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                   aria-label={
                     getExpandButtonAriaLabel?.(link, isOpen) ?? linkAriaLabel
                   }
-                  aria-description={
+                  title={
                     getExpandButtonAriaDescription?.(link, isOpen) ??
                     linkAriaDescription
                   }

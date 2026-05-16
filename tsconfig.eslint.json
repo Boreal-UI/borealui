@@ -1,5 +1,14 @@
 {
   "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "types": [
+      "node",
+      "jest",
+      "jest-axe",
+      "@testing-library/jest-dom",
+      "cypress"
+    ]
+  },
   "include": [
     "src/**/*",
     "__tests__/**/*",
@@ -8,9 +17,13 @@
     ".storybook/**/*",
     ".storybook-core/**/*",
     ".storybook-next/**/*",
+    "cypress/**/*",
+    "shared-story-assets/**/*",
     "vite.config.ts",
     "vite.config.core.ts",
     "vite.config.next.ts",
+    "cypress.config.ts",
+    "jest.config.ts",
     "global.d.ts",
     "vite-env.d.ts"
   ],

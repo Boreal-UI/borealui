@@ -11,6 +11,14 @@ import {
   ComboBoxProps,
 } from "../../src/components/ComboBox/ComboBox.types";
 import { useState } from "react";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const options = [
   { value: "react", label: "React", description: "UI library" },
@@ -163,134 +171,6 @@ export const Empty: Story = {
   },
 };
 
-export const Themes: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem", maxWidth: "32rem" }}>
-      {themeOptions.map((theme) => (
-        <ComboBox
-          key={theme}
-          {...args}
-          label={`${theme} theme`}
-          theme={theme}
-          placeholder={`Search ${theme}`}
-        />
-      ))}
-    </div>
-  ),
-};
-
-export const GlassThemes: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem", maxWidth: "32rem" }}>
-      {themeOptions.map((theme) => (
-        <ComboBox
-          key={theme}
-          glass
-          {...args}
-          label={`${theme} theme`}
-          theme={theme}
-          placeholder={`Search ${theme}`}
-        />
-      ))}
-    </div>
-  ),
-};
-
-export const States: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem", maxWidth: "32rem" }}>
-      {stateOptions.map((state) => (
-        <ComboBox
-          key={state}
-          {...args}
-          label={`${state} state`}
-          state={state}
-          helperText={state === "error" ? undefined : `Example ${state} state.`}
-          error={state === "error" ? "Choose a valid framework." : undefined}
-        />
-      ))}
-    </div>
-  ),
-};
-
-export const GlassStates: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem", maxWidth: "32rem" }}>
-      {stateOptions.map((state) => (
-        <ComboBox
-          key={state}
-          {...args}
-          label={`${state} state`}
-          state={state}
-          glass
-          helperText={state === "error" ? undefined : `Example ${state} state.`}
-          error={state === "error" ? "Choose a valid framework." : undefined}
-        />
-      ))}
-    </div>
-  ),
-};
-
-export const Outline: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem", maxWidth: "32rem" }}>
-      {themeOptions.map((theme) => (
-        <ComboBox
-          key={theme}
-          outline
-          {...args}
-          label={`${theme} theme`}
-          theme={theme}
-          placeholder={`Search ${theme}`}
-        />
-      ))}
-
-      {stateOptions.map((state) => (
-        <ComboBox
-          key={state}
-          {...args}
-          label={`${state} state`}
-          state={state}
-          outline
-          helperText={state === "error" ? undefined : `Example ${state} state.`}
-          error={state === "error" ? "Choose a valid framework." : undefined}
-        />
-      ))}
-    </div>
-  ),
-};
-
-export const GlassOutline: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem", maxWidth: "32rem" }}>
-      {themeOptions.map((theme) => (
-        <ComboBox
-          key={theme}
-          outline
-          glass
-          {...args}
-          label={`${theme} theme`}
-          theme={theme}
-          placeholder={`Search ${theme}`}
-        />
-      ))}
-
-      {stateOptions.map((state) => (
-        <ComboBox
-          key={state}
-          {...args}
-          label={`${state} state`}
-          state={state}
-          outline
-          glass
-          helperText={state === "error" ? undefined : `Example ${state} state.`}
-          error={state === "error" ? "Choose a valid framework." : undefined}
-        />
-      ))}
-    </div>
-  ),
-};
-
 export const LabelPositions: Story = {
   render: (args) => (
     <div style={{ display: "grid", gap: "1rem", maxWidth: "36rem" }}>
@@ -357,4 +237,28 @@ export const CustomClassNames: Story = {
     errorClassName: "storybook-combobox-error",
     helperText: "Custom class names are applied for styling hooks.",
   },
+};
+
+export const ThemeVariants: Story = {
+  render: (args) => renderThemeVariants({ component: ComboBox, args }),
+};
+
+export const StateVariants: Story = {
+  render: (args) => renderStateVariants({ component: ComboBox, args }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => renderOutlineVariants({ component: ComboBox, args }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) => renderGlassVariants({ component: ComboBox, args }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: ComboBox, args }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) => renderStateOutlineVariants({ component: ComboBox, args }),
 };

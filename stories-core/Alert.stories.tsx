@@ -9,6 +9,14 @@ import {
 
 import { Alert, Button } from "../src/index.core";
 import type { AlertProps } from "../src/components/Alert/Alert.types";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<AlertProps> = {
   title: "Components/Alert",
@@ -212,32 +220,6 @@ export const WithoutIcon: Story = {
   },
 };
 
-export const Glass: Story = {
-  args: {
-    title: "Glass alert",
-    children: "This alert uses glass styling with a stronger shadow.",
-    state: "info",
-    variant: "soft",
-    glass: true,
-    shadow: "strong",
-    icon: <FaInfoCircle />,
-  },
-  decorators: [
-    (StoryComponent) => (
-      <div
-        style={{
-          padding: "2rem",
-          borderRadius: "1rem",
-          background:
-            "linear-gradient(135deg, rgba(80, 120, 255, 0.35), rgba(120, 255, 200, 0.2))",
-        }}
-      >
-        <StoryComponent />
-      </div>
-    ),
-  ],
-};
-
 export const CustomShapeAndShadow: Story = {
   args: {
     title: "Rounded alert",
@@ -246,112 +228,6 @@ export const CustomShapeAndShadow: Story = {
     rounding: "lg",
     shadow: "intense",
     icon: <FaCheckCircle />,
-  },
-};
-
-export const ThemeExamples: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <Alert {...args} theme="primary" title="Primary theme">
-        Primary themed alert.
-      </Alert>
-      <Alert {...args} theme="secondary" title="Secondary theme">
-        Secondary themed alert.
-      </Alert>
-      <Alert {...args} theme="tertiary" title="Tertiary theme">
-        Tertiary themed alert.
-      </Alert>
-      <Alert {...args} theme="quaternary" title="Quaternary theme">
-        Quaternary themed alert.
-      </Alert>
-      <Alert {...args} theme="clear" title="Clear theme">
-        Clear themed alert.
-      </Alert>
-    </div>
-  ),
-  args: {
-    variant: "solid",
-    icon: <FaInfoCircle />,
-  },
-};
-
-export const OutlineThemeExamples: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <Alert {...args} theme="primary" title="Primary theme">
-        Primary themed alert.
-      </Alert>
-      <Alert {...args} theme="secondary" title="Secondary theme">
-        Secondary themed alert.
-      </Alert>
-      <Alert {...args} theme="tertiary" title="Tertiary theme">
-        Tertiary themed alert.
-      </Alert>
-      <Alert {...args} theme="quaternary" title="Quaternary theme">
-        Quaternary themed alert.
-      </Alert>
-      <Alert {...args} theme="clear" title="Clear theme">
-        Clear themed alert.
-      </Alert>
-    </div>
-  ),
-  args: {
-    outline: true,
-    icon: <FaInfoCircle />,
-  },
-};
-
-export const StateExamples: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <Alert {...args} state="success" title="Success" icon={<FaCheckCircle />}>
-        The operation completed successfully.
-      </Alert>
-      <Alert {...args} state="error" title="Error" icon={<FaTimesCircle />}>
-        The operation could not be completed.
-      </Alert>
-      <Alert
-        {...args}
-        state="warning"
-        title="Warning"
-        icon={<FaExclamationTriangle />}
-      >
-        This action may need your attention.
-      </Alert>
-      <Alert {...args} state="info" title="Info" icon={<FaInfoCircle />}>
-        Here is some useful contextual information.
-      </Alert>
-    </div>
-  ),
-  args: {
-    variant: "solid",
-  },
-};
-
-export const OutlineStateExamples: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1rem" }}>
-      <Alert {...args} state="success" title="Success" icon={<FaCheckCircle />}>
-        The operation completed successfully.
-      </Alert>
-      <Alert {...args} state="error" title="Error" icon={<FaTimesCircle />}>
-        The operation could not be completed.
-      </Alert>
-      <Alert
-        {...args}
-        state="warning"
-        title="Warning"
-        icon={<FaExclamationTriangle />}
-      >
-        This action may need your attention.
-      </Alert>
-      <Alert {...args} state="info" title="Info" icon={<FaInfoCircle />}>
-        Here is some useful contextual information.
-      </Alert>
-    </div>
-  ),
-  args: {
-    outline: true,
   },
 };
 
@@ -411,4 +287,28 @@ export const CustomSlotClasses: Story = {
     actionsClassName: "custom-alert-actions",
     dismissButtonClassName: "custom-alert-dismiss",
   },
+};
+
+export const ThemeVariants: Story = {
+  render: (args) => renderThemeVariants({ component: Alert, args }),
+};
+
+export const StateVariants: Story = {
+  render: (args) => renderStateVariants({ component: Alert, args }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => renderOutlineVariants({ component: Alert, args }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) => renderGlassVariants({ component: Alert, args }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: Alert, args }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) => renderStateOutlineVariants({ component: Alert, args }),
 };

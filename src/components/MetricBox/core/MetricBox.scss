@@ -1,310 +1,308 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/_animations";
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.metricBox {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--background-primary-light-color);
-  min-width: 120px;
-  width: max-content;
-  max-width: 100%;
-  height: fit-content;
-  text-align: center;
-  transition: var(--transition-default);
-  gap: var(--spacing-sm);
-  font-family: var(--font-family-body);
-
-  @include bp.up(xs) {
-    padding: var(--spacing-sm);
-  }
-
-  @include bp.down(sm) {
-    gap: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    gap: var(--spacing-md);
-    min-width: 140px;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-    border-radius: 8px;
-  }
-
-  &_icon {
-    font-size: 2rem;
-    color: inherit;
-    padding: 0;
-    line-height: 1;
-
-    @include bp.down(sm) {
-      font-size: 1.8rem;
-    }
-
-    @include bp.up(lg) {
-      font-size: 2.2rem;
-    }
-  }
-
-  @each $key, $value in theme.$rounding {
-    &_round-#{$key} {
-      border-radius: $value;
-    }
-  }
-
-  @each $key, $value in theme.$shadow {
-    &_shadow-#{$key} {
-      box-shadow: $value;
-    }
-  }
-
-  &_content {
+  .metricBox {
     display: flex;
     flex-direction: column;
-    align-items: inherit;
-    padding: var(--spacing-sm);
+    align-items: center;
+    justify-content: center;
+    background: var(--background-primary-light-color);
+    min-width: 120px;
+    width: max-content;
+    max-width: 100%;
+    height: fit-content;
+    text-align: center;
+    transition: var(--transition-default);
+    gap: var(--spacing-sm);
+    font-family: var(--font-family-body);
 
-    @include bp.up(lg) {
-      padding: var(--spacing-md);
+    @include bp.up(xs) {
+      padding: var(--spacing-sm);
     }
-  }
-
-  &_title {
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
-    color: var(--text-color-primary);
 
     @include bp.down(sm) {
-      font-size: var(--font-size-caption);
+      gap: var(--spacing-xs);
     }
 
     @include bp.up(lg) {
-      font-size: var(--font-size-body-sm);
-    }
-  }
-
-  &_value {
-    font-family: var(--font-family-heading);
-    font-size: var(--font-size-h5);
-    font-weight: var(--font-weight-h3);
-    line-height: var(--line-height-heading);
-    letter-spacing: var(--letter-spacing-heading);
-
-    @include bp.down(sm) {
-      font-size: var(--font-size-h6);
+      gap: var(--spacing-md);
+      min-width: 140px;
     }
 
-    @include bp.up(lg) {
-      font-size: var(--font-size-h4);
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+      border-radius: 8px;
     }
-  }
 
-  &_left {
-    align-items: flex-start;
-    text-align: left;
-  }
+    &_icon {
+      font-size: 2rem;
+      color: inherit;
+      padding: 0;
+      line-height: 1;
 
-  &_right {
-    align-items: flex-end;
-    text-align: right;
-  }
-
-  $size-variations: (
-    "xs": (
-      icon-size: 1.5rem,
-      title-size: var(--font-size-caption),
-      value-size: var(--font-size-label),
-      subtext-size: var(--font-size-caption),
-    ),
-    "small": (
-      icon-size: 2rem,
-      title-size: var(--font-size-label),
-      value-size: var(--font-size-body-sm),
-      subtext-size: var(--font-size-label),
-    ),
-    "medium": (
-      icon-size: 2rem,
-      title-size: var(--font-size-body),
-      value-size: var(--font-size-h5),
-      subtext-size: var(--font-size-body),
-    ),
-    "large": (
-      icon-size: 2.5rem,
-      title-size: var(--font-size-h6),
-      value-size: var(--font-size-h4),
-      subtext-size: var(--font-size-h6),
-    ),
-    "xl": (
-      icon-size: 2.5rem,
-      title-size: var(--font-size-h5),
-      value-size: var(--font-size-h3),
-      subtext-size: var(--font-size-h6),
-    ),
-  );
-
-  @each $size, $properties in $size-variations {
-    &.metricBox_#{$size} {
-      .metricBox_icon {
-        font-size: map.get($properties, icon-size);
+      @include bp.down(sm) {
+        font-size: 1.8rem;
       }
+
+      @include bp.up(lg) {
+        font-size: 2.2rem;
+      }
+    }
+
+    @each $key, $value in theme.$rounding {
+      &_round-#{$key} {
+        border-radius: $value;
+      }
+    }
+
+    @each $key, $value in theme.$shadow {
+      &_shadow-#{$key} {
+        box-shadow: $value;
+      }
+    }
+
+    &_content {
+      display: flex;
+      flex-direction: column;
+      align-items: inherit;
+      padding: var(--spacing-sm);
+
+      @include bp.up(lg) {
+        padding: var(--spacing-md);
+      }
+    }
+
+    &_title {
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
+      color: var(--text-color-primary);
+
+      @include bp.down(sm) {
+        font-size: var(--font-size-caption);
+      }
+
+      @include bp.up(lg) {
+        font-size: var(--font-size-body-sm);
+      }
+    }
+
+    &_value {
+      font-family: var(--font-family-heading);
+      font-size: var(--font-size-h5);
+      font-weight: var(--font-weight-h3);
+      line-height: var(--line-height-heading);
+      letter-spacing: var(--letter-spacing-heading);
+
+      @include bp.down(sm) {
+        font-size: var(--font-size-h6);
+      }
+
+      @include bp.up(lg) {
+        font-size: var(--font-size-h4);
+      }
+    }
+
+    &_left {
+      align-items: flex-start;
+      text-align: left;
+    }
+
+    &_right {
+      align-items: flex-end;
+      text-align: right;
+    }
+
+    $size-variations: (
+      "xs": (
+        icon-size: 1.5rem,
+        title-size: var(--font-size-caption),
+        value-size: var(--font-size-label),
+        subtext-size: var(--font-size-caption),
+      ),
+      "small": (
+        icon-size: 2rem,
+        title-size: var(--font-size-label),
+        value-size: var(--font-size-body-sm),
+        subtext-size: var(--font-size-label),
+      ),
+      "medium": (
+        icon-size: 2rem,
+        title-size: var(--font-size-body),
+        value-size: var(--font-size-h5),
+        subtext-size: var(--font-size-body),
+      ),
+      "large": (
+        icon-size: 2.5rem,
+        title-size: var(--font-size-h6),
+        value-size: var(--font-size-h4),
+        subtext-size: var(--font-size-h6),
+      ),
+      "xl": (
+        icon-size: 2.5rem,
+        title-size: var(--font-size-h5),
+        value-size: var(--font-size-h3),
+        subtext-size: var(--font-size-h6),
+      ),
+    );
+
+    @each $size, $properties in $size-variations {
+      &.metricBox_#{$size} {
+        .metricBox_icon {
+          font-size: map.get($properties, icon-size);
+        }
+
+        .metricBox_title {
+          font-size: map.get($properties, title-size);
+        }
+
+        .metricBox_value {
+          font-size: map.get($properties, value-size);
+        }
+
+        .metricBox_subtext {
+          font-size: map.get($properties, subtext-size);
+        }
+      }
+    }
+
+    .metricBox_subtext {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-caption) !important;
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+      color: var(--text-color-primary);
+      opacity: 0.7;
+
+      @include bp.up(lg) {
+        font-size: var(--font-size-body-sm) !important;
+      }
+    }
+  }
+
+  @each $theme-name, $properties in theme.$themes {
+    .metricBox_#{$theme-name} {
+      --metric-box-glass-bg: #{map.get($properties, glass-bg)};
+      --metric-box-glass-hover-bg: #{map.get($properties, glass-hover)};
+      --metric-box-glass-border: #{map.get($properties, glass-border)};
+      --metric-box-glass-text: #{map.get($properties, text)};
+
+      background-color: map.get($properties, bg);
+      color: map.get($properties, text);
 
       .metricBox_title {
-        font-size: map.get($properties, title-size);
-      }
-
-      .metricBox_value {
-        font-size: map.get($properties, value-size);
+        color: map.get($properties, text);
       }
 
       .metricBox_subtext {
-        font-size: map.get($properties, subtext-size);
+        color: map.get($properties, text);
+      }
+
+      &.metricBox_outline {
+        border: 2px solid map.get($properties, border);
+        background-color: transparent;
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
       }
     }
-  }
 
-  .metricBox_subtext {
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-caption) !important;
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-    color: var(--text-color-primary);
-    opacity: 0.7;
-
-    @include bp.up(lg) {
-      font-size: var(--font-size-body-sm) !important;
+    .metricBox_#{$theme-name}.metricBox_outline .metricBox_icon {
+      color: map.get($properties, border);
     }
   }
-}
 
-@each $theme-name, $properties in theme.$themes {
-  .metricBox_#{$theme-name} {
-    --metric-box-glass-bg: #{map.get($properties, glass-bg)};
-    --metric-box-glass-hover-bg: #{map.get($properties, glass-hover)};
-    --metric-box-glass-border: #{map.get($properties, glass-border)};
-    --metric-box-glass-text: #{map.get($properties, text)};
+  @each $state-name, $properties in theme.$states {
+    .metricBox_#{$state-name} {
+      --metric-box-glass-bg: #{map.get($properties, glass-bg)};
+      --metric-box-glass-hover-bg: #{map.get($properties, glass-hover)};
+      --metric-box-glass-border: #{map.get($properties, glass-border)};
+      --metric-box-glass-text: #{map.get($properties, text)};
 
-    background-color: map.get($properties, bg);
-    color: map.get($properties, text);
-
-    .metricBox_title {
+      background-color: map.get($properties, bg);
       color: map.get($properties, text);
-    }
 
-    .metricBox_subtext {
-      color: map.get($properties, text);
-    }
+      .metricBox_title {
+        color: map.get($properties, text);
+      }
 
-    &.metricBox_outline {
-      border: 2px solid map.get($properties, border);
-      background-color: transparent;
+      .metricBox_subtext {
+        color: map.get($properties, text);
+      }
 
-      @include bp.down(sm) {
-        border-width: 1.5px;
+      &.metricBox_outline {
+        border: 2px solid map.get($properties, border);
+        background-color: transparent;
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
       }
     }
-  }
 
-  .metricBox_#{$theme-name}.metricBox_outline .metricBox_icon {
-    color: map.get($properties, border);
-  }
-}
-
-@each $state-name, $properties in theme.$states {
-  .metricBox_#{$state-name} {
-    --metric-box-glass-bg: #{map.get($properties, glass-bg)};
-    --metric-box-glass-hover-bg: #{map.get($properties, glass-hover)};
-    --metric-box-glass-border: #{map.get($properties, glass-border)};
-    --metric-box-glass-text: #{map.get($properties, text)};
-
-    background-color: map.get($properties, bg);
-    color: map.get($properties, text);
-
-    .metricBox_title {
-      color: map.get($properties, text);
-    }
-
-    .metricBox_subtext {
-      color: map.get($properties, text);
-    }
-
-    &.metricBox_outline {
-      border: 2px solid map.get($properties, border);
-      background-color: transparent;
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
+    .metricBox_#{$state-name}.metricBox_outline .metricBox_icon {
+      color: map.get($properties, bg);
     }
   }
 
-  .metricBox_#{$state-name}.metricBox_outline .metricBox_icon {
-    color: map.get($properties, bg);
-  }
-}
-
-.metricBox_clear {
-  border: none;
-  box-shadow: none;
-}
-
-.metricBox_glass {
-  @include mixins.glass-surface(
-    var(--metric-box-glass-bg, var(--glass-background)),
-    var(--metric-box-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
-  );
-
-  color: var(--metric-box-glass-text, currentcolor);
-}
-
-.metricBox_glass:hover {
-  background: var(--metric-box-glass-hover-bg, var(--glass-background));
-}
-
-.metricBox_glass.metricBox_outline {
-  background: var(--metric-box-glass-bg, var(--glass-background));
-  border-color: var(--metric-box-glass-border, var(--glass-border-color));
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .metricBox,
-  .metricBox * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (forced-colors: active) {
-  .metricBox {
-    background: Canvas;
-    color: CanvasText;
-    outline-color: Highlight;
+  .metricBox_clear {
+    border: none;
+    box-shadow: none;
   }
 
-  .metricBox.metricBox_outline {
-    border: 1px solid ButtonText;
+  .metricBox_glass {
+    @include mixins.glass-surface(
+      var(--metric-box-glass-bg, var(--glass-background)),
+      var(--metric-box-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--metric-box-glass-text, currentcolor);
   }
 
-  .metricBox.metricBox_glass {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+  .metricBox_glass:hover {
+    background: var(--metric-box-glass-hover-bg, var(--glass-background));
   }
-}
+
+  .metricBox_glass.metricBox_outline {
+    background: transparent;
+    border-color: var(--metric-box-glass-border, var(--glass-border-color));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .metricBox,
+    .metricBox * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .metricBox {
+      background: Canvas;
+      color: CanvasText;
+      outline-color: Highlight;
+    }
+
+    .metricBox.metricBox_outline {
+      border: 1px solid ButtonText;
+    }
+
+    .metricBox.metricBox_glass {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+  }
 }

@@ -157,10 +157,6 @@ const runAccordionTests = (
     it("supports controlled expanded state", () => {
       const onToggle = cy.stub().as("onToggle");
 
-      interface ControlledAccordionState {
-        expanded: boolean;
-      }
-
       interface OnToggleHandler {
         (nextExpanded: boolean): void;
       }

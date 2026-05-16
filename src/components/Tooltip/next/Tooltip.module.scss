@@ -1,6 +1,5 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/_animations";
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
@@ -184,7 +183,7 @@
   .glass {
     @include mixins.glass-surface(
       var(--tooltip-glass-bg, var(--glass-background)),
-      var(--tooltip-glass-border, var(--glass-border-color)),
+      transparent,
       var(--glass-blur)
     );
 
@@ -213,7 +212,7 @@
 
   .clear {
     box-shadow: none;
-    border: 2px solid var(--text-color-primary);
+    border: none;
     background-color: map.get(map.get(theme.$themes, "clear"), bg-light);
     color: var(--text-color-primary);
 

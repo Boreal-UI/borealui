@@ -9,6 +9,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<typeof IconButton> = {
   title: "Components/IconButton",
@@ -28,30 +36,6 @@ export default meta;
 type Story = StoryObj<typeof IconButton>;
 
 export const Default: Story = {};
-
-export const ThemeVariants = () =>
-  withVariants(
-    IconButton,
-    {
-      icon: FaPlus,
-      size: "medium",
-      "aria-label": "Theme",
-      theme: "primary",
-    },
-    [{ propName: "theme", values: themeOptions }],
-  );
-
-export const StateVariants = () =>
-  withVariants(
-    IconButton,
-    {
-      icon: FaPlus,
-      size: "medium",
-      "aria-label": "State",
-      state: "",
-    },
-    [{ propName: "state", values: stateOptions }],
-  );
 
 export const OutlineAndDisabledVariants: Story = {
   render: (args) => (
@@ -76,58 +60,6 @@ export const OutlineAndDisabledVariants: Story = {
       ))}
       <IconButton {...args} disabled outline aria-label="Disabled" />
       <IconButton {...args} disabled aria-label="Disabled" />
-    </div>
-  ),
-};
-
-export const GlassThemeVariants = () =>
-  withVariants(
-    IconButton,
-    {
-      icon: FaPlus,
-      size: "medium",
-      "aria-label": "Glass Theme",
-      theme: "primary",
-      glass: true,
-    },
-    [{ propName: "theme", values: themeOptions }],
-  );
-
-export const GlassStateVariants = () =>
-  withVariants(
-    IconButton,
-    {
-      icon: FaPlus,
-      size: "medium",
-      "aria-label": "Glass State",
-      glass: true,
-    },
-    [{ propName: "state", values: stateOptions }],
-  );
-
-export const GlassOutlineVariants: Story = {
-  render: (args) => (
-    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-      {themeOptions.map((theme) => (
-        <IconButton
-          key={`glass-theme-${theme}`}
-          {...args}
-          theme={theme}
-          outline
-          glass
-          aria-label={`Glass Theme: ${theme}`}
-        />
-      ))}
-      {stateOptions.map((state) => (
-        <IconButton
-          key={`glass-state-${state}`}
-          {...args}
-          state={state}
-          outline
-          glass
-          aria-label={`Glass State: ${state}`}
-        />
-      ))}
     </div>
   ),
 };
@@ -195,3 +127,27 @@ export const ShadowVariants = () =>
     },
     [{ propName: "shadow", values: shadowOptions }],
   );
+
+export const ThemeVariants: Story = {
+  render: (args) => renderThemeVariants({ component: IconButton, args }),
+};
+
+export const StateVariants: Story = {
+  render: (args) => renderStateVariants({ component: IconButton, args }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => renderOutlineVariants({ component: IconButton, args }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) => renderGlassVariants({ component: IconButton, args }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: IconButton, args }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) => renderStateOutlineVariants({ component: IconButton, args }),
+};

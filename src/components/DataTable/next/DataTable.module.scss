@@ -68,6 +68,83 @@
       }
     }
 
+    .bulkToolbar,
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-sm);
+      flex-wrap: wrap;
+      width: 100%;
+      min-width: var(--data-table-min-width);
+      padding: var(--spacing-sm);
+      border-top: 1px solid var(--border-color);
+      background: var(--background-color-light);
+      box-sizing: border-box;
+    }
+
+    .columnMenu {
+      position: relative;
+      font-family: var(--font-family-ui);
+      color: var(--text-color);
+    }
+
+    .columnMenuTrigger,
+    .paginationButton,
+    .columnControlButton,
+    .expandButton {
+      min-height: 32px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      background: var(--background-color);
+      color: var(--text-color);
+      padding: 0 var(--spacing-xs);
+      font: inherit;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+    }
+
+    .columnMenuPanel {
+      position: absolute;
+      z-index: 5;
+      top: calc(100% + var(--spacing-xxs));
+      right: 0;
+      display: grid;
+      gap: var(--spacing-xs);
+      min-width: 12rem;
+      padding: var(--spacing-sm);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      background: var(--background-color);
+      box-shadow: var(--box-shadow-md);
+    }
+
+    .columnMenuItem {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      white-space: nowrap;
+    }
+
+    .viewport {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    &.virtualized .viewport {
+      overflow: auto;
+    }
+
     .table {
       width: 100%;
       min-width: var(--data-table-min-width);
@@ -88,6 +165,14 @@
       white-space: nowrap;
       color: var(--text-color-primary);
       vertical-align: top;
+    }
+
+    .headerContent {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-xs);
+      min-width: 0;
     }
 
     .selectionCell {
@@ -183,6 +268,33 @@
       }
     }
 
+    .columnControls {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .columnControlButton,
+    .expandButton {
+      min-width: 28px;
+      min-height: 28px;
+      padding: 0;
+      line-height: 1;
+    }
+
+    .pinnedCell {
+      position: sticky;
+      z-index: 2;
+      background: var(--background-color-dark);
+      box-shadow: 1px 0 0 var(--border-color);
+    }
+
+    th.pinnedCell {
+      z-index: 3;
+      background: var(--background-color);
+    }
+
     .clickable {
       cursor: pointer;
       transition: background-color var(--transition-default);
@@ -204,6 +316,50 @@
 
     .striped:nth-child(even) {
       background-color: var(--background-color-darker);
+    }
+
+    .expandedRow {
+      background: var(--background-color-light);
+    }
+
+    .expandedCell {
+      padding: var(--spacing-sm);
+      border-bottom: 1px solid var(--text-color-primary);
+      color: var(--text-color-primary);
+    }
+
+    .editButton {
+      display: inline;
+      width: 100%;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: text;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+      }
+    }
+
+    .cellEditor {
+      width: min(100%, 16rem);
+      min-height: 32px;
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-sm);
+      background: var(--background-color);
+      color: var(--text-color);
+      padding: 0 var(--spacing-xs);
+      font: inherit;
+    }
+
+    .emptyCell {
+      padding: var(--spacing-md);
+      text-align: center;
+      color: var(--text-color-secondary);
     }
 
     tbody tr {

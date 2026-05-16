@@ -8,12 +8,28 @@ import {
   stateOptions,
   themeOptions,
 } from "../../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 type SampleRow = {
   id: number;
   name: string;
   score: number;
   passed: boolean;
+};
+
+type AdminRow = {
+  id: string;
+  project: string;
+  owner: string;
+  status: string;
+  spend: number;
 };
 
 const sampleData: SampleRow[] = [
@@ -44,6 +60,57 @@ const sampleColumns: DataTableProps<SampleRow>["columns"] = [
     label: "Status",
     sortable: false,
     render: (value: any) => (value ? "Pass" : "Fail"),
+  },
+];
+
+const adminData: AdminRow[] = [
+  {
+    id: "aurora",
+    project: "Aurora Console",
+    owner: "Ada",
+    status: "Ready",
+    spend: 12400,
+  },
+  {
+    id: "boreal",
+    project: "Boreal Analytics",
+    owner: "Grace",
+    status: "Stable",
+    spend: 9800,
+  },
+  {
+    id: "cascade",
+    project: "Cascade Ops",
+    owner: "Lin",
+    status: "Draft",
+    spend: 6200,
+  },
+  {
+    id: "drift",
+    project: "Drift Billing",
+    owner: "Mina",
+    status: "Review",
+    spend: 14300,
+  },
+];
+
+const adminColumns: DataTableProps<AdminRow>["columns"] = [
+  {
+    key: "project",
+    label: "Project",
+    sortable: true,
+    editable: true,
+    width: "180px",
+    isRowHeader: true,
+  },
+  { key: "owner", label: "Owner", sortable: true, width: "120px" },
+  { key: "status", label: "Status", sortable: true, width: "120px" },
+  {
+    key: "spend",
+    label: "Spend",
+    sortable: true,
+    width: "120px",
+    render: (value) => `$${Number(value).toLocaleString()}`,
   },
 ];
 
@@ -291,117 +358,6 @@ export const NoStripedTheme: Story = {
   },
 };
 
-export const ThemeVariants = () => {
-  return (
-    <StoryGrid title="Theme Variants">
-      {themeOptions.map((theme) => (
-        <div key={theme}>
-          <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
-            {theme} Theme
-          </h4>
-          <DataTable
-            data={sampleData}
-            columns={sampleColumns}
-            theme={theme}
-            striped={true}
-          />
-        </div>
-      ))}
-    </StoryGrid>
-  );
-};
-
-export const StateVariants = () => {
-  return (
-    <StoryGrid title="State Variants">
-      {stateOptions.map((state) => (
-        <div key={state}>
-          <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
-            {state} state
-          </h4>
-          <DataTable
-            data={sampleData}
-            columns={sampleColumns}
-            state={state}
-            striped={true}
-          />
-        </div>
-      ))}
-    </StoryGrid>
-  );
-};
-
-export const OutlineVariants = () => (
-  <StoryGrid title="Outline Variants">
-    {themeOptions.map((theme) => (
-      <div key={`outline-${theme}`}>
-        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
-          {theme} Outline
-        </h4>
-        <DataTable
-          data={sampleData}
-          columns={sampleColumns}
-          theme={theme}
-          outline
-          striped
-        />
-      </div>
-    ))}
-    {stateOptions.map((state) => (
-      <div key={state}>
-        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
-          {state} Outline
-        </h4>
-        <DataTable
-          data={sampleData}
-          columns={sampleColumns}
-          state={state}
-          outline
-          striped={true}
-        />
-      </div>
-    ))}
-  </StoryGrid>
-);
-
-export const GlassThemeVariants = () => (
-  <StoryGrid title="Glass Theme Variants">
-    {themeOptions.map((theme) => (
-      <div key={theme}>
-        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
-          {theme} Glass
-        </h4>
-        <DataTable
-          data={sampleData}
-          columns={sampleColumns}
-          theme={theme}
-          glass
-          striped
-        />
-      </div>
-    ))}
-  </StoryGrid>
-);
-
-export const GlassStateVariants = () => (
-  <StoryGrid title="Glass State Variants">
-    {stateOptions.map((state) => (
-      <div key={state}>
-        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
-          {state} Glass
-        </h4>
-        <DataTable
-          data={sampleData}
-          columns={sampleColumns}
-          state={state}
-          glass
-          striped
-        />
-      </div>
-    ))}
-  </StoryGrid>
-);
-
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (
@@ -538,4 +494,106 @@ export const WithDataTestid: Story = {
   args: {
     "data-testid": "datatable-storybook",
   },
+};
+
+export const AdminWorkflow: StoryObj<DataTableProps<AdminRow>> = {
+  render: () => (
+    <DataTable
+      data={adminData}
+      columns={adminColumns}
+      rowKey={(row) => row.id}
+      toolbarTitle="Projects"
+      filterable
+      selectableRows
+      pagination
+      itemsPerPage={2}
+      columnVisibility
+      columnReorder
+      columnResize
+      columnPinning
+      bulkActions={(keys) => (
+        <button type="button">Archive {keys.length}</button>
+      )}
+      renderExpandedRow={(row) => (
+        <div>
+          Owner: {row.owner}. Status: {row.status}. Current monthly spend is $
+          {row.spend.toLocaleString()}.
+        </div>
+      )}
+      onCellEdit={(value, meta) =>
+        console.log("Edited", meta.rowKey, String(meta.column.key), value)
+      }
+      caption="Admin workflow table"
+      theme="primary"
+      striped
+    />
+  ),
+};
+
+export const ServerPaginationWorkflow: StoryObj<DataTableProps<AdminRow>> = {
+  render: () => (
+    <DataTable
+      data={adminData.slice(0, 2)}
+      columns={adminColumns}
+      rowKey={(row) => row.id}
+      toolbarTitle="Server controlled projects"
+      pagination
+      serverPagination
+      currentPage={2}
+      itemsPerPage={2}
+      totalItems={24}
+      serverSort
+      onPageChange={(page, meta) => console.log("Load page", page, meta)}
+      onSortChange={(key, order) => console.log("Load sort", key, order)}
+      caption="Server paginated admin table"
+      theme="secondary"
+    />
+  ),
+};
+
+export const VirtualizedLargeDataset: StoryObj<DataTableProps<AdminRow>> = {
+  render: () => (
+    <DataTable
+      data={Array.from({ length: 250 }, (_, index) => ({
+        id: `row-${index}`,
+        project: `Project ${index + 1}`,
+        owner: ["Ada", "Grace", "Lin", "Mina"][index % 4],
+        status: ["Ready", "Stable", "Draft", "Review"][index % 4],
+        spend: 4000 + index * 75,
+      }))}
+      columns={adminColumns}
+      rowKey={(row) => row.id}
+      toolbarTitle="Virtualized projects"
+      virtualized
+      virtualRowHeight={48}
+      virtualViewportHeight={320}
+      caption="Virtualized project table"
+      theme="tertiary"
+      striped
+    />
+  ),
+};
+
+export const ThemeVariants: Story = {
+  render: (args) => renderThemeVariants({ component: DataTable, args }),
+};
+
+export const StateVariants: Story = {
+  render: (args) => renderStateVariants({ component: DataTable, args }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => renderOutlineVariants({ component: DataTable, args }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) => renderGlassVariants({ component: DataTable, args }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: DataTable, args }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) => renderStateOutlineVariants({ component: DataTable, args }),
 };

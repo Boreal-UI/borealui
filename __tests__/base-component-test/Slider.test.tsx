@@ -374,8 +374,8 @@ describe("SliderBase", () => {
 
     const slider = screen.getByTestId("slider");
 
-    expect(slider).toBeRequired();
-    expect(slider).toHaveAttribute("aria-required", "true");
+    expect(slider).toHaveAttribute("required");
+    expect(slider).not.toHaveAttribute("aria-required");
   });
 
   it("prefers explicit aria-required over derived required state", () => {
@@ -389,6 +389,7 @@ describe("SliderBase", () => {
       />,
     );
 
+    expect(screen.getByTestId("slider")).toHaveAttribute("required");
     expect(screen.getByTestId("slider")).toHaveAttribute(
       "aria-required",
       "false",

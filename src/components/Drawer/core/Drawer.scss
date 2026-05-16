@@ -1,8 +1,8 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
-@use "../../../styles/animations" as animations;
 @use "sass:map";
+@use "../../../styles/_animations";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 
@@ -63,7 +63,6 @@
     max-width: 100%;
     max-height: 100%;
     overflow: hidden;
-    border: 1px solid var(--border-color);
     background: var(--background-color);
     color: var(--text-color);
     font-family: var(--font-family-ui);

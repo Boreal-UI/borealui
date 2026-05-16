@@ -16,6 +16,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
@@ -71,29 +79,10 @@ export const Disabled: Story = {
   args: {
     ...defaultArgs,
     children: "Disabled Badge",
+    onClick: () => alert("Badge clicked!"),
     disabled: true,
   },
 };
-
-export const ThemeVariants = () =>
-  withVariants(Badge, { ...defaultArgs }, [
-    { propName: "theme", values: themeOptions },
-  ]);
-
-export const GlassThemeVariants = () =>
-  withVariants(Badge, { ...defaultArgs, glass: true }, [
-    { propName: "theme", values: themeOptions },
-  ]);
-
-export const StateVariants = () =>
-  withVariants(Badge, { ...defaultArgs }, [
-    { propName: "state", values: stateOptions },
-  ]);
-
-export const GlassStateVariants = () =>
-  withVariants(Badge, { ...defaultArgs, glass: true }, [
-    { propName: "state", values: stateOptions },
-  ]);
 
 export const SizeVariants = () =>
   withVariants(Badge, { ...defaultArgs }, [
@@ -110,27 +99,6 @@ export const ShadowVariants = () =>
     { propName: "shadow", values: shadowOptions },
   ]);
 
-export const OutlineVariants = () =>
-  withVariants(
-    Badge,
-    {
-      ...defaultArgs,
-      outline: true,
-    },
-    [{ propName: "theme", values: themeOptions }],
-  );
-
-export const GlassOutlineVariants = () =>
-  withVariants(
-    Badge,
-    {
-      ...defaultArgs,
-      outline: true,
-      glass: true,
-    },
-    [{ propName: "theme", values: themeOptions }],
-  );
-
 export const WithChildren: Story = {
   render: () => (
     <Badge aria-label="With children star badge">
@@ -146,4 +114,28 @@ export const IconOnly: Story = {
     "aria-label": "Information badge",
   },
   render: (args) => <Badge {...args} />,
+};
+
+export const ThemeVariants: Story = {
+  render: (args) => renderThemeVariants({ component: Badge, args }),
+};
+
+export const StateVariants: Story = {
+  render: (args) => renderStateVariants({ component: Badge, args }),
+};
+
+export const OutlineVariants: Story = {
+  render: (args) => renderOutlineVariants({ component: Badge, args }),
+};
+
+export const GlassVariants: Story = {
+  render: (args) => renderGlassVariants({ component: Badge, args }),
+};
+
+export const GlassOutlineVariants: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: Badge, args }),
+};
+
+export const StateOutlineVariants: Story = {
+  render: (args) => renderStateOutlineVariants({ component: Badge, args }),
 };
