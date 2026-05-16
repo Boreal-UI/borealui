@@ -379,13 +379,21 @@
     background-color: transparent;
   }
 
-  .checkbox_disabled {
+  .checkbox_disabled,
+  .checkbox:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     color: var(--disabled-color);
 
+    .checkbox_input:checked + .checkbox_box {
+      background-color: transparent;
+      border-color: transparent;
+      color: var(--disabled-color);
+    }
+
     .checkbox_box {
       box-shadow: none;
+      border-color: var(--disabled-color);
     }
 
     .checkbox_box::before {

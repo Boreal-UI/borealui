@@ -6,6 +6,7 @@ import { ColorPickerProps } from "../ColorPicker.types";
 
 const classes = {
   color_picker: "color_picker",
+  disabled: "color_picker_disabled",
   legend: "color_picker_legend",
   grid: "color_picker_grid",
   swatch: "color_picker_swatch",

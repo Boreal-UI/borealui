@@ -23,6 +23,11 @@ const classes = {
   info: "pagination_info",
   error: "pagination_error",
   warning: "pagination_warning",
+  xs: "pagination_xs",
+  small: "pagination_small",
+  medium: "pagination_medium",
+  large: "pagination_large",
+  xl: "pagination_xl",
 };
 
 const Pager: React.FC<PagerProps> = (props) => {

@@ -5,193 +5,187 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $sizes: (
+    "xs": theme.$font-size-sm,
+    "small": theme.$font-size-md,
+    "medium": theme.$font-size-base,
+    "large": theme.$font-size-lg,
+    "xl": theme.$font-size-xl,
+  );
 
-$sizes: (
-  "xs": theme.$font-size-sm,
-  "small": theme.$font-size-md,
-  "medium": theme.$font-size-base,
-  "large": theme.$font-size-lg,
-  "xl": theme.$font-size-xl,
-);
-
-.container {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-
-  @include bp.down(xs) {
-    gap: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    gap: var(--spacing-md);
-  }
-}
-
-.wrapper {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-xs);
-
-  @include bp.down(xs) {
-    gap: var(--spacing-xxs);
-  }
-
-  @include bp.up(lg) {
+  .container {
+    display: flex;
+    align-items: center;
     gap: var(--spacing-sm);
+
+    @include bp.down(xs) {
+      gap: var(--spacing-xs);
+    }
+
+    @include bp.up(lg) {
+      gap: var(--spacing-md);
+    }
   }
 
-  @each $size, $font-size in $sizes {
-    &.#{$size} {
-      font-size: $font-size;
+  .wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
 
-      @include bp.up(lg) {
-        font-size: calc(#{$font-size} * 1.05);
+    @include bp.down(xs) {
+      gap: var(--spacing-xxs);
+    }
+
+    @include bp.up(lg) {
+      gap: var(--spacing-sm);
+    }
+
+    @each $size, $font-size in $sizes {
+      &.#{$size} {
+        font-size: $font-size;
+
+        @include bp.up(lg) {
+          font-size: calc(#{$font-size} * 1.05);
+        }
       }
     }
   }
-}
 
-.label {
-  font-size: var(--font-size-label);
-  line-height: 1;
-  color: var(--text-color-primary);
-  margin: 0;
-  display: inline-flex;
-  align-items: center;
+  .label {
+    font-size: var(--font-size-label);
+    line-height: 1;
+    color: var(--text-color-primary);
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
 
-  @include bp.down(xs) {
-    font-size: var(--font-size-caption);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body-sm);
-  }
-}
-
-.star {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 2px;
-  border-radius: 4px;
-  transition:
-    color 0.3s ease-in-out,
-    transform 0.2s ease;
-  color: var(--disabled-color);
-
-  svg {
-    width: 1em;
-    height: 1em;
-    display: block;
+    @include bp.down(xs) {
+      font-size: var(--font-size-caption);
+    }
 
     @include bp.up(lg) {
-      width: 1.05em;
-      height: 1.05em;
+      font-size: var(--font-size-body-sm);
     }
-  }
-}
-
-.active {
-  color: var(--primary-color);
-}
-
-.interactive .star:hover {
-  cursor: pointer;
-  transform: scale(1.2);
-
-  @include bp.down(xs) {
-    transform: scale(1.1);
-  }
-}
-
-.interactive .star:focus-visible {
-  outline: 2px solid var(--focus-outline-color, var(--primary-color));
-  outline-offset: 2px;
-}
-
-@each $themeName, $vals in theme.$themes {
-  .#{$themeName} {
-    --rating-glass-text: #{map.get($vals, text)};
-
-    .active {
-      color: map.get($vals, bg);
-    }
-  }
-}
-
-@each $stateName, $vals in theme.$states {
-  .#{$stateName} {
-    --rating-glass-bg: #{map.get($vals, glass-bg)};
-    --rating-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --rating-glass-border: #{map.get($vals, glass-border)};
-    --rating-glass-text: #{map.get($vals, text)};
-
-    .active {
-      color: map.get($vals, bg);
-    }
-  }
-}
-
-.clear {
-  .active {
-    color: var(--text-color-primary);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .star,
-  .wrapper {
-    transition: none !important;
-  }
-
-  .interactive .star:hover {
-    transform: none !important;
-  }
-}
-
-@media (hover: none) {
-  .interactive .star:hover {
-    transform: none;
-  }
-}
-
-.glass {
-  @include mixins.glass-surface(
-    var(--rating-glass-bg, rgba(255, 255, 255, 0.18)),
-    var(--rating-glass-border, rgba(255, 255, 255, 0.32)),
-    14px
-  );
-  color: var(--rating-glass-text, var(--text-color-primary));
-  padding: var(--spacing-xxs) var(--spacing-xs);
-  border-radius: var(--border-radius-md);
-  box-shadow: var(--box-shadow-sm);
-}
-
-.interactive.glass:hover {
-  background: var(--rating-glass-hover-bg, rgba(255, 255, 255, 0.24));
-}
-
-@media (forced-colors: active) {
-  .wrapper.glass {
-    background: Canvas;
-    border-color: ButtonText;
-    color: ButtonText;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
   }
 
   .star {
-    color: ButtonText;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    border-radius: 4px;
+    transition:
+      color 0.3s ease-in-out,
+      transform 0.2s ease;
+    color: var(--disabled-color);
+
+    svg {
+      width: 1em;
+      height: 1em;
+      display: block;
+
+      @include bp.up(lg) {
+        width: 1.05em;
+        height: 1.05em;
+      }
+    }
   }
 
   .active {
-    color: Highlight;
+    color: var(--primary-color);
+  }
+
+  .interactive .star:hover {
+    cursor: pointer;
+    transform: scale(1.2);
+
+    @include bp.down(xs) {
+      transform: scale(1.1);
+    }
   }
 
   .interactive .star:focus-visible {
-    outline: 2px solid Highlight;
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
   }
-}
+
+  @each $themeName, $vals in theme.$themes {
+    .#{$themeName} {
+      .active {
+        color: map.get($vals, bg);
+      }
+    }
+
+    .#{$themeName}.glass {
+      --rating-glass-bg: #{map.get($vals, glass-border)};
+
+      .active {
+        color: var(--rating-glass-bg);
+      }
+    }
+  }
+
+  @each $stateName, $vals in theme.$states {
+    .#{$stateName} {
+      --rating-glass-bg: #{map.get($vals, glass-bg)};
+
+      .active {
+        color: map.get($vals, bg);
+      }
+    }
+
+    .#{$stateName}.glass {
+      --rating-glass-bg: #{map.get($vals, glass-border)};
+
+      .active {
+        color: var(--rating-glass-bg);
+      }
+    }
+  }
+
+  .clear {
+    .active {
+      color: var(--text-color-primary);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .star,
+    .wrapper {
+      transition: none !important;
+    }
+
+    .interactive .star:hover {
+      transform: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .interactive .star:hover {
+      transform: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .wrapper.glass {
+      background: Canvas;
+      border-color: ButtonText;
+      color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .star {
+      color: ButtonText;
+    }
+
+    .active {
+      color: Highlight;
+    }
+
+    .interactive .star:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+  }
 }

@@ -5,347 +5,348 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.wrapper,
-.labelWrapper,
-.circle,
-.label {
-  cursor: pointer;
-}
-
-.wrapper {
-  --radio-control-size: 1.125rem;
-  --radio-dot-size: 0.5rem;
-
-  display: inline-flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: flex-start;
-  justify-content: flex-start;
-  min-width: 0;
-  max-width: 100%;
-  cursor: pointer;
-  gap: var(--spacing-sm);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  user-select: none;
-  position: relative;
-  color: var(--text-color-primary);
-  background-color: transparent;
-  transition:
-    color var(--transition-default),
-    opacity var(--transition-default);
-
-  @include bp.down(sm) {
-    --radio-control-size: 1rem;
-    --radio-dot-size: 0.45rem;
-
-    gap: var(--spacing-xs);
-    font-size: var(--font-size-label);
-  }
-
-  @include bp.up(lg) {
-    --radio-control-size: 1.25rem;
-    --radio-dot-size: 0.55rem;
-
-    gap: var(--spacing-md);
-    font-size: var(--font-size-body);
-  }
-}
-
-.group {
-  display: flex;
-  min-width: 0;
-  max-width: 100%;
-  flex-direction: column;
-  gap: var(--spacing-sm);
-  padding: 0;
-  margin: 0;
-  border: 0;
-  color: var(--text-color-primary);
-  font-family: var(--font-family-ui);
-}
-
-.legend {
-  padding: 0;
-  margin: 0 0 var(--spacing-xs);
-  color: var(--text-color-primary);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-}
-
-.options {
-  display: flex;
-  min-width: 0;
-  max-width: 100%;
-  gap: var(--spacing-sm);
-  align-items: flex-start;
-}
-
-.vertical {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.horizontal {
-  flex-flow: row wrap;
-  align-items: flex-start;
-}
-
-@include bp.down(sm) {
-  .horizontal {
-    flex-direction: column;
-  }
-}
-
-.description,
-.errorMessage {
-  max-width: 100%;
-  margin: 0;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-caption);
-  line-height: var(--line-height-caption);
-  overflow-wrap: anywhere;
-}
-
-.description {
-  color: var(--text-color-secondary);
-}
-
-.errorMessage,
-.invalid .legend {
-  color: var(--error-color);
-}
-
-.input {
-  position: absolute;
-  inline-size: 1px;
-  block-size: 1px;
-  margin: -1px;
-  padding: 0;
-  border: 0;
-  opacity: 0;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  clip-path: inset(50%);
-  white-space: nowrap;
-}
-
-.circle {
-  inline-size: var(--radio-control-size);
-  block-size: var(--radio-control-size);
-  min-inline-size: var(--radio-control-size);
-  min-block-size: var(--radio-control-size);
-  margin-block-start: 0.05em;
-  border: 2px solid currentcolor;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  position: relative;
-  box-sizing: border-box;
-  flex-shrink: 0;
-  overflow: hidden;
-  color: currentcolor;
-  transition:
-    background-color var(--transition-default),
-    border-color var(--transition-default),
-    box-shadow var(--transition-default),
-    transform var(--transition-default);
-}
-
-.circle::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  inline-size: var(--radio-dot-size);
-  block-size: var(--radio-dot-size);
-  display: block;
-  box-sizing: border-box;
-  border-radius: inherit;
-  background-color: currentcolor;
-  opacity: 0;
-  transform: translate(-50%, -50%) scale(0.7);
-  transform-origin: center;
-  transition:
-    opacity var(--transition-default),
-    transform var(--transition-default);
-}
-
-.input:checked + .circle::after {
-  opacity: 1;
-  transform: translate(-50%, -50%) scale(1);
-}
-
-.input:focus-visible + .circle {
-  outline: 2px solid var(--focus-outline-color, var(--primary-color));
-  outline-offset: 3px;
-}
-
-.input:disabled + .circle {
-  border-color: var(--disabled-color);
-  box-shadow: none;
-}
-
-.input:disabled ~ .label,
-.disabled .label {
-  color: var(--disabled-color);
-}
-
-.clear .circle {
-  border-color: var(--text-color-primary);
-}
-
-.clear .circle::after {
-  background-color: var(--text-color-primary);
-}
-
-.labelWrapper {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  min-width: 0;
-  max-width: 100%;
-  gap: var(--spacing-xs);
-}
-
-.label {
-  color: var(--text-color-primary);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  min-width: 0;
-  max-width: 100%;
-  overflow-wrap: anywhere;
-
-  @include bp.down(sm) {
-    line-height: 1.2;
-  }
-
-  @include bp.up(lg) {
-    line-height: 1.25;
-  }
-}
-
-@each $name, $vals in theme.$themes {
-  .#{$name} {
-    --radio-glass-bg: #{map.get($vals, glass-bg)};
-    --radio-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --radio-glass-border: #{map.get($vals, glass-border)};
-    --radio-glass-text: #{map.get($vals, text)};
-
-    color: map.get($vals, border);
-
-    .circle {
-      border-color: map.get($vals, border);
-    }
-
-    .input:checked + .circle::after {
-      background-color: map.get($vals, border);
-    }
-  }
-}
-
-@each $name, $vals in theme.$states {
-  .#{$name} {
-    --radio-glass-bg: #{map.get($vals, glass-bg)};
-    --radio-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --radio-glass-border: #{map.get($vals, glass-border)};
-    --radio-glass-text: #{map.get($vals, text)};
-
-    color: map.get($vals, bg);
-
-    .circle {
-      border-color: map.get($vals, bg);
-    }
-
-    .input:checked + .circle::after {
-      background-color: map.get($vals, bg);
-    }
-  }
-}
-
-.glass .glassCircle {
-  @include mixins.glass-surface(
-    var(--radio-glass-bg, var(--glass-background)),
-    var(--radio-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
-  );
-
-  color: var(--radio-glass-text, currentcolor);
-  border-color: var(--radio-glass-border, var(--glass-border-color));
-}
-
-.glass .input:checked + .glassCircle {
-  background: var(--radio-glass-hover-bg, var(--glass-background));
-}
-
-.disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-  color: var(--disabled-color);
-
-  .circle {
-    border-color: var(--disabled-color);
-    box-shadow: none;
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-
-    &::after {
-      border-radius: $value;
-    }
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
   .wrapper,
-  .wrapper * {
-    transition: none !important;
-    animation: none !important;
+  .labelWrapper,
+  .circle,
+  .label {
+    cursor: pointer;
   }
-}
 
-@media (forced-colors: active) {
+  .wrapper {
+    --radio-control-size: 1.125rem;
+    --radio-dot-size: 0.5rem;
+
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-width: 0;
+    max-width: 100%;
+    cursor: pointer;
+    gap: var(--spacing-sm);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    user-select: none;
+    position: relative;
+    color: var(--text-color-primary);
+    background-color: transparent;
+    transition:
+      color var(--transition-default),
+      opacity var(--transition-default);
+
+    @include bp.down(sm) {
+      --radio-control-size: 1rem;
+      --radio-dot-size: 0.45rem;
+
+      gap: var(--spacing-xs);
+      font-size: var(--font-size-label);
+    }
+
+    @include bp.up(lg) {
+      --radio-control-size: 1.25rem;
+      --radio-dot-size: 0.55rem;
+
+      gap: var(--spacing-md);
+      font-size: var(--font-size-body);
+    }
+  }
+
+  .group {
+    display: flex;
+    min-width: 0;
+    max-width: 100%;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    padding: 0;
+    margin: 0;
+    border: 0;
+    color: var(--text-color-primary);
+    font-family: var(--font-family-ui);
+  }
+
+  .legend {
+    padding: 0;
+    margin: 0 0 var(--spacing-xs);
+    color: var(--text-color-primary);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+  }
+
+  .options {
+    display: flex;
+    min-width: 0;
+    max-width: 100%;
+    gap: var(--spacing-sm);
+    align-items: flex-start;
+  }
+
+  .vertical {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .horizontal {
+    flex-flow: row wrap;
+    align-items: flex-start;
+  }
+
+  @include bp.down(sm) {
+    .horizontal {
+      flex-direction: column;
+    }
+  }
+
+  .description,
+  .errorMessage {
+    max-width: 100%;
+    margin: 0;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+    overflow-wrap: anywhere;
+  }
+
+  .description {
+    color: var(--text-color-secondary);
+  }
+
+  .errorMessage,
+  .invalid .legend {
+    color: var(--error-color);
+  }
+
+  .input {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    opacity: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
   .circle {
-    background: Canvas;
-    border-color: ButtonText !important;
+    inline-size: var(--radio-control-size);
+    block-size: var(--radio-control-size);
+    min-inline-size: var(--radio-control-size);
+    min-block-size: var(--radio-control-size);
+    margin-block-start: 0.05em;
+    border: 2px solid currentcolor;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    position: relative;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    overflow: hidden;
+    color: currentcolor;
+    transition:
+      background-color var(--transition-default),
+      border-color var(--transition-default),
+      box-shadow var(--transition-default),
+      transform var(--transition-default);
+  }
+
+  .circle::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    inline-size: var(--radio-dot-size);
+    block-size: var(--radio-dot-size);
+    display: block;
+    box-sizing: border-box;
+    border-radius: inherit;
+    background-color: currentcolor;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.7);
+    transform-origin: center;
+    transition:
+      opacity var(--transition-default),
+      transform var(--transition-default);
   }
 
   .input:checked + .circle::after {
-    background: Highlight !important;
-    opacity: 1 !important;
-    transform: none !important;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .input:focus-visible + .circle {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+  }
+
+  .input:disabled + .circle {
+    border-color: var(--disabled-color);
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+
+  .input:disabled ~ .label,
+  .disabled .label {
+    color: var(--disabled-color);
+    cursor: not-allowed;
+  }
+
+  .clear .circle {
+    border-color: var(--text-color-primary);
+  }
+
+  .clear .circle::after {
+    background-color: var(--text-color-primary);
+  }
+
+  .labelWrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    min-width: 0;
+    max-width: 100%;
+    gap: var(--spacing-xs);
+  }
+
+  .label {
+    color: var(--text-color-primary);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+
+    @include bp.down(sm) {
+      line-height: 1.2;
+    }
+
+    @include bp.up(lg) {
+      line-height: 1.25;
+    }
+  }
+
+  @each $name, $vals in theme.$themes {
+    .#{$name} {
+      --radio-glass-bg: #{map.get($vals, glass-bg)};
+      --radio-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --radio-glass-border: #{map.get($vals, glass-border)};
+      --radio-glass-text: #{map.get($vals, text)};
+
+      color: map.get($vals, border);
+
+      .circle {
+        border-color: map.get($vals, border);
+      }
+
+      .input:checked + .circle::after {
+        background-color: map.get($vals, border);
+      }
+    }
+  }
+
+  @each $name, $vals in theme.$states {
+    .#{$name} {
+      --radio-glass-bg: #{map.get($vals, glass-bg)};
+      --radio-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --radio-glass-border: #{map.get($vals, glass-border)};
+      --radio-glass-text: #{map.get($vals, text)};
+
+      color: map.get($vals, bg);
+
+      .circle {
+        border-color: map.get($vals, bg);
+      }
+
+      .input:checked + .circle::after {
+        background-color: map.get($vals, bg);
+      }
+    }
   }
 
   .glass .glassCircle {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
-  }
-}
+    @include mixins.glass-surface(
+      var(--radio-glass-bg, var(--glass-background)),
+      var(--radio-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
 
-.invalid .circle {
-  border-color: var(--error-color);
-  color: var(--error-color);
-}
+    color: var(--radio-glass-text, currentcolor);
+    border-color: var(--radio-glass-border, var(--glass-border-color));
+  }
+
+  .glass .input:checked + .glassCircle {
+    background: var(--radio-glass-hover-bg, var(--glass-background));
+  }
+
+  .disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    color: var(--disabled-color);
+
+    .circle {
+      border-color: var(--disabled-color);
+      box-shadow: none;
+    }
+  }
+
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
+
+      &::after {
+        border-radius: $value;
+      }
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wrapper,
+    .wrapper * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .circle {
+      background: Canvas;
+      border-color: ButtonText !important;
+    }
+
+    .input:checked + .circle::after {
+      background: Highlight !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+
+    .glass .glassCircle {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+  }
+
+  .invalid .circle {
+    border-color: var(--error-color);
+    color: var(--error-color);
+  }
 }

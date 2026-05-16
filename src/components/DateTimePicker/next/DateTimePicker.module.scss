@@ -147,6 +147,7 @@
     z-index: 1;
     width: 100%;
     min-width: 0;
+    cursor: pointer;
     padding: 0;
     border: 2px solid transparent;
     font-family: var(--font-family-ui);
@@ -333,17 +334,23 @@
   .disabled {
     .inputWrapper {
       opacity: 0.6;
-      pointer-events: none;
       background-color: var(--disabled-color);
       color: var(--text-color-secondary);
       cursor: not-allowed;
     }
 
+    .input {
+      cursor: not-allowed;
+    }
+
     .icon {
       opacity: 0.6;
-      pointer-events: none;
       color: var(--text-color-secondary);
       cursor: not-allowed;
+
+      &:hover {
+        transform: none;
+      }
     }
   }
 

@@ -162,6 +162,7 @@
       width: 100%;
       min-width: 0;
       padding: 0;
+      cursor: pointer;
       border: 2px solid transparent;
       font-family: var(--font-family-ui);
       font-size: var(--font-size-body);
@@ -338,10 +339,13 @@
 
     &_disabled .datetime_picker_input_wrapper {
       opacity: 0.6;
-      pointer-events: none;
       background-color: var(--disabled-color);
       color: var(--text-color-secondary);
       cursor: not-allowed;
+
+      .datetime_picker_input {
+        cursor: not-allowed;
+      }
     }
 
     &_disabled .datetime_picker_icon {

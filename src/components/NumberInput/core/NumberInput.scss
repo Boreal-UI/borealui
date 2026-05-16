@@ -69,9 +69,10 @@
     border: 0;
     background: transparent;
     color: inherit;
-    padding: var(--spacing-sm);
+    padding: var(--spacing-xs);
     font: inherit;
     line-height: var(--line-height-body);
+    cursor: pointer;
 
     &:focus {
       outline: none;
@@ -91,6 +92,8 @@
 
   .numberInput_controls {
     display: inline-flex;
+    justify-content: center;
+    align-items: center;
     flex-direction: column-reverse;
     border-left: 1px solid var(--border-color);
     background: rgba(0, 0, 0, 0.04);
@@ -99,9 +102,9 @@
   .numberInput_controlButton {
     display: inline-flex;
     align-items: center;
+    height: 100%;
     justify-content: center;
     min-width: 2rem;
-    min-height: 1.5rem;
     border: 0;
     background: transparent;
     color: inherit;

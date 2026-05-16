@@ -53,6 +53,7 @@
     border-radius: var(--border-radius-md);
     margin-bottom: var(--spacing-sm);
     background-color: transparent !important;
+    cursor: pointer;
     transition: box-shadow var(--transition-default);
   }
 
@@ -256,13 +257,6 @@
     }
   }
 
-  .disabled {
-    background-color: var(--disabled-color);
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
-  }
-
   .content {
     display: grid;
     grid-template-rows: 0fr;
@@ -431,6 +425,15 @@
     width: 1em;
     height: 1em;
     min-width: 1em;
+  }
+
+  .disabled,
+  .accordion:disabled {
+    cursor: not-allowed;
+    .header {
+      opacity: 0.6;
+      background-color: var(--disabled-color);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

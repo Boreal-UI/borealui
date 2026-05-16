@@ -56,7 +56,6 @@
     background: var(--background-color);
     color: var(--text-color-primary);
     box-shadow: var(--box-shadow-sm);
-    padding: var(--spacing-sm);
     transition: var(--transition-default);
   }
 
@@ -236,6 +235,10 @@
     opacity: 0.6;
     background-color: var(--disabled-color);
     border-color: var(--disabled-color);
+
+    input {
+      cursor: not-allowed;
+    }
 
     &:hover {
       background-color: var(--disabled-color);

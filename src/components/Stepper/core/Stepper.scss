@@ -5,70 +5,164 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $stepper-sizes: (
+    "xs": var(--font-size-caption),
+    "small": var(--font-size-label),
+    "medium": var(--font-size-body-sm),
+    "large": var(--font-size-body),
+    "xl": var(--font-size-h6),
+  );
 
-$stepper-sizes: (
-  "xs": var(--font-size-caption),
-  "small": var(--font-size-label),
-  "medium": var(--font-size-body-sm),
-  "large": var(--font-size-body),
-  "xl": var(--font-size-h6),
-);
-
-.stepper {
-  margin: var(--spacing-xxs);
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  justify-content: space-evenly;
-  position: relative;
-  gap: var(--spacing-md);
-  font-family: var(--font-family-ui);
-
-  @include bp.down(xs) {
-    gap: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    gap: var(--spacing-md);
-  }
-
-  &_vertical {
-    flex-direction: column;
-    align-items: flex-start;
-    height: fit-content;
-    gap: var(--spacing-md);
-
-    .stepper_connector {
-      width: 2px;
-      height: auto;
-      align-self: stretch;
-      margin: var(--spacing-xs) 0;
-    }
-  }
-
-  @each $size, $font in $stepper-sizes {
-    &_#{$size} {
-      font-size: $font;
-    }
-  }
-
-  &_step {
+  .stepper {
+    margin: var(--spacing-xxs);
     display: flex;
+    width: fit-content;
     align-items: center;
+    justify-content: space-evenly;
     position: relative;
-    cursor: default;
-    transition: color var(--transition-default);
+    gap: var(--spacing-md);
+    font-family: var(--font-family-ui);
+
+    @include bp.down(xs) {
+      gap: var(--spacing-xs);
+    }
+
+    @include bp.up(lg) {
+      gap: var(--spacing-md);
+    }
+
+    &_vertical {
+      flex-direction: column;
+      align-items: flex-start;
+      height: fit-content;
+      gap: var(--spacing-md);
+
+      .stepper_connector {
+        width: 2px;
+        height: auto;
+        align-self: stretch;
+        margin: var(--spacing-xs) 0;
+      }
+    }
+
+    @each $size, $font in $stepper-sizes {
+      &_#{$size} {
+        font-size: $font;
+      }
+    }
+
+    &_step {
+      display: flex;
+      align-items: center;
+      position: relative;
+      cursor: default;
+      transition: color var(--transition-default);
+    }
+
+    &_clickable {
+      cursor: pointer;
+    }
+
+    &_clickable:not(.stepper_disabled) .stepper_step_button:hover {
+      transform: scale(1.1);
+    }
+
+    &_step_icon {
+      width: 10px;
+      height: 10px;
+      border-radius: var(--border-radius-round);
+      background-color: var(--background-color-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-weight-label);
+      transition:
+        background-color 0.3s ease-in-out,
+        transform 0.2s ease;
+    }
+
+    &_step_label {
+      margin-left: var(--spacing-sm);
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
+      color: var(--text-color-primary);
+
+      @include bp.down(xs) {
+        margin-left: var(--spacing-xs);
+        font-size: var(--font-size-caption);
+      }
+
+      @include bp.up(lg) {
+        margin-left: var(--spacing-md);
+        font-size: var(--font-size-body-sm);
+      }
+    }
+
+    @each $name, $vals in theme.$themes {
+      &.stepper_#{$name} {
+        --stepper-glass-bg: #{map.get($vals, glass-bg)};
+        --stepper-glass-hover-bg: #{map.get($vals, glass-hover)};
+        --stepper-glass-border: #{map.get($vals, glass-border)};
+        --stepper-glass-text: #{map.get($vals, text)};
+      }
+
+      &.stepper_#{$name} &_active .stepper_step_button {
+        background-color: map.get($vals, bg);
+      }
+
+      &.stepper_#{$name}.stepper_glass .stepper_active .stepper_step_button {
+        background-color: var(--stepper-glass-bg);
+        border: 2px solid var(--stepper-glass-border);
+        color: var(--stepper-glass-text);
+      }
+    }
+
+    @each $name, $vals in theme.$states {
+      &.stepper_#{$name} {
+        --stepper-glass-bg: #{map.get($vals, glass-bg)};
+        --stepper-glass-hover-bg: #{map.get($vals, glass-hover)};
+        --stepper-glass-border: #{map.get($vals, glass-border)};
+        --stepper-glass-text: #{map.get($vals, text)};
+      }
+
+      &.stepper_#{$name} &_active .stepper_step_button {
+        background-color: map.get($vals, bg);
+      }
+
+      &.stepper_#{$name}.stepper_glass .stepper_active .stepper_step_button {
+        background-color: var(--stepper-glass-bg);
+        border: 2px solid var(--stepper-glass-border);
+        color: var(--stepper-glass-text);
+      }
+    }
+
+    &_active .stepper_step_button {
+      color: var(--text-color-primary);
+      transform: scale(1.1);
+    }
+
+    &_completed {
+      .stepper_step_button {
+        background-color: var(--background-color-light);
+        color: var(--disabled-color);
+        border: 2px solid var(--background-color-light);
+      }
+
+      .stepper_step_label {
+        color: var(--disabled-color);
+      }
+    }
   }
 
-  &_clickable {
-    cursor: pointer;
+  .stepper_clear .stepper_active .stepper_step_button {
+    background-color: var(--background-color-darker);
   }
 
-  &_clickable:not(.stepper_disabled) .stepper_step_button:hover {
-    transform: scale(1.1);
-  }
-
-  &_disabled {
+  .stepper_disabled,
+  .stepper:disabled {
     cursor: not-allowed;
     pointer-events: none;
     transform: none;
@@ -84,146 +178,56 @@ $stepper-sizes: (
       color: var(--text-color-secondary);
       opacity: 0.5;
     }
-  }
 
-  &_step_icon {
-    width: 10px;
-    height: 10px;
-    border-radius: var(--border-radius-round);
-    background-color: var(--background-color-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: var(--font-weight-label);
-    transition:
-      background-color 0.3s ease-in-out,
-      transform 0.2s ease;
-  }
-
-  &_step_label {
-    margin-left: var(--spacing-sm);
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
-    color: var(--text-color-primary);
-
-    @include bp.down(xs) {
-      margin-left: var(--spacing-xs);
-      font-size: var(--font-size-caption);
-    }
-
-    @include bp.up(lg) {
-      margin-left: var(--spacing-md);
-      font-size: var(--font-size-body-sm);
+    .stepper_step_button:hover {
+      transform: none;
     }
   }
 
-  @each $name, $vals in theme.$themes {
-    &.stepper_#{$name} {
-      --stepper-glass-bg: #{map.get($vals, glass-bg)};
-      --stepper-glass-hover-bg: #{map.get($vals, glass-hover)};
-      --stepper-glass-border: #{map.get($vals, glass-border)};
-      --stepper-glass-text: #{map.get($vals, text)};
+  @media (prefers-reduced-motion: reduce) {
+    .stepper,
+    .stepper * {
+      transition: none !important;
+      animation: none !important;
     }
 
-    &.stepper_#{$name} &_active .stepper_step_button {
-      background-color: map.get($vals, bg);
-    }
-
-    &.stepper_#{$name}.stepper_glass .stepper_active .stepper_step_button {
-      background-color: var(--stepper-glass-bg);
-      border: 2px solid var(--stepper-glass-border);
-      color: var(--stepper-glass-text);
+    .stepper_clickable:not(.stepper_disabled) .stepper_step_button:hover {
+      transform: none !important;
     }
   }
 
-  @each $name, $vals in theme.$states {
-    &.stepper_#{$name} {
-      --stepper-glass-bg: #{map.get($vals, glass-bg)};
-      --stepper-glass-hover-bg: #{map.get($vals, glass-hover)};
-      --stepper-glass-border: #{map.get($vals, glass-border)};
-      --stepper-glass-text: #{map.get($vals, text)};
-    }
-
-    &.stepper_#{$name} &_active .stepper_step_button {
-      background-color: map.get($vals, bg);
-    }
-
-    &.stepper_#{$name}.stepper_glass .stepper_active .stepper_step_button {
-      background-color: var(--stepper-glass-bg);
-      border: 2px solid var(--stepper-glass-border);
-      color: var(--stepper-glass-text);
+  @media (hover: none) {
+    .stepper_clickable:not(.stepper_disabled) .stepper_step_button:hover {
+      transform: none;
     }
   }
 
-  &_active .stepper_step_button {
-    color: var(--text-color-primary);
-    transform: scale(1.1);
-  }
-
-  &_completed {
-    .stepper_step_button {
-      background-color: var(--background-color-light);
-      color: var(--disabled-color);
-      border: 2px solid var(--background-color-light);
+  @media (forced-colors: active) {
+    .stepper_glass .stepper_step {
+      background: Canvas;
+      border-color: ButtonText;
+      color: CanvasText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
     }
 
-    .stepper_step_label {
-      color: var(--disabled-color);
+    .stepper {
+      color: CanvasText;
+    }
+
+    .stepper .stepper_step_button {
+      background: ButtonFace;
+      color: ButtonText;
+      border: 1px solid ButtonText;
+    }
+
+    .stepper_active .stepper_step_button {
+      background: Highlight;
+      color: HighlightText;
+    }
+
+    .stepper_connector {
+      background: ButtonText;
     }
   }
-}
-
-.stepper_clear .stepper_active .stepper_step_button {
-  background-color: var(--background-color-darker);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .stepper,
-  .stepper * {
-    transition: none !important;
-    animation: none !important;
-  }
-
-  .stepper_clickable:not(.stepper_disabled) .stepper_step_button:hover {
-    transform: none !important;
-  }
-}
-
-@media (hover: none) {
-  .stepper_clickable:not(.stepper_disabled) .stepper_step_button:hover {
-    transform: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .stepper_glass .stepper_step {
-    background: Canvas;
-    border-color: ButtonText;
-    color: CanvasText;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-
-  .stepper {
-    color: CanvasText;
-  }
-
-  .stepper .stepper_step_button {
-    background: ButtonFace;
-    color: ButtonText;
-    border: 1px solid ButtonText;
-  }
-
-  .stepper_active .stepper_step_button {
-    background: Highlight;
-    color: HighlightText;
-  }
-
-  .stepper_connector {
-    background: ButtonText;
-  }
-}
 }

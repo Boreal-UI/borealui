@@ -256,13 +256,6 @@
     }
   }
 
-  .accordion_disabled {
-    background-color: var(--disabled-color);
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
-  }
-
   .accordion_content {
     display: grid;
     grid-template-rows: 0fr;
@@ -425,6 +418,15 @@
     width: 1em;
     height: 1em;
     min-width: 1em;
+  }
+
+  .accordion_disabled,
+  .accordion:disabled {
+    cursor: not-allowed;
+    .accordion_header {
+      background-color: var(--disabled-color);
+      opacity: 0.6;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

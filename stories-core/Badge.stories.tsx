@@ -79,6 +79,7 @@ export const Disabled: Story = {
   args: {
     ...defaultArgs,
     children: "Disabled Badge",
+    onClick: () => alert("Badge clicked!"),
     disabled: true,
   },
 };

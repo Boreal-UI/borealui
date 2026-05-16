@@ -303,6 +303,12 @@
     background-color: var(--disabled-color);
     border-color: var(--disabled-color);
 
+    input {
+      cursor: not-allowed;
+    }
+
+    .inputGroup_content > input,
+    .inputGroup_content > select,
     &:hover {
       background-color: var(--disabled-color);
     }

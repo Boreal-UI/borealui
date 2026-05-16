@@ -4,105 +4,158 @@
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+
 @layer boreal-ui.components {
+  $small-gap: var(--spacing-xxs);
+  $medium-gap: var(--spacing-sm);
+  $large-gap: var(--spacing-lg);
 
-$small-gap: var(--spacing-xxs);
-$medium-gap: var(--spacing-sm);
-$large-gap: var(--spacing-lg);
+  $sizes: (
+    "xs": (
+      size: 1.75rem,
+      font-size: var(--font-size-caption),
+      gap: var(--spacing-xxs),
+    ),
+    "small": (
+      size: 2rem,
+      font-size: var(--font-size-caption),
+      gap: var(--spacing-xs),
+    ),
+    "medium": (
+      size: 2.25rem,
+      font-size: var(--font-size-label),
+      gap: var(--spacing-xs),
+    ),
+    "large": (
+      size: 2.75rem,
+      font-size: var(--font-size-body),
+      gap: var(--spacing-sm),
+    ),
+    "xl": (
+      size: 3.25rem,
+      font-size: var(--font-size-body),
+      gap: var(--spacing-sm),
+    ),
+  );
 
-.wrapper {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: $medium-gap;
-  width: fit-content;
-  margin: auto;
-  justify-content: center;
-  align-items: center;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-
-  @include bp.down(md) {
-    flex-wrap: wrap;
-  }
-
-  @include bp.down(xs) {
-    flex-direction: row;
+  .wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin-inline: auto;
     gap: $medium-gap;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+
+    @include bp.down(md) {
+      flex-wrap: wrap;
+    }
+
+    @include bp.down(xs) {
+      gap: $medium-gap;
+    }
   }
-}
 
-.controls {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  list-style: none;
-  margin: auto;
-  padding: 0;
-
-  @include bp.down(xs) {
-    gap: clamp(5px, 4vw, #{$large-gap});
-    order: -1;
+  .controls,
+  .buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
-}
 
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  list-style-type: none;
-
-  @include bp.down(xs) {
-    flex-grow: 1;
-    flex-direction: row;
+  .controls {
     gap: $small-gap;
-    margin-top: $small-gap;
-  }
-}
 
-.button {
-  margin: 2px;
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-caption);
+    @include bp.down(xs) {
+      order: -1;
+      gap: clamp(0.25rem, 4vw, #{$large-gap});
+    }
   }
 
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-}
+  .buttons {
+    flex-wrap: wrap;
+    gap: $small-gap;
 
-@media (prefers-reduced-motion: reduce) {
-  .wrapper,
-  .wrapper * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (forced-colors: active) {
-  .button {
-    color: ButtonText;
-    border: 1px solid ButtonText;
-    background: Canvas;
+    @include bp.down(xs) {
+      flex-grow: 1;
+      width: 100%;
+      margin-top: $small-gap;
+    }
   }
 
-  .button:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 2px;
+  .button,
+  .controlButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    aspect-ratio: 1;
+    margin: 0;
+    padding: 0;
+    min-width: var(--pagination-button-size, 2.25rem);
+    width: var(--pagination-button-size, 2.25rem);
+    height: var(--pagination-button-size, 2.25rem);
+    min-height: var(--pagination-button-size, 2.25rem);
+    font-size: var(--pagination-button-font-size, var(--font-size-label));
+    line-height: 1;
+    white-space: nowrap;
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: var(--border-radius-sm, 4px);
+    }
   }
 
-  .wrapper.glass {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+  .active {
+    font-weight: var(--font-weight-bold);
   }
-}
+
+  @each $size, $values in $sizes {
+    .#{$size} {
+      --pagination-button-size: #{map.get($values, size)};
+      --pagination-button-font-size: #{map.get($values, font-size)};
+
+      gap: map.get($values, gap);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wrapper,
+    .wrapper * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .button,
+    .controlButton {
+      color: ButtonText;
+      border: 1px solid ButtonText;
+      background: Canvas;
+    }
+
+    .button:focus-visible,
+    .controlButton:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+
+    .wrapper.glass {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+  }
 }

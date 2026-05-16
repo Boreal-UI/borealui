@@ -103,6 +103,7 @@ export const OutlineAndDisabledVariants: Story = {
           aria-label={`State: ${state}`}
         />
       ))}
+      <IconButton {...args} outline disabled aria-label="Disabled" />
       <IconButton {...args} disabled aria-label="Disabled" />
     </div>
   ),

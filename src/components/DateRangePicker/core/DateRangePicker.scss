@@ -278,6 +278,10 @@
     border: none;
     cursor: not-allowed;
 
+    .date_range_picker_input {
+      cursor: not-allowed;
+    }
+
     &:hover {
       background: var(--disabled-color);
     }

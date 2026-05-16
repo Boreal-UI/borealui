@@ -216,12 +216,20 @@
     background-color: var(--disabled-color);
     border-color: var(--disabled-color);
 
+    .option:hover {
+      background-color: transparent;
+    }
+
     &:hover {
       background-color: var(--disabled-color);
     }
 
     .optionSelected {
       color: var(--disabled-color);
+
+      &:hover {
+        background: var(--segmentedControl-option-selected-bg);
+      }
     }
   }
 

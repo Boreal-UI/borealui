@@ -269,9 +269,16 @@
 
   .disabled {
     cursor: not-allowed;
-    pointer-events: none;
     opacity: 0.6;
     background-color: var(--disabled-color);
+
+    input {
+      cursor: not-allowed;
+    }
+
+    &:hover {
+      background-color: var(--disabled-color);
+    }
 
     .textInput {
       background-color: transparent;

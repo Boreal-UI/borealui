@@ -110,8 +110,12 @@
       background-color: var(--background-color-light);
       border-color: var(--background-color-darker);
       cursor: not-allowed;
-      pointer-events: none;
       opacity: 0.6;
+
+      &:hover {
+        background-color: var(--background-color-light);
+        border-color: var(--background-color-darker);
+      }
     }
 
     &_upload_actions {

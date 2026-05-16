@@ -363,10 +363,17 @@
     background-color: transparent;
   }
 
-  .disabled {
+  .disabled,
+  .checkbox:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     color: var(--disabled-color);
+
+    .input:checked + .box {
+      background-color: transparent;
+      border-color: transparent;
+      color: var(--disabled-color);
+    }
 
     .box {
       box-shadow: none;
@@ -374,6 +381,11 @@
 
     .box::before {
       background-color: var(--disabled-color);
+    }
+
+    .label,
+    .labelWrapper {
+      cursor: not-allowed;
     }
   }
 

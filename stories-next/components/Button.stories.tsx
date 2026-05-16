@@ -104,12 +104,21 @@ export const Loading: Story = {
   },
 };
 
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-    children: "Disabled",
-  },
-};
+export const Disabled = () => (
+  <StoryGrid title="Disabled Buttons">
+    <Button icon={FaPlus} disabled>
+      Icon Left
+    </Button>
+
+    <Button icon={FaPlus} outline disabled>
+      Icon Right
+    </Button>
+
+    <Button icon={FaPlus} glass disabled>
+      Icon Right
+    </Button>
+  </StoryGrid>
+);
 
 export const FullWidth: Story = {
   args: {

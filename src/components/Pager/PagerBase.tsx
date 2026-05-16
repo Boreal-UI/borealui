@@ -65,6 +65,7 @@ const BasePager: React.FC<BasePagerProps> = ({
     classMap.button,
     shadow && classMap[`shadow${capitalize(shadow)}`],
     rounding && classMap[`round${capitalize(rounding)}`],
+    size && classMap[`size${capitalize(size)}`],
   );
 
   const liveRegionId = `${testId}-status`;
