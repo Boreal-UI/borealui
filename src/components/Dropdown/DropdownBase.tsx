@@ -640,7 +640,6 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
               {...commonProps}
               onPointerEnter={openCurrentSubmenu}
               onPointerOver={openDirectSubmenu}
-              onFocus={openCurrentSubmenu}
               onClick={(event) => {
                 event.stopPropagation();
                 openDirectSubmenu();

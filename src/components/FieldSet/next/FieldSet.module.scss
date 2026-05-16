@@ -66,7 +66,6 @@
     margin-inline-start: var(--spacing-2xs, 0.25rem);
     font-size: var(--font-size-ui);
     font-weight: var(--font-weight-label);
-    color: var(--error-color, currentcolor);
   }
 
   .optional {
@@ -95,7 +94,11 @@
 
   .errorText {
     color: var(--error-color, currentcolor);
+    background: rgb(from var(--background-color-darker) r g b / 50%);
+    padding: 5px;
+    border-radius: 2px;
     font-weight: var(--font-weight-ui);
+    width: fit-content;
   }
 
   .content {

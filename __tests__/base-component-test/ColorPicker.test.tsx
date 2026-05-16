@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import "@testing-library/jest-dom";
@@ -91,7 +90,7 @@ describe("ColorPickerBase", () => {
   it("renders radio inputs with the correct shared name by default", () => {
     renderColorPicker();
 
-    const radios = screen.getAllByRole("radio") as HTMLInputElement[];
+    const radios = screen.getAllByRole("radio");
     radios.forEach((radio) => {
       expect(radio).toHaveAttribute("name", "color-picker");
     });
@@ -100,7 +99,7 @@ describe("ColorPickerBase", () => {
   it("uses a custom radio group name when provided", () => {
     renderColorPicker({ name: "theme-colors" });
 
-    const radios = screen.getAllByRole("radio") as HTMLInputElement[];
+    const radios = screen.getAllByRole("radio");
     radios.forEach((radio) => {
       expect(radio).toHaveAttribute("name", "theme-colors");
     });
@@ -121,7 +120,7 @@ describe("ColorPickerBase", () => {
   it("does not check any radio when selected value does not match provided colors", () => {
     renderColorPicker({ selected: "#123456" });
 
-    const radios = screen.getAllByRole("radio") as HTMLInputElement[];
+    const radios = screen.getAllByRole("radio");
     radios.forEach((radio) => {
       expect(radio).not.toBeChecked();
     });
@@ -310,7 +309,7 @@ describe("ColorPickerBase", () => {
   it("renders radios as disabled when fieldset is disabled", () => {
     renderColorPicker({ disabled: true });
 
-    const radios = screen.getAllByRole("radio") as HTMLInputElement[];
+    const radios = screen.getAllByRole("radio");
     radios.forEach((radio) => {
       expect(radio).toBeDisabled();
     });
@@ -360,9 +359,7 @@ describe("ColorPickerBase", () => {
       onChange: handleChange,
     });
 
-    const customInput = screen.getByLabelText(
-      "Custom color picker",
-    ) as HTMLInputElement;
+    const customInput = screen.getByLabelText("Custom color picker");
 
     fireEvent.change(customInput, { target: { value: "#123456" } });
 
@@ -408,7 +405,7 @@ describe("ColorPickerBase", () => {
   it("generates the expected radio ids", () => {
     renderColorPicker();
 
-    const radios = screen.getAllByRole("radio") as HTMLInputElement[];
+    const radios = screen.getAllByRole("radio");
 
     expect(radios[0]).toHaveAttribute("id", "color-picker-color-0");
     expect(radios[1]).toHaveAttribute("id", "color-picker-color-1");
@@ -535,7 +532,7 @@ describe("ColorPickerBase", () => {
 
     const radios = screen.getAllByRole("radio");
     radios.forEach((radio) => {
-      expect(radio).toHaveAttribute("aria-invalid", "true");
+      expect(radio).not.toHaveAttribute("aria-invalid");
       expect(radio).toHaveAttribute(
         "aria-describedby",
         "color-picker-error-text",
@@ -575,7 +572,7 @@ describe("ColorPickerBase", () => {
     );
   });
 
-  it("sets aria-required on radios when required is true", () => {
+  it("sets native required state on radios when required is true", () => {
     renderColorPicker({ required: true });
 
     const fieldset = screen.getByTestId("color-picker");
@@ -583,7 +580,8 @@ describe("ColorPickerBase", () => {
 
     const radios = screen.getAllByRole("radio");
     radios.forEach((radio) => {
-      expect(radio).toHaveAttribute("aria-required", "true");
+      expect(radio).toHaveAttribute("required");
+      expect(radio).not.toHaveAttribute("aria-required");
     });
   });
 

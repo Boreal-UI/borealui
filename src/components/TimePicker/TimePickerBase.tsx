@@ -92,6 +92,7 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
       : false;
     const invalid = Boolean(error || invalidRange || outOfBounds);
     const computedAriaDisabled = ariaDisabled ?? (disabled || undefined);
+    const isControlled = value !== undefined;
 
     const containerClass = useMemo(
       () =>
@@ -200,7 +201,7 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
               type="time"
               className={combineClassNames(classMap.input, inputClassName)}
               value={value}
-              defaultValue={defaultValue}
+              defaultValue={isControlled ? undefined : defaultValue}
               onChange={handleChange}
               name={name}
               min={min}

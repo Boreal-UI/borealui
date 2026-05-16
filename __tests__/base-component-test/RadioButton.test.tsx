@@ -238,22 +238,22 @@ describe("BaseRadioButton", () => {
     );
   });
 
-  it("applies aria-invalid when provided", () => {
+  it("applies invalid state metadata when provided", () => {
     render(<BaseRadioButton {...defaultProps} aria-invalid={true} />);
 
-    expect(screen.getByTestId("radio")).toHaveAttribute("aria-invalid", "true");
+    expect(screen.getByTestId("radio")).toHaveAttribute("data-invalid", "true");
   });
 
-  it("applies aria-required based on required when aria-required is not explicitly provided", () => {
+  it("applies the native required attribute when required", () => {
     render(<BaseRadioButton {...defaultProps} required={true} />);
 
     const radio = screen.getByTestId("radio");
 
     expect(radio).toHaveAttribute("required");
-    expect(radio).toHaveAttribute("aria-required", "true");
+    expect(radio).not.toHaveAttribute("aria-required");
   });
 
-  it("prefers explicit aria-required over required fallback", () => {
+  it("keeps required as native input state when aria-required is provided", () => {
     render(
       <BaseRadioButton
         {...defaultProps}
@@ -265,7 +265,7 @@ describe("BaseRadioButton", () => {
     const radio = screen.getByTestId("radio");
 
     expect(radio).toHaveAttribute("required");
-    expect(radio).toHaveAttribute("aria-required", "false");
+    expect(radio).not.toHaveAttribute("aria-required");
   });
 
   it("passes through native input attributes", () => {

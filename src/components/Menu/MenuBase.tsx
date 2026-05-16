@@ -782,7 +782,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
             classMap.itemWrapper,
             hasSubmenu && classMap.hasSubmenu,
           )}
-          role="group"
+          role="presentation"
           data-menu-item-wrapper="true"
           data-menu-item-path={itemPath}
           onPointerEnter={handleDirectItemHover}

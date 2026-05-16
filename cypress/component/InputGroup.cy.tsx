@@ -25,7 +25,7 @@ implementations.forEach(({ name, InputGroup }) => {
             suffix="USD"
             data-testid="amount-group"
           >
-            <input type="number" />
+            <input title="number" type="number" />
           </InputGroup>
         </div>,
       );
@@ -53,7 +53,7 @@ implementations.forEach(({ name, InputGroup }) => {
             error="Domain is required."
             data-testid="domain-group"
           >
-            <input />
+            <input title="text" type="text" />
           </InputGroup>
         </div>,
       );
