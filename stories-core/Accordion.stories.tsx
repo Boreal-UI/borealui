@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React, { useState } from "react";
 import "../src/components/Accordion/core/Accordion.scss";
 import { Accordion } from "../src/index.core";
@@ -14,8 +15,6 @@ import {
   roundingOptions,
   shadowOptions,
   sizeOptions,
-  stateOptions,
-  themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import {
   renderThemeVariants,
