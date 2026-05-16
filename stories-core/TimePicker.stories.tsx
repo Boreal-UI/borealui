@@ -69,60 +69,6 @@ export const Loading: Story = {
   },
 };
 
-export const ThemeVariants = () => (
-  <StoryGrid title="Theme Variants">
-    {themeOptions.map((theme) => (
-      <TimePicker
-        key={theme}
-        label={theme}
-        theme={theme}
-        defaultValue="09:30"
-      />
-    ))}
-  </StoryGrid>
-);
-
-export const GlassThemeVariants = () => (
-  <StoryGrid title="Glass Theme Variants">
-    {themeOptions.map((theme) => (
-      <TimePicker
-        key={theme}
-        label={theme}
-        theme={theme}
-        defaultValue="09:30"
-        glass
-      />
-    ))}
-  </StoryGrid>
-);
-
-export const StateVariants = () => (
-  <StoryGrid title="State Variants">
-    {stateOptions.map((state) => (
-      <TimePicker
-        key={state}
-        label={state}
-        state={state}
-        defaultValue="09:30"
-      />
-    ))}
-  </StoryGrid>
-);
-
-export const OutlineVariants = () => (
-  <StoryGrid title="Outline Variants">
-    {themeOptions.map((theme) => (
-      <TimePicker
-        key={theme}
-        label={`${theme} outline`}
-        theme={theme}
-        defaultValue="09:30"
-        outline
-      />
-    ))}
-  </StoryGrid>
-);
-
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (
@@ -155,26 +101,26 @@ export const Disabled: Story = {
   },
 };
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: TimePicker, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: TimePicker, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) => renderOutlineVariants({ component: TimePicker, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: TimePicker, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) => renderGlassOutlineVariants({ component: TimePicker, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) => renderStateOutlineVariants({ component: TimePicker, args }),
 };

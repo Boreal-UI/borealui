@@ -1,6 +1,7 @@
 import {
   useEffect,
   useMemo,
+  useCallback,
   useState,
   KeyboardEvent,
   CSSProperties,
@@ -343,7 +344,7 @@ function DataTableBase<T extends object>({
     );
   };
 
-  const announceSortChange = (
+  const announceSortChange = useCallback((
     column: Column<T>,
     nextOrder: "asc" | "desc",
   ): void => {
@@ -352,7 +353,7 @@ function DataTableBase<T extends object>({
       : `${column.label} sorted ${nextOrder === "asc" ? "ascending" : "descending"}`;
 
     setSortAnnouncement(message);
-  };
+  }, [getSortAnnouncement]);
 
   const handleSort = (column: Column<T>): void => {
     const nextOrder =
@@ -546,7 +547,7 @@ function DataTableBase<T extends object>({
     if (!activeColumn) return;
 
     announceSortChange(activeColumn, sortOrder);
-  }, []);
+  }, [announceSortChange, columns, sortKey, sortOrder]);
 
   useEffect(() => {
     if (page > pageCount && currentPage === undefined) {
@@ -632,7 +633,12 @@ function DataTableBase<T extends object>({
   };
 
   return (
-    <div className={wrapperClass} data-testid={testId} tabIndex={0}>
+    <div
+      className={wrapperClass}
+      data-testid={testId}
+      role="region"
+      aria-label="Data table"
+    >
       {hasToolbar ? (
         <div
           className={combineClassNames(classMap.toolbar, toolbarClassName)}
@@ -1039,12 +1045,12 @@ function DataTableBase<T extends object>({
                                   cancel: () => setEditingCell(null),
                                 })
                               ) : (
-                                <input
-                                  className={classMap.cellEditor}
-                                  defaultValue={String(value ?? "")}
-                                  type={column.editInputType ?? "text"}
-                                  autoFocus
-                                  aria-label={
+                                  <input
+                                    className={classMap.cellEditor}
+                                    defaultValue={String(value ?? "")}
+                                    type={column.editInputType ?? "text"}
+                                    ref={(input) => input?.focus()}
+                                    aria-label={
                                     column.getEditAriaLabel?.(
                                       row,
                                       value,

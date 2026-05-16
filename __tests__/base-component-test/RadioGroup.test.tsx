@@ -205,9 +205,8 @@ describe("BaseRadioGroup", () => {
     expect(screen.getByTestId("radio-group-two")).toBeRequired();
     expect(screen.getByTestId("radio-group-three")).toBeRequired();
 
-    expect(screen.getByTestId("radio-group-one")).toHaveAttribute(
+    expect(screen.getByTestId("radio-group-one")).not.toHaveAttribute(
       "aria-required",
-      "true",
     );
   });
 
@@ -220,7 +219,7 @@ describe("BaseRadioGroup", () => {
     );
 
     expect(screen.getByTestId("radio-group-one")).toHaveAttribute(
-      "aria-invalid",
+      "data-invalid",
       "true",
     );
   });
@@ -234,7 +233,7 @@ describe("BaseRadioGroup", () => {
     );
 
     expect(screen.getByTestId("radio-group-one")).toHaveAttribute(
-      "aria-invalid",
+      "data-invalid",
       "true",
     );
   });

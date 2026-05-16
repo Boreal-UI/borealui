@@ -285,11 +285,11 @@ describe("BaseModal", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
-  it("calls onClose when clicking the overlay", async () => {
+  it("calls onClose when pressing the overlay", async () => {
     renderModal();
 
     const overlay = await screen.findByTestId("modal");
-    fireEvent.click(overlay);
+    fireEvent.mouseDown(overlay);
 
     act(() => {
       jest.advanceTimersByTime(200);

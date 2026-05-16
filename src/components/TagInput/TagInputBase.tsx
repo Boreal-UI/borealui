@@ -264,7 +264,6 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
           <li
             key={`${tag}-${index}`}
             className={tagClass}
-            role="listitem"
             data-testid={`${testId}-tag-${index}`}
           >
             <span className={classMap.tagLabel}>{tag}</span>
@@ -315,7 +314,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
       </div>
 
       {open && suggestions.length > 0 && (
-        <ul
+        <div
           className={classMap.suggestionList}
           role="listbox"
           id={listboxId}
@@ -323,7 +322,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
           data-testid={`${testId}-suggestions`}
         >
           {suggestions.map((suggestion, index) => (
-            <li
+            <div
               key={`${suggestion}-${index}`}
               id={`${listboxId}-opt-${index}`}
               className={combineClassNames(
@@ -334,12 +333,19 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
               aria-selected={index === activeIndex}
               onMouseDown={(e) => e.preventDefault()}
               onClick={() => handleSuggestionClick(suggestion)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault();
+                  handleSuggestionClick(suggestion);
+                }
+              }}
+              tabIndex={-1}
               data-testid={`${testId}-suggestion-${index}`}
             >
               {suggestion}
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
 
       <div id={statusId} aria-live="polite" className="sr_only">

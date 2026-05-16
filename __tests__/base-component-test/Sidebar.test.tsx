@@ -360,7 +360,7 @@ describe("SidebarBase", () => {
     });
 
     expect(button).toHaveAttribute(
-      "aria-description",
+      "title",
       "Toggle Reports navigation section",
     );
   });

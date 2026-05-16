@@ -87,60 +87,6 @@ export const FocusOnMount: Story = {
   },
 };
 
-export const ThemeVariants = () => (
-  <StoryGrid title="Theme Variants">
-    {themeOptions.map((theme) => (
-      <ValidationSummary
-        key={theme}
-        label={theme}
-        theme={theme}
-        items={validationItems.slice(0, 2)}
-      />
-    ))}
-  </StoryGrid>
-);
-
-export const GlassThemeVariants = () => (
-  <StoryGrid title="Glass Theme Variants">
-    {themeOptions.map((theme) => (
-      <ValidationSummary
-        key={theme}
-        label={theme}
-        theme={theme}
-        glass
-        items={validationItems.slice(0, 2)}
-      />
-    ))}
-  </StoryGrid>
-);
-
-export const StateVariants = () => (
-  <StoryGrid title="State Variants">
-    {stateOptions.map((state) => (
-      <ValidationSummary
-        key={state}
-        label={state || "default"}
-        state={state}
-        items={validationItems.slice(0, 2)}
-      />
-    ))}
-  </StoryGrid>
-);
-
-export const OutlineVariants = () => (
-  <StoryGrid title="Outline Variants">
-    {themeOptions.map((theme) => (
-      <ValidationSummary
-        key={theme}
-        label={`${theme} outline`}
-        theme={theme}
-        outline
-        items={validationItems.slice(0, 2)}
-      />
-    ))}
-  </StoryGrid>
-);
-
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (
@@ -173,29 +119,29 @@ export const Disabled: Story = {
   },
 };
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: ValidationSummary, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: ValidationSummary, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) =>
     renderOutlineVariants({ component: ValidationSummary, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: ValidationSummary, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) =>
     renderGlassOutlineVariants({ component: ValidationSummary, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) =>
     renderStateOutlineVariants({ component: ValidationSummary, args }),
 };

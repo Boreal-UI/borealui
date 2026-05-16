@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import React from "react";
 import { FieldSet as CoreFieldSet } from "../../src/index.core";
 import { FieldSet as NextFieldSet } from "../../src/index.next";
 

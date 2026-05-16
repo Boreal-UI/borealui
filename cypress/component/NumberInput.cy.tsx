@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import React from "react";
 import { NumberInput as CoreNumberInput } from "../../src/index.core";
 import { NumberInput as NextNumberInput } from "../../src/index.next";
 

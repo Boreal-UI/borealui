@@ -84,6 +84,17 @@ describe("TimePickerBase", () => {
     expect(onChange).toHaveBeenCalledWith("13:45");
   });
 
+  it("uses controlled value when both value and defaultValue are provided", () => {
+    const consoleErrorSpy = jest.spyOn(console, "error").mockImplementation();
+
+    renderTimePicker({ value: "09:30", defaultValue: "08:00" });
+
+    expect(screen.getByTestId("time-picker-input")).toHaveValue("09:30");
+    expect(consoleErrorSpy).not.toHaveBeenCalledWith(
+      expect.stringContaining("both value and defaultValue props"),
+    );
+  });
+
   it("connects description, helper text, error text, and screen-reader text", () => {
     renderTimePicker({
       id: "appointment",

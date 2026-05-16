@@ -2,6 +2,7 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
+@use "sass:color";
 @use "../../../styles/_animations";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
@@ -66,7 +67,6 @@
     margin-inline-start: var(--spacing-2xs, 0.25rem);
     font-size: var(--font-size-ui);
     font-weight: var(--font-weight-label);
-    color: var(--error-color, currentcolor);
   }
 
   .fieldSet_optional {
@@ -95,6 +95,9 @@
 
   .fieldSet_errorText {
     color: var(--error-color, currentcolor);
+    background: rgb(from var(--background-color-darker) r g b / 50%);
+    padding: 5px;
+    border-radius: 2px;
     font-weight: var(--font-weight-ui);
     width: fit-content;
   }

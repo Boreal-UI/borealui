@@ -75,68 +75,6 @@ export const DecimalStep: Story = {
   },
 };
 
-export const ThemeVariants = () => (
-  <StoryGrid title="Theme Variants">
-    {themeOptions.map((theme) => (
-      <NumberInput
-        key={theme}
-        label={theme}
-        defaultValue={3}
-        min={0}
-        max={10}
-        theme={theme}
-      />
-    ))}
-  </StoryGrid>
-);
-
-export const GlassThemeVariants = () => (
-  <StoryGrid title="Glass Theme Variants">
-    {themeOptions.map((theme) => (
-      <NumberInput
-        key={theme}
-        label={theme}
-        defaultValue={3}
-        min={0}
-        max={10}
-        theme={theme}
-        glass
-      />
-    ))}
-  </StoryGrid>
-);
-
-export const StateVariants = () => (
-  <StoryGrid title="State Variants">
-    {stateOptions.map((state) => (
-      <NumberInput
-        key={state}
-        label={state}
-        defaultValue={3}
-        min={0}
-        max={10}
-        state={state}
-      />
-    ))}
-  </StoryGrid>
-);
-
-export const OutlineVariants = () => (
-  <StoryGrid title="Outline Variants">
-    {themeOptions.map((theme) => (
-      <NumberInput
-        key={theme}
-        label={`${theme} outline`}
-        defaultValue={3}
-        min={0}
-        max={10}
-        theme={theme}
-        outline
-      />
-    ))}
-  </StoryGrid>
-);
-
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (
@@ -171,28 +109,28 @@ export const Disabled: Story = {
   },
 };
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: NumberInput, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: NumberInput, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) => renderOutlineVariants({ component: NumberInput, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: NumberInput, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) =>
     renderGlassOutlineVariants({ component: NumberInput, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) =>
     renderStateOutlineVariants({ component: NumberInput, args }),
 };

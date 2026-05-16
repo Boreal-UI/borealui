@@ -307,11 +307,13 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
       : `${filtered.length} ${resultsAnnouncement}`;
 
   return ReactDOM.createPortal(
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       className={classMap.overlay}
-      onClick={onClose}
+      onMouseDown={onClose}
       data-testid={`${testId}-overlay`}
     >
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         {...rest}
         id={resolvedPaletteId}
@@ -325,7 +327,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           glass && classMap.glass,
           className,
         )}
-        onClick={(e) => e.stopPropagation()}
+        onMouseDown={(e) => e.stopPropagation()}
         onKeyDown={handleContainerKeyDown}
         role={dialogRole}
         aria-modal={modal ? true : undefined}
@@ -395,7 +397,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           {liveMessage}
         </div>
 
-        <ul
+        <div
           id={resolvedListboxId}
           className={classMap.list}
           role="listbox"
@@ -405,7 +407,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           data-testid={`${testId}-listbox`}
         >
           {isLoading ? (
-            <li
+            <div
               className={combineClassNames(classMap.item, classMap.empty)}
               role="option"
               aria-disabled="true"
@@ -413,7 +415,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
               data-testid={`${testId}-loading`}
             >
               Searching…
-            </li>
+            </div>
           ) : filtered.length > 0 ? (
             filtered.map((cmd, index) => {
               const isActive = index === activeIndex;
@@ -424,7 +426,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
                 : undefined;
 
               return (
-                <li
+                <div
                   key={cmd.id ?? `${cmd.label}-${index}`}
                   id={itemId}
                   role="option"
@@ -439,9 +441,16 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
                     isDisabled && classMap.disabled,
                   )}
                   onClick={() => activateCommand(cmd)}
+                  onKeyDown={(event) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      activateCommand(cmd);
+                    }
+                  }}
                   onMouseEnter={() => {
                     if (!isDisabled) setActiveIndex(index);
                   }}
+                  tabIndex={-1}
                   data-testid={`${testId}-option-${index}`}
                 >
                   {cmd.icon && (
@@ -466,11 +475,11 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
                       {cmd["aria-description"]}
                     </span>
                   )}
-                </li>
+                </div>
               );
             })
           ) : (
-            <li
+            <div
               role="option"
               aria-selected="false"
               aria-disabled="true"
@@ -478,9 +487,9 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
               data-testid={`${testId}-empty`}
             >
               {emptyMessage}
-            </li>
+            </div>
           )}
-        </ul>
+        </div>
       </div>
     </div>,
     portalElement,

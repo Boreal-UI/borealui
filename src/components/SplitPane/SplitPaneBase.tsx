@@ -176,9 +176,10 @@ const SplitPaneBase = forwardRef<HTMLDivElement, SplitPaneBaseProps>(
         >
           {resolvedStartPane}
         </section>
+        {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
         <div
           role="separator"
-          tabIndex={isResizable ? 0 : -1}
+          tabIndex={isResizable ? 0 : -1} // eslint-disable-line jsx-a11y/no-noninteractive-tabindex
           aria-label={separatorAriaLabel}
           aria-orientation={
             orientation === "horizontal" ? "vertical" : "horizontal"

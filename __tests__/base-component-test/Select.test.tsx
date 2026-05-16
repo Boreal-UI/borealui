@@ -254,7 +254,7 @@ describe("BaseSelect", () => {
     expect(iconWrapper).toHaveAttribute("aria-hidden", "true");
   });
 
-  it("forwards wrapper clicks to the native select", () => {
+  it("forwards wrapper pointer presses to the native select", () => {
     render(<BaseSelect {...defaultProps} aria-label="Fruit select" />);
 
     const wrapper = screen.getByTestId("select");
@@ -262,7 +262,7 @@ describe("BaseSelect", () => {
     const focusSpy = jest.spyOn(select, "focus");
     const clickSpy = jest.spyOn(select, "click");
 
-    fireEvent.click(wrapper);
+    fireEvent.mouseDown(wrapper);
 
     expect(focusSpy).toHaveBeenCalledTimes(1);
     expect(clickSpy).toHaveBeenCalledTimes(1);

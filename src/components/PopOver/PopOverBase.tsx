@@ -1,6 +1,7 @@
 import React, {
   useState,
   useRef,
+  useCallback,
   useEffect,
   JSX,
   useMemo,
@@ -83,11 +84,11 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
     setOpen((prev) => !prev);
   };
 
-  const close = () => {
+  const close = useCallback(() => {
     setOpen(false);
     setDynamicPlacement(placement);
     triggerRef.current?.focus();
-  };
+  }, [placement]);
 
   useEffect(() => {
     if (!open) return;
@@ -101,7 +102,7 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [open, placement]);
+  }, [close, open]);
 
   useEffect(() => {
     if (!open) return;
@@ -121,7 +122,7 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
       window.removeEventListener("resize", onReflow);
       window.removeEventListener("scroll", onReflow);
     };
-  }, [open, placement]);
+  }, [close, open]);
 
   useEffect(() => {
     if (!open || !popoverRef.current || !triggerRef.current) return;

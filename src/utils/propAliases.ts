@@ -130,7 +130,7 @@ export const expandClassMap = <T extends ClassMap>(classMap: T): T => {
   const cached = expandedClassMapCache.get(classMap);
   if (cached) return cached as T;
 
-  const expanded: ClassMap = Object.create(null);
+  const expanded = Object.create(null) as ClassMap;
 
   for (const [key, value] of Object.entries(classMap)) {
     assignSafeClass(expanded, key, value);

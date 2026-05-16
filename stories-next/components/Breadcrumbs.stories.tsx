@@ -81,51 +81,10 @@ export const ShadowVariants = () =>
     { propName: "shadow", values: shadowOptions },
   ]);
 
-export const ThemeVariants = () =>
-  withVariants(Breadcrumbs, { ...defaultArgs }, [
-    { propName: "theme", values: [...themeOptions] },
-  ]);
-
-export const GlassThemeVariants = () =>
-  withVariants(Breadcrumbs, { ...defaultArgs, glass: true }, [
-    { propName: "theme", values: [...themeOptions] },
-  ]);
-
-export const StateVariants = () =>
-  withVariants(Breadcrumbs, { ...defaultArgs }, [
-    { propName: "state", values: stateOptions },
-  ]);
-
-export const GlassStateVariants = () =>
-  withVariants(Breadcrumbs, { ...defaultArgs, glass: true }, [
-    { propName: "state", values: stateOptions },
-  ]);
-
 export const SizeVariants = () =>
   withVariants(Breadcrumbs, { ...defaultArgs }, [
     { propName: "size", values: sizeOptions },
   ]);
-
-export const OutlineVariants = () =>
-  withVariants(
-    Breadcrumbs,
-    {
-      ...defaultArgs,
-      outline: true,
-    },
-    [{ propName: "theme", values: [...themeOptions, ...stateOptions] }],
-  );
-
-export const GlassOutlineVariants = () =>
-  withVariants(
-    Breadcrumbs,
-    {
-      ...defaultArgs,
-      outline: true,
-      glass: true,
-    },
-    [{ propName: "theme", values: [...themeOptions, ...stateOptions] }],
-  );
 
 export const Truncated: Story = {
   args: {
@@ -161,28 +120,28 @@ export const WithClassName: Story = {
   },
 };
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: Breadcrumbs, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: Breadcrumbs, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) => renderOutlineVariants({ component: Breadcrumbs, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: Breadcrumbs, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) =>
     renderGlassOutlineVariants({ component: Breadcrumbs, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) =>
     renderStateOutlineVariants({ component: Breadcrumbs, args }),
 };

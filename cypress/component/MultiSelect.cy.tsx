@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import React from "react";
 import { MultiSelect as CoreMultiSelect } from "../../src/index.core";
 import { MultiSelect as NextMultiSelect } from "../../src/index.next";
 

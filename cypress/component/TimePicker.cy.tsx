@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import React from "react";
 import { TimePicker as CoreTimePicker } from "../../src/index.core";
 import { TimePicker as NextTimePicker } from "../../src/index.next";
 

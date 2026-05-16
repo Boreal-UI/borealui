@@ -557,12 +557,12 @@ describe("CommandPaletteBase", () => {
     expect(options[1]).toHaveAttribute("aria-selected", "false");
   });
 
-  it("closes when the overlay is clicked", () => {
+  it("closes when the overlay is pressed", () => {
     const onClose = jest.fn();
 
     renderPalette({ onClose });
 
-    fireEvent.click(screen.getByTestId("command-palette-overlay"));
+    fireEvent.mouseDown(screen.getByTestId("command-palette-overlay"));
 
     expect(onClose).toHaveBeenCalledTimes(1);
   });

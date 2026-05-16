@@ -84,64 +84,6 @@ export const Loading: Story = {
   },
 };
 
-export const ThemeVariants = () => (
-  <StoryGrid title="Theme Variants">
-    {themeOptions.map((theme) => (
-      <SegmentedControl
-        key={theme}
-        label={theme}
-        theme={theme}
-        options={rangeOptions}
-        defaultValue="week"
-      />
-    ))}
-  </StoryGrid>
-);
-
-export const GlassThemeVariants = () => (
-  <StoryGrid title="Glass Theme Variants">
-    {themeOptions.map((theme) => (
-      <SegmentedControl
-        key={theme}
-        label={theme}
-        theme={theme}
-        glass
-        options={rangeOptions}
-        defaultValue="week"
-      />
-    ))}
-  </StoryGrid>
-);
-
-export const StateVariants = () => (
-  <StoryGrid title="State Variants">
-    {stateOptions.map((state) => (
-      <SegmentedControl
-        key={state}
-        label={state}
-        state={state}
-        options={rangeOptions}
-        defaultValue="week"
-      />
-    ))}
-  </StoryGrid>
-);
-
-export const OutlineVariants = () => (
-  <StoryGrid title="Outline Variants">
-    {themeOptions.map((theme) => (
-      <SegmentedControl
-        key={theme}
-        label={`${theme} outline`}
-        theme={theme}
-        outline
-        options={rangeOptions}
-        defaultValue="week"
-      />
-    ))}
-  </StoryGrid>
-);
-
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (
@@ -176,29 +118,29 @@ export const Disabled: Story = {
   },
 };
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: SegmentedControl, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: SegmentedControl, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) =>
     renderOutlineVariants({ component: SegmentedControl, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: SegmentedControl, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) =>
     renderGlassOutlineVariants({ component: SegmentedControl, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) =>
     renderStateOutlineVariants({ component: SegmentedControl, args }),
 };

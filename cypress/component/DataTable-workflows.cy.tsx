@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import React from "react";
 import { DataTable as CoreDataTable } from "../../src/index.core";
 import { DataTable as NextDataTable } from "../../src/index.next";
 import type { DataTableProps } from "../../src/components/DataTable/DataTable.types";

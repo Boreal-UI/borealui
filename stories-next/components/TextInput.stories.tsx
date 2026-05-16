@@ -144,151 +144,6 @@ export const PasswordInput: Story = {
   },
 };
 
-export const ThemedVariants: Story = {
-  render: (args) => {
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {themeOptions.map((theme) => {
-          const [value, setValue] = useState("");
-          return (
-            <TextInput
-              key={theme}
-              {...args}
-              theme={theme}
-              placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`}
-              value={value}
-              onChange={(value) => setValue(value)}
-            />
-          );
-        })}
-      </div>
-    );
-  },
-};
-
-export const StateVariants: Story = {
-  render: (args) => {
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {stateOptions.map((state) => {
-          const [value, setValue] = useState("");
-          return (
-            <TextInput
-              key={state}
-              {...args}
-              state={state}
-              placeholder={`${state.charAt(0).toUpperCase() + state.slice(1)} state`}
-              value={value}
-              onChange={(value) => setValue(value)}
-            />
-          );
-        })}
-      </div>
-    );
-  },
-};
-
-export const OutlineVariants: Story = {
-  render: (args) => {
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {themeOptions.map((theme) => {
-          const [value, setValue] = useState("");
-          return (
-            <TextInput
-              key={`outline-${theme}`}
-              {...args}
-              outline
-              theme={theme}
-              icon={FaInbox}
-              placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
-              value={value}
-              password
-              onChange={(value) => setValue(value)}
-            />
-          );
-        })}
-      </div>
-    );
-  },
-};
-
-export const GlassThemeVariants: Story = {
-  render: (args) => {
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {themeOptions.map((theme) => {
-          const [value, setValue] = useState("");
-          return (
-            <TextInput
-              key={`glass-${theme}`}
-              {...args}
-              glass
-              theme={theme}
-              icon={FaInbox}
-              placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
-              value={value}
-              password
-              onChange={(value) => setValue(value)}
-            />
-          );
-        })}
-      </div>
-    );
-  },
-};
-
-export const GlassStateVariants: Story = {
-  render: (args) => {
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {stateOptions.map((state) => {
-          const [value, setValue] = useState("");
-          return (
-            <TextInput
-              key={`glass-${state}`}
-              {...args}
-              glass
-              state={state}
-              icon={FaInbox}
-              placeholder={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
-              value={value}
-              password
-              onChange={(value) => setValue(value)}
-            />
-          );
-        })}
-      </div>
-    );
-  },
-};
-
-export const GlassOutlineVariants: Story = {
-  render: (args) => {
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {themeOptions.map((theme) => {
-          const [value, setValue] = useState("");
-          return (
-            <TextInput
-              key={`outline-${theme}`}
-              {...args}
-              outline
-              glass
-              theme={theme}
-              icon={FaInbox}
-              placeholder={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
-              value={value}
-              password
-              onChange={(value) => setValue(value)}
-            />
-          );
-        })}
-      </div>
-    );
-  },
-};
-
 export const Disabled: Story = {
   render: (args) => {
     return (
@@ -333,26 +188,26 @@ export const ShadowVariants = (args: React.ComponentProps<typeof TextInput>) =>
     { propName: "shadow", values: shadowOptions },
   ]);
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: TextInput, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: TextInput, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) => renderOutlineVariants({ component: TextInput, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: TextInput, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) => renderGlassOutlineVariants({ component: TextInput, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) => renderStateOutlineVariants({ component: TextInput, args }),
 };

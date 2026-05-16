@@ -210,7 +210,6 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                     notificationClass,
                     classMap[note.type || "info"],
                   )}
-                  role="listitem"
                   aria-label={note.ariaLabel}
                   aria-labelledby={note.ariaLabel ? undefined : messageId}
                   aria-describedby={describedByIds || undefined}

@@ -90,26 +90,6 @@ export const Disabled: Story = {
   },
 };
 
-export const ThemeVariants = () =>
-  withVariants(Badge, { ...defaultArgs }, [
-    { propName: "theme", values: themeOptions },
-  ]);
-
-export const GlassThemeVariants = () =>
-  withVariants(Badge, { ...defaultArgs, glass: true }, [
-    { propName: "theme", values: themeOptions },
-  ]);
-
-export const StateVariants = () =>
-  withVariants(Badge, { ...defaultArgs }, [
-    { propName: "state", values: stateOptions },
-  ]);
-
-export const GlassStateVariants = () =>
-  withVariants(Badge, { ...defaultArgs, glass: true }, [
-    { propName: "state", values: stateOptions },
-  ]);
-
 export const SizeVariants = () =>
   withVariants(Badge, { ...defaultArgs }, [
     { propName: "size", values: sizeOptions },
@@ -124,27 +104,6 @@ export const ShadowVariants = () =>
   withVariants(Badge, { ...defaultArgs }, [
     { propName: "shadow", values: shadowOptions },
   ]);
-
-export const OutlineVariants = () =>
-  withVariants(
-    Badge,
-    {
-      ...defaultArgs,
-      outline: true,
-    },
-    [{ propName: "theme", values: themeOptions }],
-  );
-
-export const GlassOutlineVariants = () =>
-  withVariants(
-    Badge,
-    {
-      ...defaultArgs,
-      outline: true,
-      glass: true,
-    },
-    [{ propName: "theme", values: themeOptions }],
-  );
 
 export const WithChildren: Story = {
   render: () => (
@@ -163,26 +122,26 @@ export const IconOnly: Story = {
   render: (args) => <Badge {...args} />,
 };
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: Badge, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: Badge, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) => renderOutlineVariants({ component: Badge, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: Badge, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) => renderGlassOutlineVariants({ component: Badge, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) => renderStateOutlineVariants({ component: Badge, args }),
 };

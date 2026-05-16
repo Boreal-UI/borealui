@@ -42,7 +42,7 @@ describe("prop aliases", () => {
     const classMap = Object.create(null) as Record<string, string>;
     classMap.primary = "component_primary";
     classMap.__proto__ = "polluted";
-    classMap.constructor = "polluted";
+    classMap["constructor"] = "polluted";
     classMap.prototype = "polluted";
 
     const expanded = expandClassMap(classMap);

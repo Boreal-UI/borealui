@@ -141,156 +141,6 @@ export const Disabled: Story = {
   },
 };
 
-export const ThemeVariants: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("");
-    const options = [
-      { label: "Alpha", value: "alpha" },
-      { label: "Beta", value: "beta" },
-      { label: "Gamma", value: "gamma" },
-    ];
-
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {themeOptions.map((theme) => (
-          <Select
-            key={theme}
-            {...args}
-            theme={theme}
-            value={value}
-            onChange={setValue}
-            options={options}
-            aria-label={`Select with ${theme} theme`}
-          />
-        ))}
-      </div>
-    );
-  },
-};
-
-export const StateVariants: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("");
-    const options = [
-      { label: "Alpha", value: "alpha" },
-      { label: "Beta", value: "beta" },
-      { label: "Gamma", value: "gamma" },
-    ];
-
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {stateOptions.map((state) => (
-          <Select
-            key={state}
-            {...args}
-            state={state}
-            value={value}
-            onChange={setValue}
-            options={options}
-            aria-label={`Select with ${state} state`}
-          />
-        ))}
-      </div>
-    );
-  },
-};
-
-export const OutlineVariants: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("");
-    const options = [
-      { label: "Outlined A", value: "a" },
-      { label: "Outlined B", value: "b" },
-      { label: "Outlined C", value: "c" },
-    ];
-
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {themeOptions.map((theme) => (
-          <Select
-            key={theme}
-            {...args}
-            theme={theme}
-            outline
-            value={value}
-            onChange={setValue}
-            options={options}
-            aria-label={`Outlined ${theme} select`}
-          />
-        ))}
-        {stateOptions.map((state) => (
-          <Select
-            key={state}
-            {...args}
-            state={state}
-            outline
-            value={value}
-            onChange={setValue}
-            options={options}
-            aria-label={`Outlined ${state} select`}
-          />
-        ))}
-      </div>
-    );
-  },
-};
-
-export const GlassThemeVariants: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("");
-    const options = [
-      { label: "Alpha", value: "alpha" },
-      { label: "Beta", value: "beta" },
-      { label: "Gamma", value: "gamma" },
-    ];
-
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {themeOptions.map((theme) => (
-          <Select
-            key={`glass-${theme}`}
-            {...args}
-            theme={theme}
-            glass
-            value={value}
-            onChange={setValue}
-            options={options}
-            aria-label={`Glass ${theme} select`}
-          />
-        ))}
-      </div>
-    );
-  },
-};
-
-export const GlassStateVariants: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("");
-    const options = [
-      { label: "Alpha", value: "alpha" },
-      { label: "Beta", value: "beta" },
-      { label: "Gamma", value: "gamma" },
-    ];
-
-    return (
-      <div style={{ display: "grid", gap: "1rem" }}>
-        {stateOptions.map((state) => (
-          <Select
-            key={`glass-${state}`}
-            {...args}
-            state={state}
-            glass
-            value={value}
-            onChange={setValue}
-            options={options}
-            aria-label={`Glass ${state} select`}
-          />
-        ))}
-      </div>
-    );
-  },
-};
-
 export const RoundingVariants = () =>
   withVariants(Select, { ...defaultArgs }, [
     { propName: "rounding", values: roundingOptions },
@@ -330,26 +180,26 @@ export const WithPollingAsyncOptions: Story = {
   },
 };
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: Select, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: Select, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) => renderOutlineVariants({ component: Select, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: Select, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) => renderGlassOutlineVariants({ component: Select, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) => renderStateOutlineVariants({ component: Select, args }),
 };

@@ -1,6 +1,5 @@
 /// <reference types="cypress" />
 
-import React from "react";
 import {
   AppShell as CoreAppShell,
   BreadCrumbPageHeader as CoreBreadCrumbPageHeader,

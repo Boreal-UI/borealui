@@ -86,46 +86,6 @@ export const LabelPositions = () => (
   </StoryGrid>
 );
 
-export const ThemeVariants = () => (
-  <StoryGrid title="Theme Variants">
-    {themeOptions.map((theme) => (
-      <InputGroup key={theme} label={theme} theme={theme} prefix="$">
-        <ExampleInput />
-      </InputGroup>
-    ))}
-  </StoryGrid>
-);
-
-export const GlassThemeVariants = () => (
-  <StoryGrid title="Glass Theme Variants">
-    {themeOptions.map((theme) => (
-      <InputGroup key={theme} label={theme} theme={theme} glass prefix="$">
-        <ExampleInput />
-      </InputGroup>
-    ))}
-  </StoryGrid>
-);
-
-export const StateVariants = () => (
-  <StoryGrid title="State Variants">
-    {stateOptions.map((state) => (
-      <InputGroup key={state} label={state || "default"} state={state}>
-        <ExampleInput />
-      </InputGroup>
-    ))}
-  </StoryGrid>
-);
-
-export const OutlineVariants = () => (
-  <StoryGrid title="Outline Variants">
-    {themeOptions.map((theme) => (
-      <InputGroup key={theme} label={`${theme} outline`} theme={theme} outline>
-        <ExampleInput />
-      </InputGroup>
-    ))}
-  </StoryGrid>
-);
-
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (
@@ -152,26 +112,26 @@ export const Disabled: Story = {
   },
 };
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: InputGroup, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: InputGroup, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) => renderOutlineVariants({ component: InputGroup, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: InputGroup, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) => renderGlassOutlineVariants({ component: InputGroup, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) => renderStateOutlineVariants({ component: InputGroup, args }),
 };

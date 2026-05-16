@@ -1,6 +1,6 @@
 {
   "name": "boreal-ui",
-  "version": "0.0.899",
+  "version": "0.0.900-Experimental",
   "readme": "README.npm.md",
   "description": "A modern, customizable React/Next.js component library",
   "author": "Davin Chiupka",
@@ -23,7 +23,7 @@
   ],
   "scripts": {
     "audit:types": "tsc --noEmit",
-    "audit:lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "audit:lint": "npm run lint",
     "audit:styles": "stylelint \"src/**/*.{scss,css}\"",
     "audit:test": "jest --coverage",
     "audit:build": "npm run build",
@@ -42,7 +42,8 @@
     "build": "npm run clean && npm run build:core && npm run build:next && npm run patch:useClient && npm run build:docs && npm run build:types && npm run build:types:public",
     "lint:styles": "stylelint '**/*.{css,scss}'",
     "lint:styles:fix": "stylelint '**/*.{css,scss}' --fix",
-    "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" \"cypress/**/*.{ts,tsx}\" \"*.config.ts\" --fix",
+    "lint:all": "eslint . --max-warnings=0",
     "check:sync": "node scripts/checkSync.cjs",
     "gen:entrypoints": "node scripts/generateEntryPoints.cjs",
     "gen:exports": "node scripts/generateExports.cjs",
@@ -62,7 +63,7 @@
     "storybook:build:next": "storybook build  --output-dir ./storybook-next-json -c .storybook-next",
     "build-storybook": "storybook build",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" --max-warnings=0"
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"cypress/**/*.{ts,tsx}\" \"*.config.ts\" --max-warnings=0"
   },
   "keywords": [
     "react",
