@@ -10,6 +10,14 @@ import {
   StateType,
   ThemeType,
 } from "../../src/types/types";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const themeOptions: ThemeType[] = [
   "primary",
@@ -96,12 +104,21 @@ export const Loading: Story = {
   },
 };
 
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-    children: "Disabled",
-  },
-};
+export const Disabled = () => (
+  <StoryGrid title="Disabled Buttons">
+    <Button icon={FaPlus} disabled>
+      Icon Left
+    </Button>
+
+    <Button icon={FaPlus} outline disabled>
+      Icon Right
+    </Button>
+
+    <Button icon={FaPlus} glass disabled>
+      Icon Right
+    </Button>
+  </StoryGrid>
+);
 
 export const FullWidth: Story = {
   args: {
@@ -259,4 +276,28 @@ export const WithAriaLabel: Story = {
     "aria-label": "Custom Aria Label",
     children: "Accessible Button",
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: Button, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: Button, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: Button, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: Button, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: Button, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: Button, args }),
 };

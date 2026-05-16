@@ -4,6 +4,14 @@ import { FaInbox, FaUser } from "react-icons/fa";
 import { TextInput } from "../../src/index.next";
 import type { TextInputProps } from "../../src/components/TextInput/TextInput.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const themeOptions: NonNullable<TextInputProps["theme"]>[] = [
   "primary",
@@ -324,3 +332,27 @@ export const ShadowVariants = (args: React.ComponentProps<typeof TextInput>) =>
   withVariants(TextInput, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: TextInput, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: TextInput, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: TextInput, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: TextInput, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: TextInput, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: TextInput, args }),
+};

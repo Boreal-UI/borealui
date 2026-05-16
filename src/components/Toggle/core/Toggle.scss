@@ -6,286 +6,298 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-$sizes: (
-  "xs": (
-    toggle: (
-      30px,
-      12px,
+  $sizes: (
+    "xs": (
+      toggle: (
+        30px,
+        12px,
+      ),
+      slider: (
+        8px,
+        8px,
+      ),
+      translate: 15px,
     ),
-    slider: (
-      8px,
-      8px,
+    "small": (
+      toggle: (
+        40px,
+        20px,
+      ),
+      slider: (
+        16px,
+        16px,
+      ),
+      translate: 18px,
     ),
-    translate: 15px,
-  ),
-  "small": (
-    toggle: (
-      40px,
-      20px,
+    "medium": (
+      toggle: (
+        50px,
+        28px,
+      ),
+      slider: (
+        20px,
+        20px,
+      ),
+      translate: 22px,
     ),
-    slider: (
-      16px,
-      16px,
+    "large": (
+      toggle: (
+        60px,
+        34px,
+      ),
+      slider: (
+        25px,
+        25px,
+      ),
+      translate: 28px,
     ),
-    translate: 18px,
-  ),
-  "medium": (
-    toggle: (
-      50px,
-      28px,
+    "xl": (
+      toggle: (
+        70px,
+        44px,
+      ),
+      slider: (
+        30px,
+        30px,
+      ),
+      translate: 32px,
     ),
-    slider: (
-      20px,
-      20px,
-    ),
-    translate: 22px,
-  ),
-  "large": (
-    toggle: (
-      60px,
-      34px,
-    ),
-    slider: (
-      25px,
-      25px,
-    ),
-    translate: 28px,
-  ),
-  "xl": (
-    toggle: (
-      70px,
-      44px,
-    ),
-    slider: (
-      30px,
-      30px,
-    ),
-    translate: 32px,
-  ),
-);
-
-.container {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-
-  @include bp.down(xs) {
-    gap: var(--spacing-xxs);
-  }
-
-  @include bp.up(lg) {
-    gap: var(--spacing-md);
-  }
-}
-
-.toggle_label {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  color: var(--text-color-primary);
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-caption);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body-sm);
-  }
-}
-
-.toggle {
-  background-color: var(--disabled-color);
-  position: relative;
-  cursor: pointer;
-  border: none;
-  display: flex;
-  align-items: center;
-  transition: background 0.3s ease-in-out;
-  outline: none;
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 9999px;
-  }
-
-  &_slider {
-    background-color: var(--text-color-primary);
-    position: absolute;
-    left: 4px;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  &_active {
-    background-color: var(--primary-color);
-  }
-
-  &_clear .toggle_active {
-    border: 1px solid var(--text-color-primary);
-  }
-}
-
-@each $theme, $color in theme.$themes {
-  .toggle_#{$theme} {
-    --toggle-glass-bg: #{map.get($color, glass-bg)};
-    --toggle-glass-hover-bg: #{map.get($color, glass-hover)};
-    --toggle-glass-border: #{map.get($color, glass-border)};
-    --toggle-glass-text: #{map.get($color, text)};
-  }
-
-  .toggle_#{$theme} .toggle_active {
-    background-color: map.get($color, bg);
-  }
-}
-
-@each $state, $color in theme.$states {
-  .toggle_#{$state} {
-    --toggle-glass-bg: #{map.get($color, glass-bg)};
-    --toggle-glass-hover-bg: #{map.get($color, glass-hover)};
-    --toggle-glass-border: #{map.get($color, glass-border)};
-    --toggle-glass-text: #{map.get($color, text)};
-  }
-
-  .toggle_#{$state} .toggle_active {
-    outline: 2px solid map.get($color, border);
-  }
-}
-
-.toggle_glass .toggle_glassTrack {
-  @include mixins.glass-surface(
-    var(--toggle-glass-bg, var(--glass-background)),
-    var(--toggle-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
   );
 
-  color: var(--toggle-glass-text, currentcolor);
-}
-
-.toggle_glass .toggle_active {
-  background: var(--toggle-glass-hover-bg, var(--glass-background));
-  border-color: var(--toggle-glass-border, var(--glass-border-color));
-}
-
-@each $name, $vals in $sizes {
-  $tw: list.nth(map.get($vals, toggle), 1);
-  $th: list.nth(map.get($vals, toggle), 2);
-  $sw: list.nth(map.get($vals, slider), 1);
-  $sh: list.nth(map.get($vals, slider), 2);
-  $tx: map.get($vals, translate);
-
-  .toggle_#{$name} .toggle {
-    width: $tw;
-    height: $th;
-
-    &_slider {
-      width: $sw;
-      height: $sh;
-    }
-
-    &_active .toggle_slider {
-      transform: translateX($tx);
-    }
+  .container {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
 
     @include bp.down(xs) {
-      width: $tw * 0.9;
-      height: $th * 0.9;
-
-      &_slider {
-        width: $sw * 0.9;
-        height: $sh * 0.9;
-      }
-
-      &_active .toggle_slider {
-        transform: translateX($tx * 0.85);
-      }
+      gap: var(--spacing-xxs);
     }
 
     @include bp.up(lg) {
-      width: $tw * 1.05;
-      height: $th * 1.05;
-
-      &_slider {
-        width: $sw * 1.05;
-        height: $sh * 1.05;
-      }
-
-      &_active .toggle_slider {
-        transform: translateX($tx * 1.05);
-      }
+      gap: var(--spacing-md);
     }
   }
-}
 
-.toggle_disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-  box-shadow: none;
+  .toggle_label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    color: var(--text-color-primary);
+
+    @include bp.down(xs) {
+      font-size: var(--font-size-caption);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body-sm);
+    }
+  }
 
   .toggle {
     background-color: var(--disabled-color);
-  }
-}
+    position: relative;
+    cursor: pointer;
+    border: none;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s ease-in-out;
+    outline: none;
 
-@each $key, $value in theme.$rounding {
-  .toggle_round-#{$key} {
-    border-radius: $value;
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 9999px;
+    }
 
-    .toggle_slider {
-      border-radius: $value;
+    &_slider {
+      background-color: var(--text-color-primary);
+      position: absolute;
+      left: 4px;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    &_active {
+      background-color: var(--primary-color);
+    }
+
+    &_clear .toggle_active {
+      border: 1px solid var(--text-color-primary);
     }
   }
-}
 
-@each $key, $value in theme.$shadow {
-  .toggle_shadow-#{$key} {
-    box-shadow: $value;
-  }
-}
+  @each $theme, $color in theme.$themes {
+    .toggle_#{$theme} {
+      --toggle-glass-bg: #{map.get($color, glass-bg)};
+      --toggle-glass-hover-bg: #{map.get($color, glass-hover)};
+      --toggle-glass-border: #{map.get($color, glass-border)};
+      --toggle-glass-text: #{map.get($color, text)};
+    }
 
-@media (prefers-reduced-motion: reduce) {
-  .toggle,
-  .toggle * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .toggle {
-    transition: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .toggle {
-    background: ButtonFace;
-    color: ButtonText;
-    border: 1px solid ButtonText;
+    .toggle_#{$theme} .toggle_active {
+      background-color: map.get($color, bg);
+    }
   }
 
-  .toggle_active {
-    background: Highlight;
-  }
+  @each $state, $color in theme.$states {
+    .toggle_#{$state} {
+      --toggle-glass-bg: #{map.get($color, glass-bg)};
+      --toggle-glass-hover-bg: #{map.get($color, glass-hover)};
+      --toggle-glass-border: #{map.get($color, glass-border)};
+      --toggle-glass-text: #{map.get($color, text)};
+    }
 
-  .toggle_slider {
-    background: ButtonText;
+    .toggle_#{$state} .toggle_active {
+      outline: 2px solid map.get($color, border);
+    }
   }
 
   .toggle_glass .toggle_glassTrack {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+    @include mixins.glass-surface(
+      var(--toggle-glass-bg, var(--glass-background)),
+      var(--toggle-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--toggle-glass-text, currentcolor);
   }
 
-  .toggle:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 2px;
+  .toggle_glass .toggle_active {
+    background: var(--toggle-glass-hover-bg, var(--glass-background));
+    border-color: var(--toggle-glass-border, var(--glass-border-color));
   }
-}
+
+  @each $name, $vals in $sizes {
+    $tw: list.nth(map.get($vals, toggle), 1);
+    $th: list.nth(map.get($vals, toggle), 2);
+    $sw: list.nth(map.get($vals, slider), 1);
+    $sh: list.nth(map.get($vals, slider), 2);
+    $tx: map.get($vals, translate);
+
+    .toggle_#{$name} .toggle {
+      width: $tw;
+      height: $th;
+
+      &_slider {
+        width: $sw;
+        height: $sh;
+      }
+
+      &_active .toggle_slider {
+        transform: translateX($tx);
+      }
+
+      @include bp.down(xs) {
+        width: $tw * 0.9;
+        height: $th * 0.9;
+
+        &_slider {
+          width: $sw * 0.9;
+          height: $sh * 0.9;
+        }
+
+        &_active .toggle_slider {
+          transform: translateX($tx * 0.85);
+        }
+      }
+
+      @include bp.up(lg) {
+        width: $tw * 1.05;
+        height: $th * 1.05;
+
+        &_slider {
+          width: $sw * 1.05;
+          height: $sh * 1.05;
+        }
+
+        &_active .toggle_slider {
+          transform: translateX($tx * 1.05);
+        }
+      }
+    }
+  }
+
+  @each $key, $value in theme.$rounding {
+    .toggle_round-#{$key} {
+      border-radius: $value;
+
+      .toggle_slider {
+        border-radius: $value;
+      }
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .toggle_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  .toggle_disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    .toggle,
+    .toggle_slider,
+    .toggle_label {
+      cursor: not-allowed;
+    }
+
+    .toggle {
+      background-color: var(--disabled-color);
+      box-shadow: none;
+    }
+
+    .toggle_active {
+      background-color: var(--disabled-color);
+    }
+  }
+
+  .toggle:disabled {
+    cursor: not-allowed;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .toggle,
+    .toggle * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .toggle {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .toggle {
+      background: ButtonFace;
+      color: ButtonText;
+      border: 1px solid ButtonText;
+    }
+
+    .toggle_active {
+      background: Highlight;
+    }
+
+    .toggle_slider {
+      background: ButtonText;
+    }
+
+    .toggle_glass .toggle_glassTrack {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+
+    .toggle:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+  }
 }

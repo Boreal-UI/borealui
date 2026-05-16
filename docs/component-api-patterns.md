@@ -77,11 +77,17 @@ For icon-only actions, use `IconButton` or provide an accessible label.
 
 ## Forms
 
-Text inputs, text areas, selects, checkboxes, radio controls, toggles, sliders, date/time pickers, file uploads, and tag inputs expose normal controlled and uncontrolled React patterns.
+Text inputs, search inputs, number inputs, text areas, selects, multi-selects, segmented controls, checkboxes, radio controls, toggles, sliders, date/time pickers, file uploads, and tag inputs expose normal controlled and uncontrolled React patterns.
 
 ```tsx
 import { useState } from "react";
-import { Select, TextArea, TextInput } from "boreal-ui/core";
+import {
+  NumberInput,
+  SearchInput,
+  Select,
+  TextArea,
+  TextInput,
+} from "boreal-ui/core";
 
 export function ContactFields() {
   const [priority, setPriority] = useState("low");
@@ -89,6 +95,8 @@ export function ContactFields() {
   return (
     <>
       <TextInput label="Name" name="name" autoComplete="name" />
+      <SearchInput label="Search contacts" name="search" />
+      <NumberInput label="Budget" name="budget" min={0} step={100} />
       <Select
         label="Priority"
         name="priority"
@@ -106,6 +114,8 @@ export function ContactFields() {
 ```
 
 Use `helperText`, `errorMessage`, `required`, and disabled props where supported. When a component does not render helper or error text itself, connect external text with `aria-describedby`.
+
+Use `InputGroup` to compose prefixes, suffixes, addons, and custom controls around form content. Use `FieldSet` for grouped controls with a semantic legend, and `ValidationSummary` to list form-level errors with accessible navigation targets.
 
 ## DataTable
 
@@ -152,6 +162,8 @@ export function InvoiceTable() {
 }
 ```
 
+`DataTable` also supports pagination with `Pager`, column visibility, column resize/reorder/pinning, row expansion panels, bulk actions, inline editing, server pagination contracts, and virtualization for larger datasets. Use the controlled callbacks when table state is owned by your app or server API.
+
 Use `serverSort` with `onSortChange` when sorting is handled by your API.
 
 ```tsx
@@ -163,7 +175,7 @@ Use `serverSort` with `onSortChange` when sorting is handled by your API.
   onSortChange={(key, order) => {
     fetchInvoices({ sortBy: String(key), order });
   }}
-/>;
+/>
 ```
 
 ## Overlays and Interactive Components
@@ -188,12 +200,75 @@ export function ConfirmDialog({
       aria-describedby="delete-project-description"
     >
       <div>
-        <p id="delete-project-description">
-          This action cannot be undone.
-        </p>
+        <p id="delete-project-description">This action cannot be undone.</p>
         <Button state="warning">Delete</Button>
       </div>
     </Modal>
+  );
+}
+```
+
+## Layout and Shells
+
+Use `AppShell`, `PageHeader`, `BreadCrumbPageHeader`, `Sidebar`, `SplitPane`, and the layout primitives to compose application pages without rebuilding common structure.
+
+```tsx
+import { AppShell, PageHeader, SplitPane, TreeView } from "boreal-ui/core";
+
+export function ProjectWorkspace() {
+  return (
+    <AppShell
+      header={<PageHeader title="Projects" subtitle="Delivery workspace" />}
+      sidebar={
+        <TreeView
+          label="Project navigation"
+          items={[
+            { id: "active", label: "Active projects" },
+            { id: "archive", label: "Archive" },
+          ]}
+        />
+      }
+    >
+      <SplitPane startPane="List" endPane="Details" />
+    </AppShell>
+  );
+}
+```
+
+`Portal` is a structural utility for rendering content into another DOM container. It keeps a deliberately small API: target container, inline fallback behavior, custom class name, screen-reader-only context, and test IDs.
+
+## Charts and Metrics
+
+Use chart components for compact dashboard visuals and status summaries.
+
+```tsx
+import {
+  BarChart,
+  DonutChart,
+  Legend,
+  Sparkline,
+} from "boreal-ui/core";
+
+export function RevenueSnapshot() {
+  return (
+    <>
+      <Sparkline data={[12, 18, 16, 24, 28]} label="Revenue trend" />
+      <BarChart
+        label="Quarterly revenue"
+        data={[
+          { label: "Q1", value: 12 },
+          { label: "Q2", value: 18 },
+        ]}
+      />
+      <DonutChart
+        label="Pipeline mix"
+        data={[
+          { label: "New", value: 45 },
+          { label: "Expansion", value: 30 },
+        ]}
+      />
+      <Legend items={[{ label: "New", color: "var(--primary-color)" }]} />
+    </>
   );
 }
 ```
@@ -224,8 +299,10 @@ Use root and section class props for local styling.
   data={rows}
   className="invoice-table-shell"
   tableClassName="invoice-table"
-  rowClassName={(row) => (row.status === "open" ? "invoice-row-open" : undefined)}
-/>;
+  rowClassName={(row) =>
+    row.status === "open" ? "invoice-row-open" : undefined
+  }
+/>
 ```
 
 Do not rely on generated SCSS Module class names from the Next build. Use the component's public class props and test IDs instead.

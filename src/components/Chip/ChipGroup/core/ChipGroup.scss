@@ -1,115 +1,114 @@
 @use "../../../../styles/theme" as theme;
-@use "../../../../styles/_animations";
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $chip-positions: (
+    "topLeft": (
+      top: 20px,
+      left: 20px,
+      align-items: flex-start,
+    ),
+    "topCenter": (
+      top: 20px,
+      left: 50%,
+      transform: translateX(-50%),
+      align-items: center,
+    ),
+    "topRight": (
+      top: 20px,
+      right: 20px,
+      align-items: flex-end,
+    ),
+    "bottomLeft": (
+      bottom: 20px,
+      left: 20px,
+      align-items: flex-start,
+    ),
+    "bottomCenter": (
+      bottom: 20px,
+      left: 50%,
+      transform: translateX(-50%),
+      align-items: center,
+    ),
+    "bottomRight": (
+      bottom: 20px,
+      right: 20px,
+      align-items: flex-end,
+    ),
+  );
 
-$chip-positions: (
-  "topLeft": (
-    top: 20px,
-    left: 20px,
-    align-items: flex-start,
-  ),
-  "topCenter": (
-    top: 20px,
-    left: 50%,
-    transform: translateX(-50%),
-    align-items: center,
-  ),
-  "topRight": (
-    top: 20px,
-    right: 20px,
-    align-items: flex-end,
-  ),
-  "bottomLeft": (
-    bottom: 20px,
-    left: 20px,
-    align-items: flex-start,
-  ),
-  "bottomCenter": (
-    bottom: 20px,
-    left: 50%,
-    transform: translateX(-50%),
-    align-items: center,
-  ),
-  "bottomRight": (
-    bottom: 20px,
-    right: 20px,
-    align-items: flex-end,
-  ),
-);
-
-.chip_group {
-  position: fixed;
-  z-index: 9998;
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-  max-width: 90vw;
-  pointer-events: none;
-
-  @each $position, $values in $chip-positions {
-    &.chip_group_#{$position} {
-      @if map.has-key($values, top) {
-        top: map.get($values, top);
-      }
-
-      @if map.has-key($values, bottom) {
-        bottom: map.get($values, bottom);
-      }
-
-      @if map.has-key($values, left) {
-        left: map.get($values, left);
-      }
-
-      @if map.has-key($values, right) {
-        right: map.get($values, right);
-      }
-
-      @if map.has-key($values, transform) {
-        transform: map.get($values, transform);
-      }
-
-      align-items: map.get($values, align-items);
-    }
-  }
-}
-
-.chip_group_list {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  list-style: none;
-  margin: 0;
-  gap: var(--spacing-medium, 16px);
-  padding: 0;
-
-  .chip {
-    pointer-events: auto;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .chip_group,
-  .chip_group * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (forced-colors: active) {
   .chip_group {
-    color: CanvasText;
+    position: fixed;
+    z-index: 9998;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    max-width: 90vw;
+    pointer-events: none;
+
+    @each $position, $values in $chip-positions {
+      &.chip_group_#{$position} {
+        @if map.has-key($values, top) {
+          top: map.get($values, top);
+        }
+
+        @if map.has-key($values, bottom) {
+          bottom: map.get($values, bottom);
+        }
+
+        @if map.has-key($values, left) {
+          left: map.get($values, left);
+        }
+
+        @if map.has-key($values, right) {
+          right: map.get($values, right);
+        }
+
+        @if map.has-key($values, transform) {
+          transform: map.get($values, transform);
+        }
+
+        align-items: map.get($values, align-items);
+      }
+    }
   }
 
   .chip_group_list {
-    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    margin: 0;
+    gap: var(--spacing-medium, 16px);
+    padding: 0;
+
+    .chip {
+      pointer-events: auto;
+    }
   }
 
-  .chip_group_list .chip {
-    forced-color-adjust: auto;
+  @media (prefers-reduced-motion: reduce) {
+    .chip_group,
+    .chip_group * {
+      transition: none !important;
+      animation: none !important;
+    }
   }
-}
+
+  @media (forced-colors: active) {
+    .chip_group {
+      color: CanvasText;
+    }
+
+    .chip_group_list {
+      background: transparent;
+    }
+
+    .chip_group_list .chip {
+      -webkit-forced-color-adjust: none;
+      forced-color-adjust: auto;
+    }
+  }
 }

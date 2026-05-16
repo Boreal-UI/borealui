@@ -5,310 +5,322 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .container {
+    display: flex;
+    gap: var(--spacing-xs);
+    width: fit-content;
+    align-items: center;
+    justify-content: flex-start;
+  }
 
-.container {
-  display: flex;
-  gap: var(--spacing-xs);
-  width: fit-content;
-  align-items: center;
-  justify-content: flex-start;
-}
+  .label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    white-space: nowrap;
+  }
 
-.label {
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-ui);
-}
+  .labelTop {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-.labelTop {
-  flex-direction: column;
-}
+  .labelBottom {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
 
-.labelBottom {
-  flex-direction: column-reverse;
-}
+  .labelLeft {
+    flex-direction: row;
+    align-items: center;
+  }
 
-.labelLeft {
-  flex-direction: row;
-  align-items: center;
-}
+  .labelRight {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
 
-.labelRight {
-  flex-direction: row-reverse;
-  align-items: center;
-}
-
-@each $k, $v in theme.$rounding {
-  .round#{$k} {
-    border-radius: $v;
-
-    input {
+  @each $k, $v in theme.$rounding {
+    .round#{$k} {
       border-radius: $v;
+
+      input {
+        border-radius: $v;
+      }
     }
   }
-}
 
-@each $k, $v in theme.$shadow {
-  .shadow#{$k} {
-    box-shadow: $v;
-  }
-}
-
-.textInput {
-  display: inline-flex;
-  justify-content: space-between;
-  align-items: center;
-  width: fit-content;
-  height: max-content;
-  margin: var(--spacing-sm);
-  padding-left: var(--spacing-sm);
-  padding-right: var(--spacing-sm);
-  transition: var(--transition-default);
-  background: transparent;
-  outline: none;
-  margin: var(--spacing-sm);
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  border: none;
-  background-color: transparent;
-  color: var(--text-color-primary);
-
-  &:focus-within {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-    border-radius: var(--border-radius-md);
+  @each $k, $v in theme.$shadow {
+    .shadow#{$k} {
+      box-shadow: $v;
+    }
   }
 
-  @include bp.down(xs) {
-    padding-left: var(--spacing-xs);
-    padding-right: var(--spacing-xs);
-    height: 35px;
-    width: 95%;
-    max-width: none;
-  }
-
-  input {
-    width: 100%;
-    padding: var(--spacing-sm);
+  .textInput {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+    width: fit-content;
+    height: max-content;
+    margin: var(--spacing-sm);
+    padding-left: var(--spacing-sm);
+    padding-right: var(--spacing-sm);
+    transition: var(--transition-default);
+    background: transparent;
+    outline: none;
+    margin: var(--spacing-sm);
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
     border: none;
-    height: 100%;
     background-color: transparent;
     color: var(--text-color-primary);
 
-    &[type="password"] {
-      -webkit-appearance: none;
-      appearance: none;
-    }
-
-    &[type="password"]::-ms-reveal,
-    &[type="password"]::-ms-clear {
-      display: none;
-      width: 0;
-      height: 0;
-    }
-
-    &[type="password"]::-webkit-credentials-auto-fill-button,
-    &[type="password"]::-webkit-caps-lock-indicator,
-    &[type="password"]::-webkit-contacts-auto-fill-button {
-      visibility: hidden;
-      display: none !important;
-      pointer-events: none;
-      position: absolute;
-      right: 0;
-    }
-
-    &:hover {
-      background-color: transparent;
-    }
-
-    &:focus,
     &:focus-within {
-      outline: none;
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+      border-radius: var(--border-radius-md);
     }
-  }
-
-  &::placeholder {
-    color: var(--text-color-primary);
-    opacity: 0.8;
-    font: inherit;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: var(--border-radius-lg);
-  }
-
-  @include bp.down(xs) {
-    width: 100%;
-    font-size: var(--font-size-body-sm);
-    margin: var(--spacing-xs);
-  }
-}
-
-@each $state, $vals in theme.$states {
-  .#{$state} {
-    --textInput-glass-bg: #{map.get($vals, glass-bg)};
-    --textInput-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --textInput-glass-border: #{map.get($vals, glass-border)};
-    --textInput-glass-text: #{map.get($vals, text)};
-    border: 2px solid map.get($vals, border);
-  }
-
-  .#{state}.glass {
-    border: 2px solid var(--textInput-glass-border);
-  }
-}
-
-@each $themeName, $vals in theme.$themes {
-  .#{$themeName} {
-    --textInput-glass-bg: #{map.get($vals, glass-bg)};
-    --textInput-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --textInput-glass-border: #{map.get($vals, glass-border)};
-    --textInput-glass-text: #{map.get($vals, text)};
-    background-color: map.get($vals, bg);
-    color: map.get($vals, text);
-
-    &:hover {
-      background-color: if(
-        map.has-key($vals, hover),
-        map.get($vals, hover),
-        map.get($vals, bg)
-      );
-    }
-
-    .textInput::placeholder {
-      color: map.get($vals, text);
-    }
-
-    .iconContainer svg {
-      color: map.get($vals, text);
-    }
-
-    &.outline {
-      background-color: transparent;
-      color: map.get($vals, text);
-      box-shadow: none;
-      border: 2px solid map.get($vals, border);
-    }
-  }
-}
-
-.glass {
-  @include mixins.glass-surface(
-    var(--textInput-glass-bg, rgba(255, 255, 255, 0.18)),
-    inherit,
-    16px
-  );
-  color: var(--textInput-glass-text, var(--text-color-primary));
-  box-shadow: var(--box-shadow-sm);
-}
-
-.glass:hover {
-  background: var(--textInput-glass-hover-bg, rgba(255, 255, 255, 0.24));
-}
-
-.glass.outline {
-  border-color: var(--textInput-glass-border);
-}
-
-.clear {
-  box-shadow: none;
-  .textInput {
-    border: none;
-  }
-}
-
-.iconContainer {
-  display: flex;
-  box-sizing: border-box;
-  margin: 0.5rem;
-  background-color: transparent;
-  box-shadow: none;
-  @include bp.down(xs) {
-    margin: 0.1rem;
-  }
-
-  svg {
-    width: 1em;
-    height: 1em;
-    color: var(--text-color-primary);
 
     @include bp.down(xs) {
-      width: 15px;
-      height: 15px;
+      padding-left: var(--spacing-xs);
+      padding-right: var(--spacing-xs);
+      height: 35px;
+      width: 95%;
+      max-width: none;
     }
-  }
-}
 
-.togglePassword {
-  padding: var(--spacing-xs);
-  box-sizing: border-box;
-  background: transparent;
-  border: none;
-  color: inherit;
-  cursor: pointer;
+    input {
+      width: 100%;
+      padding: var(--spacing-sm);
+      border: none;
+      height: 100%;
+      background-color: transparent;
+      color: var(--text-color-primary);
 
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: var(--border-radius-xs);
-  }
+      &[type="password"] {
+        -webkit-appearance: none;
+        appearance: none;
+      }
 
-  @include bp.down(xs) {
-    margin-top: var(--spacing-xs);
-  }
-}
+      &[type="password"]::-ms-reveal,
+      &[type="password"]::-ms-clear {
+        display: none;
+        width: 0;
+        height: 0;
+      }
 
-.disabled {
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-  background-color: var(--disabled-color);
+      &[type="password"]::-webkit-credentials-auto-fill-button,
+      &[type="password"]::-webkit-caps-lock-indicator,
+      &[type="password"]::-webkit-contacts-auto-fill-button {
+        visibility: hidden;
+        display: none !important;
+        pointer-events: none;
+        position: absolute;
+        right: 0;
+      }
 
-  .textInput {
-    background-color: transparent;
-  }
-}
+      &:hover {
+        background-color: transparent;
+      }
 
-@media (prefers-reduced-motion: reduce) {
-  .container,
-  .container * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (forced-colors: active) {
-  .glass {
-    background: Canvas;
-    color: CanvasText;
-    border-color: ButtonText;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-
-  .container {
-    background: Canvas;
-    color: CanvasText;
-    border: 1px solid ButtonText;
-  }
-
-  .textInput {
-    color: CanvasText;
-    background: Canvas;
+      &:focus,
+      &:focus-within {
+        outline: none;
+      }
+    }
 
     &::placeholder {
-      color: CanvasText;
+      color: var(--text-color-primary);
+      opacity: 0.8;
+      font: inherit;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: var(--border-radius-lg);
+    }
+
+    @include bp.down(xs) {
+      width: 100%;
+      font-size: var(--font-size-body-sm);
+      margin: var(--spacing-xs);
     }
   }
 
-  .textInput:focus-visible,
-  .container:focus-within {
-    outline: 2px solid Highlight !important;
-    outline-offset: 2px !important;
+  @each $state, $vals in theme.$states {
+    .#{$state} {
+      --textInput-glass-bg: #{map.get($vals, glass-bg)};
+      --textInput-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --textInput-glass-border: #{map.get($vals, glass-border)};
+      --textInput-glass-text: #{map.get($vals, text)};
+      border: 2px solid map.get($vals, border);
+    }
+
+    .#{state}.glass {
+      border: 2px solid var(--textInput-glass-border);
+    }
   }
-}
+
+  @each $themeName, $vals in theme.$themes {
+    .#{$themeName} {
+      --textInput-glass-bg: #{map.get($vals, glass-bg)};
+      --textInput-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --textInput-glass-border: #{map.get($vals, glass-border)};
+      --textInput-glass-text: #{map.get($vals, text)};
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+
+      &:hover {
+        background-color: if(
+          map.has-key($vals, hover),
+          map.get($vals, hover),
+          map.get($vals, bg)
+        );
+      }
+
+      .textInput::placeholder {
+        color: map.get($vals, text);
+      }
+
+      .iconContainer svg {
+        color: map.get($vals, text);
+      }
+
+      &.outline {
+        background-color: transparent;
+        color: map.get($vals, text);
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
+    }
+  }
+
+  .glass {
+    @include mixins.glass-surface(
+      var(--textInput-glass-bg, rgba(255, 255, 255, 0.18)),
+      inherit,
+      16px
+    );
+    color: var(--textInput-glass-text, var(--text-color-primary));
+    box-shadow: var(--box-shadow-sm);
+  }
+
+  .glass:hover {
+    background: var(--textInput-glass-hover-bg, rgba(255, 255, 255, 0.24));
+  }
+
+  .glass.outline {
+    border-color: var(--textInput-glass-border);
+  }
+
+  .clear {
+    box-shadow: none;
+    .textInput {
+      border: none;
+    }
+  }
+
+  .iconContainer {
+    display: flex;
+    box-sizing: border-box;
+    margin: 0.5rem;
+    background-color: transparent;
+    box-shadow: none;
+    @include bp.down(xs) {
+      margin: 0.1rem;
+    }
+
+    svg {
+      width: 1em;
+      height: 1em;
+      color: var(--text-color-primary);
+
+      @include bp.down(xs) {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
+
+  .togglePassword {
+    padding: var(--spacing-xs);
+    box-sizing: border-box;
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: var(--border-radius-xs);
+    }
+
+    @include bp.down(xs) {
+      margin-top: var(--spacing-xs);
+    }
+  }
+
+  .disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--disabled-color);
+
+    input {
+      cursor: not-allowed;
+    }
+
+    &:hover {
+      background-color: var(--disabled-color);
+    }
+
+    .textInput {
+      background-color: transparent;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .container,
+    .container * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .glass {
+      background: Canvas;
+      color: CanvasText;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .container {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+    }
+
+    .textInput {
+      color: CanvasText;
+      background: Canvas;
+
+      &::placeholder {
+        color: CanvasText;
+      }
+    }
+
+    .textInput:focus-visible,
+    .container:focus-within {
+      outline: 2px solid Highlight !important;
+      outline-offset: 2px !important;
+    }
+  }
 }

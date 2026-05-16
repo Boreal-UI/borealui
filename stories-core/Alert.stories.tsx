@@ -9,6 +9,14 @@ import {
 
 import { Alert, Button } from "../src/index.core";
 import type { AlertProps } from "../src/components/Alert/Alert.types";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<AlertProps> = {
   title: "Components/Alert",
@@ -411,4 +419,28 @@ export const CustomSlotClasses: Story = {
     actionsClassName: "custom-alert-actions",
     dismissButtonClassName: "custom-alert-dismiss",
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: Alert, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: Alert, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: Alert, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: Alert, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: Alert, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: Alert, args }),
 };

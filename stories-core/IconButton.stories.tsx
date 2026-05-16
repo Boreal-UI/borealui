@@ -9,6 +9,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<typeof IconButton> = {
   title: "Components/IconButton",
@@ -195,3 +203,27 @@ export const ShadowVariants = () =>
     },
     [{ propName: "shadow", values: shadowOptions }],
   );
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: IconButton, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: IconButton, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: IconButton, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: IconButton, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: IconButton, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: IconButton, args }),
+};

@@ -7,7 +7,10 @@ import {
   writeFileSync,
 } from "node:fs";
 import { join } from "node:path";
-import { initCommand } from "../../packages/cli/src/commands/init.js";
+import {
+  __testing,
+  initCommand,
+} from "../../packages/cli/src/commands/init.js";
 import { VERSION } from "../../packages/cli/src/utils/constants.js";
 
 describe("Boreal UI CLI setup", () => {
@@ -505,6 +508,25 @@ createRoot(document.getElementById("root")!).render(<App />);
         "Run pnpm install if dependencies have not been installed yet.",
       ),
     );
+  });
+
+  it("rejects file candidates that resolve outside the project root", () => {
+    const exitSpy = jest
+      .spyOn(process, "exit")
+      .mockImplementation((() => {
+        throw new Error("process.exit");
+      }) as typeof process.exit);
+
+    try {
+      expect(() =>
+        __testing.resolveProjectPath(root, "..", "outside-project.txt"),
+      ).toThrow("process.exit");
+      expect(errorSpy).toHaveBeenCalledWith(
+        expect.stringContaining("Refusing to access a path outside the project directory"),
+      );
+    } finally {
+      exitSpy.mockRestore();
+    }
   });
 
   it("prints already configured message when there are no changes", async () => {

@@ -9,6 +9,14 @@ import {
 } from "../../src/index.next";
 import type { EmptyStateProps } from "../../src/components/EmptyState/EmptyState.types";
 import { FaInbox, FaBug, FaFolderOpen } from "react-icons/fa";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const themeOptions: ThemeType[] = [
   "primary",
@@ -231,4 +239,28 @@ export const ShadowVariants: Story = {
       ))}
     </div>
   ),
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: EmptyState, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: EmptyState, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: EmptyState, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: EmptyState, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: EmptyState, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: EmptyState, args }),
 };

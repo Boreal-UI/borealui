@@ -311,6 +311,23 @@
   .combobox_toggle:disabled {
     opacity: 0.6;
     cursor: not-allowed;
+    background-color: var(--disabled-color);
+    border: none;
+
+    .combobox_input {
+      cursor: not-allowed;
+    }
+
+    &:hover {
+      background-color: var(--disabled-color);
+    }
+
+    .combobox_toggle {
+      background-color: transparent;
+      &:hover {
+        background-color: transparent;
+      }
+    }
   }
 
   .combobox_outline {

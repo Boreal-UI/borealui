@@ -1,8 +1,8 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
-@use "../../../styles/animations";
 @use "sass:map";
+@use "../../../styles/_animations";
 
 $drawer-placements: (
   "right": (

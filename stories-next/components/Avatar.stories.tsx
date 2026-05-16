@@ -10,6 +10,14 @@ import {
   ThemeType,
 } from "../../src/types/types";
 import { FaStar } from "react-icons/fa";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../../shared-story-assets/VisualVariantStories";
 
 const themeOptions = [
   "primary",
@@ -272,4 +280,28 @@ export const AllStatuses: Story = {
       ))}
     </div>
   ),
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: Avatar, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: Avatar, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: Avatar, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: Avatar, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: Avatar, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: Avatar, args }),
 };

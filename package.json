@@ -44,9 +44,10 @@
     "lint:styles:fix": "stylelint '**/*.{css,scss}' --fix",
     "lint:fix": "eslint ./src --ext .ts,.tsx --fix",
     "check:sync": "node scripts/checkSync.cjs",
-    "generate:entrypoints": "node scripts/generateEntryPoints.cjs",
-    "generate:exports": "node scripts/generateExports.cjs",
-    "generate:docs": "ts-node scripts/generate-component-docs.cjs",
+    "gen:entrypoints": "node scripts/generateEntryPoints.cjs",
+    "gen:exports": "node scripts/generateExports.cjs",
+    "gen:component": "node scripts/addComponent.cjs",
+    "gen:docs": "ts-node scripts/generate-component-docs.cjs",
     "patch:useClient": "node scripts/patchUseClient.cjs",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -162,34 +163,6 @@
       "import": "./dist/core/index.js",
       "require": "./dist/core/index.cjs.js"
     },
-    "./core/types": {
-      "types": "./dist/types/public.types.d.ts",
-      "default": "./dist/types/public.types.d.ts"
-    },
-    "./core/globals.css": {
-      "style": "./dist/core/globals.css",
-      "default": "./dist/core/globals.css"
-    },
-    "./next": {
-      "types": "./dist/types/index.next.d.ts",
-      "import": "./dist/next/index.js"
-    },
-    "./next/types": {
-      "types": "./dist/types/public.types.d.ts",
-      "default": "./dist/types/public.types.d.ts"
-    },
-    "./next/globals.css": {
-      "style": "./dist/next/globals.css",
-      "default": "./dist/next/globals.css"
-    },
-    "./docs": {
-      "types": "./dist/types/generated-docs/index.d.ts",
-      "default": "./dist/generated-docs/index.js"
-    },
-    "./docs/*": {
-      "types": "./dist/types/generated-docs/*.d.ts",
-      "default": "./dist/generated-docs/*.js"
-    },
     "./core/Accordion": {
       "types": "./dist/types/core/Accordion.d.ts",
       "import": "./dist/core/Accordion.js",
@@ -200,6 +173,11 @@
       "import": "./dist/core/Alert.js",
       "require": "./dist/core/Alert.cjs.js"
     },
+    "./core/AppShell": {
+      "types": "./dist/types/core/AppShell.d.ts",
+      "import": "./dist/core/AppShell.js",
+      "require": "./dist/core/AppShell.cjs.js"
+    },
     "./core/Avatar": {
       "types": "./dist/types/core/Avatar.d.ts",
       "import": "./dist/core/Avatar.js",
@@ -209,6 +187,16 @@
       "types": "./dist/types/core/Badge.d.ts",
       "import": "./dist/core/Badge.js",
       "require": "./dist/core/Badge.cjs.js"
+    },
+    "./core/BarChart": {
+      "types": "./dist/types/core/BarChart.d.ts",
+      "import": "./dist/core/BarChart.js",
+      "require": "./dist/core/BarChart.cjs.js"
+    },
+    "./core/BreadCrumbPageHeader": {
+      "types": "./dist/types/core/BreadCrumbPageHeader.d.ts",
+      "import": "./dist/core/BreadCrumbPageHeader.js",
+      "require": "./dist/core/BreadCrumbPageHeader.cjs.js"
     },
     "./core/Breadcrumbs": {
       "types": "./dist/types/core/Breadcrumbs.d.ts",
@@ -255,20 +243,25 @@
       "import": "./dist/core/colorSchemes.js",
       "require": "./dist/core/colorSchemes.cjs.js"
     },
-    "./core/CommandPalette": {
-      "types": "./dist/types/core/CommandPalette.d.ts",
-      "import": "./dist/core/CommandPalette.js",
-      "require": "./dist/core/CommandPalette.cjs.js"
-    },
     "./core/ComboBox": {
       "types": "./dist/types/core/ComboBox.d.ts",
       "import": "./dist/core/ComboBox.js",
       "require": "./dist/core/ComboBox.cjs.js"
     },
+    "./core/CommandPalette": {
+      "types": "./dist/types/core/CommandPalette.d.ts",
+      "import": "./dist/core/CommandPalette.js",
+      "require": "./dist/core/CommandPalette.cjs.js"
+    },
     "./core/DataTable": {
       "types": "./dist/types/core/DataTable.d.ts",
       "import": "./dist/core/DataTable.js",
       "require": "./dist/core/DataTable.cjs.js"
+    },
+    "./core/DatePicker": {
+      "types": "./dist/types/core/DatePicker.d.ts",
+      "import": "./dist/core/DatePicker.js",
+      "require": "./dist/core/DatePicker.cjs.js"
     },
     "./core/DateRangePicker": {
       "types": "./dist/types/core/DateRangePicker.d.ts",
@@ -285,20 +278,30 @@
       "import": "./dist/core/Divider.js",
       "require": "./dist/core/Divider.cjs.js"
     },
-    "./core/Dropdown": {
-      "types": "./dist/types/core/Dropdown.d.ts",
-      "import": "./dist/core/Dropdown.js",
-      "require": "./dist/core/Dropdown.cjs.js"
+    "./core/DonutChart": {
+      "types": "./dist/types/core/DonutChart.d.ts",
+      "import": "./dist/core/DonutChart.js",
+      "require": "./dist/core/DonutChart.cjs.js"
     },
     "./core/Drawer": {
       "types": "./dist/types/core/Drawer.d.ts",
       "import": "./dist/core/Drawer.js",
       "require": "./dist/core/Drawer.cjs.js"
     },
+    "./core/Dropdown": {
+      "types": "./dist/types/core/Dropdown.d.ts",
+      "import": "./dist/core/Dropdown.js",
+      "require": "./dist/core/Dropdown.cjs.js"
+    },
     "./core/EmptyState": {
       "types": "./dist/types/core/EmptyState.d.ts",
       "import": "./dist/core/EmptyState.js",
       "require": "./dist/core/EmptyState.cjs.js"
+    },
+    "./core/FieldSet": {
+      "types": "./dist/types/core/FieldSet.d.ts",
+      "import": "./dist/core/FieldSet.js",
+      "require": "./dist/core/FieldSet.cjs.js"
     },
     "./core/FileUpload": {
       "types": "./dist/types/core/FileUpload.d.ts",
@@ -310,30 +313,49 @@
       "import": "./dist/core/Footer.js",
       "require": "./dist/core/Footer.cjs.js"
     },
-    "./core/FormGroup": {
-      "types": "./dist/types/core/FormGroup.d.ts",
-      "import": "./dist/core/FormGroup.js",
-      "require": "./dist/core/FormGroup.cjs.js"
-    },
     "./core/FormField": {
       "types": "./dist/types/core/FormField.d.ts",
       "import": "./dist/core/FormField.js",
       "require": "./dist/core/FormField.cjs.js"
+    },
+    "./core/FormGroup": {
+      "types": "./dist/types/core/FormGroup.d.ts",
+      "import": "./dist/core/FormGroup.js",
+      "require": "./dist/core/FormGroup.cjs.js"
     },
     "./core/globals": {
       "types": "./dist/types/core/globals.d.ts",
       "import": "./dist/core/globals.js",
       "require": "./dist/core/globals.cjs.js"
     },
+    "./core/globals.css": {
+      "style": "./dist/core/globals.css",
+      "default": "./dist/core/globals.css"
+    },
     "./core/IconButton": {
       "types": "./dist/types/core/IconButton.d.ts",
       "import": "./dist/core/IconButton.js",
       "require": "./dist/core/IconButton.cjs.js"
     },
+    "./core/InputGroup": {
+      "types": "./dist/types/core/InputGroup.d.ts",
+      "import": "./dist/core/InputGroup.js",
+      "require": "./dist/core/InputGroup.cjs.js"
+    },
     "./core/Layout": {
       "types": "./dist/types/core/Layout.d.ts",
       "import": "./dist/core/Layout.js",
       "require": "./dist/core/Layout.cjs.js"
+    },
+    "./core/Legend": {
+      "types": "./dist/types/core/Legend.d.ts",
+      "import": "./dist/core/Legend.js",
+      "require": "./dist/core/Legend.cjs.js"
+    },
+    "./core/LineChart": {
+      "types": "./dist/types/core/LineChart.d.ts",
+      "import": "./dist/core/LineChart.js",
+      "require": "./dist/core/LineChart.cjs.js"
     },
     "./core/MarkdownRenderer": {
       "types": "./dist/types/core/MarkdownRenderer.d.ts",
@@ -360,6 +382,11 @@
       "import": "./dist/core/Modal.js",
       "require": "./dist/core/Modal.cjs.js"
     },
+    "./core/MultiSelect": {
+      "types": "./dist/types/core/MultiSelect.d.ts",
+      "import": "./dist/core/MultiSelect.js",
+      "require": "./dist/core/MultiSelect.cjs.js"
+    },
     "./core/NavBar": {
       "types": "./dist/types/core/NavBar.d.ts",
       "import": "./dist/core/NavBar.js",
@@ -370,6 +397,16 @@
       "import": "./dist/core/NotificationCenter.js",
       "require": "./dist/core/NotificationCenter.cjs.js"
     },
+    "./core/NumberInput": {
+      "types": "./dist/types/core/NumberInput.d.ts",
+      "import": "./dist/core/NumberInput.js",
+      "require": "./dist/core/NumberInput.cjs.js"
+    },
+    "./core/PageHeader": {
+      "types": "./dist/types/core/PageHeader.d.ts",
+      "import": "./dist/core/PageHeader.js",
+      "require": "./dist/core/PageHeader.cjs.js"
+    },
     "./core/Pager": {
       "types": "./dist/types/core/Pager.d.ts",
       "import": "./dist/core/Pager.js",
@@ -379,6 +416,11 @@
       "types": "./dist/types/core/PopOver.d.ts",
       "import": "./dist/core/PopOver.js",
       "require": "./dist/core/PopOver.cjs.js"
+    },
+    "./core/Portal": {
+      "types": "./dist/types/core/Portal.d.ts",
+      "import": "./dist/core/Portal.js",
+      "require": "./dist/core/Portal.cjs.js"
     },
     "./core/ProgressBar": {
       "types": "./dist/types/core/ProgressBar.d.ts",
@@ -410,6 +452,16 @@
       "import": "./dist/core/ScrollToTop.js",
       "require": "./dist/core/ScrollToTop.cjs.js"
     },
+    "./core/SearchInput": {
+      "types": "./dist/types/core/SearchInput.d.ts",
+      "import": "./dist/core/SearchInput.js",
+      "require": "./dist/core/SearchInput.cjs.js"
+    },
+    "./core/SegmentedControl": {
+      "types": "./dist/types/core/SegmentedControl.d.ts",
+      "import": "./dist/core/SegmentedControl.js",
+      "require": "./dist/core/SegmentedControl.cjs.js"
+    },
     "./core/Select": {
       "types": "./dist/types/core/Select.d.ts",
       "import": "./dist/core/Select.js",
@@ -430,10 +482,20 @@
       "import": "./dist/core/Slider.js",
       "require": "./dist/core/Slider.cjs.js"
     },
+    "./core/Sparkline": {
+      "types": "./dist/types/core/Sparkline.d.ts",
+      "import": "./dist/core/Sparkline.js",
+      "require": "./dist/core/Sparkline.cjs.js"
+    },
     "./core/Spinner": {
       "types": "./dist/types/core/Spinner.d.ts",
       "import": "./dist/core/Spinner.js",
       "require": "./dist/core/Spinner.cjs.js"
+    },
+    "./core/SplitPane": {
+      "types": "./dist/types/core/SplitPane.d.ts",
+      "import": "./dist/core/SplitPane.js",
+      "require": "./dist/core/SplitPane.cjs.js"
     },
     "./core/Stepper": {
       "types": "./dist/types/core/Stepper.d.ts",
@@ -480,15 +542,20 @@
       "import": "./dist/core/Timeline.js",
       "require": "./dist/core/Timeline.cjs.js"
     },
-    "./core/Toggle": {
-      "types": "./dist/types/core/Toggle.d.ts",
-      "import": "./dist/core/Toggle.js",
-      "require": "./dist/core/Toggle.cjs.js"
+    "./core/TimePicker": {
+      "types": "./dist/types/core/TimePicker.d.ts",
+      "import": "./dist/core/TimePicker.js",
+      "require": "./dist/core/TimePicker.cjs.js"
     },
     "./core/ToastProvider": {
       "types": "./dist/types/core/ToastProvider.d.ts",
       "import": "./dist/core/ToastProvider.js",
       "require": "./dist/core/ToastProvider.cjs.js"
+    },
+    "./core/Toggle": {
+      "types": "./dist/types/core/Toggle.d.ts",
+      "import": "./dist/core/Toggle.js",
+      "require": "./dist/core/Toggle.cjs.js"
     },
     "./core/Toolbar": {
       "types": "./dist/types/core/Toolbar.d.ts",
@@ -500,10 +567,36 @@
       "import": "./dist/core/Tooltip.js",
       "require": "./dist/core/Tooltip.cjs.js"
     },
+    "./core/TreeView": {
+      "types": "./dist/types/core/TreeView.d.ts",
+      "import": "./dist/core/TreeView.js",
+      "require": "./dist/core/TreeView.cjs.js"
+    },
+    "./core/types": {
+      "types": "./dist/types/public.types.d.ts",
+      "default": "./dist/types/public.types.d.ts"
+    },
     "./core/Typography": {
       "types": "./dist/types/core/Typography.d.ts",
       "import": "./dist/core/Typography.js",
       "require": "./dist/core/Typography.cjs.js"
+    },
+    "./core/ValidationSummary": {
+      "types": "./dist/types/core/ValidationSummary.d.ts",
+      "import": "./dist/core/ValidationSummary.js",
+      "require": "./dist/core/ValidationSummary.cjs.js"
+    },
+    "./docs": {
+      "types": "./dist/types/generated-docs/index.d.ts",
+      "default": "./dist/generated-docs/index.js"
+    },
+    "./docs/*": {
+      "types": "./dist/types/generated-docs/*.d.ts",
+      "default": "./dist/generated-docs/*.js"
+    },
+    "./next": {
+      "types": "./dist/types/index.next.d.ts",
+      "import": "./dist/next/index.js"
     },
     "./next/Accordion": {
       "types": "./dist/types/next/Accordion.d.ts",
@@ -513,6 +606,10 @@
       "types": "./dist/types/next/Alert.d.ts",
       "import": "./dist/next/Alert.js"
     },
+    "./next/AppShell": {
+      "types": "./dist/types/next/AppShell.d.ts",
+      "import": "./dist/next/AppShell.js"
+    },
     "./next/Avatar": {
       "types": "./dist/types/next/Avatar.d.ts",
       "import": "./dist/next/Avatar.js"
@@ -520,6 +617,14 @@
     "./next/Badge": {
       "types": "./dist/types/next/Badge.d.ts",
       "import": "./dist/next/Badge.js"
+    },
+    "./next/BarChart": {
+      "types": "./dist/types/next/BarChart.d.ts",
+      "import": "./dist/next/BarChart.js"
+    },
+    "./next/BreadCrumbPageHeader": {
+      "types": "./dist/types/next/BreadCrumbPageHeader.d.ts",
+      "import": "./dist/next/BreadCrumbPageHeader.js"
     },
     "./next/Breadcrumbs": {
       "types": "./dist/types/next/Breadcrumbs.d.ts",
@@ -557,17 +662,21 @@
       "types": "./dist/types/next/colorSchemes.d.ts",
       "import": "./dist/next/colorSchemes.js"
     },
-    "./next/CommandPalette": {
-      "types": "./dist/types/next/CommandPalette.d.ts",
-      "import": "./dist/next/CommandPalette.js"
-    },
     "./next/ComboBox": {
       "types": "./dist/types/next/ComboBox.d.ts",
       "import": "./dist/next/ComboBox.js"
     },
+    "./next/CommandPalette": {
+      "types": "./dist/types/next/CommandPalette.d.ts",
+      "import": "./dist/next/CommandPalette.js"
+    },
     "./next/DataTable": {
       "types": "./dist/types/next/DataTable.d.ts",
       "import": "./dist/next/DataTable.js"
+    },
+    "./next/DatePicker": {
+      "types": "./dist/types/next/DatePicker.d.ts",
+      "import": "./dist/next/DatePicker.js"
     },
     "./next/DateRangePicker": {
       "types": "./dist/types/next/DateRangePicker.d.ts",
@@ -581,17 +690,25 @@
       "types": "./dist/types/next/Divider.d.ts",
       "import": "./dist/next/Divider.js"
     },
-    "./next/Dropdown": {
-      "types": "./dist/types/next/Dropdown.d.ts",
-      "import": "./dist/next/Dropdown.js"
+    "./next/DonutChart": {
+      "types": "./dist/types/next/DonutChart.d.ts",
+      "import": "./dist/next/DonutChart.js"
     },
     "./next/Drawer": {
       "types": "./dist/types/next/Drawer.d.ts",
       "import": "./dist/next/Drawer.js"
     },
+    "./next/Dropdown": {
+      "types": "./dist/types/next/Dropdown.d.ts",
+      "import": "./dist/next/Dropdown.js"
+    },
     "./next/EmptyState": {
       "types": "./dist/types/next/EmptyState.d.ts",
       "import": "./dist/next/EmptyState.js"
+    },
+    "./next/FieldSet": {
+      "types": "./dist/types/next/FieldSet.d.ts",
+      "import": "./dist/next/FieldSet.js"
     },
     "./next/FileUpload": {
       "types": "./dist/types/next/FileUpload.d.ts",
@@ -601,25 +718,41 @@
       "types": "./dist/types/next/Footer.d.ts",
       "import": "./dist/next/Footer.js"
     },
-    "./next/FormGroup": {
-      "types": "./dist/types/next/FormGroup.d.ts",
-      "import": "./dist/next/FormGroup.js"
-    },
     "./next/FormField": {
       "types": "./dist/types/next/FormField.d.ts",
       "import": "./dist/next/FormField.js"
+    },
+    "./next/FormGroup": {
+      "types": "./dist/types/next/FormGroup.d.ts",
+      "import": "./dist/next/FormGroup.js"
     },
     "./next/globals": {
       "types": "./dist/types/next/globals.d.ts",
       "import": "./dist/next/globals.js"
     },
+    "./next/globals.css": {
+      "style": "./dist/next/globals.css",
+      "default": "./dist/next/globals.css"
+    },
     "./next/IconButton": {
       "types": "./dist/types/next/IconButton.d.ts",
       "import": "./dist/next/IconButton.js"
     },
+    "./next/InputGroup": {
+      "types": "./dist/types/next/InputGroup.d.ts",
+      "import": "./dist/next/InputGroup.js"
+    },
     "./next/Layout": {
       "types": "./dist/types/next/Layout.d.ts",
       "import": "./dist/next/Layout.js"
+    },
+    "./next/Legend": {
+      "types": "./dist/types/next/Legend.d.ts",
+      "import": "./dist/next/Legend.js"
+    },
+    "./next/LineChart": {
+      "types": "./dist/types/next/LineChart.d.ts",
+      "import": "./dist/next/LineChart.js"
     },
     "./next/MarkdownRenderer": {
       "types": "./dist/types/next/MarkdownRenderer.d.ts",
@@ -641,6 +774,10 @@
       "types": "./dist/types/next/Modal.d.ts",
       "import": "./dist/next/Modal.js"
     },
+    "./next/MultiSelect": {
+      "types": "./dist/types/next/MultiSelect.d.ts",
+      "import": "./dist/next/MultiSelect.js"
+    },
     "./next/NavBar": {
       "types": "./dist/types/next/NavBar.d.ts",
       "import": "./dist/next/NavBar.js"
@@ -649,6 +786,14 @@
       "types": "./dist/types/next/NotificationCenter.d.ts",
       "import": "./dist/next/NotificationCenter.js"
     },
+    "./next/NumberInput": {
+      "types": "./dist/types/next/NumberInput.d.ts",
+      "import": "./dist/next/NumberInput.js"
+    },
+    "./next/PageHeader": {
+      "types": "./dist/types/next/PageHeader.d.ts",
+      "import": "./dist/next/PageHeader.js"
+    },
     "./next/Pager": {
       "types": "./dist/types/next/Pager.d.ts",
       "import": "./dist/next/Pager.js"
@@ -656,6 +801,10 @@
     "./next/PopOver": {
       "types": "./dist/types/next/PopOver.d.ts",
       "import": "./dist/next/PopOver.js"
+    },
+    "./next/Portal": {
+      "types": "./dist/types/next/Portal.d.ts",
+      "import": "./dist/next/Portal.js"
     },
     "./next/ProgressBar": {
       "types": "./dist/types/next/ProgressBar.d.ts",
@@ -681,6 +830,14 @@
       "types": "./dist/types/next/ScrollToTop.d.ts",
       "import": "./dist/next/ScrollToTop.js"
     },
+    "./next/SearchInput": {
+      "types": "./dist/types/next/SearchInput.d.ts",
+      "import": "./dist/next/SearchInput.js"
+    },
+    "./next/SegmentedControl": {
+      "types": "./dist/types/next/SegmentedControl.d.ts",
+      "import": "./dist/next/SegmentedControl.js"
+    },
     "./next/Select": {
       "types": "./dist/types/next/Select.d.ts",
       "import": "./dist/next/Select.js"
@@ -697,9 +854,17 @@
       "types": "./dist/types/next/Slider.d.ts",
       "import": "./dist/next/Slider.js"
     },
+    "./next/Sparkline": {
+      "types": "./dist/types/next/Sparkline.d.ts",
+      "import": "./dist/next/Sparkline.js"
+    },
     "./next/Spinner": {
       "types": "./dist/types/next/Spinner.d.ts",
       "import": "./dist/next/Spinner.js"
+    },
+    "./next/SplitPane": {
+      "types": "./dist/types/next/SplitPane.d.ts",
+      "import": "./dist/next/SplitPane.js"
     },
     "./next/Stepper": {
       "types": "./dist/types/next/Stepper.d.ts",
@@ -737,13 +902,17 @@
       "types": "./dist/types/next/Timeline.d.ts",
       "import": "./dist/next/Timeline.js"
     },
-    "./next/Toggle": {
-      "types": "./dist/types/next/Toggle.d.ts",
-      "import": "./dist/next/Toggle.js"
+    "./next/TimePicker": {
+      "types": "./dist/types/next/TimePicker.d.ts",
+      "import": "./dist/next/TimePicker.js"
     },
     "./next/ToastProvider": {
       "types": "./dist/types/next/ToastProvider.d.ts",
       "import": "./dist/next/ToastProvider.js"
+    },
+    "./next/Toggle": {
+      "types": "./dist/types/next/Toggle.d.ts",
+      "import": "./dist/next/Toggle.js"
     },
     "./next/Toolbar": {
       "types": "./dist/types/next/Toolbar.d.ts",
@@ -753,9 +922,21 @@
       "types": "./dist/types/next/Tooltip.d.ts",
       "import": "./dist/next/Tooltip.js"
     },
+    "./next/TreeView": {
+      "types": "./dist/types/next/TreeView.d.ts",
+      "import": "./dist/next/TreeView.js"
+    },
+    "./next/types": {
+      "types": "./dist/types/public.types.d.ts",
+      "default": "./dist/types/public.types.d.ts"
+    },
     "./next/Typography": {
       "types": "./dist/types/next/Typography.d.ts",
       "import": "./dist/next/Typography.js"
+    },
+    "./next/ValidationSummary": {
+      "types": "./dist/types/next/ValidationSummary.d.ts",
+      "import": "./dist/next/ValidationSummary.js"
     }
   },
   "overrides": {

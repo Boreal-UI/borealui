@@ -217,16 +217,13 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
       }}
     >
       {enableThemeScript ? (
-        <script
-          dangerouslySetInnerHTML={{
-            __html: getThemeInitializationScript({
-              customSchemes: parsedCustomSchemes,
-              initialSchemeName,
-              useOnlyCustomSchemes,
-            }),
-          }}
-          suppressHydrationWarning
-        />
+        <script suppressHydrationWarning>
+          {getThemeInitializationScript({
+            customSchemes: parsedCustomSchemes,
+            initialSchemeName,
+            useOnlyCustomSchemes,
+          })}
+        </script>
       ) : null}
       {children}
     </ThemeContext.Provider>

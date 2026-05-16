@@ -77,6 +77,22 @@ const renderMenu = (
 describe("BaseMenu", () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    Object.defineProperty(window, "matchMedia", {
+      configurable: true,
+      writable: true,
+      value: jest.fn().mockImplementation((query: string) => ({
+        matches: query.includes("479.98px")
+          ? window.innerWidth <= 479.98
+          : false,
+        media: query,
+        onchange: null,
+        addListener: jest.fn(),
+        removeListener: jest.fn(),
+        addEventListener: jest.fn(),
+        removeEventListener: jest.fn(),
+        dispatchEvent: jest.fn(),
+      })),
+    });
     Object.defineProperty(window, "innerWidth", {
       configurable: true,
       writable: true,
@@ -369,6 +385,50 @@ describe("BaseMenu", () => {
 
     fireEvent.keyDown(screen.getByTestId("menu"), { key: "ArrowLeft" });
     expect(create).toHaveFocus();
+  });
+
+  it("does not open nested submenus from pointer hover on stacked mobile layouts", () => {
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 390,
+    });
+
+    renderMenu({
+      items: [
+        {
+          label: "Settings",
+          "data-testid": "menu-settings",
+          items: [
+            {
+              label: "Advanced",
+              "data-testid": "menu-advanced",
+              items: [
+                {
+                  label: "API access",
+                  "data-testid": "menu-api-access",
+                  onClick: jest.fn(),
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    });
+
+    fireEvent.contextMenu(screen.getByTestId("menu-target"));
+
+    fireEvent.pointerOver(screen.getByTestId("menu-settings"));
+    expect(screen.queryByTestId("menu-advanced")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId("menu-settings"));
+    expect(screen.getByTestId("menu-advanced")).toBeInTheDocument();
+
+    fireEvent.pointerOver(screen.getByTestId("menu-advanced"));
+    expect(screen.queryByTestId("menu-api-access")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId("menu-advanced"));
+    expect(screen.getByTestId("menu-api-access")).toBeInTheDocument();
   });
 
   it("closes on Escape and outside clicks", () => {

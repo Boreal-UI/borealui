@@ -9,6 +9,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const mockLinks = [
   { label: "Dashboard", href: "/Dashboard", icon: <FaBook /> },
@@ -100,3 +108,27 @@ export const ShadowVariants = () => (
     ))}
   </StoryGrid>
 );
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: Sidebar, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: Sidebar, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: Sidebar, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: Sidebar, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: Sidebar, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: Sidebar, args }),
+};

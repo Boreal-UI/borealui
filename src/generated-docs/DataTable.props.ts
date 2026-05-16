@@ -36,6 +36,22 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "category": "aria"
     },
     {
+      "name": "bulkActions",
+      "type": "((selectedKeys: Array<string | number>, selectedRows: T[]) => ReactNode)",
+      "description": "Optional actions shown only when one or more rows are selected.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
+      "name": "bulkToolbarClassName",
+      "type": "string",
+      "description": "Optional class name for the bulk action toolbar.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "caption",
       "type": "string",
       "description": "Optional visible or screen-reader-only caption text for the table. A table caption is the preferred built-in table label.",
@@ -69,10 +85,78 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "columnMenuClassName",
+      "type": "string",
+      "description": "Optional class name for the column visibility menu.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "columnOrder",
+      "type": "(keyof T)[]",
+      "description": "Controlled column order.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "columnPinning",
+      "type": "boolean",
+      "description": "Enables column pin/unpin controls.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
+      "name": "columnReorder",
+      "type": "boolean",
+      "description": "Enables keyboard/button column reordering controls in each header.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
+      "name": "columnResize",
+      "type": "boolean",
+      "description": "Enables column resizing controls.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
       "name": "columns",
       "type": "Column<T>[]",
       "description": "Array of column definitions.",
       "required": true,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "columnVisibility",
+      "type": "boolean",
+      "description": "Enables the column visibility menu.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
+      "name": "columnWidths",
+      "type": "Partial<Record<keyof T, string>>",
+      "description": "Controlled column widths keyed by column key.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "currentPage",
+      "type": "number",
+      "description": "Controlled current page, 1-indexed.",
+      "required": false,
       "inherited": false,
       "category": "props"
     },
@@ -93,12 +177,56 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "category": "testing"
     },
     {
+      "name": "defaultColumnOrder",
+      "type": "(keyof T)[]",
+      "description": "Initial column order for uncontrolled usage.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "defaultColumnWidths",
+      "type": "Partial<Record<keyof T, string>>",
+      "description": "Initial column widths for uncontrolled usage.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "{}"
+    },
+    {
+      "name": "defaultExpandedRowKeys",
+      "type": "(string | number)[]",
+      "description": "Initial expanded row keys for uncontrolled usage.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "[]"
+    },
+    {
       "name": "defaultFilterValue",
       "type": "string",
       "description": "Initial filter query for uncontrolled filtering.",
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "defaultPage",
+      "type": "number",
+      "description": "Initial page for uncontrolled pagination.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "1"
+    },
+    {
+      "name": "defaultPinnedColumnKeys",
+      "type": "(keyof T)[]",
+      "description": "Initial pinned column keys for uncontrolled usage.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "[]"
     },
     {
       "name": "defaultSelectedRowKeys",
@@ -127,6 +255,14 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"asc\""
     },
     {
+      "name": "defaultVisibleColumnKeys",
+      "type": "(keyof T)[]",
+      "description": "Initial visible column keys for uncontrolled column visibility.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "emptyMessage",
       "type": "string",
       "description": "Text shown when no rows are available.",
@@ -134,6 +270,14 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"No data available\""
+    },
+    {
+      "name": "expandedRowKeys",
+      "type": "(string | number)[]",
+      "description": "Controlled expanded row keys.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "filterable",
@@ -237,6 +381,15 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "defaultValue": "true"
     },
     {
+      "name": "itemsPerPage",
+      "type": "number",
+      "description": "Rows displayed on each page.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "10"
+    },
+    {
       "name": "loading",
       "type": "boolean",
       "description": "Whether the table is currently loading data.",
@@ -255,9 +408,65 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"Loading data\""
     },
     {
+      "name": "onCellEdit",
+      "type": "((value: unknown, meta: DataTableCellEditMeta<T>) => void)",
+      "description": "Callback fired when an editable cell commits a value.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
+      "name": "onColumnOrderChange",
+      "type": "((keys: Array<keyof T>) => void)",
+      "description": "Callback fired when column order changes.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
+      "name": "onColumnVisibilityChange",
+      "type": "((keys: Array<keyof T>) => void)",
+      "description": "Callback fired when visible columns change.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
+      "name": "onColumnWidthsChange",
+      "type": "((widths: Partial<Record<keyof T, string>>) => void)",
+      "description": "Callback fired when column widths change.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
+      "name": "onExpandedRowsChange",
+      "type": "((keys: Array<string | number>, rows: T[]) => void)",
+      "description": "Callback fired when expanded rows change.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
       "name": "onFilterChange",
       "type": "((value: string) => void)",
       "description": "Callback fired when the filter query changes.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
+      "name": "onPageChange",
+      "type": "((page: number, meta: DataTablePageChangeMeta) => void)",
+      "description": "Callback fired when the page changes.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
+      "name": "onPinnedColumnKeysChange",
+      "type": "((keys: Array<keyof T>) => void)",
+      "description": "Callback fired when pinned columns change.",
       "required": false,
       "inherited": false,
       "category": "events"
@@ -294,6 +503,39 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "configured default outline setting (fallback: false)"
+    },
+    {
+      "name": "pagination",
+      "type": "boolean",
+      "description": "Enables built-in client-side pagination controls.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
+      "name": "paginationClassName",
+      "type": "string",
+      "description": "Optional class name for the pagination footer.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "pinnedColumnKeys",
+      "type": "(keyof T)[]",
+      "description": "Controlled pinned column keys.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "renderExpandedRow",
+      "type": "((row: T, index: number) => ReactNode)",
+      "description": "Render expanded content for a row. Enables row expansion controls.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
     },
     {
       "name": "rounding",
@@ -353,6 +595,15 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "serverPagination",
+      "type": "boolean",
+      "description": "Enables server-side pagination. The table will not slice data locally.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "serverSort",
@@ -451,6 +702,58 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "name": "toolbarTitle",
       "type": "ReactNode",
       "description": "Optional toolbar title shown above the table.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "totalItems",
+      "type": "number",
+      "description": "Total rows for server-side pagination. Falls back to the processed row count.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "virtualized",
+      "type": "boolean",
+      "description": "Enables row virtualization for large client-side data sets.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
+      "name": "virtualOverscan",
+      "type": "number",
+      "description": "Extra rows rendered before and after the visible virtualized range.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "4"
+    },
+    {
+      "name": "virtualRowHeight",
+      "type": "number",
+      "description": "Estimated/fixed row height used by the virtualized renderer.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "48"
+    },
+    {
+      "name": "virtualViewportHeight",
+      "type": "number",
+      "description": "Height of the virtualized viewport.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "360"
+    },
+    {
+      "name": "visibleColumnKeys",
+      "type": "(keyof T)[]",
+      "description": "Controlled list of visible column keys.",
       "required": false,
       "inherited": false,
       "category": "props"

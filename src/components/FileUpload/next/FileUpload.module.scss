@@ -1,273 +1,275 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/_animations";
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.fileUpload {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: var(--spacing-sm);
-  padding: var(--spacing-md);
-  text-align: center;
-  background-color: var(--background-color-light);
-  border: 2px dashed var(--background-color-darker);
-  transition: var(--transition-default);
-  max-width: 300px;
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-
-  @include bp.down(md) {
-    padding: var(--spacing-md);
-    max-width: 100%;
-  }
-
-  @include bp.down(xs) {
-    padding: var(--spacing-sm);
-  }
-
-  @include bp.up(lg) {
-    max-width: 420px;
-  }
-
-  &:hover {
-    background-color: var(--background-color-lighter);
-  }
-
-  &:focus-visible,
-  &:focus-within {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-  }
-
-  &.dragOver,
-  &[data-drag-active="true"] {
-    background-color: var(--background-color-lighter);
-    border-color: var(--focus-outline-color, var(--primary-color));
-  }
-
-  &.disabled,
-  &[aria-disabled="true"] {
-    background-color: var(--background-color-light);
-    border-color: var(--background-color-darker);
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
-  }
-
-  .uploadActions {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .uploadControls {
+  .fileUpload {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-sm);
+    justify-content: center;
     align-items: center;
-    width: 100%;
-
-    @include bp.up(lg) {
-      gap: var(--spacing-md);
-    }
-  }
-
-  .uploadProgress {
-    width: 100%;
-    margin-top: var(--spacing-sm);
-  }
-
-  .uploadButton {
-    align-self: center;
-  }
-
-  .removeButton {
-    border: none !important;
-    box-shadow: none !important;
-  }
-
-  .hiddenInput {
-    display: none;
-  }
-
-  .fileList {
-    margin: var(--spacing-sm) 0;
-    padding: 0;
-    list-style: none;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md);
+    text-align: center;
+    background-color: var(--background-color-light);
+    border: 2px dashed var(--background-color-darker);
+    transition: var(--transition-default);
+    max-width: 300px;
     font-family: var(--font-family-body);
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-body);
     line-height: var(--line-height-body);
     letter-spacing: var(--letter-spacing-body);
-    color: var(--text-color-secondary);
+
+    @include bp.down(md) {
+      padding: var(--spacing-md);
+      max-width: 100%;
+    }
 
     @include bp.down(xs) {
-      font-size: var(--font-size-label);
+      padding: var(--spacing-sm);
     }
 
     @include bp.up(lg) {
-      font-size: var(--font-size-body);
+      max-width: 420px;
     }
-  }
 
-  .fileListItem {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--spacing-sm);
-    padding: 2px 0;
-    font-family: inherit;
-    font-size: inherit;
-    text-overflow: ellipsis;
+    &:hover {
+      background-color: var(--background-color-lighter);
+    }
 
-    > :first-child {
-      flex: 1 1 auto;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    &:focus-visible,
+    &:focus-within {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+    }
 
-      @include bp.down(xs) {
-        white-space: normal;
+    &.dragOver,
+    &[data-drag-active="true"] {
+      background-color: var(--background-color-lighter);
+      border-color: var(--focus-outline-color, var(--primary-color));
+    }
+
+    &.disabled,
+    &[aria-disabled="true"] {
+      background-color: var(--background-color-light);
+      border-color: var(--background-color-darker);
+      cursor: not-allowed;
+      opacity: 0.6;
+
+      &:hover {
+        background-color: var(--background-color-light);
+        border-color: var(--background-color-darker);
       }
     }
 
-    @include bp.down(xs) {
-      gap: var(--spacing-xxs);
+    .uploadActions {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-  }
 
-  .rejectedFiles {
-    margin-top: var(--spacing-sm);
-    color: var(--error-color);
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
+    .uploadControls {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-sm);
+      align-items: center;
+      width: 100%;
 
-    @include bp.down(xs) {
+      @include bp.up(lg) {
+        gap: var(--spacing-md);
+      }
+    }
+
+    .uploadProgress {
+      width: 100%;
+      margin-top: var(--spacing-sm);
+    }
+
+    .uploadButton {
+      align-self: center;
+    }
+
+    .removeButton {
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    .hiddenInput {
+      display: none;
+    }
+
+    .fileList {
+      margin: var(--spacing-sm) 0;
+      padding: 0;
+      list-style: none;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-sm);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+      color: var(--text-color-secondary);
+
+      @include bp.down(xs) {
+        font-size: var(--font-size-label);
+      }
+
+      @include bp.up(lg) {
+        font-size: var(--font-size-body);
+      }
+    }
+
+    .fileListItem {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--spacing-sm);
+      padding: 2px 0;
+      font-family: inherit;
+      font-size: inherit;
+      text-overflow: ellipsis;
+
+      > :first-child {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        @include bp.down(xs) {
+          white-space: normal;
+        }
+      }
+
+      @include bp.down(xs) {
+        gap: var(--spacing-xxs);
+      }
+    }
+
+    .rejectedFiles {
+      margin-top: var(--spacing-sm);
+      color: var(--error-color);
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-sm);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+
+      @include bp.down(xs) {
+        font-size: var(--font-size-label);
+      }
+    }
+
+    .rejectedLabel {
+      font-family: var(--font-family-ui);
       font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
+      margin-bottom: var(--spacing-xs);
+    }
+
+    .rejectedList {
+      list-style: disc;
+      padding-left: var(--spacing-md);
+    }
+
+    .rejectedItem {
+      margin-bottom: 2px;
     }
   }
 
-  .rejectedLabel {
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
-    margin-bottom: var(--spacing-xs);
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
+    }
   }
 
-  .rejectedList {
-    list-style: disc;
-    padding-left: var(--spacing-md);
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
+    }
   }
 
-  .rejectedItem {
-    margin-bottom: 2px;
-  }
-}
+  @each $theme-name, $vals in theme.$themes {
+    .#{$theme-name} {
+      --file-upload-glass-bg: #{map.get($vals, glass-bg)};
+      --file-upload-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --file-upload-glass-border: #{map.get($vals, glass-border)};
+      --file-upload-glass-text: #{map.get($vals, text)};
+    }
 
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@each $theme-name, $vals in theme.$themes {
-  .#{$theme-name} {
-    --file-upload-glass-bg: #{map.get($vals, glass-bg)};
-    --file-upload-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --file-upload-glass-border: #{map.get($vals, glass-border)};
-    --file-upload-glass-text: #{map.get($vals, text)};
+    .#{$theme-name}:hover {
+      border-color: map.get($vals, border);
+    }
   }
 
-  .#{$theme-name}:hover {
-    border-color: map.get($vals, border);
-  }
-}
+  @each $state-name, $vals in theme.$states {
+    .#{$state-name} {
+      --file-upload-glass-bg: #{map.get($vals, glass-bg)};
+      --file-upload-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --file-upload-glass-border: #{map.get($vals, glass-border)};
+      --file-upload-glass-text: #{map.get($vals, text)};
+      border-color: map.get($vals, border);
+    }
 
-@each $state-name, $vals in theme.$states {
-  .#{$state-name} {
-    --file-upload-glass-bg: #{map.get($vals, glass-bg)};
-    --file-upload-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --file-upload-glass-border: #{map.get($vals, glass-border)};
-    --file-upload-glass-text: #{map.get($vals, text)};
-    border-color: map.get($vals, border);
-  }
-
-  .#{$state-name}:hover {
-    border-color: map.get($vals, hover);
-  }
-}
-
-.glass {
-  @include mixins.glass-surface(
-    var(--file-upload-glass-bg, rgba(255, 255, 255, 0.16)),
-    var(--file-upload-glass-border, rgba(255, 255, 255, 0.34)),
-    16px
-  );
-  color: var(--file-upload-glass-text, var(--text-color-primary));
-}
-
-.glass:hover,
-.glass.dragOver,
-.glass[data-drag-active="true"] {
-  background: var(--file-upload-glass-hover-bg, rgba(255, 255, 255, 0.24));
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fileUpload,
-  .fileUpload * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .fileUpload:hover {
-    background-color: var(--background-color-light);
-  }
-}
-
-@media (forced-colors: active) {
-  .fileUpload.glass {
-    background: Canvas;
-    color: CanvasText;
-    border-color: ButtonText;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    .#{$state-name}:hover {
+      border-color: map.get($vals, hover);
+    }
   }
 
-  .fileUpload {
-    background: Canvas;
-    color: CanvasText;
-    border: 1px dashed ButtonText;
-    outline-color: Highlight;
+  .glass {
+    @include mixins.glass-surface(
+      var(--file-upload-glass-bg, rgba(255, 255, 255, 0.16)),
+      var(--file-upload-glass-border, rgba(255, 255, 255, 0.34)),
+      16px
+    );
+    color: var(--file-upload-glass-text, var(--text-color-primary));
   }
 
-  .fileUpload:focus-visible,
-  .fileUpload:focus-within {
-    outline: 2px solid Highlight;
-    outline-offset: 3px;
+  .glass:hover,
+  .glass.dragOver,
+  .glass[data-drag-active="true"] {
+    background: var(--file-upload-glass-hover-bg, rgba(255, 255, 255, 0.24));
   }
-}
+
+  @media (prefers-reduced-motion: reduce) {
+    .fileUpload,
+    .fileUpload * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .fileUpload:hover {
+      background-color: var(--background-color-light);
+    }
+  }
+
+  @media (forced-colors: active) {
+    .fileUpload.glass {
+      background: Canvas;
+      color: CanvasText;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+
+    .fileUpload {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px dashed ButtonText;
+      outline-color: Highlight;
+    }
+
+    .fileUpload:focus-visible,
+    .fileUpload:focus-within {
+      outline: 2px solid Highlight;
+      outline-offset: 3px;
+    }
+  }
 }

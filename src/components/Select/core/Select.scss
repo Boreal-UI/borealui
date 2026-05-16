@@ -1,6 +1,5 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/_animations";
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
@@ -23,13 +22,6 @@
 
     &:hover {
       box-shadow: theme.$box-shadow-heavy;
-    }
-
-    &.disabled {
-      opacity: 0.6;
-      pointer-events: none;
-      cursor: not-allowed;
-      background-color: var(--disabled-color) !important;
     }
 
     &:focus-within {
@@ -107,6 +99,16 @@
 
     &.select_glass.select_outline {
       background: var(--select-glass-bg, rgba(255, 255, 255, 0.14));
+    }
+
+    &.select_disabled,
+    &.select:disabled {
+      background-color: var(--disabled-color);
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: var(--disabled-color);
+      }
     }
   }
 
@@ -226,6 +228,31 @@
       flex: 1;
       min-width: 0;
     }
+  }
+
+  .select_wrapper.select_disabled,
+  .select_wrapper:has(.select:disabled) {
+    background-color: var(--disabled-color);
+    cursor: not-allowed;
+    opacity: 0.65;
+
+    &:hover {
+      background-color: var(--disabled-color);
+      box-shadow: none;
+    }
+
+    .select,
+    .select_icon {
+      cursor: not-allowed;
+    }
+
+    .select {
+      pointer-events: none;
+    }
+  }
+
+  .select:disabled {
+    cursor: not-allowed;
   }
 
   @media (prefers-reduced-motion: reduce) {

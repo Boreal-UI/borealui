@@ -1,0 +1,275 @@
+@use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
+@use "../../../styles/_mixins" as mixins;
+@use "sass:map";
+@use "../../../styles/_animations";
+
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.components {
+  .breadCrumbPageHeader_container {
+    display: inline-flex;
+    gap: var(--spacing-xs);
+    align-items: flex-start;
+    max-width: 100%;
+    font-family: var(--font-family-body);
+  }
+
+  .breadCrumbPageHeader_label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-ui);
+    line-height: var(--line-height-label);
+    color: var(--text-color-primary);
+  }
+
+  .breadCrumbPageHeader_labelTop {
+    flex-direction: column;
+  }
+
+  .breadCrumbPageHeader_labelBottom {
+    flex-direction: column-reverse;
+  }
+
+  .breadCrumbPageHeader_labelLeft {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .breadCrumbPageHeader_labelRight {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
+
+  .breadCrumbPageHeader {
+    --breadCrumbPageHeader-glass-bg: rgba(255, 255, 255, 0.18);
+    --breadCrumbPageHeader-glass-hover-bg: rgba(255, 255, 255, 0.24);
+    --breadCrumbPageHeader-glass-border: rgba(255, 255, 255, 0.28);
+    --breadCrumbPageHeader-glass-text: var(--text-color-primary);
+
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    min-width: 0;
+    max-width: 100%;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-md);
+    background: var(--background-color);
+    color: var(--text-color-primary);
+    box-shadow: var(--box-shadow-sm);
+    padding: var(--spacing-sm);
+    transition: var(--transition-default);
+  }
+
+  .breadCrumbPageHeader_content {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .breadCrumbPageHeader_loader {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid currentcolor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    opacity: 0.72;
+    animation: spin 700ms linear infinite;
+  }
+
+  @each $themeName, $vals in theme.$themes {
+    .breadCrumbPageHeader_#{$themeName} {
+      --breadCrumbPageHeader-glass-bg: #{map.get($vals, glass-bg)};
+      --breadCrumbPageHeader-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --breadCrumbPageHeader-glass-border: #{map.get($vals, glass-border)};
+      --breadCrumbPageHeader-glass-text: #{map.get($vals, text)};
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+      border-color: map.get($vals, border);
+
+      &:hover {
+        background-color: if(
+          map.has-key($vals, hover),
+          map.get($vals, hover),
+          map.get($vals, bg)
+        );
+      }
+
+      &.breadCrumbPageHeader_outline {
+        background-color: transparent;
+        color: map.get($vals, text);
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
+    }
+  }
+
+  @each $state, $vals in theme.$states {
+    .breadCrumbPageHeader_#{$state} {
+      --breadCrumbPageHeader-glass-bg: #{map.get($vals, glass-bg)};
+      --breadCrumbPageHeader-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --breadCrumbPageHeader-glass-border: #{map.get($vals, glass-border)};
+      --breadCrumbPageHeader-glass-text: #{map.get($vals, text)};
+      border-width: 2px;
+      border-color: map.get($vals, border);
+      color: map.get($vals, text);
+    }
+  }
+
+  .breadCrumbPageHeader_clear {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .breadCrumbPageHeader_glass {
+    @include mixins.glass-surface(
+      var(--breadCrumbPageHeader-glass-bg),
+      var(--breadCrumbPageHeader-glass-border),
+      16px
+    );
+
+    color: var(--breadCrumbPageHeader-glass-text);
+  }
+
+  .breadCrumbPageHeader_glass:hover {
+    background: var(--breadCrumbPageHeader-glass-hover-bg);
+  }
+
+  .breadCrumbPageHeader_glass.breadCrumbPageHeader_outline {
+    border-color: var(--breadCrumbPageHeader-glass-border);
+  }
+
+  .breadCrumbPageHeader_disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--disabled-color);
+    border-color: var(--disabled-color);
+
+    &:hover {
+      background-color: var(--disabled-color);
+    }
+  }
+
+  .breadCrumbPageHeader_loading {
+    cursor: progress;
+  }
+
+  @each $key, $value in theme.$rounding {
+    .breadCrumbPageHeader_round-#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .breadCrumbPageHeader_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @include bp.down(xs) {
+    .breadCrumbPageHeader_container,
+    .breadCrumbPageHeader {
+      width: 100%;
+    }
+
+    .breadCrumbPageHeader_labelLeft,
+    .breadCrumbPageHeader_labelRight {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .breadCrumbPageHeader,
+    .breadCrumbPageHeader * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .breadCrumbPageHeader {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+      box-shadow: none;
+    }
+
+    .breadCrumbPageHeader_glass {
+      background: Canvas;
+      border-color: ButtonText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+}
+
+@layer boreal-ui.components {
+  .breadCrumbPageHeader {
+    display: grid;
+    width: 100%;
+    gap: var(--spacing-sm);
+  }
+
+  .breadCrumbPageHeader_breadcrumbList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    align-items: center;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+
+  .breadCrumbPageHeader_breadcrumbItem {
+    display: inline-flex;
+    gap: var(--spacing-xs);
+    align-items: center;
+  }
+
+  .breadCrumbPageHeader_breadcrumbLink {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .breadCrumbPageHeader_breadcrumbLink:focus-visible {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+  }
+
+  .breadCrumbPageHeader_current {
+    font-weight: var(--font-weight-ui);
+  }
+
+  .breadCrumbPageHeader_separator {
+    opacity: 0.64;
+  }
+
+  .breadCrumbPageHeader_main {
+    display: flex;
+    gap: var(--spacing-md);
+    align-items: flex-start;
+    justify-content: space-between;
+    min-width: 0;
+  }
+
+  .breadCrumbPageHeader_title {
+    margin: 0;
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-heading-md);
+    line-height: 1.15;
+  }
+
+  .breadCrumbPageHeader_subtitle {
+    margin: var(--spacing-xs) 0 0;
+    color: var(--text-color-secondary);
+  }
+
+  .breadCrumbPageHeader_actions {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+}

@@ -5,376 +5,383 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.avatar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  aspect-ratio: 1 / 1;
-  font-family: var(--font-family-ui);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  text-transform: uppercase;
-  color: var(--text-color-primary);
-  border: 2px solid transparent;
-  overflow: hidden;
-  transition: all var(--transition-default);
-  z-index: 0;
-
-  &_xs {
-    width: 36px;
-    height: 36px;
-    font-size: var(--font-size-caption);
-  }
-
-  &_small {
-    width: 42px;
-    height: 42px;
-    font-size: var(--font-size-caption);
-  }
-
-  &_medium {
-    width: 56px;
-    height: 56px;
-    font-size: var(--font-size-label);
-  }
-
-  &_large {
-    width: 72px;
-    height: 72px;
-    font-size: var(--font-size-body-sm);
-  }
-
-  &_xl {
-    width: 84px;
-    height: 84px;
-    font-size: var(--font-size-body);
-  }
-
-  &_circle {
-    border-radius: 50%;
-  }
-
-  &_rounded {
-    border-radius: var(--border-radius-sm);
-  }
-
-  &_square {
-    border-radius: 0;
-  }
-
-  &_outline {
-    border-style: solid;
-  }
-
-  &_glass {
-    @include mixins.glass-surface(
-      var(--avatar-glass-bg, var(--glass-background)),
-      var(--avatar-glass-border, var(--glass-border-color)),
-      var(--glass-blur)
-    );
-
-    color: var(--avatar-glass-text, currentcolor);
-    isolation: isolate;
-
-    &.avatar_clickable:hover {
-      background: var(--avatar-glass-hover-bg, var(--glass-background-strong));
-    }
-
-    &.avatar_outline {
-      border-color: var(--avatar-glass-border, var(--glass-border-color));
-
-      &.avatar_clickable:hover {
-        background: var(--avatar-glass-hover-bg, var(--glass-background));
-      }
-    }
-  }
-
-  @each $key, $value in theme.$shadow {
-    &_shadow-#{$key} {
-      box-shadow: $value;
-    }
-  }
-
-  .avatar_clickable {
-    cursor: pointer;
-
-    &:hover {
-      transform: translateY(-2px);
-    }
-
-    &:focus {
-      outline: 2px solid var(--focus-outline-color);
-      outline-offset: 2px;
-    }
-  }
-
-  &_clear {
-    background-color: transparent;
-
-    &.avatar_clickable:hover {
-      background-color: color.adjust(#000, $lightness: -10%);
-      transform: translateY(-2px);
-    }
-
-    &.avatar_clickable:focus {
-      outline: 2px solid var(--text-color-primary);
-      outline-offset: 1px;
-    }
-
-    &.avatar_outline {
-      color: var(--text-color-primary);
-      border-color: var(--text-color-primary);
-
-      &.avatar_clickable:hover {
-        background-color: transparent;
-        border-color: color.adjust(#000, $lightness: 10%);
-      }
-    }
-  }
-
-  @each $name, $props in theme.$themes {
-    &_#{$name} {
-      background-color: map.get($props, bg);
-      color: var(--text-color-primary);
-
-      --avatar-glass-bg: #{map.get($props, glass-bg)};
-      --avatar-glass-hover-bg: #{map.get($props, glass-hover)};
-      --avatar-glass-border: #{map.get($props, glass-border)};
-      --avatar-glass-text: #{map.get($props, text)};
-
-      &.avatar_clickable:hover {
-        background-color: map.get($props, hover);
-        transform: translateY(-2px);
-      }
-
-      &.avatar_clickable:focus {
-        outline: 2px solid map.get($props, border);
-        outline-offset: 2px;
-      }
-    }
-
-    &_#{$name}.avatar_glass {
-      background-color: transparent;
-      background: var(--avatar-glass-bg);
-      border: 1px solid var(--avatar-glass-border);
-      color: var(--avatar-glass-text);
-
-      &.avatar_clickable:hover {
-        background-color: transparent;
-        background: var(--avatar-glass-hover-bg);
-      }
-    }
-
-    &_#{$name}.avatar_outline {
-      background-color: transparent;
-      color: map.get($props, text);
-      border-color: map.get($props, border);
-
-      &.avatar_clickable:hover {
-        background-color: map.get($props, hover);
-        border-color: map.get($props, hover);
-        color: map.get($props, text-hover);
-      }
-    }
-
-    &_#{$name}.avatar_outline.avatar_glass {
-      @include mixins.glass-surface(
-        transparent,
-        var(--avatar-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--avatar-glass-text);
-    }
-  }
-
-  @each $name, $props in theme.$states {
-    &_#{$name} {
-      background-color: map.get($props, bg);
-      color: var(--text-color-primary);
-
-      --avatar-glass-bg: #{map.get($props, glass-bg)};
-      --avatar-glass-hover-bg: #{map.get($props, glass-hover)};
-      --avatar-glass-border: #{map.get($props, glass-border)};
-      --avatar-glass-text: #{map.get($props, text)};
-
-      &.avatar_clickable:hover {
-        background-color: map.get($props, hover);
-        transform: translateY(-2px);
-      }
-
-      &.avatar_clickable:focus {
-        outline: 2px solid map.get($props, border);
-        outline-offset: 2px;
-      }
-    }
-
-    &_#{$name}.avatar_glass {
-      background-color: transparent;
-      background: var(--avatar-glass-bg);
-      border: 1px solid var(--avatar-glass-border);
-      color: var(--avatar-glass-text);
-
-      &.avatar_clickable:hover {
-        background-color: transparent;
-        background: var(--avatar-glass-hover-bg);
-      }
-    }
-
-    &_#{$name}.avatar_outline {
-      background-color: transparent;
-      color: map.get($props, text);
-      border-color: map.get($props, border);
-
-      &.avatar_clickable:hover {
-        background-color: map.get($props, hover);
-        border-color: map.get($props, hover);
-        color: map.get($props, text-hover);
-      }
-    }
-
-    &_#{$name}.avatar_outline.avatar_glass {
-      @include mixins.glass-surface(
-        transparent,
-        var(--avatar-glass-border),
-        var(--glass-blur)
-      );
-
-      color: var(--avatar-glass-text);
-    }
-  }
-
-  &_disabled {
-    background-color: var(--disabled-color);
-    cursor: not-allowed;
-    pointer-events: none;
-    opacity: 0.6;
-  }
-
-  &_disabled.avatar_outline {
-    color: var(--disabled-color);
-    border-color: var(--disabled-color);
-  }
-
-  &_image {
-    object-fit: cover;
-    width: 100% !important;
-    height: 100% !important;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-  }
-
-  &_initials {
-    font-family: inherit;
-    font-size: inherit;
-    font-weight: inherit;
-    line-height: 1;
-    letter-spacing: inherit;
-    z-index: 1;
-    position: relative;
-  }
-
-  &_fallback_icon {
-    width: 70%;
-    height: 70%;
-    margin: auto;
-    display: block;
-    color: var(--text-color-primary);
-  }
-
-  &_status {
-    position: absolute;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
+  .avatar {
     display: flex;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
-    z-index: 2;
+    position: relative;
+    aspect-ratio: 1 / 1;
+    font-family: var(--font-family-ui);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    text-transform: uppercase;
+    color: var(--text-color-primary);
+    border: 2px solid transparent;
+    overflow: hidden;
+    transition: all var(--transition-default);
+    z-index: 0;
 
-    &_topLeft {
-      top: 12%;
-      left: 15%;
+    &_xs {
+      width: 36px;
+      height: 36px;
+      font-size: var(--font-size-caption);
     }
 
-    &_topRight {
-      top: 12%;
-      right: 15%;
+    &_small {
+      width: 42px;
+      height: 42px;
+      font-size: var(--font-size-caption);
     }
 
-    &_bottomLeft {
-      bottom: 12%;
-      left: 15%;
+    &_medium {
+      width: 56px;
+      height: 56px;
+      font-size: var(--font-size-label);
     }
 
-    &_bottomRight {
-      bottom: 12%;
-      right: 15%;
+    &_large {
+      width: 72px;
+      height: 72px;
+      font-size: var(--font-size-body-sm);
     }
 
-    &_icon_only {
-      background-color: transparent;
-      border: none;
-      font-size: 1em;
+    &_xl {
+      width: 84px;
+      height: 84px;
+      font-size: var(--font-size-body);
+    }
 
-      svg {
-        width: 1em;
-        height: 1em;
+    &_circle {
+      border-radius: 50%;
+    }
+
+    &_rounded {
+      border-radius: var(--border-radius-sm);
+    }
+
+    &_square {
+      border-radius: 0;
+    }
+
+    &_outline {
+      border-style: solid;
+    }
+
+    &_glass {
+      @include mixins.glass-surface(
+        var(--avatar-glass-bg, var(--glass-background)),
+        var(--avatar-glass-border, var(--glass-border-color)),
+        var(--glass-blur)
+      );
+
+      color: var(--avatar-glass-text, currentcolor);
+      isolation: isolate;
+
+      &.avatar_clickable:hover {
+        background: var(
+          --avatar-glass-hover-bg,
+          var(--glass-background-strong)
+        );
+      }
+
+      &.avatar_outline {
+        border-color: var(--avatar-glass-border, var(--glass-border-color));
+
+        &.avatar_clickable:hover {
+          background: var(--avatar-glass-hover-bg, var(--glass-background));
+        }
       }
     }
 
-    &_online {
-      background-color: var(--success-color);
-      border: 1px solid color.adjust(theme.$success-color, $lightness: 20%);
+    @each $key, $value in theme.$shadow {
+      &_shadow-#{$key} {
+        box-shadow: $value;
+      }
     }
 
-    &_away {
-      background-color: var(--warning-color);
-      border: 1px solid color.adjust(theme.$warning-color, $lightness: 20%);
+    .avatar_clickable {
+      cursor: pointer;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      &:focus {
+        outline: 2px solid var(--focus-outline-color);
+        outline-offset: 2px;
+      }
     }
 
-    &_offline {
+    &_clear {
+      background-color: transparent;
+
+      &.avatar_clickable:hover {
+        background-color: color.adjust(#000, $lightness: -10%);
+        transform: translateY(-2px);
+      }
+
+      &.avatar_clickable:focus {
+        outline: 2px solid var(--text-color-primary);
+        outline-offset: 1px;
+      }
+
+      &.avatar_outline {
+        color: var(--text-color-primary);
+        border-color: var(--text-color-primary);
+
+        &.avatar_clickable:hover {
+          background-color: transparent;
+          border-color: color.adjust(#000, $lightness: 10%);
+        }
+      }
+    }
+
+    @each $name, $props in theme.$themes {
+      &_#{$name} {
+        background-color: map.get($props, bg);
+        color: var(--text-color-primary);
+
+        --avatar-glass-bg: #{map.get($props, glass-bg)};
+        --avatar-glass-hover-bg: #{map.get($props, glass-hover)};
+        --avatar-glass-border: #{map.get($props, glass-border)};
+        --avatar-glass-text: #{map.get($props, text)};
+
+        &.avatar_clickable:hover {
+          background-color: map.get($props, hover);
+          transform: translateY(-2px);
+        }
+
+        &.avatar_clickable:focus {
+          outline: 2px solid map.get($props, border);
+          outline-offset: 2px;
+        }
+      }
+
+      &_#{$name}.avatar_glass {
+        background-color: transparent;
+        background: var(--avatar-glass-bg);
+        border: 1px solid var(--avatar-glass-border);
+        color: var(--avatar-glass-text);
+
+        &.avatar_clickable:hover {
+          background-color: transparent;
+          background: var(--avatar-glass-hover-bg);
+        }
+      }
+
+      &_#{$name}.avatar_outline {
+        background-color: transparent;
+        color: map.get($props, text);
+        border-color: map.get($props, border);
+
+        &.avatar_clickable:hover {
+          background-color: map.get($props, hover);
+          border-color: map.get($props, hover);
+          color: map.get($props, text-hover);
+        }
+      }
+
+      &_#{$name}.avatar_outline.avatar_glass {
+        @include mixins.glass-surface(
+          transparent,
+          var(--avatar-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--avatar-glass-text);
+      }
+    }
+
+    @each $name, $props in theme.$states {
+      &_#{$name} {
+        background-color: map.get($props, bg);
+        color: var(--text-color-primary);
+
+        --avatar-glass-bg: #{map.get($props, glass-bg)};
+        --avatar-glass-hover-bg: #{map.get($props, glass-hover)};
+        --avatar-glass-border: #{map.get($props, glass-border)};
+        --avatar-glass-text: #{map.get($props, text)};
+
+        &.avatar_clickable:hover {
+          background-color: map.get($props, hover);
+          transform: translateY(-2px);
+        }
+
+        &.avatar_clickable:focus {
+          outline: 2px solid map.get($props, border);
+          outline-offset: 2px;
+        }
+      }
+
+      &_#{$name}.avatar_glass {
+        background-color: transparent;
+        background: var(--avatar-glass-bg);
+        border: 1px solid var(--avatar-glass-border);
+        color: var(--avatar-glass-text);
+
+        &.avatar_clickable:hover {
+          background-color: transparent;
+          background: var(--avatar-glass-hover-bg);
+        }
+      }
+
+      &_#{$name}.avatar_outline {
+        background-color: transparent;
+        color: map.get($props, text);
+        border-color: map.get($props, border);
+
+        &.avatar_clickable:hover {
+          background-color: map.get($props, hover);
+          border-color: map.get($props, hover);
+          color: map.get($props, text-hover);
+        }
+      }
+
+      &_#{$name}.avatar_outline.avatar_glass {
+        @include mixins.glass-surface(
+          transparent,
+          var(--avatar-glass-border),
+          var(--glass-blur)
+        );
+
+        color: var(--avatar-glass-text);
+      }
+    }
+
+    &_disabled.avatar_outline {
+      color: var(--disabled-color);
+      border-color: var(--disabled-color);
+    }
+
+    &_image {
+      object-fit: cover;
+      width: 100% !important;
+      height: 100% !important;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+
+    &_initials {
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      line-height: 1;
+      letter-spacing: inherit;
+      z-index: 1;
+      position: relative;
+    }
+
+    &_fallback_icon {
+      width: 70%;
+      height: 70%;
+      margin: auto;
+      display: block;
+      color: var(--text-color-primary);
+    }
+
+    &_status {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 2;
+
+      &_topLeft {
+        top: 12%;
+        left: 15%;
+      }
+
+      &_topRight {
+        top: 12%;
+        right: 15%;
+      }
+
+      &_bottomLeft {
+        bottom: 12%;
+        left: 15%;
+      }
+
+      &_bottomRight {
+        bottom: 12%;
+        right: 15%;
+      }
+
+      &_icon_only {
+        background-color: transparent;
+        border: none;
+        font-size: 1em;
+
+        svg {
+          width: 1em;
+          height: 1em;
+        }
+      }
+
+      &_online {
+        background-color: var(--success-color);
+        border: 1px solid color.adjust(theme.$success-color, $lightness: 20%);
+      }
+
+      &_away {
+        background-color: var(--warning-color);
+        border: 1px solid color.adjust(theme.$warning-color, $lightness: 20%);
+      }
+
+      &_offline {
+        background-color: var(--disabled-color);
+        border: 1px solid color.adjust(theme.$disabled-color, $lightness: 20%);
+      }
+
+      &_busy {
+        background-color: var(--error-color);
+        border: 1px solid color.adjust(theme.$error-color, $lightness: 20%);
+      }
+    }
+
+    &_dot {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  .avatar_disabled,
+  .avatar:disabled {
+    background-color: var(--disabled-color);
+    cursor: not-allowed;
+    opacity: 0.6;
+
+    &:hover {
+      transform: none;
       background-color: var(--disabled-color);
-      border: 1px solid color.adjust(theme.$disabled-color, $lightness: 20%);
-    }
-
-    &_busy {
-      background-color: var(--error-color);
-      border: 1px solid color.adjust(theme.$error-color, $lightness: 20%);
     }
   }
 
-  &_dot {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .avatar {
-    transition: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .avatar {
-    border: 1px solid ButtonText;
-    outline-color: Highlight;
+  @media (prefers-reduced-motion: reduce) {
+    .avatar {
+      transition: none;
+    }
   }
 
-  .avatar_glass {
-    background: Canvas;
-    border: 1px solid ButtonText;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+  @media (forced-colors: active) {
+    .avatar {
+      border: 1px solid ButtonText;
+      outline-color: Highlight;
+    }
+
+    .avatar_glass {
+      background: Canvas;
+      border: 1px solid ButtonText;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
   }
-}
 }

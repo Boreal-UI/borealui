@@ -1,248 +1,246 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/_animations";
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $stepper-sizes: (
+    "xs": var(--font-size-caption),
+    "small": var(--font-size-label),
+    "medium": var(--font-size-body-sm),
+    "large": var(--font-size-body),
+    "xl": var(--font-size-h6),
+  );
 
-$stepper-sizes: (
-  "xs": var(--font-size-caption),
-  "small": var(--font-size-label),
-  "medium": var(--font-size-body-sm),
-  "large": var(--font-size-body),
-  "xl": var(--font-size-h6),
-);
-
-.stepper {
-  margin: var(--spacing-xxs);
-  display: flex;
-  width: fit-content;
-  align-items: center;
-  justify-content: space-evenly;
-  position: relative;
-  gap: var(--spacing-md);
-  font-family: var(--font-family-ui);
-
-  @include bp.down(xs) {
-    gap: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    gap: var(--spacing-md);
-  }
-
-  @each $size, $font in $stepper-sizes {
-    &.#{$size} {
-      font-size: $font;
-    }
-  }
-
-  &.vertical {
-    flex-direction: column;
-    align-items: flex-start;
-    height: fit-content;
-    gap: var(--spacing-md);
-
-    .connector {
-      width: 2px;
-      height: auto;
-      align-self: stretch;
-      margin: var(--spacing-xs) 0;
-
-      @include bp.down(xs) {
-        margin: var(--spacing-xxs) 0;
-      }
-
-      @include bp.up(lg) {
-        margin: var(--spacing-sm) 0;
-      }
-    }
-  }
-
-  &.clickable {
-    cursor: pointer;
-  }
-
-  &.clickable:not(.disabled) .stepButton:hover {
-    transform: scale(1.1);
-
-    @include bp.down(xs) {
-      transform: scale(1.05);
-    }
-  }
-
-  &.disabled {
-    cursor: not-allowed;
-    pointer-events: none;
-    transform: none;
-
-    .icon {
-      background-color: var(--disabled-color);
-      color: var(--text-color-secondary);
-      transform: none;
-      opacity: 0.5;
-    }
-
-    .label {
-      color: var(--text-color-secondary);
-      opacity: 0.5;
-    }
-  }
-
-  .step {
+  .stepper {
+    margin: var(--spacing-xxs);
     display: flex;
+    width: fit-content;
     align-items: center;
-    justify-content: center;
-    gap: var(--spacing-sm);
+    justify-content: space-evenly;
     position: relative;
-    cursor: default;
-    transition: color var(--transition-default);
-  }
-
-  .stepButton {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .icon {
-    width: 10px;
-    height: 10px;
-    border-radius: var(--border-radius-round);
-    background-color: var(--background-color-light);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: var(--font-weight-label);
-    transition:
-      background-color 0.3s ease-in-out,
-      transform 0.2s ease;
-  }
-
-  .label {
-    margin-left: var(--spacing-sm);
+    gap: var(--spacing-md);
     font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
-    color: var(--text-color-primary);
 
     @include bp.down(xs) {
-      margin-left: var(--spacing-xs);
-      font-size: var(--font-size-caption);
+      gap: var(--spacing-xs);
     }
 
     @include bp.up(lg) {
-      margin-left: var(--spacing-md);
-      font-size: var(--font-size-body-sm);
+      gap: var(--spacing-md);
     }
-  }
 
-  .active .stepButton {
-    color: var(--text-color-primary);
-    transform: scale(1.1);
-  }
+    @each $size, $font in $stepper-sizes {
+      &.#{$size} {
+        font-size: $font;
+      }
+    }
 
-  .completed {
+    &.vertical {
+      flex-direction: column;
+      align-items: flex-start;
+      height: fit-content;
+      gap: var(--spacing-md);
+
+      .connector {
+        width: 2px;
+        height: auto;
+        align-self: stretch;
+        margin: var(--spacing-xs) 0;
+
+        @include bp.down(xs) {
+          margin: var(--spacing-xxs) 0;
+        }
+
+        @include bp.up(lg) {
+          margin: var(--spacing-sm) 0;
+        }
+      }
+    }
+
+    &.clickable {
+      cursor: pointer;
+    }
+
+    &.clickable:not(.disabled) .stepButton:hover {
+      transform: scale(1.1);
+
+      @include bp.down(xs) {
+        transform: scale(1.05);
+      }
+    }
+
+    &.disabled {
+      cursor: not-allowed;
+      pointer-events: none;
+      transform: none;
+
+      .icon {
+        background-color: var(--disabled-color);
+        color: var(--text-color-secondary);
+        transform: none;
+        opacity: 0.5;
+      }
+
+      .label {
+        color: var(--text-color-secondary);
+        opacity: 0.5;
+      }
+    }
+
+    .step {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--spacing-sm);
+      position: relative;
+      cursor: default;
+      transition: color var(--transition-default);
+    }
+
     .stepButton {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon {
+      width: 10px;
+      height: 10px;
+      border-radius: var(--border-radius-round);
       background-color: var(--background-color-light);
-      color: var(--disabled-color);
-      border: 2px solid var(--background-color-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-weight-label);
+      transition:
+        background-color 0.3s ease-in-out,
+        transform 0.2s ease;
     }
 
     .label {
-      color: var(--disabled-color);
+      margin-left: var(--spacing-sm);
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
+      color: var(--text-color-primary);
+
+      @include bp.down(xs) {
+        margin-left: var(--spacing-xs);
+        font-size: var(--font-size-caption);
+      }
+
+      @include bp.up(lg) {
+        margin-left: var(--spacing-md);
+        font-size: var(--font-size-body-sm);
+      }
+    }
+
+    .active .stepButton {
+      color: var(--text-color-primary);
+      transform: scale(1.1);
+    }
+
+    .completed {
+      .stepButton {
+        background-color: var(--background-color-light);
+        color: var(--disabled-color);
+        border: 2px solid var(--background-color-light);
+      }
+
+      .label {
+        color: var(--disabled-color);
+      }
+    }
+
+    @each $name, $vals in theme.$themes {
+      &.#{$name} {
+        --stepper-glass-bg: #{map.get($vals, glass-bg)};
+        --stepper-glass-hover-bg: #{map.get($vals, glass-hover)};
+        --stepper-glass-border: #{map.get($vals, glass-border)};
+        --stepper-glass-text: #{map.get($vals, text)};
+      }
+
+      &.#{$name} .active .stepButton {
+        background-color: map.get($vals, bg);
+      }
+
+      &.#{$name}.glass .active .stepButton {
+        background-color: var(--stepper-glass-bg);
+        border: 2px solid var(--stepper-glass-border);
+        color: var(--stepper-glass-text);
+      }
+    }
+
+    @each $name, $vals in theme.$states {
+      &.#{$name} {
+        --stepper-glass-bg: #{map.get($vals, glass-bg)};
+        --stepper-glass-hover-bg: #{map.get($vals, glass-hover)};
+        --stepper-glass-border: #{map.get($vals, glass-border)};
+        --stepper-glass-text: #{map.get($vals, text)};
+      }
+      &.#{$name} .active .stepButton {
+        background-color: map.get($vals, bg);
+      }
+      &.#{$name}.glass .active .stepButton {
+        background-color: var(--stepper-glass-bg);
+        border: 2px solid var(--stepper-glass-border);
+        color: var(--stepper-glass-text);
+      }
+    }
+
+    &.clear .active .stepButton {
+      background-color: var(--background-color-darker);
     }
   }
 
-  @each $name, $vals in theme.$themes {
-    &.#{$name} {
-      --stepper-glass-bg: #{map.get($vals, glass-bg)};
-      --stepper-glass-hover-bg: #{map.get($vals, glass-hover)};
-      --stepper-glass-border: #{map.get($vals, glass-border)};
-      --stepper-glass-text: #{map.get($vals, text)};
+  @media (prefers-reduced-motion: reduce) {
+    .stepper,
+    .stepper * {
+      transition: none !important;
+      animation: none !important;
     }
 
-    &.#{$name} .active .stepButton {
-      background-color: map.get($vals, bg);
-    }
-
-    &.#{$name}.glass .active .stepButton {
-      background-color: var(--stepper-glass-bg);
-      border: 2px solid var(--stepper-glass-border);
-      color: var(--stepper-glass-text);
+    .stepper.clickable:not(.disabled) .stepButton:hover {
+      transform: none !important;
     }
   }
 
-  @each $name, $vals in theme.$states {
-    &.#{$name} {
-      --stepper-glass-bg: #{map.get($vals, glass-bg)};
-      --stepper-glass-hover-bg: #{map.get($vals, glass-hover)};
-      --stepper-glass-border: #{map.get($vals, glass-border)};
-      --stepper-glass-text: #{map.get($vals, text)};
-    }
-    &.#{$name} .active .stepButton {
-      background-color: map.get($vals, bg);
-    }
-    &.#{$name}.glass .active .stepButton {
-      background-color: var(--stepper-glass-bg);
-      border: 2px solid var(--stepper-glass-border);
-      color: var(--stepper-glass-text);
+  @media (hover: none) {
+    .stepper.clickable:not(.disabled) .stepButton:hover {
+      transform: none;
     }
   }
 
-  &.clear .active .stepButton {
-    background-color: var(--background-color-darker);
-  }
-}
+  @media (forced-colors: active) {
+    .stepper.glass .step {
+      background: Canvas;
+      border-color: ButtonText;
+      color: CanvasText;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
 
-@media (prefers-reduced-motion: reduce) {
-  .stepper,
-  .stepper * {
-    transition: none !important;
-    animation: none !important;
-  }
+    .stepper {
+      color: CanvasText;
+    }
 
-  .stepper.clickable:not(.disabled) .stepButton:hover {
-    transform: none !important;
-  }
-}
+    .stepper .stepButton {
+      background: ButtonFace;
+      color: ButtonText;
+      border: 1px solid ButtonText;
+    }
 
-@media (hover: none) {
-  .stepper.clickable:not(.disabled) .stepButton:hover {
-    transform: none;
-  }
-}
+    .stepper .active .stepButton {
+      background: Highlight;
+      color: HighlightText;
+    }
 
-@media (forced-colors: active) {
-  .stepper.glass .step {
-    background: Canvas;
-    border-color: ButtonText;
-    color: CanvasText;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+    .stepper .connector {
+      background: ButtonText;
+    }
   }
-
-  .stepper {
-    color: CanvasText;
-  }
-
-  .stepper .stepButton {
-    background: ButtonFace;
-    color: ButtonText;
-    border: 1px solid ButtonText;
-  }
-
-  .stepper .active .stepButton {
-    background: Highlight;
-    color: HighlightText;
-  }
-
-  .stepper .connector {
-    background: ButtonText;
-  }
-}
 }

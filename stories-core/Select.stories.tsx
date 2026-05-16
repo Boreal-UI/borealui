@@ -9,6 +9,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<SelectProps> = {
   title: "Components/Select",
@@ -301,4 +309,28 @@ export const WithPollingAsyncOptions: Story = {
       />
     );
   },
+};
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: Select, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: Select, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: Select, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: Select, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: Select, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: Select, args }),
 };

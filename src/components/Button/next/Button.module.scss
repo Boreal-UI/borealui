@@ -1,384 +1,393 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/_animations";
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 @use "sass:list";
 
+@use "../../../styles/_animations";
+
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $sizes: (
+    "xs": (
+      padding: 4px 8px,
+      label: var(--font-size-caption),
+      icon: 1rem,
+    ),
+    "small": (
+      padding: 6px 10px,
+      label: var(--font-size-label),
+      icon: 1rem,
+    ),
+    "medium": (
+      padding: 6px 12px,
+      label: var(--font-size-body-sm),
+      icon: 1.2rem,
+    ),
+    "large": (
+      padding: 8px 16px,
+      label: var(--font-size-body),
+      icon: 1.3rem,
+    ),
+    "xl": (
+      padding: 10px 18px,
+      label: var(--font-size-h6),
+      icon: 1.5rem,
+    ),
+  );
 
-$sizes: (
-  "xs": (
-    padding: 4px 8px,
-    label: var(--font-size-caption),
-    icon: 1rem,
-  ),
-  "small": (
-    padding: 6px 10px,
-    label: var(--font-size-label),
-    icon: 1rem,
-  ),
-  "medium": (
-    padding: 6px 12px,
-    label: var(--font-size-body-sm),
-    icon: 1.2rem,
-  ),
-  "large": (
-    padding: 8px 16px,
-    label: var(--font-size-body),
-    icon: 1.3rem,
-  ),
-  "xl": (
-    padding: 10px 18px,
-    label: var(--font-size-h6),
-    icon: 1.5rem,
-  ),
-);
+  @media (prefers-reduced-motion: reduce) {
+    .button {
+      transition: none;
+    }
 
-@media (prefers-reduced-motion: reduce) {
+    .loader {
+      animation-duration: 2s;
+    }
+  }
+
+  @media (hover: none) {
+    .button:hover {
+      transform: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .button {
+      border: 1px solid ButtonText;
+      outline-color: Highlight;
+    }
+  }
+
   .button {
-    transition: none;
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    flex-wrap: nowrap;
+    width: fit-content;
+    border: none;
+    cursor: pointer;
+    transition:
+      transform var(--transition-default),
+      box-shadow var(--transition-default);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    color: inherit;
+    text-decoration: none;
+
+    &:hover {
+      transform: scale(1.05);
+      text-decoration: none;
+    }
+
+    &:focus {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+    }
+
+    @include bp.down(sm) {
+      gap: var(--spacing-xs);
+      padding: 8px 14px;
+    }
+
+    @include bp.between(sm, md) {
+      gap: var(--spacing-sm);
+      padding: 10px 16px;
+    }
+
+    @include bp.up(lg) {
+      gap: var(--spacing-md);
+      padding: 12px 20px;
+    }
+  }
+
+  .button.fullWidth {
+    width: 100%;
+    max-width: none;
+    display: flex;
+
+    @include bp.up(xl) {
+      max-width: 640px;
+    }
+  }
+
+  .button.autoFull {
+    @include bp.down(sm) {
+      width: 100%;
+      display: flex;
+    }
+  }
+
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
+    }
   }
 
   .loader {
-    animation-duration: 2s;
-  }
-}
-
-@media (hover: none) {
-  .button:hover {
-    transform: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .button {
-    border: 1px solid ButtonText;
-    outline-color: Highlight;
-  }
-}
-
-.button {
-  min-height: 44px;
-  min-width: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--spacing-xs);
-  flex-wrap: nowrap;
-  width: fit-content;
-  border: none;
-  cursor: pointer;
-  transition:
-    transform var(--transition-default),
-    box-shadow var(--transition-default);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  color: inherit;
-  text-decoration: none;
-
-  &:hover {
-    transform: scale(1.05);
-    text-decoration: none;
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid transparent;
+    border-top-color: var(--text-color-primary);
+    border-radius: 50%;
+    animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   }
 
-  &:focus {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-  }
-
-  @include bp.down(sm) {
-    gap: var(--spacing-xs);
-    padding: 8px 14px;
-  }
-
-  @include bp.between(sm, md) {
-    gap: var(--spacing-sm);
-    padding: 10px 16px;
-  }
-
-  @include bp.up(lg) {
-    gap: var(--spacing-md);
-    padding: 12px 20px;
-  }
-}
-
-.button.fullWidth {
-  width: 100%;
-  max-width: none;
-  display: flex;
-
-  @include bp.up(xl) {
-    max-width: 640px;
-  }
-}
-
-.button.autoFull {
-  @include bp.down(sm) {
-    width: 100%;
+  .buttonIcon {
     display: flex;
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
-  }
-}
-
-.loader {
-  width: 1.2rem;
-  height: 1.2rem;
-  border: 2px solid transparent;
-  border-top-color: var(--text-color-primary);
-  border-radius: 50%;
-  animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-}
-
-.buttonIcon {
-  display: flex;
-  align-items: center;
-  line-height: 1em;
-}
-
-.button.iconLeft {
-  flex-direction: row;
-
-  .buttonIcon {
-    margin-right: var(--spacing-sm);
-
-    @include bp.down(sm) {
-      margin-right: var(--spacing-xs);
-    }
-
-    @include bp.up(lg) {
-      margin-right: var(--spacing-sm);
-    }
-  }
-}
-
-.button.iconRight {
-  flex-direction: row;
-
-  .buttonIcon {
-    margin-left: var(--spacing-sm);
-
-    @include bp.down(sm) {
-      margin-left: var(--spacing-xs);
-    }
-
-    @include bp.up(lg) {
-      margin-left: var(--spacing-sm);
-    }
-  }
-}
-
-.buttonLabel {
-  font: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-}
-
-.glass {
-  @include mixins.glass-surface(
-    var(--button-glass-bg, var(--glass-background)),
-    var(--button-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
-  );
-
-  color: var(--button-glass-text, currentcolor);
-  isolation: isolate;
-
-  &:hover {
-    background: var(--button-glass-hover-bg, var(--glass-background-strong));
+    align-items: center;
+    line-height: 1em;
   }
 
-  &.outline {
-    border-color: var(--button-glass-border, var(--glass-border-color));
-
-    &:hover {
-      background: var(--button-glass-hover-bg, var(--glass-background));
-    }
-  }
-}
-
-.clear {
-  background-color: transparent;
-  box-shadow: none;
-  color: var(--text-color-primary);
-}
-
-.outline {
-  background-color: transparent;
-  border: 2px solid currentcolor;
-  box-shadow: none;
-
-  @include bp.down(sm) {
-    border-width: 1.5px;
-  }
-
-  @include bp.up(lg) {
-    border-width: 2px;
-  }
-}
-
-@each $name, $values in theme.$themes {
-  .#{$name} {
-    background-color: map.get($values, bg);
-    color: map.get($values, text);
-
-    --button-glass-bg: #{map.get($values, glass-bg)};
-    --button-glass-hover-bg: #{map.get($values, glass-hover)};
-    --button-glass-border: #{map.get($values, glass-border)};
-    --button-glass-text: #{map.get($values, text)};
-
-    &:hover {
-      background-color: map.get($values, hover);
-    }
-
-    .loader {
-      border-top-color: map.get($values, text);
-    }
-
-    &.glass {
-      background-color: transparent;
-      background: var(--button-glass-bg);
-      border: 1px solid var(--button-glass-border);
-      color: var(--button-glass-text);
-
-      &:hover {
-        background-color: transparent;
-        background: var(--button-glass-hover-bg);
-      }
-    }
-
-    &.outline {
-      background-color: transparent;
-      color: map.get($values, text);
-      border-color: map.get($values, border);
-
-      &:hover {
-        border-color: map.get($values, hover);
-        color: map.get($values, text);
-        background-color: map.get($values, bg);
-      }
-    }
-  }
-}
-
-@each $name, $values in theme.$states {
-  .#{$name} {
-    background-color: map.get($values, bg);
-    color: map.get($values, text);
-
-    --button-glass-bg: #{map.get($values, glass-bg)};
-    --button-glass-hover-bg: #{map.get($values, glass-hover)};
-    --button-glass-border: #{map.get($values, glass-border)};
-    --button-glass-text: #{map.get($values, text)};
-
-    &:hover {
-      background-color: map.get($values, hover);
-    }
-
-    .loader {
-      border-top-color: map.get($values, text);
-    }
-
-    &.glass {
-      background-color: transparent;
-      background: var(--button-glass-bg);
-      border: 1px solid var(--button-glass-border);
-      color: var(--button-glass-text);
-
-      &:hover {
-        background-color: transparent;
-        background: var(--button-glass-hover-bg);
-      }
-    }
-
-    &.outline {
-      background-color: transparent;
-      color: map.get($values, text);
-      border-color: map.get($values, border);
-
-      &:hover {
-        border-color: map.get($values, hover);
-        color: map.get($values, text);
-        background-color: map.get($values, bg);
-      }
-    }
-  }
-}
-
-.disabled,
-.button:disabled {
-  background-color: var(--disabled-color);
-  background: var(--disabled-color);
-  color: var(--text-color-primary);
-  cursor: not-allowed;
-  pointer-events: none;
-  opacity: 0.6;
-  box-shadow: none;
-}
-
-.disabled.glass,
-.button:disabled.glass {
-  background-color: var(--disabled-color);
-  background: var(--disabled-color);
-  color: var(--text-color-primary);
-}
-
-.disabled.outline,
-.button:disabled.outline {
-  background-color: transparent;
-  border-color: var(--disabled-color);
-  color: var(--disabled-color);
-}
-
-@each $size, $values in $sizes {
-  .#{$size} {
-    padding: map.get($values, padding);
-
-    @include bp.down(sm) {
-      padding: max(8px, 0.6em) 10px;
-    }
-
-    @include bp.up(xl) {
-      $vpad: list.nth(map.get($values, padding), 1);
-      $hpad: list.nth(map.get($values, padding), 2);
-
-      padding: $vpad ($hpad * 1.1) $vpad ($hpad * 1.1);
-    }
-
-    .buttonLabel {
-      font-size: map.get($values, label);
-
-      @include bp.up(lg) {
-        font-size: calc(#{map.get($values, label)} * 1.05);
-      }
-    }
+  .button.iconLeft {
+    flex-direction: row;
 
     .buttonIcon {
-      $ic: map.get($values, icon);
+      margin-right: var(--spacing-sm);
 
-      width: $ic;
-      height: $ic;
+      @include bp.down(sm) {
+        margin-right: var(--spacing-xs);
+      }
 
       @include bp.up(lg) {
-        width: calc(#{$ic} * 1.05);
-        height: calc(#{$ic} * 1.05);
+        margin-right: var(--spacing-sm);
       }
     }
   }
-}
+
+  .button.iconRight {
+    flex-direction: row;
+
+    .buttonIcon {
+      margin-left: var(--spacing-sm);
+
+      @include bp.down(sm) {
+        margin-left: var(--spacing-xs);
+      }
+
+      @include bp.up(lg) {
+        margin-left: var(--spacing-sm);
+      }
+    }
+  }
+
+  .buttonLabel {
+    font: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+  }
+
+  .glass {
+    @include mixins.glass-surface(
+      var(--button-glass-bg, var(--glass-background)),
+      var(--button-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: var(--button-glass-text, currentcolor);
+    isolation: isolate;
+
+    &:hover {
+      background: var(--button-glass-hover-bg, var(--glass-background-strong));
+    }
+
+    &.outline {
+      border-color: var(--button-glass-border, var(--glass-border-color));
+
+      &:hover {
+        background: var(--button-glass-hover-bg, var(--glass-background));
+      }
+    }
+  }
+
+  .clear {
+    background-color: transparent;
+    box-shadow: none;
+    color: var(--text-color-primary);
+  }
+
+  .outline {
+    background-color: transparent;
+    border: 2px solid currentcolor;
+    box-shadow: none;
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
+
+    @include bp.up(lg) {
+      border-width: 2px;
+    }
+  }
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+
+      --button-glass-bg: #{map.get($values, glass-bg)};
+      --button-glass-hover-bg: #{map.get($values, glass-hover)};
+      --button-glass-border: #{map.get($values, glass-border)};
+      --button-glass-text: #{map.get($values, text)};
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+
+      .loader {
+        border-top-color: map.get($values, text);
+      }
+
+      &.glass {
+        background-color: transparent;
+        background: var(--button-glass-bg);
+        border: 1px solid var(--button-glass-border);
+        color: var(--button-glass-text);
+
+        &:hover {
+          background-color: transparent;
+          background: var(--button-glass-hover-bg);
+        }
+      }
+
+      &.outline {
+        background-color: transparent;
+        color: map.get($values, text);
+        border-color: map.get($values, border);
+
+        &:hover {
+          border-color: map.get($values, hover);
+          color: map.get($values, text);
+          background-color: map.get($values, bg);
+        }
+      }
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+
+      --button-glass-bg: #{map.get($values, glass-bg)};
+      --button-glass-hover-bg: #{map.get($values, glass-hover)};
+      --button-glass-border: #{map.get($values, glass-border)};
+      --button-glass-text: #{map.get($values, text)};
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+
+      .loader {
+        border-top-color: map.get($values, text);
+      }
+
+      &.glass {
+        background-color: transparent;
+        background: var(--button-glass-bg);
+        border: 1px solid var(--button-glass-border);
+        color: var(--button-glass-text);
+
+        &:hover {
+          background-color: transparent;
+          background: var(--button-glass-hover-bg);
+        }
+      }
+
+      &.outline {
+        background-color: transparent;
+        color: map.get($values, text);
+        border-color: map.get($values, border);
+
+        &:hover {
+          border-color: map.get($values, hover);
+          color: map.get($values, text);
+          background-color: map.get($values, bg);
+        }
+      }
+    }
+  }
+
+  .disabled,
+  .button:disabled {
+    background-color: var(--disabled-color);
+    background: var(--disabled-color);
+    color: var(--text-color-primary);
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+
+  .disabled.glass,
+  .button:disabled.glass {
+    background-color: var(--disabled-color);
+    background: var(--disabled-color);
+    color: var(--text-color-primary);
+    & :hover {
+      transform: none;
+    }
+  }
+
+  .disabled.outline,
+  .button:disabled.outline {
+    background-color: transparent;
+    border-color: var(--disabled-color);
+    color: var(--disabled-color);
+    &:hover {
+      transform: none;
+    }
+  }
+
+  @each $size, $values in $sizes {
+    .#{$size} {
+      padding: map.get($values, padding);
+
+      @include bp.down(sm) {
+        padding: max(8px, 0.6em) 10px;
+      }
+
+      @include bp.up(xl) {
+        $vpad: list.nth(map.get($values, padding), 1);
+        $hpad: list.nth(map.get($values, padding), 2);
+
+        padding: $vpad ($hpad * 1.1) $vpad ($hpad * 1.1);
+      }
+
+      .buttonLabel {
+        font-size: map.get($values, label);
+
+        @include bp.up(lg) {
+          font-size: calc(#{map.get($values, label)} * 1.05);
+        }
+      }
+
+      .buttonIcon {
+        $ic: map.get($values, icon);
+
+        width: $ic;
+        height: $ic;
+
+        @include bp.up(lg) {
+          width: calc(#{$ic} * 1.05);
+          height: calc(#{$ic} * 1.05);
+        }
+      }
+    }
+  }
 }

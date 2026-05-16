@@ -9,6 +9,14 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
+import {
+  renderThemeVariants,
+  renderStateVariants,
+  renderOutlineVariants,
+  renderGlassVariants,
+  renderGlassOutlineVariants,
+  renderStateOutlineVariants,
+} from "../shared-story-assets/VisualVariantStories";
 
 const meta: Meta<MetricBoxProps> = {
   title: "Components/MetricBox",
@@ -231,3 +239,27 @@ export const ShadowVariants = () =>
   withVariants(MetricBox, { ...defaultArgs }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+export const ThemeMatrix: Story = {
+  render: (args) => renderThemeVariants({ component: MetricBox, args }),
+};
+
+export const StateMatrix: Story = {
+  render: (args) => renderStateVariants({ component: MetricBox, args }),
+};
+
+export const OutlineMatrix: Story = {
+  render: (args) => renderOutlineVariants({ component: MetricBox, args }),
+};
+
+export const GlassMatrix: Story = {
+  render: (args) => renderGlassVariants({ component: MetricBox, args }),
+};
+
+export const GlassOutlineMatrix: Story = {
+  render: (args) => renderGlassOutlineVariants({ component: MetricBox, args }),
+};
+
+export const StateOutlineMatrix: Story = {
+  render: (args) => renderStateOutlineVariants({ component: MetricBox, args }),
+};

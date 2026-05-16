@@ -55,7 +55,11 @@ const classes = {
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = (props) => {
   return (
-    <BreadcrumbsBase {...props} classMap={expandClassMap(classes)} ButtonComponent={Button} />
+    <BreadcrumbsBase
+      {...props}
+      classMap={expandClassMap(classes)}
+      ButtonComponent={Button}
+    />
   );
 };
 Breadcrumbs.displayName = "Breadcrumbs";
