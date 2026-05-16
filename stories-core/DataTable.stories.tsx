@@ -358,117 +358,6 @@ export const NoStripedTheme: Story = {
   },
 };
 
-export const ThemeVariants = () => {
-  return (
-    <StoryGrid title="Theme Variants">
-      {themeOptions.map((theme) => (
-        <div key={theme}>
-          <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
-            {theme} Theme
-          </h4>
-          <DataTable
-            data={sampleData}
-            columns={sampleColumns}
-            theme={theme}
-            striped={true}
-          />
-        </div>
-      ))}
-    </StoryGrid>
-  );
-};
-
-export const StateVariants = () => {
-  return (
-    <StoryGrid title="State Variants">
-      {stateOptions.map((state) => (
-        <div key={state}>
-          <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
-            {state} state
-          </h4>
-          <DataTable
-            data={sampleData}
-            columns={sampleColumns}
-            state={state}
-            striped={true}
-          />
-        </div>
-      ))}
-    </StoryGrid>
-  );
-};
-
-export const OutlineVariants = () => (
-  <StoryGrid title="Outline Variants">
-    {themeOptions.map((theme) => (
-      <div key={`outline-${theme}`}>
-        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
-          {theme} Outline
-        </h4>
-        <DataTable
-          data={sampleData}
-          columns={sampleColumns}
-          theme={theme}
-          outline
-          striped
-        />
-      </div>
-    ))}
-    {stateOptions.map((state) => (
-      <div key={state}>
-        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
-          {state} Outline
-        </h4>
-        <DataTable
-          data={sampleData}
-          columns={sampleColumns}
-          state={state}
-          outline
-          striped={true}
-        />
-      </div>
-    ))}
-  </StoryGrid>
-);
-
-export const GlassThemeVariants = () => (
-  <StoryGrid title="Glass Theme Variants">
-    {themeOptions.map((theme) => (
-      <div key={theme}>
-        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
-          {theme} Glass
-        </h4>
-        <DataTable
-          data={sampleData}
-          columns={sampleColumns}
-          theme={theme}
-          glass
-          striped
-        />
-      </div>
-    ))}
-  </StoryGrid>
-);
-
-export const GlassStateVariants = () => (
-  <StoryGrid title="Glass State Variants">
-    {stateOptions.map((state) => (
-      <div key={state}>
-        <h4 style={{ textTransform: "capitalize", marginBottom: "0.5rem" }}>
-          {state} Glass
-        </h4>
-        <DataTable
-          data={sampleData}
-          columns={sampleColumns}
-          state={state}
-          glass
-          striped
-        />
-      </div>
-    ))}
-  </StoryGrid>
-);
-
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (
@@ -685,26 +574,26 @@ export const VirtualizedLargeDataset: StoryObj<DataTableProps<AdminRow>> = {
   ),
 };
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: DataTable, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: DataTable, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) => renderOutlineVariants({ component: DataTable, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: DataTable, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) => renderGlassOutlineVariants({ component: DataTable, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) => renderStateOutlineVariants({ component: DataTable, args }),
 };

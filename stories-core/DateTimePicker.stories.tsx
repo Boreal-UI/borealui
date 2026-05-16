@@ -72,28 +72,6 @@ export const WithMinMax: Story = {
   },
 };
 
-export const OutlineVariants: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("2025-04-15T11:00");
-
-    return (
-      <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
-        {themeOptions.map((theme) => (
-          <DateTimePicker
-            key={theme}
-            {...args}
-            theme={theme}
-            outline
-            value={value}
-            onChange={setValue}
-            label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Outline`}
-          />
-        ))}
-      </div>
-    );
-  },
-};
-
 export const Disabled: Story = {
   args: {
     disabled: true,
@@ -192,92 +170,6 @@ export const LabelPositionVariants: Story = {
   },
 };
 
-export const ThemeVariants: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("2025-04-15T11:00");
-
-    return (
-      <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
-        {themeOptions.map((theme) => (
-          <DateTimePicker
-            key={theme}
-            {...args}
-            theme={theme}
-            value={value}
-            onChange={setValue}
-            label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Theme`}
-          />
-        ))}
-      </div>
-    );
-  },
-};
-
-export const StateVariants: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("2025-04-15T11:00");
-
-    return (
-      <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
-        {stateOptions.map((state) => (
-          <DateTimePicker
-            key={state}
-            {...args}
-            state={state}
-            value={value}
-            onChange={setValue}
-            label={`${state.charAt(0).toUpperCase() + state.slice(1)} State`}
-          />
-        ))}
-      </div>
-    );
-  },
-};
-
-export const GlassThemeVariants: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("2025-04-15T11:00");
-
-    return (
-      <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
-        {themeOptions.map((theme) => (
-          <DateTimePicker
-            key={`glass-${theme}`}
-            {...args}
-            theme={theme}
-            glass
-            value={value}
-            onChange={setValue}
-            label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
-          />
-        ))}
-      </div>
-    );
-  },
-};
-
-export const GlassStateVariants: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("2025-04-15T11:00");
-
-    return (
-      <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
-        {stateOptions.map((state) => (
-          <DateTimePicker
-            key={`glass-${state}`}
-            {...args}
-            state={state}
-            glass
-            value={value}
-            onChange={setValue}
-            label={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
-          />
-        ))}
-      </div>
-    );
-  },
-};
-
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (
@@ -310,28 +202,28 @@ export const WithDataTestid: Story = {
   },
 };
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: DateTimePicker, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: DateTimePicker, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) => renderOutlineVariants({ component: DateTimePicker, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: DateTimePicker, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) =>
     renderGlassOutlineVariants({ component: DateTimePicker, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) =>
     renderStateOutlineVariants({ component: DateTimePicker, args }),
 };

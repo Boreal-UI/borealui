@@ -148,90 +148,6 @@ export const Disabled: Story = {
   render: (args) => <FileUpload {...args} onSubmit={() => {}} />,
 };
 
-export const ThemeVariants: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1.5rem" }}>
-      {themeOptions.map((theme) => (
-        <div key={theme}>
-          <h4 style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
-            {theme} Theme
-          </h4>
-          <FileUpload
-            {...args}
-            theme={theme}
-            label={`Upload (${theme})`}
-            onSubmit={(files) => console.log(`${theme}:`, files)}
-          />
-        </div>
-      ))}
-    </div>
-  ),
-};
-
-export const StateVariants: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1.5rem" }}>
-      {stateOptions.map((state) => (
-        <div key={state}>
-          <h4 style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
-            {state} state
-          </h4>
-          <FileUpload
-            {...args}
-            state={state}
-            theme="secondary"
-            label={`Upload (${state})`}
-            onSubmit={(files) => console.log(`${state}:`, files)}
-          />
-        </div>
-      ))}
-    </div>
-  ),
-};
-
-export const GlassThemeVariants: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1.5rem" }}>
-      {themeOptions.map((theme) => (
-        <div key={theme}>
-          <h4 style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
-            Glass {theme}
-          </h4>
-          <FileUpload
-            {...args}
-            theme={theme}
-            glass
-            label={`Upload (${theme})`}
-            onSubmit={(files) => console.log(`${theme}:`, files)}
-          />
-        </div>
-      ))}
-    </div>
-  ),
-};
-
-export const GlassStateVariants: Story = {
-  render: (args) => (
-    <div style={{ display: "grid", gap: "1.5rem" }}>
-      {stateOptions.map((state) => (
-        <div key={state}>
-          <h4 style={{ marginBottom: "0.5rem", textTransform: "capitalize" }}>
-            Glass {state}
-          </h4>
-          <FileUpload
-            {...args}
-            state={state}
-            theme="secondary"
-            glass
-            label={`Upload (${state})`}
-            onSubmit={(files) => console.log(`${state}:`, files)}
-          />
-        </div>
-      ))}
-    </div>
-  ),
-};
-
 export const OutlineRoundingVariants: Story = {
   render: (args) => (
     <div style={{ display: "grid", gap: "1.5rem" }}>
@@ -272,26 +188,26 @@ export const OutlineShadowVariants: Story = {
   ),
 };
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: FileUpload, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: FileUpload, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) => renderOutlineVariants({ component: FileUpload, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: FileUpload, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) => renderGlassOutlineVariants({ component: FileUpload, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) => renderStateOutlineVariants({ component: FileUpload, args }),
 };

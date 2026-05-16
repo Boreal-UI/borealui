@@ -127,77 +127,6 @@ export const FullWidth: Story = {
   },
 };
 
-export const OutlineVariants = () => (
-  <StoryGrid title="Outline Buttons">
-    {themeOptions.map((theme) => (
-      <Button key={theme} theme={theme} outline>
-        {theme} Outline
-      </Button>
-    ))}
-    {stateOptions.map((state) => (
-      <Button key={state} state={state} outline>
-        {state} Outline
-      </Button>
-    ))}
-  </StoryGrid>
-);
-
-export const ThemeVariants = () => (
-  <StoryGrid title="Theme Variants">
-    {themeOptions.map((theme) => (
-      <Button key={theme} theme={theme}>
-        {theme}
-      </Button>
-    ))}
-  </StoryGrid>
-);
-
-export const StateVariants = () => (
-  <StoryGrid title="State Variants">
-    {stateOptions.map((state) => (
-      <Button key={state} state={state}>
-        {state}
-      </Button>
-    ))}
-  </StoryGrid>
-);
-
-export const GlassVariants = () => (
-  <StoryGrid title="Glass Buttons">
-    {themeOptions.map((theme) => (
-      <Button key={theme} theme={theme} glass>
-        {theme} Glass
-      </Button>
-    ))}
-
-    {stateOptions.map((state) => (
-      <Button key={state} state={state} glass>
-        {state} Glass
-      </Button>
-    ))}
-
-    <Button key="disabled" disabled glass>
-      Disabled Glass
-    </Button>
-  </StoryGrid>
-);
-
-export const OutlineGlassVariants = () => (
-  <StoryGrid title="Glass Buttons">
-    {themeOptions.map((theme) => (
-      <Button key={theme} theme={theme} outline glass>
-        {theme} Glass Outline
-      </Button>
-    ))}
-
-    {stateOptions.map((state) => (
-      <Button key={state} state={state} outline glass>
-        {state} Glass Outline
-      </Button>
-    ))}
-  </StoryGrid>
-);
-
 export const SizeVariants = () => (
   <StoryGrid title="Size Variants">
     {sizeOptions.map((size) => (
@@ -278,26 +207,26 @@ export const WithAriaLabel: Story = {
   },
 };
 
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: Button, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: Button, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) => renderOutlineVariants({ component: Button, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: Button, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) => renderGlassOutlineVariants({ component: Button, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) => renderStateOutlineVariants({ component: Button, args }),
 };

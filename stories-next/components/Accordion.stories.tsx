@@ -230,26 +230,6 @@ export const AccessibleRegionOverrides: Story = {
   },
 };
 
-export const ThemeVariants = () =>
-  withVariants(Accordion, { ...defaultArgs }, [
-    { propName: "theme", values: themeOptions },
-  ]);
-
-export const GlassThemeVariants = () =>
-  withVariants(Accordion, { ...defaultArgs, glass: true }, [
-    { propName: "theme", values: themeOptions },
-  ]);
-
-export const StateVariants = () =>
-  withVariants(Accordion, { ...defaultArgs }, [
-    { propName: "state", values: stateOptions },
-  ]);
-
-export const GlassStateVariants = () =>
-  withVariants(Accordion, { ...defaultArgs, glass: true }, [
-    { propName: "state", values: stateOptions },
-  ]);
-
 export const SizeVariants = () =>
   withVariants(Accordion, { ...defaultArgs }, [
     { propName: "size", values: sizeOptions },
@@ -265,47 +245,26 @@ export const ShadowVariants = () =>
     { propName: "shadow", values: shadowOptions },
   ]);
 
-export const OutlineVariants = () =>
-  withVariants(
-    Accordion,
-    {
-      ...defaultArgs,
-      outline: true,
-    },
-    [{ propName: "theme", values: themeOptions }],
-  );
-
-export const GlassOutlineVariants = () =>
-  withVariants(
-    Accordion,
-    {
-      ...defaultArgs,
-      outline: true,
-      glass: true,
-    },
-    [{ propName: "theme", values: themeOptions }],
-  );
-
-export const ThemeMatrix: Story = {
+export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: Accordion, args }),
 };
 
-export const StateMatrix: Story = {
+export const StateVariants: Story = {
   render: (args) => renderStateVariants({ component: Accordion, args }),
 };
 
-export const OutlineMatrix: Story = {
+export const OutlineVariants: Story = {
   render: (args) => renderOutlineVariants({ component: Accordion, args }),
 };
 
-export const GlassMatrix: Story = {
+export const GlassVariants: Story = {
   render: (args) => renderGlassVariants({ component: Accordion, args }),
 };
 
-export const GlassOutlineMatrix: Story = {
+export const GlassOutlineVariants: Story = {
   render: (args) => renderGlassOutlineVariants({ component: Accordion, args }),
 };
 
-export const StateOutlineMatrix: Story = {
+export const StateOutlineVariants: Story = {
   render: (args) => renderStateOutlineVariants({ component: Accordion, args }),
 };
