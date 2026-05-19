@@ -48,7 +48,7 @@
 
       &.appShell_outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
       }
@@ -66,7 +66,7 @@
 
       &.appShell_outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
       }
@@ -86,7 +86,7 @@
       16px
     );
 
-    color: var(--appShell-glass-text);
+    color: inherit;
   }
 
   .appShell_glass.appShell_outline {

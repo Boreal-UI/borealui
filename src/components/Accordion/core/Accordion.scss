@@ -78,10 +78,6 @@
     }
   }
 
-  .accordion_clear {
-    box-shadow: none !important;
-  }
-
   .accordion_glass {
     .accordion_header,
     &.accordion_content {
@@ -91,7 +87,7 @@
         var(--glass-blur)
       );
 
-      color: var(--accordion-glass-text, currentcolor);
+      color: inherit;
     }
 
     &.accordion_content {
@@ -173,7 +169,7 @@
     .accordion_#{$name}.accordion_glass {
       background: var(--accordion-glass-bg);
       border: 1px solid var(--accordion-glass-border);
-      color: var(--accordion-glass-text);
+      color: inherit;
 
       &:hover {
         background: var(--accordion-glass-hover-bg);
@@ -183,7 +179,7 @@
     .accordion_outline.accordion_#{$name} {
       background-color: transparent;
       border: 2px solid map.get($values, border);
-      color: map.get($values, text);
+      color: inherit;
 
       @include bp.down(sm) {
         border-width: 1.5px;
@@ -202,7 +198,7 @@
         var(--glass-blur)
       );
 
-      color: var(--accordion-glass-text);
+      color: inherit;
     }
   }
 
@@ -223,7 +219,7 @@
 
     .accordion_#{$name}.accordion_glass {
       background: var(--accordion-glass-bg);
-      color: var(--accordion-glass-text);
+      color: inherit;
 
       &:hover {
         background: var(--accordion-glass-hover-bg);
@@ -233,7 +229,7 @@
     .accordion_outline.accordion_#{$name} {
       background-color: transparent;
       border: 2px solid map.get($values, border);
-      color: map.get($values, text);
+      color: inherit;
 
       @include bp.down(sm) {
         border-width: 1.5px;
@@ -252,7 +248,7 @@
         var(--glass-blur)
       );
 
-      color: var(--accordion-glass-text);
+      color: inherit;
     }
   }
 
@@ -297,7 +293,7 @@
     padding: var(--spacing-xl);
     border-bottom-left-radius: var(--border-radius-md);
     border-bottom-right-radius: var(--border-radius-md);
-
+    color: inherit;
     @include bp.down(sm) {
       padding: var(--spacing-md);
     }
@@ -427,6 +423,12 @@
       background-color: var(--disabled-color);
       opacity: 0.6;
     }
+  }
+
+  .accordion_clear,
+  .accordion_clear.accordion_header {
+    box-shadow: none;
+    color: inherit;
   }
 
   @media (prefers-reduced-motion: reduce) {

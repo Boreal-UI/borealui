@@ -6,343 +6,345 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-$slider-sizes: (
-  "xs": (
-    track: 2px,
-    thumb: 10px,
-  ),
-  "small": (
-    track: 4px,
-    thumb: 12px,
-  ),
-  "medium": (
-    track: 6px,
-    thumb: 14px,
-  ),
-  "large": (
-    track: 8px,
-    thumb: 16px,
-  ),
-  "xl": (
-    track: 10px,
-    thumb: 18px,
-  ),
-);
-
-.slider_container {
-  display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-  font-family: var(--font-family-ui);
-
-  @include bp.down(xs) {
-    gap: var(--spacing-xxs);
-  }
-
-  @include bp.up(lg) {
-    gap: var(--spacing-sm);
-  }
-}
-
-.slider_label {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  color: var(--text-color-primary);
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-caption);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body-sm);
-  }
-}
-
-.slider_wrapper {
-  display: flex;
-  align-items: center;
-  gap: var(--spacing-sm);
-  width: 100%;
-
-  @include bp.down(xs) {
-    gap: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    gap: var(--spacing-md);
-  }
-}
-
-.slider {
-  width: 100%;
-  appearance: none;
-  outline: none;
-  background-color: var(--background-color-light);
-  transition: background 0.3s ease;
-  accent-color: var(--text-color-primary);
-
-  &::-webkit-slider-runnable-track {
-    background: transparent;
-    border-radius: inherit;
-  }
-
-  &::-moz-range-track {
-    background: transparent;
-    border-radius: inherit;
-  }
-
-  &::-webkit-slider-thumb {
-    appearance: none;
-    border-radius: 50%;
-    background-color: var(--text-color-primary);
-    cursor: pointer;
-    box-shadow: 0 0 2px rgb(0 0 0 / 20%);
-    border: none;
-    transition: transform 0.15s ease;
-  }
-
-  &::-moz-range-thumb {
-    appearance: none;
-    border-radius: 50%;
-    background-color: var(--text-color-primary);
-    cursor: pointer;
-    box-shadow: 0 0 2px rgb(0 0 0 / 20%);
-    border: none;
-    transition: transform 0.15s ease;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-    border-radius: 9999px;
-  }
-
-  &:focus-visible::-webkit-slider-thumb {
-    box-shadow: 0 0 0 3px var(--focus-outline-color, var(--primary-color));
-  }
-
-  &:focus-visible::-moz-range-thumb {
-    box-shadow: 0 0 0 3px var(--focus-outline-color, var(--primary-color));
-  }
-
-  &:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .slider_round-#{$key} .slider {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .slider_shadow-#{$key} .slider {
-    box-shadow: $value;
-  }
-}
-
-.slider_value {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  color: var(--text-color-primary);
-  min-width: 2ch;
-  text-align: right;
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-caption);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body-sm);
-  }
-}
-
-@each $name, $vals in theme.$themes {
-  .slider_#{$name} {
-    --slider-glass-bg: #{map.get($vals, glass-bg)};
-    --slider-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --slider-glass-border: #{map.get($vals, glass-border)};
-    --slider-glass-text: #{map.get($vals, text)};
-  }
-
-  .slider_#{$name} .slider {
-    background-color: map.get($vals, bg);
-    color: map.get($vals, bg);
-
-    &:hover {
-      background-color: map.get($vals, hover);
-    }
-  }
-}
-
-@each $name, $vals in theme.$states {
-  .slider_#{$name} {
-    --slider-glass-bg: #{map.get($vals, glass-bg)};
-    --slider-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --slider-glass-border: #{map.get($vals, glass-border)};
-    --slider-glass-text: #{map.get($vals, text)};
-  }
-
-  .slider_#{$name} .slider {
-    background-color: map.get($vals, bg);
-    color: map.get($vals, bg);
-
-    &:hover {
-      background-color: map.get($vals, hover);
-    }
-  }
-}
-
-.slider_clear .slider {
-  background-color: var(--background-color-light);
-}
-
-.slider_glass .slider {
-  @include mixins.glass-surface(
-    var(--slider-glass-bg, var(--glass-background)),
-    var(--slider-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
+  $slider-sizes: (
+    "xs": (
+      track: 2px,
+      thumb: 10px,
+    ),
+    "small": (
+      track: 4px,
+      thumb: 12px,
+    ),
+    "medium": (
+      track: 6px,
+      thumb: 14px,
+    ),
+    "large": (
+      track: 8px,
+      thumb: 16px,
+    ),
+    "xl": (
+      track: 10px,
+      thumb: 18px,
+    ),
   );
 
-  color: var(--slider-glass-text, currentcolor);
-
-  &:hover {
-    background: var(--slider-glass-hover-bg, var(--glass-background));
-  }
-}
-
-@each $size, $props in $slider-sizes {
-  .slider_#{$size} .slider {
-    $track: map.get($props, track);
-    $thumb: map.get($props, thumb);
-
-    height: $thumb;
-
-    &::-webkit-slider-runnable-track {
-      height: $track;
-    }
-
-    &::-moz-range-track {
-      height: $track;
-    }
-
-    &::-webkit-slider-thumb {
-      width: $thumb;
-      height: $thumb;
-      border-radius: 50%;
-      background-color: var(--text-color-primary);
-      margin-top: calc((#{$track} - #{$thumb}) / 2);
-    }
-
-    &::-moz-range-thumb {
-      width: $thumb;
-      height: $thumb;
-      border-radius: 50%;
-    }
+  .slider_container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    font-family: var(--font-family-ui);
 
     @include bp.down(xs) {
-      height: calc(#{map.get($props, track)} * 0.9);
-
-      &::-webkit-slider-runnable-track {
-        height: calc(#{map.get($props, track)} * 0.9);
-      }
-
-      &::-moz-range-track {
-        height: calc(#{map.get($props, track)} * 0.9);
-      }
-
-      &::-webkit-slider-thumb {
-        width: calc(#{map.get($props, thumb)} * 0.9);
-        height: calc(#{map.get($props, thumb)} * 0.9);
-      }
-
-      &::-moz-range-thumb {
-        width: calc(#{map.get($props, thumb)} * 0.9);
-        height: calc(#{map.get($props, thumb)} * 0.9);
-      }
+      gap: var(--spacing-xxs);
     }
 
     @include bp.up(lg) {
-      height: calc(#{map.get($props, track)} * 1.1);
+      gap: var(--spacing-sm);
+    }
+  }
 
-      &::-webkit-slider-runnable-track {
-        height: calc(#{map.get($props, track)} * 1.1);
-      }
+  .slider_label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    color: inherit;
 
-      &::-moz-range-track {
-        height: calc(#{map.get($props, track)} * 1.1);
-      }
+    @include bp.down(xs) {
+      font-size: var(--font-size-caption);
+    }
 
-      &::-webkit-slider-thumb {
-        width: calc(#{map.get($props, thumb)} * 1.05);
-        height: calc(#{map.get($props, thumb)} * 1.05);
-      }
+    @include bp.up(lg) {
+      font-size: var(--font-size-body-sm);
+    }
+  }
 
-      &::-moz-range-thumb {
-        width: calc(#{map.get($props, thumb)} * 1.05);
-        height: calc(#{map.get($props, thumb)} * 1.05);
+  .slider_wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    width: 100%;
+
+    @include bp.down(xs) {
+      gap: var(--spacing-xs);
+    }
+
+    @include bp.up(lg) {
+      gap: var(--spacing-md);
+    }
+  }
+
+  .slider {
+    width: 100%;
+    appearance: none;
+    outline: none;
+    transition: background 0.3s ease;
+    accent-color: inherit;
+
+    &::-webkit-slider-runnable-track {
+      background: transparent;
+      border-radius: inherit;
+    }
+
+    &::-moz-range-track {
+      background: transparent;
+      border-radius: inherit;
+    }
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      border-radius: 50%;
+      background-color: var(--text-color);
+      cursor: pointer;
+      box-shadow: 0 0 2px rgb(0 0 0 / 20%);
+      border: none;
+      transition: transform 0.15s ease;
+    }
+
+    &::-moz-range-thumb {
+      appearance: none;
+      border-radius: 50%;
+      background-color: var(--text-color);
+      cursor: pointer;
+      box-shadow: 0 0 2px rgb(0 0 0 / 20%);
+      border: none;
+      transition: transform 0.15s ease;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+      border-radius: 9999px;
+    }
+
+    &:focus-visible::-webkit-slider-thumb {
+      box-shadow: 0 0 0 3px var(--focus-outline-color, var(--primary-color));
+    }
+
+    &:focus-visible::-moz-range-thumb {
+      box-shadow: 0 0 0 3px var(--focus-outline-color, var(--primary-color));
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+  }
+
+  @each $key, $value in theme.$rounding {
+    .slider_round-#{$key} .slider {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .slider_shadow-#{$key} .slider {
+      box-shadow: $value;
+    }
+  }
+
+  .slider_value {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    color: inherit;
+    min-width: 2ch;
+    text-align: right;
+
+    @include bp.down(xs) {
+      font-size: var(--font-size-caption);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body-sm);
+    }
+  }
+
+  @each $name, $vals in theme.$themes {
+    .slider_#{$name} {
+      --slider-glass-bg: #{map.get($vals, glass-bg)};
+      --slider-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --slider-glass-border: #{map.get($vals, glass-border)};
+      --slider-glass-text: #{map.get($vals, text)};
+    }
+
+    .slider_#{$name} .slider {
+      background-color: map.get($vals, bg);
+      color: map.get($vals, bg);
+
+      &:hover {
+        background-color: map.get($vals, hover);
       }
     }
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .slider,
-  .slider * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
+  @each $name, $vals in theme.$states {
+    .slider_#{$name} {
+      --slider-glass-bg: #{map.get($vals, glass-bg)};
+      --slider-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --slider-glass-border: #{map.get($vals, glass-border)};
+      --slider-glass-text: #{map.get($vals, text)};
+    }
 
-@media (hover: none) {
-  .slider::-webkit-slider-thumb {
-    transition: none;
-  }
+    .slider_#{$name} .slider {
+      background-color: map.get($vals, bg);
+      color: map.get($vals, bg);
 
-  .slider::-moz-range-thumb {
-    transition: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .slider {
-    forced-color-adjust: none;
-    background: Canvas;
-    color: ButtonText;
-    border: 1px solid ButtonText;
+      &:hover {
+        background-color: map.get($vals, hover);
+      }
+    }
   }
 
-  .slider::-webkit-slider-runnable-track {
-    background: ButtonFace;
-    border: 1px solid ButtonText;
-  }
-
-  .slider::-moz-range-track {
-    background: ButtonFace;
-    border: 1px solid ButtonText;
-  }
-
-  .slider:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 3px;
+  .slider_clear .slider {
+    background-color: var(--disabled-color);
   }
 
   .slider_glass .slider {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+    @include mixins.glass-surface(
+      var(--slider-glass-bg, var(--glass-background)),
+      var(--slider-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: inherit;
+
+    &:hover {
+      background: var(--slider-glass-hover-bg, var(--glass-background));
+    }
   }
-}
+
+  .slider_clear.slider_glass .slider {
+    background-color: var(--disabled-color);
+  }
+
+  @each $size, $props in $slider-sizes {
+    .slider_#{$size} .slider {
+      $track: map.get($props, track);
+      $thumb: map.get($props, thumb);
+
+      height: $thumb;
+
+      &::-webkit-slider-runnable-track {
+        height: $track;
+      }
+
+      &::-moz-range-track {
+        height: $track;
+      }
+
+      &::-webkit-slider-thumb {
+        width: $thumb;
+        height: $thumb;
+        border-radius: 50%;
+        background-color: var(--text-color);
+        margin-top: calc((#{$track} - #{$thumb}) / 2);
+      }
+
+      &::-moz-range-thumb {
+        width: $thumb;
+        height: $thumb;
+        border-radius: 50%;
+      }
+
+      @include bp.down(xs) {
+        height: calc(#{map.get($props, track)} * 0.9);
+
+        &::-webkit-slider-runnable-track {
+          height: calc(#{map.get($props, track)} * 0.9);
+        }
+
+        &::-moz-range-track {
+          height: calc(#{map.get($props, track)} * 0.9);
+        }
+
+        &::-webkit-slider-thumb {
+          width: calc(#{map.get($props, thumb)} * 0.9);
+          height: calc(#{map.get($props, thumb)} * 0.9);
+        }
+
+        &::-moz-range-thumb {
+          width: calc(#{map.get($props, thumb)} * 0.9);
+          height: calc(#{map.get($props, thumb)} * 0.9);
+        }
+      }
+
+      @include bp.up(lg) {
+        height: calc(#{map.get($props, track)} * 1.1);
+
+        &::-webkit-slider-runnable-track {
+          height: calc(#{map.get($props, track)} * 1.1);
+        }
+
+        &::-moz-range-track {
+          height: calc(#{map.get($props, track)} * 1.1);
+        }
+
+        &::-webkit-slider-thumb {
+          width: calc(#{map.get($props, thumb)} * 1.05);
+          height: calc(#{map.get($props, thumb)} * 1.05);
+        }
+
+        &::-moz-range-thumb {
+          width: calc(#{map.get($props, thumb)} * 1.05);
+          height: calc(#{map.get($props, thumb)} * 1.05);
+        }
+      }
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slider,
+    .slider * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .slider::-webkit-slider-thumb {
+      transition: none;
+    }
+
+    .slider::-moz-range-thumb {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .slider {
+      forced-color-adjust: none;
+      background: Canvas;
+      color: ButtonText;
+      border: 1px solid ButtonText;
+    }
+
+    .slider::-webkit-slider-runnable-track {
+      background: ButtonFace;
+      border: 1px solid ButtonText;
+    }
+
+    .slider::-moz-range-track {
+      background: ButtonFace;
+      border: 1px solid ButtonText;
+    }
+
+    .slider:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 3px;
+    }
+
+    .slider_glass .slider {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+  }
 }

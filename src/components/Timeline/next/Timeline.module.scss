@@ -5,338 +5,337 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: fit-content;
+    height: fit-content;
+    max-width: 600px;
+    padding-left: var(--spacing-md);
+    background: transparent;
+    font-family: var(--font-family-body);
 
-.timeline {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  width: fit-content;
-  height: fit-content;
-  max-width: 600px;
-  padding-left: var(--spacing-md);
-  background: transparent;
-  font-family: var(--font-family-body);
+    @include bp.down(sm) {
+      width: 100%;
+      max-width: 100%;
+      padding-left: var(--spacing-sm);
+    }
 
-  @include bp.down(sm) {
-    width: 100%;
+    &:focus-within {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+      border-radius: var(--border-radius-sm);
+    }
+  }
+
+  .horizontal {
+    flex-direction: row;
+    align-items: center;
+    padding-left: 0;
     max-width: 100%;
-    padding-left: var(--spacing-sm);
-  }
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x proximity;
 
-  &:focus-within {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-    border-radius: var(--border-radius-sm);
-  }
-}
-
-.horizontal {
-  flex-direction: row;
-  align-items: center;
-  padding-left: 0;
-  max-width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior-x: contain;
-  scroll-snap-type: x proximity;
-
-  &::-webkit-scrollbar-track {
-    background-color: transparent !important;
-  }
-}
-
-.item {
-  display: inline-flex;
-  align-items: center;
-  padding-bottom: var(--spacing-sm);
-  gap: var(--spacing-sm);
-  position: relative;
-  text-align: center;
-  scroll-snap-align: start;
-
-  &.horizontal {
-    overflow: visible;
-    gap: 0;
-    margin-bottom: 2px;
-  }
-
-  &:not(:last-child)::after {
-    content: "";
-    position: absolute;
-    left: 13.5px;
-    top: 62%;
-    width: 2px;
-    height: 5em;
-    background-color: var(--primary-color);
-
-    @include bp.down(xs) {
-      left: 12px;
-      height: 4em;
-    }
-
-    @include bp.up(lg) {
-      left: 14px;
-      height: 5.5em;
+    &::-webkit-scrollbar-track {
+      background-color: transparent !important;
     }
   }
 
-  &.horizontal:not(:last-child)::after {
-    top: 46%;
-    left: 100%;
-    width: 20px;
-    height: 2px;
+  .item {
+    display: inline-flex;
+    align-items: center;
+    padding-bottom: var(--spacing-sm);
+    gap: var(--spacing-sm);
+    position: relative;
+    text-align: center;
+    scroll-snap-align: start;
 
-    @include bp.down(xs) {
-      width: 14px;
+    &.horizontal {
+      overflow: visible;
+      gap: 0;
+      margin-bottom: 2px;
     }
 
-    @include bp.up(lg) {
-      width: 24px;
-    }
-  }
-}
+    &:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      left: 13.5px;
+      top: 62%;
+      width: 2px;
+      height: 5em;
+      background-color: var(--primary-color);
 
-.marker {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 25px;
-  height: 25px;
-  min-width: 30px;
-  min-height: 30px;
-  border-radius: var(--border-radius-round);
-  background-color: var(--primary-color);
-  color: var(--text-color-primary);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: 1;
-  transition: transform 0.3s ease-in-out;
+      @include bp.down(xs) {
+        left: 12px;
+        height: 4em;
+      }
 
-  &:hover {
-    transform: scale(1.05);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-  }
-
-  &.horizontal {
-    margin: 10px;
-    overflow-x: visible;
-  }
-
-  @include bp.down(xs) {
-    width: 22px;
-    height: 22px;
-    min-width: 24px;
-    min-height: 24px;
-    font-size: var(--font-size-caption);
-  }
-
-  @include bp.up(lg) {
-    width: 28px;
-    height: 28px;
-    min-width: 32px;
-    min-height: 32px;
-  }
-}
-
-.dot {
-  width: 8px;
-  height: 8px;
-  background-color: var(--text-color-primary);
-  border-radius: 50%;
-
-  @include bp.down(xs) {
-    width: 7px;
-    height: 7px;
-  }
-
-  @include bp.up(lg) {
-    width: 9px;
-    height: 9px;
-  }
-}
-
-.content {
-  background: var(--background-color-lighter);
-  padding: var(--spacing-sm);
-  flex: 1;
-  min-width: 15rem;
-
-  &.horizontal {
-    overflow-x: visible;
-  }
-
-  @include bp.down(xs) {
-    min-width: 12rem;
-    padding: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    min-width: 18rem;
-    padding: var(--spacing-md);
-  }
-}
-
-.title {
-  text-align: center;
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-h6);
-  font-weight: var(--font-weight-heading);
-  line-height: var(--line-height-heading);
-  letter-spacing: var(--letter-spacing-heading);
-  margin-bottom: var(--spacing-xs);
-  color: var(--text-color-primary);
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-body);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-h5);
-  }
-}
-
-.date {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-caption);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  color: var(--text-color-primary);
-  opacity: 0.8;
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-label);
-  }
-}
-
-.description {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  margin-top: var(--spacing-xs);
-  color: var(--text-color-primary);
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-caption);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body);
-  }
-}
-
-@each $themeName, $vals in theme.$themes {
-  .#{$themeName} {
-    --timeline-glass-bg: #{map.get($vals, glass-bg)};
-    --timeline-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --timeline-glass-border: #{map.get($vals, glass-border)};
-    --timeline-glass-text: #{map.get($vals, text)};
-
-    .item:not(:last-child)::after {
-      background-color: map.get($vals, border);
+      @include bp.up(lg) {
+        left: 14px;
+        height: 5.5em;
+      }
     }
 
-    .marker {
-      background-color: map.get($vals, bg);
-      color: map.get($vals, text);
+    &.horizontal:not(:last-child)::after {
+      top: 47%;
+      left: 100%;
+      width: 20px;
+      height: 2px;
+
+      @include bp.down(xs) {
+        width: 14px;
+      }
+
+      @include bp.up(lg) {
+        width: 24px;
+      }
     }
-  }
-}
-
-@each $stateName, $vals in theme.$states {
-  .#{$stateName} {
-    --timeline-glass-bg: #{map.get($vals, glass-bg)};
-    --timeline-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --timeline-glass-border: #{map.get($vals, glass-border)};
-    --timeline-glass-text: #{map.get($vals, text)};
-
-    .item:not(:last-child)::after {
-      background-color: map.get($vals, border);
-    }
-
-    .marker {
-      background-color: map.get($vals, bg);
-      color: map.get($vals, text);
-    }
-  }
-}
-
-.glass.content,
-.glass.marker {
-  @include mixins.glass-surface(
-    var(--timeline-glass-bg, var(--glass-background)),
-    var(--timeline-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
-  );
-
-  color: var(--timeline-glass-text, currentcolor);
-}
-
-.clear .marker {
-  box-shadow: none;
-}
-
-@each $k, $v in theme.$rounding {
-  .round#{$k} {
-    border-radius: $v;
-  }
-}
-
-@each $k, $v in theme.$shadow {
-  .shadow#{$k} {
-    box-shadow: $v;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .timeline,
-  .timeline * {
-    transition: none !important;
-    animation: none !important;
-  }
-
-  .marker:hover {
-    transform: none !important;
-  }
-}
-
-@media (hover: none) {
-  .marker:hover {
-    transform: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .content {
-    background: Canvas;
-    color: CanvasText;
-    border: 1px solid ButtonText;
-  }
-
-  .item:not(:last-child)::after {
-    background: ButtonText !important;
   }
 
   .marker {
-    background: ButtonFace !important;
-    color: ButtonText !important;
-    border: 1px solid ButtonText !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    min-width: 30px;
+    min-height: 30px;
+    border-radius: var(--border-radius-round);
+    background-color: var(--primary-color);
+    color: inherit;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: 1;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+    }
+
+    &.horizontal {
+      margin: 10px;
+      overflow-x: visible;
+    }
+
+    @include bp.down(xs) {
+      width: 22px;
+      height: 22px;
+      min-width: 24px;
+      min-height: 24px;
+      font-size: var(--font-size-caption);
+    }
+
+    @include bp.up(lg) {
+      width: 28px;
+      height: 28px;
+      min-width: 32px;
+      min-height: 32px;
+    }
+  }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    background-color: currentColor;
+    border-radius: 50%;
+
+    @include bp.down(xs) {
+      width: 7px;
+      height: 7px;
+    }
+
+    @include bp.up(lg) {
+      width: 9px;
+      height: 9px;
+    }
+  }
+
+  .content {
+    background: var(--background-color-lighter);
+    padding: var(--spacing-sm);
+    flex: 1;
+    min-width: 15rem;
+
+    &.horizontal {
+      overflow-x: visible;
+    }
+
+    @include bp.down(xs) {
+      min-width: 12rem;
+      padding: var(--spacing-xs);
+    }
+
+    @include bp.up(lg) {
+      min-width: 18rem;
+      padding: var(--spacing-md);
+    }
+  }
+
+  .title {
+    text-align: center;
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h6);
+    font-weight: var(--font-weight-heading);
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
+    margin-bottom: var(--spacing-xs);
+    color: inherit;
+
+    @include bp.down(xs) {
+      font-size: var(--font-size-body);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-h5);
+    }
+  }
+
+  .date {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-caption);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    color: inherit;
+    opacity: 0.8;
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-label);
+    }
+  }
+
+  .description {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    margin-top: var(--spacing-xs);
+    color: inherit;
+
+    @include bp.down(xs) {
+      font-size: var(--font-size-caption);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body);
+    }
+  }
+
+  @each $themeName, $vals in theme.$themes {
+    .#{$themeName} {
+      --timeline-glass-bg: #{map.get($vals, glass-bg)};
+      --timeline-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --timeline-glass-border: #{map.get($vals, glass-border)};
+      --timeline-glass-text: #{map.get($vals, text)};
+
+      .item:not(:last-child)::after {
+        background-color: map.get($vals, border);
+      }
+
+      .marker {
+        background-color: map.get($vals, bg);
+        color: map.get($vals, text);
+      }
+    }
+  }
+
+  @each $stateName, $vals in theme.$states {
+    .#{$stateName} {
+      --timeline-glass-bg: #{map.get($vals, glass-bg)};
+      --timeline-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --timeline-glass-border: #{map.get($vals, glass-border)};
+      --timeline-glass-text: #{map.get($vals, text)};
+
+      .item:not(:last-child)::after {
+        background-color: map.get($vals, border);
+      }
+
+      .marker {
+        background-color: map.get($vals, bg);
+        color: map.get($vals, text);
+      }
+    }
   }
 
   .glass.content,
   .glass.marker {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+    @include mixins.glass-surface(
+      var(--timeline-glass-bg, var(--glass-background)),
+      var(--timeline-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    color: inherit;
   }
-}
+
+  .clear .marker {
+    box-shadow: none;
+  }
+
+  @each $k, $v in theme.$rounding {
+    .round#{$k} {
+      border-radius: $v;
+    }
+  }
+
+  @each $k, $v in theme.$shadow {
+    .shadow#{$k} {
+      box-shadow: $v;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .timeline,
+    .timeline * {
+      transition: none !important;
+      animation: none !important;
+    }
+
+    .marker:hover {
+      transform: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .marker:hover {
+      transform: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .content {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+    }
+
+    .item:not(:last-child)::after {
+      background: ButtonText !important;
+    }
+
+    .marker {
+      background: ButtonFace !important;
+      color: ButtonText !important;
+      border: 1px solid ButtonText !important;
+    }
+
+    .glass.content,
+    .glass.marker {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+  }
 }

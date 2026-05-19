@@ -104,10 +104,15 @@
     min-width: 0;
     min-height: 44px;
     border: 0;
-    background: transparent;
     color: inherit;
+    background: transparent;
     padding: 0 var(--spacing-sm);
     font: inherit;
+  }
+
+  .input::placeholder {
+    color: inherit;
+    opacity: 0.6;
   }
 
   .input:focus {
@@ -149,7 +154,7 @@
     width: 100%;
     border: 0;
     background: transparent;
-    color: inherit;
+    color: var(--text-color);
     text-align: left;
     padding: var(--spacing-sm);
     cursor: pointer;
@@ -220,7 +225,7 @@
     .#{$name}.glass {
       background: var(--combobox-glass-bg);
       border-color: var(--combobox-glass-border);
-      color: var(--combobox-glass-text);
+      color: inherit;
 
       &:hover {
         background: var(--combobox-glass-hover-bg);
@@ -230,7 +235,7 @@
     .outline.#{$name} {
       background: transparent;
       border: 2px solid map.get($values, border);
-      color: map.get($values, text);
+      color: inherit;
 
       &:hover {
         background: map.get($values, hover);
@@ -245,7 +250,7 @@
         var(--glass-blur)
       );
 
-      color: var(--combobox-glass-text);
+      color: inherit;
     }
   }
 
@@ -277,7 +282,7 @@
     .#{$name}.glass {
       background: var(--combobox-glass-bg);
       border-color: var(--combobox-glass-border);
-      color: var(--combobox-glass-text);
+      color: inherit;
 
       &:hover {
         background: var(--combobox-glass-hover-bg);
@@ -287,7 +292,7 @@
     .outline.#{$name} {
       background: transparent;
       border: 2px solid map.get($values, border);
-      color: map.get($values, text);
+      color: inherit;
 
       &:hover {
         background: map.get($values, hover);
@@ -302,7 +307,7 @@
         var(--glass-blur)
       );
 
-      color: var(--combobox-glass-text);
+      color: inherit;
     }
   }
 

@@ -1,6 +1,5 @@
 @use "../../../styles/_animations";
 
-
 @layer boreal-ui.components {
   .barChart,
   .root {
@@ -8,14 +7,14 @@
     flex-direction: column;
     gap: var(--spacing-sm);
     max-width: 100%;
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-ui);
   }
   .barChart_label,
   .label {
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
-    color: var(--text-color-primary);
+    color: inherit;
   }
   .barChart_svg,
   .svg {
@@ -39,7 +38,7 @@
   }
   .barChart_axisLabel,
   .axisLabel {
-    fill: var(--text-color-primary);
+    fill: currentColor;
     font-size: 0.7rem;
     opacity: 0.72;
   }
@@ -51,42 +50,6 @@
     border-right-color: transparent;
     border-radius: 50%;
     animation: spin 700ms linear infinite;
-  }
-  .barChart_primary,
-  .primary {
-    color: var(--primary-color);
-  }
-  .barChart_secondary,
-  .secondary {
-    color: var(--secondary-color);
-  }
-  .barChart_tertiary,
-  .tertiary {
-    color: var(--tertiary-color);
-  }
-  .barChart_quaternary,
-  .quaternary {
-    color: var(--quaternary-color);
-  }
-  .barChart_clear,
-  .clear {
-    color: var(--text-color-primary);
-  }
-  .barChart_success,
-  .success {
-    color: var(--success-color);
-  }
-  .barChart_info,
-  .info {
-    color: var(--info-color);
-  }
-  .barChart_warning,
-  .warning {
-    color: var(--warning-color);
-  }
-  .barChart_error,
-  .error {
-    color: var(--error-color);
   }
   .barChart_loading,
   .loading {

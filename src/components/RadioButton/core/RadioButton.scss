@@ -64,14 +64,14 @@
     padding: 0;
     margin: 0;
     border: 0;
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-ui);
   }
 
   .radio_legend {
     padding: 0;
     margin: 0 0 var(--spacing-xs);
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-label);
@@ -113,7 +113,7 @@
   }
 
   .radio_description {
-    color: var(--text-color-secondary);
+    color: inherit;
   }
 
   .radio_errorMessage,
@@ -217,7 +217,7 @@
   }
 
   .radio_label {
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-body);
@@ -243,7 +243,7 @@
       --radio-glass-border: #{map.get($vals, glass-border)};
       --radio-glass-text: #{map.get($vals, text)};
 
-      color: map.get($vals, border);
+      color: inherit;
 
       .radio_circle {
         border-color: map.get($vals, border);
@@ -262,8 +262,6 @@
       --radio-glass-border: #{map.get($vals, glass-border)};
       --radio-glass-text: #{map.get($vals, text)};
 
-      color: map.get($vals, bg);
-
       .radio_circle {
         border-color: map.get($vals, bg);
       }
@@ -281,7 +279,7 @@
       var(--glass-blur)
     );
 
-    color: var(--radio-glass-text, currentcolor);
+    color: inherit;
     border-color: var(--radio-glass-border, var(--glass-border-color));
   }
 

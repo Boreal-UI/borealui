@@ -78,13 +78,13 @@
 
       .icon {
         background-color: var(--disabled-color);
-        color: var(--text-color-secondary);
+        color: inherit;
         transform: none;
         opacity: 0.5;
       }
 
       .label {
-        color: var(--text-color-secondary);
+        color: inherit;
         opacity: 0.5;
       }
     }
@@ -126,7 +126,7 @@
       font-weight: var(--font-weight-label);
       line-height: var(--line-height-label);
       letter-spacing: var(--letter-spacing-label);
-      color: var(--text-color-primary);
+      color: inherit;
 
       @include bp.down(xs) {
         margin-left: var(--spacing-xs);
@@ -140,7 +140,7 @@
     }
 
     .active .stepButton {
-      color: var(--text-color-primary);
+      color: inherit;
       transform: scale(1.1);
     }
 
@@ -171,7 +171,7 @@
       &.#{$name}.glass .active .stepButton {
         background-color: var(--stepper-glass-bg);
         border: 2px solid var(--stepper-glass-border);
-        color: var(--stepper-glass-text);
+        color: inherit;
       }
     }
 
@@ -188,13 +188,21 @@
       &.#{$name}.glass .active .stepButton {
         background-color: var(--stepper-glass-bg);
         border: 2px solid var(--stepper-glass-border);
-        color: var(--stepper-glass-text);
+        color: inherit;
       }
     }
 
     &.clear .active .stepButton {
       background-color: var(--background-color-darker);
     }
+  }
+
+  .stepper.clear .active .stepButton {
+    background-color: var(--disabled-color);
+  }
+
+  .stepper.clear.glass .active .stepButton {
+    background-color: var(--disabled-color);
   }
 
   @media (prefers-reduced-motion: reduce) {

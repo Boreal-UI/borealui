@@ -194,7 +194,7 @@
         var(--glass-blur)
       );
 
-      color: var(--button-glass-text, currentcolor);
+      color: inherit;
       isolation: isolate;
 
       &:hover {
@@ -216,7 +216,7 @@
     &_clear {
       background-color: transparent;
       box-shadow: none;
-      color: var(--text-color-primary);
+      color: inherit;
     }
 
     &_outline {
@@ -256,7 +256,7 @@
         background-color: transparent;
         background: var(--button-glass-bg);
         border: 1px solid var(--button-glass-border);
-        color: var(--button-glass-text);
+        color: inherit;
 
         &:hover {
           background-color: transparent;
@@ -266,12 +266,12 @@
 
       &_outline.button_#{$name} {
         background-color: transparent;
-        color: map.get($values, text);
+        color: inherit;
         border-color: map.get($values, border);
 
         &:hover {
           border-color: map.get($values, hover);
-          color: map.get($values, text);
+          color: inherit;
           background-color: map.get($values, bg);
         }
       }
@@ -300,7 +300,7 @@
         background-color: transparent;
         background: var(--button-glass-bg);
         border: 1px solid var(--button-glass-border);
-        color: var(--button-glass-text);
+        color: inherit;
 
         &:hover {
           background-color: transparent;
@@ -310,12 +310,12 @@
 
       &_outline.button_#{$name} {
         background-color: transparent;
-        color: map.get($values, text);
+        color: inherit;
         border-color: map.get($values, border);
 
         &:hover {
           border-color: map.get($values, hover);
-          color: map.get($values, text);
+          color: inherit;
           background-color: map.get($values, bg);
         }
       }

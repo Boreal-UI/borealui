@@ -48,7 +48,7 @@
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md);
     background: var(--background-color-lighter);
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     line-height: var(--line-height-label);
@@ -63,6 +63,9 @@
   }
 
   .menu {
+    --menu-radius: var(--border-radius-md);
+
+    border-radius: var(--menu-radius);
     position: fixed;
     top: var(--spacing-sm);
     left: var(--spacing-sm);
@@ -71,10 +74,9 @@
     min-width: 12rem;
     max-width: var(--menu-panel-max-width, calc(100vw - 1rem));
     max-height: var(--menu-panel-max-height, calc(100vh - 1rem));
-    padding: var(--spacing-xs) 0;
     border: 1px solid var(--border-color);
     background: var(--background-color-lighter);
-    color: var(--text-color);
+    color: inherit;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     line-height: var(--line-height-label);
@@ -94,6 +96,7 @@
       --menu-glass-border: #{map.get($values, glass-border)};
       --menu-glass-text: #{map.get($values, text)};
       --menu-item-hover-bg: #{map.get($values, hover)};
+      --menu-item-hover-text: #{map.get($values, text)};
       border-color: map.get($values, border);
     }
   }
@@ -109,18 +112,26 @@
     }
   }
 
+  .clear {
+    --menu-item-hover-text: var(--text-color);
+    color: inherit;
+  }
+
   .glass {
     @include mixins.glass-surface(
       var(--menu-glass-bg, rgba(255, 255, 255, 0.18)),
       var(--menu-glass-border, rgba(255, 255, 255, 0.34)),
       16px
     );
+
+    .item:hover {
+      background: var(--menu-glass-hover-bg, rgba(255, 255, 255, 0.24));
+    }
   }
 
   .itemWrapper {
     position: relative;
     min-width: 100%;
-    overflow: visible;
   }
 
   .item {
@@ -133,7 +144,7 @@
     padding: var(--spacing-sm) var(--spacing-md);
     border: 0;
     background: transparent;
-    color: var(--text-color);
+    color: inherit;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-label);
@@ -149,6 +160,7 @@
   .item:hover,
   .item:focus {
     background: var(--menu-item-hover-bg, var(--background-color-dark));
+    color: var(--menu-item-hover-text, inherit);
     outline: none;
   }
 
@@ -192,7 +204,8 @@
   .shortcut {
     flex: 0 0 auto;
     margin-left: var(--spacing-md);
-    color: var(--text-color-secondary);
+    color: inherit;
+    opacity: 0.8;
     font-size: var(--font-size-caption);
     white-space: nowrap;
   }
@@ -205,7 +218,8 @@
 
   .sectionLabel {
     padding: var(--spacing-xs) var(--spacing-md);
-    color: var(--text-color-primary);
+    color: inherit;
+    opacity: 0.8;
     font-size: var(--font-size-caption);
     font-weight: var(--font-weight-heading);
     line-height: var(--line-height-caption);
@@ -244,7 +258,7 @@
   }
 
   .destructive {
-    color: var(--danger-color, var(--error-color));
+    color: var(--error-color);
   }
 
   .inset .itemContent {
@@ -258,18 +272,34 @@
 
   .menu.clear {
     .label {
-      color: var(--text-color);
+      color: inherit;
     }
 
-    .item:hover {
+    .item:hover,
+    .item:focus {
       background-color: var(--background-color-dark);
+      color: inherit;
+      opacity: 0.8;
     }
   }
 
   @each $key, $value in theme.$rounding {
     .round#{$key} {
-      border-radius: $value;
+      --menu-radius: #{$value};
+      border-radius: var(--menu-radius);
     }
+  }
+
+  .menu > .itemWrapper:first-child > .item,
+  .menu > .item:first-child {
+    border-top-left-radius: calc(var(--menu-radius) - 1px);
+    border-top-right-radius: calc(var(--menu-radius) - 1px);
+  }
+
+  .menu > .itemWrapper:last-child > .item,
+  .menu > .item:last-child {
+    border-bottom-left-radius: calc(var(--menu-radius) - 1px);
+    border-bottom-right-radius: calc(var(--menu-radius) - 1px);
   }
 
   @each $key, $value in theme.$shadow {

@@ -89,7 +89,6 @@
       color: var(--text-color);
     }
 
-    .columnMenuTrigger,
     .paginationButton,
     .columnControlButton,
     .expandButton {
@@ -98,6 +97,25 @@
       border-radius: var(--border-radius-sm);
       background: var(--background-color);
       color: var(--text-color);
+      padding: 0 var(--spacing-xs);
+      font: inherit;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+    }
+
+    .columnMenuTrigger {
+      min-height: 32px;
+      border-radius: var(--border-radius-sm);
+      background: transparent;
       padding: 0 var(--spacing-xs);
       font: inherit;
       cursor: pointer;
@@ -138,6 +156,7 @@
     .viewport {
       width: 100%;
       overflow-x: auto;
+      border-radius: 0;
       -webkit-overflow-scrolling: touch;
     }
 
@@ -148,7 +167,8 @@
     .table {
       width: 100%;
       min-width: var(--data-table-min-width);
-      border-collapse: collapse;
+      border-collapse: separate;
+      border-spacing: 0;
       table-layout: auto;
       font-size: inherit;
     }
@@ -201,7 +221,7 @@
       border-bottom: 1px solid var(--text-color-primary);
       text-align: left;
       white-space: nowrap;
-      color: var(--text-color-primary);
+      color: inherit;
       font-family: var(--font-family-body);
       font-size: var(--font-size-body-sm);
       font-weight: var(--font-weight-body);
@@ -288,6 +308,10 @@
       z-index: 2;
       background: var(--background-color-dark);
       box-shadow: 1px 0 0 var(--border-color);
+
+      &.headerCell {
+        color: var(--text-color);
+      }
     }
 
     th.pinnedCell {
@@ -492,6 +516,10 @@
         color: map.get($values, text);
       }
 
+      .columnMenuTrigger {
+        color: map.get($values, text);
+      }
+
       .headerCell {
         background-color: map.get($values, bg);
         color: map.get($values, text);
@@ -506,7 +534,7 @@
       .headerCell {
         border: 2px solid map.get($values, border);
         background-color: transparent;
-        color: map.get($values, text);
+        color: inherit;
 
         @include bp.down(sm) {
           border-width: 1.5px;
@@ -527,6 +555,10 @@
         color: map.get($values, text);
       }
 
+      .columnMenuTrigger {
+        color: map.get($values, text);
+      }
+
       .headerCell {
         background-color: map.get($values, bg);
         color: map.get($values, text);
@@ -541,7 +573,7 @@
       .headerCell {
         border: 2px solid map.get($values, border);
         background-color: transparent;
-        color: map.get($values, text);
+        color: inherit;
 
         @include bp.down(sm) {
           border-width: 1.5px;
@@ -557,7 +589,7 @@
       18px
     );
 
-    color: var(--data-table-glass-text, var(--text-color-primary));
+    color: inherit;
 
     .table {
       background: transparent;
@@ -565,25 +597,25 @@
 
     .toolbar {
       background: var(--data-table-glass-hover-bg, rgba(255, 255, 255, 0.22));
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
       border-bottom: 1px solid
         var(--data-table-glass-border, rgba(255, 255, 255, 0.28));
     }
 
     .toolbarTitle {
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
     }
 
     .filterInput {
       background: var(--data-table-glass-bg, rgba(255, 255, 255, 0.16));
       border-color: var(--data-table-glass-border, rgba(255, 255, 255, 0.28));
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
     }
 
     .headerCell,
     th.selectionCell {
       background: var(--data-table-glass-hover-bg, rgba(255, 255, 255, 0.22));
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
       border-bottom-color: var(
         --data-table-glass-border,
         var(--text-color-primary)
@@ -593,7 +625,7 @@
     .selectionCell,
     .cell {
       background: unset;
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
       border-bottom-color: var(
         --data-table-glass-border,
         var(--text-color-primary)
@@ -616,6 +648,36 @@
   @each $key, $value in theme.$rounding {
     .round#{$key} {
       border-radius: $value;
+
+      .toolbar {
+        border-top-left-radius: $value;
+        border-top-right-radius: $value;
+      }
+
+      .pagination {
+        border-bottom-left-radius: $value;
+        border-bottom-right-radius: $value;
+      }
+
+      &:not(:has(.toolbar)) {
+        .table thead th:first-child {
+          border-top-left-radius: $value;
+        }
+
+        .table thead th:last-child {
+          border-top-right-radius: $value;
+        }
+      }
+
+      &:not(:has(.pagination)) {
+        .table tbody tr:last-child > *:first-child {
+          border-bottom-left-radius: $value;
+        }
+
+        .table tbody tr:last-child > *:last-child {
+          border-bottom-right-radius: $value;
+        }
+      }
     }
   }
 

@@ -233,25 +233,49 @@ export const ShadowVariants = () =>
   ]);
 
 export const ThemeVariants: Story = {
-  render: (args) => renderThemeVariants({ component: Accordion, args }),
+  render: (args) =>
+    renderThemeVariants({
+      component: Accordion,
+      args: { ...defaultArgs, ...args },
+    }),
 };
 
 export const StateVariants: Story = {
-  render: (args) => renderStateVariants({ component: Accordion, args }),
+  render: (args) =>
+    renderStateVariants({
+      component: Accordion,
+      args: { ...defaultArgs, ...args },
+    }),
 };
 
 export const OutlineVariants: Story = {
-  render: (args) => renderOutlineVariants({ component: Accordion, args }),
+  render: (args) =>
+    renderOutlineVariants({
+      component: Accordion,
+      args: { ...defaultArgs, ...args },
+    }),
 };
 
 export const GlassVariants: Story = {
-  render: (args) => renderGlassVariants({ component: Accordion, args }),
+  render: (args) =>
+    renderGlassVariants({
+      component: Accordion,
+      args: { ...defaultArgs, ...args },
+    }),
 };
 
 export const GlassOutlineVariants: Story = {
-  render: (args) => renderGlassOutlineVariants({ component: Accordion, args }),
+  render: (args) =>
+    renderGlassOutlineVariants({
+      component: Accordion,
+      args: { ...defaultArgs, ...args },
+    }),
 };
 
 export const StateOutlineVariants: Story = {
-  render: (args) => renderStateOutlineVariants({ component: Accordion, args }),
+  render: (args) =>
+    renderStateOutlineVariants({
+      component: Accordion,
+      args: { ...defaultArgs, ...args },
+    }),
 };

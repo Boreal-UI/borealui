@@ -81,7 +81,7 @@
       var(--nav-glass-border, rgba(255, 255, 255, 0.32)),
       16px
     );
-    color: var(--nav-glass-text, var(--text-color-primary));
+    color: inherit;
   }
 
   .glass .item:hover,

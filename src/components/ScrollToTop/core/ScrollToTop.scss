@@ -3,119 +3,118 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.scrollToTop {
-  position: fixed;
-  bottom: calc(65px + env(safe-area-inset-bottom, 0px));
-  right: var(--spacing-sm);
-  z-index: 2003;
-  cursor: pointer;
-  opacity: 0.9;
-  transition:
-    opacity var(--transition-default),
-    transform var(--transition-default);
-
-  &:hover {
-    opacity: 1;
-    transform: scale(1.05);
-
-    @include bp.down(xs) {
-      transform: scale(1.02);
-    }
-  }
-
-  @include bp.down(xs) {
-    bottom: calc(56px + env(safe-area-inset-bottom, 0px));
-    right: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
-    right: var(--spacing-md);
-  }
-
-  &_button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .scrollToTop {
+    position: fixed;
+    bottom: calc(65px + env(safe-area-inset-bottom, 0px));
+    right: var(--spacing-sm);
+    z-index: 2003;
     cursor: pointer;
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    margin: 0;
+    opacity: 0.9;
+    transition:
+      opacity var(--transition-default),
+      transform var(--transition-default);
 
-    &:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 3px;
-      border-radius: 8px;
+    &:hover {
+      opacity: 1;
+      transform: scale(1.05);
+
+      @include bp.down(xs) {
+        transform: scale(1.02);
+      }
     }
-  }
-
-  &_icon {
-    font-size: var(--font-size-label);
-    color: var(--text-color-primary);
-    background-color: var(--background-color-lighter);
-    padding: var(--spacing-xs);
-    width: 100%;
-    height: 100%;
 
     @include bp.down(xs) {
-      font-size: var(--font-size-caption);
-      padding: 1px;
+      bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+      right: var(--spacing-xs);
     }
 
     @include bp.up(lg) {
-      font-size: var(--font-size-body-sm);
-      padding: var(--spacing-sm);
+      bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+      right: var(--spacing-md);
     }
-  }
 
-  @each $key, $value in theme.$rounding {
-    &_round-#{$key} {
-      .scrollToTop_icon,
-      .button_icon {
-        border-radius: $value;
+    &_button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background-color: transparent;
+      border: none;
+      padding: 0;
+      margin: 0;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 3px;
+        border-radius: 8px;
+      }
+    }
+
+    &_icon {
+      font-size: var(--font-size-label);
+      color: var(--text-color);
+      background-color: var(--background-color-lighter);
+      padding: var(--spacing-xs);
+      width: 100%;
+      height: 100%;
+
+      @include bp.down(xs) {
+        font-size: var(--font-size-caption);
+        padding: 1px;
+      }
+
+      @include bp.up(lg) {
+        font-size: var(--font-size-body-sm);
+        padding: var(--spacing-sm);
+      }
+    }
+
+    @each $key, $value in theme.$rounding {
+      &_round-#{$key} {
+        .scrollToTop_icon,
+        .button_icon {
+          border-radius: $value;
+        }
+      }
+    }
+
+    @each $key, $value in theme.$shadow {
+      &_shadow-#{$key} {
+        .scrollToTop_icon,
+        .button_icon {
+          box-shadow: $value;
+        }
       }
     }
   }
 
-  @each $key, $value in theme.$shadow {
-    &_shadow-#{$key} {
-      .scrollToTop_icon,
-      .button_icon {
-        box-shadow: $value;
-      }
+  @media (prefers-reduced-motion: reduce) {
+    .scrollToTop,
+    .scrollToTop * {
+      transition: none !important;
+    }
+
+    .scrollToTop:hover {
+      transform: none !important;
     }
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .scrollToTop,
-  .scrollToTop * {
-    transition: none !important;
+  @media (hover: none) {
+    .scrollToTop:hover {
+      transform: none;
+    }
   }
 
-  .scrollToTop:hover {
-    transform: none !important;
-  }
-}
+  @media (forced-colors: active) {
+    .scrollToTop_icon {
+      background: Canvas;
+      color: ButtonText;
+      border: 1px solid ButtonText;
+    }
 
-@media (hover: none) {
-  .scrollToTop:hover {
-    transform: none;
+    .scrollToTop_button:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 3px;
+    }
   }
-}
-
-@media (forced-colors: active) {
-  .scrollToTop_icon {
-    background: Canvas;
-    color: ButtonText;
-    border: 1px solid ButtonText;
-  }
-
-  .scrollToTop_button:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 3px;
-  }
-}
 }

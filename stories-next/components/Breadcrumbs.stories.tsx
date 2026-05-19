@@ -121,27 +121,49 @@ export const WithClassName: Story = {
 };
 
 export const ThemeVariants: Story = {
-  render: (args) => renderThemeVariants({ component: Breadcrumbs, args }),
+  render: (args) =>
+    renderThemeVariants({
+      component: Breadcrumbs,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const StateVariants: Story = {
-  render: (args) => renderStateVariants({ component: Breadcrumbs, args }),
+  render: (args) =>
+    renderStateVariants({
+      component: Breadcrumbs,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const OutlineVariants: Story = {
-  render: (args) => renderOutlineVariants({ component: Breadcrumbs, args }),
+  render: (args) =>
+    renderOutlineVariants({
+      component: Breadcrumbs,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const GlassVariants: Story = {
-  render: (args) => renderGlassVariants({ component: Breadcrumbs, args }),
+  render: (args) =>
+    renderGlassVariants({
+      component: Breadcrumbs,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const GlassOutlineVariants: Story = {
   render: (args) =>
-    renderGlassOutlineVariants({ component: Breadcrumbs, args }),
+    renderGlassOutlineVariants({
+      component: Breadcrumbs,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const StateOutlineVariants: Story = {
   render: (args) =>
-    renderStateOutlineVariants({ component: Breadcrumbs, args }),
+    renderStateOutlineVariants({
+      component: Breadcrumbs,
+      args: { ...args, ...defaultArgs },
+    }),
 };

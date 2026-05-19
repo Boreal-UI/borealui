@@ -129,7 +129,10 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
           glass={glass}
           onClick={onActionClick}
           aria-label={resolvedActionAriaLabel}
-          className={actionButtonClassName}
+          className={combineClassNames(
+            classMap.actionBtn,
+            actionButtonClassName,
+          )}
           data-testid={`${testId}-action`}
         >
           {actionLabel}

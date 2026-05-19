@@ -1,60 +1,67 @@
 import { expandClassMap } from "@/utils/propAliases";
-import React from "react";
+import { forwardRef } from "react";
 import DateTimePickerBase from "../DateTimePickerBase";
 import "./DateTimePicker.scss";
 import type { DateTimePickerProps } from "../DateTimePicker.types";
 
 const classes = {
-  wrapper: "datetime_picker_wrapper",
-  label: "datetime_picker_label",
-  labelTop: "datetime_picker_label_top",
-  labelBottom: "datetime_picker_label_bottom",
-  labelLeft: "datetime_picker_label_left",
-  labelRight: "datetime_picker_label_right",
-  description: "datetime_picker_description",
+  container: "dateTimePicker_container",
+  label: "dateTimePicker_label",
+  labelTop: "dateTimePicker_labelTop",
+  labelBottom: "dateTimePicker_labelBottom",
+  labelLeft: "dateTimePicker_labelLeft",
+  labelRight: "dateTimePicker_labelRight",
 
-  fullWidth: "datetime_picker_full_width",
+  root: "dateTimePicker",
+  content: "dateTimePicker_content",
+  inputWrapper: "dateTimePicker_inputWrapper",
+  input: "dateTimePicker_input",
+  button: "dateTimePicker_button",
+  description: "dateTimePicker_description",
+  helperText: "dateTimePicker_helperText",
+  errorText: "dateTimePicker_errorText",
+  loader: "dateTimePicker_loader",
+  srOnly: "sr_only",
+  fullWidth: "dateTimePicker_fullWidth",
+  readOnly: "dateTimePicker_readOnly",
 
-  inputWrapper: "datetime_picker_input_wrapper",
-  input: "datetime_picker_input",
+  primary: "dateTimePicker_primary",
+  secondary: "dateTimePicker_secondary",
+  tertiary: "dateTimePicker_tertiary",
+  quaternary: "dateTimePicker_quaternary",
 
-  primary: "datetime_picker_primary",
-  secondary: "datetime_picker_secondary",
-  tertiary: "datetime_picker_tertiary",
-  quaternary: "datetime_picker_quaternary",
+  success: "dateTimePicker_success",
+  info: "dateTimePicker_info",
+  warning: "dateTimePicker_warning",
+  error: "dateTimePicker_error",
 
-  success: "datetime_picker_success",
-  info: "datetime_picker_info",
-  error: "datetime_picker_error",
-  warning: "datetime_picker_warning",
+  clear: "dateTimePicker_clear",
+  outline: "dateTimePicker_outline",
+  glass: "dateTimePicker_glass",
+  disabled: "dateTimePicker_disabled",
+  loading: "dateTimePicker_loading",
 
-  clear: "datetime_picker_clear",
-  glass: "datetime_picker_glass",
+  shadowNone: "dateTimePicker_shadow-None",
+  shadowLight: "dateTimePicker_shadow-Light",
+  shadowMedium: "dateTimePicker_shadow-Medium",
+  shadowStrong: "dateTimePicker_shadow-Strong",
+  shadowIntense: "dateTimePicker_shadow-Intense",
 
-  xs: "datetime_picker_xs",
-  small: "datetime_picker_small",
-  medium: "datetime_picker_medium",
-  large: "datetime_picker_large",
-  xl: "datetime_picker_xl",
-
-  outline: "datetime_picker_outline",
-  disabled: "datetime_picker_disabled",
-  icon: "datetime_picker_icon",
-
-  shadowNone: "datetime_picker_shadow-None",
-  shadowLight: "datetime_picker_shadow-Light",
-  shadowMedium: "datetime_picker_shadow-Medium",
-  shadowStrong: "datetime_picker_shadow-Strong",
-  shadowIntense: "datetime_picker_shadow-Intense",
-
-  roundNone: "datetime_picker_round-None",
-  roundSmall: "datetime_picker_round-Small",
-  roundMedium: "datetime_picker_round-Medium",
-  roundLarge: "datetime_picker_round-Large",
+  roundNone: "dateTimePicker_round-None",
+  roundSmall: "dateTimePicker_round-Small",
+  roundMedium: "dateTimePicker_round-Medium",
+  roundLarge: "dateTimePicker_round-Large",
+  roundFull: "dateTimePicker_round-Full",
 };
 
-const DateTimePicker: React.FC<DateTimePickerProps> = (props) => (
-  <DateTimePickerBase {...props} classMap={expandClassMap(classes)} />
+const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(
+  (props, ref) => (
+    <DateTimePickerBase
+      {...props}
+      ref={ref}
+      classMap={expandClassMap(classes)}
+    />
+  ),
 );
 DateTimePicker.displayName = "DateTimePicker";
 export default DateTimePicker;

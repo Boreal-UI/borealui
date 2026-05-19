@@ -19,7 +19,7 @@
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
     line-height: var(--line-height-label);
-    color: var(--text-color-primary);
+    color: inherit;
   }
 
   .labelTop {
@@ -44,7 +44,7 @@
     --searchInput-glass-bg: rgba(255, 255, 255, 0.18);
     --searchInput-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --searchInput-glass-border: rgba(255, 255, 255, 0.28);
-    --searchInput-glass-text: var(--text-color-primary);
+    --searchInput-glass-text: inherit;
 
     position: relative;
     display: inline-flex;
@@ -55,7 +55,7 @@
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
-    color: var(--text-color-primary);
+    color: inherit;
     box-shadow: var(--box-shadow-sm);
     transition: var(--transition-default);
     overflow: hidden;
@@ -210,7 +210,7 @@
 
       &.outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
       }
@@ -225,7 +225,13 @@
       --searchInput-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
-      color: map.get($vals, text);
+
+      &.outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
     }
   }
 
@@ -242,7 +248,7 @@
       16px
     );
 
-    color: var(--searchInput-glass-text);
+    color: inherit;
   }
 
   .glass:hover {
@@ -297,6 +303,10 @@
       align-items: flex-start;
       flex-direction: column;
     }
+  }
+
+  .clear.outline.glass {
+    border-color: var(--text-color);
   }
 
   @media (prefers-reduced-motion: reduce) {

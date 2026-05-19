@@ -94,7 +94,7 @@
         var(--glass-blur)
       );
 
-      color: var(--accordion-glass-text, currentcolor);
+      color: inherit;
     }
 
     &.content {
@@ -173,7 +173,7 @@
 
       &.glass.header {
         background: var(--accordion-glass-bg);
-        color: var(--accordion-glass-text);
+        color: inherit;
 
         &:hover {
           background: var(--accordion-glass-hover-bg);
@@ -183,7 +183,7 @@
       &.outline {
         background-color: transparent;
         border: 2px solid map.get($values, border);
-        color: map.get($values, text);
+        color: inherit;
 
         @include bp.down(sm) {
           border-width: 1.5px;
@@ -202,7 +202,7 @@
           var(--glass-blur)
         );
 
-        color: var(--accordion-glass-text);
+        color: inherit;
       }
     }
   }
@@ -223,7 +223,7 @@
 
       &.glass.header {
         background: var(--accordion-glass-bg);
-        color: var(--accordion-glass-text);
+        color: inherit;
 
         &:hover {
           background: var(--accordion-glass-hover-bg);
@@ -233,7 +233,7 @@
       &.outline {
         background-color: transparent;
         border: 2px solid map.get($values, border);
-        color: map.get($values, text);
+        color: inherit;
 
         @include bp.down(sm) {
           border-width: 1.5px;
@@ -252,7 +252,7 @@
           var(--glass-blur)
         );
 
-        color: var(--accordion-glass-text);
+        color: inherit;
       }
     }
   }

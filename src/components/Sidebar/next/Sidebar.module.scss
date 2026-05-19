@@ -5,338 +5,334 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.wrapper {
-  width: 240px;
-  height: 100vh;
-  background-color: var(--background-color-light);
-  border-right: 1px solid var(--background-color-lighter);
-  position: sticky;
-  top: 0;
-  overflow-y: auto;
-  font-family: var(--font-family-ui);
-  overscroll-behavior: contain;
-
-  @include bp.down(md) {
-    width: 200px;
-  }
-
-  @include bp.up(lg) {
-    width: 260px;
-  }
-
-  @include bp.down(xs) {
-    width: 100%;
-    height: auto;
-    position: relative;
-    border-right: none;
-    border-bottom: 1px solid var(--background-color-lighter);
-  }
-
-  @each $k, $v in theme.$rounding {
-    &.round#{$k} {
-      border-radius: $v;
-    }
-  }
-
-  @each $k, $v in theme.$shadow {
-    &.shadow#{$k} {
-      box-shadow: $v;
-    }
-  }
-}
-
-@each $name, $vals in theme.$themes {
-  .#{$name} {
-    --sidebar-glass-bg: #{map.get($vals, glass-bg)};
-    --sidebar-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --sidebar-glass-border: #{map.get($vals, glass-border)};
-    --sidebar-glass-text: #{map.get($vals, text)};
-  }
-
-  .#{$name} .active {
-    background-color: map.get($vals, bg);
-    color: map.get($vals, text);
-  }
-
-  .#{$name}.outline .active {
-    background-color: transparent;
-    color: map.get($vals, text);
-    border: 2px solid map.get($vals, border);
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
-  }
-
-  .wrapper.clear.#{$name} .active {
-    background-color: transparent;
-  }
-}
-
-@each $name, $vals in theme.$states {
-  .#{$name} {
-    --sidebar-glass-bg: #{map.get($vals, glass-bg)};
-    --sidebar-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --sidebar-glass-border: #{map.get($vals, glass-border)};
-    --sidebar-glass-text: #{map.get($vals, text)};
-  }
-
-  .#{$name} .active {
-    background-color: map.get($vals, bg);
-    color: map.get($vals, text);
-
-    &:hover {
-      background-color: map.get($vals, hover);
-    }
-  }
-
-  .#{$name}.outline .active {
-    border: 2px solid map.get($vals, bg);
-    background-color: transparent;
-    color: map.get($vals, text);
-
-    &:hover {
-      background-color: map.get($vals, hover);
-    }
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
-  }
-}
-
-.glass {
-  @include mixins.glass-surface(
-    var(--sidebar-glass-bg, rgba(255, 255, 255, 0.16)),
-    var(--sidebar-glass-border, rgba(255, 255, 255, 0.28)),
-    18px
-  );
-  color: var(--sidebar-glass-text, var(--text-color-primary));
-}
-
-.glass .link:hover,
-.glass .active {
-  background-color: var(
-    --sidebar-glass-hover-bg,
-    rgba(255, 255, 255, 0.22)
-  );
-  color: var(--sidebar-glass-text, var(--text-color-primary));
-}
-
-.nav {
-  display: flex;
-  flex-direction: column;
-}
-
-.list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  @include bp.down(xs) {
-    display: contents;
-  }
-}
-
-.link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  color: var(--text-color-secondary);
-  text-decoration: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: var(--transition-default);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-
-  &:hover {
-    text-decoration: none;
-    background-color: var(--background-color-dark);
-    color: var(--text-color-primary);
-    letter-spacing: 0.05em;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 6px;
-  }
-
-  @include bp.down(xs) {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--font-size-caption);
-  }
-
-  @include bp.up(lg) {
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: var(--font-size-body-sm);
-  }
-}
-
-.active {
-  font-weight: var(--font-weight-label);
-  letter-spacing: 0.1em;
-}
-
-.childLink {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-body-sm);
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-label);
-  }
-}
-
-.icon {
-  display: inline-flex;
-  align-items: center;
-  margin-right: 2px;
-
-  svg {
-    width: 1em;
-    height: 1em;
-  }
-
-  @include bp.down(xs) {
-    margin-right: var(--spacing-xxs);
-
-    svg {
-      width: 0.95em;
-      height: 0.95em;
-    }
-  }
-
-  @include bp.up(lg) {
-    svg {
-      width: 1.05em;
-      height: 1.05em;
-    }
-  }
-}
-
-.chevron {
-  transition: transform 0.2s ease;
-}
-
-.chevronOpen {
-  transform: rotate(180deg);
-}
-
-.submenu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.25s ease;
-}
-
-.submenuOpen {
-  max-height: max-content;
-}
-
-.childList {
-  border-left: 3px solid var(--background-color-darker);
-  margin: 0.25rem 0;
-
-  @include bp.down(xs) {
-    border-left-width: 2px;
-  }
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  margin-top: auto;
-  width: 100%;
-  padding: 1rem;
-  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-  border-top: 1px solid var(--background-color-darker);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-
-  @include bp.down(xs) {
-    position: static;
-    border-top: none;
-    padding: var(--spacing-sm);
-    gap: var(--spacing-xs);
-  }
-}
-
-.footerLink {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  text-decoration: none;
-
-  &:hover {
-    color: var(--text-color-primary);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-}
-
-.footerVersion {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-caption);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  opacity: 0.7;
-  margin-top: 0.5rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wrapper,
-  .wrapper * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .link:hover {
-    background-color: transparent;
-    letter-spacing: normal;
-  }
-}
-
-@media (forced-colors: active) {
   .wrapper {
-    background: Canvas;
-    color: CanvasText;
-    border-color: ButtonFace;
+    width: 240px;
+    height: 100vh;
+    background-color: var(--background-color-light);
+    border-right: 1px solid var(--background-color-lighter);
+    position: sticky;
+    color: inherit;
+    top: 0;
+    overflow-y: auto;
+    font-family: var(--font-family-ui);
+    overscroll-behavior: contain;
+
+    @include bp.down(md) {
+      width: 200px;
+    }
+
+    @include bp.up(lg) {
+      width: 260px;
+    }
+
+    @include bp.down(xs) {
+      width: 100%;
+      height: auto;
+      position: relative;
+      border-right: none;
+      border-bottom: 1px solid var(--background-color-lighter);
+    }
+
+    @each $k, $v in theme.$rounding {
+      &.round#{$k} {
+        border-radius: $v;
+      }
+    }
+
+    @each $k, $v in theme.$shadow {
+      &.shadow#{$k} {
+        box-shadow: $v;
+      }
+    }
+  }
+
+  @each $name, $vals in theme.$themes {
+    .#{$name} {
+      --sidebar-glass-bg: #{map.get($vals, glass-bg)};
+      --sidebar-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --sidebar-glass-border: #{map.get($vals, glass-border)};
+      --sidebar-glass-text: #{map.get($vals, text)};
+    }
+
+    .#{$name} .active {
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+    }
+
+    .#{$name}.outline .active {
+      background-color: transparent;
+      color: inherit;
+      border: 2px solid map.get($vals, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
+
+    .wrapper.clear.#{$name} .active {
+      background-color: transparent;
+    }
+  }
+
+  @each $name, $vals in theme.$states {
+    .#{$name} {
+      --sidebar-glass-bg: #{map.get($vals, glass-bg)};
+      --sidebar-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --sidebar-glass-border: #{map.get($vals, glass-border)};
+      --sidebar-glass-text: #{map.get($vals, text)};
+    }
+
+    .#{$name} .active {
+      background-color: map.get($vals, bg);
+
+      &:hover {
+        background-color: map.get($vals, hover);
+      }
+    }
+
+    .#{$name}.outline .active {
+      border: 2px solid map.get($vals, bg);
+      background-color: transparent;
+      color: inherit;
+
+      &:hover {
+        background-color: map.get($vals, hover);
+      }
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
   }
 
   .glass {
-    background: Canvas;
-    border-color: ButtonText;
-    box-shadow: none;
+    @include mixins.glass-surface(
+      var(--sidebar-glass-bg, rgba(255, 255, 255, 0.16)),
+      var(--sidebar-glass-border, rgba(255, 255, 255, 0.28)),
+      18px
+    );
+    color: inherit;
+  }
+
+  .glass .link:hover,
+  .glass .active {
+    background-color: var(--sidebar-glass-hover-bg, rgba(255, 255, 255, 0.22));
+    color: inherit;
+  }
+
+  .nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    @include bp.down(xs) {
+      display: contents;
+    }
   }
 
   .link {
-    color: ButtonText;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    color: inherit;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-default);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+
+    &:hover {
+      text-decoration: none;
+      background-color: var(--background-color-dark);
+      color: inherit;
+      letter-spacing: 0.05em;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    @include bp.down(xs) {
+      padding: var(--spacing-xs) var(--spacing-sm);
+      font-size: var(--font-size-caption);
+    }
+
+    @include bp.up(lg) {
+      padding: var(--spacing-sm) var(--spacing-md);
+      font-size: var(--font-size-body-sm);
+    }
   }
 
-  .link:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 2px;
+  .active {
+    font-weight: var(--font-weight-label);
+    letter-spacing: 0.1em;
+  }
+
+  .childLink {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-sm);
+
+    @include bp.down(xs) {
+      font-size: var(--font-size-label);
+    }
+  }
+
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 2px;
+
+    svg {
+      width: 1em;
+      height: 1em;
+    }
+
+    @include bp.down(xs) {
+      margin-right: var(--spacing-xxs);
+
+      svg {
+        width: 0.95em;
+        height: 0.95em;
+      }
+    }
+
+    @include bp.up(lg) {
+      svg {
+        width: 1.05em;
+        height: 1.05em;
+      }
+    }
+  }
+
+  .chevron {
+    transition: transform 0.2s ease;
+  }
+
+  .chevronOpen {
+    transform: rotate(180deg);
+  }
+
+  .submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+
+  .submenuOpen {
+    max-height: max-content;
   }
 
   .childList {
-    border-left-color: ButtonText;
+    border-left: 3px solid var(--background-color-darker);
+    margin: 0.25rem 0;
+
+    @include bp.down(xs) {
+      border-left-width: 2px;
+    }
   }
-}
+
+  .footer {
+    position: absolute;
+    bottom: 0;
+    margin-top: auto;
+    width: 100%;
+    padding: 1rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--background-color-darker);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    @include bp.down(xs) {
+      position: static;
+      border-top: none;
+      padding: var(--spacing-sm);
+      gap: var(--spacing-xs);
+    }
+  }
+
+  .footerLink {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    text-decoration: none;
+
+    &:hover {
+      color: var(--text-color-primary);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  }
+
+  .footerVersion {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-caption);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    opacity: 0.7;
+    margin-top: 0.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wrapper,
+    .wrapper * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .link:hover {
+      background-color: transparent;
+      letter-spacing: normal;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .wrapper {
+      background: Canvas;
+      color: CanvasText;
+      border-color: ButtonFace;
+    }
+
+    .glass {
+      background: Canvas;
+      border-color: ButtonText;
+      box-shadow: none;
+    }
+
+    .link {
+      color: ButtonText;
+    }
+
+    .link:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+
+    .childList {
+      border-left-color: ButtonText;
+    }
+  }
 }

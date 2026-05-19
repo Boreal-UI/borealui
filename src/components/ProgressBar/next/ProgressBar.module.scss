@@ -7,216 +7,219 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $progress-sizes: (
+    xs: 2px,
+    small: 5px,
+    medium: 10px,
+    large: 15px,
+    xl: 20px,
+  );
 
-$progress-sizes: (
-  xs: 2px,
-  small: 5px,
-  medium: 10px,
-  large: 15px,
-  xl: 20px,
-);
-
-.container {
-  width: 100%;
-  min-width: 100px;
-  height: 10px;
-  background-color: var(--background-color-lighter);
-  overflow: hidden;
-  position: relative;
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-
-  @include bp.down(xs) {
-    min-width: 80px;
-  }
-
-  @include bp.up(lg) {
-    min-width: 160px;
-  }
-
-  @each $size, $height in $progress-sizes {
-    &.#{$size} {
-      height: $height;
-
-      @include bp.down(xs) {
-        height: calc(#{$height} * 0.85);
-      }
-
-      @include bp.up(lg) {
-        height: calc(#{$height} * 1.1);
-      }
-    }
-  }
-
-  &.clear {
-    background-color: var(--background-color-lighter);
-  }
-
-  &.glass {
-    @include mixins.glass-surface(
-      var(--progress-glass-bg, var(--glass-background)),
-      var(--progress-glass-border, var(--glass-border-color)),
-      var(--glass-blur)
-    );
-
-    color: var(--progress-glass-text, currentcolor);
-  }
-}
-
-.layout {
-  display: flex;
-  gap: 0.5rem;
-  width: 100%;
-  font-family: var(--font-family-ui);
-}
-
-.label {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  white-space: nowrap;
-}
-
-.labelTop {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.labelBottom {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.labelLeft,
-.labelRight {
-  align-items: center;
-}
-
-.labelLeft .container,
-.labelRight .container {
-  width: auto;
-  flex: 1 1 0;
-  min-width: 0;
-}
-
-.labelLeft .label,
-.labelRight .label {
-  flex: 0 0 auto;
-}
-
-.bar {
-  position: relative;
-  height: 100%;
-  width: 0;
-  transition: width 0.4s ease-in-out;
-  border-radius: inherit;
-
-  @each $name, $vals in theme.$themes {
-    &.#{$name} {
-      --progress-glass-bg: #{map.get($vals, glass-bg)};
-      --progress-glass-hover-bg: #{map.get($vals, glass-hover)};
-      --progress-glass-border: #{map.get($vals, glass-border)};
-      --progress-glass-text: #{map.get($vals, text)};
-
-      background-color: map.get($vals, bg);
-    }
-  }
-
-  @each $name, $vals in theme.$states {
-    &.#{$name} {
-      --progress-glass-bg: #{map.get($vals, glass-bg)};
-      --progress-glass-hover-bg: #{map.get($vals, glass-hover)};
-      --progress-glass-border: #{map.get($vals, glass-border)};
-      --progress-glass-text: #{map.get($vals, text)};
-
-      background-color: map.get($vals, bg);
-    }
-  }
-
-  &.clear {
-    background-color: var(--text-color-primary);
-  }
-}
-
-.container {
-  @each $name, $vals in theme.$themes {
-    &.#{$name} {
-      --progress-glass-bg: #{map.get($vals, glass-bg)};
-      --progress-glass-hover-bg: #{map.get($vals, glass-hover)};
-      --progress-glass-border: #{map.get($vals, glass-border)};
-      --progress-glass-text: #{map.get($vals, text)};
-    }
-  }
-
-  @each $name, $vals in theme.$states {
-    &.#{$name} {
-      --progress-glass-bg: #{map.get($vals, glass-bg)};
-      --progress-glass-hover-bg: #{map.get($vals, glass-hover)};
-      --progress-glass-border: #{map.get($vals, glass-border)};
-      --progress-glass-text: #{map.get($vals, text)};
-    }
-  }
-}
-
-.glassBar {
-  box-shadow: inset 0 0 0 1px var(--progress-glass-border, transparent);
-}
-
-.animated {
-  animation: progress-grow 0.8s ease-out;
-}
-
-.indeterminate {
-  width: 100%;
-  animation: indeterminate-move 1.5s infinite ease-in-out;
-}
-
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .bar {
-    transition: none !important;
-  }
-
-  .animated,
-  .indeterminate {
-    animation: none !important;
-  }
-}
-
-@media (forced-colors: active) {
   .container {
-    background: Canvas;
-    color: CanvasText;
-    border: 1px solid ButtonText;
+    width: 100%;
+    min-width: 100px;
+    height: 10px;
+    background-color: var(--background-color-lighter);
+    overflow: hidden;
+    position: relative;
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    @include bp.down(xs) {
+      min-width: 80px;
+    }
+
+    @include bp.up(lg) {
+      min-width: 160px;
+    }
+
+    @each $size, $height in $progress-sizes {
+      &.#{$size} {
+        height: $height;
+
+        @include bp.down(xs) {
+          height: calc(#{$height} * 0.85);
+        }
+
+        @include bp.up(lg) {
+          height: calc(#{$height} * 1.1);
+        }
+      }
+    }
+
+    &.clear {
+      background-color: var(--background-color-lighter);
+    }
+
+    &.glass {
+      @include mixins.glass-surface(
+        var(--progress-glass-bg, var(--glass-background)),
+        var(--progress-glass-border, var(--glass-border-color)),
+        var(--glass-blur)
+      );
+
+      color: inherit;
+    }
+  }
+
+  .layout {
+    display: flex;
+    gap: 0.5rem;
+    width: 100%;
+    font-family: var(--font-family-ui);
+  }
+
+  .label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    white-space: nowrap;
+  }
+
+  .labelTop {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .labelBottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .labelLeft,
+  .labelRight {
+    align-items: center;
+  }
+
+  .labelLeft .container,
+  .labelRight .container {
+    width: auto;
+    flex: 1 1 0;
+    min-width: 0;
+  }
+
+  .labelLeft .label,
+  .labelRight .label {
+    flex: 0 0 auto;
   }
 
   .bar {
-    background: Highlight;
+    position: relative;
+    height: 100%;
+    width: 0;
+    transition: width 0.4s ease-in-out;
+    border-radius: inherit;
+
+    @each $name, $vals in theme.$themes {
+      &.#{$name} {
+        --progress-glass-bg: #{map.get($vals, glass-bg)};
+        --progress-glass-hover-bg: #{map.get($vals, glass-hover)};
+        --progress-glass-border: #{map.get($vals, glass-border)};
+        --progress-glass-text: #{map.get($vals, text)};
+
+        background-color: map.get($vals, bg);
+      }
+    }
+
+    @each $name, $vals in theme.$states {
+      &.#{$name} {
+        --progress-glass-bg: #{map.get($vals, glass-bg)};
+        --progress-glass-hover-bg: #{map.get($vals, glass-hover)};
+        --progress-glass-border: #{map.get($vals, glass-border)};
+        --progress-glass-text: #{map.get($vals, text)};
+
+        background-color: map.get($vals, bg);
+      }
+    }
+
+    &.clear {
+      background-color: var(--text-color);
+    }
   }
 
-  .container.glass {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+  .container {
+    @each $name, $vals in theme.$themes {
+      &.#{$name} {
+        --progress-glass-bg: #{map.get($vals, glass-bg)};
+        --progress-glass-hover-bg: #{map.get($vals, glass-hover)};
+        --progress-glass-border: #{map.get($vals, glass-border)};
+        --progress-glass-text: #{map.get($vals, text)};
+      }
+    }
+
+    @each $name, $vals in theme.$states {
+      &.#{$name} {
+        --progress-glass-bg: #{map.get($vals, glass-bg)};
+        --progress-glass-hover-bg: #{map.get($vals, glass-hover)};
+        --progress-glass-border: #{map.get($vals, glass-border)};
+        --progress-glass-text: #{map.get($vals, text)};
+      }
+    }
   }
-}
+
+  .glassBar {
+    box-shadow: inset 0 0 0 1px var(--progress-glass-border, transparent);
+  }
+
+  .animated {
+    animation: progress-grow 0.8s ease-out;
+  }
+
+  .indeterminate {
+    width: 100%;
+    animation: indeterminate-move 1.5s infinite ease-in-out;
+  }
+
+  .bar.clear {
+    background-color: var(--text-color);
+  }
+
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bar {
+      transition: none !important;
+    }
+
+    .animated,
+    .indeterminate {
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .container {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+    }
+
+    .bar {
+      background: Highlight;
+    }
+
+    .container.glass {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+  }
 }

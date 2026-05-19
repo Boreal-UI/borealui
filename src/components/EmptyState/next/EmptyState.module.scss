@@ -5,298 +5,319 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .empty_state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-sm);
+    background-color: var(--background-color-light);
+    transition: var(--transition-default);
+    width: 400px;
+    max-width: 100%;
+    min-width: 100px;
+    font-family: var(--font-family-body);
 
-.empty_state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: var(--spacing-xs);
-  padding: var(--spacing-sm);
-  background-color: var(--background-color-light);
-  transition: var(--transition-default);
-  width: 400px;
-  max-width: 100%;
-  min-width: 100px;
-  font-family: var(--font-family-body);
-
-  @include bp.down(md) {
-    width: 100%;
-    padding: var(--spacing-md);
-  }
-
-  @include bp.up(lg) {
-    width: 420px;
-  }
-}
-
-.icon {
-  font-size: 3em;
-
-  @include bp.down(md) {
-    font-size: 2.5em;
-  }
-
-  @include bp.down(xs) {
-    font-size: 2em;
-  }
-
-  @include bp.up(lg) {
-    font-size: 3.25em;
-  }
-}
-
-.title,
-.message {
-  margin: var(--spacing-sm);
-}
-
-.title {
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-body);
-  font-weight: var(--font-weight-h4);
-  line-height: var(--line-height-heading);
-  letter-spacing: var(--letter-spacing-heading);
-
-  @include bp.down(md) {
-    font-size: var(--font-size-body-sm);
-  }
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-label);
-  }
-
-  @include bp.up(lg) {
-    font-size: calc(var(--font-size-body) * 1.05);
-  }
-}
-
-.message {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  opacity: 0.8;
-  width: 90%;
-
-  @include bp.down(md) {
-    font-size: var(--font-size-label);
-  }
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-caption);
-  }
-
-  @include bp.up(lg) {
-    font-size: calc(var(--font-size-body-sm) * 1.05);
-  }
-}
-
-.outline {
-  background-color: transparent;
-  box-shadow: none;
-  border: 2px solid var(--text-color-primary);
-
-  @include bp.down(sm) {
-    border-width: 1.5px;
-  }
-}
-
-.clear {
-  box-shadow: none;
-}
-
-.clear.outline {
-  color: var(--text-color-primary);
-  border-color: var(--text-color-primary);
-
-  @include bp.down(sm) {
-    border-width: 1.5px;
-  }
-}
-
-.disabled {
-  opacity: 0.6;
-  pointer-events: none;
-}
-
-$pad-sizes: (
-  "xs": var(--spacing-xs),
-  "small": var(--spacing-sm),
-  "medium": var(--spacing-md),
-  "large": var(--spacing-lg),
-  "xl": var(--spacing-xl),
-);
-
-$font-sizes: (
-  "xs": var(--font-size-caption),
-  "small": var(--font-size-label),
-  "medium": var(--font-size-body-sm),
-  "large": var(--font-size-body),
-  "xl": var(--font-size-h6),
-);
-
-$icon-sizes: (
-  "xs": 2em,
-  "small": 3em,
-  "medium": 3.5em,
-  "large": 4em,
-  "xl": 4.5em,
-);
-
-@each $size, $pad in $pad-sizes {
-  .#{$size} {
-    .title {
-      padding: $pad;
-      font-size: map.get($font-sizes, $size);
-    }
-
-    .message {
-      font-size: map.get($font-sizes, $size);
-    }
-
-    .icon {
-      font-size: map.get($icon-sizes, $size);
-    }
-
-    @include bp.down(sm) {
-      .title {
-        font-size: map.get($font-sizes, $size);
-      }
-
-      .message {
-        font-size: map.get($font-sizes, $size);
-      }
+    @include bp.down(md) {
+      width: 100%;
+      padding: var(--spacing-md);
     }
 
     @include bp.up(lg) {
-      .title {
-        font-size: calc(#{map.get($font-sizes, $size)} * 1.05);
-      }
-
-      .message {
-        font-size: calc(#{map.get($font-sizes, $size)} * 1.02);
-      }
+      width: 420px;
     }
   }
-}
 
-@each $name, $vals in theme.$themes {
-  .#{$name} {
-    --empty-state-glass-bg: #{map.get($vals, glass-bg)};
-    --empty-state-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --empty-state-glass-border: #{map.get($vals, glass-border)};
-    --empty-state-glass-text: #{map.get($vals, text)};
+  .icon {
+    font-size: 3em;
 
-    background-color: map.get($vals, bg);
-    color: map.get($vals, text);
-  }
+    @include bp.down(md) {
+      font-size: 2.5em;
+    }
 
-  .#{$name}.outline {
-    background-color: transparent;
-    border: 2px solid map.get($vals, border);
-    color: map.get($vals, text);
+    @include bp.down(xs) {
+      font-size: 2em;
+    }
 
-    @include bp.down(sm) {
-      border-width: 1.5px;
+    @include bp.up(lg) {
+      font-size: 3.25em;
     }
   }
-}
 
-@each $name, $vals in theme.$states {
-  .#{$name} {
-    --empty-state-glass-bg: #{map.get($vals, glass-bg)};
-    --empty-state-glass-hover-bg: #{map.get($vals, glass-hover)};
-    --empty-state-glass-border: #{map.get($vals, glass-border)};
-    --empty-state-glass-text: #{map.get($vals, text)};
-
-    background-color: map.get($vals, bg);
-    color: map.get($vals, text);
+  .title,
+  .message {
+    margin: var(--spacing-sm);
   }
 
-  .#{$name}.outline {
-    background-color: transparent;
-    border: 2px solid map.get($vals, bg);
-    color: map.get($vals, text);
+  .title {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-body);
+    font-weight: var(--font-weight-h4);
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
 
-    @include bp.down(sm) {
-      border-width: 1.5px;
+    @include bp.down(md) {
+      font-size: var(--font-size-body-sm);
+    }
+
+    @include bp.down(xs) {
+      font-size: var(--font-size-label);
+    }
+
+    @include bp.up(lg) {
+      font-size: calc(var(--font-size-body) * 1.05);
     }
   }
-}
 
-.glass {
-  @include mixins.glass-surface(
-    var(--empty-state-glass-bg, var(--glass-background)),
-    var(--empty-state-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
-  );
+  .message {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    opacity: 0.8;
+    width: 90%;
 
-  color: var(--empty-state-glass-text, currentcolor);
-}
+    @include bp.down(md) {
+      font-size: var(--font-size-label);
+    }
 
-.glass:hover {
-  background: var(--empty-state-glass-hover-bg, var(--glass-background));
-}
+    @include bp.down(xs) {
+      font-size: var(--font-size-caption);
+    }
 
-.glass.outline {
-  background: transparent;
-  border-color: var(--empty-state-glass-border, var(--glass-border-color));
-}
-
-@each $k, $v in theme.$rounding {
-  .round#{$k} {
-    border-radius: $v;
-  }
-}
-
-@each $k, $v in theme.$shadow {
-  .shadow#{$k} {
-    box-shadow: $v;
-  }
-}
-
-.empty_state[tabindex]:focus-visible,
-.empty_state a:focus-visible,
-.empty_state button:focus-visible {
-  outline: 2px solid var(--focus-outline-color, var(--primary-color));
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .empty_state,
-  .empty_state * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .empty_state * {
-    transition: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .empty_state {
-    background: Canvas;
-    color: CanvasText;
-    outline-color: Highlight;
+    @include bp.up(lg) {
+      font-size: calc(var(--font-size-body-sm) * 1.05);
+    }
   }
 
   .outline {
-    border: 1px solid ButtonText;
+    background-color: transparent;
+    box-shadow: none;
+    border: 2px solid var(--text-color-primary);
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
   }
 
-  .empty_state.glass {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+  .clear {
+    box-shadow: none;
   }
-}
+
+  .clear.outline {
+    color: inherit;
+    border-color: var(--text-color-primary);
+
+    @include bp.down(sm) {
+      border-width: 1.5px;
+    }
+  }
+
+  .disabled {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  $pad-sizes: (
+    "xs": var(--spacing-xs),
+    "small": var(--spacing-sm),
+    "medium": var(--spacing-md),
+    "large": var(--spacing-lg),
+    "xl": var(--spacing-xl),
+  );
+
+  $font-sizes: (
+    "xs": var(--font-size-caption),
+    "small": var(--font-size-label),
+    "medium": var(--font-size-body-sm),
+    "large": var(--font-size-body),
+    "xl": var(--font-size-h6),
+  );
+
+  $icon-sizes: (
+    "xs": 2em,
+    "small": 3em,
+    "medium": 3.5em,
+    "large": 4em,
+    "xl": 4.5em,
+  );
+
+  @each $size, $pad in $pad-sizes {
+    .#{$size} {
+      .title {
+        padding: $pad;
+        font-size: map.get($font-sizes, $size);
+      }
+
+      .message {
+        font-size: map.get($font-sizes, $size);
+      }
+
+      .icon {
+        font-size: map.get($icon-sizes, $size);
+      }
+
+      @include bp.down(sm) {
+        .title {
+          font-size: map.get($font-sizes, $size);
+        }
+
+        .message {
+          font-size: map.get($font-sizes, $size);
+        }
+      }
+
+      @include bp.up(lg) {
+        .title {
+          font-size: calc(#{map.get($font-sizes, $size)} * 1.05);
+        }
+
+        .message {
+          font-size: calc(#{map.get($font-sizes, $size)} * 1.02);
+        }
+      }
+    }
+  }
+
+  @each $name, $vals in theme.$themes {
+    .#{$name} {
+      --empty-state-glass-bg: #{map.get($vals, glass-bg)};
+      --empty-state-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --empty-state-glass-border: #{map.get($vals, glass-border)};
+      --empty-state-glass-text: #{map.get($vals, text)};
+
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+
+      .actionBtn {
+        color: map.get($vals, text);
+      }
+    }
+
+    .#{$name}.outline {
+      background-color: transparent;
+      border: 2px solid map.get($vals, border);
+      color: inherit;
+
+      .actionBtn {
+        color: inherit;
+        border-color: map.get($vals, bg);
+      }
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
+  }
+
+  @each $name, $vals in theme.$states {
+    .#{$name} {
+      --empty-state-glass-bg: #{map.get($vals, glass-bg)};
+      --empty-state-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --empty-state-glass-border: #{map.get($vals, glass-border)};
+      --empty-state-glass-text: #{map.get($vals, text)};
+
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+
+      .actionBtn {
+        color: map.get($vals, text);
+      }
+    }
+
+    .#{$name}.outline {
+      background-color: transparent;
+      border: 2px solid map.get($vals, bg);
+      color: inherit;
+
+      .actionBtn {
+        color: inherit;
+        border-color: map.get($vals, bg);
+      }
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
+  }
+
+  .glass {
+    @include mixins.glass-surface(
+      var(--empty-state-glass-bg, var(--glass-background)),
+      var(--empty-state-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    .actionBtn {
+      color: inherit;
+    }
+
+    color: inherit;
+  }
+
+  .glass:hover {
+    background: var(--empty-state-glass-hover-bg, var(--glass-background));
+  }
+
+  .glass.outline {
+    background: transparent;
+    border-color: var(--empty-state-glass-border, var(--glass-border-color));
+  }
+
+  @each $k, $v in theme.$rounding {
+    .round#{$k} {
+      border-radius: $v;
+    }
+  }
+
+  @each $k, $v in theme.$shadow {
+    .shadow#{$k} {
+      box-shadow: $v;
+    }
+  }
+
+  .empty_state[tabindex]:focus-visible,
+  .empty_state a:focus-visible,
+  .empty_state button:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .empty_state,
+    .empty_state * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .empty_state * {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .empty_state {
+      background: Canvas;
+      color: CanvasText;
+      outline-color: Highlight;
+    }
+
+    .outline {
+      border: 1px solid ButtonText;
+    }
+
+    .empty_state.glass {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+  }
 }

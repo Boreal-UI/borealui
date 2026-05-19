@@ -8,9 +8,8 @@
 @layer boreal-ui.components {
   .pageHeader {
     --pageHeader-glass-bg: rgba(255, 255, 255, 0.18);
-    --pageHeader-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --pageHeader-glass-border: rgba(255, 255, 255, 0.28);
-    --pageHeader-glass-text: var(--text-color-primary);
+    --pageHeader-glass-text: inherit;
 
     display: inline-flex;
     align-items: center;
@@ -20,16 +19,32 @@
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
-    color: var(--text-color-primary);
+    color: inherit;
     box-shadow: var(--box-shadow-sm);
     padding: var(--spacing-sm);
     transition: var(--transition-default);
+  }
+
+  .pageHeader_eyebrow {
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-md);
+    font-weight: var(--font-weight-bold);
+    color: inherit;
+    margin-right: var(--spacing-xxs);
+  }
+
+  .pageHeader_title {
+    font-size: var(--font-size-lg);
+    line-height: var(--line-height-md);
+    font-weight: var(--font-weight-bold);
+    color: inherit;
   }
 
   .pageHeader_content {
     min-width: 0;
     max-width: 100%;
     overflow-wrap: anywhere;
+    color: inherit;
   }
 
   .pageHeader_loader {
@@ -47,24 +62,15 @@
   @each $themeName, $vals in theme.$themes {
     .pageHeader_#{$themeName} {
       --pageHeader-glass-bg: #{map.get($vals, glass-bg)};
-      --pageHeader-glass-hover-bg: #{map.get($vals, glass-hover)};
       --pageHeader-glass-border: #{map.get($vals, glass-border)};
       --pageHeader-glass-text: #{map.get($vals, text)};
       background-color: map.get($vals, bg);
       color: map.get($vals, text);
       border-color: map.get($vals, border);
 
-      &:hover {
-        background-color: if(
-          map.has-key($vals, hover),
-          map.get($vals, hover),
-          map.get($vals, bg)
-        );
-      }
-
       &.pageHeader_outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
       }
@@ -74,12 +80,17 @@
   @each $state, $vals in theme.$states {
     .pageHeader_#{$state} {
       --pageHeader-glass-bg: #{map.get($vals, glass-bg)};
-      --pageHeader-glass-hover-bg: #{map.get($vals, glass-hover)};
       --pageHeader-glass-border: #{map.get($vals, glass-border)};
       --pageHeader-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
-      color: map.get($vals, text);
+
+      &.pageHeader_outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
     }
   }
 
@@ -96,11 +107,7 @@
       16px
     );
 
-    color: var(--pageHeader-glass-text);
-  }
-
-  .pageHeader_glass:hover {
-    background: var(--pageHeader-glass-hover-bg);
+    color: inherit;
   }
 
   .pageHeader_glass.pageHeader_outline {
@@ -201,7 +208,7 @@
   .pageHeader_meta,
   .pageHeader_eyebrow {
     margin: 0;
-    color: var(--text-color-secondary);
+    color: inherit;
     overflow-wrap: anywhere;
   }
 

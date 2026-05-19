@@ -5,222 +5,231 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $progress-sizes: (
+    "xs": (
+      dimensions: 50px,
+      font-size: var(--font-size-caption),
+    ),
+    "small": (
+      dimensions: 60px,
+      font-size: var(--font-size-label),
+    ),
+    "medium": (
+      dimensions: 100px,
+      font-size: var(--font-size-body-sm),
+    ),
+    "large": (
+      dimensions: 140px,
+      font-size: var(--font-size-body),
+    ),
+    "xl": (
+      dimensions: 200px,
+      font-size: var(--font-size-h6),
+    ),
+  );
 
-$progress-sizes: (
-  "xs": (
-    dimensions: 50px,
-    font-size: var(--font-size-caption),
-  ),
-  "small": (
-    dimensions: 60px,
-    font-size: var(--font-size-label),
-  ),
-  "medium": (
-    dimensions: 100px,
-    font-size: var(--font-size-body-sm),
-  ),
-  "large": (
-    dimensions: 140px,
-    font-size: var(--font-size-body),
-  ),
-  "xl": (
-    dimensions: 200px,
-    font-size: var(--font-size-h6),
-  ),
-);
-
-.circular_progress {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  .circle_border {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border-radius: var(--border-radius-round);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: background 0.5s ease-in-out;
-    background: transparent;
-    overflow: hidden;
-
-    &::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      background: var(--circular-progress-fill, transparent);
-      pointer-events: none;
-
-      -webkit-mask: radial-gradient(circle, transparent 0 61%, #000 62% 100%);
-      mask: radial-gradient(circle, transparent 0 61%, #000 62% 100%);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 3px;
-    }
-  }
-
-  .inner_circle {
-    position: relative;
-    z-index: 1;
-    width: 80%;
-    height: 80%;
-    border-radius: var(--border-radius-round);
-    background: var(--background-color);
-    padding: var(--spacing-xxs);
+  .circular_progress {
     display: flex;
     justify-content: center;
     align-items: center;
 
-    @include bp.down(sm) {
-      width: 82%;
-      height: 82%;
-    }
+    .circle_border {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      border-radius: var(--border-radius-round);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: background 0.5s ease-in-out;
+      background: transparent;
+      overflow: hidden;
 
-    @include bp.up(lg) {
-      width: 78%;
-      height: 78%;
-    }
-  }
+      &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: var(--circular-progress-fill, transparent);
+        pointer-events: none;
 
-  &.glass .inner_circle,
-  .inner_circle.glass {
-    @include mixins.glass-surface(
-      var(--circular-progress-glass-bg, var(--glass-background-subtle)),
-      var(--circular-progress-glass-border, var(--glass-border-color)),
-      var(--glass-blur)
-    );
-
-    color: var(--circular-progress-glass-text, currentcolor);
-  }
-
-  @each $name, $values in theme.$themes {
-    &.#{$name} {
-      --circular-progress-glass-bg: #{map.get($values, glass-bg)};
-      --circular-progress-glass-border: #{map.get($values, glass-border)};
-      --circular-progress-glass-text: #{map.get($values, text)};
-
-      .inner_circle {
-        background-color: map.get($values, bg);
+        -webkit-mask: radial-gradient(circle, transparent 0 61%, #000 62% 100%);
+        mask: radial-gradient(circle, transparent 0 61%, #000 62% 100%);
       }
 
-      &.glass .inner_circle,
-      .inner_circle.glass {
-        background-color: var(--circular-progress-glass-bg);
-        border: 1px solid var(--circular-progress-glass-border);
-        color: var(--circular-progress-glass-text);
-      }
-    }
-  }
-
-  @each $name, $values in theme.$states {
-    &.#{$name} {
-      --circular-progress-glass-bg: #{map.get($values, glass-bg)};
-      --circular-progress-glass-border: #{map.get($values, glass-border)};
-      --circular-progress-glass-text: #{map.get($values, text)};
-
-      .inner_circle {
-        background-color: map.get($values, bg);
-      }
-
-      &.glass .inner_circle,
-      .inner_circle.glass {
-        background-color: var(--circular-progress-glass-bg);
-        border: 1px solid var(--circular-progress-glass-border);
-        color: var(--circular-progress-glass-text);
-      }
-    }
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} .circle_border {
-    box-shadow: $value;
-  }
-}
-
-@each $size, $props in $progress-sizes {
-  .#{$size} {
-    $dim: map.get($props, dimensions);
-
-    width: $dim;
-    height: $dim;
-
-    @include bp.down(sm) {
-      width: calc(#{$dim} * 0.9);
-      height: calc(#{$dim} * 0.9);
-    }
-
-    @include bp.up(lg) {
-      width: calc(#{$dim} * 1.1);
-      height: calc(#{$dim} * 1.1);
-    }
-
-    .value_text {
-      font-family: var(--font-family-ui);
-      font-size: map.get($props, font-size);
-      font-weight: var(--font-weight-label);
-      line-height: var(--line-height-label);
-      letter-spacing: var(--letter-spacing-label);
-      color: var(--text-color-primary);
-
-      @include bp.up(lg) {
-        font-size: calc(#{map.get($props, font-size)} * 1.05);
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 3px;
       }
     }
 
     .inner_circle {
+      position: relative;
+      z-index: 1;
+      width: 80%;
+      height: 80%;
+      border-radius: var(--border-radius-round);
+      background: var(--background-color);
       padding: var(--spacing-xxs);
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
       @include bp.down(sm) {
-        padding: calc(var(--spacing-xxs) * 0.75);
+        width: 82%;
+        height: 82%;
       }
 
       @include bp.up(lg) {
-        padding: calc(var(--spacing-xxs) * 1.25);
+        width: 78%;
+        height: 78%;
+      }
+    }
+
+    &.glass .inner_circle,
+    .inner_circle.glass {
+      @include mixins.glass-surface(
+        var(--circular-progress-glass-bg, var(--glass-background-subtle)),
+        var(--circular-progress-glass-border, var(--glass-border-color)),
+        var(--glass-blur)
+      );
+
+      color: inherit;
+    }
+
+    @each $name, $values in theme.$themes {
+      &.#{$name} {
+        --circular-progress-glass-bg: #{map.get($values, glass-bg)};
+        --circular-progress-glass-border: #{map.get($values, glass-border)};
+        --circular-progress-glass-text: #{map.get($values, text)};
+
+        .inner_circle {
+          background-color: map.get($values, bg);
+        }
+
+        &.glass .inner_circle,
+        .inner_circle.glass {
+          background-color: var(--circular-progress-glass-bg);
+          border: 1px solid var(--circular-progress-glass-border);
+        }
+      }
+    }
+
+    @each $name, $values in theme.$states {
+      &.#{$name} {
+        --circular-progress-glass-bg: #{map.get($values, glass-bg)};
+        --circular-progress-glass-border: #{map.get($values, glass-border)};
+        --circular-progress-glass-text: #{map.get($values, text)};
+
+        .inner_circle {
+          background-color: map.get($values, bg);
+        }
+
+        &.glass .inner_circle,
+        .inner_circle.glass {
+          background-color: var(--circular-progress-glass-bg);
+          border: 1px solid var(--circular-progress-glass-border);
+        }
       }
     }
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .circular_progress,
-  .circular_progress * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .circular_progress .circle_border:hover {
-    box-shadow: none;
-    transform: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .circular_progress .circle_border,
-  .circular_progress .inner_circle {
-    background: Canvas;
-    color: CanvasText;
-    outline-color: Highlight;
-    box-shadow: none !important;
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} .circle_border {
+      box-shadow: $value;
+    }
   }
 
-  .circular_progress .circle_border {
-    border: 1px solid ButtonText;
+  @each $size, $props in $progress-sizes {
+    .#{$size} {
+      $dim: map.get($props, dimensions);
+
+      width: $dim;
+      height: $dim;
+
+      @include bp.down(sm) {
+        width: calc(#{$dim} * 0.9);
+        height: calc(#{$dim} * 0.9);
+      }
+
+      @include bp.up(lg) {
+        width: calc(#{$dim} * 1.1);
+        height: calc(#{$dim} * 1.1);
+      }
+
+      .value_text {
+        font-family: var(--font-family-ui);
+        font-size: map.get($props, font-size);
+        font-weight: var(--font-weight-label);
+        line-height: var(--line-height-label);
+        letter-spacing: var(--letter-spacing-label);
+        color: var(--text-color-primary);
+
+        @include bp.up(lg) {
+          font-size: calc(#{map.get($props, font-size)} * 1.05);
+        }
+      }
+
+      .inner_circle {
+        padding: var(--spacing-xxs);
+
+        @include bp.down(sm) {
+          padding: calc(var(--spacing-xxs) * 0.75);
+        }
+
+        @include bp.up(lg) {
+          padding: calc(var(--spacing-xxs) * 1.25);
+        }
+      }
+    }
   }
 
-  .circular_progress.glass .inner_circle {
-    background: Canvas;
-    border: 1px solid ButtonText;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+  .glass {
+    .value_text {
+      color: inherit;
+    }
   }
-}
+
+  .clear {
+    .value_text {
+      color: inherit;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .circular_progress,
+    .circular_progress * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .circular_progress .circle_border:hover {
+      box-shadow: none;
+      transform: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .circular_progress .circle_border,
+    .circular_progress .inner_circle {
+      background: Canvas;
+      color: CanvasText;
+      outline-color: Highlight;
+      box-shadow: none !important;
+    }
+
+    .circular_progress .circle_border {
+      border: 1px solid ButtonText;
+    }
+
+    .circular_progress.glass .inner_circle {
+      background: Canvas;
+      border: 1px solid ButtonText;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
 }

@@ -10,7 +10,7 @@
     --pageHeader-glass-bg: rgba(255, 255, 255, 0.18);
     --pageHeader-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --pageHeader-glass-border: rgba(255, 255, 255, 0.28);
-    --pageHeader-glass-text: var(--text-color-primary);
+    --pageHeader-glass-text: inherit;
 
     display: inline-flex;
     align-items: center;
@@ -20,7 +20,7 @@
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
-    color: var(--text-color-primary);
+    color: inherit;
     box-shadow: var(--box-shadow-sm);
     padding: var(--spacing-sm);
     transition: var(--transition-default);
@@ -54,17 +54,9 @@
       color: map.get($vals, text);
       border-color: map.get($vals, border);
 
-      &:hover {
-        background-color: if(
-          map.has-key($vals, hover),
-          map.get($vals, hover),
-          map.get($vals, bg)
-        );
-      }
-
       &.outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
       }
@@ -79,7 +71,13 @@
       --pageHeader-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
-      color: map.get($vals, text);
+
+      &.outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
     }
   }
 
@@ -96,11 +94,7 @@
       16px
     );
 
-    color: var(--pageHeader-glass-text);
-  }
-
-  .glass:hover {
-    background: var(--pageHeader-glass-hover-bg);
+    color: inherit;
   }
 
   .glass.outline {
@@ -201,7 +195,7 @@
   .meta,
   .eyebrow {
     margin: 0;
-    color: var(--text-color-secondary);
+    color: inherit;
     overflow-wrap: anywhere;
   }
 

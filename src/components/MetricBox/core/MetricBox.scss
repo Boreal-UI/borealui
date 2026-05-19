@@ -17,19 +17,11 @@
     height: fit-content;
     text-align: center;
     transition: var(--transition-default);
-    gap: var(--spacing-sm);
+    gap: var(--spacing-xs);
     font-family: var(--font-family-body);
-
-    @include bp.up(xs) {
-      padding: var(--spacing-sm);
-    }
-
-    @include bp.down(sm) {
-      gap: var(--spacing-xs);
-    }
+    padding: var(--spacing-xs) var(--spacing-sm);
 
     @include bp.up(lg) {
-      gap: var(--spacing-md);
       min-width: 140px;
     }
 
@@ -44,6 +36,7 @@
       color: inherit;
       padding: 0;
       line-height: 1;
+      padding: var(--spacing-sm);
 
       @include bp.down(sm) {
         font-size: 1.8rem;
@@ -70,11 +63,7 @@
       display: flex;
       flex-direction: column;
       align-items: inherit;
-      padding: var(--spacing-sm);
-
-      @include bp.up(lg) {
-        padding: var(--spacing-md);
-      }
+      padding: var(--spacing-xs) var(--spacing-sm);
     }
 
     &_title {
@@ -83,7 +72,8 @@
       font-weight: var(--font-weight-label);
       line-height: var(--line-height-label);
       letter-spacing: var(--letter-spacing-label);
-      color: var(--text-color-primary);
+      color: inherit;
+      opacity: 0.8;
 
       @include bp.down(sm) {
         font-size: var(--font-size-caption);
@@ -96,7 +86,7 @@
 
     &_value {
       font-family: var(--font-family-heading);
-      font-size: var(--font-size-h5);
+      font-size: var(--font-size-h4);
       font-weight: var(--font-weight-h3);
       line-height: var(--line-height-heading);
       letter-spacing: var(--letter-spacing-heading);
@@ -106,7 +96,7 @@
       }
 
       @include bp.up(lg) {
-        font-size: var(--font-size-h4);
+        font-size: var(--font-size-h3);
       }
     }
 
@@ -124,32 +114,32 @@
       "xs": (
         icon-size: 1.5rem,
         title-size: var(--font-size-caption),
-        value-size: var(--font-size-label),
+        value-size: var(--font-size-body-md),
         subtext-size: var(--font-size-caption),
       ),
       "small": (
         icon-size: 2rem,
-        title-size: var(--font-size-label),
-        value-size: var(--font-size-body-sm),
-        subtext-size: var(--font-size-label),
+        title-size: var(--font-size-body-sm),
+        value-size: var(--font-size-body-lg),
+        subtext-size: var(--font-size-body-sm),
       ),
       "medium": (
         icon-size: 2rem,
         title-size: var(--font-size-body),
-        value-size: var(--font-size-h5),
-        subtext-size: var(--font-size-body),
+        value-size: var(--font-size-h3),
+        subtext-size: var(--font-size-body-body),
       ),
       "large": (
         icon-size: 2.5rem,
-        title-size: var(--font-size-h6),
-        value-size: var(--font-size-h4),
-        subtext-size: var(--font-size-h6),
+        title-size: var(--font-size-body-md),
+        value-size: var(--font-size-h2),
+        subtext-size: var(--font-size-body-md),
       ),
       "xl": (
         icon-size: 2.5rem,
-        title-size: var(--font-size-h5),
-        value-size: var(--font-size-h3),
-        subtext-size: var(--font-size-h6),
+        title-size: var(--font-size-body-lg),
+        value-size: var(--font-size-h1),
+        subtext-size: var(--font-size-body-lg),
       ),
     );
 
@@ -175,15 +165,14 @@
 
     .metricBox_subtext {
       font-family: var(--font-family-body);
-      font-size: var(--font-size-caption) !important;
       font-weight: var(--font-weight-body);
       line-height: var(--line-height-body);
       letter-spacing: var(--letter-spacing-body);
-      color: var(--text-color-primary);
-      opacity: 0.7;
+      color: inherit;
+      opacity: 0.8;
 
       @include bp.up(lg) {
-        font-size: var(--font-size-body-sm) !important;
+        font-size: var(--font-size-body-sm);
       }
     }
   }
@@ -210,6 +199,12 @@
         border: 2px solid map.get($properties, border);
         background-color: transparent;
 
+        .metricBox_title,
+        .metricBox_subtext,
+        .metricBox_value {
+          color: var(--text-color);
+        }
+
         @include bp.down(sm) {
           border-width: 1.5px;
         }
@@ -229,19 +224,16 @@
       --metric-box-glass-text: #{map.get($properties, text)};
 
       background-color: map.get($properties, bg);
-      color: map.get($properties, text);
-
-      .metricBox_title {
-        color: map.get($properties, text);
-      }
-
-      .metricBox_subtext {
-        color: map.get($properties, text);
-      }
 
       &.metricBox_outline {
         border: 2px solid map.get($properties, border);
         background-color: transparent;
+
+        .metricBox_title,
+        .metricBox_subtext,
+        .metricBox_value {
+          color: var(--text-color);
+        }
 
         @include bp.down(sm) {
           border-width: 1.5px;
@@ -266,7 +258,12 @@
       var(--glass-blur)
     );
 
-    color: var(--metric-box-glass-text, currentcolor);
+    .metricBox_title,
+    .metricBox_subtext,
+    .metricBox_value,
+    .metricBox_icon {
+      color: var(--text-color);
+    }
   }
 
   .metricBox_glass:hover {

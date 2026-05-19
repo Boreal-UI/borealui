@@ -100,7 +100,7 @@
 
     .#{$name}.outline {
       background: transparent;
-      color: var(--alert-text);
+      color: inherit;
       border-color: var(--alert-border);
     }
 
@@ -111,7 +111,7 @@
         var(--glass-blur)
       );
 
-      color: var(--alert-glass-text, var(--alert-text));
+      color: inherit;
       border-color: var(--alert-glass-border, var(--alert-border));
     }
   }
@@ -140,7 +140,7 @@
 
     .#{$name}.outline {
       background: transparent;
-      color: var(--alert-text);
+      color: inherit;
       border-color: var(--alert-border);
     }
 
@@ -151,7 +151,7 @@
         var(--glass-blur)
       );
 
-      color: var(--alert-glass-text, var(--alert-text));
+      color: inherit;
       border-color: var(--alert-glass-border, var(--alert-border));
     }
   }

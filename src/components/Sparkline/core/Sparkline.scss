@@ -1,6 +1,5 @@
 @use "../../../styles/_animations";
 
-
 @layer boreal-ui.components {
   .sparkline,
   .root {
@@ -8,14 +7,14 @@
     flex-direction: column;
     gap: var(--spacing-xs);
     max-width: 100%;
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-ui);
   }
   .sparkline_label,
   .label {
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
-    color: var(--text-color-primary);
+    color: inherit;
   }
   .sparkline_chart,
   .chart {
@@ -47,7 +46,7 @@
   .value {
     font-size: var(--font-size-body-sm);
     font-variant-numeric: tabular-nums;
-    color: var(--text-color-primary);
+    color: inherit;
   }
   .sparkline_loader,
   .loader {
@@ -57,42 +56,6 @@
     border-right-color: transparent;
     border-radius: 50%;
     animation: spin 700ms linear infinite;
-  }
-  .sparkline_primary,
-  .primary {
-    color: var(--primary-color);
-  }
-  .sparkline_secondary,
-  .secondary {
-    color: var(--secondary-color);
-  }
-  .sparkline_tertiary,
-  .tertiary {
-    color: var(--tertiary-color);
-  }
-  .sparkline_quaternary,
-  .quaternary {
-    color: var(--quaternary-color);
-  }
-  .sparkline_clear,
-  .clear {
-    color: var(--text-color-primary);
-  }
-  .sparkline_success,
-  .success {
-    color: var(--success-color);
-  }
-  .sparkline_info,
-  .info {
-    color: var(--info-color);
-  }
-  .sparkline_warning,
-  .warning {
-    color: var(--warning-color);
-  }
-  .sparkline_error,
-  .error {
-    color: var(--error-color);
   }
   .sparkline_loading,
   .loading {

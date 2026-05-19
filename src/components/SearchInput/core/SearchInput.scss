@@ -19,7 +19,7 @@
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
     line-height: var(--line-height-label);
-    color: var(--text-color-primary);
+    color: inherit;
   }
 
   .searchInput_labelTop {
@@ -44,7 +44,7 @@
     --searchInput-glass-bg: rgba(255, 255, 255, 0.18);
     --searchInput-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --searchInput-glass-border: rgba(255, 255, 255, 0.28);
-    --searchInput-glass-text: var(--text-color-primary);
+    --searchInput-glass-text: inherit;
 
     position: relative;
     display: inline-flex;
@@ -55,7 +55,7 @@
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
-    color: var(--text-color-primary);
+    color: inherit;
     box-shadow: var(--box-shadow-sm);
     transition: var(--transition-default);
     overflow: hidden;
@@ -82,7 +82,7 @@
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
-    color: currentColor;
+    color: inherit;
     pointer-events: none;
   }
 
@@ -212,7 +212,7 @@
 
       &.searchInput_outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
       }
@@ -228,6 +228,13 @@
       border-width: 2px;
       border-color: map.get($vals, border);
       color: map.get($vals, text);
+
+      &.searchInput_outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
     }
   }
 
@@ -244,7 +251,7 @@
       16px
     );
 
-    color: var(--searchInput-glass-text);
+    color: inherit;
   }
 
   .searchInput_glass:hover {
@@ -253,6 +260,10 @@
 
   .searchInput_glass.searchInput_outline {
     border-color: var(--searchInput-glass-border);
+  }
+
+  .searchInput_clear.searchInput_outline.searchInput_glass {
+    border-color: var(--text-color);
   }
 
   .searchInput_disabled {

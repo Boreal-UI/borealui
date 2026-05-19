@@ -17,19 +17,11 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions = ["success", "error", "warning"];
-const sizeOptions = ["xs", "small", "medium", "large", "xl"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
-const roundingOptions = ["none", "small", "medium", "large", "full"];
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const meta: Meta<typeof Badge> = {
   title: "Components/Badge",
@@ -123,25 +115,49 @@ export const IconOnly: Story = {
 };
 
 export const ThemeVariants: Story = {
-  render: (args) => renderThemeVariants({ component: Badge, args }),
+  render: (args) =>
+    renderThemeVariants({
+      component: Badge,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const StateVariants: Story = {
-  render: (args) => renderStateVariants({ component: Badge, args }),
+  render: (args) =>
+    renderStateVariants({
+      component: Badge,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const OutlineVariants: Story = {
-  render: (args) => renderOutlineVariants({ component: Badge, args }),
+  render: (args) =>
+    renderOutlineVariants({
+      component: Badge,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const GlassVariants: Story = {
-  render: (args) => renderGlassVariants({ component: Badge, args }),
+  render: (args) =>
+    renderGlassVariants({
+      component: Badge,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const GlassOutlineVariants: Story = {
-  render: (args) => renderGlassOutlineVariants({ component: Badge, args }),
+  render: (args) =>
+    renderGlassOutlineVariants({
+      component: Badge,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const StateOutlineVariants: Story = {
-  render: (args) => renderStateOutlineVariants({ component: Badge, args }),
+  render: (args) =>
+    renderStateOutlineVariants({
+      component: Badge,
+      args: { ...args, ...defaultArgs },
+    }),
 };

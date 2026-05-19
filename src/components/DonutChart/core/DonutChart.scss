@@ -1,6 +1,6 @@
 @use "../../../styles/_animations";
 
-
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
   .donutChart,
   .root {
@@ -9,7 +9,7 @@
     align-items: center;
     gap: var(--spacing-sm);
     max-width: 100%;
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-ui);
   }
   .donutChart_label,
@@ -17,7 +17,7 @@
     align-self: stretch;
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
-    color: var(--text-color-primary);
+    color: inherit;
   }
   .donutChart_chart,
   .chart {
@@ -53,7 +53,7 @@
     place-items: center;
     text-align: center;
     font-weight: var(--font-weight-ui);
-    color: var(--text-color-primary);
+    color: inherit;
   }
   .donutChart_legend,
   .legend {
@@ -63,7 +63,7 @@
     padding: 0;
     margin: 0;
     list-style: none;
-    color: var(--text-color-primary);
+    color: inherit;
   }
   .donutChart_legendItem,
   .legendItem {
@@ -91,42 +91,6 @@
     border-right-color: transparent;
     border-radius: 50%;
     animation: spin 700ms linear infinite;
-  }
-  .donutChart_primary,
-  .primary {
-    color: var(--primary-color);
-  }
-  .donutChart_secondary,
-  .secondary {
-    color: var(--secondary-color);
-  }
-  .donutChart_tertiary,
-  .tertiary {
-    color: var(--tertiary-color);
-  }
-  .donutChart_quaternary,
-  .quaternary {
-    color: var(--quaternary-color);
-  }
-  .donutChart_clear,
-  .clear {
-    color: var(--text-color-primary);
-  }
-  .donutChart_success,
-  .success {
-    color: var(--success-color);
-  }
-  .donutChart_info,
-  .info {
-    color: var(--info-color);
-  }
-  .donutChart_warning,
-  .warning {
-    color: var(--warning-color);
-  }
-  .donutChart_error,
-  .error {
-    color: var(--error-color);
   }
   .donutChart_loading,
   .loading {

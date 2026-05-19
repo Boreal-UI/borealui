@@ -185,7 +185,7 @@
       var(--glass-blur)
     );
 
-    color: var(--tooltip-glass-text, currentcolor);
+    color: inherit;
   }
 
   .tooltip_glass::after {
@@ -212,7 +212,7 @@
     box-shadow: none;
     border: none;
     background-color: map.get(map.get(theme.$themes, "clear"), bg-light);
-    color: var(--text-color-primary);
+    color: inherit;
   }
 
   .tooltip_clear::after {

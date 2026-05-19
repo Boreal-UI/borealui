@@ -1,6 +1,5 @@
 @use "../../../styles/_animations";
 
-
 @layer boreal-ui.components {
   .root,
   .root {
@@ -8,14 +7,14 @@
     flex-direction: column;
     gap: var(--spacing-sm);
     max-width: 100%;
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-ui);
   }
   .label,
   .label {
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
-    color: var(--text-color-primary);
+    color: inherit;
   }
   .svg,
   .svg {
@@ -25,7 +24,7 @@
   }
   .gridLine,
   .gridLine {
-    stroke: currentcolor;
+    stroke: inherit;
     stroke-width: 1;
     opacity: 0.16;
   }
@@ -39,7 +38,7 @@
   }
   .axisLabel,
   .axisLabel {
-    fill: currentcolor;
+    fill: currentColor;
     font-size: 0.7rem;
     opacity: 0.72;
   }
@@ -47,46 +46,10 @@
   .loader {
     width: 1rem;
     height: 1rem;
-    border: 2px solid currentcolor;
+    border: 2px solid inherit;
     border-right-color: transparent;
     border-radius: 50%;
     animation: spin 700ms linear infinite;
-  }
-  .primary,
-  .primary {
-    color: var(--primary-color);
-  }
-  .secondary,
-  .secondary {
-    color: var(--secondary-color);
-  }
-  .tertiary,
-  .tertiary {
-    color: var(--tertiary-color);
-  }
-  .quaternary,
-  .quaternary {
-    color: var(--quaternary-color);
-  }
-  .clear,
-  .clear {
-    color: var(--text-color-primary);
-  }
-  .success,
-  .success {
-    color: var(--success-color);
-  }
-  .info,
-  .info {
-    color: var(--info-color);
-  }
-  .warning,
-  .warning {
-    color: var(--warning-color);
-  }
-  .error,
-  .error {
-    color: var(--error-color);
   }
   .loading,
   .loading {

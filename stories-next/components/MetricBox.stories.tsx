@@ -1,11 +1,5 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import {
-  MetricBox,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "../../src/index.next";
+import { MetricBox } from "../../src/index.next";
 import type { MetricBoxProps } from "../../src/components/MetricBox/MetricBox.types";
 import { FaChartLine, FaCheckCircle } from "react-icons/fa";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
@@ -17,25 +11,10 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const meta: Meta<MetricBoxProps> = {
   title: "Components/MetricBox",
@@ -45,8 +24,10 @@ const meta: Meta<MetricBoxProps> = {
     title: "Users Online",
     value: "1,234",
     theme: "primary",
-    align: "center",
+    align: "left",
     size: "medium",
+    icon: FaChartLine,
+    subtext: "Up 12% since last week",
   },
 };
 
@@ -62,6 +43,8 @@ const defaultArgs: MetricBoxProps = {
   theme: "primary",
   align: "center",
   size: "medium",
+  icon: FaChartLine,
+  subtext: "Up 12% since last week",
 };
 
 export const WithIcon: Story = {
@@ -101,12 +84,7 @@ export const SizeVariants: Story = {
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         {sizes.map((size) => (
-          <MetricBox
-            key={size}
-            title={`${size.charAt(0).toUpperCase() + size.slice(1)} Size`}
-            value="1,000"
-            size={size}
-          />
+          <MetricBox key={size} {...defaultArgs} size={size} />
         ))}
       </div>
     );

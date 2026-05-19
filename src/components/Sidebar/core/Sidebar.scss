@@ -5,338 +5,337 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.sidebar {
-  width: 240px;
-  height: 100vh;
-  background-color: var(--background-color-light);
-  border-right: 1px solid var(--background-color-lighter);
-  position: sticky;
-  top: 0;
-  overflow-y: auto;
-  font-family: var(--font-family-ui);
-  overscroll-behavior: contain;
-
-  @include bp.down(md) {
-    width: 200px;
-  }
-
-  @include bp.up(lg) {
-    width: 260px;
-  }
-
-  @include bp.down(xs) {
-    width: 100%;
-    height: auto;
-    position: relative;
-    border-right: none;
-    border-bottom: 1px solid var(--background-color-lighter);
-  }
-
-  @each $key, $value in theme.$rounding {
-    &_round-#{$key} {
-      border-radius: $value;
-    }
-  }
-
-  @each $key, $value in theme.$shadow {
-    &_shadow-#{$key} {
-      box-shadow: $value;
-    }
-  }
-
-  @each $themeName, $values in theme.$themes {
-    &_#{$themeName} {
-      --sidebar-glass-bg: #{map.get($values, glass-bg)};
-      --sidebar-glass-hover-bg: #{map.get($values, glass-hover)};
-      --sidebar-glass-border: #{map.get($values, glass-border)};
-      --sidebar-glass-text: #{map.get($values, text)};
-    }
-
-    &_#{$themeName} .sidebar_active {
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-    }
-
-    &_#{$themeName}.sidebar_outline .sidebar_active {
-      background-color: transparent;
-      color: map.get($values, text);
-      border: 2px solid map.get($values, border);
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-    }
-
-    &_clear.sidebar_#{$themeName} .sidebar_active {
-      background-color: transparent;
-    }
-  }
-
-  @each $stateName, $values in theme.$states {
-    &_#{$stateName} {
-      --sidebar-glass-bg: #{map.get($values, glass-bg)};
-      --sidebar-glass-hover-bg: #{map.get($values, glass-hover)};
-      --sidebar-glass-border: #{map.get($values, glass-border)};
-      --sidebar-glass-text: #{map.get($values, text)};
-    }
-
-    &_#{$stateName} .sidebar_active {
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-
-      &:hover {
-        background-color: map.get($values, hover);
-      }
-    }
-
-    &_#{$stateName}.sidebar_outline .sidebar_active {
-      border: 2px solid map.get($values, bg);
-      background-color: transparent;
-      color: map.get($values, text);
-
-      &:hover {
-        background-color: map.get($values, hover);
-      }
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-    }
-  }
-
-  &_glass {
-    @include mixins.glass-surface(
-      var(--sidebar-glass-bg, rgba(255, 255, 255, 0.16)),
-      var(--sidebar-glass-border, rgba(255, 255, 255, 0.28)),
-      18px
-    );
-    color: var(--sidebar-glass-text, var(--text-color-primary));
-  }
-
-  &_glass .sidebar_link:hover,
-  &_glass .sidebar_active {
-    background-color: var(
-      --sidebar-glass-hover-bg,
-      rgba(255, 255, 255, 0.22)
-    );
-    color: var(--sidebar-glass-text, var(--text-color-primary));
-  }
-}
-
-.sidebar_nav {
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar_list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-
-  @include bp.down(xs) {
-    display: contents;
-  }
-}
-
-.sidebar_link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 0.5rem 0.75rem;
-  color: var(--text-color-secondary);
-  text-decoration: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  transition: var(--transition-default);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-
-  &:hover {
-    text-decoration: none;
-    background-color: var(--background-color-dark);
-    color: var(--text-color-primary);
-    letter-spacing: 0.05em;
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 6px;
-  }
-
-  @include bp.down(xs) {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font-size: var(--font-size-caption);
-  }
-
-  @include bp.up(lg) {
-    padding: var(--spacing-sm) var(--spacing-md);
-    font-size: var(--font-size-body-sm);
-  }
-}
-
-.sidebar_active {
-  font-weight: var(--font-weight-label);
-  letter-spacing: 0.1em;
-}
-
-.sidebar_child_link {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-body-sm);
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-label);
-  }
-}
-
-.sidebar_chevron {
-  transition: transform 0.2s ease;
-}
-
-.icon {
-  display: inline-flex;
-  align-items: center;
-  margin-right: 2px;
-
-  svg {
-    width: 1em;
-    height: 1em;
-  }
-
-  @include bp.down(xs) {
-    margin-right: var(--spacing-xxs);
-
-    svg {
-      width: 0.95em;
-      height: 0.95em;
-    }
-  }
-
-  @include bp.up(lg) {
-    svg {
-      width: 1.05em;
-      height: 1.05em;
-    }
-  }
-}
-
-.sidebar_chevron_open {
-  transform: rotate(180deg);
-}
-
-.sidebar_submenu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.25s ease;
-}
-
-.sidebar_submenu_open {
-  max-height: max-content;
-}
-
-.sidebar_child_list {
-  border-left: 3px solid var(--background-color-darker);
-  margin: 0.25rem 0;
-
-  @include bp.down(xs) {
-    border-left-width: 2px;
-  }
-}
-
-.sidebar_footer {
-  position: absolute;
-  bottom: 0;
-  margin-top: auto;
-  width: 100%;
-  padding: 1rem;
-  border-top: 1px solid var(--background-color-darker);
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
-
-  @include bp.down(xs) {
-    position: static;
-    border-top: none;
-    padding: var(--spacing-sm);
-    gap: var(--spacing-xs);
-  }
-}
-
-.sidebar_footer_link {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  text-decoration: none;
-
-  &:hover {
-    color: var(--text-color-primary);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-}
-
-.sidebar_footer_version {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-caption);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  opacity: 0.7;
-  margin-top: 0.5rem;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sidebar,
-  .sidebar * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .sidebar_link:hover {
-    background-color: transparent;
-    letter-spacing: normal;
-  }
-}
-
-@media (forced-colors: active) {
   .sidebar {
-    background: Canvas;
-    color: CanvasText;
-    border-color: ButtonFace;
+    width: 240px;
+    height: 100vh;
+    background-color: var(--background-color-light);
+    border-right: 1px solid var(--background-color-lighter);
+    position: sticky;
+    color: inherit;
+    top: 0;
+    overflow-y: auto;
+    font-family: var(--font-family-ui);
+    overscroll-behavior: contain;
+
+    @include bp.down(md) {
+      width: 200px;
+    }
+
+    @include bp.up(lg) {
+      width: 260px;
+    }
+
+    @include bp.down(xs) {
+      width: 100%;
+      height: auto;
+      position: relative;
+      border-right: none;
+      border-bottom: 1px solid var(--background-color-lighter);
+    }
+
+    @each $key, $value in theme.$rounding {
+      &_round-#{$key} {
+        border-radius: $value;
+      }
+    }
+
+    @each $key, $value in theme.$shadow {
+      &_shadow-#{$key} {
+        box-shadow: $value;
+      }
+    }
+
+    @each $themeName, $values in theme.$themes {
+      &_#{$themeName} {
+        --sidebar-glass-bg: #{map.get($values, glass-bg)};
+        --sidebar-glass-hover-bg: #{map.get($values, glass-hover)};
+        --sidebar-glass-border: #{map.get($values, glass-border)};
+        --sidebar-glass-text: #{map.get($values, text)};
+      }
+
+      &_#{$themeName} .sidebar_active {
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+      }
+
+      &_#{$themeName}.sidebar_outline .sidebar_active {
+        background-color: transparent;
+        border: 2px solid map.get($values, border);
+        color: inherit;
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+
+      &_clear.sidebar_#{$themeName} .sidebar_active {
+        background-color: transparent;
+      }
+    }
+
+    @each $stateName, $values in theme.$states {
+      &_#{$stateName} {
+        --sidebar-glass-bg: #{map.get($values, glass-bg)};
+        --sidebar-glass-hover-bg: #{map.get($values, glass-hover)};
+        --sidebar-glass-border: #{map.get($values, glass-border)};
+        --sidebar-glass-text: #{map.get($values, text)};
+      }
+
+      &_#{$stateName} .sidebar_active {
+        background-color: map.get($values, bg);
+
+        &:hover {
+          background-color: map.get($values, hover);
+        }
+      }
+
+      &_#{$stateName}.sidebar_outline .sidebar_active {
+        border: 2px solid map.get($values, bg);
+        background-color: transparent;
+        color: inherit;
+
+        &:hover {
+          background-color: map.get($values, hover);
+        }
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+    }
+
+    &_glass {
+      @include mixins.glass-surface(
+        var(--sidebar-glass-bg, rgba(255, 255, 255, 0.16)),
+        var(--sidebar-glass-border, rgba(255, 255, 255, 0.28)),
+        18px
+      );
+      color: inherit;
+    }
+
+    &_glass .sidebar_link:hover,
+    &_glass .sidebar_active {
+      background-color: var(
+        --sidebar-glass-hover-bg,
+        rgba(255, 255, 255, 0.22)
+      );
+      color: inherit;
+    }
   }
 
-  .sidebar_glass {
-    background: Canvas;
-    border-color: ButtonText;
-    box-shadow: none;
+  .sidebar_nav {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sidebar_list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    @include bp.down(xs) {
+      display: contents;
+    }
   }
 
   .sidebar_link {
-    color: ButtonText;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    color: inherit;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-default);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+
+    &:hover {
+      text-decoration: none;
+      background-color: var(--background-color-dark);
+      color: inherit;
+      letter-spacing: 0.05em;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 6px;
+    }
+
+    @include bp.down(xs) {
+      padding: var(--spacing-xs) var(--spacing-sm);
+      font-size: var(--font-size-caption);
+    }
+
+    @include bp.up(lg) {
+      padding: var(--spacing-sm) var(--spacing-md);
+      font-size: var(--font-size-body-sm);
+    }
   }
 
-  .sidebar_link:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 2px;
+  .sidebar_active {
+    font-weight: var(--font-weight-label);
+    letter-spacing: 0.1em;
+  }
+
+  .sidebar_child_link {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-sm);
+
+    @include bp.down(xs) {
+      font-size: var(--font-size-label);
+    }
+  }
+
+  .sidebar_chevron {
+    transition: transform 0.2s ease;
+  }
+
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 2px;
+
+    svg {
+      width: 1em;
+      height: 1em;
+    }
+
+    @include bp.down(xs) {
+      margin-right: var(--spacing-xxs);
+
+      svg {
+        width: 0.95em;
+        height: 0.95em;
+      }
+    }
+
+    @include bp.up(lg) {
+      svg {
+        width: 1.05em;
+        height: 1.05em;
+      }
+    }
+  }
+
+  .sidebar_chevron_open {
+    transform: rotate(180deg);
+  }
+
+  .sidebar_submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.25s ease;
+  }
+
+  .sidebar_submenu_open {
+    max-height: max-content;
   }
 
   .sidebar_child_list {
-    border-left-color: ButtonText;
+    border-left: 3px solid var(--background-color-darker);
+    margin: 0.25rem 0;
+
+    @include bp.down(xs) {
+      border-left-width: 2px;
+    }
   }
-}
+
+  .sidebar_footer {
+    position: absolute;
+    bottom: 0;
+    margin-top: auto;
+    width: 100%;
+    padding: 1rem;
+    border-top: 1px solid var(--background-color-darker);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+
+    @include bp.down(xs) {
+      position: static;
+      border-top: none;
+      padding: var(--spacing-sm);
+      gap: var(--spacing-xs);
+    }
+  }
+
+  .sidebar_footer_link {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    text-decoration: none;
+
+    &:hover {
+      color: inherit;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+  }
+
+  .sidebar_footer_version {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-caption);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    opacity: 0.7;
+    margin-top: 0.5rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sidebar,
+    .sidebar * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .sidebar_link:hover {
+      background-color: transparent;
+      letter-spacing: normal;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .sidebar {
+      background: Canvas;
+      color: CanvasText;
+      border-color: ButtonFace;
+    }
+
+    .sidebar_glass {
+      background: Canvas;
+      border-color: ButtonText;
+      box-shadow: none;
+    }
+
+    .sidebar_link {
+      color: ButtonText;
+    }
+
+    .sidebar_link:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+
+    .sidebar_child_list {
+      border-left-color: ButtonText;
+    }
+  }
 }

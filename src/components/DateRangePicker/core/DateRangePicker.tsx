@@ -2,7 +2,7 @@ import { expandClassMap } from "@/utils/propAliases";
 import DateRangePickerBase from "../DateRangePickerBase";
 import { DateRangePickerProps } from "../DateRangePicker.types";
 import "./DateRangePicker.scss";
-import DateTimePicker from "@/components/DateTimePicker/core/DateTimePicker";
+import DatePicker from "@/components/DatePicker/core/DatePicker";
 
 const classes = {
   dateRangePicker: "date_range_picker",
@@ -54,7 +54,7 @@ export default function DateRangePicker(props: DateRangePickerProps) {
     <DateRangePickerBase
       {...props}
       classMap={expandClassMap(classes)}
-      DatePickerComponent={DateTimePicker}
+      DatePickerComponent={DatePicker}
     />
   );
 }

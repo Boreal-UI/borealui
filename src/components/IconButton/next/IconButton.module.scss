@@ -63,10 +63,6 @@
     }
   }
 
-  .clear {
-    box-shadow: none;
-  }
-
   .glass {
     @include mixins.glass-surface(
       var(--icon-button-glass-bg, var(--glass-background)),
@@ -74,7 +70,7 @@
       var(--glass-blur)
     );
 
-    color: var(--icon-button-glass-text, currentcolor);
+    color: inherit;
     isolation: isolate;
 
     &:hover {
@@ -116,7 +112,7 @@
         background-color: transparent;
         background: var(--icon-button-glass-bg);
         border: 1px solid var(--icon-button-glass-border);
-        color: var(--icon-button-glass-text);
+        color: inherit;
 
         &:hover {
           background-color: transparent;
@@ -135,7 +131,7 @@
 
         &:hover {
           border-color: map.get($vals, hover);
-          color: map.get($vals, text);
+          color: inherit;
         }
       }
 
@@ -146,7 +142,7 @@
           var(--glass-blur)
         );
 
-        color: var(--icon-button-glass-text);
+        color: inherit;
       }
     }
   }
@@ -174,7 +170,7 @@
         background-color: transparent;
         background: var(--icon-button-glass-bg);
         border: 1px solid var(--icon-button-glass-border);
-        color: var(--icon-button-glass-text);
+        color: inherit;
 
         &:hover {
           background-color: transparent;
@@ -193,7 +189,7 @@
 
         &:hover {
           border-color: map.get($vals, hover);
-          color: map.get($vals, text);
+          color: inherit;
         }
       }
 
@@ -204,13 +200,17 @@
           var(--glass-blur)
         );
 
-        color: var(--icon-button-glass-text);
+        color: inherit;
       }
     }
   }
 
-  .clear.outline:hover {
-    border-color: var(--text-color-primary);
+  .clear.glass {
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+
+  .clear.outline.glass {
+    border-color: rgba(109, 108, 108, 0.37);
   }
 
   $sizes: (
@@ -269,6 +269,16 @@
         }
       }
     }
+  }
+
+  .clear {
+    box-shadow: none;
+    color: inherit;
+    background: transparent;
+  }
+
+  .clear.outline:hover {
+    border-color: inherit;
   }
 
   .disabled {

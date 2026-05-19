@@ -65,7 +65,7 @@
 
   .badge_clear {
     background-color: transparent;
-    color: var(--text-color-primary);
+    color: inherit;
 
     &.badge_clickable:hover {
       transform: translateY(-2px);
@@ -84,7 +84,7 @@
 
     &_outline {
       background-color: transparent;
-      color: var(--text-color-primary);
+      color: inherit;
       border: 2px solid var(--text-color-primary);
 
       @include bp.down(sm) {
@@ -115,7 +115,7 @@
       var(--glass-blur)
     );
 
-    color: var(--badge-glass-text, currentcolor);
+    color: inherit;
     isolation: isolate;
 
     &.badge_clickable:hover {
@@ -178,7 +178,7 @@
       background-color: transparent;
       background: var(--badge-glass-bg);
       border: 1px solid var(--badge-glass-border);
-      color: var(--badge-glass-text);
+      color: inherit;
 
       &.badge_clickable:hover {
         background-color: transparent;
@@ -188,7 +188,7 @@
 
     .badge_#{$name}.badge_outline {
       background-color: transparent;
-      color: map.get($values, text);
+      color: inherit;
       border: 2px solid map.get($values, border);
       box-shadow: none;
 
@@ -209,7 +209,7 @@
         var(--glass-blur)
       );
 
-      color: var(--badge-glass-text);
+      color: inherit;
     }
   }
 
@@ -248,7 +248,7 @@
       background-color: transparent;
       background: var(--badge-glass-bg);
       border: 1px solid var(--badge-glass-border);
-      color: var(--badge-glass-text);
+      color: inherit;
 
       &.badge_clickable:hover {
         background-color: transparent;
@@ -258,7 +258,7 @@
 
     .badge_#{$name}.badge_outline {
       background-color: transparent;
-      color: map.get($values, text);
+      color: inherit;
       border: 2px solid map.get($values, border);
       box-shadow: none;
 
@@ -279,7 +279,7 @@
         var(--glass-blur)
       );
 
-      color: var(--badge-glass-text);
+      color: inherit;
     }
   }
 
@@ -355,8 +355,10 @@
     opacity: 0.6;
   }
 
-  .badge_disabled.badge_clickable:hover {
+  .badge_disabled.badge_clickable:hover,
+  .badge:disabled.badge_clickable:hover {
     background-color: var(--disabled-color);
+    box-shadow: none;
     transform: none;
     cursor: not-allowed;
   }

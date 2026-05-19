@@ -13,7 +13,7 @@
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-body);
   }
 
@@ -38,7 +38,7 @@
     max-width: 100%;
     margin: 0;
     border: none;
-    color: var(--text-color-primary);
+    color: inherit;
     box-shadow: var(--box-shadow-sm);
     padding: var(--spacing-sm);
     transition: var(--transition-default);
@@ -89,7 +89,7 @@
   .description,
   .helperText,
   .loadingMessage {
-    color: var(--text-color-secondary);
+    color: inherit;
   }
 
   .errorText {
@@ -212,7 +212,7 @@
 
       &.outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
       }
@@ -227,7 +227,12 @@
       --fieldSet-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
-      color: map.get($vals, text);
+
+      &.outline {
+        background-color: transparent;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
     }
   }
 
@@ -244,7 +249,7 @@
       16px
     );
 
-    color: var(--fieldSet-glass-text);
+    color: inherit;
   }
 
   .glass:hover {

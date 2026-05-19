@@ -6,249 +6,248 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $notification-colors: (
+    primary: var(--primary-color),
+    success: var(--success-color),
+    error: var(--error-color),
+    warning: var(--warning-color),
+    info: var(--info-color),
+  );
 
-$notification-colors: (
-  primary: var(--primary-color),
-  success: var(--success-color),
-  error: var(--error-color),
-  warning: var(--warning-color),
-  info: var(--info-color),
-);
-
-.notification_center {
-  position: relative;
-  width: fit-content;
-  max-width: 400px;
-  padding: var(--spacing-sm);
-  overflow: hidden;
-  font-family: var(--font-family-body);
-
-  @include bp.down(sm) {
-    max-width: 100%;
-    padding: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    max-width: 520px;
-    padding: var(--spacing-md);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-    border-radius: 8px;
-  }
-
-  &_header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
-    margin-bottom: var(--spacing-sm);
-    gap: var(--spacing-xs);
-
-    @include bp.down(sm) {
-      margin-bottom: var(--spacing-xs);
-      flex-direction: column;
-    }
-
-    @include bp.up(lg) {
-      margin-bottom: var(--spacing-md);
-    }
-  }
-
-  &_body {
-    width: 100%;
-    overflow-x: auto;
-  }
-
-  &_list {
-    display: flex;
+  .notification_center {
+    position: relative;
     width: fit-content;
-    height: fit-content;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-    margin: 0;
-    padding: 4px;
-    list-style: none;
-    max-height: 340px;
-    overflow-y: auto;
+    max-width: 400px;
+    padding: var(--spacing-sm);
+    overflow: hidden;
+    font-family: var(--font-family-body);
 
     @include bp.down(sm) {
-      max-height: 50vh;
-      gap: var(--spacing-xxs);
-      padding: 2px;
+      max-width: 100%;
+      padding: var(--spacing-xs);
     }
 
     @include bp.up(lg) {
-      max-height: 60vh;
-      gap: var(--spacing-sm);
-    }
-  }
-
-  &_notification {
-    display: flex;
-    align-items: center;
-    padding: var(--spacing-xs);
-    background-color: var(--background-color-dark);
-    border-left: 4px solid transparent;
-    animation: fade-in-up 0.3s ease;
-    transition:
-      background-color var(--transition-default),
-      transform var(--transition-default),
-      box-shadow var(--transition-default);
-
-    &:hover {
-      background-color: var(--background-color-darker);
+      max-width: 520px;
+      padding: var(--spacing-md);
     }
 
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 2px;
-      border-radius: 4px;
+      outline-offset: 3px;
+      border-radius: 8px;
     }
 
-    @include bp.down(sm) {
-      padding: var(--spacing-xxs);
-    }
-
-    @include bp.up(lg) {
-      padding: var(--spacing-sm);
-    }
-  }
-
-  &_icon {
-    margin-right: var(--spacing-sm);
-    font-size: 1.2rem;
-
-    @include bp.down(sm) {
-      margin-right: var(--spacing-xs);
-      font-size: 1rem;
-    }
-
-    @include bp.up(lg) {
-      font-size: 1.3rem;
-    }
-  }
-
-  .notification_center_content {
-    flex-grow: 1;
-
-    .notification_center_message {
-      display: block;
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-body);
-      font-weight: var(--font-weight-body);
-      line-height: var(--line-height-body);
-      letter-spacing: var(--letter-spacing-body);
+    &_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
+      margin-bottom: var(--spacing-sm);
+      gap: var(--spacing-xs);
 
       @include bp.down(sm) {
-        font-size: var(--font-size-body-sm);
+        margin-bottom: var(--spacing-xs);
+        flex-direction: column;
       }
 
       @include bp.up(lg) {
+        margin-bottom: var(--spacing-md);
+      }
+    }
+
+    &_body {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    &_list {
+      display: flex;
+      width: fit-content;
+      height: fit-content;
+      flex-direction: column;
+      gap: var(--spacing-xs);
+      margin: 0;
+      padding: 4px;
+      list-style: none;
+      max-height: 340px;
+      overflow-y: auto;
+
+      @include bp.down(sm) {
+        max-height: 50vh;
+        gap: var(--spacing-xxs);
+        padding: 2px;
+      }
+
+      @include bp.up(lg) {
+        max-height: 60vh;
+        gap: var(--spacing-sm);
+      }
+    }
+
+    &_notification {
+      display: flex;
+      align-items: center;
+      padding: var(--spacing-xs);
+      background-color: var(--background-color-dark);
+      border-left: 4px solid transparent;
+      animation: fade-in-up 0.3s ease;
+      transition:
+        background-color var(--transition-default),
+        transform var(--transition-default),
+        box-shadow var(--transition-default);
+
+      &:hover {
+        background-color: var(--background-color-darker);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+
+      @include bp.down(sm) {
+        padding: var(--spacing-xxs);
+      }
+
+      @include bp.up(lg) {
+        padding: var(--spacing-sm);
+      }
+    }
+
+    &_icon {
+      margin-right: var(--spacing-sm);
+      font-size: 1.2rem;
+
+      @include bp.down(sm) {
+        margin-right: var(--spacing-xs);
+        font-size: 1rem;
+      }
+
+      @include bp.up(lg) {
+        font-size: 1.3rem;
+      }
+    }
+
+    .notification_center_content {
+      flex-grow: 1;
+
+      .notification_center_message {
+        display: block;
+        font-family: var(--font-family-body);
         font-size: var(--font-size-body);
+        font-weight: var(--font-weight-body);
+        line-height: var(--line-height-body);
+        letter-spacing: var(--letter-spacing-body);
+
+        @include bp.down(sm) {
+          font-size: var(--font-size-body-sm);
+        }
+
+        @include bp.up(lg) {
+          font-size: var(--font-size-body);
+        }
+      }
+
+      .notification_center_timestamp {
+        font-family: var(--font-family-body);
+        font-size: var(--font-size-caption);
+        font-weight: var(--font-weight-body);
+        line-height: var(--line-height-body);
+        letter-spacing: var(--letter-spacing-body);
+        color: inherit;
+
+        @include bp.down(sm) {
+          font-size: var(--font-size-caption);
+        }
+
+        @include bp.up(lg) {
+          font-size: var(--font-size-label);
+        }
       }
     }
 
-    .notification_center_timestamp {
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-caption);
-      font-weight: var(--font-weight-body);
-      line-height: var(--line-height-body);
-      letter-spacing: var(--letter-spacing-body);
-      color: var(--text-color-secondary);
+    .notification_center_close {
+      margin-left: var(--spacing-sm);
+      background: transparent;
+      color: inherit;
+      border: none;
+      box-shadow: none;
+      cursor: pointer;
+      padding: var(--spacing-xxs);
+      line-height: 1;
+      transition: opacity var(--transition-default);
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
 
       @include bp.down(sm) {
-        font-size: var(--font-size-caption);
+        margin-left: var(--spacing-xs);
       }
+    }
 
-      @include bp.up(lg) {
-        font-size: var(--font-size-label);
+    @each $type, $color in $notification-colors {
+      &_#{$type} {
+        border-color: $color;
       }
     }
   }
 
-  .notification_center_close {
-    margin-left: var(--spacing-sm);
-    background: transparent;
-    color: inherit;
-    border: none;
-    box-shadow: none;
-    cursor: pointer;
-    padding: var(--spacing-xxs);
-    line-height: 1;
-    transition: opacity var(--transition-default);
+  @each $key, $value in theme.$rounding {
+    .notification_center_round-#{$key} {
+      border-radius: $value;
+    }
+  }
 
-    &:hover {
-      opacity: 0.7;
+  @each $key, $value in theme.$shadow {
+    .notification_center_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .notification_center,
+    .notification_center * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .notification_center_notification:hover {
+      background-color: var(--background-color-dark);
     }
 
-    &:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 2px;
+    .notification_center_header_clear_all:hover,
+    .notification_center_close:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .notification_center_notification {
+      background: Canvas;
+      color: CanvasText;
+      border-left: 3px solid Highlight;
+    }
+
+    .notification_center_close,
+    .notification_center_header_clear_all {
+      color: ButtonText;
+      border: 1px solid ButtonText;
       border-radius: 4px;
     }
-
-    @include bp.down(sm) {
-      margin-left: var(--spacing-xs);
-    }
   }
-
-  @each $type, $color in $notification-colors {
-    &_#{$type} {
-      border-color: $color;
-    }
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .notification_center_round-#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .notification_center_shadow-#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .notification_center,
-  .notification_center * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .notification_center_notification:hover {
-    background-color: var(--background-color-dark);
-  }
-
-  .notification_center_header_clear_all:hover,
-  .notification_center_close:hover {
-    opacity: 1;
-  }
-}
-
-@media (forced-colors: active) {
-  .notification_center_notification {
-    background: Canvas;
-    color: CanvasText;
-    border-left: 3px solid Highlight;
-  }
-
-  .notification_center_close,
-  .notification_center_header_clear_all {
-    color: ButtonText;
-    border: 1px solid ButtonText;
-    border-radius: 4px;
-  }
-}
 }

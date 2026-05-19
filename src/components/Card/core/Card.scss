@@ -135,11 +135,6 @@
         --card-glass-border: #{map.get($props, glass-border)};
         --card-glass-text: #{map.get($props, text)};
 
-        .card_icon,
-        .card_description {
-          color: inherit;
-        }
-
         .card_loading {
           background-color: transparent;
         }
@@ -152,7 +147,7 @@
           var(--glass-blur)
         );
 
-        color: var(--card-glass-text);
+        color: inherit;
       }
 
       &_#{$name}.card_glass.card_clickable:hover {
@@ -165,6 +160,7 @@
         border-color: map.get($props, border);
         border: 2px solid map.get($props, border);
         box-shadow: none;
+        color: inherit;
 
         @include bp.down(sm) {
           border-width: 1.5px;
@@ -178,7 +174,7 @@
           var(--glass-blur)
         );
 
-        color: var(--card-glass-text);
+        color: inherit;
       }
     }
 
@@ -192,11 +188,6 @@
         --card-glass-border: #{map.get($props, glass-border)};
         --card-glass-text: #{map.get($props, text)};
 
-        .card_icon,
-        .card_description {
-          color: inherit;
-        }
-
         .card_loading {
           background-color: transparent;
         }
@@ -209,7 +200,7 @@
           var(--glass-blur)
         );
 
-        color: var(--card-glass-text);
+        color: inherit;
       }
 
       &_#{$name}.card_glass.card_clickable:hover {
@@ -233,7 +224,7 @@
           var(--glass-blur)
         );
 
-        color: var(--card-glass-text);
+        color: inherit;
       }
     }
 

@@ -5,293 +5,314 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $input-sizes: (
+    "xs": var(--spacing-xs),
+    "small": var(--spacing-sm),
+    "medium": var(--spacing-md),
+    "large": var(--spacing-lg),
+    "xl": var(--spacing-xl),
+  );
 
-$input-sizes: (
-  "xs": var(--spacing-xs),
-  "small": var(--spacing-sm),
-  "medium": var(--spacing-md),
-  "large": var(--spacing-lg),
-  "xl": var(--spacing-xl),
-);
+  $font-sizes: (
+    "xs": var(--font-size-caption),
+    "small": var(--font-size-label),
+    "medium": var(--font-size-body-sm),
+    "large": var(--font-size-body),
+    "xl": var(--font-size-h6),
+  );
 
-$font-sizes: (
-  "xs": var(--font-size-caption),
-  "small": var(--font-size-label),
-  "medium": var(--font-size-body-sm),
-  "large": var(--font-size-body),
-  "xl": var(--font-size-h6),
-);
+  $icon-sizes: (
+    "xs": 2em,
+    "small": 3em,
+    "medium": 3.5em,
+    "large": 4em,
+    "xl": 4.5em,
+  );
 
-$icon-sizes: (
-  "xs": 2em,
-  "small": 3em,
-  "medium": 3.5em,
-  "large": 4em,
-  "xl": 4.5em,
-);
-
-.empty_state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: var(--spacing-sm);
-  background-color: var(--background-color-light);
-  gap: var(--spacing-xs);
-  transition: var(--transition-default);
-  width: 400px;
-  max-width: 100%;
-  min-width: 100px;
-  font-family: var(--font-family-body);
-
-  @include bp.down(md) {
-    width: 100%;
-    padding: var(--spacing-md);
-  }
-
-  @include bp.up(lg) {
-    width: 420px;
-  }
-
-  &_icon {
-    font-size: 3em;
-
-    @include bp.down(md) {
-      font-size: 2.5em;
-    }
-
-    @include bp.down(xs) {
-      font-size: 2em;
-    }
-
-    @include bp.up(lg) {
-      font-size: 3.25em;
-    }
-  }
-
-  &_title,
-  &_message {
-    margin: var(--spacing-sm);
-  }
-
-  &_title {
-    font-family: var(--font-family-heading);
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-h4);
-    line-height: var(--line-height-heading);
-    letter-spacing: var(--letter-spacing-heading);
-
-    @include bp.down(md) {
-      font-size: var(--font-size-body-sm);
-    }
-
-    @include bp.down(xs) {
-      font-size: var(--font-size-label);
-    }
-
-    @include bp.up(lg) {
-      font-size: calc(var(--font-size-body) * 1.05);
-    }
-  }
-
-  &_message {
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-    opacity: 0.8;
-    width: 90%;
-
-    @include bp.down(md) {
-      font-size: var(--font-size-label);
-    }
-
-    @include bp.down(xs) {
-      font-size: var(--font-size-caption);
-    }
-
-    @include bp.up(lg) {
-      font-size: calc(var(--font-size-body-sm) * 1.05);
-    }
-  }
-
-  @each $themeName, $values in theme.$themes {
-    &_#{$themeName} {
-      --empty-state-glass-bg: #{map.get($values, glass-bg)};
-      --empty-state-glass-hover-bg: #{map.get($values, glass-hover)};
-      --empty-state-glass-border: #{map.get($values, glass-border)};
-      --empty-state-glass-text: #{map.get($values, text)};
-
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-    }
-
-    &_#{$themeName}.empty_state_outline {
-      background-color: transparent;
-      border: 2px solid map.get($values, border);
-      color: map.get($values, text);
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-    }
-  }
-
-  @each $stateName, $values in theme.$states {
-    &_#{$stateName} {
-      --empty-state-glass-bg: #{map.get($values, glass-bg)};
-      --empty-state-glass-hover-bg: #{map.get($values, glass-hover)};
-      --empty-state-glass-border: #{map.get($values, glass-border)};
-      --empty-state-glass-text: #{map.get($values, text)};
-
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-    }
-
-    &_#{$stateName}.empty_state_outline {
-      background-color: transparent;
-      border: 2px solid map.get($values, bg);
-      color: map.get($values, text);
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-    }
-  }
-
-  &_outline {
-    background-color: transparent;
-    box-shadow: none;
-  }
-
-  &_clear {
-    box-shadow: none;
-  }
-
-  &_glass {
-    @include mixins.glass-surface(
-      var(--empty-state-glass-bg, var(--glass-background)),
-      var(--empty-state-glass-border, var(--glass-border-color)),
-      var(--glass-blur)
-    );
-
-    color: var(--empty-state-glass-text, currentcolor);
-  }
-
-  &_glass:hover {
-    background: var(--empty-state-glass-hover-bg, var(--glass-background));
-  }
-
-  &_glass.empty_state_outline {
-    background: transparent;
-    border-color: var(--empty-state-glass-border, var(--glass-border-color));
-  }
-
-  &_clear.empty_state_outline {
-    color: var(--text-color-primary);
-    border-color: var(--text-color-primary);
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
-  }
-
-  &_disabled {
-    opacity: 0.6;
-    pointer-events: none;
-  }
-}
-
-@each $size, $spacing in $input-sizes {
-  .empty_state_#{$size} {
-    .empty_state_title {
-      padding: $spacing;
-      font-size: map.get($font-sizes, $size);
-    }
-
-    .empty_state_message {
-      font-size: map.get($font-sizes, $size);
-    }
-
-    .empty_state_icon {
-      font-size: map.get($icon-sizes, $size);
-    }
-
-    @include bp.down(sm) {
-      .empty_state_title {
-        font-size: map.get($font-sizes, $size);
-      }
-
-      .empty_state_message {
-        font-size: map.get($font-sizes, $size);
-      }
-    }
-
-    @include bp.up(lg) {
-      .empty_state_title {
-        font-size: calc(#{map.get($font-sizes, $size)} * 1.05);
-      }
-
-      .empty_state_message {
-        font-size: calc(#{map.get($font-sizes, $size)} * 1.02);
-      }
-    }
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .empty_state_round-#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .empty_state_shadow-#{$key} {
-    box-shadow: $value;
-  }
-}
-
-.empty_state[tabindex]:focus-visible,
-.empty_state a:focus-visible,
-.empty_state button:focus-visible {
-  outline: 2px solid var(--focus-outline-color, var(--primary-color));
-  outline-offset: 3px;
-  border-radius: 6px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .empty_state,
-  .empty_state * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .empty_state * {
-    transition: none;
-  }
-}
-
-@media (forced-colors: active) {
   .empty_state {
-    background: Canvas;
-    color: CanvasText;
-    outline-color: Highlight;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: var(--spacing-sm);
+    background-color: var(--background-color-light);
+    gap: var(--spacing-xs);
+    transition: var(--transition-default);
+    width: 400px;
+    max-width: 100%;
+    min-width: 100px;
+    font-family: var(--font-family-body);
+
+    @include bp.down(md) {
+      width: 100%;
+      padding: var(--spacing-md);
+    }
+
+    @include bp.up(lg) {
+      width: 420px;
+    }
+
+    &_icon {
+      font-size: 3em;
+
+      @include bp.down(md) {
+        font-size: 2.5em;
+      }
+
+      @include bp.down(xs) {
+        font-size: 2em;
+      }
+
+      @include bp.up(lg) {
+        font-size: 3.25em;
+      }
+    }
+
+    &_title,
+    &_message {
+      margin: var(--spacing-sm);
+    }
+
+    &_title {
+      font-family: var(--font-family-heading);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-h4);
+      line-height: var(--line-height-heading);
+      letter-spacing: var(--letter-spacing-heading);
+
+      @include bp.down(md) {
+        font-size: var(--font-size-body-sm);
+      }
+
+      @include bp.down(xs) {
+        font-size: var(--font-size-label);
+      }
+
+      @include bp.up(lg) {
+        font-size: calc(var(--font-size-body) * 1.05);
+      }
+    }
+
+    &_message {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-sm);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+      opacity: 0.8;
+      width: 90%;
+
+      @include bp.down(md) {
+        font-size: var(--font-size-label);
+      }
+
+      @include bp.down(xs) {
+        font-size: var(--font-size-caption);
+      }
+
+      @include bp.up(lg) {
+        font-size: calc(var(--font-size-body-sm) * 1.05);
+      }
+    }
+
+    @each $themeName, $values in theme.$themes {
+      &_#{$themeName} {
+        --empty-state-glass-bg: #{map.get($values, glass-bg)};
+        --empty-state-glass-hover-bg: #{map.get($values, glass-hover)};
+        --empty-state-glass-border: #{map.get($values, glass-border)};
+        --empty-state-glass-text: #{map.get($values, text)};
+
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+
+        .empty_state_action_btn {
+          color: map.get($values, text);
+        }
+      }
+
+      &_#{$themeName}.empty_state_outline {
+        background-color: transparent;
+        border: 2px solid map.get($values, border);
+        color: inherit;
+
+        .empty_state_action_btn {
+          color: inherit;
+          border-color: map.get($values, bg);
+        }
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+    }
+
+    @each $stateName, $values in theme.$states {
+      &_#{$stateName} {
+        --empty-state-glass-bg: #{map.get($values, glass-bg)};
+        --empty-state-glass-hover-bg: #{map.get($values, glass-hover)};
+        --empty-state-glass-border: #{map.get($values, glass-border)};
+        --empty-state-glass-text: #{map.get($values, text)};
+
+        background-color: map.get($values, bg);
+        color: map.get($values, text);
+
+        .empty_state_action_btn {
+          color: map.get($values, text);
+        }
+      }
+
+      &_#{$stateName}.empty_state_outline {
+        background-color: transparent;
+        border: 2px solid map.get($values, bg);
+        color: inherit;
+
+        .empty_state_action_btn {
+          color: inherit;
+          border-color: map.get($values, bg);
+        }
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+    }
+
+    &_outline {
+      background-color: transparent;
+      box-shadow: none;
+    }
+
+    &_clear {
+      box-shadow: none;
+    }
+
+    &_glass {
+      @include mixins.glass-surface(
+        var(--empty-state-glass-bg, var(--glass-background)),
+        var(--empty-state-glass-border, var(--glass-border-color)),
+        var(--glass-blur)
+      );
+
+      .empty_state_action_btn {
+        color: inherit;
+      }
+
+      color: inherit;
+    }
+
+    &_glass:hover {
+      background: var(--empty-state-glass-hover-bg, var(--glass-background));
+    }
+
+    &_glass.empty_state_outline {
+      background: transparent;
+      border-color: var(--empty-state-glass-border, var(--glass-border-color));
+    }
+
+    &_clear.empty_state_outline {
+      color: inherit;
+      border-color: var(--text-color-primary);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
+
+    &_disabled {
+      opacity: 0.6;
+      pointer-events: none;
+    }
   }
 
-  .empty_state.empty_state_outline {
-    border: 1px solid ButtonText;
+  @each $size, $spacing in $input-sizes {
+    .empty_state_#{$size} {
+      .empty_state_title {
+        padding: $spacing;
+        font-size: map.get($font-sizes, $size);
+      }
+
+      .empty_state_message {
+        font-size: map.get($font-sizes, $size);
+      }
+
+      .empty_state_icon {
+        font-size: map.get($icon-sizes, $size);
+      }
+
+      @include bp.down(sm) {
+        .empty_state_title {
+          font-size: map.get($font-sizes, $size);
+        }
+
+        .empty_state_message {
+          font-size: map.get($font-sizes, $size);
+        }
+      }
+
+      @include bp.up(lg) {
+        .empty_state_title {
+          font-size: calc(#{map.get($font-sizes, $size)} * 1.05);
+        }
+
+        .empty_state_message {
+          font-size: calc(#{map.get($font-sizes, $size)} * 1.02);
+        }
+      }
+    }
   }
 
-  .empty_state.empty_state_glass {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+  @each $key, $value in theme.$rounding {
+    .empty_state_round-#{$key} {
+      border-radius: $value;
+    }
   }
-}
+
+  @each $key, $value in theme.$shadow {
+    .empty_state_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  .empty_state[tabindex]:focus-visible,
+  .empty_state a:focus-visible,
+  .empty_state button:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .empty_state,
+    .empty_state * {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .empty_state * {
+      transition: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .empty_state {
+      background: Canvas;
+      color: CanvasText;
+      outline-color: Highlight;
+    }
+
+    .empty_state.empty_state_outline {
+      border: 1px solid ButtonText;
+    }
+
+    .empty_state.empty_state_glass {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+  }
 }
