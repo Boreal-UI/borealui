@@ -13,7 +13,7 @@
     padding: var(--spacing-md);
     border: 1px solid var(--alert-border, var(--border-color));
     font-family: var(--font-family-ui);
-    color: var(--alert-text, var(--text-color));
+    color: inherit;
     background: var(--alert-bg, var(--surface-color, var(--background-color)));
     overflow-wrap: anywhere;
   }
@@ -95,7 +95,7 @@
 
     .alert_#{$name}.alert_soft {
       background: var(--alert-soft-bg);
-      color: var(--alert-text);
+      color: inherit;
       border-color: var(--alert-border);
     }
 
@@ -125,7 +125,6 @@
       --alert-soft-bg: #{map.get($values, glass-bg)};
 
       background: var(--alert-bg);
-      color: var(--alert-text);
       border-color: var(--alert-border);
 
       --alert-glass-bg: #{map.get($values, glass-bg)};
@@ -136,7 +135,7 @@
 
     .alert_#{$name}.alert_soft {
       background: var(--alert-soft-bg);
-      color: var(--alert-text);
+      color: inherit;
       border-color: var(--alert-border);
     }
 
