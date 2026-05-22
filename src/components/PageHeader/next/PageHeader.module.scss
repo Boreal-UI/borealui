@@ -5,36 +5,193 @@
 @use "../../../styles/_animations";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+
 @layer boreal-ui.components {
   .root {
     --pageHeader-glass-bg: rgba(255, 255, 255, 0.18);
-    --pageHeader-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --pageHeader-glass-border: rgba(255, 255, 255, 0.28);
     --pageHeader-glass-text: inherit;
 
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    min-width: 0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
     max-width: 100%;
-    border: 1px solid transparent;
-    border-radius: var(--border-radius-md);
-    background: var(--background-color);
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-xl, var(--border-radius-md));
     color: inherit;
     box-shadow: var(--box-shadow-sm);
-    padding: var(--spacing-sm);
-    transition: var(--transition-default);
+    font-family: var(--font-family-ui);
+    transition:
+      background-color var(--transition-default),
+      border-color var(--transition-default),
+      box-shadow var(--transition-default),
+      color var(--transition-default);
+  }
+
+  .root *,
+  .root *::before,
+  .root *::after {
+    box-sizing: border-box;
+  }
+
+  .fullWidth {
+    width: 100%;
+  }
+
+  .before {
+    min-width: 0;
+    padding: var(--spacing-lg) var(--spacing-lg) 0;
+    color: inherit;
+  }
+
+  .main {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      "icon content"
+      "actions actions";
+    align-items: start;
+    gap: var(--spacing-md);
+    width: 100%;
+    min-width: 0;
+    padding: var(--spacing-lg);
+  }
+
+  .before + .main {
+    padding-top: var(--spacing-md);
+  }
+
+  .icon {
+    grid-area: icon;
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    border-radius: var(--border-radius-lg, 0.75rem);
+    background: transparent;
+    color: inherit;
+    margin-top: 1.35rem;
+  }
+
+  .icon svg {
+    width: 1.25rem;
+    height: 1.25rem;
   }
 
   .content {
+    grid-area: content;
+    display: grid;
+    gap: var(--spacing-xs);
+    align-items: start;
     min-width: 0;
     max-width: 100%;
-    overflow-wrap: anywhere;
+    color: inherit;
+  }
+
+  .content > .icon {
+    grid-area: icon;
+  }
+
+  .eyebrow {
+    margin: 0;
+    max-width: 100%;
+    color: inherit;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-caption, 0.75rem);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.25;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.72;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  .title {
+    margin: 0;
+    max-width: 100%;
+    color: inherit;
+    font-family: var(--font-family-heading);
+    font-size: clamp(1.6rem, 7cqw, 2.5rem);
+    font-weight: var(--font-weight-bold);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  .subtitle {
+    margin: 0;
+    max-width: 60ch;
+    color: inherit;
+    font-family: var(--font-family-body);
+    font-size: clamp(0.95rem, 3cqw, 1.125rem);
+    line-height: 1.55;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-xs);
+    color: inherit;
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm, 0.875rem);
+    line-height: 1.4;
+  }
+
+  .bodyContent {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: normal;
+    word-break: normal;
+  }
+
+  .actions {
+    grid-area: actions;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--spacing-sm);
+    min-width: 0;
+    max-width: 100%;
+    padding-top: var(--spacing-sm);
+  }
+
+  .actions > * {
+    min-width: max-content;
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    min-width: 0;
+    max-width: 100%;
+    padding: var(--spacing-xs) var(--spacing-lg);
+    border-top: 1px solid var(--border-color);
+    overflow-x: auto;
+  }
+
+  .footer > * {
+    min-width: 0;
   }
 
   .loader {
+    position: absolute;
+    inset-block-start: var(--spacing-sm);
+    inset-inline-end: var(--spacing-sm);
     display: inline-block;
-    flex: 0 0 auto;
     width: 1rem;
     height: 1rem;
     border: 2px solid currentcolor;
@@ -42,43 +199,6 @@
     border-radius: 50%;
     opacity: 0.72;
     animation: spin 700ms linear infinite;
-  }
-
-  @each $themeName, $vals in theme.$themes {
-    .#{$themeName} {
-      --pageHeader-glass-bg: #{map.get($vals, glass-bg)};
-      --pageHeader-glass-hover-bg: #{map.get($vals, glass-hover)};
-      --pageHeader-glass-border: #{map.get($vals, glass-border)};
-      --pageHeader-glass-text: #{map.get($vals, text)};
-      background-color: map.get($vals, bg);
-      color: map.get($vals, text);
-      border-color: map.get($vals, border);
-
-      &.outline {
-        background-color: transparent;
-        color: inherit;
-        box-shadow: none;
-        border: 2px solid map.get($vals, border);
-      }
-    }
-  }
-
-  @each $state, $vals in theme.$states {
-    .#{$state} {
-      --pageHeader-glass-bg: #{map.get($vals, glass-bg)};
-      --pageHeader-glass-hover-bg: #{map.get($vals, glass-hover)};
-      --pageHeader-glass-border: #{map.get($vals, glass-border)};
-      --pageHeader-glass-text: #{map.get($vals, text)};
-      border-width: 2px;
-      border-color: map.get($vals, border);
-
-      &.outline {
-        background-color: transparent;
-        color: inherit;
-        box-shadow: none;
-        border: 2px solid map.get($vals, border);
-      }
-    }
   }
 
   .clear {
@@ -106,14 +226,73 @@
     opacity: 0.6;
     background-color: var(--disabled-color);
     border-color: var(--disabled-color);
-
-    &:hover {
-      background-color: var(--disabled-color);
-    }
   }
 
   .loading {
+    position: relative;
     cursor: progress;
+  }
+
+  .compact {
+    .before {
+      padding: var(--spacing-md) var(--spacing-md) 0;
+    }
+
+    .main {
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
+    }
+
+    .footer {
+      padding-inline: var(--spacing-md);
+    }
+
+    .title {
+      font-size: clamp(
+        var(--font-size-heading-sm, 1.35rem),
+        3vw,
+        var(--font-size-heading-lg, 2rem)
+      );
+    }
+  }
+
+  @each $themeName, $vals in theme.$themes {
+    .#{$themeName} {
+      --pageHeader-glass-bg: #{map.get($vals, glass-bg)};
+      --pageHeader-glass-border: #{map.get($vals, glass-border)};
+      --pageHeader-glass-text: #{map.get($vals, text)};
+      --pageHeader-accent: #{map.get($vals, border)};
+
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+      border-color: map.get($vals, border);
+
+      &.outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
+    }
+  }
+
+  @each $state, $vals in theme.$states {
+    .#{$state} {
+      --pageHeader-glass-bg: #{map.get($vals, glass-bg)};
+      --pageHeader-glass-border: #{map.get($vals, glass-border)};
+      --pageHeader-glass-text: #{map.get($vals, text)};
+      --pageHeader-accent: #{map.get($vals, border)};
+
+      border-width: 2px;
+      border-color: map.get($vals, border);
+
+      &.outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
+    }
   }
 
   @each $key, $value in theme.$rounding {
@@ -128,9 +307,95 @@
     }
   }
 
-  @include bp.down(xs) {
+  @include bp.down(lg) {
+    .main {
+      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-areas:
+        "icon content"
+        "actions actions";
+    }
+
+    .icon {
+      margin-top: 1.4rem;
+    }
+
+    .actions {
+      justify-content: flex-start;
+      padding-top: 0;
+    }
+  }
+
+  @include bp.down(md) {
     .root {
       width: 100%;
+    }
+
+    .before {
+      padding: var(--spacing-md) var(--spacing-md) 0;
+    }
+
+    .main {
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
+    }
+
+    .footer {
+      padding-inline: var(--spacing-md);
+    }
+  }
+
+  @include bp.down(sm) {
+    .main {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "icon"
+        "content"
+        "actions";
+    }
+
+    .icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      margin-top: 0;
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      width: 100%;
+    }
+
+    .actions > * {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .meta {
+      gap: var(--spacing-xs);
+    }
+
+    .footer {
+      align-items: stretch;
+      justify-content: flex-start;
+      padding-inline: var(--spacing-md);
+    }
+  }
+
+  @include bp.down(xs) {
+    .before {
+      padding: var(--spacing-sm) var(--spacing-sm) 0;
+    }
+
+    .main {
+      padding: var(--spacing-sm);
+    }
+
+    .footer {
+      padding-inline: var(--spacing-sm);
+    }
+
+    .title {
+      font-size: clamp(1.5rem, 10vw, 2rem);
     }
   }
 
@@ -139,6 +404,7 @@
     .root * {
       transition: none !important;
       animation: none !important;
+      scroll-behavior: auto !important;
     }
   }
 
@@ -150,68 +416,28 @@
       box-shadow: none;
     }
 
+    .icon {
+      background: Canvas;
+      color: ButtonText;
+      border-color: ButtonText;
+    }
+
+    .footer {
+      background: Canvas;
+      border-color: ButtonText;
+    }
+
     .glass {
       background: Canvas;
       border-color: ButtonText;
+      box-shadow: none;
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
-  }
-}
 
-@layer boreal-ui.components {
-  .root {
-    width: fit-content;
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .fullWidth {
-    width: 100%;
-  }
-
-  .main {
-    display: flex;
-    gap: var(--spacing-md);
-    align-items: flex-start;
-    justify-content: space-between;
-    min-width: 0;
-  }
-
-  .content {
-    display: grid;
-    gap: var(--spacing-xs);
-  }
-
-  .title {
-    margin: 0;
-    font-family: var(--font-family-heading);
-    font-size: var(--font-size-heading-md);
-    line-height: 1.15;
-    overflow-wrap: anywhere;
-  }
-
-  .subtitle,
-  .meta,
-  .eyebrow {
-    margin: 0;
-    color: inherit;
-    overflow-wrap: anywhere;
-  }
-
-  .actions {
-    display: inline-flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-xs);
-    justify-content: flex-end;
-  }
-
-  .footer,
-  .before {
-    min-width: 0;
-  }
-
-  .compact {
-    padding: var(--spacing-xs);
+    .loader {
+      border-color: CanvasText;
+      border-right-color: Canvas;
+    }
   }
 }
