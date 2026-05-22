@@ -17,6 +17,9 @@ export interface MetricBoxProps {
   /** The primary value of the metric, e.g., a number or a string. */
   value: string | number;
 
+  /** Optional unit label shown beside the value. */
+  units?: string;
+
   /** Optional icon to visually represent the metric (from react-icons, for example). */
   icon?: IconType;
 

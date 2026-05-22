@@ -1,55 +1,99 @@
 @use "../../../styles/_animations";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+
 @layer boreal-ui.components {
-  .sparkline,
-  .root {
-    display: inline-flex;
+  .sparkline {
+    display: flex;
     flex-direction: column;
     gap: var(--spacing-xs);
+    width: 100%;
     max-width: 100%;
+    min-width: 0;
     color: inherit;
     font-family: var(--font-family-ui);
+    animation: fade-in-up 240ms ease-out both;
   }
-  .sparkline_label,
-  .label {
+
+  .sparkline_label {
+    max-width: 100%;
+    color: inherit;
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
-    color: inherit;
+    line-height: var(--line-height-body, 1.4);
+    overflow-wrap: anywhere;
   }
-  .sparkline_chart,
-  .chart {
-    display: inline-flex;
+
+  .sparkline_chart {
+    display: flex;
     align-items: center;
     gap: var(--spacing-xs);
+    width: 100%;
     max-width: 100%;
-  }
-  .sparkline_svg,
-  .svg {
-    display: block;
-    max-width: 100%;
-    overflow: visible;
-  }
-  .sparkline_line,
-  .line {
-    vector-effect: non-scaling-stroke;
-  }
-  .sparkline_area,
-  .area {
-    pointer-events: none;
-  }
-  .sparkline_point,
-  .point {
-    stroke: var(--background-color);
-    stroke-width: 2;
-  }
-  .sparkline_value,
-  .value {
-    font-size: var(--font-size-body-sm);
-    font-variant-numeric: tabular-nums;
+    min-width: 0;
     color: inherit;
   }
-  .sparkline_loader,
-  .loader {
+
+  .sparkline_svg {
+    display: block;
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-width: 0;
+    overflow: visible;
+    color: inherit;
+  }
+
+  .sparkline_line {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+    animation: fade-in-up 520ms ease-out both;
+    transition:
+      opacity var(--transition-default),
+      filter var(--transition-default);
+  }
+
+  .sparkline_area {
+    pointer-events: none;
+    opacity: 0.18;
+    transition: opacity var(--transition-default);
+  }
+
+  .sparkline_point {
+    stroke: var(--background-color);
+    stroke-width: 4;
+    vector-effect: non-scaling-stroke;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: fade-in-up 320ms ease-out both;
+    transition:
+      opacity var(--transition-default),
+      r var(--transition-default),
+      filter var(--transition-default);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .sparkline_line:hover,
+    .sparkline_point:hover {
+      opacity: 0.78;
+    }
+  }
+
+  .sparkline_value {
+    flex: 0 0 auto;
+    max-width: 40%;
+    color: inherit;
+    font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body, 1.4);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .sparkline_loader {
     width: 1rem;
     height: 1rem;
     border: 2px solid currentcolor;
@@ -57,8 +101,121 @@
     border-radius: 50%;
     animation: spin 700ms linear infinite;
   }
-  .sparkline_loading,
-  .loading {
+
+  .sparkline_loading {
     cursor: progress;
+  }
+
+  @media (max-width: 420px) {
+    .sparkline {
+      gap: var(--spacing-xxs, 0.25rem);
+    }
+
+    .sparkline_chart {
+      gap: var(--spacing-xxs, 0.25rem);
+    }
+
+    .sparkline_label,
+    .sparkline_value {
+      font-size: var(--font-size-body-xs, 0.8rem);
+    }
+
+    .sparkline_point {
+      stroke-width: 1.5;
+    }
+  }
+
+  @media (max-width: 280px) {
+    .sparkline_chart {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .sparkline_value {
+      max-width: 100%;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .sparkline_point {
+      stroke-width: 1.25;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sparkline,
+    .sparkline_line,
+    .sparkline_area,
+    .sparkline_point,
+    .sparkline_loader {
+      animation: none;
+      transition: none;
+    }
+
+    .sparkline_line,
+    .sparkline_area,
+    .sparkline_point {
+      opacity: 1;
+      transform: none;
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (hover: none) {
+    .sparkline_line,
+    .sparkline_area,
+    .sparkline_point {
+      transition: none;
+    }
+
+    .sparkline_line:hover,
+    .sparkline_point:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .sparkline {
+      color: CanvasText;
+    }
+
+    .sparkline_chart,
+    .sparkline_svg {
+      color: CanvasText;
+    }
+
+    .sparkline_label,
+    .sparkline_value {
+      color: CanvasText;
+      opacity: 1;
+    }
+
+    .sparkline_line {
+      stroke: Highlight;
+      opacity: 1;
+    }
+
+    .sparkline_area {
+      fill: Highlight;
+      opacity: 0.25;
+    }
+
+    .sparkline_point {
+      fill: Highlight;
+      stroke: Canvas;
+      stroke-width: 2;
+      opacity: 1;
+    }
+
+    .sparkline_line:hover,
+    .sparkline_point:hover {
+      opacity: 1;
+    }
+
+    .sparkline_loader {
+      border-color: CanvasText;
+      border-right-color: Canvas;
+    }
   }
 }

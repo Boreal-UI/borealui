@@ -56,6 +56,7 @@ const DonutChartBase = forwardRef<HTMLDivElement, DonutChartBaseProps>(
       centerLabel,
       showLegend = false,
       valueFormatter = formatDefaultValue,
+      units,
       theme = "primary",
       state,
       loading = false,
@@ -109,7 +110,9 @@ const DonutChartBase = forwardRef<HTMLDivElement, DonutChartBaseProps>(
                 height={size}
                 viewBox={`0 0 ${size} ${size}`}
                 role="img"
-                aria-label={ariaLabel ?? describeData(data, valueFormatter)}
+                aria-label={
+                  ariaLabel ?? describeData(data, valueFormatter, units)
+                }
               >
                 <circle
                   className={classMap.track}
@@ -143,6 +146,7 @@ const DonutChartBase = forwardRef<HTMLDivElement, DonutChartBaseProps>(
                       <title>{`${datum.label}: ${formatValueText(
                         datum.value,
                         valueFormatter,
+                        units,
                       )}`}</title>
                     </path>
                   );
@@ -172,7 +176,7 @@ const DonutChartBase = forwardRef<HTMLDivElement, DonutChartBaseProps>(
                     />
                     <span>{datum.label}</span>
                     <span className={classMap.value}>
-                      {valueFormatter(datum.value)}
+                      {formatValueText(datum.value, valueFormatter, units)}
                     </span>
                   </li>
                 ))}

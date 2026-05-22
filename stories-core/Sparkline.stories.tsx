@@ -12,6 +12,7 @@ const meta: Meta<SparklineProps> = {
 export default meta;
 type Story = StoryObj<SparklineProps>;
 export const Default: Story = {};
+export const WithUnits: Story = { args: { units: "k USD" } };
 export const CustomColor: Story = {
   args: {
     color: "#0ea5e9",

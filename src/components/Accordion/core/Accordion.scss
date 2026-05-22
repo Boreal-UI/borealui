@@ -2,6 +2,7 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
+@use "sass:color";
 @use "sass:list";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
@@ -112,7 +113,7 @@
     min-width: 0;
     padding: var(--spacing-sm) var(--spacing-md);
 
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-label);
@@ -154,7 +155,7 @@
   @each $name, $values in theme.$themes {
     .accordion_#{$name} {
       background-color: map.get($values, bg);
-      color: var(--text-color-primary);
+      color: map.get($values, text);
 
       --accordion-glass-bg: #{map.get($values, glass-bg)};
       --accordion-glass-hover-bg: #{map.get($values, glass-hover)};
@@ -162,8 +163,12 @@
       --accordion-glass-text: #{map.get($values, text)};
     }
 
-    .accordion_#{$name}:hover {
+    .accordion_#{$name}.accordion_header:hover {
       background-color: map.get($values, hover);
+    }
+
+    .accordion_#{$name}.accordion_content {
+      background-color: (var(--accordion-glass-bg));
     }
 
     .accordion_#{$name}.accordion_glass {
@@ -171,7 +176,7 @@
       border: 1px solid var(--accordion-glass-border);
       color: inherit;
 
-      &:hover {
+      &.accordion_header:hover {
         background: var(--accordion-glass-hover-bg);
       }
     }
@@ -185,7 +190,7 @@
         border-width: 1.5px;
       }
 
-      &:hover {
+      &.accordion_header:hover {
         background-color: map.get($values, hover);
         color: map.get($values, text-hover);
       }
@@ -205,15 +210,13 @@
   @each $name, $values in theme.$states {
     .accordion_#{$name} {
       background-color: map.get($values, bg);
-      color: var(--text-color-primary);
-
       --accordion-glass-bg: #{map.get($values, glass-bg)};
       --accordion-glass-hover-bg: #{map.get($values, glass-hover)};
       --accordion-glass-border: #{map.get($values, glass-border)};
       --accordion-glass-text: #{map.get($values, text)};
     }
 
-    .accordion_#{$name}:hover {
+    .accordion_#{$name}.accordion_header:hover {
       background-color: map.get($values, hover);
     }
 
@@ -221,7 +224,7 @@
       background: var(--accordion-glass-bg);
       color: inherit;
 
-      &:hover {
+      &.accordion_header:hover {
         background: var(--accordion-glass-hover-bg);
       }
     }
@@ -235,7 +238,7 @@
         border-width: 1.5px;
       }
 
-      &:hover {
+      &.accordion_header:hover {
         background-color: map.get($values, hover);
         color: map.get($values, text-hover);
       }
@@ -265,7 +268,7 @@
     box-sizing: border-box;
     padding: 0 var(--spacing-md);
     background-color: var(--background-color-lighter);
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-body);
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-body);
@@ -314,7 +317,7 @@
 
   .accordion_content_clear {
     background-color: transparent;
-    border: 1px solid var(--text-color-primary);
+    border: 1px solid inherit;
 
     @include bp.down(sm) {
       border-width: 1px;
@@ -429,6 +432,10 @@
   .accordion_clear.accordion_header {
     box-shadow: none;
     color: inherit;
+  }
+
+  .accordion_clear.accordion_glass.accordion_header:hover {
+    background: var(--disabled-color);
   }
 
   @media (prefers-reduced-motion: reduce) {

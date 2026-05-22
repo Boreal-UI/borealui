@@ -74,6 +74,11 @@ export interface SparklineProps extends NativeSparklineProps {
   valueFormatter?: ChartValueFormatter;
 
   /**
+   * Optional unit label shown beside formatted values.
+   */
+  units?: string;
+
+  /**
    * Theme class used for styling.
    */
   theme?: ThemeType;

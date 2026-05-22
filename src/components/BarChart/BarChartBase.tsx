@@ -21,6 +21,7 @@ const BarChartBase = forwardRef<HTMLDivElement, BarChartBaseProps>(
       showGrid = true,
       showLabels = true,
       valueFormatter = formatDefaultValue,
+      units,
       theme = "primary",
       state,
       loading = false,
@@ -78,7 +79,7 @@ const BarChartBase = forwardRef<HTMLDivElement, BarChartBaseProps>(
             height={height}
             viewBox={`0 0 ${width} ${height}`}
             role="img"
-            aria-label={ariaLabel ?? describeData(data, valueFormatter)}
+            aria-label={ariaLabel ?? describeData(data, valueFormatter, units)}
             data-testid={`${testId}-chart`}
           >
             {showGrid
@@ -117,6 +118,7 @@ const BarChartBase = forwardRef<HTMLDivElement, BarChartBaseProps>(
                     <title>{`${datum.label}: ${formatValueText(
                       datum.value,
                       valueFormatter,
+                      units,
                     )}`}</title>
                   </rect>
                   {showLabels ? (

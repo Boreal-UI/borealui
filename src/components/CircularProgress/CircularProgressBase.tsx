@@ -3,6 +3,11 @@ import type { CircularProgressBaseProps } from "./CircularProgress.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
+  appendUnits,
+  formatDefaultValue,
+  formatValueText,
+} from "../../utils/chartUtils";
+import {
   getDefaultGlass,
   getDefaultShadow,
   getDefaultSize,
@@ -18,6 +23,7 @@ const getColor = (percent: number): string => {
 
 const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   value,
+  units,
   min = 0,
   max = 100,
   label = "Progress",
@@ -56,7 +62,9 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
     info: "var(--info-color)",
   };
 
-  const progressColor = state ? (stateColorMap[state] ?? getColor(percent)) : getColor(percent);
+  const progressColor = state
+    ? (stateColorMap[state] ?? getColor(percent))
+    : getColor(percent);
 
   const angle = Math.min(360, (percent / 100) * 360);
 
@@ -74,11 +82,23 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
     [classMap, theme, size, state, glass, shadow, className],
   );
 
-  const valueText = showRaw ? `${clamped}/${max}` : `${displayPercent}%`;
+  const rawValueText = units
+    ? `${formatDefaultValue(clamped)}/${appendUnits(formatDefaultValue(max), units)}`
+    : `${formatDefaultValue(clamped)}/${formatDefaultValue(max)}`;
+  const percentText = formatValueText(
+    displayPercent,
+    (percentValue) => `${percentValue}%`,
+  );
+  const valueText = showRaw ? rawValueText : percentText;
 
   const resolvedAriaValueText =
     ariaValueText ??
-    (showRaw ? `${clamped} out of ${max}` : `${displayPercent}%`);
+    (showRaw
+      ? `${formatDefaultValue(clamped)} out of ${appendUnits(
+          formatDefaultValue(max),
+          units,
+        )}`
+      : percentText);
 
   const accessibleNameProps = decorative
     ? {}

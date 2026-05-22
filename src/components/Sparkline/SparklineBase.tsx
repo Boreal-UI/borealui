@@ -4,6 +4,7 @@ import {
   buildPoints,
   describeData,
   formatDefaultValue,
+  formatValueText,
   normalizeData,
   pointsToPath,
 } from "../../utils/chartUtils";
@@ -21,6 +22,7 @@ const SparklineBase = forwardRef<HTMLDivElement, SparklineBaseProps>(
       showArea = false,
       showValue = false,
       valueFormatter = formatDefaultValue,
+      units,
       theme = "primary",
       state,
       loading = false,
@@ -47,7 +49,7 @@ const SparklineBase = forwardRef<HTMLDivElement, SparklineBaseProps>(
             points[0].x
           } ${height - padding} Z`
         : undefined;
-    const description = describeData(normalizedData, valueFormatter);
+    const description = describeData(normalizedData, valueFormatter, units);
 
     return (
       <div
@@ -114,7 +116,7 @@ const SparklineBase = forwardRef<HTMLDivElement, SparklineBaseProps>(
             </svg>
             {showValue && lastValue !== undefined ? (
               <span className={classMap.value} data-testid={`${testId}-value`}>
-                {valueFormatter(lastValue)}
+                {formatValueText(lastValue, valueFormatter, units)}
               </span>
             ) : null}
           </div>

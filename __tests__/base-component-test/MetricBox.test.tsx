@@ -293,6 +293,22 @@ describe("BaseMetricBox", () => {
     expect(value).toHaveAttribute("aria-label", "9 Projects");
   });
 
+  it("shows units beside the value", () => {
+    render(
+      <BaseMetricBox
+        title="Storage"
+        value={42}
+        units="GB"
+        classMap={classNames}
+        data-testid="metric-box"
+      />,
+    );
+
+    const value = screen.getByTestId("metric-box-value");
+    expect(value).toHaveTextContent("42 GB");
+    expect(value).toHaveAttribute("aria-label", "42 GB Storage");
+  });
+
   it("renders content structure correctly", () => {
     render(
       <BaseMetricBox

@@ -223,12 +223,4 @@ export const defaultColorSchemes: readonly ColorScheme[] = [
     quaternaryColor: "#ffdcb0",
     backgroundColor: "#c2bfbf",
   },
-  {
-    name: "Contrast Test",
-    primaryColor: "#7f4ac4",
-    secondaryColor: "#7d533b",
-    tertiaryColor: "#905da8",
-    quaternaryColor: "#ac4d0e",
-    backgroundColor: "#ffffff",
-  },
 ];

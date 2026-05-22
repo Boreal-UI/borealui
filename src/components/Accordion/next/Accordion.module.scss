@@ -118,7 +118,7 @@
     min-width: 0;
     padding: var(--spacing-sm) var(--spacing-md);
 
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-label);
@@ -160,15 +160,19 @@
   @each $name, $values in theme.$themes {
     .#{$name} {
       background-color: map.get($values, bg);
-      color: var(--text-color-primary);
+      color: map.get($values, text);
 
       --accordion-glass-bg: #{map.get($values, glass-bg)};
       --accordion-glass-hover-bg: #{map.get($values, glass-hover)};
       --accordion-glass-border: #{map.get($values, glass-border)};
       --accordion-glass-text: #{map.get($values, text)};
 
-      &:hover {
+      &.header:hover {
         background-color: map.get($values, hover);
+      }
+
+      &.content {
+        background: var(--accordion-glass-bg);
       }
 
       &.glass.header {
@@ -189,7 +193,7 @@
           border-width: 1.5px;
         }
 
-        &:hover {
+        &.header:hover {
           background-color: map.get($values, hover);
           color: map.get($values, text-hover);
         }
@@ -210,14 +214,12 @@
   @each $name, $values in theme.$states {
     .#{$name} {
       background-color: map.get($values, bg);
-      color: var(--text-color-primary);
-
       --accordion-glass-bg: #{map.get($values, glass-bg)};
       --accordion-glass-hover-bg: #{map.get($values, glass-hover)};
       --accordion-glass-border: #{map.get($values, glass-border)};
       --accordion-glass-text: #{map.get($values, text)};
 
-      &:hover {
+      &.header:hover {
         background-color: map.get($values, hover);
       }
 
@@ -239,7 +241,7 @@
           border-width: 1.5px;
         }
 
-        &:hover {
+        &.header:hover {
           background-color: map.get($values, hover);
           color: map.get($values, text-hover);
         }
@@ -270,7 +272,7 @@
     box-sizing: border-box;
     padding: 0 var(--spacing-md);
     background-color: var(--background-color-lighter);
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-body);
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-body);
@@ -319,7 +321,7 @@
 
   .content_clear {
     background-color: transparent;
-    border: 1px solid var(--text-color-primary);
+    border: 1px solid inherit;
 
     @include bp.down(sm) {
       border-width: 1px;
@@ -434,6 +436,10 @@
       opacity: 0.6;
       background-color: var(--disabled-color);
     }
+  }
+
+  .clear.glass.header:hover {
+    background: var(--disabled-color);
   }
 
   @media (prefers-reduced-motion: reduce) {

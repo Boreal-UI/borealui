@@ -14,6 +14,7 @@ import {
 const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   title,
   value,
+  units,
   icon: Icon,
   subtext,
   theme = getDefaultTheme(),
@@ -75,8 +76,10 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
     ],
   );
 
+  const displayValue = units ? `${value} ${units}` : String(value ?? "");
+
   const valueLabel =
-    title && value != null ? `${value} ${title}` : String(value ?? "");
+    title && value != null ? `${displayValue} ${title}` : displayValue;
 
   const resolvedRole = role ?? (title ? "region" : undefined);
   const resolvedAriaLabelledBy =
@@ -125,7 +128,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
           data-testid={`${testId}-value`}
           aria-label={valueLabel}
         >
-          {value}
+          {displayValue}
         </div>
 
         {subtext && (

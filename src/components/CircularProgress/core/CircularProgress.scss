@@ -128,7 +128,8 @@
         font-weight: var(--font-weight-label);
         line-height: var(--line-height-label);
         letter-spacing: var(--letter-spacing-label);
-        color: var(--text-color-primary);
+        color: inherit;
+        text-align: center;
 
         @include bp.up(lg) {
           font-size: calc(#{map.get($props, font-size)} * 1.05);

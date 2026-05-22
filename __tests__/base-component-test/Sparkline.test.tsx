@@ -63,6 +63,20 @@ describe("SparklineBase", () => {
     expect(screen.getByTestId("sparkline-value")).toHaveTextContent("12");
   });
 
+  it("shows units in the visible and accessible values", () => {
+    render(
+      <SparklineBase
+        classMap={classMap}
+        data={[4, 8, 6, 12]}
+        showValue
+        units="kWh"
+      />,
+    );
+
+    expect(screen.getByRole("img")).toHaveAccessibleName(/Value 1: 4 kWh/);
+    expect(screen.getByTestId("sparkline-value")).toHaveTextContent("12 kWh");
+  });
+
   it("supports loading and refs", () => {
     const ref = React.createRef<HTMLDivElement>();
     render(<SparklineBase ref={ref} classMap={classMap} data={[1]} loading />);

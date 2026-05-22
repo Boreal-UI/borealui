@@ -1,58 +1,160 @@
 @use "../../../styles/_animations";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  .root,
   .root {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
+    width: 100%;
     max-width: 100%;
+    min-width: 0;
     color: inherit;
     font-family: var(--font-family-ui);
+    animation: fade-in-up 240ms ease-out both;
   }
-  .label,
+
   .label {
+    max-width: 100%;
+    color: inherit;
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
-    color: inherit;
+    line-height: var(--line-height-body, 1.4);
+    overflow-wrap: anywhere;
   }
-  .svg,
+
   .svg {
     display: block;
+    width: 100%;
     max-width: 100%;
+    height: auto;
+    min-width: 0;
     overflow: visible;
+    color: inherit;
   }
-  .gridLine,
+
   .gridLine {
-    stroke: inherit;
+    stroke: var(--border-color);
     stroke-width: 1;
     opacity: 0.16;
+    vector-effect: non-scaling-stroke;
   }
-  .bar,
+
   .bar {
-    transition: opacity var(--transition-default);
+    transform-box: fill-box;
+    transform-origin: bottom;
+    animation: bar-chart-grow 420ms ease-out both;
+    transition:
+      opacity var(--transition-default),
+      filter var(--transition-default);
   }
-  .bar:hover,
+
   .bar:hover {
     opacity: 0.78;
   }
-  .axisLabel,
+
   .axisLabel {
-    fill: currentColor;
-    font-size: 0.7rem;
+    fill: currentcolor;
+    font-size: clamp(0.55rem, 2.4cqi, 0.7rem);
+    line-height: 1;
     opacity: 0.72;
+    pointer-events: none;
   }
-  .loader,
+
   .loader {
     width: 1rem;
     height: 1rem;
-    border: 2px solid inherit;
+    border: 2px solid currentcolor;
     border-right-color: transparent;
     border-radius: 50%;
     animation: spin 700ms linear infinite;
   }
-  .loading,
+
   .loading {
     cursor: progress;
+  }
+
+  @media (max-width: 420px) {
+    .root {
+      gap: var(--spacing-xs, 0.5rem);
+    }
+
+    .label {
+      font-size: var(--font-size-body-xs, 0.8rem);
+    }
+
+    .axisLabel {
+      font-size: 0.7rem;
+    }
+  }
+
+  @media (max-width: 280px) {
+    .axisLabel {
+      font-size: 0.9rem;
+      opacity: 0.64;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .root,
+    .bar,
+    .loader {
+      animation: none;
+      transition: none;
+    }
+
+    .bar {
+      transform: none;
+      opacity: 1;
+    }
+  }
+
+  @media (hover: none) {
+    .bar {
+      transition: none;
+    }
+
+    .bar:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .root {
+      color: CanvasText;
+    }
+
+    .svg {
+      color: CanvasText;
+    }
+
+    .label,
+    .axisLabel {
+      color: CanvasText;
+      fill: CanvasText;
+      opacity: 1;
+    }
+
+    .gridLine {
+      stroke: GrayText;
+      opacity: 1;
+    }
+
+    .bar {
+      fill: Highlight;
+      stroke: CanvasText;
+      stroke-width: 1;
+      opacity: 1;
+    }
+
+    .bar:hover {
+      fill: Highlight;
+      opacity: 1;
+    }
+
+    .loader {
+      border-color: CanvasText;
+      border-right-color: Canvas;
+    }
   }
 }

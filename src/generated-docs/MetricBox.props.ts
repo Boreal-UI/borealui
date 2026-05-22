@@ -229,6 +229,14 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "units",
+      "type": "string",
+      "description": "Optional unit label shown beside the value.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "value",
       "type": "string | number",
       "description": "The primary value of the metric, e.g., a number or a string.",

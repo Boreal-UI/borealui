@@ -60,6 +60,15 @@ export const WithSubtext: Story = {
   },
 };
 
+export const WithUnits: Story = {
+  args: {
+    title: "Storage Used",
+    value: 42,
+    units: "GB",
+    subtext: "Across active workspaces",
+  },
+};
+
 export const AlignmentVariants: Story = {
   render: () => {
     const alignments = ["left", "center", "right"] as const;

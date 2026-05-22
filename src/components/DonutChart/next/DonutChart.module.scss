@@ -1,89 +1,125 @@
 @use "../../../styles/_animations";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+
 @layer boreal-ui.components {
-  .root,
   .root {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: var(--spacing-sm);
+    width: 100%;
     max-width: 100%;
+    min-width: 0;
     color: inherit;
     font-family: var(--font-family-ui);
+    animation: fade-in-up 240ms ease-out both;
   }
-  .label,
+
   .label {
     align-self: stretch;
+    max-width: 100%;
+    color: inherit;
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
-    color: inherit;
+    line-height: var(--line-height-body, 1.4);
+    text-align: inherit;
+    overflow-wrap: anywhere;
   }
-  .chart,
+
   .chart {
     position: relative;
-    display: inline-grid;
+    display: grid;
     place-items: center;
+    width: min(100%, var(--donut-chart-size, 18rem));
+    max-width: 100%;
+    min-width: 0;
+    aspect-ratio: 1;
   }
-  .svg,
+
   .svg {
     display: block;
+    width: 100%;
     max-width: 100%;
+    height: auto;
+    min-width: 0;
     overflow: visible;
+    color: inherit;
   }
-  .track,
+
   .track {
     stroke: currentcolor;
     opacity: 0.14;
+    vector-effect: non-scaling-stroke;
   }
-  .segment,
+
   .segment {
     stroke-linecap: round;
-    transition: opacity var(--transition-default);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: donut-chart-draw 520ms ease-out both;
+    transition:
+      opacity var(--transition-default),
+      filter var(--transition-default);
   }
-  .segment:hover,
-  .segment:hover {
-    opacity: 0.78;
+
+  @media (hover: hover) and (pointer: fine) {
+    .segment:hover {
+      opacity: 0.78;
+    }
   }
-  .center,
+
   .center {
     position: absolute;
     inset: 20%;
     display: grid;
     place-items: center;
-    text-align: center;
-    font-weight: var(--font-weight-ui);
+    min-width: 0;
     color: inherit;
+    font-weight: var(--font-weight-ui);
+    line-height: var(--line-height-body, 1.25);
+    text-align: center;
+    overflow-wrap: anywhere;
+    pointer-events: none;
   }
-  .legend,
+
   .legend {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--spacing-xs) var(--spacing-sm);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     padding: 0;
     margin: 0;
-    list-style: none;
     color: inherit;
+    list-style: none;
   }
-  .legendItem,
+
   .legendItem {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
+    min-width: 0;
+    max-width: 100%;
     font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body, 1.4);
   }
-  .swatch,
+
   .swatch {
+    flex: 0 0 auto;
     width: 0.75rem;
     height: 0.75rem;
     border-radius: var(--border-radius-full);
   }
-  .value,
+
   .value {
     font-variant-numeric: tabular-nums;
     opacity: 0.76;
   }
-  .loader,
+
   .loader {
     width: 1rem;
     height: 1rem;
@@ -92,8 +128,125 @@
     border-radius: 50%;
     animation: spin 700ms linear infinite;
   }
-  .loading,
+
   .loading {
     cursor: progress;
+  }
+
+  @media (max-width: 420px) {
+    .root {
+      gap: var(--spacing-xs, 0.5rem);
+    }
+
+    .label,
+    .legendItem {
+      font-size: var(--font-size-body-xs, 0.8rem);
+    }
+
+    .chart {
+      width: min(100%, var(--donut-chart-size-sm, 14rem));
+    }
+
+    .center {
+      inset: 24%;
+      font-size: var(--font-size-body-xs, 0.8rem);
+    }
+
+    .legend {
+      gap: var(--spacing-xxs, 0.25rem) var(--spacing-xs, 0.5rem);
+    }
+  }
+
+  @media (max-width: 280px) {
+    .chart {
+      width: min(100%, var(--donut-chart-size-xs, 11rem));
+    }
+
+    .center {
+      inset: 28%;
+      font-size: 0.68rem;
+    }
+
+    .legend {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .legendItem {
+      font-size: 0.72rem;
+    }
+
+    .swatch {
+      width: 0.65rem;
+      height: 0.65rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .root,
+    .segment,
+    .loader {
+      animation: none;
+      transition: none;
+    }
+
+    .segment {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (hover: none) {
+    .segment {
+      transition: none;
+    }
+
+    .segment:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .root {
+      color: CanvasText;
+    }
+
+    .svg {
+      color: CanvasText;
+    }
+
+    .label,
+    .center,
+    .legend,
+    .legendItem,
+    .value {
+      color: CanvasText;
+      opacity: 1;
+    }
+
+    .track {
+      stroke: GrayText;
+      opacity: 1;
+    }
+
+    .segment {
+      stroke: Highlight;
+      opacity: 1;
+    }
+
+    .segment:hover {
+      stroke: Highlight;
+      opacity: 1;
+    }
+
+    .swatch {
+      background: Highlight;
+      border: 1px solid CanvasText;
+    }
+
+    .loader {
+      border-color: CanvasText;
+      border-right-color: Canvas;
+    }
   }
 }

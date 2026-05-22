@@ -1,88 +1,137 @@
 @use "../../../styles/_animations";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+
 @layer boreal-ui.components {
   .donutChart,
   .root {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     gap: var(--spacing-sm);
+    width: 100%;
     max-width: 100%;
+    min-width: 0;
     color: inherit;
     font-family: var(--font-family-ui);
+    animation: fade-in-up 240ms ease-out both;
   }
+
   .donutChart_label,
   .label {
     align-self: stretch;
+    max-width: 100%;
+    color: inherit;
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
-    color: inherit;
+    line-height: var(--line-height-body, 1.4);
+    text-align: inherit;
+    overflow-wrap: anywhere;
   }
+
   .donutChart_chart,
   .chart {
     position: relative;
-    display: inline-grid;
+    display: grid;
     place-items: center;
+    width: min(100%, var(--donut-chart-size, 18rem));
+    max-width: 100%;
+    min-width: 0;
+    aspect-ratio: 1;
   }
+
   .donutChart_svg,
   .svg {
     display: block;
+    width: 100%;
     max-width: 100%;
+    height: auto;
+    min-width: 0;
     overflow: visible;
+    color: inherit;
   }
+
   .donutChart_track,
   .track {
     stroke: currentcolor;
     opacity: 0.14;
+    vector-effect: non-scaling-stroke;
   }
+
   .donutChart_segment,
   .segment {
     stroke-linecap: round;
-    transition: opacity var(--transition-default);
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: donut-chart-draw 520ms ease-out both;
+    transition:
+      opacity var(--transition-default),
+      filter var(--transition-default);
   }
-  .donutChart_segment:hover,
-  .segment:hover {
-    opacity: 0.78;
+
+  @media (hover: hover) and (pointer: fine) {
+    .donutChart_segment:hover,
+    .segment:hover {
+      opacity: 0.78;
+    }
   }
+
   .donutChart_center,
   .center {
     position: absolute;
     inset: 20%;
     display: grid;
     place-items: center;
-    text-align: center;
-    font-weight: var(--font-weight-ui);
+    min-width: 0;
     color: inherit;
+    font-weight: var(--font-weight-ui);
+    line-height: var(--line-height-body, 1.25);
+    text-align: center;
+    overflow-wrap: anywhere;
+    pointer-events: none;
   }
+
   .donutChart_legend,
   .legend {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--spacing-xs) var(--spacing-sm);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     padding: 0;
     margin: 0;
-    list-style: none;
     color: inherit;
+    list-style: none;
   }
+
   .donutChart_legendItem,
   .legendItem {
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
+    min-width: 0;
+    max-width: 100%;
     font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body, 1.4);
   }
+
   .donutChart_swatch,
   .swatch {
+    flex: 0 0 auto;
     width: 0.75rem;
     height: 0.75rem;
     border-radius: var(--border-radius-full);
   }
+
   .donutChart_value,
   .value {
     font-variant-numeric: tabular-nums;
     opacity: 0.76;
   }
+
   .donutChart_loader,
   .loader {
     width: 1rem;
@@ -92,8 +141,155 @@
     border-radius: 50%;
     animation: spin 700ms linear infinite;
   }
+
   .donutChart_loading,
   .loading {
     cursor: progress;
+  }
+
+  @media (max-width: 420px) {
+    .donutChart,
+    .root {
+      gap: var(--spacing-xs, 0.5rem);
+    }
+
+    .donutChart_label,
+    .label,
+    .donutChart_legendItem,
+    .legendItem {
+      font-size: var(--font-size-body-xs, 0.8rem);
+    }
+
+    .donutChart_chart,
+    .chart {
+      width: min(100%, var(--donut-chart-size-sm, 14rem));
+    }
+
+    .donutChart_center,
+    .center {
+      inset: 24%;
+      font-size: var(--font-size-body-xs, 0.8rem);
+    }
+
+    .donutChart_legend,
+    .legend {
+      gap: var(--spacing-xxs, 0.25rem) var(--spacing-xs, 0.5rem);
+    }
+  }
+
+  @media (max-width: 280px) {
+    .donutChart_chart,
+    .chart {
+      width: min(100%, var(--donut-chart-size-xs, 11rem));
+    }
+
+    .donutChart_center,
+    .center {
+      inset: 28%;
+      font-size: 0.68rem;
+    }
+
+    .donutChart_legend,
+    .legend {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .donutChart_legendItem,
+    .legendItem {
+      font-size: 0.72rem;
+    }
+
+    .donutChart_swatch,
+    .swatch {
+      width: 0.65rem;
+      height: 0.65rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .donutChart,
+    .root,
+    .donutChart_segment,
+    .segment,
+    .donutChart_loader,
+    .loader {
+      animation: none;
+      transition: none;
+    }
+
+    .donutChart_segment,
+    .segment {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (hover: none) {
+    .donutChart_segment,
+    .segment {
+      transition: none;
+    }
+
+    .donutChart_segment:hover,
+    .segment:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .donutChart,
+    .root {
+      color: CanvasText;
+    }
+
+    .donutChart_svg,
+    .svg {
+      color: CanvasText;
+    }
+
+    .donutChart_label,
+    .label,
+    .donutChart_center,
+    .center,
+    .donutChart_legend,
+    .legend,
+    .donutChart_legendItem,
+    .legendItem,
+    .donutChart_value,
+    .value {
+      color: CanvasText;
+      opacity: 1;
+    }
+
+    .donutChart_track,
+    .track {
+      stroke: GrayText;
+      opacity: 1;
+    }
+
+    .donutChart_segment,
+    .segment {
+      stroke: Highlight;
+      opacity: 1;
+    }
+
+    .donutChart_segment:hover,
+    .segment:hover {
+      stroke: Highlight;
+      opacity: 1;
+    }
+
+    .donutChart_swatch,
+    .swatch {
+      background: Highlight;
+      border: 1px solid CanvasText;
+    }
+
+    .donutChart_loader,
+    .loader {
+      border-color: CanvasText;
+      border-right-color: Canvas;
+    }
   }
 }
