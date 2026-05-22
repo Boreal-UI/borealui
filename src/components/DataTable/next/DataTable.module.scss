@@ -154,14 +154,15 @@
     }
 
     .viewport {
-      width: 100%;
-      overflow-x: auto;
+      width: max(100%, var(--data-table-min-width));
+      min-width: var(--data-table-min-width);
+      overflow: visible;
       border-radius: 0;
-      -webkit-overflow-scrolling: touch;
     }
 
     &.virtualized .viewport {
-      overflow: auto;
+      overflow-x: visible;
+      overflow-y: auto;
     }
 
     .table {
@@ -171,6 +172,13 @@
       border-spacing: 0;
       table-layout: auto;
       font-size: inherit;
+    }
+
+    .headerCell,
+    thead .selectionCell {
+      position: sticky;
+      top: 0;
+      z-index: 4;
     }
 
     .headerCell {

@@ -154,14 +154,15 @@
     }
 
     .data_table_viewport {
-      width: 100%;
-      overflow-x: auto;
+      width: max(100%, var(--data-table-min-width));
+      min-width: var(--data-table-min-width);
+      overflow: visible;
       border-radius: 0;
-      -webkit-overflow-scrolling: touch;
     }
 
     &.data_table_virtualized .data_table_viewport {
-      overflow: auto;
+      overflow-x: visible;
+      overflow-y: auto;
     }
 
     .data_table {
@@ -171,6 +172,13 @@
       border-spacing: 0;
       table-layout: auto;
       font-size: inherit;
+    }
+
+    .data_table_header_cell,
+    thead .data_table_selection_cell {
+      position: sticky;
+      top: 0;
+      z-index: 4;
     }
 
     .data_table_header_cell {
