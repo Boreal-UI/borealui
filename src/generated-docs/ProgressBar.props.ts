@@ -147,6 +147,15 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default shadow (fallback: \"light\")"
     },
     {
+      "name": "showValue",
+      "type": "boolean",
+      "description": "If true, displays the current progress value next to the label.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
       "name": "size",
       "type": "SizeType",
       "description": "Size of the progress bar. One of: \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
@@ -180,6 +189,15 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "configured default theme (fallback: \"primary\")"
+    },
+    {
+      "name": "units",
+      "type": "ReactNode",
+      "description": "Unit text rendered after the displayed progress value.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"%\""
     },
     {
       "name": "value",

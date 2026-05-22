@@ -18,7 +18,7 @@
   .progress {
     &_container {
       width: 100%;
-      min-width: 100px;
+      min-width: 0;
       height: 10px;
       background-color: var(--background-color-lighter);
       overflow: hidden;
@@ -29,19 +29,12 @@
         outline-offset: 2px;
         border-radius: 4px;
       }
-
-      @include bp.down(xs) {
-        min-width: 80px;
-      }
-
-      @include bp.up(lg) {
-        min-width: 160px;
-      }
     }
 
     &_layout {
       display: flex;
       gap: 0.5rem;
+      width: 100%;
       font-family: var(--font-family-ui);
     }
 
@@ -68,6 +61,30 @@
       font-weight: var(--font-weight-label);
       line-height: var(--line-height-label);
       letter-spacing: var(--letter-spacing-label);
+      white-space: nowrap;
+    }
+
+    &_meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-sm);
+      width: 100%;
+      min-width: 0;
+    }
+
+    &_meta_valueOnly {
+      justify-content: flex-end;
+    }
+
+    &_value {
+      flex: 0 0 auto;
+      color: var(--text-color);
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-bold, 700);
+      line-height: var(--line-height-label);
+      font-variant-numeric: tabular-nums;
       white-space: nowrap;
     }
 

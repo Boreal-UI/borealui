@@ -12,6 +12,9 @@ const classNames = {
   glass: "glass",
   glassBar: "glassBar",
   label: "progressLabel",
+  meta: "progressMeta",
+  metaValueOnly: "progressMetaValueOnly",
+  value: "progressValue",
 
   primary: "themePrimary",
   secondary: "themeSecondary",
@@ -191,6 +194,57 @@ describe("BaseProgressBar", () => {
     expect(label).toHaveAttribute("id", "progressbar-label");
     expect(progressbar).toHaveAttribute("aria-labelledby", "progressbar-label");
     expect(progressbar).not.toHaveAttribute("aria-label", "Progress");
+  });
+
+  it("renders the visible progress value with percent units by default", () => {
+    render(
+      <BaseProgressBar
+        value={42}
+        label="Lead"
+        showValue
+        classMap={classNames}
+        data-testid="progressbar"
+      />,
+    );
+
+    const meta = screen.getByTestId("progressbar-meta");
+    const value = screen.getByTestId("progressbar-value");
+
+    expect(meta).toHaveClass("progressMeta");
+    expect(value).toHaveClass("progressValue");
+    expect(value).toHaveTextContent("42%");
+  });
+
+  it("renders the visible progress value with custom units", () => {
+    render(
+      <BaseProgressBar
+        value={42}
+        showValue
+        units=" files"
+        classMap={classNames}
+        data-testid="progressbar"
+      />,
+    );
+
+    expect(screen.getByTestId("progressbar-value")).toHaveTextContent(
+      "42 files",
+    );
+    expect(screen.getByTestId("progressbar-meta")).toHaveClass(
+      "progressMetaValueOnly",
+    );
+  });
+
+  it("does not render a visible value while indeterminate", () => {
+    render(
+      <BaseProgressBar
+        indeterminate
+        showValue
+        classMap={classNames}
+        data-testid="progressbar"
+      />,
+    );
+
+    expect(screen.queryByTestId("progressbar-value")).not.toBeInTheDocument();
   });
 
   it("uses a custom labelId when provided", () => {
