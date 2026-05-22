@@ -307,6 +307,12 @@
     }
   }
 
+  .clear {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
   @include bp.down(lg) {
     .main {
       grid-template-columns: auto minmax(0, 1fr);
