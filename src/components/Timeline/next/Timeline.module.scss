@@ -4,37 +4,45 @@
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+
 @layer boreal-ui.components {
   .timeline {
+    box-sizing: border-box;
+    position: relative;
     display: flex;
     flex-direction: column;
-    position: relative;
-    width: fit-content;
-    height: fit-content;
-    max-width: 600px;
+    gap: 0;
+    width: 100%;
+    max-width: min(100%, 600px);
+    min-width: 0;
+    height: auto;
     padding-left: var(--spacing-md);
     background: transparent;
+    color: inherit;
     font-family: var(--font-family-body);
+    overflow: visible;
 
     @include bp.down(sm) {
-      width: 100%;
       max-width: 100%;
       padding-left: var(--spacing-sm);
     }
 
     &:focus-within {
+      border-radius: var(--border-radius-sm);
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 3px;
-      border-radius: var(--border-radius-sm);
     }
   }
 
   .horizontal {
     flex-direction: row;
-    align-items: center;
-    padding-left: 0;
+    align-items: stretch;
+    width: 100%;
     max-width: 100%;
+    min-width: 0;
+    padding-left: 0;
     overflow-x: auto;
+    overflow-y: visible;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
     scroll-snap-type: x proximity;
@@ -45,62 +53,83 @@
   }
 
   .item {
-    display: inline-flex;
-    align-items: center;
-    padding-bottom: var(--spacing-sm);
-    gap: var(--spacing-sm);
+    box-sizing: border-box;
     position: relative;
-    text-align: center;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: var(--spacing-sm);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    padding-bottom: var(--spacing-sm);
+    text-align: start;
     scroll-snap-align: start;
 
     &.horizontal {
-      overflow: visible;
-      gap: 0;
+      display: inline-grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      justify-items: center;
+      align-items: start;
+      flex: 0 0 clamp(12rem, 48cqi, 18rem);
+      width: clamp(12rem, 48cqi, 18rem);
+      max-width: min(18rem, 85vw);
+      min-width: 0;
+      gap: var(--spacing-xs);
+      padding-bottom: var(--spacing-xs);
       margin-bottom: 2px;
+      overflow: visible;
+      text-align: center;
     }
 
     &:not(:last-child)::after {
       content: "";
       position: absolute;
-      left: 13.5px;
-      top: 62%;
+      left: 14px;
+      top: 30px;
       width: 2px;
-      height: 5em;
-      background-color: var(--primary-color);
+      height: calc(100% - 22px);
+      background-color: currentcolor;
 
       @include bp.down(xs) {
-        left: 12px;
-        height: 4em;
+        left: 11px;
+        top: 24px;
       }
 
       @include bp.up(lg) {
-        left: 14px;
-        height: 5.5em;
+        left: 15px;
+        top: 32px;
       }
     }
 
     &.horizontal:not(:last-child)::after {
-      top: 47%;
-      left: 100%;
-      width: 20px;
+      top: 15px;
+      left: calc(50% + 16px);
+      width: calc(100% - 32px);
       height: 2px;
 
       @include bp.down(xs) {
-        width: 14px;
+        left: calc(50% + 13px);
+        width: calc(100% - 26px);
       }
 
       @include bp.up(lg) {
-        width: 24px;
+        left: calc(50% + 17px);
+        width: calc(100% - 34px);
       }
     }
   }
 
   .marker {
+    box-sizing: border-box;
+    z-index: 1;
     display: flex;
+    flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    width: 25px;
-    height: 25px;
+    width: 30px;
+    height: 30px;
     min-width: 30px;
     min-height: 30px;
     border-radius: var(--border-radius-round);
@@ -122,21 +151,21 @@
     }
 
     &.horizontal {
-      margin: 10px;
-      overflow-x: visible;
+      margin: 0;
+      overflow: visible;
     }
 
     @include bp.down(xs) {
-      width: 22px;
-      height: 22px;
+      width: 24px;
+      height: 24px;
       min-width: 24px;
       min-height: 24px;
       font-size: var(--font-size-caption);
     }
 
     @include bp.up(lg) {
-      width: 28px;
-      height: 28px;
+      width: 32px;
+      height: 32px;
       min-width: 32px;
       min-height: 32px;
     }
@@ -145,7 +174,7 @@
   .dot {
     width: 8px;
     height: 8px;
-    background-color: currentColor;
+    background-color: currentcolor;
     border-radius: 50%;
 
     @include bp.down(xs) {
@@ -160,35 +189,45 @@
   }
 
   .content {
-    background: var(--background-color-lighter);
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     padding: var(--spacing-sm);
-    flex: 1;
-    min-width: 15rem;
+    overflow-wrap: anywhere;
+    background: var(--background-color-lighter);
 
     &.horizontal {
-      overflow-x: visible;
+      width: 95%;
+      max-width: 95%;
+      height: 100%;
+      min-width: 0;
+      overflow: visible;
     }
 
     @include bp.down(xs) {
-      min-width: 12rem;
-      padding: var(--spacing-xs);
+      padding: var(--spacing-sm);
     }
 
     @include bp.up(lg) {
-      min-width: 18rem;
       padding: var(--spacing-md);
     }
   }
 
   .title {
-    text-align: center;
+    max-width: 100%;
+    margin: 0 0 var(--spacing-xs);
+    color: inherit;
     font-family: var(--font-family-heading);
     font-size: var(--font-size-h6);
     font-weight: var(--font-weight-heading);
     line-height: var(--line-height-heading);
     letter-spacing: var(--letter-spacing-heading);
-    margin-bottom: var(--spacing-xs);
-    color: inherit;
+    text-align: inherit;
+    overflow-wrap: anywhere;
+    -webkit-hyphens: auto;
+    hyphens: auto;
 
     @include bp.down(xs) {
       font-size: var(--font-size-body);
@@ -200,13 +239,16 @@
   }
 
   .date {
+    max-width: 100%;
+    color: inherit;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-caption);
     font-weight: var(--font-weight-label);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
-    color: inherit;
     opacity: 0.8;
+    overflow-wrap: anywhere;
+    font-variant-numeric: tabular-nums;
 
     @include bp.up(lg) {
       font-size: var(--font-size-label);
@@ -214,13 +256,17 @@
   }
 
   .description {
+    max-width: 100%;
+    margin: var(--spacing-xs) 0 0;
+    color: inherit;
     font-family: var(--font-family-body);
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-body);
     line-height: var(--line-height-body);
     letter-spacing: var(--letter-spacing-body);
-    margin-top: var(--spacing-xs);
-    color: inherit;
+    overflow-wrap: anywhere;
+    -webkit-hyphens: auto;
+    hyphens: auto;
 
     @include bp.down(xs) {
       font-size: var(--font-size-caption);
@@ -278,27 +324,24 @@
     color: inherit;
   }
 
-  .clear .marker {
-    box-shadow: none;
-  }
-
-  @each $k, $v in theme.$rounding {
-    .round#{$k} {
-      border-radius: $v;
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
     }
   }
 
-  @each $k, $v in theme.$shadow {
-    .shadow#{$k} {
-      box-shadow: $v;
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .timeline,
     .timeline * {
-      transition: none !important;
       animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
     }
 
     .marker:hover {
@@ -307,16 +350,25 @@
   }
 
   @media (hover: none) {
+    .marker {
+      transition: none;
+    }
+
     .marker:hover {
       transform: none;
     }
   }
 
   @media (forced-colors: active) {
+    .timeline {
+      color: CanvasText;
+    }
+
     .content {
       background: Canvas;
       color: CanvasText;
       border: 1px solid ButtonText;
+      box-shadow: none;
     }
 
     .item:not(:last-child)::after {
@@ -327,6 +379,11 @@
       background: ButtonFace !important;
       color: ButtonText !important;
       border: 1px solid ButtonText !important;
+      box-shadow: none;
+    }
+
+    .dot {
+      background: ButtonText;
     }
 
     .glass.content,
