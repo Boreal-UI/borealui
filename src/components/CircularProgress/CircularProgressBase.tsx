@@ -82,14 +82,23 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
     [classMap, theme, size, state, glass, shadow, className],
   );
 
+  const clampedText = formatDefaultValue(clamped);
+  const maxText = formatDefaultValue(max);
+
   const rawValueText = units
-    ? `${formatDefaultValue(clamped)}/${appendUnits(formatDefaultValue(max), units)}`
-    : `${formatDefaultValue(clamped)}/${formatDefaultValue(max)}`;
+    ? `${clampedText} out of ${appendUnits(maxText, units)}`
+    : `${clampedText} out of ${maxText}`;
+
   const percentText = formatValueText(
     displayPercent,
     (percentValue) => `${percentValue}%`,
   );
-  const valueText = showRaw ? rawValueText : percentText;
+
+  const valueText = showRaw
+    ? units
+      ? `${clampedText}/${maxText}${units}`
+      : `${clampedText}/${maxText}`
+    : percentText;
 
   const resolvedAriaValueText =
     ariaValueText ??
@@ -155,7 +164,19 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
             aria-live={announceInnerValue ? "polite" : undefined}
             aria-atomic={announceInnerValue ? "true" : undefined}
           >
-            {valueText}
+            {showRaw ? (
+              <>
+                <span className={classMap.valueNumber}>
+                  {clampedText}/{maxText}
+                </span>
+                {units && <span className={classMap.valueUnits}>{units}</span>}
+              </>
+            ) : (
+              <>
+                <span className={classMap.valueNumber}>{displayPercent}</span>
+                {units && <span className={classMap.valueUnits}>{units}</span>}
+              </>
+            )}
           </span>
         </div>
       </div>

@@ -20,11 +20,11 @@
     ),
     "large": (
       dimensions: 140px,
-      font-size: var(--font-size-body),
+      font-size: var(--font-size-h5),
     ),
     "xl": (
       dimensions: 200px,
-      font-size: var(--font-size-h6),
+      font-size: var(--font-size-h4),
     ),
   );
 
@@ -123,6 +123,10 @@
       }
 
       .circular_progress_value_text {
+        display: inline-flex;
+        align-items: baseline;
+        justify-content: center;
+        gap: 0.1em;
         font-family: var(--font-family-ui);
         font-size: map.get($props, font-size);
         font-weight: var(--font-weight-label);
@@ -130,10 +134,22 @@
         letter-spacing: var(--letter-spacing-label);
         color: inherit;
         text-align: center;
+        white-space: nowrap;
 
         @include bp.up(lg) {
           font-size: calc(#{map.get($props, font-size)} * 1.05);
         }
+      }
+
+      .circular_progress_value_number {
+        color: inherit;
+      }
+
+      .circular_progress_value_units {
+        font-size: 0.72em;
+        font-weight: var(--font-weight-body);
+        line-height: 1;
+        opacity: 0.82;
       }
 
       .circular_progress_inner_circle {
