@@ -5,24 +5,113 @@
 @use "../../../styles/_animations";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+
 @layer boreal-ui.components {
   .appShell {
     --appShell-glass-bg: rgba(255, 255, 255, 0.18);
     --appShell-glass-border: rgba(255, 255, 255, 0.28);
     --appShell-glass-text: var(--text-color-primary);
 
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    min-width: 0;
+    --appShell-sidebar-size: var(--app-shell-sidebar-width, 16rem);
+    --appShell-aside-size: var(--app-shell-aside-width, 0rem);
+    --appShell-padding: var(--spacing-md);
+    --appShell-header-padding: var(--spacing-sm);
+    --appShell-footer-padding: var(--spacing-sm);
+
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    width: 100%;
     max-width: 100%;
+    min-width: 0;
+    min-height: 100vh;
+    padding: 0;
+    overflow: hidden;
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
     color: var(--text-color-primary);
     box-shadow: var(--box-shadow-sm);
-    padding: var(--spacing-sm);
-    transition: var(--transition-default);
+    font-family: var(--font-family-ui);
+    transition:
+      background-color var(--transition-default),
+      border-color var(--transition-default),
+      box-shadow var(--transition-default),
+      color var(--transition-default);
+  }
+
+  .appShell *,
+  .appShell *::before,
+  .appShell *::after {
+    box-sizing: border-box;
+  }
+
+  .appShell_header {
+    z-index: 2;
+    min-width: 0;
+    padding: var(--appShell-header-padding);
+    border-bottom: 1px solid var(--border-color);
+    background: inherit;
+    color: inherit;
+  }
+
+  .appShell_stickyHeader .appShell_header {
+    position: sticky;
+    top: 0;
+  }
+
+  .appShell_body {
+    display: grid;
+    grid-template-columns:
+      minmax(0, var(--appShell-sidebar-size))
+      minmax(0, 1fr)
+      minmax(0, var(--appShell-aside-size));
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .appShell_sidebar,
+  .appShell_aside,
+  .appShell_main {
+    min-width: 0;
+    min-height: 0;
+    padding: var(--appShell-padding);
+    overflow: auto;
+    color: inherit;
+  }
+
+  .appShell_main {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .appShell_sidebar {
+    border-right: 1px solid var(--border-color);
+  }
+
+  .appShell_aside {
+    border-left: 1px solid var(--border-color);
+  }
+
+  .appShell_sidebarCollapsed {
+    --appShell-sidebar-size: 0rem;
+  }
+
+  .appShell_sidebarCollapsed .appShell_sidebar {
+    width: 0;
+    min-width: 0;
+    padding-inline: 0;
+    border-right: 0;
+    overflow: hidden;
+  }
+
+  .appShell_footer {
+    min-width: 0;
+    padding: var(--appShell-footer-padding);
+    border-top: 1px solid var(--border-color);
+    color: inherit;
   }
 
   .appShell_loader {
@@ -37,11 +126,16 @@
     animation: spin 700ms linear infinite;
   }
 
+  .appShell_loading {
+    cursor: progress;
+  }
+
   @each $themeName, $vals in theme.$themes {
     .appShell_#{$themeName} {
       --appShell-glass-bg: #{map.get($vals, glass-bg)};
       --appShell-glass-border: #{map.get($vals, glass-border)};
       --appShell-glass-text: #{map.get($vals, text)};
+
       background-color: map.get($vals, bg);
       color: map.get($vals, text);
       border-color: map.get($vals, border);
@@ -49,8 +143,8 @@
       &.appShell_outline {
         background-color: transparent;
         color: inherit;
-        box-shadow: none;
         border: 2px solid map.get($vals, border);
+        box-shadow: none;
       }
     }
   }
@@ -60,15 +154,16 @@
       --appShell-glass-bg: #{map.get($vals, glass-bg)};
       --appShell-glass-border: #{map.get($vals, glass-border)};
       --appShell-glass-text: #{map.get($vals, text)};
+
+      color: map.get($vals, text);
       border-width: 2px;
       border-color: map.get($vals, border);
-      color: map.get($vals, text);
 
       &.appShell_outline {
         background-color: transparent;
         color: inherit;
-        box-shadow: none;
         border: 2px solid map.get($vals, border);
+        box-shadow: none;
       }
     }
   }
@@ -104,15 +199,6 @@
     }
   }
 
-  .appShell_footer {
-    margin-top: var(--spacing-md);
-    padding: var(--spacing-xs);
-  }
-
-  .appShell_loading {
-    cursor: progress;
-  }
-
   @each $key, $value in theme.$rounding {
     .appShell_round-#{$key} {
       border-radius: $value;
@@ -125,17 +211,54 @@
     }
   }
 
-  @include bp.down(xs) {
+  @include bp.down(md) {
+    .appShell {
+      min-height: 100dvh;
+    }
+  }
+
+  @include bp.down(sm) {
     .appShell {
       width: 100%;
+      max-width: 100%;
+      border-radius: 0;
+    }
+  }
+
+  @media (max-width: 1150px) {
+    .appShell_body {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr) auto;
+    }
+
+    .appShell_sidebar,
+    .appShell_aside {
+      border-inline: 0;
+    }
+
+    .appShell_sidebar {
+      border-right: 0;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .appShell_aside {
+      border-left: 0;
+      border-top: 1px solid var(--border-color);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .appShell,
     .appShell * {
-      transition: none !important;
       animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  @media (hover: none) {
+    .appShell_disabled:hover {
+      background-color: var(--disabled-color);
     }
   }
 
@@ -147,56 +270,31 @@
       box-shadow: none;
     }
 
+    .appShell_header,
+    .appShell_footer,
+    .appShell_sidebar,
+    .appShell_aside {
+      border-color: ButtonText;
+    }
+
     .appShell_glass {
       background: Canvas;
       border-color: ButtonText;
+      box-shadow: none;
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
-  }
-}
 
-@layer boreal-ui.components {
-  .appShell {
-    display: grid;
-    grid-template-rows: auto minmax(0, 1fr) auto;
-    width: 100%;
-    min-height: 100vh;
-    padding: 0;
-    overflow: hidden;
-  }
+    .appShell_loader {
+      border-color: CanvasText;
+      border-right-color: Canvas;
+    }
 
-  .appShell_header {
-    z-index: 1;
-    padding: var(--spacing-sm);
-    border-bottom: 1px solid currentcolor;
-  }
-
-  .appShell_stickyHeader .appShell_header {
-    position: sticky;
-    top: 0;
-  }
-
-  .appShell_body {
-    display: grid;
-    grid-template-columns:
-      var(--app-shell-sidebar-width, 16rem)
-      minmax(0, 1fr)
-      var(--app-shell-aside-width, 0rem);
-    min-height: 0;
-  }
-
-  .appShell_sidebar,
-  .appShell_aside,
-  .appShell_main {
-    min-width: 0;
-    min-height: 0;
-    overflow: auto;
-    padding: var(--spacing-md);
-  }
-
-  .appShell_sidebarCollapsed .appShell_sidebar {
-    padding-inline: 0;
-    overflow: hidden;
+    .appShell_disabled {
+      background: Canvas;
+      color: GrayText;
+      border-color: GrayText;
+      opacity: 1;
+    }
   }
 }

@@ -6,31 +6,30 @@
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
   .sidebar {
-    width: 240px;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    max-height: 100vh;
     background-color: var(--background-color-light);
     border-right: 1px solid var(--background-color-lighter);
     position: sticky;
     color: inherit;
     top: 0;
-    overflow-y: auto;
+    overflow: hidden;
     font-family: var(--font-family-ui);
     overscroll-behavior: contain;
 
-    @include bp.down(md) {
-      width: 200px;
-    }
-
-    @include bp.up(lg) {
-      width: 260px;
-    }
+    display: flex;
+    flex-direction: column;
 
     @include bp.down(xs) {
-      width: 100%;
       height: auto;
+      max-height: none;
+      min-height: 0;
       position: relative;
       border-right: none;
       border-bottom: 1px solid var(--background-color-lighter);
+      overflow: visible;
     }
 
     @each $key, $value in theme.$rounding {
@@ -125,13 +124,18 @@
 
   .sidebar_nav {
     display: flex;
+    flex: 1 1 auto;
     flex-direction: column;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
 
   .sidebar_list {
     list-style: none;
     padding: 0;
     margin: 0;
+    min-width: 0;
 
     @include bp.down(xs) {
       display: contents;
@@ -141,9 +145,10 @@
   .sidebar_link {
     display: flex;
     justify-content: space-between;
+    gap: var(--spacing-xs);
     align-items: center;
     width: 100%;
-    padding: 0.5rem 0.75rem;
+    padding: var(--spacing-sm) var(--spacing-md);
     color: inherit;
     text-decoration: none;
     background: none;
@@ -201,7 +206,7 @@
   .icon {
     display: inline-flex;
     align-items: center;
-    margin-right: 2px;
+    margin-right: 1rem;
 
     svg {
       width: 1em;
@@ -249,8 +254,7 @@
   }
 
   .sidebar_footer {
-    position: absolute;
-    bottom: 0;
+    flex: 0 0 auto;
     margin-top: auto;
     width: 100%;
     padding: 1rem;
@@ -261,7 +265,6 @@
     padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
 
     @include bp.down(xs) {
-      position: static;
       border-top: none;
       padding: var(--spacing-sm);
       gap: var(--spacing-xs);
