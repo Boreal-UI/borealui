@@ -155,10 +155,14 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
           data-testid={`${testId}-bar`}
         />
       </div>
-      {showValue && !showMetaRow && valueNode}
+      {showValue &&
+        !showMetaRow &&
+        resolvedLabelPosition !== "right" &&
+        valueNode}
 
       {resolvedLabelPosition === "bottom" && metaNode}
       {resolvedLabelPosition === "right" && labelNode}
+      {showValue && resolvedLabelPosition === "right" && valueNode}
       {descriptionNode}
     </div>
   );

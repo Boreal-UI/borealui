@@ -9,9 +9,15 @@ const mockStyles = {
   container: "sliderContainer",
   wrapper: "sliderWrapper",
   label: "sliderLabel",
+  meta: "sliderMeta",
+  metaValueOnly: "sliderMetaValueOnly",
   slider: "slider",
   glass: "glass",
   value: "sliderValue",
+  labelTop: "labelTop",
+  labelBottom: "labelBottom",
+  labelLeft: "labelLeft",
+  labelRight: "labelRight",
   small: "small",
   medium: "medium",
   large: "large",
@@ -49,6 +55,19 @@ describe("SliderBase", () => {
     expect(slider).toBeInTheDocument();
     expect(label).toHaveTextContent("Volume");
     expect(value).toHaveTextContent("25");
+  });
+
+  it("renders value without units by default", () => {
+    render(<SliderBase {...defaultProps} label="Volume" />);
+
+    expect(screen.getByTestId("slider-value")).toHaveTextContent("25");
+    expect(screen.getByTestId("slider-value")).not.toHaveTextContent("25%");
+  });
+
+  it("renders value with custom units", () => {
+    render(<SliderBase {...defaultProps} label="Volume" units="%" />);
+
+    expect(screen.getByTestId("slider-value")).toHaveTextContent("25%");
   });
 
   it("renders without visible label when aria-label is provided", () => {
@@ -129,6 +148,92 @@ describe("SliderBase", () => {
 
     expect(slider).toHaveAttribute("aria-describedby", "slider-help");
     expect(screen.queryByTestId("slider-value")).not.toBeInTheDocument();
+  });
+
+  it("renders label and value above the slider when labelPosition is top", () => {
+    render(
+      <SliderBase {...defaultProps} label="Volume" labelPosition="top" />,
+    );
+
+    const meta = screen.getByTestId("slider-meta");
+    const label = screen.getByTestId("slider-label");
+    const value = screen.getByTestId("slider-value");
+    const wrapper = screen.getByTestId("slider-wrapper");
+
+    expect(screen.getByTestId("slider-container")).toHaveClass("labelTop");
+    expect(meta).toHaveClass("sliderMeta");
+    expect(label.compareDocumentPosition(value)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+    expect(meta.compareDocumentPosition(wrapper)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+  });
+
+  it("renders label and value below the slider when labelPosition is bottom", () => {
+    render(
+      <SliderBase {...defaultProps} label="Volume" labelPosition="bottom" />,
+    );
+
+    const meta = screen.getByTestId("slider-meta");
+    const wrapper = screen.getByTestId("slider-wrapper");
+
+    expect(screen.getByTestId("slider-container")).toHaveClass("labelBottom");
+    expect(wrapper.compareDocumentPosition(meta)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+  });
+
+  it("renders the label before the slider and value when labelPosition is left", () => {
+    render(
+      <SliderBase {...defaultProps} label="Volume" labelPosition="left" />,
+    );
+
+    const label = screen.getByTestId("slider-label");
+    const wrapper = screen.getByTestId("slider-wrapper");
+    const value = screen.getByTestId("slider-value");
+
+    expect(screen.getByTestId("slider-container")).toHaveClass("labelLeft");
+    expect(label.compareDocumentPosition(wrapper)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+    expect(wrapper.compareDocumentPosition(value)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+    expect(screen.queryByTestId("slider-meta")).not.toBeInTheDocument();
+  });
+
+  it("renders the slider before the label and value when labelPosition is right", () => {
+    render(
+      <SliderBase
+        {...defaultProps}
+        label="Volume"
+        labelPosition="right"
+        units="%"
+      />,
+    );
+
+    const wrapper = screen.getByTestId("slider-wrapper");
+    const value = screen.getByTestId("slider-value");
+    const label = screen.getByTestId("slider-label");
+
+    expect(screen.getByTestId("slider-container")).toHaveClass("labelRight");
+    expect(wrapper.compareDocumentPosition(label)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+    expect(label.compareDocumentPosition(value)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+    expect(value).toHaveTextContent("25%");
+    expect(screen.queryByTestId("slider-meta")).not.toBeInTheDocument();
+  });
+
+  it("right-aligns top-positioned value when no label is provided", () => {
+    render(<SliderBase {...defaultProps} aria-label="Volume" />);
+
+    expect(screen.getByTestId("slider-meta")).toHaveClass(
+      "sliderMetaValueOnly",
+    );
   });
 
   it("fires onChange when value changes", () => {

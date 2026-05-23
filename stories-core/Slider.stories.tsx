@@ -73,6 +73,44 @@ export const HiddenValue: Story = {
   },
 };
 
+export const WithUnits: Story = {
+  render: (args) => {
+    const [value, setValue] = useState(42);
+    return (
+      <Slider
+        {...args}
+        value={value}
+        label="Lead"
+        units="%"
+        onChange={(e) => setValue(Number(e.target.value))}
+      />
+    );
+  },
+};
+
+export const LabelPositions: Story = {
+  render: (args) => {
+    const positions = ["top", "bottom", "left", "right"] as const;
+    const [value, setValue] = useState(42);
+
+    return (
+      <div style={{ display: "grid", gap: "1rem", maxWidth: "560px" }}>
+        {positions.map((position) => (
+          <Slider
+            key={position}
+            {...args}
+            value={value}
+            label={`Label ${position}`}
+            labelPosition={position}
+            units="%"
+            onChange={(e) => setValue(Number(e.target.value))}
+          />
+        ))}
+      </div>
+    );
+  },
+};
+
 export const SizeVariants: Story = {
   render: (args) => {
     const sizes = ["xs", "small", "medium", "large", "xl"] as const;

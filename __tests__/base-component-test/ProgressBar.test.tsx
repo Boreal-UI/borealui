@@ -449,6 +449,31 @@ describe("BaseProgressBar", () => {
     );
   });
 
+  it("renders the right-positioned label before the visible value", () => {
+    render(
+      <BaseProgressBar
+        value={42}
+        label="Right Label"
+        labelPosition="right"
+        showValue
+        classMap={classNames}
+        data-testid="progressbar"
+      />,
+    );
+
+    const progressbar = screen.getByTestId("progressbar");
+    const label = screen.getByTestId("progressbar-label");
+    const value = screen.getByTestId("progressbar-value");
+
+    expect(progressbar.compareDocumentPosition(label)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+    expect(label.compareDocumentPosition(value)).toBe(
+      Node.DOCUMENT_POSITION_FOLLOWING,
+    );
+    expect(value).toHaveTextContent("42%");
+  });
+
   it("applies expected theme, state, size, rounding, shadow, glass, and custom classes", () => {
     render(
       <BaseProgressBar

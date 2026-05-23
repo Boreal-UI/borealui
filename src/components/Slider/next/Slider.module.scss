@@ -31,8 +31,8 @@
 
   .container {
     display: flex;
-    flex-direction: column;
     gap: var(--spacing-xs);
+    width: 100%;
     font-family: var(--font-family-ui);
 
     @include bp.down(xs) {
@@ -44,7 +44,20 @@
     }
   }
 
+  .labelTop,
+  .labelBottom {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .labelLeft,
+  .labelRight {
+    flex-direction: row;
+    align-items: center;
+  }
+
   .label {
+    flex: 0 0 auto;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-label);
@@ -61,10 +74,25 @@
     }
   }
 
+  .meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+    width: 100%;
+    min-width: 0;
+  }
+
+  .metaValueOnly {
+    justify-content: flex-end;
+  }
+
   .wrapper {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
+    flex: 1 1 0;
+    min-width: 0;
     width: 100%;
 
     @include bp.down(xs) {
@@ -77,6 +105,7 @@
   }
 
   .slider {
+    min-width: 0;
     width: 100%;
     -webkit-appearance: none;
     appearance: none;
@@ -150,6 +179,7 @@
   }
 
   .value {
+    flex: 0 0 auto;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-label);

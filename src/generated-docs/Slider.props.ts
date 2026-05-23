@@ -143,6 +143,15 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "labelPosition",
+      "type": "LabelPositionType",
+      "description": "Position of the label relative to the slider.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"top\""
+    },
+    {
       "name": "max",
       "type": "number",
       "description": "The maximum value of the slider.",
@@ -263,6 +272,14 @@ export const sliderPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "styling",
       "defaultValue": "configured default theme (fallback: \"primary\")"
+    },
+    {
+      "name": "units",
+      "type": "ReactNode",
+      "description": "Unit text rendered after the displayed slider value.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "value",
