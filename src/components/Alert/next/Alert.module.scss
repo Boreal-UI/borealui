@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
@@ -163,6 +164,97 @@
   .outline {
     background: transparent;
     border-color: currentcolor;
+  }
+
+  .outline.glass {
+    background: transparent;
+  }
+
+  @include bp.down(md) {
+    .alert {
+      gap: var(--spacing-xs);
+      padding: var(--spacing-sm);
+    }
+
+    .title {
+      font-size: var(--font-size-body-sm);
+    }
+
+    .message {
+      font-size: var(--font-size-label);
+    }
+
+    .hasActions {
+      flex-wrap: wrap;
+    }
+
+    .hasActions .actions {
+      flex: 1 1 100%;
+      justify-content: center;
+    }
+  }
+
+  @include bp.down(sm) {
+    .content {
+      gap: var(--spacing-xxs, 0.35rem);
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .actions > * {
+      width: 100%;
+    }
+
+    .dismissButton {
+      min-width: 1.75rem;
+      min-height: 1.75rem;
+    }
+  }
+
+  @include bp.down(xs) {
+    .alert {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+      gap: var(--spacing-xs);
+      padding: var(--spacing-xs);
+    }
+
+    .hasIcon {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .dismissible {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .hasIcon.dismissible {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+
+    .icon {
+      grid-column: auto;
+      margin-top: 0.1rem;
+    }
+
+    .content {
+      grid-column: auto;
+      min-width: 0;
+    }
+
+    .dismissButton {
+      grid-column: auto;
+      justify-self: end;
+    }
+
+    .actions {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
@@ -154,6 +155,97 @@
 
       color: inherit;
       border-color: var(--alert-glass-border, var(--alert-border));
+    }
+  }
+
+  .alert_glass.alert_outline {
+    background: transparent;
+  }
+
+  @include bp.down(md) {
+    .alert {
+      gap: var(--spacing-xs);
+      padding: var(--spacing-sm);
+    }
+
+    .alert_title {
+      font-size: var(--font-size-body-sm);
+    }
+
+    .alert_message {
+      font-size: var(--font-size-label);
+    }
+
+    .alert_has_actions {
+      flex-wrap: wrap;
+    }
+
+    .alert_has_actions .alert_actions {
+      flex: 1 1 100%;
+      justify-content: center;
+    }
+  }
+
+  @include bp.down(sm) {
+    .alert_content {
+      gap: var(--spacing-xxs, 0.35rem);
+    }
+
+    .alert_actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .alert_actions > * {
+      width: 100%;
+    }
+
+    .alert_dismiss_button {
+      min-width: 1.75rem;
+      min-height: 1.75rem;
+    }
+  }
+
+  @include bp.down(xs) {
+    .alert {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+      gap: var(--spacing-xs);
+      padding: var(--spacing-xs);
+    }
+
+    .alert_has_icon {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .alert_dismissible {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .alert_has_icon.alert_dismissible {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+
+    .alert_icon {
+      grid-column: auto;
+      margin-top: 0.1rem;
+    }
+
+    .alert_content {
+      grid-column: auto;
+      min-width: 0;
+    }
+
+    .alert_dismiss_button {
+      grid-column: auto;
+      justify-self: end;
+    }
+
+    .alert_actions {
+      grid-column: 1 / -1;
+      width: 100%;
     }
   }
 
