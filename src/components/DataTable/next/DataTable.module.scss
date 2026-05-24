@@ -9,7 +9,9 @@
     --data-table-min-width: 600px;
 
     width: 100%;
+    max-width: 100%;
     overflow-x: auto;
+    overflow-y: visible;
     font-family: var(--font-family-body);
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-body);
@@ -17,6 +19,7 @@
     letter-spacing: var(--letter-spacing-body);
     border-radius: inherit;
     -webkit-overflow-scrolling: touch;
+    min-width: 0;
 
     @include bp.down(md) {
       --data-table-min-width: 520px;
@@ -26,6 +29,12 @@
       --data-table-min-width: 720px;
     }
 
+    .scrollArea {
+      display: grid;
+      width: max-content;
+      min-width: 100%;
+    }
+
     .toolbar {
       display: flex;
       align-items: center;
@@ -33,7 +42,7 @@
       gap: var(--spacing-sm);
       flex-wrap: wrap;
       width: 100%;
-      min-width: var(--data-table-min-width);
+      min-width: 0;
       padding: var(--spacing-sm);
       box-sizing: border-box;
     }
@@ -76,7 +85,7 @@
       gap: var(--spacing-sm);
       flex-wrap: wrap;
       width: 100%;
-      min-width: var(--data-table-min-width);
+      min-width: 0;
       padding: var(--spacing-sm);
       border-top: 1px solid var(--border-color);
       background: var(--background-color-light);
@@ -154,8 +163,8 @@
     }
 
     .viewport {
-      width: max(100%, var(--data-table-min-width));
-      min-width: var(--data-table-min-width);
+      width: 100%;
+      min-width: 0;
       overflow: visible;
       border-radius: 0;
     }
@@ -166,8 +175,8 @@
     }
 
     .table {
-      width: 100%;
-      min-width: var(--data-table-min-width);
+      width: max-content;
+      min-width: max(100%, var(--data-table-min-width));
       border-collapse: separate;
       border-spacing: 0;
       table-layout: auto;
@@ -433,11 +442,20 @@
     }
 
     @include bp.down(xs) {
-      overflow-x: visible;
+      overflow-x: auto;
+
+      .scrollArea,
+      .table {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .viewport {
+        width: 100%;
+        min-width: 0;
+      }
 
       .table {
-        min-width: 0;
-        width: 100%;
         font-size: var(--font-size-caption);
       }
 

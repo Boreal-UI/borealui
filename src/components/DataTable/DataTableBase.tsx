@@ -123,18 +123,21 @@ function DataTableBase<T extends object>({
   const [internalSelectedKeys, setInternalSelectedKeys] = useState<
     Array<string | number>
   >(defaultSelectedRowKeys);
-  const [internalFilter, setInternalFilter] = useState(defaultFilterValue ?? "");
+  const [internalFilter, setInternalFilter] = useState(
+    defaultFilterValue ?? "",
+  );
   const [internalPage, setInternalPage] = useState(defaultPage);
   const [internalVisibleColumnKeys, setInternalVisibleColumnKeys] = useState<
     Array<keyof T>
   >(defaultVisibleColumnKeys ?? columns.map((column) => column.key));
-  const [internalColumnOrder, setInternalColumnOrder] = useState<Array<keyof T>>(
-    defaultColumnOrder ?? columns.map((column) => column.key),
-  );
+  const [internalColumnOrder, setInternalColumnOrder] = useState<
+    Array<keyof T>
+  >(defaultColumnOrder ?? columns.map((column) => column.key));
   const [internalColumnWidths, setInternalColumnWidths] =
     useState<Partial<Record<keyof T, string>>>(defaultColumnWidths);
-  const [internalPinnedColumnKeys, setInternalPinnedColumnKeys] =
-    useState<Array<keyof T>>(defaultPinnedColumnKeys);
+  const [internalPinnedColumnKeys, setInternalPinnedColumnKeys] = useState<
+    Array<keyof T>
+  >(defaultPinnedColumnKeys);
   const [internalExpandedRowKeys, setInternalExpandedRowKeys] = useState<
     Array<string | number>
   >(defaultExpandedRowKeys);
@@ -206,7 +209,9 @@ function DataTableBase<T extends object>({
     return data.filter((row) =>
       columns.some((column) => {
         const value = row[column.key];
-        return String(value ?? "").toLowerCase().includes(query);
+        return String(value ?? "")
+          .toLowerCase()
+          .includes(query);
       }),
     );
   }, [columns, data, filterable, filterQuery]);
@@ -261,7 +266,9 @@ function DataTableBase<T extends object>({
   const renderedData = virtualized
     ? paginatedData.slice(virtualStartIndex, virtualEndIndex)
     : paginatedData;
-  const virtualTopSpacer = virtualized ? virtualStartIndex * virtualRowHeight : 0;
+  const virtualTopSpacer = virtualized
+    ? virtualStartIndex * virtualRowHeight
+    : 0;
   const virtualBottomSpacer = virtualized
     ? Math.max(0, (paginatedData.length - virtualEndIndex) * virtualRowHeight)
     : 0;
@@ -313,7 +320,9 @@ function DataTableBase<T extends object>({
 
   const toggleAllRows = () => {
     if (allVisibleSelected) {
-      updateSelection(selectedKeys.filter((key) => !allVisibleKeys.includes(key)));
+      updateSelection(
+        selectedKeys.filter((key) => !allVisibleKeys.includes(key)),
+      );
       return;
     }
 
@@ -344,16 +353,16 @@ function DataTableBase<T extends object>({
     );
   };
 
-  const announceSortChange = useCallback((
-    column: Column<T>,
-    nextOrder: "asc" | "desc",
-  ): void => {
-    const message = getSortAnnouncement
-      ? getSortAnnouncement(column, nextOrder)
-      : `${column.label} sorted ${nextOrder === "asc" ? "ascending" : "descending"}`;
+  const announceSortChange = useCallback(
+    (column: Column<T>, nextOrder: "asc" | "desc"): void => {
+      const message = getSortAnnouncement
+        ? getSortAnnouncement(column, nextOrder)
+        : `${column.label} sorted ${nextOrder === "asc" ? "ascending" : "descending"}`;
 
-    setSortAnnouncement(message);
-  }, [getSortAnnouncement]);
+      setSortAnnouncement(message);
+    },
+    [getSortAnnouncement],
+  );
 
   const handleSort = (column: Column<T>): void => {
     const nextOrder =
@@ -581,7 +590,17 @@ function DataTableBase<T extends object>({
         virtualized && classMap.virtualized,
         className,
       ),
-    [classMap, theme, state, glass, shadow, rounding, striped, virtualized, className],
+    [
+      classMap,
+      theme,
+      state,
+      glass,
+      shadow,
+      rounding,
+      striped,
+      virtualized,
+      className,
+    ],
   );
 
   const controlColumnCount =
@@ -639,525 +658,565 @@ function DataTableBase<T extends object>({
       role="region"
       aria-label="Data table"
     >
-      {hasToolbar ? (
+      <div className={classMap.scrollArea}>
+        {hasToolbar ? (
+          <div
+            className={combineClassNames(classMap.toolbar, toolbarClassName)}
+            data-testid={`${testId}-toolbar`}
+          >
+            {toolbarTitle ? (
+              <div className={classMap.toolbarTitle}>{toolbarTitle}</div>
+            ) : null}
+            {filterable ? (
+              <input
+                type="search"
+                value={filterQuery}
+                placeholder={filterPlaceholder}
+                aria-label={filterAriaLabel}
+                onChange={(event) => handleFilterChange(event.target.value)}
+                className={combineClassNames(
+                  classMap.filterInput,
+                  filterInputClassName,
+                )}
+                data-testid={`${testId}-filter`}
+              />
+            ) : null}
+            {columnVisibility ? (
+              <details
+                className={combineClassNames(
+                  classMap.columnMenu,
+                  columnMenuClassName,
+                )}
+                data-testid={`${testId}-column-menu`}
+              >
+                <summary className={classMap.columnMenuTrigger}>
+                  Columns
+                </summary>
+                <div className={classMap.columnMenuPanel}>
+                  {columns.map((column) => {
+                    const checked = resolvedVisibleColumnKeys.includes(
+                      column.key,
+                    );
+                    const wouldHideLast =
+                      checked && resolvedVisibleColumnKeys.length <= 1;
+
+                    return (
+                      <label
+                        key={String(column.key)}
+                        className={classMap.columnMenuItem}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={checked}
+                          disabled={wouldHideLast}
+                          onChange={(event) =>
+                            updateVisibleColumns(
+                              column.key,
+                              event.target.checked,
+                            )
+                          }
+                          data-testid={`${testId}-toggle-column-${String(
+                            column.key,
+                          )}`}
+                        />
+                        <span>{column.label}</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </details>
+            ) : null}
+            {toolbarActions ? (
+              <div className={classMap.toolbarActions}>{toolbarActions}</div>
+            ) : null}
+          </div>
+        ) : null}
+
+        {bulkActions && selectedKeys.length > 0 ? (
+          <div
+            className={combineClassNames(
+              classMap.bulkToolbar,
+              bulkToolbarClassName,
+            )}
+            data-testid={`${testId}-bulk-toolbar`}
+          >
+            <span>{selectedKeys.length} selected</span>
+            <div className={classMap.toolbarActions}>
+              {bulkActions(selectedKeys, selectedRows)}
+            </div>
+          </div>
+        ) : null}
+
         <div
-          className={combineClassNames(classMap.toolbar, toolbarClassName)}
-          data-testid={`${testId}-toolbar`}
+          id={liveRegionId}
+          className={classMap.srOnly ?? "sr_only"}
+          aria-live="polite"
+          aria-atomic="true"
         >
-          {toolbarTitle ? (
-            <div className={classMap.toolbarTitle}>{toolbarTitle}</div>
-          ) : null}
-          {filterable ? (
-            <input
-              type="search"
-              value={filterQuery}
-              placeholder={filterPlaceholder}
-              aria-label={filterAriaLabel}
-              onChange={(event) => handleFilterChange(event.target.value)}
-              className={combineClassNames(
-                classMap.filterInput,
-                filterInputClassName,
-              )}
-              data-testid={`${testId}-filter`}
-            />
-          ) : null}
-          {columnVisibility ? (
-            <details
-              className={combineClassNames(
-                classMap.columnMenu,
-                columnMenuClassName,
-              )}
-              data-testid={`${testId}-column-menu`}
-            >
-              <summary className={classMap.columnMenuTrigger}>Columns</summary>
-              <div className={classMap.columnMenuPanel}>
-                {columns.map((column) => {
-                  const checked = resolvedVisibleColumnKeys.includes(column.key);
-                  const wouldHideLast =
-                    checked && resolvedVisibleColumnKeys.length <= 1;
+          {loading ? loadingMessage : sortAnnouncement}
+        </div>
+
+        <div
+          className={classMap.viewport}
+          style={
+            virtualized
+              ? { maxHeight: virtualViewportHeight, overflowY: "auto" }
+              : undefined
+          }
+          onScroll={
+            virtualized
+              ? (event) => setScrollTop(event.currentTarget.scrollTop)
+              : undefined
+          }
+          data-testid={virtualized ? `${testId}-virtual-viewport` : undefined}
+        >
+          <table
+            className={tableClass}
+            aria-label={ariaLabel}
+            aria-labelledby={ariaLabelledBy}
+            aria-describedby={computedAriaDescribedBy || undefined}
+            aria-colcount={colCount ?? colSpan}
+            aria-rowcount={rowCount ?? totalRows}
+          >
+            {caption ? (
+              <caption
+                id={captionId}
+                className={
+                  hideCaption ? (classMap.srOnly ?? "sr_only") : undefined
+                }
+              >
+                {caption}
+              </caption>
+            ) : null}
+
+            <thead className={theadClassName}>
+              <tr>
+                {renderExpandedRow ? (
+                  <th scope="col" className={classMap.selectionCell}>
+                    <span className={classMap.srOnly ?? "sr_only"}>
+                      Expand row
+                    </span>
+                  </th>
+                ) : null}
+                {selectableRows ? (
+                  <th scope="col" className={classMap.selectionCell}>
+                    <input
+                      type="checkbox"
+                      aria-label={selectAllAriaLabel}
+                      checked={allVisibleSelected}
+                      onChange={toggleAllRows}
+                      data-testid={`${testId}-select-all`}
+                    />
+                  </th>
+                ) : null}
+                {visibleColumns.map((column, columnIndex) => {
+                  const isActive = sortKey === column.key;
+                  const isPinned = resolvedPinnedColumnKeys.includes(
+                    column.key,
+                  );
 
                   return (
-                    <label
+                    <th
                       key={String(column.key)}
-                      className={classMap.columnMenuItem}
+                      id={getHeaderId(column)}
+                      scope={getHeaderScope(column)}
+                      style={getColumnStyle(column, columnIndex)}
+                      aria-sort={
+                        column.sortable
+                          ? isActive
+                            ? sortOrder === "asc"
+                              ? "ascending"
+                              : "descending"
+                            : "none"
+                          : undefined
+                      }
+                      className={combineClassNames(
+                        column.sortable && classMap.sortable,
+                        classMap.headerCell,
+                        isPinned && classMap.pinnedCell,
+                        (column.wrap ?? wrapCells) && classMap.wrapCell,
+                        column.headerClassName,
+                      )}
                     >
-                      <input
-                        type="checkbox"
-                        checked={checked}
-                        disabled={wouldHideLast}
-                        onChange={(event) =>
-                          updateVisibleColumns(column.key, event.target.checked)
-                        }
-                        data-testid={`${testId}-toggle-column-${String(
-                          column.key,
-                        )}`}
-                      />
-                      <span>{column.label}</span>
-                    </label>
+                      <div className={classMap.headerContent}>
+                        {column.sortable ? (
+                          <button
+                            type="button"
+                            className={combineClassNames(
+                              classMap.sortButton,
+                              column.sortButtonClassName,
+                            )}
+                            onClick={() => handleSort(column)}
+                            onKeyDown={handleSortKeyDown(column)}
+                            aria-label={getColumnAriaLabel(column, isActive)}
+                            data-testid={`${testId}-sort-${String(column.key)}`}
+                          >
+                            <span>{column.label}</span>
+                            <span
+                              className={classMap.sortIcon}
+                              aria-hidden="true"
+                            >
+                              {isActive
+                                ? sortOrder === "asc"
+                                  ? "▲"
+                                  : "▼"
+                                : "⇅"}
+                            </span>
+                          </button>
+                        ) : (
+                          <span aria-label={column.srLabel}>
+                            {column.label}
+                          </span>
+                        )}
+                        {columnReorder || columnResize || columnPinning ? (
+                          <span className={classMap.columnControls}>
+                            {columnReorder ? (
+                              <>
+                                <button
+                                  type="button"
+                                  className={classMap.columnControlButton}
+                                  disabled={columnIndex === 0}
+                                  onClick={() => moveColumn(column.key, -1)}
+                                  aria-label={`Move ${column.label} column left`}
+                                  data-testid={`${testId}-move-${String(
+                                    column.key,
+                                  )}-left`}
+                                >
+                                  ‹
+                                </button>
+                                <button
+                                  type="button"
+                                  className={classMap.columnControlButton}
+                                  disabled={
+                                    columnIndex === visibleColumns.length - 1
+                                  }
+                                  onClick={() => moveColumn(column.key, 1)}
+                                  aria-label={`Move ${column.label} column right`}
+                                  data-testid={`${testId}-move-${String(
+                                    column.key,
+                                  )}-right`}
+                                >
+                                  ›
+                                </button>
+                              </>
+                            ) : null}
+                            {columnResize ? (
+                              <>
+                                <button
+                                  type="button"
+                                  className={classMap.columnControlButton}
+                                  onClick={() => resizeColumn(column, -24)}
+                                  aria-label={`Resize ${column.label} column narrower`}
+                                  data-testid={`${testId}-resize-${String(
+                                    column.key,
+                                  )}-narrower`}
+                                >
+                                  −
+                                </button>
+                                <button
+                                  type="button"
+                                  className={classMap.columnControlButton}
+                                  onClick={() => resizeColumn(column, 24)}
+                                  aria-label={`Resize ${column.label} column wider`}
+                                  data-testid={`${testId}-resize-${String(
+                                    column.key,
+                                  )}-wider`}
+                                >
+                                  +
+                                </button>
+                              </>
+                            ) : null}
+                            {columnPinning ? (
+                              <button
+                                type="button"
+                                className={classMap.columnControlButton}
+                                aria-pressed={isPinned}
+                                onClick={() => togglePinnedColumn(column.key)}
+                                aria-label={`${isPinned ? "Unpin" : "Pin"} ${column.label} column`}
+                                data-testid={`${testId}-pin-${String(column.key)}`}
+                              >
+                                ⌖
+                              </button>
+                            ) : null}
+                          </span>
+                        ) : null}
+                      </div>
+                    </th>
                   );
                 })}
-              </div>
-            </details>
-          ) : null}
-          {toolbarActions ? (
-            <div className={classMap.toolbarActions}>{toolbarActions}</div>
-          ) : null}
-        </div>
-      ) : null}
+              </tr>
+            </thead>
 
-      {bulkActions && selectedKeys.length > 0 ? (
-        <div
-          className={combineClassNames(classMap.bulkToolbar, bulkToolbarClassName)}
-          data-testid={`${testId}-bulk-toolbar`}
-        >
-          <span>{selectedKeys.length} selected</span>
-          <div className={classMap.toolbarActions}>
-            {bulkActions(selectedKeys, selectedRows)}
-          </div>
-        </div>
-      ) : null}
-
-      <div
-        id={liveRegionId}
-        className={classMap.srOnly ?? "sr_only"}
-        aria-live="polite"
-        aria-atomic="true"
-      >
-        {loading ? loadingMessage : sortAnnouncement}
-      </div>
-
-      <div
-        className={classMap.viewport}
-        style={
-          virtualized
-            ? { maxHeight: virtualViewportHeight, overflowY: "auto" }
-            : undefined
-        }
-        onScroll={
-          virtualized
-            ? (event) => setScrollTop(event.currentTarget.scrollTop)
-            : undefined
-        }
-        data-testid={virtualized ? `${testId}-virtual-viewport` : undefined}
-      >
-        <table
-          className={tableClass}
-          aria-label={ariaLabel}
-          aria-labelledby={ariaLabelledBy}
-          aria-describedby={computedAriaDescribedBy || undefined}
-          aria-colcount={colCount ?? colSpan}
-          aria-rowcount={rowCount ?? totalRows}
-        >
-          {caption ? (
-            <caption
-              id={captionId}
-              className={
-                hideCaption ? (classMap.srOnly ?? "sr_only") : undefined
-              }
-            >
-              {caption}
-            </caption>
-          ) : null}
-
-          <thead className={theadClassName}>
-            <tr>
-              {renderExpandedRow ? (
-                <th scope="col" className={classMap.selectionCell}>
-                  <span className={classMap.srOnly ?? "sr_only"}>Expand row</span>
-                </th>
-              ) : null}
-              {selectableRows ? (
-                <th scope="col" className={classMap.selectionCell}>
-                  <input
-                    type="checkbox"
-                    aria-label={selectAllAriaLabel}
-                    checked={allVisibleSelected}
-                    onChange={toggleAllRows}
-                    data-testid={`${testId}-select-all`}
-                  />
-                </th>
-              ) : null}
-              {visibleColumns.map((column, columnIndex) => {
-                const isActive = sortKey === column.key;
-                const isPinned = resolvedPinnedColumnKeys.includes(column.key);
-
-                return (
-                  <th
-                    key={String(column.key)}
-                    id={getHeaderId(column)}
-                    scope={getHeaderScope(column)}
-                    style={getColumnStyle(column, columnIndex)}
-                    aria-sort={
-                      column.sortable
-                        ? isActive
-                          ? sortOrder === "asc"
-                            ? "ascending"
-                            : "descending"
-                          : "none"
-                        : undefined
-                    }
-                    className={combineClassNames(
-                      column.sortable && classMap.sortable,
-                      classMap.headerCell,
-                      isPinned && classMap.pinnedCell,
-                      (column.wrap ?? wrapCells) && classMap.wrapCell,
-                      column.headerClassName,
-                    )}
+            <tbody className={tbodyClassName}>
+              {loading ? (
+                <tr>
+                  <td
+                    className={classMap.emptyCell}
+                    colSpan={colSpan}
+                    aria-live="polite"
                   >
-                    <div className={classMap.headerContent}>
-                      {column.sortable ? (
-                        <button
-                          type="button"
+                    {loadingMessage}
+                  </td>
+                </tr>
+              ) : paginatedData.length === 0 ? (
+                <tr>
+                  <td
+                    className={classMap.emptyCell}
+                    colSpan={colSpan}
+                    aria-live="polite"
+                  >
+                    {emptyMessage}
+                  </td>
+                </tr>
+              ) : (
+                <>
+                  {virtualTopSpacer > 0 ? (
+                    <tr
+                      aria-hidden="true"
+                      data-testid={`${testId}-virtual-top`}
+                    >
+                      <td
+                        style={{ height: virtualTopSpacer, padding: 0 }}
+                        colSpan={colSpan}
+                      />
+                    </tr>
+                  ) : null}
+                  {renderedData.map((row, visibleIndex) => {
+                    const index = virtualStartIndex + visibleIndex;
+                    const absoluteIndex = serverPagination
+                      ? index
+                      : pageOffset + index;
+                    const key = getResolvedRowKey(row, absoluteIndex);
+                    const rowAriaLabel = getRowAriaLabel?.(row, absoluteIndex);
+                    const rowAriaDescription = getRowAriaDescription?.(
+                      row,
+                      absoluteIndex,
+                    );
+                    const expanded = resolvedExpandedRowKeys.includes(key);
+
+                    return (
+                      <Fragment key={key}>
+                        <tr
+                          key={key}
                           className={combineClassNames(
-                            classMap.sortButton,
-                            column.sortButtonClassName,
+                            onRowClick && classMap.clickable,
+                            striped &&
+                              absoluteIndex % 2 === 1 &&
+                              classMap.striped,
+                            getRowClassName(row, absoluteIndex),
                           )}
-                          onClick={() => handleSort(column)}
-                          onKeyDown={handleSortKeyDown(column)}
-                          aria-label={getColumnAriaLabel(column, isActive)}
-                          data-testid={`${testId}-sort-${String(column.key)}`}
+                          onClick={() => onRowClick?.(row)}
+                          onKeyDown={handleRowKeyDown(row)}
+                          tabIndex={onRowClick ? 0 : undefined}
+                          aria-label={onRowClick ? rowAriaLabel : undefined}
+                          aria-description={
+                            onRowClick ? rowAriaDescription : undefined
+                          }
+                          data-testid={`${testId}-row-${key}`}
                         >
-                          <span>{column.label}</span>
-                          <span className={classMap.sortIcon} aria-hidden="true">
-                            {isActive
-                              ? sortOrder === "asc"
-                                ? "▲"
-                                : "▼"
-                              : "⇅"}
-                          </span>
-                        </button>
-                      ) : (
-                        <span aria-label={column.srLabel}>{column.label}</span>
-                      )}
-                      {columnReorder || columnResize || columnPinning ? (
-                        <span className={classMap.columnControls}>
-                          {columnReorder ? (
-                            <>
+                          {renderExpandedRow ? (
+                            <td className={classMap.selectionCell}>
                               <button
                                 type="button"
-                                className={classMap.columnControlButton}
-                                disabled={columnIndex === 0}
-                                onClick={() => moveColumn(column.key, -1)}
-                                aria-label={`Move ${column.label} column left`}
-                                data-testid={`${testId}-move-${String(
-                                  column.key,
-                                )}-left`}
+                                className={classMap.expandButton}
+                                aria-expanded={expanded}
+                                aria-label={`${expanded ? "Collapse" : "Expand"} row ${absoluteIndex + 1}`}
+                                onClick={(event) => {
+                                  event.stopPropagation();
+                                  toggleExpandedRow(row, absoluteIndex);
+                                }}
+                                data-testid={`${testId}-expand-row-${key}`}
                               >
-                                ‹
+                                {expanded ? "−" : "+"}
                               </button>
-                              <button
-                                type="button"
-                                className={classMap.columnControlButton}
-                                disabled={columnIndex === visibleColumns.length - 1}
-                                onClick={() => moveColumn(column.key, 1)}
-                                aria-label={`Move ${column.label} column right`}
-                                data-testid={`${testId}-move-${String(
-                                  column.key,
-                                )}-right`}
-                              >
-                                ›
-                              </button>
-                            </>
+                            </td>
                           ) : null}
-                          {columnResize ? (
-                            <>
-                              <button
-                                type="button"
-                                className={classMap.columnControlButton}
-                                onClick={() => resizeColumn(column, -24)}
-                                aria-label={`Resize ${column.label} column narrower`}
-                                data-testid={`${testId}-resize-${String(
-                                  column.key,
-                                )}-narrower`}
-                              >
-                                −
-                              </button>
-                              <button
-                                type="button"
-                                className={classMap.columnControlButton}
-                                onClick={() => resizeColumn(column, 24)}
-                                aria-label={`Resize ${column.label} column wider`}
-                                data-testid={`${testId}-resize-${String(
-                                  column.key,
-                                )}-wider`}
-                              >
-                                +
-                              </button>
-                            </>
+                          {selectableRows ? (
+                            <td className={classMap.selectionCell}>
+                              <input
+                                type="checkbox"
+                                aria-label={
+                                  getRowSelectAriaLabel?.(row, absoluteIndex) ??
+                                  `Select row ${absoluteIndex + 1}`
+                                }
+                                checked={selectedKeys.includes(key)}
+                                onChange={(event) => {
+                                  event.stopPropagation();
+                                  toggleRow(row, absoluteIndex);
+                                }}
+                                onClick={(event) => event.stopPropagation()}
+                                data-testid={`${testId}-select-row-${key}`}
+                              />
+                            </td>
                           ) : null}
-                          {columnPinning ? (
-                            <button
-                              type="button"
-                              className={classMap.columnControlButton}
-                              aria-pressed={isPinned}
-                              onClick={() => togglePinnedColumn(column.key)}
-                              aria-label={`${isPinned ? "Unpin" : "Pin"} ${column.label} column`}
-                              data-testid={`${testId}-pin-${String(column.key)}`}
-                            >
-                              ⌖
-                            </button>
-                          ) : null}
-                        </span>
-                      ) : null}
-                    </div>
-                  </th>
-                );
-              })}
-            </tr>
-          </thead>
+                          {visibleColumns.map((column, columnIndex) => {
+                            const cellKey = String(column.key);
+                            const value = row[column.key];
+                            const content = renderCellContent(row, column);
+                            const headerId = getHeaderId(column);
+                            const shouldWrap = column.wrap ?? wrapCells;
+                            const isPinned = resolvedPinnedColumnKeys.includes(
+                              column.key,
+                            );
+                            const isEditing =
+                              editingCell?.rowKey === key &&
+                              editingCell.columnKey === column.key;
 
-          <tbody className={tbodyClassName}>
-            {loading ? (
-              <tr>
-                <td
-                  className={classMap.emptyCell}
-                  colSpan={colSpan}
-                  aria-live="polite"
-                >
-                  {loadingMessage}
-                </td>
-              </tr>
-            ) : paginatedData.length === 0 ? (
-              <tr>
-                <td
-                  className={classMap.emptyCell}
-                  colSpan={colSpan}
-                  aria-live="polite"
-                >
-                  {emptyMessage}
-                </td>
-              </tr>
-            ) : (
-              <>
-                {virtualTopSpacer > 0 ? (
-                  <tr aria-hidden="true" data-testid={`${testId}-virtual-top`}>
-                    <td style={{ height: virtualTopSpacer, padding: 0 }} colSpan={colSpan} />
-                  </tr>
-                ) : null}
-                {renderedData.map((row, visibleIndex) => {
-                  const index = virtualStartIndex + visibleIndex;
-                  const absoluteIndex = serverPagination
-                    ? index
-                    : pageOffset + index;
-                  const key = getResolvedRowKey(row, absoluteIndex);
-                  const rowAriaLabel = getRowAriaLabel?.(row, absoluteIndex);
-                  const rowAriaDescription = getRowAriaDescription?.(
-                    row,
-                    absoluteIndex,
-                  );
-                  const expanded = resolvedExpandedRowKeys.includes(key);
+                            const resolvedCellClassName = combineClassNames(
+                              classMap.cell,
+                              isPinned && classMap.pinnedCell,
+                              column.editable && classMap.editableCell,
+                              shouldWrap && classMap.wrapCell,
+                              column.cellClassName,
+                              getCellClassName(
+                                value,
+                                row,
+                                column,
+                                absoluteIndex,
+                              ),
+                            );
 
-                  return (
-                    <Fragment key={key}>
-                      <tr
-                        key={key}
-                        className={combineClassNames(
-                          onRowClick && classMap.clickable,
-                          striped && absoluteIndex % 2 === 1 && classMap.striped,
-                          getRowClassName(row, absoluteIndex),
-                        )}
-                        onClick={() => onRowClick?.(row)}
-                        onKeyDown={handleRowKeyDown(row)}
-                        tabIndex={onRowClick ? 0 : undefined}
-                        aria-label={onRowClick ? rowAriaLabel : undefined}
-                        aria-description={
-                          onRowClick ? rowAriaDescription : undefined
-                        }
-                        data-testid={`${testId}-row-${key}`}
-                      >
-                        {renderExpandedRow ? (
-                          <td className={classMap.selectionCell}>
-                            <button
-                              type="button"
-                              className={classMap.expandButton}
-                              aria-expanded={expanded}
-                              aria-label={`${expanded ? "Collapse" : "Expand"} row ${absoluteIndex + 1}`}
-                              onClick={(event) => {
-                                event.stopPropagation();
-                                toggleExpandedRow(row, absoluteIndex);
-                              }}
-                              data-testid={`${testId}-expand-row-${key}`}
-                            >
-                              {expanded ? "−" : "+"}
-                            </button>
-                          </td>
-                        ) : null}
-                        {selectableRows ? (
-                          <td className={classMap.selectionCell}>
-                            <input
-                              type="checkbox"
-                              aria-label={
-                                getRowSelectAriaLabel?.(row, absoluteIndex) ??
-                                `Select row ${absoluteIndex + 1}`
-                              }
-                              checked={selectedKeys.includes(key)}
-                              onChange={(event) => {
-                                event.stopPropagation();
-                                toggleRow(row, absoluteIndex);
-                              }}
-                              onClick={(event) => event.stopPropagation()}
-                              data-testid={`${testId}-select-row-${key}`}
-                            />
-                          </td>
-                        ) : null}
-                        {visibleColumns.map((column, columnIndex) => {
-                          const cellKey = String(column.key);
-                          const value = row[column.key];
-                          const content = renderCellContent(row, column);
-                          const headerId = getHeaderId(column);
-                          const shouldWrap = column.wrap ?? wrapCells;
-                          const isPinned = resolvedPinnedColumnKeys.includes(
-                            column.key,
-                          );
-                          const isEditing =
-                            editingCell?.rowKey === key &&
-                            editingCell.columnKey === column.key;
-
-                          const resolvedCellClassName = combineClassNames(
-                            classMap.cell,
-                            isPinned && classMap.pinnedCell,
-                            column.editable && classMap.editableCell,
-                            shouldWrap && classMap.wrapCell,
-                            column.cellClassName,
-                            getCellClassName(
-                              value,
-                              row,
-                              column,
-                              absoluteIndex,
-                            ),
-                          );
-
-                          const cellContent =
-                            column.editable && isEditing ? (
-                              column.renderEditor ? (
-                                column.renderEditor({
-                                  value,
-                                  row,
-                                  rowIndex: absoluteIndex,
-                                  column,
-                                  commit: (nextValue) =>
-                                    commitCellEdit(
-                                      row,
-                                      absoluteIndex,
-                                      column,
-                                      nextValue,
-                                    ),
-                                  cancel: () => setEditingCell(null),
-                                })
-                              ) : (
+                            const cellContent =
+                              column.editable && isEditing ? (
+                                column.renderEditor ? (
+                                  column.renderEditor({
+                                    value,
+                                    row,
+                                    rowIndex: absoluteIndex,
+                                    column,
+                                    commit: (nextValue) =>
+                                      commitCellEdit(
+                                        row,
+                                        absoluteIndex,
+                                        column,
+                                        nextValue,
+                                      ),
+                                    cancel: () => setEditingCell(null),
+                                  })
+                                ) : (
                                   <input
                                     className={classMap.cellEditor}
                                     defaultValue={String(value ?? "")}
                                     type={column.editInputType ?? "text"}
                                     ref={(input) => input?.focus()}
                                     aria-label={
-                                    column.getEditAriaLabel?.(
-                                      row,
-                                      value,
-                                      absoluteIndex,
-                                    ) ?? `Edit ${column.label}`
-                                  }
-                                  onClick={(event) => event.stopPropagation()}
-                                  onKeyDown={(event) => {
-                                    if (event.key === "Enter") {
+                                      column.getEditAriaLabel?.(
+                                        row,
+                                        value,
+                                        absoluteIndex,
+                                      ) ?? `Edit ${column.label}`
+                                    }
+                                    onClick={(event) => event.stopPropagation()}
+                                    onKeyDown={(event) => {
+                                      if (event.key === "Enter") {
+                                        commitCellEdit(
+                                          row,
+                                          absoluteIndex,
+                                          column,
+                                          event.currentTarget.value,
+                                        );
+                                      }
+                                      if (event.key === "Escape") {
+                                        setEditingCell(null);
+                                      }
+                                    }}
+                                    onBlur={(event) =>
                                       commitCellEdit(
                                         row,
                                         absoluteIndex,
                                         column,
                                         event.currentTarget.value,
-                                      );
+                                      )
                                     }
-                                    if (event.key === "Escape") {
-                                      setEditingCell(null);
-                                    }
+                                    data-testid={`${testId}-editor-${key}-${cellKey}`}
+                                  />
+                                )
+                              ) : column.editable ? (
+                                <button
+                                  type="button"
+                                  className={classMap.editButton}
+                                  onClick={(event) => {
+                                    event.stopPropagation();
+                                    setEditingCell({
+                                      rowKey: key,
+                                      columnKey: column.key,
+                                    });
                                   }}
-                                  onBlur={(event) =>
-                                    commitCellEdit(
-                                      row,
-                                      absoluteIndex,
-                                      column,
-                                      event.currentTarget.value,
-                                    )
-                                  }
-                                  data-testid={`${testId}-editor-${key}-${cellKey}`}
-                                />
-                              )
-                            ) : column.editable ? (
-                              <button
-                                type="button"
-                                className={classMap.editButton}
-                                onClick={(event) => {
-                                  event.stopPropagation();
-                                  setEditingCell({
-                                    rowKey: key,
-                                    columnKey: column.key,
-                                  });
-                                }}
-                                data-testid={`${testId}-edit-${key}-${cellKey}`}
-                              >
-                                {content}
-                              </button>
-                            ) : (
-                              content
-                            );
+                                  data-testid={`${testId}-edit-${key}-${cellKey}`}
+                                >
+                                  {content}
+                                </button>
+                              ) : (
+                                content
+                              );
 
-                          if (column.isRowHeader) {
+                            if (column.isRowHeader) {
+                              return (
+                                <th
+                                  key={cellKey}
+                                  scope="row"
+                                  headers={headerId}
+                                  data-label={column.label}
+                                  style={getColumnStyle(column, columnIndex)}
+                                  className={combineClassNames(
+                                    resolvedCellClassName,
+                                    column.rowHeaderClassName,
+                                  )}
+                                >
+                                  {cellContent}
+                                </th>
+                              );
+                            }
+
                             return (
-                              <th
+                              <td
                                 key={cellKey}
-                                scope="row"
                                 headers={headerId}
                                 data-label={column.label}
                                 style={getColumnStyle(column, columnIndex)}
-                                className={combineClassNames(
-                                  resolvedCellClassName,
-                                  column.rowHeaderClassName,
-                                )}
+                                className={resolvedCellClassName}
                               >
                                 {cellContent}
-                              </th>
+                              </td>
                             );
-                          }
-
-                          return (
-                            <td
-                              key={cellKey}
-                              headers={headerId}
-                              data-label={column.label}
-                              style={getColumnStyle(column, columnIndex)}
-                              className={resolvedCellClassName}
-                            >
-                              {cellContent}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                      {renderExpandedRow && expanded ? (
-                        <tr
-                          key={`${key}-expanded`}
-                          className={classMap.expandedRow}
-                          data-testid={`${testId}-expanded-row-${key}`}
-                        >
-                          <td className={classMap.expandedCell} colSpan={colSpan}>
-                            {renderExpandedRow(row, absoluteIndex)}
-                          </td>
+                          })}
                         </tr>
-                      ) : null}
-                    </Fragment>
-                  );
-                })}
-                {virtualBottomSpacer > 0 ? (
-                  <tr aria-hidden="true" data-testid={`${testId}-virtual-bottom`}>
-                    <td style={{ height: virtualBottomSpacer, padding: 0 }} colSpan={colSpan} />
-                  </tr>
-                ) : null}
-              </>
-            )}
-          </tbody>
-        </table>
-      </div>
+                        {renderExpandedRow && expanded ? (
+                          <tr
+                            key={`${key}-expanded`}
+                            className={classMap.expandedRow}
+                            data-testid={`${testId}-expanded-row-${key}`}
+                          >
+                            <td
+                              className={classMap.expandedCell}
+                              colSpan={colSpan}
+                            >
+                              {renderExpandedRow(row, absoluteIndex)}
+                            </td>
+                          </tr>
+                        ) : null}
+                      </Fragment>
+                    );
+                  })}
+                  {virtualBottomSpacer > 0 ? (
+                    <tr
+                      aria-hidden="true"
+                      data-testid={`${testId}-virtual-bottom`}
+                    >
+                      <td
+                        style={{ height: virtualBottomSpacer, padding: 0 }}
+                        colSpan={colSpan}
+                      />
+                    </tr>
+                  ) : null}
+                </>
+              )}
+            </tbody>
+          </table>
+        </div>
 
-      {renderPagination()}
+        {renderPagination()}
+      </div>
     </div>
   );
 }
