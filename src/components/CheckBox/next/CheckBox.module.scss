@@ -258,7 +258,7 @@
   }
 
   .label {
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-label);
@@ -278,10 +278,8 @@
 
   @each $name, $props in theme.$themes {
     .#{$name} {
-      color: map.get($props, border);
-
       --checkbox-fill-color: #{map.get($props, border)};
-      --checkbox-check-color: var(--text-color);
+      --checkbox-check-color: #{map.get($props, text)};
 
       --checkbox-glass-bg: #{map.get($props, glass-bg)};
       --checkbox-glass-hover-bg: #{map.get($props, glass-hover)};
@@ -297,12 +295,12 @@
     .input:checked + .box.#{$name} {
       background-color: map.get($props, border);
       border-color: map.get($props, border);
-      color: var(--text-color);
+      color: var(--checkbox-check-color);
     }
 
     .#{$name} .input:checked + .box::after,
     .input:checked + .box.#{$name}::after {
-      border-color: var(--text-color);
+      border-color: var(--checkbox-check-color);
     }
 
     .#{$name}.glass .input:checked + .box,
@@ -319,8 +317,6 @@
 
   @each $state, $props in theme.$states {
     .#{$state} {
-      color: map.get($props, bg);
-
       --checkbox-fill-color: #{map.get($props, bg)};
       --checkbox-check-color: var(--text-color);
 

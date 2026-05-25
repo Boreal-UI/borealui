@@ -69,12 +69,28 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"off\""
     },
     {
+      "name": "buttonClassName",
+      "type": "string",
+      "description": "Additional class name for the picker trigger button.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "className",
       "type": "string",
-      "description": "Additional class name for custom styling.",
+      "description": "Additional class name for the component root.",
       "required": false,
       "inherited": false,
       "category": "styling"
+    },
+    {
+      "name": "containerClassName",
+      "type": "string",
+      "description": "Additional class name for the outer label/component container.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "data-testid",
@@ -85,9 +101,33 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
       "category": "testing"
     },
     {
+      "name": "defaultValue",
+      "type": "string",
+      "description": "Initial date/time value in YYYY-MM-DDTHH:mm format for uncontrolled usage.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "description",
+      "type": "ReactNode",
+      "description": "Supporting description connected with aria-describedby.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "descriptionClassName",
+      "type": "string",
+      "description": "Additional class name for description text.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "descriptionId",
       "type": "string",
-      "description": "Custom id for helper/description text.",
+      "description": "Custom id for description text.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -95,11 +135,27 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "disabled",
       "type": "boolean",
-      "description": "Whether the input is disabled.",
+      "description": "Whether the component is disabled.",
       "required": false,
       "inherited": false,
       "category": "props",
       "defaultValue": "false"
+    },
+    {
+      "name": "error",
+      "type": "ReactNode",
+      "description": "Error text connected with aria-errormessage and announced as an alert.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "errorClassName",
+      "type": "string",
+      "description": "Additional class name for error text.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "errorId",
@@ -112,7 +168,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "fullWidth",
       "type": "boolean",
-      "description": "Whether the input should take the full width of its container.",
+      "description": "Whether the picker should stretch to the full available width.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -121,24 +177,56 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "glass",
       "type": "boolean",
-      "description": "Adds translucent glass styling to the input surface.",
+      "description": "Whether to render glass styling.",
       "required": false,
       "inherited": false,
       "category": "props",
       "defaultValue": "configured default glass setting (fallback: false)"
     },
     {
-      "name": "id",
+      "name": "helperText",
+      "type": "ReactNode",
+      "description": "Helper text connected with aria-describedby.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "helperTextClassName",
       "type": "string",
-      "description": "Custom input id.",
+      "description": "Additional class name for helper text.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "inputClassName",
+      "type": "string",
+      "description": "Additional class name for the native input.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "inputWrapperClassName",
+      "type": "string",
+      "description": "Additional class name for the input/button wrapper.",
       "required": false,
       "inherited": false,
       "category": "props"
     },
     {
       "name": "label",
+      "type": "ReactNode",
+      "description": "Optional visible label for the input.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "labelClassName",
       "type": "string",
-      "description": "Optional visible label displayed above the input.",
+      "description": "Additional class name for the visible label.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -154,16 +242,25 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "labelPosition",
       "type": "LabelPositionType",
-      "description": "Position of the label relative to the input.",
+      "description": "Position of the label relative to the component.",
       "required": false,
       "inherited": false,
       "category": "props",
       "defaultValue": "\"top\""
     },
     {
+      "name": "loading",
+      "type": "boolean",
+      "description": "Whether the component should display a loading state.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
       "name": "max",
       "type": "string",
-      "description": "Maximum allowed date/time (ISO 8601 format).",
+      "description": "Maximum selectable date/time in YYYY-MM-DDTHH:mm format.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -171,7 +268,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "min",
       "type": "string",
-      "description": "Minimum allowed date/time (ISO 8601 format).",
+      "description": "Minimum selectable date/time in YYYY-MM-DDTHH:mm format.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -179,7 +276,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "name",
       "type": "string",
-      "description": "Name attribute for form submission.",
+      "description": "Name attribute used for form submission.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -187,7 +284,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "onChange",
       "type": "((newValue: string) => void)",
-      "description": "Callback triggered when the date/time value changes.",
+      "description": "Callback fired when the date/time value changes.",
       "required": false,
       "inherited": false,
       "category": "events"
@@ -195,15 +292,16 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "outline",
       "type": "boolean",
-      "description": "Whether to use outlined styling.",
+      "description": "Whether to render outlined styling.",
       "required": false,
       "inherited": false,
-      "category": "styling"
+      "category": "styling",
+      "defaultValue": "configured default outline setting (fallback: false)"
     },
     {
       "name": "pickerButtonAriaDescribedBy",
       "type": "string",
-      "description": "Accessible description reference for the calendar trigger button.",
+      "description": "Accessible description reference for the picker trigger button.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -211,15 +309,16 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "pickerButtonAriaLabel",
       "type": "string",
-      "description": "Accessible label for the calendar trigger button.",
+      "description": "Accessible label for the picker trigger button.",
       "required": false,
       "inherited": false,
-      "category": "props"
+      "category": "props",
+      "defaultValue": "\"Open date and time picker\""
     },
     {
       "name": "pickerButtonAriaLabelledBy",
       "type": "string",
-      "description": "Accessible label reference for the calendar trigger button.",
+      "description": "Accessible label reference for the picker trigger button.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -227,7 +326,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "pickerButtonTitle",
       "type": "string",
-      "description": "Optional title/tooltip for the picker trigger button.",
+      "description": "Optional title for the picker trigger button.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -243,7 +342,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "readOnly",
       "type": "boolean",
-      "description": "Whether the input should be read-only.",
+      "description": "Whether the input is read-only.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -252,7 +351,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "required",
       "type": "boolean",
-      "description": "Whether the input is required for form validation.",
+      "description": "Whether the input is required.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -261,7 +360,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "rounding",
       "type": "RoundingType",
-      "description": "Controls the rounding of the input ('none' | 'small' | 'medium' | 'large' | 'full').",
+      "description": "Rounding style for the component.",
       "required": false,
       "inherited": false,
       "category": "styling",
@@ -270,7 +369,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "shadow",
       "type": "ShadowType",
-      "description": "Controls the shadow of the input ('none' | 'light' | 'medium' | 'strong' | 'intense').",
+      "description": "Shadow style for the component.",
       "required": false,
       "inherited": false,
       "category": "styling",
@@ -279,16 +378,31 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "size",
       "type": "SizeType",
-      "description": "Size of the component ('xs' | 'small' | 'medium' | 'large' | 'xl').",
+      "description": "Legacy size prop retained for compatibility. DateTimePicker follows DatePicker sizing so this prop does not alter layout.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "configured default size (fallback: \"medium\")"
+      "category": "styling"
+    },
+    {
+      "name": "srOnlyClassName",
+      "type": "string",
+      "description": "Additional class name for screen-reader-only content.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "srOnlyText",
+      "type": "ReactNode",
+      "description": "Optional content rendered for assistive technologies only.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of the input ('success' | 'error' | 'warning' | 'disabled' | '').",
+      "description": "Visual state for styling.",
       "required": false,
       "inherited": false,
       "category": "styling"
@@ -305,7 +419,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "theme",
       "type": "ThemeType",
-      "description": "Thematic style of the input ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').",
+      "description": "Theme used for styling.",
       "required": false,
       "inherited": false,
       "category": "styling",
@@ -314,7 +428,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "title",
       "type": "string",
-      "description": "Optional title/tooltip for the input.",
+      "description": "Optional input title.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -322,7 +436,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "type",
       "type": "\"date\" | \"time\" | \"datetime-local\"",
-      "description": "The type of input element. ('date' | 'time' | 'datetime-local').",
+      "description": "Native input type used by the picker.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -331,7 +445,7 @@ export const dateTimePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "value",
       "type": "string",
-      "description": "Current value in ISO 8601 format (e.g., \"2025-04-10T12:00\").",
+      "description": "Current date/time value in YYYY-MM-DDTHH:mm format.",
       "required": false,
       "inherited": false,
       "category": "props"

@@ -43,6 +43,23 @@ export const StaticBar: Story = {
   },
 };
 
+export const WithValue: Story = {
+  args: {
+    value: 42,
+    label: "Lead",
+    showValue: true,
+  },
+};
+
+export const CustomUnits: Story = {
+  args: {
+    value: 8,
+    label: "Files",
+    showValue: true,
+    units: " files",
+  },
+};
+
 export const LabelPositions: Story = {
   render: (args) => {
     const positions = ["top", "bottom", "left", "right"] as const;
@@ -57,7 +74,8 @@ export const LabelPositions: Story = {
             <ProgressBar
               {...args}
               value={72}
-              label={`Build ${72}%`}
+              showValue
+              label="Build"
               labelPosition={pos}
             />
           </div>

@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import TimelineBase from "@/components/Timeline/TimelineBase";
 import { FaCheck } from "react-icons/fa";
+import { DummySkeleton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 
@@ -12,6 +13,10 @@ const mockStyles = {
   icon: "icon",
   dot: "dot",
   content: "content",
+  loading: "loading",
+  loadingItem: "loadingItem",
+  loadingContent: "loadingContent",
+  skeleton: "skeleton",
   title: "title",
   date: "date",
   description: "description",
@@ -403,6 +408,59 @@ describe("TimelineBase", () => {
     expect(
       screen.getByTestId("timeline-item-0-description"),
     ).toBeInTheDocument();
+  });
+
+  it("renders item skeletons while keeping markers and connector items visible when loading", () => {
+    render(
+      <TimelineBase
+        items={items}
+        classMap={mockStyles}
+        loading
+        SkeletonComponent={DummySkeleton}
+      />,
+    );
+
+    const timeline = screen.getByTestId("timeline");
+    const firstItem = screen.getByTestId("timeline-item-0");
+    const secondItem = screen.getByTestId("timeline-item-1");
+    const firstContent = screen.getByTestId("timeline-item-0-content");
+    const secondContent = screen.getByTestId("timeline-item-1-content");
+
+    expect(timeline).toHaveAttribute("aria-busy", "true");
+    expect(timeline).toHaveClass("loading");
+    expect(firstItem).toHaveClass("loadingItem");
+    expect(secondItem).toHaveClass("loadingItem");
+    expect(firstContent).toHaveClass("loadingContent");
+    expect(secondContent).toHaveClass("loadingContent");
+
+    expect(screen.getByTestId("timeline-item-0-marker")).toBeInTheDocument();
+    expect(screen.getByTestId("timeline-item-0-icon")).toBeInTheDocument();
+    expect(screen.getByTestId("timeline-item-1-marker")).toBeInTheDocument();
+    expect(screen.getByTestId("timeline-item-1-dot")).toBeInTheDocument();
+
+    expect(screen.getByTestId("timeline-item-0-skeleton")).toHaveStyle({
+      width: "100%",
+      height: "100%",
+    });
+    expect(screen.getByTestId("timeline-item-1-skeleton")).toHaveStyle({
+      width: "100%",
+      height: "100%",
+    });
+
+    expect(firstItem).toHaveAttribute("aria-label", "Timeline item 1 loading");
+    expect(firstItem).not.toHaveAttribute("aria-labelledby");
+    expect(firstItem).not.toHaveAttribute("aria-describedby");
+    expect(secondItem).toHaveAttribute(
+      "aria-label",
+      "Timeline item 2 loading",
+    );
+    expect(secondItem).not.toHaveAttribute("aria-labelledby");
+    expect(secondItem).not.toHaveAttribute("aria-describedby");
+    expect(screen.queryByTestId("timeline-item-0-title")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("timeline-item-0-date")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("timeline-item-0-description"),
+    ).not.toBeInTheDocument();
   });
 
   it("renders an empty timeline when no items are provided", () => {

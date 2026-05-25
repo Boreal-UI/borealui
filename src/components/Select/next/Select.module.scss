@@ -43,27 +43,6 @@
     }
   }
 
-  .icon {
-    position: absolute;
-    height: 1.4rem;
-    width: 1.4rem;
-    z-index: 1;
-    pointer-events: none;
-    font-size: 12px;
-    color: var(--text-color-primary);
-    transform-origin: center;
-    background-color: transparent !important;
-    inset-inline-end: var(--spacing-sm);
-
-    @include bp.down(xs) {
-      font-size: 11px;
-    }
-
-    @include bp.up(lg) {
-      font-size: 14px;
-    }
-  }
-
   .select {
     box-sizing: border-box;
     width: 100%;
@@ -76,7 +55,7 @@
     letter-spacing: var(--letter-spacing-label);
     appearance: none;
     border: none;
-    color: var(--text-color-primary);
+    color: inherit;
     background: transparent;
     cursor: pointer;
     transition:
@@ -104,7 +83,7 @@
     option {
       background-color: var(--background-color);
       border: none;
-      color: var(--text-color-primary);
+      color: inherit;
       font-family: var(--font-family-body);
       font-size: var(--font-size-label);
     }
@@ -122,6 +101,7 @@
     font-weight: var(--font-weight-label);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
+    color: inherit;
     white-space: nowrap;
   }
 
@@ -156,6 +136,10 @@
       background-color: map.get($vals, bg);
       color: map.get($vals, text);
 
+      option {
+        color: var(--text-color);
+      }
+
       &:hover {
         background-color: map.get($vals, hover);
       }
@@ -163,7 +147,7 @@
 
     .#{$name}.outline {
       background-color: transparent;
-      color: map.get($vals, text);
+      color: inherit;
       border: 1px solid map.get($vals, border);
 
       @include bp.down(sm) {
@@ -183,7 +167,6 @@
       --select-glass-border: #{map.get($vals, glass-border)};
       --select-glass-text: #{map.get($vals, text)};
       background-color: map.get($vals, bg);
-      color: map.get($vals, text);
 
       &:hover {
         background-color: map.get($vals, hover);
@@ -192,7 +175,7 @@
 
     .#{$name}.outline {
       background-color: transparent;
-      color: map.get($vals, text);
+      color: inherit;
       border: 1px solid map.get($vals, border);
 
       @include bp.down(sm) {
@@ -211,7 +194,7 @@
       var(--select-glass-border, rgba(255, 255, 255, 0.34)),
       16px
     );
-    color: var(--select-glass-text, var(--text-color-primary));
+    color: inherit;
   }
 
   .glass:hover {
@@ -251,6 +234,27 @@
 
   .select:disabled {
     cursor: not-allowed;
+  }
+
+  .icon {
+    position: absolute;
+    height: 1.4rem;
+    width: 1.4rem;
+    z-index: 1;
+    pointer-events: none;
+    font-size: 12px;
+    color: inherit;
+    transform-origin: center;
+    background-color: transparent;
+    inset-inline-end: var(--spacing-sm);
+
+    @include bp.down(xs) {
+      font-size: 11px;
+    }
+
+    @include bp.up(lg) {
+      font-size: 14px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

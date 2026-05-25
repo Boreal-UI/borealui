@@ -5,291 +5,352 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: var(--background-primary-light-color);
-  min-width: 120px;
-  width: max-content;
-  max-width: 100%;
-  height: fit-content;
-  text-align: center;
-  gap: var(--spacing-sm);
-  transition: var(--transition-default);
-  font-family: var(--font-family-body);
-
-  @include bp.up(xs) {
-    padding: var(--spacing-sm);
-  }
-
-  @include bp.down(sm) {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-primary-light-color);
+    min-width: 120px;
+    width: max-content;
+    max-width: 100%;
+    height: fit-content;
+    text-align: center;
+    transition: var(--transition-default);
     gap: var(--spacing-xs);
+    font-family: var(--font-family-body);
+    padding: var(--spacing-xs) var(--spacing-sm);
+
+    @include bp.up(xs) {
+      padding: var(--spacing-sm);
+    }
+
+    @include bp.down(sm) {
+      gap: var(--spacing-xs);
+    }
+
+    @include bp.up(lg) {
+      gap: var(--spacing-md);
+      min-width: 140px;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+      border-radius: 8px;
+    }
   }
 
-  @include bp.up(lg) {
-    gap: var(--spacing-md);
-    min-width: 140px;
+  .icon {
+    font-size: 2rem;
+    color: inherit;
+    padding: 0;
+    line-height: 1;
+    padding: var(--spacing-sm);
+
+    @include bp.down(sm) {
+      font-size: 1.8rem;
+    }
+
+    @include bp.up(lg) {
+      font-size: 2.2rem;
+    }
   }
 
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-    border-radius: 8px;
-  }
-}
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-xs) var(--spacing-sm);
 
-.icon {
-  font-size: 2rem;
-  color: var(--text-color);
-  padding: 0;
-  line-height: 1;
-
-  @include bp.down(sm) {
-    font-size: 1.8rem;
+    @include bp.up(lg) {
+      padding: var(--spacing-md);
+    }
   }
 
-  @include bp.up(lg) {
-    font-size: 2.2rem;
-  }
-}
+  .title {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    color: inherit;
+    opacity: 0.8;
 
-.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: var(--spacing-sm);
+    @include bp.down(sm) {
+      font-size: var(--font-size-caption);
+    }
 
-  @include bp.up(lg) {
-    padding: var(--spacing-md);
-  }
-}
-
-.title {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  color: var(--text-color-primary);
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-caption);
+    @include bp.up(lg) {
+      font-size: var(--font-size-body-sm);
+    }
   }
 
-  @include bp.up(lg) {
-    font-size: var(--font-size-body-sm);
-  }
-}
-
-.value {
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-h5);
-  font-weight: var(--font-weight-h3);
-  line-height: var(--line-height-heading);
-  letter-spacing: var(--letter-spacing-heading);
-
-  @include bp.down(sm) {
-    font-size: var(--font-size-h6);
-  }
-
-  @include bp.up(lg) {
+  .value {
+    font-family: var(--font-family-heading);
     font-size: var(--font-size-h4);
-  }
-}
+    font-weight: var(--font-weight-h3);
+    line-height: var(--line-height-heading);
+    letter-spacing: var(--letter-spacing-heading);
 
-.subtext {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-caption) !important;
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  color: var(--text-color-primary);
-  opacity: 0.7;
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body-sm) !important;
-  }
-}
-
-.left {
-  align-items: flex-start;
-  text-align: left;
-}
-
-.right {
-  align-items: flex-end;
-  text-align: right;
-}
-
-@each $k, $v in theme.$rounding {
-  .round#{$k} {
-    border-radius: $v;
-  }
-}
-
-@each $k, $v in theme.$shadow {
-  .shadow#{$k} {
-    box-shadow: $v;
-  }
-}
-
-@each $name, $props in theme.$themes {
-  .#{$name} {
-    --metric-box-glass-bg: #{map.get($props, glass-bg)};
-    --metric-box-glass-hover-bg: #{map.get($props, glass-hover)};
-    --metric-box-glass-border: #{map.get($props, glass-border)};
-    --metric-box-glass-text: #{map.get($props, text)};
-
-    background-color: map.get($props, bg);
-    color: map.get($props, text);
-
-    .title,
-    .subtext {
-      color: map.get($props, text);
+    @include bp.down(sm) {
+      font-size: var(--font-size-h6);
     }
 
-    &.outline {
-      border: 2px solid map.get($props, border);
-      background-color: transparent;
+    @include bp.up(lg) {
+      font-size: var(--font-size-h3);
+    }
+  }
 
-      @include bp.down(sm) {
-        border-width: 1.5px;
+  .subtext {
+    font-family: var(--font-family-body);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    color: inherit;
+    opacity: 0.8;
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body-sm);
+    }
+  }
+
+  .left {
+    align-items: flex-start;
+    text-align: left;
+
+    .content,
+    .title,
+    .value,
+    .subtext {
+      align-items: flex-start;
+      text-align: left;
+    }
+  }
+
+  .right {
+    align-items: flex-end;
+    text-align: right;
+
+    .content,
+    .title,
+    .value,
+    .subtext {
+      align-items: flex-end;
+      text-align: right;
+    }
+  }
+
+  @each $k, $v in theme.$rounding {
+    .round#{$k} {
+      border-radius: $v;
+    }
+  }
+
+  @each $k, $v in theme.$shadow {
+    .shadow#{$k} {
+      box-shadow: $v;
+    }
+  }
+
+  @each $name, $props in theme.$themes {
+    .#{$name} {
+      --metric-box-glass-bg: #{map.get($props, glass-bg)};
+      --metric-box-glass-hover-bg: #{map.get($props, glass-hover)};
+      --metric-box-glass-border: #{map.get($props, glass-border)};
+      --metric-box-glass-text: #{map.get($props, text)};
+
+      background-color: map.get($props, bg);
+      color: map.get($props, text);
+
+      .title,
+      .subtext {
+        color: map.get($props, text);
+      }
+
+      &.outline {
+        border: 2px solid map.get($props, border);
+        background-color: transparent;
+
+        .title,
+        .subtext,
+        .value {
+          color: var(--text-color);
+        }
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+    }
+
+    .#{$name}.outline .icon {
+      color: map.get($props, border);
+    }
+  }
+
+  @each $state, $props in theme.$states {
+    .#{$state} {
+      --metric-box-glass-bg: #{map.get($props, glass-bg)};
+      --metric-box-glass-hover-bg: #{map.get($props, glass-hover)};
+      --metric-box-glass-border: #{map.get($props, glass-border)};
+      --metric-box-glass-text: #{map.get($props, text)};
+
+      background-color: map.get($props, bg);
+
+      &.outline {
+        border: 2px solid map.get($props, border);
+        background-color: transparent;
+
+        .title,
+        .subtext,
+        .value {
+          color: var(--text-color);
+        }
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+    }
+
+    .#{$state}.outline .icon {
+      color: map.get($props, border);
+    }
+  }
+
+  .clear {
+    border: none;
+    box-shadow: none;
+  }
+
+  .glass {
+    @include mixins.glass-surface(
+      var(--metric-box-glass-bg, var(--glass-background)),
+      var(--metric-box-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    .title,
+    .subtext,
+    .value,
+    .icon {
+      color: var(--text-color);
+    }
+
+    color: inherit;
+  }
+
+  .glass:hover {
+    background: var(--metric-box-glass-hover-bg, var(--glass-background));
+  }
+
+  .glass.outline {
+    border-color: var(--metric-box-glass-border, var(--glass-border-color));
+  }
+
+  .loading {
+    background: none;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .loadingSkeleton {
+      min-width: 120px;
+      min-height: 7rem;
+      width: min(100%, 12rem);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+
+      @include bp.up(lg) {
+        min-width: 140px;
+        min-height: 8rem;
       }
     }
   }
-}
 
-@each $state, $props in theme.$states {
-  .#{$state} {
-    --metric-box-glass-bg: #{map.get($props, glass-bg)};
-    --metric-box-glass-hover-bg: #{map.get($props, glass-hover)};
-    --metric-box-glass-border: #{map.get($props, glass-border)};
-    --metric-box-glass-text: #{map.get($props, text)};
-
-    background-color: map.get($props, bg);
-    color: map.get($props, text);
-
-    .title,
-    .subtext {
-      color: map.get($props, text);
-    }
-
-    &.outline {
-      border: 2px solid map.get($props, border);
-      background-color: transparent;
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-    }
-  }
-}
-
-.clear {
-  border: none;
-  box-shadow: none;
-}
-
-.glass {
-  @include mixins.glass-surface(
-    var(--metric-box-glass-bg, var(--glass-background)),
-    var(--metric-box-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
+  $sizes: (
+    "xs": (
+      icon-size: 1.5rem,
+      title-size: var(--font-size-caption),
+      value-size: var(--font-size-body-md),
+      subtext-size: var(--font-size-caption),
+    ),
+    "small": (
+      icon-size: 2rem,
+      title-size: var(--font-size-body-sm),
+      value-size: var(--font-size-body-lg),
+      subtext-size: var(--font-size-body-sm),
+    ),
+    "medium": (
+      icon-size: 2rem,
+      title-size: var(--font-size-body),
+      value-size: var(--font-size-h3),
+      subtext-size: var(--font-size-body-body),
+    ),
+    "large": (
+      icon-size: 2.5rem,
+      title-size: var(--font-size-body-md),
+      value-size: var(--font-size-h2),
+      subtext-size: var(--font-size-body-md),
+    ),
+    "xl": (
+      icon-size: 2.5rem,
+      title-size: var(--font-size-body-lg),
+      value-size: var(--font-size-h1),
+      subtext-size: var(--font-size-body-lg),
+    ),
   );
 
-  color: var(--metric-box-glass-text, currentcolor);
-}
+  @each $size, $vals in $sizes {
+    .#{$size} {
+      .icon {
+        font-size: map.get($vals, icon);
+      }
 
-.glass:hover {
-  background: var(--metric-box-glass-hover-bg, var(--glass-background));
-}
+      .title {
+        font-size: map.get($vals, title);
+      }
 
-.glass.outline {
-  border-color: var(--metric-box-glass-border, var(--glass-border-color));
-}
+      .value {
+        font-size: map.get($vals, value);
+      }
 
-$sizes: (
-  "xs": (
-    icon: 1.5rem,
-    title: var(--font-size-caption),
-    value: var(--font-size-label),
-    subtext: var(--font-size-caption),
-  ),
-  "small": (
-    icon: 2rem,
-    title: var(--font-size-label),
-    value: var(--font-size-body-sm),
-    subtext: var(--font-size-label),
-  ),
-  "medium": (
-    icon: 2rem,
-    title: var(--font-size-body),
-    value: var(--font-size-h5),
-    subtext: var(--font-size-body),
-  ),
-  "large": (
-    icon: 2.5rem,
-    title: var(--font-size-h6),
-    value: var(--font-size-h4),
-    subtext: var(--font-size-h6),
-  ),
-  "xl": (
-    icon: 2.5rem,
-    title: var(--font-size-h5),
-    value: var(--font-size-h3),
-    subtext: var(--font-size-h6),
-  ),
-);
-
-@each $size, $vals in $sizes {
-  .#{$size} {
-    .icon {
-      font-size: map.get($vals, icon);
-    }
-
-    .title {
-      font-size: map.get($vals, title);
-    }
-
-    .value {
-      font-size: map.get($vals, value);
-    }
-
-    .subtext {
-      font-size: map.get($vals, subtext);
+      .subtext {
+        font-size: map.get($vals, subtext);
+      }
     }
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .wrapper,
-  .wrapper * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (forced-colors: active) {
-  .wrapper {
-    background: Canvas;
-    color: CanvasText;
-    outline-color: Highlight;
+  @media (prefers-reduced-motion: reduce) {
+    .wrapper,
+    .wrapper * {
+      transition: none !important;
+      animation: none !important;
+    }
   }
 
-  .outline {
-    border: 1px solid ButtonText;
-  }
+  @media (forced-colors: active) {
+    .wrapper {
+      background: Canvas;
+      color: CanvasText;
+      outline-color: Highlight;
+    }
 
-  .wrapper.glass {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+    .outline {
+      border: 1px solid ButtonText;
+    }
+
+    .wrapper.glass {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
   }
-}
 }

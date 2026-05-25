@@ -2,6 +2,7 @@ import React, { useMemo, useId } from "react";
 import { SliderProps } from "./Slider.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultGlass,
   getDefaultRounding,
@@ -22,6 +23,7 @@ const SliderBase: React.FC<
   max = 100,
   step = 1,
   label,
+  labelPosition = "top",
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
@@ -29,6 +31,7 @@ const SliderBase: React.FC<
   glass = getDefaultGlass(),
   state,
   showValue = true,
+  units,
   className,
   disabled = false,
   required = false,
@@ -47,6 +50,7 @@ const SliderBase: React.FC<
   ...rest
 }) => {
   const uid = useId();
+  const resolvedLabelPosition = resolvePropAlias(labelPosition);
 
   const inputId = id || `${testId}-input-${uid}`;
   const labelId = label ? `${testId}-label-${uid}` : undefined;
@@ -56,11 +60,15 @@ const SliderBase: React.FC<
   const safeMax = Number.isFinite(max) ? Number(max) : 100;
   const safeStep = step > 0 ? step : 1;
   const clamped = Math.min(safeMax, Math.max(safeMin, Number(value)));
+  const showMetaRow =
+    (resolvedLabelPosition === "top" || resolvedLabelPosition === "bottom") &&
+    (label || showValue);
 
   const containerClasses = useMemo(
     () =>
       combineClassNames(
         classMap.container,
+        classMap[`label${capitalize(resolvedLabelPosition)}`],
         classMap[size],
         classMap[theme],
         state && classMap[state],
@@ -69,7 +77,17 @@ const SliderBase: React.FC<
         rounding && classMap[`round${capitalize(rounding)}`],
         className,
       ),
-    [classMap, size, theme, state, glass, className, shadow, rounding],
+    [
+      classMap,
+      resolvedLabelPosition,
+      size,
+      theme,
+      state,
+      glass,
+      className,
+      shadow,
+      rounding,
+    ],
   );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,18 +112,46 @@ const SliderBase: React.FC<
         ? true
         : undefined;
 
+  const labelNode = label ? (
+    <label
+      id={labelId}
+      htmlFor={inputId}
+      className={classMap.label}
+      data-testid={`${testId}-label`}
+    >
+      {label}
+    </label>
+  ) : null;
+
+  const valueNode = showValue ? (
+    <output
+      id={valueId}
+      className={classMap.value}
+      htmlFor={inputId}
+      data-testid={`${testId}-value`}
+    >
+      {clamped}
+      {units}
+    </output>
+  ) : null;
+
+  const metaNode = showMetaRow ? (
+    <div
+      className={combineClassNames(
+        classMap.meta,
+        !label && classMap.metaValueOnly,
+      )}
+      data-testid={`${testId}-meta`}
+    >
+      {labelNode}
+      {valueNode}
+    </div>
+  ) : null;
+
   return (
     <div className={containerClasses} data-testid={`${testId}-container`}>
-      {label && (
-        <label
-          id={labelId}
-          htmlFor={inputId}
-          className={classMap.label}
-          data-testid={`${testId}-label`}
-        >
-          {label}
-        </label>
-      )}
+      {resolvedLabelPosition === "top" && metaNode}
+      {resolvedLabelPosition === "left" && labelNode}
 
       <div className={classMap.wrapper} data-testid={`${testId}-wrapper`}>
         <input
@@ -134,18 +180,15 @@ const SliderBase: React.FC<
           data-testid={testId}
           {...rest}
         />
-
-        {showValue && (
-          <output
-            id={valueId}
-            className={classMap.value}
-            htmlFor={inputId}
-            data-testid={`${testId}-value`}
-          >
-            {clamped}
-          </output>
-        )}
       </div>
+      {showValue &&
+        !showMetaRow &&
+        resolvedLabelPosition !== "right" &&
+        valueNode}
+
+      {resolvedLabelPosition === "bottom" && metaNode}
+      {resolvedLabelPosition === "right" && labelNode}
+      {showValue && resolvedLabelPosition === "right" && valueNode}
     </div>
   );
 };

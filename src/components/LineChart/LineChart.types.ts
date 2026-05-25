@@ -74,6 +74,11 @@ export interface LineChartProps extends NativeLineChartProps {
   valueFormatter?: ChartValueFormatter;
 
   /**
+   * Optional unit label shown beside formatted values.
+   */
+  units?: string;
+
+  /**
    * Theme class used for styling.
    */
   theme?: ThemeType;

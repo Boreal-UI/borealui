@@ -27,7 +27,7 @@
     border: none;
     border-radius: var(--border-radius-lg);
     background-color: transparent;
-    color: var(--text-color-primary);
+    color: inherit;
 
     &_container {
       display: flex;
@@ -72,7 +72,7 @@
       border: none;
       height: 100%;
       background-color: transparent;
-      color: var(--text-color-primary);
+      color: inherit;
 
       &[type="password"] {
         -webkit-appearance: none;
@@ -113,8 +113,7 @@
     }
 
     &::placeholder {
-      color: var(--text-color-primary);
-      opacity: 0.8;
+      color: inherit;
       font: inherit;
     }
 
@@ -144,7 +143,7 @@
       svg {
         width: 1em;
         height: 1em;
-        color: var(--text-color-primary);
+        color: inherit;
 
         @include bp.down(xs) {
           width: 15px;
@@ -181,16 +180,6 @@
     }
   }
 
-  @each $state, $vals in theme.$states {
-    .textInput_#{$state} {
-      --textInput-glass-bg: #{map.get($vals, glass-bg)};
-      --textInput-glass-hover-bg: #{map.get($vals, glass-hover)};
-      --textInput-glass-border: #{map.get($vals, glass-border)};
-      --textInput-glass-text: #{map.get($vals, text)};
-      border: 2px solid map.get($vals, border);
-    }
-  }
-
   @each $themeName, $vals in theme.$themes {
     .textInput_#{$themeName} {
       --textInput-glass-bg: #{map.get($vals, glass-bg)};
@@ -213,17 +202,30 @@
         );
       }
 
-      .textInput::placeholder {
-        color: map.get($vals, text);
-      }
-
       .textInput_icon_container svg {
         color: map.get($vals, text);
       }
 
       &.textInput_outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
+    }
+  }
+
+  @each $state, $vals in theme.$states {
+    .textInput_#{$state} {
+      --textInput-glass-bg: #{map.get($vals, glass-bg)};
+      --textInput-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --textInput-glass-border: #{map.get($vals, glass-border)};
+      --textInput-glass-text: #{map.get($vals, text)};
+      border: 2px solid map.get($vals, border);
+
+      &.textInput_outline {
+        background-color: transparent;
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
       }
@@ -236,7 +238,7 @@
       inherit,
       16px
     );
-    color: var(--textInput-glass-text, var(--text-color-primary));
+    color: inherit;
     box-shadow: var(--box-shadow-sm);
   }
 

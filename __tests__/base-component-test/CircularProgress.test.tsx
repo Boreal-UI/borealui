@@ -93,6 +93,20 @@ describe("CircularProgressBase", () => {
     expect(screen.getByText("30/120")).toBeInTheDocument();
   });
 
+  it("shows units beside raw values", () => {
+    renderProgress({
+      value: 30,
+      max: 120,
+      showRaw: true,
+      units: "MB",
+    });
+
+    const progressbar = screen.getByRole("progressbar");
+
+    expect(progressbar).toHaveAttribute("aria-valuetext", "30 out of 120 MB");
+    expect(screen.getByText("30/120 MB")).toBeInTheDocument();
+  });
+
   it("uses label as the default accessible name when aria props are not provided", () => {
     renderProgress({
       value: 80,

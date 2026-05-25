@@ -130,6 +130,64 @@ export interface ToolbarProps {
   titleClassName?: string;
 
   /**
+   * Optional additional class names for the left section wrapper.
+   */
+  leftSectionClassName?: string;
+
+  /**
+   * Optional additional class names for the left section wrapper.
+   * Alias for `leftSectionClassName`.
+   */
+  leftClassName?: string;
+
+  /**
+   * Optional additional class names for the center section wrapper.
+   */
+  centerSectionClassName?: string;
+
+  /**
+   * Optional additional class names for the center section wrapper.
+   * Alias for `centerSectionClassName`.
+   */
+  centerClassName?: string;
+
+  /**
+   * Optional additional class names for the right section wrapper.
+   */
+  rightSectionClassName?: string;
+
+  /**
+   * Optional additional class names for the right section wrapper.
+   * Alias for `rightSectionClassName`.
+   */
+  rightClassName?: string;
+
+  /**
+   * Optional additional class names for the left section content wrapper.
+   */
+  leftContentClassName?: string;
+
+  /**
+   * Optional additional class names for the center section content wrapper.
+   */
+  centerContentClassName?: string;
+
+  /**
+   * Optional additional class names for the right section content wrapper.
+   */
+  rightContentClassName?: string;
+
+  /**
+   * Optional additional class names for the avatar wrapper.
+   */
+  avatarWrapperClassName?: string;
+
+  /**
+   * Optional additional class names for the rendered avatar component.
+   */
+  avatarClassName?: string;
+
+  /**
    * The visual theme of the toolbar.
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
    *

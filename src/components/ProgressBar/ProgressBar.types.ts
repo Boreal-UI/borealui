@@ -119,6 +119,20 @@ export interface ProgressBarProps {
   label?: React.ReactNode;
 
   /**
+   * If true, displays the current progress value next to the label.
+   *
+   * @default false
+   */
+  showValue?: boolean;
+
+  /**
+   * Unit text rendered after the displayed progress value.
+   *
+   * @default "%"
+   */
+  units?: React.ReactNode;
+
+  /**
    * Position of the label relative to the progress bar.
    *
    * @default "top"

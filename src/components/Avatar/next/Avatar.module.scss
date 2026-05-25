@@ -75,7 +75,7 @@
         var(--glass-blur)
       );
 
-      color: var(--avatar-glass-text, currentcolor);
+      color: inherit;
       isolation: isolate;
 
       &.clickable:hover {
@@ -113,30 +113,6 @@
       }
     }
 
-    &.clear {
-      background-color: transparent;
-
-      &.clickable:hover {
-        background-color: color.adjust(#000, $lightness: -10%);
-        transform: translateY(-2px);
-      }
-
-      &.clickable:focus {
-        outline: 2px solid var(--text-color-primary);
-        outline-offset: 1px;
-      }
-
-      &.outline {
-        color: var(--text-color-primary);
-        border-color: var(--text-color-primary);
-
-        &.clickable:hover {
-          background-color: transparent;
-          border-color: color.adjust(#000, $lightness: 10%);
-        }
-      }
-    }
-
     @each $name, $props in theme.$themes {
       &.#{$name} {
         background-color: map.get($props, bg);
@@ -162,7 +138,7 @@
         background-color: transparent;
         background: var(--avatar-glass-bg);
         border: 1px solid var(--avatar-glass-border);
-        color: var(--avatar-glass-text);
+        color: inherit;
 
         &.clickable:hover {
           background-color: transparent;
@@ -172,7 +148,7 @@
 
       &.#{$name}.outline {
         background-color: transparent;
-        color: map.get($props, text);
+        color: inherit;
         border-color: map.get($props, border);
 
         &.clickable:hover {
@@ -189,7 +165,7 @@
           var(--glass-blur)
         );
 
-        color: var(--avatar-glass-text);
+        color: inherit;
       }
     }
 
@@ -218,7 +194,7 @@
         background-color: transparent;
         background: var(--avatar-glass-bg);
         border: 1px solid var(--avatar-glass-border);
-        color: var(--avatar-glass-text);
+        color: inherit;
 
         &.clickable:hover {
           background-color: transparent;
@@ -228,7 +204,7 @@
 
       &.#{$name}.outline {
         background-color: transparent;
-        color: map.get($props, text);
+        color: inherit;
         border-color: map.get($props, border);
 
         &.clickable:hover {
@@ -245,7 +221,7 @@
           var(--glass-blur)
         );
 
-        color: var(--avatar-glass-text);
+        color: inherit;
       }
     }
 
@@ -279,7 +255,7 @@
       height: 70%;
       margin: auto;
       display: block;
-      color: var(--text-color-primary);
+      color: inherit;
     }
 
     .status {
@@ -349,6 +325,31 @@
       width: 100%;
       height: 100%;
       border-radius: 50%;
+    }
+  }
+
+  .avatar.clear {
+    background-color: transparent;
+    color: inherit;
+
+    &.clickable:hover {
+      background-color: color.adjust(#000, $lightness: -10%);
+      transform: translateY(-2px);
+    }
+
+    &.clickable:focus {
+      outline: 2px solid var(--text-color-primary);
+      outline-offset: 1px;
+    }
+
+    &.outline {
+      color: inherit;
+      border-color: var(--text-color-primary);
+
+      &.clickable:hover {
+        background-color: transparent;
+        border-color: color.adjust(#000, $lightness: 10%);
+      }
     }
   }
 

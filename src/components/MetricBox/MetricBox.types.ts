@@ -6,6 +6,7 @@ import {
   StateType,
   ThemeType,
 } from "@/types/types";
+import { SkeletonProps } from "../Skeleton/Skeleton.types";
 
 /**
  * Props for the MetricBox component.
@@ -17,11 +18,21 @@ export interface MetricBoxProps {
   /** The primary value of the metric, e.g., a number or a string. */
   value: string | number;
 
+  /** Optional unit label shown beside the value. */
+  units?: string;
+
   /** Optional icon to visually represent the metric (from react-icons, for example). */
   icon?: IconType;
 
   /** Optional subtext providing additional context for the metric. */
   subtext?: string;
+
+  /**
+   * Whether the metric box is in a loading state (shows skeleton).
+   *
+   * @default false
+   */
+  loading?: boolean;
 
   /**
    * Optional outline style for the component (default: false).
@@ -168,4 +179,9 @@ export interface BaseMetricBoxProps extends MetricBoxProps {
    * Framework-specific class name map supplied by the core or Next wrapper.
    */
   classMap: Record<string, string>;
+
+  /**
+   * Component implementation used to render the skeleton portion.
+   */
+  SkeletonComponent: React.FC<SkeletonProps>;
 }

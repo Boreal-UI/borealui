@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import { TimelineProps } from "./Timeline.types";
+import { TimelineBaseProps } from "./Timeline.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -9,11 +9,25 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
-const TimelineBase: React.FC<
-  TimelineProps & { classMap: Record<string, string> }
-> = ({
+const FallbackSkeleton: TimelineBaseProps["SkeletonComponent"] = ({
+  width,
+  height,
+  className,
+  "data-testid": testId,
+  "aria-hidden": ariaHidden,
+}) => (
+  <div
+    className={className}
+    style={{ width, height }}
+    data-testid={testId}
+    aria-hidden={ariaHidden}
+  />
+);
+
+const TimelineBase: React.FC<TimelineBaseProps> = ({
   items,
   orientation = "vertical",
+  loading = false,
   "aria-label": ariaLabel = "Timeline",
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
@@ -23,6 +37,7 @@ const TimelineBase: React.FC<
   rounding = getDefaultRounding(),
   shadow = getDefaultShadow(),
   classMap,
+  SkeletonComponent = FallbackSkeleton,
   className,
   "data-testid": dataTestId,
   testId = dataTestId ?? "timeline",
@@ -35,9 +50,10 @@ const TimelineBase: React.FC<
         classMap[orientation],
         classMap[theme],
         glass && classMap.glass,
+        loading && classMap.loading,
         className,
       ),
-    [classMap, orientation, theme, glass, className],
+    [classMap, orientation, theme, glass, loading, className],
   );
 
   const itemClassName = useMemo(
@@ -47,8 +63,9 @@ const TimelineBase: React.FC<
         classMap[orientation],
         classMap[theme],
         glass && classMap.glass,
+        loading && classMap.loadingItem,
       ),
-    [classMap, orientation, theme, glass],
+    [classMap, orientation, theme, glass, loading],
   );
 
   const markerClassName = useMemo(
@@ -70,10 +87,11 @@ const TimelineBase: React.FC<
         classMap[orientation],
         classMap[theme],
         glass && classMap.glass,
+        loading && classMap.loadingContent,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
       ),
-    [classMap, orientation, theme, glass, shadow, rounding],
+    [classMap, orientation, theme, glass, loading, shadow, rounding],
   );
 
   const setSize = items.length;
@@ -86,6 +104,7 @@ const TimelineBase: React.FC<
       aria-label={ariaLabelledBy ? undefined : ariaLabel}
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
+      aria-busy={loading || undefined}
       {...rest}
     >
       {items.map((item, index) => {
@@ -106,16 +125,23 @@ const TimelineBase: React.FC<
           }
         }
 
-        const describedBy =
-          [dateId, descriptionId].filter(Boolean).join(" ") || undefined;
+        const describedBy = loading
+          ? undefined
+          : [dateId, descriptionId].filter(Boolean).join(" ") || undefined;
 
         return (
           <li
             key={index}
             className={itemClassName}
             data-testid={itemTestId}
-            aria-labelledby={hasTitle ? labelId : undefined}
-            aria-label={!hasTitle ? `Timeline item ${index + 1}` : undefined}
+            aria-labelledby={!loading && hasTitle ? labelId : undefined}
+            aria-label={
+              loading
+                ? `Timeline item ${index + 1} loading`
+                : !hasTitle
+                  ? `Timeline item ${index + 1}`
+                  : undefined
+            }
             aria-describedby={describedBy}
             aria-posinset={index + 1}
             aria-setsize={setSize}
@@ -146,34 +172,46 @@ const TimelineBase: React.FC<
               className={contentClassName}
               data-testid={`${itemTestId}-content`}
             >
-              {hasTitle && (
-                <h3
-                  id={labelId}
-                  className={classMap.title}
-                  data-testid={`${itemTestId}-title`}
-                >
-                  {item.title}
-                </h3>
-              )}
+              {loading ? (
+                <SkeletonComponent
+                  width="100%"
+                  height="100%"
+                  className={classMap.skeleton}
+                  aria-hidden={true}
+                  data-testid={`${itemTestId}-skeleton`}
+                />
+              ) : (
+                <>
+                  {hasTitle && (
+                    <h3
+                      id={labelId}
+                      className={classMap.title}
+                      data-testid={`${itemTestId}-title`}
+                    >
+                      {item.title}
+                    </h3>
+                  )}
 
-              {item.date && (
-                <p
-                  id={dateId}
-                  className={classMap.date}
-                  data-testid={`${itemTestId}-date`}
-                >
-                  <time dateTime={dateTimeAttr}>{item.date}</time>
-                </p>
-              )}
+                  {item.date && (
+                    <p
+                      id={dateId}
+                      className={classMap.date}
+                      data-testid={`${itemTestId}-date`}
+                    >
+                      <time dateTime={dateTimeAttr}>{item.date}</time>
+                    </p>
+                  )}
 
-              {item.description && (
-                <p
-                  id={descriptionId}
-                  className={classMap.description}
-                  data-testid={`${itemTestId}-description`}
-                >
-                  {item.description}
-                </p>
+                  {item.description && (
+                    <p
+                      id={descriptionId}
+                      className={classMap.description}
+                      data-testid={`${itemTestId}-description`}
+                    >
+                      {item.description}
+                    </p>
+                  )}
+                </>
               )}
             </div>
           </li>

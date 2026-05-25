@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
@@ -13,7 +14,7 @@
     padding: var(--spacing-md);
     border: 1px solid var(--alert-border, var(--border-color));
     font-family: var(--font-family-ui);
-    color: var(--alert-text, var(--text-color));
+    color: inherit;
     background: var(--alert-bg, var(--surface-color, var(--background-color)));
     overflow-wrap: anywhere;
   }
@@ -38,7 +39,7 @@
   .alert_icon {
     display: inline-flex;
     flex: 0 0 auto;
-    margin-top: 0.125rem;
+    margin-top: 0.4rem;
   }
 
   .alert_actions {
@@ -49,8 +50,9 @@
   }
 
   .alert_dismiss_button {
-    min-width: 2rem;
-    min-height: 2rem;
+    min-width: 1rem;
+    min-height: 1rem;
+    margin-top: -0.6rem;
     border: 0;
     border-radius: var(--border-radius-sm);
     background: transparent;
@@ -95,13 +97,13 @@
 
     .alert_#{$name}.alert_soft {
       background: var(--alert-soft-bg);
-      color: var(--alert-text);
+      color: inherit;
       border-color: var(--alert-border);
     }
 
     .alert_#{$name}.alert_outline {
       background: transparent;
-      color: var(--alert-text);
+      color: inherit;
       border-color: var(--alert-border);
     }
 
@@ -112,7 +114,7 @@
         var(--glass-blur)
       );
 
-      color: var(--alert-glass-text, var(--alert-text));
+      color: inherit;
       border-color: var(--alert-glass-border, var(--alert-border));
     }
   }
@@ -125,7 +127,6 @@
       --alert-soft-bg: #{map.get($values, glass-bg)};
 
       background: var(--alert-bg);
-      color: var(--alert-text);
       border-color: var(--alert-border);
 
       --alert-glass-bg: #{map.get($values, glass-bg)};
@@ -136,13 +137,13 @@
 
     .alert_#{$name}.alert_soft {
       background: var(--alert-soft-bg);
-      color: var(--alert-text);
+      color: inherit;
       border-color: var(--alert-border);
     }
 
     .alert_#{$name}.alert_outline {
       background: transparent;
-      color: var(--alert-text);
+      color: inherit;
       border-color: var(--alert-border);
     }
 
@@ -153,8 +154,115 @@
         var(--glass-blur)
       );
 
-      color: var(--alert-glass-text, var(--alert-text));
+      color: inherit;
       border-color: var(--alert-glass-border, var(--alert-border));
+    }
+  }
+
+  .alert_glass.alert_outline {
+    background: transparent;
+  }
+
+  @include bp.down(md) {
+    .alert {
+      gap: var(--spacing-xs);
+      padding: var(--spacing-sm);
+    }
+
+    .alert_title {
+      font-size: var(--font-size-body);
+    }
+
+    .alert_message {
+      font-size: var(--font-size-label);
+    }
+
+    .alert_has_actions {
+      flex-wrap: wrap;
+    }
+
+    .alert_icon {
+      order: 1;
+    }
+
+    .alert_content {
+      order: 2;
+      flex: 1 1 0;
+    }
+
+    .alert_dismiss_button {
+      order: 3;
+      align-self: flex-start;
+      margin-top: 0;
+      margin-left: auto;
+    }
+
+    .alert_has_actions .alert_actions {
+      order: 4;
+      flex: 1 1 100%;
+      justify-content: center;
+    }
+  }
+
+  @include bp.down(sm) {
+    .alert_content {
+      gap: var(--spacing-xxs, 0.35rem);
+    }
+
+    .alert_actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .alert_actions > * {
+      width: 100%;
+    }
+
+    .alert_dismiss_button {
+      min-width: 1.75rem;
+      min-height: 1.75rem;
+    }
+  }
+
+  @include bp.down(xs) {
+    .alert {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+      gap: var(--spacing-xs);
+      padding: var(--spacing-xs);
+    }
+
+    .alert_has_icon {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .alert_dismissible {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .alert_has_icon.alert_dismissible {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+
+    .alert_icon {
+      grid-column: auto;
+    }
+
+    .alert_content {
+      grid-column: auto;
+      min-width: 0;
+    }
+
+    .alert_dismiss_button {
+      grid-column: auto;
+      justify-self: end;
+    }
+
+    .alert_actions {
+      grid-column: 1 / -1;
+      width: 100%;
     }
   }
 

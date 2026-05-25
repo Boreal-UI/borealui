@@ -53,7 +53,7 @@
     &_label {
       font-size: var(--font-size-label);
       line-height: 1;
-      color: var(--text-color-primary);
+      color: inherit;
       margin: 0;
       display: inline-flex;
       align-items: center;
@@ -92,6 +92,7 @@
 
     &_active {
       color: var(--primary-color);
+      opacity: 1;
     }
 
     @each $themeName, $vals in theme.$themes {
@@ -126,7 +127,7 @@
 
     &_clear {
       .rating_active {
-        color: var(--text-color-primary);
+        color: inherit;
       }
     }
   }
@@ -143,6 +144,11 @@
   .rating_interactive .rating_star:focus-visible {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
+  }
+
+  .rating_clear.rating_glass .rating_active {
+    color: var(--text-color);
+    opacity: 0.9;
   }
 
   @media (prefers-reduced-motion: reduce) {

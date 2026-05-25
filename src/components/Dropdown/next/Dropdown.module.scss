@@ -37,13 +37,16 @@
   }
 
   .menu {
+    --dropdown-menu-radius: var(--border-radius-md);
+
+    border-radius: var(--dropdown-menu-radius);
     position: absolute;
     top: 100%;
     overflow: visible;
     margin-top: var(--spacing-xs);
     background-color: var(--background-color-lighter);
+    color: inherit;
     z-index: theme.$z-index-drawer;
-    padding: var(--spacing-xs) 0;
     width: max-content;
     max-width: var(--dropdown-panel-max-width, calc(100vw - 1rem));
     max-height: var(--dropdown-panel-max-height, calc(100vh - 1rem));
@@ -102,7 +105,6 @@
       --dropdown-glass-hover-bg: #{map.get($values, glass-hover)};
       --dropdown-glass-border: #{map.get($values, glass-border)};
       --dropdown-glass-text: #{map.get($values, text)};
-      color: map.get($values, text);
       border: 1px solid map.get($values, border);
     }
   }
@@ -113,7 +115,6 @@
       --dropdown-glass-hover-bg: #{map.get($values, glass-hover)};
       --dropdown-glass-border: #{map.get($values, glass-border)};
       --dropdown-glass-text: #{map.get($values, text)};
-      color: map.get($values, text);
       border: 1px solid map.get($values, border);
     }
   }
@@ -124,7 +125,7 @@
       var(--dropdown-glass-border, rgba(255, 255, 255, 0.34)),
       16px
     );
-    color: var(--dropdown-glass-text, var(--text-color-primary));
+    color: inherit;
     box-shadow: var(--box-shadow-md);
   }
 
@@ -143,6 +144,7 @@
     font-weight: var(--font-weight-label);
     letter-spacing: var(--letter-spacing-label);
     color: var(--text-color-primary);
+    color: inherit;
     cursor: pointer;
     text-align: left;
     transition:
@@ -156,7 +158,8 @@
         --dropdown-item-hover-bg,
         var(--background-color-dark)
       );
-      color: var(--text-color-primary);
+      color: inherit;
+      opacity: 0.78;
       outline: none;
     }
 
@@ -266,8 +269,21 @@
 
   @each $key, $value in theme.$rounding {
     .round#{$key} {
-      border-radius: $value;
+      --dropdown-menu-radius: #{$value};
+      border-radius: var(--dropdown-menu-radius);
     }
+  }
+
+  .menu > .itemWrapper:first-child > .item,
+  .menu > .item:first-child {
+    border-top-left-radius: calc(var(--dropdown-menu-radius) - 1px);
+    border-top-right-radius: calc(var(--dropdown-menu-radius) - 1px);
+  }
+
+  .menu > .itemWrapper:last-child > .item,
+  .menu > .item:last-child {
+    border-bottom-left-radius: calc(var(--dropdown-menu-radius) - 1px);
+    border-bottom-right-radius: calc(var(--dropdown-menu-radius) - 1px);
   }
 
   @each $key, $value in theme.$shadow {

@@ -16,6 +16,7 @@ const classes = {
   actions: "pageHeader_actions",
   footer: "pageHeader_footer",
   content: "pageHeader_content",
+  bodyContent: "pageHeader_bodyContent",
   compact: "pageHeader_compact",
   fullWidth: "pageHeader_fullWidth",
   loader: "pageHeader_loader",

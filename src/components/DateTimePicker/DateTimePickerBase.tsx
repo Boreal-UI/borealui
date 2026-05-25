@@ -1,225 +1,320 @@
-import React, { useId, useMemo, useRef } from "react";
+import { ChangeEvent, forwardRef, useId, useMemo, useRef } from "react";
 import { DateTimePickerBaseProps } from "./DateTimePicker.types";
 import { combineClassNames } from "../../utils/classNames";
 import { CalendarIcon } from "../../Icons";
 import { capitalize } from "../../utils/capitalize";
+import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultGlass,
+  getDefaultOutline,
   getDefaultRounding,
   getDefaultShadow,
-  getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
-const DateTimePickerBase: React.FC<DateTimePickerBaseProps> = ({
-  label,
-  labelPosition = "top",
-  value,
-  fullWidth = false,
-  onChange,
-  min,
-  max,
-  name,
-  required = false,
-  disabled = false,
-  readOnly = false,
-  placeholder,
-  type = "datetime-local",
-  autoComplete = "off",
-  title,
-  size = getDefaultSize(),
-  outline,
-  theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
-  state,
-  rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
-  className,
-  "data-testid": dataTestId,
-  testId = dataTestId ?? "datetime-picker",
-  classMap,
-  error,
-  description,
-  id,
-  labelId,
-  descriptionId,
-  errorId,
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledBy,
-  "aria-describedby": ariaDescribedBy,
-  "aria-errormessage": ariaErrorMessage,
-  "aria-invalid": ariaInvalid,
-  "aria-required": ariaRequired,
-  pickerButtonAriaLabel,
-  pickerButtonAriaLabelledBy,
-  pickerButtonAriaDescribedBy,
-  pickerButtonTitle,
-  inputProps,
-  buttonProps,
-}) => {
-  const generatedId = useId();
-  const inputId = id || generatedId;
-  const computedLabelId = labelId || (label ? `${inputId}-label` : undefined);
-  const computedDescriptionId =
-    descriptionId || (description ? `${inputId}-description` : undefined);
-  const computedErrorId = errorId || (error ? `${inputId}-error` : undefined);
-
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const invalidRange = min && max ? min > max : false;
-  const outOfBounds = value
-    ? (min ? value < min : false) || (max ? value > max : false)
-    : false;
-
-  const openPicker = () => {
-    const el = inputRef.current;
-    if (!el || disabled || readOnly) return;
-
-    if (typeof el.showPicker === "function") {
-      el.showPicker();
-    } else {
-      el.focus();
-    }
-  };
-
-  const pickerClass = useMemo(
-    () =>
-      combineClassNames(
-        classMap.wrapper,
-        classMap[`label${capitalize(labelPosition)}`],
-        classMap[theme],
-        state && classMap[state],
-        classMap[size],
-        fullWidth && classMap.fullWidth,
-        glass && classMap.glass,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
-        rounding && classMap[`round${capitalize(rounding)}`],
-        outline && classMap.outline,
-        disabled && classMap.disabled,
-        readOnly && classMap.readOnly,
-        className && className,
-      ),
-    [
-      classMap,
-      labelPosition,
-      theme,
+const DateTimePickerBase = forwardRef<HTMLDivElement, DateTimePickerBaseProps>(
+  (
+    {
+      value,
+      defaultValue,
+      onChange,
+      name,
+      min,
+      max,
+      required = false,
+      readOnly = false,
+      placeholder,
+      type = "datetime-local",
+      autoComplete = "off",
+      title,
+      label,
+      labelPosition = "top",
+      description,
+      helperText,
+      error,
+      fullWidth = false,
+      theme = getDefaultTheme(),
       state,
-      size,
-      fullWidth,
-      glass,
-      shadow,
-      rounding,
-      outline,
-      disabled,
-      readOnly,
+      outline = getDefaultOutline(),
+      glass = getDefaultGlass(),
+      rounding = getDefaultRounding(),
+      shadow = getDefaultShadow(),
+      disabled = false,
+      loading = false,
+      pickerButtonAriaLabel = "Open date and time picker",
+      pickerButtonTitle,
+      pickerButtonAriaLabelledBy,
+      pickerButtonAriaDescribedBy,
+      classMap,
       className,
-    ],
-  );
+      containerClassName,
+      labelClassName,
+      inputWrapperClassName,
+      inputClassName,
+      buttonClassName,
+      descriptionClassName,
+      helperTextClassName,
+      errorClassName,
+      srOnlyText,
+      srOnlyClassName,
+      inputProps,
+      buttonProps,
+      labelId: labelIdProp,
+      descriptionId: descriptionIdProp,
+      errorId: errorIdProp,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedBy,
+      "aria-errormessage": ariaErrorMessage,
+      "aria-invalid": ariaInvalid,
+      "aria-required": ariaRequired,
+      "data-testid": dataTestId,
+      testId = dataTestId ?? "datetime-picker",
+      ...rest
+    },
+    ref,
+  ) => {
+    const generatedId = useId();
+    const inputRef = useRef<HTMLInputElement>(null);
+    const resolvedLabelPosition = resolvePropAlias(labelPosition);
 
-  const mergedDescribedBy =
-    [ariaDescribedBy, computedDescriptionId, computedErrorId]
-      .filter(Boolean)
-      .join(" ") || undefined;
+    const {
+      id: idProp,
+      role: roleProp,
+      "aria-disabled": ariaDisabled,
+      ...restRoot
+    } = rest;
 
-  const resolvedAriaInvalid =
-    (ariaInvalid ?? Boolean(error || invalidRange || outOfBounds)) || undefined;
+    const rootId = idProp ?? `${testId}-${generatedId}`;
+    const inputId = `${rootId}-input`;
+    const labelId = labelIdProp ?? (label ? `${rootId}-label` : undefined);
+    const descriptionId =
+      descriptionIdProp ?? (description ? `${rootId}-description` : undefined);
+    const helperId = helperText && !error ? `${rootId}-helper` : undefined;
+    const errorId = errorIdProp ?? (error ? `${rootId}-error` : undefined);
+    const srDescriptionId = srOnlyText ? `${rootId}-sr-description` : undefined;
+    const describedBy =
+      [ariaDescribedBy, descriptionId, helperId, errorId, srDescriptionId]
+        .filter(Boolean)
+        .join(" ") || undefined;
+    const invalidRange = min && max ? min > max : false;
+    const outOfBounds = value
+      ? (min ? value < min : false) || (max ? value > max : false)
+      : false;
+    const invalid = Boolean(error || invalidRange || outOfBounds);
+    const resolvedAriaInvalid = (ariaInvalid ?? invalid) || undefined;
+    const resolvedAriaRequired = (ariaRequired ?? required) || undefined;
+    const resolvedAriaErrorMessage =
+      ariaErrorMessage ?? (error ? errorId : undefined);
+    const computedAriaDisabled = ariaDisabled ?? (disabled || undefined);
 
-  const resolvedAriaRequired = (ariaRequired ?? required) || undefined;
+    const containerClass = useMemo(
+      () =>
+        combineClassNames(
+          classMap.container,
+          classMap[`label${capitalize(resolvedLabelPosition)}`],
+          fullWidth && classMap.fullWidth,
+          containerClassName,
+        ),
+      [classMap, resolvedLabelPosition, fullWidth, containerClassName],
+    );
 
-  const resolvedAriaLabel =
-    ariaLabel || (!label && !ariaLabelledBy ? "Date and time" : undefined);
+    const rootClass = useMemo(
+      () =>
+        combineClassNames(
+          classMap.root,
+          classMap[theme],
+          state && classMap[state],
+          invalid && classMap.error,
+          outline && classMap.outline,
+          glass && classMap.glass,
+          disabled && classMap.disabled,
+          readOnly && classMap.readOnly,
+          loading && classMap.loading,
+          fullWidth && classMap.fullWidth,
+          shadow && classMap[`shadow${capitalize(shadow)}`],
+          rounding && classMap[`round${capitalize(rounding)}`],
+          className,
+        ),
+      [
+        classMap,
+        theme,
+        state,
+        invalid,
+        outline,
+        glass,
+        disabled,
+        readOnly,
+        loading,
+        fullWidth,
+        shadow,
+        rounding,
+        className,
+      ],
+    );
 
-  const resolvedAriaLabelledBy =
-    ariaLabelledBy ||
-    (!ariaLabel && computedLabelId ? computedLabelId : undefined);
+    const openPicker = () => {
+      const input = inputRef.current;
+      if (!input || disabled || readOnly || loading) return;
 
-  const resolvedAriaErrorMessage =
-    ariaErrorMessage || (error ? computedErrorId : undefined);
+      if (typeof input.showPicker === "function") {
+        input.showPicker();
+        return;
+      }
 
-  return (
-    <div className={pickerClass} data-testid={testId}>
-      {label && (
-        <label
-          id={computedLabelId}
-          htmlFor={inputId}
-          className={classMap.label}
-          data-testid={`${testId}-label`}
+      input.focus();
+    };
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      onChange?.(event.target.value);
+    };
+
+    return (
+      <div className={containerClass} data-testid={testId}>
+        {label ? (
+          <label
+            id={labelId}
+            htmlFor={inputId}
+            className={combineClassNames(classMap.label, labelClassName)}
+            data-testid={`${testId}-label`}
+          >
+            {label}
+            {required ? <span aria-hidden="true"> *</span> : null}
+          </label>
+        ) : null}
+
+        <div
+          ref={ref}
+          id={rootId}
+          role={roleProp}
+          className={rootClass}
+          aria-busy={loading || undefined}
+          aria-disabled={computedAriaDisabled}
+          data-testid={`${testId}-root`}
+          {...restRoot}
         >
-          {label}
-          {required && <span aria-hidden="true"> *</span>}
-        </label>
-      )}
+          {loading ? (
+            <span
+              className={classMap.loader}
+              aria-hidden="true"
+              data-testid={`${testId}-loader`}
+            />
+          ) : null}
 
-      <div className={classMap.inputWrapper}>
-        <input
-          id={inputId}
-          ref={inputRef}
-          type={type}
-          className={classMap.input}
-          value={value}
-          onChange={(e) => onChange?.(e.target.value)}
-          min={min}
-          max={max}
-          name={name}
-          required={required}
-          disabled={disabled}
-          readOnly={readOnly}
-          placeholder={placeholder}
-          autoComplete={autoComplete}
-          title={title}
-          aria-label={resolvedAriaLabel}
-          aria-labelledby={resolvedAriaLabelledBy}
-          aria-describedby={mergedDescribedBy}
-          aria-errormessage={resolvedAriaErrorMessage}
-          aria-invalid={resolvedAriaInvalid}
-          aria-required={resolvedAriaRequired}
-          data-testid={`${testId}-input`}
-          {...inputProps}
-        />
+          <div
+            className={combineClassNames(
+              classMap.inputWrapper,
+              inputWrapperClassName,
+            )}
+            data-testid={`${testId}-input-wrapper`}
+          >
+            <input
+              {...inputProps}
+              ref={inputRef}
+              id={inputId}
+              type={type}
+              className={combineClassNames(classMap.input, inputClassName)}
+              value={value}
+              defaultValue={defaultValue}
+              onChange={handleChange}
+              name={name}
+              min={min}
+              max={max}
+              required={required}
+              disabled={disabled || loading}
+              readOnly={readOnly}
+              placeholder={placeholder}
+              autoComplete={autoComplete}
+              title={title}
+              aria-label={
+                inputProps?.["aria-label"] ??
+                ariaLabel ??
+                (!label && !inputProps?.["aria-labelledby"] && !ariaLabelledBy
+                  ? "Date and time"
+                  : undefined)
+              }
+              aria-labelledby={
+                inputProps?.["aria-labelledby"] ??
+                ariaLabelledBy ??
+                (!inputProps?.["aria-label"] && !ariaLabel ? labelId : undefined)
+              }
+              aria-describedby={describedBy}
+              aria-invalid={resolvedAriaInvalid}
+              aria-errormessage={resolvedAriaErrorMessage}
+              aria-required={resolvedAriaRequired}
+              data-testid={`${testId}-input`}
+            />
 
-        <button
-          type="button"
-          className={classMap.icon}
-          onClick={openPicker}
-          disabled={disabled || readOnly}
-          aria-label={pickerButtonAriaLabel || "Open date and time picker"}
-          aria-labelledby={pickerButtonAriaLabelledBy}
-          aria-describedby={pickerButtonAriaDescribedBy}
-          title={
-            pickerButtonTitle ||
-            pickerButtonAriaLabel ||
-            "Open date and time picker"
-          }
-          data-testid={`${testId}-button`}
-          {...buttonProps}
-        >
-          <CalendarIcon aria-hidden={true} focusable={false} />
-        </button>
+            <button
+              {...buttonProps}
+              type="button"
+              className={combineClassNames(classMap.button, buttonClassName)}
+              onClick={openPicker}
+              disabled={disabled || readOnly || loading}
+              aria-label={pickerButtonAriaLabel}
+              aria-labelledby={pickerButtonAriaLabelledBy}
+              aria-describedby={pickerButtonAriaDescribedBy}
+              title={pickerButtonTitle ?? pickerButtonAriaLabel}
+              data-testid={`${testId}-button`}
+            >
+              <CalendarIcon aria-hidden="true" focusable={false} />
+            </button>
+          </div>
+
+          {srOnlyText ? (
+            <span
+              id={srDescriptionId}
+              className={combineClassNames(
+                classMap.srOnly ?? "sr_only",
+                srOnlyClassName,
+              )}
+              data-testid={`${testId}-sr-only-text`}
+            >
+              {srOnlyText}
+            </span>
+          ) : null}
+        </div>
+
+        {description ? (
+          <p
+            id={descriptionId}
+            className={combineClassNames(
+              classMap.description,
+              descriptionClassName,
+            )}
+            data-testid={`${testId}-description`}
+          >
+            {description}
+          </p>
+        ) : null}
+
+        {helperText && !error ? (
+          <p
+            id={helperId}
+            className={combineClassNames(
+              classMap.helperText,
+              helperTextClassName,
+            )}
+            data-testid={`${testId}-helper`}
+          >
+            {helperText}
+          </p>
+        ) : null}
+
+        {error ? (
+          <p
+            id={errorId}
+            className={combineClassNames(classMap.errorText, errorClassName)}
+            role="alert"
+            data-testid={`${testId}-error`}
+          >
+            {error}
+          </p>
+        ) : null}
       </div>
-
-      {description && !error && (
-        <p
-          id={computedDescriptionId}
-          className={classMap.description}
-          data-testid={`${testId}-description`}
-        >
-          {description}
-        </p>
-      )}
-
-      {error && (
-        <p
-          id={computedErrorId}
-          className={classMap.error}
-          role="alert"
-          data-testid={`${testId}-error`}
-        >
-          {error}
-        </p>
-      )}
-    </div>
-  );
-};
+    );
+  },
+);
 
 DateTimePickerBase.displayName = "DateTimePickerBase";
 

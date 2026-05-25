@@ -5,6 +5,7 @@ import { DataTableProps } from "../DataTable.types";
 
 const classes = {
   wrapper: "data_table_wrapper",
+  scrollArea: "data_table_scroll_area",
   table: "data_table",
   toolbar: "data_table_toolbar",
   toolbarTitle: "data_table_toolbar_title",

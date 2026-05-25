@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  LabelPositionType,
   RoundingType,
   ShadowType,
   SizeType,
@@ -56,11 +57,21 @@ export interface SliderProps {
   label?: string;
 
   /**
+   * Position of the label relative to the slider.
+   *
+   * @default "top"
+   */
+  labelPosition?: LabelPositionType;
+
+  /**
    * If true, the current slider value is displayed alongside the slider.
    *
    * @default true
    */
   showValue?: boolean;
+
+  /** Unit text rendered after the displayed slider value. */
+  units?: React.ReactNode;
 
   /**
    * Size variant for the slider.

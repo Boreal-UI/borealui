@@ -111,7 +111,7 @@
       font-weight: var(--font-weight-body);
       line-height: var(--line-height-body);
       letter-spacing: var(--letter-spacing-body);
-      color: var(--text-color-secondary);
+      color: inherit;
 
       @include bp.down(xs) {
         font-size: var(--font-size-label);
@@ -227,7 +227,7 @@
       var(--file-upload-glass-border, rgba(255, 255, 255, 0.34)),
       16px
     );
-    color: var(--file-upload-glass-text, var(--text-color-primary));
+    color: inherit;
   }
 
   .glass:hover,

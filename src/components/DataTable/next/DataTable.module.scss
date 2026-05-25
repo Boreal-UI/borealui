@@ -9,7 +9,9 @@
     --data-table-min-width: 600px;
 
     width: 100%;
+    max-width: 100%;
     overflow-x: auto;
+    overflow-y: visible;
     font-family: var(--font-family-body);
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-body);
@@ -17,6 +19,7 @@
     letter-spacing: var(--letter-spacing-body);
     border-radius: inherit;
     -webkit-overflow-scrolling: touch;
+    min-width: 0;
 
     @include bp.down(md) {
       --data-table-min-width: 520px;
@@ -26,6 +29,12 @@
       --data-table-min-width: 720px;
     }
 
+    .scrollArea {
+      display: grid;
+      width: max-content;
+      min-width: 100%;
+    }
+
     .toolbar {
       display: flex;
       align-items: center;
@@ -33,7 +42,7 @@
       gap: var(--spacing-sm);
       flex-wrap: wrap;
       width: 100%;
-      min-width: var(--data-table-min-width);
+      min-width: 0;
       padding: var(--spacing-sm);
       box-sizing: border-box;
     }
@@ -76,7 +85,7 @@
       gap: var(--spacing-sm);
       flex-wrap: wrap;
       width: 100%;
-      min-width: var(--data-table-min-width);
+      min-width: 0;
       padding: var(--spacing-sm);
       border-top: 1px solid var(--border-color);
       background: var(--background-color-light);
@@ -89,7 +98,6 @@
       color: var(--text-color);
     }
 
-    .columnMenuTrigger,
     .paginationButton,
     .columnControlButton,
     .expandButton {
@@ -98,6 +106,25 @@
       border-radius: var(--border-radius-sm);
       background: var(--background-color);
       color: var(--text-color);
+      padding: 0 var(--spacing-xs);
+      font: inherit;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+    }
+
+    .columnMenuTrigger {
+      min-height: 32px;
+      border-radius: var(--border-radius-sm);
+      background: transparent;
       padding: 0 var(--spacing-xs);
       font: inherit;
       cursor: pointer;
@@ -137,20 +164,30 @@
 
     .viewport {
       width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      min-width: 0;
+      overflow: visible;
+      border-radius: 0;
     }
 
     &.virtualized .viewport {
-      overflow: auto;
+      overflow-x: visible;
+      overflow-y: auto;
     }
 
     .table {
-      width: 100%;
-      min-width: var(--data-table-min-width);
-      border-collapse: collapse;
+      width: max-content;
+      min-width: max(100%, var(--data-table-min-width));
+      border-collapse: separate;
+      border-spacing: 0;
       table-layout: auto;
       font-size: inherit;
+    }
+
+    .headerCell,
+    thead .selectionCell {
+      position: sticky;
+      top: 0;
+      z-index: 4;
     }
 
     .headerCell {
@@ -201,7 +238,7 @@
       border-bottom: 1px solid var(--text-color-primary);
       text-align: left;
       white-space: nowrap;
-      color: var(--text-color-primary);
+      color: inherit;
       font-family: var(--font-family-body);
       font-size: var(--font-size-body-sm);
       font-weight: var(--font-weight-body);
@@ -288,6 +325,10 @@
       z-index: 2;
       background: var(--background-color-dark);
       box-shadow: 1px 0 0 var(--border-color);
+
+      &.headerCell {
+        color: var(--text-color);
+      }
     }
 
     th.pinnedCell {
@@ -401,11 +442,20 @@
     }
 
     @include bp.down(xs) {
-      overflow-x: visible;
+      overflow-x: auto;
+
+      .scrollArea,
+      .table {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .viewport {
+        width: 100%;
+        min-width: 0;
+      }
 
       .table {
-        min-width: 0;
-        width: 100%;
         font-size: var(--font-size-caption);
       }
 
@@ -492,6 +542,10 @@
         color: map.get($values, text);
       }
 
+      .columnMenuTrigger {
+        color: map.get($values, text);
+      }
+
       .headerCell {
         background-color: map.get($values, bg);
         color: map.get($values, text);
@@ -506,7 +560,7 @@
       .headerCell {
         border: 2px solid map.get($values, border);
         background-color: transparent;
-        color: map.get($values, text);
+        color: inherit;
 
         @include bp.down(sm) {
           border-width: 1.5px;
@@ -527,6 +581,10 @@
         color: map.get($values, text);
       }
 
+      .columnMenuTrigger {
+        color: map.get($values, text);
+      }
+
       .headerCell {
         background-color: map.get($values, bg);
         color: map.get($values, text);
@@ -541,7 +599,7 @@
       .headerCell {
         border: 2px solid map.get($values, border);
         background-color: transparent;
-        color: map.get($values, text);
+        color: inherit;
 
         @include bp.down(sm) {
           border-width: 1.5px;
@@ -557,7 +615,7 @@
       18px
     );
 
-    color: var(--data-table-glass-text, var(--text-color-primary));
+    color: inherit;
 
     .table {
       background: transparent;
@@ -565,25 +623,25 @@
 
     .toolbar {
       background: var(--data-table-glass-hover-bg, rgba(255, 255, 255, 0.22));
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
       border-bottom: 1px solid
         var(--data-table-glass-border, rgba(255, 255, 255, 0.28));
     }
 
     .toolbarTitle {
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
     }
 
     .filterInput {
       background: var(--data-table-glass-bg, rgba(255, 255, 255, 0.16));
       border-color: var(--data-table-glass-border, rgba(255, 255, 255, 0.28));
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
     }
 
     .headerCell,
     th.selectionCell {
       background: var(--data-table-glass-hover-bg, rgba(255, 255, 255, 0.22));
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
       border-bottom-color: var(
         --data-table-glass-border,
         var(--text-color-primary)
@@ -593,7 +651,7 @@
     .selectionCell,
     .cell {
       background: unset;
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
       border-bottom-color: var(
         --data-table-glass-border,
         var(--text-color-primary)
@@ -616,6 +674,36 @@
   @each $key, $value in theme.$rounding {
     .round#{$key} {
       border-radius: $value;
+
+      .toolbar {
+        border-top-left-radius: $value;
+        border-top-right-radius: $value;
+      }
+
+      .pagination {
+        border-bottom-left-radius: $value;
+        border-bottom-right-radius: $value;
+      }
+
+      &:not(:has(.toolbar)) {
+        .table thead th:first-child {
+          border-top-left-radius: $value;
+        }
+
+        .table thead th:last-child {
+          border-top-right-radius: $value;
+        }
+      }
+
+      &:not(:has(.pagination)) {
+        .table tbody tr:last-child > *:first-child {
+          border-bottom-left-radius: $value;
+        }
+
+        .table tbody tr:last-child > *:last-child {
+          border-bottom-right-radius: $value;
+        }
+      }
     }
   }
 

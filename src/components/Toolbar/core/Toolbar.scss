@@ -5,169 +5,197 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: nowrap;
+    width: 100%;
+    min-width: 200px;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--background-color-light);
+    color: inherit;
+    gap: var(--spacing-sm);
 
-.toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: nowrap;
-  width: 100%;
-  min-width: 200px;
-  padding: var(--spacing-sm) var(--spacing-md);
-  background-color: var(--background-color-light);
-  color: var(--text-color-primary);
-  gap: var(--spacing-sm);
+    @include bp.down(xs) {
+      padding: var(--spacing-xs) var(--spacing-sm);
+      gap: var(--spacing-xs);
+    }
 
-  @include bp.down(xs) {
-    padding: var(--spacing-xs) var(--spacing-sm);
-    gap: var(--spacing-xs);
-  }
+    @include bp.up(lg) {
+      padding: var(--spacing-md) var(--spacing-lg);
+    }
 
-  @include bp.up(lg) {
-    padding: var(--spacing-md) var(--spacing-lg);
-  }
-
-  @each $theme, $color in theme.$themes {
-    &_#{$theme} {
-      --toolbar-glass-bg: #{map.get($color, glass-bg)};
-      --toolbar-glass-border: #{map.get($color, glass-border)};
-      --toolbar-glass-text: #{map.get($color, text)};
-
-      background-color: map.get($color, bg);
-
-      @if $theme == "secondary" {
-        color: var(--text-color-secondary);
-      } @else {
-        color: var(--text-color-primary);
+    @each $theme, $color in theme.$themes {
+      &_#{$theme} {
+        --toolbar-glass-bg: #{map.get($color, glass-bg)};
+        --toolbar-glass-border: #{map.get($color, glass-border)};
+        --toolbar-glass-text: #{map.get($color, text)};
+        background-color: map.get($color, bg);
+        color: map.get($color, text);
       }
     }
-  }
 
-  &_glass {
-    @include mixins.glass-surface(
-      var(--toolbar-glass-bg, var(--glass-background)),
-      var(--toolbar-glass-border, var(--glass-border-color)),
-      var(--glass-blur)
-    );
+    &_glass {
+      @include mixins.glass-surface(
+        var(--toolbar-glass-bg, var(--glass-background)),
+        var(--toolbar-glass-border, var(--glass-border-color)),
+        var(--glass-blur)
+      );
 
-    color: var(--toolbar-glass-text, currentcolor);
-  }
+      color: inherit;
+    }
 
-  &_static {
-    position: static;
-  }
+    &_static {
+      position: static;
+    }
 
-  &_fixed {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: var(--z-index-fixed, 1000);
-  }
+    &_fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: var(--z-index-fixed, 1000);
+    }
 
-  &_sticky {
-    position: sticky;
-    top: 0;
-    z-index: var(--z-index-sticky, 999);
-  }
+    &_sticky {
+      position: sticky;
+      top: 0;
+      z-index: var(--z-index-sticky, 999);
+    }
 
-  &_section {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    &_section {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-    &:first-child {
+      &:first-child {
+        justify-content: flex-start;
+      }
+
+      &:last-child {
+        justify-content: flex-end;
+      }
+
+      @include bp.down(sm) {
+        width: 100%;
+        justify-content: space-between;
+        margin-bottom: var(--spacing-xs);
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+    }
+
+    &_leftSection {
       justify-content: flex-start;
     }
 
-    &:last-child {
+    &_centerSection {
+      justify-content: center;
+    }
+
+    &_rightSection {
       justify-content: flex-end;
     }
 
-    @include bp.down(sm) {
-      width: 100%;
-      justify-content: space-between;
-      margin-bottom: var(--spacing-xs);
-
-      &:last-child {
-        margin-bottom: 0;
-      }
+    &_sectionContent {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      max-width: 100%;
+      gap: var(--spacing-sm);
     }
 
-    > *:focus-visible {
+    &_leftContent {
+      justify-content: flex-start;
+    }
+
+    &_centerContent {
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    &_rightContent {
+      justify-content: flex-end;
+    }
+
+    &_sectionContent > *:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
       border-radius: 6px;
     }
-  }
 
-  &_title {
-    margin: 0;
-    font-family: var(--font-family-heading);
-    font-size: var(--font-size-h6);
-    font-weight: var(--font-weight-heading);
-    line-height: var(--line-height-heading);
-    letter-spacing: var(--letter-spacing-heading);
+    &_title {
+      margin: 0;
+      font-family: var(--font-family-heading);
+      font-size: var(--font-size-h6);
+      font-weight: var(--font-weight-heading);
+      line-height: var(--line-height-heading);
+      letter-spacing: var(--letter-spacing-heading);
 
-    @include bp.down(sm) {
-      font-size: var(--font-size-body);
-      margin-bottom: var(--spacing-xs);
+      @include bp.down(sm) {
+        font-size: var(--font-size-body);
+        margin-bottom: var(--spacing-xs);
+      }
+
+      @include bp.up(lg) {
+        font-size: var(--font-size-h5);
+      }
     }
 
-    @include bp.up(lg) {
-      font-size: var(--font-size-h5);
+    &_avatarWrapper {
+      margin-left: var(--spacing-sm);
+
+      @include bp.down(sm) {
+        margin-left: 0;
+        margin-top: var(--spacing-xs);
+      }
     }
   }
 
-  &_avatarWrapper {
-    margin-left: var(--spacing-sm);
-
-    @include bp.down(sm) {
-      margin-left: 0;
-      margin-top: var(--spacing-xs);
+  @each $key, $value in theme.$rounding {
+    .toolbar_round-#{$key} {
+      border-bottom-right-radius: $value;
+      border-bottom-left-radius: $value;
     }
   }
-}
 
-@each $key, $value in theme.$rounding {
-  .toolbar_round-#{$key} {
-    border-bottom-right-radius: $value;
-    border-bottom-left-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .toolbar_shadow-#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .toolbar,
-  .toolbar * {
-    transition: none !important;
-  }
-}
-
-@media (forced-colors: active) {
-  .toolbar {
-    background: Canvas;
-    color: CanvasText;
-    border-bottom: 1px solid ButtonText;
+  @each $key, $value in theme.$shadow {
+    .toolbar_shadow-#{$key} {
+      box-shadow: $value;
+    }
   }
 
-  .toolbar_section > *:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 2px;
+  @media (prefers-reduced-motion: reduce) {
+    .toolbar,
+    .toolbar * {
+      transition: none !important;
+    }
   }
 
-  .toolbar.toolbar_glass {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+  @media (forced-colors: active) {
+    .toolbar {
+      background: Canvas;
+      color: CanvasText;
+      border-bottom: 1px solid ButtonText;
+    }
+
+    .toolbar_sectionContent > *:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+
+    .toolbar.toolbar_glass {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
   }
-}
 }

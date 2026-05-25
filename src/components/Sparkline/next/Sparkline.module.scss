@@ -1,54 +1,98 @@
 @use "../../../styles/_animations";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 
 @layer boreal-ui.components {
-  .root,
   .root {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     gap: var(--spacing-xs);
+    width: 100%;
     max-width: 100%;
-    color: var(--text-color-primary);
+    min-width: 0;
+    color: inherit;
     font-family: var(--font-family-ui);
+    animation: fade-in-up 240ms ease-out both;
   }
-  .label,
+
   .label {
+    max-width: 100%;
+    color: inherit;
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
-    color: inherit;
+    line-height: var(--line-height-body, 1.4);
+    overflow-wrap: anywhere;
   }
-  .chart,
+
   .chart {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: var(--spacing-xs);
+    width: 100%;
     max-width: 100%;
+    min-width: 0;
+    color: inherit;
   }
-  .svg,
+
   .svg {
     display: block;
+    flex: 1 1 auto;
+    width: 100%;
     max-width: 100%;
+    height: auto;
+    min-width: 0;
     overflow: visible;
+    color: inherit;
   }
-  .line,
+
   .line {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
     vector-effect: non-scaling-stroke;
+    animation: fade-in-up 520ms ease-out both;
+    transition:
+      opacity var(--transition-default),
+      filter var(--transition-default);
   }
-  .area,
+
   .area {
     pointer-events: none;
+    opacity: 0.18;
+    transition: opacity var(--transition-default);
   }
-  .point,
+
   .point {
     stroke: var(--background-color);
-    stroke-width: 2;
+    stroke-width: 4;
+    vector-effect: non-scaling-stroke;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: fade-in-up 320ms ease-out both;
+    transition:
+      opacity var(--transition-default),
+      r var(--transition-default),
+      filter var(--transition-default);
   }
-  .value,
+
+  @media (hover: hover) and (pointer: fine) {
+    .line:hover,
+    .point:hover {
+      opacity: 0.78;
+    }
+  }
+
   .value {
+    flex: 0 0 auto;
+    max-width: 40%;
+    color: inherit;
     font-size: var(--font-size-body-sm);
+    line-height: var(--line-height-body, 1.4);
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
-  .loader,
+
   .loader {
     width: 1rem;
     height: 1rem;
@@ -57,44 +101,122 @@
     border-radius: 50%;
     animation: spin 700ms linear infinite;
   }
-  .primary,
-  .primary {
-    color: var(--primary-color);
-  }
-  .secondary,
-  .secondary {
-    color: var(--secondary-color);
-  }
-  .tertiary,
-  .tertiary {
-    color: var(--tertiary-color);
-  }
-  .quaternary,
-  .quaternary {
-    color: var(--quaternary-color);
-  }
-  .clear,
-  .clear {
-    color: var(--text-color-primary);
-  }
-  .success,
-  .success {
-    color: var(--success-color);
-  }
-  .info,
-  .info {
-    color: var(--info-color);
-  }
-  .warning,
-  .warning {
-    color: var(--warning-color);
-  }
-  .error,
-  .error {
-    color: var(--error-color);
-  }
-  .loading,
+
   .loading {
     cursor: progress;
+  }
+
+  @media (max-width: 420px) {
+    .root {
+      gap: var(--spacing-xxs, 0.25rem);
+    }
+
+    .chart {
+      gap: var(--spacing-xxs, 0.25rem);
+    }
+
+    .label,
+    .value {
+      font-size: var(--font-size-body-xs, 0.8rem);
+    }
+
+    .point {
+      stroke-width: 1.5;
+    }
+  }
+
+  @media (max-width: 280px) {
+    .chart {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .value {
+      max-width: 100%;
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .point {
+      stroke-width: 1.25;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sparkline,
+    .root,
+    .line,
+    .area,
+    .point,
+    .loader {
+      animation: none;
+      transition: none;
+    }
+
+    .line,
+    .area,
+    .point {
+      opacity: 1;
+      transform: none;
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (hover: none) {
+    .line,
+    .area,
+    .point {
+      transition: none;
+    }
+
+    .line:hover,
+    .point:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .root {
+      color: CanvasText;
+    }
+
+    .chart,
+    .svg {
+      color: CanvasText;
+    }
+
+    .label,
+    .value {
+      color: CanvasText;
+      opacity: 1;
+    }
+
+    .line {
+      stroke: Highlight;
+      opacity: 1;
+    }
+
+    .area {
+      fill: Highlight;
+      opacity: 0.25;
+    }
+
+    .point {
+      fill: Highlight;
+      stroke: Canvas;
+      stroke-width: 2;
+      opacity: 1;
+    }
+
+    .line:hover,
+    .point:hover {
+      opacity: 1;
+    }
+
+    .loader {
+      border-color: CanvasText;
+      border-right-color: Canvas;
+    }
   }
 }

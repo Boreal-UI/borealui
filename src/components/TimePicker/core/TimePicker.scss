@@ -19,7 +19,7 @@
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
     line-height: var(--line-height-label);
-    color: var(--text-color-primary);
+    color: inherit;
   }
 
   .timePicker_labelTop {
@@ -44,7 +44,7 @@
     --timePicker-glass-bg: rgba(255, 255, 255, 0.18);
     --timePicker-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --timePicker-glass-border: rgba(255, 255, 255, 0.28);
-    --timePicker-glass-text: var(--text-color-primary);
+    --timePicker-glass-text: inherit;
 
     display: inline-flex;
     align-items: center;
@@ -54,7 +54,7 @@
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
-    color: var(--text-color-primary);
+    color: inherit;
     box-shadow: var(--box-shadow-sm);
     transition: var(--transition-default);
   }
@@ -177,6 +177,10 @@
       color: map.get($vals, text);
       border-color: map.get($vals, border);
 
+      .timePicker_button {
+        border-color: map.get($vals, text);
+      }
+
       &:hover {
         background-color: if(
           map.has-key($vals, hover),
@@ -187,9 +191,13 @@
 
       &.timePicker_outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
+
+        .timePicker_button {
+          border-color: map.get($vals, border);
+        }
       }
     }
   }
@@ -202,7 +210,21 @@
       --timePicker-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
-      color: map.get($vals, text);
+
+      .timePicker_button {
+        border-color: map.get($vals, border);
+      }
+
+      &.timePicker_outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+
+        .timePicker_button {
+          border-color: map.get($vals, border);
+        }
+      }
     }
   }
 
@@ -219,7 +241,11 @@
       16px
     );
 
-    color: var(--timePicker-glass-text);
+    .timePicker_button {
+      border-color: var(--timePicker-glass-border);
+    }
+
+    color: inherit;
   }
 
   .timePicker_glass:hover {

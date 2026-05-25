@@ -58,6 +58,12 @@ describe("BarChartBase", () => {
     expect(screen.getByRole("img")).toHaveAccessibleName(/Jan: 12/);
   });
 
+  it("shows units in accessible value text", () => {
+    render(<BarChartBase classMap={classMap} data={data} units="orders" />);
+
+    expect(screen.getByRole("img")).toHaveAccessibleName(/Jan: 12 orders/);
+  });
+
   it("supports loading and refs", () => {
     const ref = React.createRef<HTMLDivElement>();
     render(<BarChartBase ref={ref} classMap={classMap} data={data} loading />);

@@ -132,6 +132,14 @@ export const barChartPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"primary\""
     },
     {
+      "name": "units",
+      "type": "string",
+      "description": "Optional unit label shown beside formatted values.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "valueFormatter",
       "type": "ChartValueFormatter",
       "description": "Formatter used for visible and accessible values.",

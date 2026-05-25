@@ -14,8 +14,10 @@ import {
 const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   title,
   value,
+  units,
   icon: Icon,
   subtext,
+  loading = false,
   theme = getDefaultTheme(),
   glass = getDefaultGlass(),
   shadow = getDefaultShadow(),
@@ -41,6 +43,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   "data-testid": dataTestId,
   testId = dataTestId ?? "metric-box",
   classMap,
+  SkeletonComponent,
 }) => {
   const uid = useId();
 
@@ -57,6 +60,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
         classMap[size],
         classMap[align],
         glass && classMap.glass,
+        loading && classMap.loading,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
         className,
@@ -68,6 +72,7 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
       size,
       align,
       glass,
+      loading,
       outline,
       shadow,
       rounding,
@@ -75,69 +80,91 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
     ],
   );
 
+  const displayValue = units ? `${value} ${units}` : String(value ?? "");
+
   const valueLabel =
-    title && value != null ? `${value} ${title}` : String(value ?? "");
+    title && value != null ? `${displayValue} ${title}` : displayValue;
 
   const resolvedRole = role ?? (title ? "region" : undefined);
+  const resolvedAriaLabel =
+    ariaLabel ?? (!ariaLabelledBy && loading && title ? title : undefined);
   const resolvedAriaLabelledBy =
-    ariaLabelledBy ?? (title ? titleId : undefined);
+    ariaLabelledBy ?? (!loading && title ? titleId : undefined);
   const resolvedAriaDescribedBy =
-    ariaDescribedBy ?? (subtext ? subtextId : undefined);
+    ariaDescribedBy ?? (!loading && subtext ? subtextId : undefined);
 
   return (
     <div
       className={wrapperClass}
       role={resolvedRole}
-      aria-label={ariaLabel}
-      aria-labelledby={ariaLabel ? undefined : resolvedAriaLabelledBy}
+      aria-label={resolvedAriaLabel}
+      aria-labelledby={resolvedAriaLabel ? undefined : resolvedAriaLabelledBy}
       aria-describedby={resolvedAriaDescribedBy}
       aria-live={ariaLive}
       aria-atomic={ariaAtomic}
+      aria-busy={loading || undefined}
       data-testid={testId}
     >
-      {Icon && (
-        <div
-          className={combineClassNames(classMap.icon, iconClassName)}
-          data-testid={`${testId}-icon`}
-          aria-hidden={decorativeIcon ? true : undefined}
-        >
-          <Icon
-            aria-hidden={decorativeIcon ? true : undefined}
-            aria-label={!decorativeIcon ? iconAriaLabel : undefined}
-            focusable={false}
-          />
-        </div>
-      )}
+      {loading ? (
+        <SkeletonComponent
+          width="100%"
+          height="100%"
+          aria-hidden={true}
+          className={classMap.loadingSkeleton}
+          data-testid={`${testId}-skeleton`}
+        />
+      ) : (
+        <>
+          {Icon && (
+            <div
+              className={combineClassNames(classMap.icon, iconClassName)}
+              data-testid={`${testId}-icon`}
+              aria-hidden={decorativeIcon ? true : undefined}
+            >
+              <Icon
+                aria-hidden={decorativeIcon ? true : undefined}
+                aria-label={!decorativeIcon ? iconAriaLabel : undefined}
+                focusable={false}
+              />
+            </div>
+          )}
 
-      <div className={combineClassNames(classMap.content, contentClassName)}>
-        {title && (
-          <h3
-            id={titleId}
-            className={combineClassNames(classMap.title, titleClassName)}
-            data-testid={`${testId}-title`}
-          >
-            {title}
-          </h3>
-        )}
-
-        <div
-          className={combineClassNames(classMap.value, valueClassName)}
-          data-testid={`${testId}-value`}
-          aria-label={valueLabel}
-        >
-          {value}
-        </div>
-
-        {subtext && (
           <div
-            id={subtextId}
-            className={combineClassNames(classMap.subtext, subtextClassName)}
-            data-testid={`${testId}-subtext`}
+            className={combineClassNames(classMap.content, contentClassName)}
           >
-            {subtext}
+            {title && (
+              <h3
+                id={titleId}
+                className={combineClassNames(classMap.title, titleClassName)}
+                data-testid={`${testId}-title`}
+              >
+                {title}
+              </h3>
+            )}
+
+            <div
+              className={combineClassNames(classMap.value, valueClassName)}
+              data-testid={`${testId}-value`}
+              aria-label={valueLabel}
+            >
+              {displayValue}
+            </div>
+
+            {subtext && (
+              <div
+                id={subtextId}
+                className={combineClassNames(
+                  classMap.subtext,
+                  subtextClassName,
+                )}
+                data-testid={`${testId}-subtext`}
+              >
+                {subtext}
+              </div>
+            )}
           </div>
-        )}
-      </div>
+        </>
+      )}
     </div>
   );
 };

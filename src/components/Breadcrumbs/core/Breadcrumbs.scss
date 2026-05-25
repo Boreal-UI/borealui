@@ -52,7 +52,7 @@
       var(--glass-blur)
     );
 
-    color: var(--breadcrumbs-glass-text, currentcolor);
+    color: inherit;
     isolation: isolate;
 
     &:hover {
@@ -100,7 +100,7 @@
       background-color: transparent;
       background: var(--breadcrumbs-glass-bg);
       border: 1px solid var(--breadcrumbs-glass-border);
-      color: var(--breadcrumbs-glass-text);
+      color: inherit;
 
       &:hover {
         background-color: transparent;
@@ -109,7 +109,7 @@
     }
 
     .breadcrumbs_#{$name}.breadcrumbs_outline {
-      color: map.get($values, text);
+      color: inherit;
       background-color: transparent;
       border: 2px solid map.get($values, border);
 
@@ -136,7 +136,7 @@
         var(--glass-blur)
       );
 
-      color: var(--breadcrumbs-glass-text);
+      color: inherit;
     }
   }
 
@@ -175,7 +175,7 @@
       background-color: transparent;
       background: var(--breadcrumbs-glass-bg);
       border: 1px solid var(--breadcrumbs-glass-border);
-      color: var(--breadcrumbs-glass-text);
+      color: inherit;
 
       &:hover {
         background-color: transparent;
@@ -184,7 +184,7 @@
     }
 
     .breadcrumbs_#{$name}.breadcrumbs_outline {
-      color: map.get($values, text);
+      color: inherit;
       background-color: transparent;
       border: 2px solid map.get($values, border);
 
@@ -210,7 +210,7 @@
         var(--glass-blur)
       );
 
-      color: var(--breadcrumbs-glass-text);
+      color: inherit;
     }
   }
 

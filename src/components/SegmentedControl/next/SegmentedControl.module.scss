@@ -19,7 +19,7 @@
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
     line-height: var(--line-height-label);
-    color: var(--text-color-primary);
+    color: inherit;
   }
 
   .labelTop {
@@ -44,11 +44,11 @@
     --segmentedControl-glass-bg: rgba(255, 255, 255, 0.18);
     --segmentedControl-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --segmentedControl-glass-border: rgba(255, 255, 255, 0.28);
-    --segmentedControl-glass-text: var(--text-color-primary);
+    --segmentedControl-glass-text: inherit;
     --segmentedControl-option-bg: transparent;
     --segmentedControl-option-hover-bg: var(--background-color-surface);
     --segmentedControl-option-selected-bg: var(--background-color);
-    --segmentedControl-option-selected-text: var(--text-color-primary);
+    --segmentedControl-option-selected-text: inherit;
 
     display: inline-flex;
     align-items: center;
@@ -57,7 +57,7 @@
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
-    color: var(--text-color-primary);
+    color: inherit;
     box-shadow: var(--box-shadow-sm);
     padding: var(--spacing-xxs);
     transition: var(--transition-default);
@@ -162,9 +162,13 @@
 
       &.outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
+        .optionSelected {
+          background-color: map.get($vals, border);
+          color: map.get($vals, text);
+        }
       }
     }
   }
@@ -180,6 +184,16 @@
       border-width: 2px;
       border-color: map.get($vals, border);
       color: map.get($vals, text);
+
+      &.outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+        .optionSelected {
+          background-color: map.get($vals, border);
+        }
+      }
     }
   }
 
@@ -188,8 +202,14 @@
     border-color: transparent;
     box-shadow: none;
     .optionSelected {
-      color: var(--background-color-lighter);
+      background-color: var(--disabled-color);
+      color: inherit;
     }
+  }
+
+  .clear.outline .optionSelected {
+    background-color: var(--disabled-color);
+    color: inherit;
   }
 
   .glass {
@@ -199,7 +219,7 @@
       16px
     );
 
-    color: var(--segmentedControl-glass-text);
+    color: inherit;
   }
 
   .glass:hover {

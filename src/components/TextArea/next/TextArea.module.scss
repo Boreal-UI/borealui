@@ -14,8 +14,12 @@
   }
 
   .label {
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-ui);
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    white-space: nowrap;
   }
 
   .labelTop {
@@ -81,21 +85,17 @@
           color: if(
             map.has-key($props, placeholder),
             map.get($props, placeholder),
-            var(--text-color-primary)
+            inherit
           );
         }
 
         .iconContainer svg {
-          color: if(
-            map.has-key($props, icon),
-            map.get($props, icon),
-            var(--text-color-primary)
-          );
+          color: if(map.has-key($props, icon), map.get($props, icon), inherit);
         }
 
         &.outline {
           background-color: transparent;
-          color: map.get($props, text);
+          color: inherit;
           box-shadow: none;
           border: 2px solid map.get($props, border);
         }
@@ -114,17 +114,24 @@
         --textArea-glass-border: #{map.get($props, glass-border)};
         --textArea-glass-text: #{map.get($props, text)};
         border: 2px solid map.get($props, border);
-        color: map.get($props, text);
         box-shadow: if(
           map.has-key($props, shadow),
           map.get($props, shadow),
           var(--box-shadow-medium)
         );
+
+        &.outline {
+          background-color: transparent;
+          color: inherit;
+          box-shadow: none;
+          border: 2px solid map.get($props, border);
+        }
       }
     }
 
     &.clear {
       box-shadow: none;
+      background-color: transparent;
     }
 
     &.glass {
@@ -133,7 +140,7 @@
         var(--textArea-glass-border, rgba(255, 255, 255, 0.34)),
         16px
       );
-      color: var(--textArea-glass-text, var(--text-color-primary));
+      color: inherit;
       box-shadow: var(--box-shadow-sm);
     }
 
@@ -183,7 +190,7 @@
     resize: vertical;
     border: none;
     outline: none;
-    color: var(--text-color-primary);
+    color: inherit;
     background-color: transparent;
     font-family: var(--font-family-body);
     font-size: var(--font-size-body);
@@ -196,8 +203,7 @@
     min-height: 2.5em;
 
     &::placeholder {
-      color: var(--text-color-primary);
-      opacity: 0.7;
+      color: rgba(255, 255, 255, 0.514);
       font: inherit;
     }
 
@@ -242,36 +248,6 @@
         width: 1.1em;
         height: 1.1em;
       }
-    }
-  }
-
-  .togglePassword {
-    background: none;
-    border: none;
-    cursor: pointer;
-    border-radius: 50%;
-    padding: var(--spacing-xs);
-    margin: 2px;
-    margin-right: 0.5em;
-    color: inherit;
-
-    &:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 2px;
-    }
-
-    svg {
-      width: 1.5em;
-      height: 1.5em;
-
-      @include bp.down(xs) {
-        width: 18px;
-        height: 18px;
-      }
-    }
-
-    @include bp.down(xs) {
-      margin-top: var(--spacing-xs);
     }
   }
 

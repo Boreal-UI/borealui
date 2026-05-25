@@ -6,8 +6,6 @@ import { withVariants } from "../.storybook-core/helpers/withVariants";
 import {
   roundingOptions,
   shadowOptions,
-  stateOptions,
-  themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import {
   renderThemeVariants,
@@ -26,8 +24,10 @@ const meta: Meta<MetricBoxProps> = {
     title: "Users Online",
     value: "1,234",
     theme: "primary",
-    align: "center",
+    align: "left",
     size: "medium",
+    icon: FaChartLine,
+    subtext: "Up 12% since last week",
   },
 };
 
@@ -43,6 +43,8 @@ const defaultArgs: MetricBoxProps = {
   theme: "primary",
   align: "center",
   size: "medium",
+  icon: FaChartLine,
+  subtext: "Up 12% since last week",
 };
 
 export const WithIcon: Story = {
@@ -55,6 +57,21 @@ export const WithSubtext: Story = {
   args: {
     icon: FaCheckCircle,
     subtext: "Up 12% since last week",
+  },
+};
+
+export const WithUnits: Story = {
+  args: {
+    title: "Storage Used",
+    value: 42,
+    units: "GB",
+    subtext: "Across active workspaces",
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    loading: true,
   },
 };
 
@@ -82,12 +99,7 @@ export const SizeVariants: Story = {
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         {sizes.map((size) => (
-          <MetricBox
-            key={size}
-            title={`${size.charAt(0).toUpperCase() + size.slice(1)} Size`}
-            value="1,000"
-            size={size}
-          />
+          <MetricBox key={size} {...defaultArgs} size={size} />
         ))}
       </div>
     );

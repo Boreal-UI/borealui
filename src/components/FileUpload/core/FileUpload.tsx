@@ -17,6 +17,7 @@ const classes = {
   uploadControls: "file_upload_upload_controls",
   uploadProgress: "file_upload_upload_progress",
   uploadButton: "file_upload_upload_button",
+  rejectedFiles: "file_upload_rejected_files",
   fileList: "file_upload_file_list",
   fileListItem: "file_upload_file_list_item",
   fileListFileName: "file_upload_file_list_file_name",

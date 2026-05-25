@@ -84,7 +84,7 @@
     font-weight: var(--font-weight-label);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
-    color: var(--text-color-primary);
+    color: inherit;
 
     @include bp.down(xs) {
       font-size: var(--font-size-caption);
@@ -112,7 +112,7 @@
     }
 
     &_slider {
-      background-color: var(--text-color-primary);
+      background-color: var(--text-color);
       position: absolute;
       left: 4px;
       transition: transform 0.3s ease-in-out;
@@ -123,7 +123,7 @@
     }
 
     &_clear .toggle_active {
-      border: 1px solid var(--text-color-primary);
+      border: 1px solid inherit;
     }
   }
 
@@ -160,7 +160,7 @@
       var(--glass-blur)
     );
 
-    color: var(--toggle-glass-text, currentcolor);
+    color: inherit;
   }
 
   .toggle_glass .toggle_active {

@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
@@ -13,7 +14,7 @@
     padding: var(--spacing-md);
     border: 1px solid var(--border-color);
     font-family: var(--font-family-ui);
-    color: var(--text-color);
+    color: inherit;
     background: var(--surface-color, var(--background-color));
     overflow-wrap: anywhere;
   }
@@ -38,7 +39,7 @@
   .icon {
     display: inline-flex;
     flex: 0 0 auto;
-    margin-top: 0.125rem;
+    margin-top: 0.4rem;
   }
 
   .actions {
@@ -49,8 +50,9 @@
   }
 
   .dismissButton {
-    min-width: 2rem;
-    min-height: 2rem;
+    min-width: 1rem;
+    min-height: 1rem;
+    margin-top: -0.6rem;
     border: 0;
     border-radius: var(--border-radius-sm);
     background: transparent;
@@ -94,13 +96,13 @@
     }
     .#{$name}.soft {
       background: var(--alert-soft-bg);
-      color: var(--alert-text);
+      color: inherit;
       border-color: var(--alert-border);
     }
 
     .#{$name}.outline {
       background: transparent;
-      color: var(--alert-text);
+      color: inherit;
       border-color: var(--alert-border);
     }
 
@@ -111,7 +113,7 @@
         var(--glass-blur)
       );
 
-      color: var(--alert-glass-text, var(--alert-text));
+      color: inherit;
       border-color: var(--alert-glass-border, var(--alert-border));
     }
   }
@@ -140,7 +142,7 @@
 
     .#{$name}.outline {
       background: transparent;
-      color: var(--alert-text);
+      color: inherit;
       border-color: var(--alert-border);
     }
 
@@ -151,7 +153,7 @@
         var(--glass-blur)
       );
 
-      color: var(--alert-glass-text, var(--alert-text));
+      color: inherit;
       border-color: var(--alert-glass-border, var(--alert-border));
     }
   }
@@ -163,6 +165,113 @@
   .outline {
     background: transparent;
     border-color: currentcolor;
+  }
+
+  .outline.glass {
+    background: transparent;
+  }
+
+  @include bp.down(md) {
+    .alert {
+      gap: var(--spacing-xs);
+      padding: var(--spacing-sm);
+    }
+
+    .title {
+      font-size: var(--font-size-body);
+    }
+
+    .message {
+      font-size: var(--font-size-label);
+    }
+
+    .hasActions {
+      flex-wrap: wrap;
+    }
+
+    .icon {
+      order: 1;
+    }
+
+    .content {
+      order: 2;
+      flex: 1 1 0;
+    }
+
+    .dismissButton {
+      order: 3;
+      align-self: flex-start;
+      margin-left: auto;
+      margin-top: 0;
+    }
+
+    .hasActions .actions {
+      order: 4;
+      flex: 1 1 100%;
+      justify-content: center;
+    }
+  }
+
+  @include bp.down(sm) {
+    .content {
+      gap: var(--spacing-xxs, 0.35rem);
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .actions > * {
+      width: 100%;
+    }
+
+    .dismissButton {
+      min-width: 1.75rem;
+      min-height: 1.75rem;
+    }
+  }
+
+  @include bp.down(xs) {
+    .alert {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      align-items: start;
+      gap: var(--spacing-xs);
+      padding: var(--spacing-xs);
+    }
+
+    .hasIcon {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .dismissible {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .hasIcon.dismissible {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+
+    .icon {
+      grid-column: auto;
+    }
+
+    .content {
+      grid-column: auto;
+      min-width: 0;
+    }
+
+    .dismissButton {
+      grid-column: auto;
+      justify-self: end;
+    }
+
+    .actions {
+      grid-column: 1 / -1;
+      width: 100%;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

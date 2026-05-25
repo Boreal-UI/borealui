@@ -48,6 +48,9 @@ export default function AlertBase({
         glass && classMap.glass,
         shadow && classMap[`shadow${capitalize(shadow)}`],
         rounding && classMap[`round${capitalize(rounding)}`],
+        icon ? classMap.hasIcon : null,
+        actions ? classMap.hasActions : null,
+        dismissible && classMap.dismissible,
         className,
       ),
     [
@@ -59,6 +62,9 @@ export default function AlertBase({
       glass,
       shadow,
       rounding,
+      icon,
+      actions,
+      dismissible,
       className,
     ],
   );

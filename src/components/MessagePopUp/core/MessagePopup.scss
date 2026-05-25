@@ -3,192 +3,191 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.messagePopup {
-  position: fixed;
-  inset: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgb(0 0 0 / 50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-  transition: opacity var(--transition-default);
-  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
-    env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
-
-  &.isHidden {
-    opacity: 0;
-    pointer-events: none;
-  }
-
-  @each $key, $value in theme.$rounding {
-    &_round-#{$key} .messagePopup_popup_content {
-      border-radius: $value;
-    }
-  }
-
-  @each $key, $value in theme.$shadow {
-    &_shadow-#{$key} .messagePopup_popup_content {
-      box-shadow: $value;
-    }
-  }
-
-  &_header {
+  .messagePopup {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgb(0 0 0 / 50%);
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border-color, rgb(0 0 0 / 10%));
+    z-index: 1000;
+    transition: opacity var(--transition-default);
+    padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
+      env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+
+    &.isHidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    @each $key, $value in theme.$rounding {
+      &_round-#{$key} .messagePopup_popup_content {
+        border-radius: $value;
+      }
+    }
+
+    @each $key, $value in theme.$shadow {
+      &_shadow-#{$key} .messagePopup_popup_content {
+        box-shadow: $value;
+      }
+    }
+
+    &_header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-color, rgb(0 0 0 / 10%));
+    }
+
+    &_title {
+      margin: 0;
+      font-family: var(--font-family-heading);
+      font-size: var(--font-size-h5);
+      font-weight: var(--font-weight-h4);
+      line-height: var(--line-height-heading);
+      letter-spacing: var(--letter-spacing-heading);
+
+      @include bp.down(sm) {
+        font-size: var(--font-size-h6);
+      }
+
+      @include bp.up(lg) {
+        font-size: var(--font-size-h4);
+      }
+    }
+
+    &_body {
+      padding-top: 0.75rem;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body-sm);
+      font-weight: var(--font-weight-body);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+    }
+
+    &_popup_content {
+      background: var(--background-color-light);
+      color: inherit;
+      position: relative;
+      text-align: center;
+      width: 92%;
+      max-width: 400px;
+      padding: var(--spacing-lg) var(--spacing-lg);
+      padding-top: 50px;
+      max-height: 80vh;
+      overflow: auto;
+      font-family: var(--font-family-body);
+
+      @include bp.down(sm) {
+        width: 94%;
+        max-width: 360px;
+        padding: var(--spacing-md);
+        padding-top: calc(var(--spacing-lg) * 1.2);
+      }
+
+      @include bp.up(lg) {
+        max-width: 520px;
+        padding: var(--spacing-lg);
+        padding-top: calc(var(--spacing-lg) * 1.1);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 4px;
+        border-radius: 8px;
+      }
+    }
+
+    &_close_button {
+      position: absolute;
+      top: var(--spacing-xs);
+      right: var(--spacing-xs);
+      cursor: pointer;
+      border: none;
+      line-height: 1;
+      transition:
+        color var(--transition-default),
+        transform var(--transition-default);
+
+      &:hover {
+        transform: translateY(-1px);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+    }
+
+    &_popupMessage {
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-body);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--line-height-body);
+      letter-spacing: var(--letter-spacing-body);
+      color: inherit;
+      margin-bottom: var(--spacing-sm);
+
+      @include bp.down(sm) {
+        font-size: var(--font-size-body-sm);
+      }
+
+      @include bp.up(lg) {
+        font-size: var(--font-size-h6);
+      }
+    }
+
+    &_popupActions {
+      display: flex;
+      justify-content: center;
+      gap: var(--spacing-sm);
+      margin-top: var(--spacing-sm);
+
+      @include bp.down(sm) {
+        gap: var(--spacing-sm);
+      }
+
+      @include bp.up(lg) {
+        gap: var(--spacing-md);
+      }
+    }
   }
 
-  &_title {
-    margin: 0;
-    font-family: var(--font-family-heading);
-    font-size: var(--font-size-h5);
-    font-weight: var(--font-weight-h4);
-    line-height: var(--line-height-heading);
-    letter-spacing: var(--letter-spacing-heading);
-
-    @include bp.down(sm) {
-      font-size: var(--font-size-h6);
-    }
-
-    @include bp.up(lg) {
-      font-size: var(--font-size-h4);
+  @media (prefers-reduced-motion: reduce) {
+    .messagePopup,
+    .messagePopup * {
+      transition: none !important;
+      animation: none !important;
     }
   }
 
-  &_body {
-    padding-top: 0.75rem;
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-  }
-
-  &_popup_content {
-    background: var(--background-color-light);
-    color: var(--text-color-primary);
-    position: relative;
-    text-align: center;
-    width: 92%;
-    max-width: 400px;
-    padding: var(--spacing-lg) var(--spacing-lg);
-    padding-top: 50px;
-    max-height: 80vh;
-    overflow: auto;
-    font-family: var(--font-family-body);
-
-    @include bp.down(sm) {
-      width: 94%;
-      max-width: 360px;
-      padding: var(--spacing-md);
-      padding-top: calc(var(--spacing-lg) * 1.2);
-    }
-
-    @include bp.up(lg) {
-      max-width: 520px;
-      padding: var(--spacing-lg);
-      padding-top: calc(var(--spacing-lg) * 1.1);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 4px;
-      border-radius: 8px;
+  @media (hover: none) {
+    .messagePopup_close_button:hover {
+      transform: none;
     }
   }
 
-  &_close_button {
-    position: absolute;
-    top: var(--spacing-xs);
-    right: var(--spacing-xs);
-    cursor: pointer;
-    border: none;
-    line-height: 1;
-    transition:
-      color var(--transition-default),
-      transform var(--transition-default);
-
-    &:hover {
-      transform: translateY(-1px);
+  @media (forced-colors: active) {
+    .messagePopup {
+      background: transparent;
     }
 
-    &:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 2px;
+    .messagePopup_popup_content {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+      outline-color: Highlight;
+    }
+
+    .messagePopup_close_button {
+      color: ButtonText;
+      border: 1px solid ButtonText;
       border-radius: 4px;
     }
   }
-
-  &_popupMessage {
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-semibold);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-    color: var(--text-color-primary);
-    margin-bottom: var(--spacing-sm);
-
-    @include bp.down(sm) {
-      font-size: var(--font-size-body-sm);
-    }
-
-    @include bp.up(lg) {
-      font-size: var(--font-size-h6);
-    }
-  }
-
-  &_popupActions {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-sm);
-
-    @include bp.down(sm) {
-      gap: var(--spacing-sm);
-    }
-
-    @include bp.up(lg) {
-      gap: var(--spacing-md);
-    }
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .messagePopup,
-  .messagePopup * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .messagePopup_close_button:hover {
-    transform: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .messagePopup {
-    background: transparent;
-  }
-
-  .messagePopup_popup_content {
-    background: Canvas;
-    color: CanvasText;
-    border: 1px solid ButtonText;
-    outline-color: Highlight;
-  }
-
-  .messagePopup_close_button {
-    color: ButtonText;
-    border: 1px solid ButtonText;
-    border-radius: 4px;
-  }
-}
 }

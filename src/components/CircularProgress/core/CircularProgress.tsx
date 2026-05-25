@@ -9,6 +9,8 @@ const classes = {
   circle_border: "circular_progress_circle_border",
   inner_circle: "circular_progress_inner_circle",
   value_text: "circular_progress_value_text",
+  valueNumber: "circular_progress_value_number",
+  valueUnits: "circular_progress_value_units",
 
   primary: "circular_progress_primary",
   secondary: "circular_progress_secondary",

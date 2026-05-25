@@ -10,6 +10,7 @@ const classes = {
   title: "empty_state_title",
   message: "empty_state_message",
   icon: "empty_state_icon",
+  actionBtn: "empty_state_action_btn",
 
   outline: "empty_state_outline",
   glass: "empty_state_glass",
@@ -46,7 +47,13 @@ const classes = {
 };
 
 const EmptyState: React.FC<EmptyStateProps> = (props) => {
-  return <BaseEmptyState {...props} Button={Button} classMap={expandClassMap(classes)} />;
+  return (
+    <BaseEmptyState
+      {...props}
+      Button={Button}
+      classMap={expandClassMap(classes)}
+    />
+  );
 };
 EmptyState.displayName = "EmptyState";
 export default EmptyState;

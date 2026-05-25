@@ -70,6 +70,15 @@ export const timelinePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "loading",
+      "type": "boolean",
+      "description": "Whether timeline item content should display skeleton placeholders. Markers and connector bars remain visible.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
       "name": "orientation",
       "type": "OrientationType",
       "description": "Orientation of the timeline. \"vertical\" | \"horizontal\"",

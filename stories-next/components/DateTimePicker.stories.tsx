@@ -1,13 +1,10 @@
-import { useState } from "react";
-import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { DateTimePicker, LabelPositionType } from "../../src/index.next";
+import type { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { DateTimePicker } from "../../src/index.next";
 import type { DateTimePickerProps } from "../../src/components/DateTimePicker/DateTimePicker.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
 import {
   roundingOptions,
   shadowOptions,
-  stateOptions,
-  themeOptions,
 } from "../../shared-story-assets/OptionTypes";
 import {
   renderThemeVariants,
@@ -18,21 +15,15 @@ import {
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
 
-const labelPositionOptions: LabelPositionType[] = [
-  "top",
-  "bottom",
-  "left",
-  "right",
-];
-
 const meta: Meta<DateTimePickerProps> = {
   title: "Components/DateTimePicker",
   component: DateTimePicker,
   tags: ["autodocs"],
   args: {
-    label: "Select date and time",
+    label: "Start date and time",
+    defaultValue: "2026-05-14T09:30",
+    helperText: "Choose a date and time for the work to begin.",
     theme: "primary",
-    size: "medium",
   },
 };
 
@@ -40,140 +31,50 @@ export default meta;
 
 type Story = StoryObj<DateTimePickerProps>;
 
-export const Default: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("2025-04-15T10:30");
-    return <DateTimePicker {...args} value={value} onChange={setValue} />;
+export const Default: Story = {};
+
+export const WithConstraints: Story = {
+  args: {
+    label: "Booking date and time",
+    min: "2026-05-01T00:00",
+    max: "2026-05-31T23:59",
+    defaultValue: "2026-05-14T09:30",
+    description: "Only times in May 2026 are available.",
+  },
+};
+
+export const ErrorState: Story = {
+  args: {
+    label: "Deadline",
+    value: "2026-04-30T16:00",
+    min: "2026-05-01T00:00",
+    error: "Choose a date and time after May 1, 2026.",
   },
 };
 
 export const FullWidth: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("2025-04-15T10:30");
-    return (
-      <DateTimePicker {...args} fullWidth value={value} onChange={setValue} />
-    );
-  },
-};
-
-export const WithMinMax: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("2025-04-15T12:00");
-    return (
-      <DateTimePicker
-        {...args}
-        value={value}
-        onChange={setValue}
-        min="2025-04-15T08:00"
-        max="2025-04-15T18:00"
-        theme="secondary"
-      />
-    );
-  },
-};
-
-export const Disabled: Story = {
   args: {
-    disabled: true,
-    value: "2025-04-15T14:00",
-    onChange: () => {},
+    fullWidth: true,
+    label: "Launch date and time",
+    description: "The control stretches to the width of its parent.",
   },
 };
 
-export const Required: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("");
-    return (
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          alert(`Submitted: ${value}`);
-        }}
-      >
-        <DateTimePicker {...args} required value={value} onChange={setValue} />
-        <button type="submit" style={{ marginTop: "1rem" }}>
-          Submit
-        </button>
-      </form>
-    );
-  },
-};
-
-export const Sizes: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("2025-04-15T09:00");
-    return (
-      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-        <DateTimePicker
-          {...args}
-          size="xs"
-          value={value}
-          theme="secondary"
-          onChange={setValue}
-          label="xs"
-        />
-        <DateTimePicker
-          {...args}
-          size="small"
-          value={value}
-          theme="secondary"
-          onChange={setValue}
-          label="Small"
-        />
-        <DateTimePicker
-          {...args}
-          size="medium"
-          value={value}
-          theme="secondary"
-          onChange={setValue}
-          label="Medium"
-        />
-        <DateTimePicker
-          {...args}
-          size="large"
-          value={value}
-          theme="secondary"
-          onChange={setValue}
-          label="Large"
-        />
-        <DateTimePicker
-          {...args}
-          size="xl"
-          value={value}
-          theme="secondary"
-          onChange={setValue}
-          label="xl"
-        />
-      </div>
-    );
-  },
-};
-
-export const LabelPositionVariants: Story = {
-  render: (args) => {
-    const [value, setValue] = useState("2025-04-15T11:00");
-
-    return (
-      <div style={{ display: "grid", gap: "1rem", padding: "1rem" }}>
-        {labelPositionOptions.map((labelPosition) => (
-          <DateTimePicker
-            key={labelPosition}
-            {...args}
-            labelPosition={labelPosition}
-            value={value}
-            onChange={setValue}
-            label={`${labelPosition.charAt(0).toUpperCase() + labelPosition.slice(1)} Label`}
-          />
-        ))}
-      </div>
-    );
+export const Loading: Story = {
+  args: {
+    loading: true,
   },
 };
 
 export const RoundingVariants = () => (
   <StoryGrid title="Rounding Variants">
     {roundingOptions.map((rounding) => (
-      <DateTimePicker key={rounding} rounding={rounding} />
+      <DateTimePicker
+        key={rounding}
+        label={rounding}
+        rounding={rounding}
+        defaultValue="2026-05-14T09:30"
+      />
     ))}
   </StoryGrid>
 );
@@ -181,24 +82,19 @@ export const RoundingVariants = () => (
 export const ShadowVariants = () => (
   <StoryGrid title="Shadow Variants">
     {shadowOptions.map((shadow) => (
-      <DateTimePicker key={shadow} shadow={shadow} />
+      <DateTimePicker
+        key={shadow}
+        label={shadow}
+        shadow={shadow}
+        defaultValue="2026-05-14T09:30"
+      />
     ))}
   </StoryGrid>
 );
 
-export const WithClassName: Story = {
+export const Disabled: Story = {
   args: {
-    className: "storybook-datetime-custom",
-    value: "2025-04-15T15:30",
-    onChange: () => {},
-  },
-};
-
-export const WithDataTestid: Story = {
-  args: {
-    "data-testid": "datetimepicker-storybook",
-    value: "2025-04-15T15:30",
-    onChange: () => {},
+    disabled: true,
   },
 };
 
