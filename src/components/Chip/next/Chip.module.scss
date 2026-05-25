@@ -104,27 +104,6 @@
     transform: none;
   }
 
-  .glass {
-    @include mixins.glass-surface(
-      var(--chip-glass-bg, var(--glass-background)),
-      var(--chip-glass-border, var(--glass-border-color)),
-      var(--glass-blur)
-    );
-
-    border-color: var(--chip-glass-border, var(--glass-border-color));
-    color: inherit;
-    isolation: isolate;
-
-    &:focus-visible {
-      outline: 2px solid var(--chip-glass-border, var(--glass-border-color));
-      outline-offset: 3px;
-    }
-
-    &:hover {
-      background: var(--chip-glass-hover-bg, var(--glass-background-strong));
-    }
-  }
-
   @each $name, $values in theme.$themes {
     .#{$name} {
       background-color: map.get($values, bg);
@@ -158,6 +137,27 @@
         outline: 2px solid map.get($values, border);
         outline-offset: 3px;
       }
+    }
+  }
+
+  .glass {
+    @include mixins.glass-surface(
+      var(--chip-glass-bg, var(--glass-background)),
+      var(--chip-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    border-color: var(--chip-glass-border, var(--glass-border-color));
+    color: inherit;
+    isolation: isolate;
+
+    &:focus-visible {
+      outline: 2px solid var(--chip-glass-border, var(--glass-border-color));
+      outline-offset: 3px;
+    }
+
+    &:hover {
+      background: var(--chip-glass-hover-bg, var(--glass-background-strong));
     }
   }
 
