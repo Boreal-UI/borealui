@@ -1,6 +1,7 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
+@use "../../../styles/_animations" as animations;
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
@@ -334,6 +335,25 @@
     .timeline_shadow-#{$key} {
       box-shadow: $value;
     }
+  }
+
+  .timeline_loading {
+    cursor: progress;
+  }
+
+  .timeline_contentLoading {
+    min-height: 5.5rem;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .timeline_horizontal.timeline_contentLoading {
+    min-height: 6rem;
+  }
+
+  .timeline_skeleton {
+    min-height: 5.5rem;
+    margin-top: -1rem;
   }
 
   @media (prefers-reduced-motion: reduce) {

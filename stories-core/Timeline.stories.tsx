@@ -70,6 +70,21 @@ export const WithoutIcons: Story = {
   },
 };
 
+export const LoadingVertical: Story = {
+  args: {
+    items: sampleEvents,
+    loading: true,
+  },
+};
+
+export const LoadingHorizontal: Story = {
+  args: {
+    items: sampleEvents,
+    loading: true,
+    orientation: "horizontal",
+  },
+};
+
 export const ThemeVariants: Story = {
   render: (args) => {
     return (

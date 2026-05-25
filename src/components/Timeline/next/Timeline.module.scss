@@ -336,6 +336,25 @@
     }
   }
 
+  .loading {
+    cursor: progress;
+  }
+
+  .loadingContent {
+    min-height: 5.5rem;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .horizontal.loadingContent {
+    min-height: 6rem;
+  }
+
+  .skeleton {
+    min-height: 5.5rem;
+    margin-top: -1rem;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .timeline,
     .timeline * {
