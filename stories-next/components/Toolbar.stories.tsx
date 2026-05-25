@@ -79,6 +79,31 @@ export const WithAvatar: Story = {
   },
 };
 
+export const CustomClassNames: Story = {
+  args: {
+    title: "Custom toolbar",
+    left: leftIcon,
+    center: <span>Workspace</span>,
+    right: rightIcon,
+    avatar: {
+      name: "Davin Chiupka",
+    },
+    className: "storybook-toolbar",
+    leftClassName: "storybook-toolbar-left-alias",
+    centerClassName: "storybook-toolbar-center-alias",
+    rightClassName: "storybook-toolbar-right-alias",
+    leftSectionClassName: "storybook-toolbar-left",
+    centerSectionClassName: "storybook-toolbar-center",
+    rightSectionClassName: "storybook-toolbar-right",
+    leftContentClassName: "storybook-toolbar-left-content",
+    centerContentClassName: "storybook-toolbar-center-content",
+    rightContentClassName: "storybook-toolbar-right-content",
+    titleClassName: "storybook-toolbar-title",
+    avatarWrapperClassName: "storybook-toolbar-avatar",
+    avatarClassName: "storybook-toolbar-avatar-button",
+  },
+};
+
 export const ThemedVariants: Story = {
   render: (args) => {
     return (

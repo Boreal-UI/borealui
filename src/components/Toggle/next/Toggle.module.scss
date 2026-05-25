@@ -84,7 +84,7 @@
     font-weight: var(--font-weight-label);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
-    color: var(--text-color-primary);
+    color: inherit;
 
     @include bp.down(xs) {
       font-size: var(--font-size-caption);
@@ -112,7 +112,7 @@
     }
 
     .slider {
-      background-color: var(--text-color-primary);
+      background-color: var(--text-color);
       position: absolute;
       left: 4px;
       transition: transform 0.3s ease-in-out;
@@ -206,7 +206,7 @@
       var(--glass-blur)
     );
 
-    color: var(--toggle-glass-text, currentcolor);
+    color: inherit;
   }
 
   .glass .toggle.active {
@@ -215,7 +215,7 @@
   }
 
   .clear .toggle.active {
-    outline: 2px solid var(--text-color-primary);
+    outline: 2px solid inherit;
   }
 
   @each $key, $value in theme.$rounding {

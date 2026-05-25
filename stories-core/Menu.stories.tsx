@@ -75,7 +75,7 @@ const Target = () => (
       border: "1px dashed var(--border-color)",
       borderRadius: "var(--border-radius-md)",
       background: "var(--background-color-lighter)",
-      color: "var(--text-color-primary)",
+      color: "inherit",
     }}
   >
     Right click this project tile
@@ -178,7 +178,12 @@ export const States: Story = {
           activation="click"
           state={state}
           aria-label={`${state} menu`}
-          items={[{ label: `Open ${state}`, onClick: () => {} }]}
+          items={[
+            { label: `Open ${state}`, onClick: () => {} },
+            { label: `Open ${state}`, onClick: () => {} },
+            { label: `Open ${state}`, onClick: () => {} },
+            { label: `Open ${state}`, onClick: () => {} },
+          ]}
         />
       ))}
     </StoryGrid>

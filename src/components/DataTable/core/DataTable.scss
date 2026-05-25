@@ -9,7 +9,9 @@
     --data-table-min-width: 600px;
 
     width: 100%;
+    max-width: 100%;
     overflow-x: auto;
+    overflow-y: visible;
     font-family: var(--font-family-body);
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-body);
@@ -17,6 +19,7 @@
     letter-spacing: var(--letter-spacing-body);
     border-radius: inherit;
     -webkit-overflow-scrolling: touch;
+    min-width: 0;
 
     @include bp.down(md) {
       --data-table-min-width: 520px;
@@ -26,14 +29,27 @@
       --data-table-min-width: 720px;
     }
 
+    .data_table_scroll_area {
+      display: grid;
+      width: max-content;
+      min-width: 100%;
+    }
+
+    .data_table_toolbar,
+    .data_table_bulk_toolbar,
+    .data_table_pagination,
+    .data_table_viewport {
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+    }
+
     .data_table_toolbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--spacing-sm);
       flex-wrap: wrap;
-      width: 100%;
-      min-width: var(--data-table-min-width);
       padding: var(--spacing-sm);
       box-sizing: border-box;
     }
@@ -75,8 +91,6 @@
       justify-content: space-between;
       gap: var(--spacing-sm);
       flex-wrap: wrap;
-      width: 100%;
-      min-width: var(--data-table-min-width);
       padding: var(--spacing-sm);
       border-top: 1px solid var(--border-color);
       background: var(--background-color-light);
@@ -89,7 +103,6 @@
       color: var(--text-color);
     }
 
-    .data_table_column_menu_trigger,
     .data_table_pagination_button,
     .data_table_column_control_button,
     .data_table_expand_button {
@@ -98,6 +111,25 @@
       border-radius: var(--border-radius-sm);
       background: var(--background-color);
       color: var(--text-color);
+      padding: 0 var(--spacing-sm);
+      font: inherit;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
+      }
+    }
+
+    .data_table_column_menu_trigger {
+      min-height: 32px;
+      border-radius: var(--border-radius-sm);
+      background: transparent;
       padding: 0 var(--spacing-xs);
       font: inherit;
       cursor: pointer;
@@ -136,21 +168,29 @@
     }
 
     .data_table_viewport {
-      width: 100%;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
+      overflow: visible;
+      border-radius: 0;
     }
 
     &.data_table_virtualized .data_table_viewport {
-      overflow: auto;
+      overflow-x: visible;
+      overflow-y: auto;
     }
 
     .data_table {
-      width: 100%;
-      min-width: var(--data-table-min-width);
-      border-collapse: collapse;
+      width: max-content;
+      min-width: max(100%, var(--data-table-min-width));
+      border-collapse: separate;
+      border-spacing: 0;
       table-layout: auto;
       font-size: inherit;
+    }
+
+    .data_table_header_cell,
+    thead .data_table_selection_cell {
+      position: sticky;
+      top: 0;
+      z-index: 4;
     }
 
     .data_table_header_cell {
@@ -167,8 +207,17 @@
       vertical-align: top;
     }
 
+    .data_table thead th:first-child {
+      border-top-left-radius: inherit;
+    }
+
+    .data_table thead th:last-child {
+      border-top-right-radius: inherit;
+    }
+
     .data_table_header_content {
       display: flex;
+      color: inherit;
       align-items: center;
       justify-content: space-between;
       gap: var(--spacing-xs);
@@ -182,7 +231,7 @@
       border-bottom: 1px solid var(--text-color-primary);
       text-align: center;
       vertical-align: middle;
-      color: var(--text-color-primary);
+      color: inherit;
       background: inherit;
       font-family: var(--font-family-body);
       font-size: var(--font-size-body-sm);
@@ -201,7 +250,7 @@
       border-bottom: 1px solid var(--text-color-primary);
       text-align: left;
       white-space: nowrap;
-      color: var(--text-color-primary);
+      color: inherit;
       font-family: var(--font-family-body);
       font-size: var(--font-size-body-sm);
       font-weight: var(--font-weight-body);
@@ -236,6 +285,7 @@
       margin: 0;
       padding: 0;
       background-color: transparent;
+      border-radius: var(--border-radius-xs);
       border: none;
       color: inherit;
       display: inline-flex;
@@ -249,7 +299,6 @@
       &:focus-visible {
         outline: 2px solid var(--focus-outline-color, var(--primary-color));
         outline-offset: 2px;
-        border-radius: var(--border-radius-sm);
       }
     }
 
@@ -287,6 +336,10 @@
       z-index: 2;
       background: var(--background-color-dark);
       box-shadow: 1px 0 0 var(--border-color);
+
+      &.data_table_header_cell {
+        color: var(--text-color);
+      }
     }
 
     th.data_table_cell_pinned {
@@ -401,11 +454,22 @@
     }
 
     @include bp.down(xs) {
-      overflow-x: visible;
+      --data-table-min-width: 520px;
+
+      overflow-x: auto;
+
+      .data_table_scroll_area,
+      .data_table {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .data_table_viewport {
+        width: 100%;
+        min-width: 0;
+      }
 
       .data_table {
-        min-width: 0;
-        width: 100%;
         font-size: var(--font-size-caption);
       }
 
@@ -492,6 +556,10 @@
         color: map.get($values, text);
       }
 
+      .data_table_column_menu_trigger {
+        color: map.get($values, text);
+      }
+
       .data_table_header_cell {
         background-color: map.get($values, bg);
         color: map.get($values, text);
@@ -506,7 +574,7 @@
       .data_table_header_cell {
         border: 2px solid map.get($values, border);
         background-color: transparent;
-        color: map.get($values, text);
+        color: inherit;
 
         @include bp.down(sm) {
           border-width: 1.5px;
@@ -527,6 +595,10 @@
         color: map.get($values, text);
       }
 
+      .data_table_column_menu_trigger {
+        color: map.get($values, text);
+      }
+
       .data_table_header_cell {
         background-color: map.get($values, bg);
         color: map.get($values, text);
@@ -541,7 +613,7 @@
       .data_table_header_cell {
         border: 2px solid map.get($values, border);
         background-color: transparent;
-        color: map.get($values, text);
+        color: inherit;
 
         @include bp.down(sm) {
           border-width: 1.5px;
@@ -557,7 +629,7 @@
       18px
     );
 
-    color: var(--data-table-glass-text, var(--text-color-primary));
+    color: inherit;
 
     .data_table {
       background: transparent;
@@ -565,25 +637,25 @@
 
     .data_table_toolbar {
       background: var(--data-table-glass-hover-bg, rgba(255, 255, 255, 0.22));
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
       border-bottom: 1px solid
         var(--data-table-glass-border, rgba(255, 255, 255, 0.28));
     }
 
     .data_table_toolbar_title {
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
     }
 
     .data_table_filter_input {
       background: var(--data-table-glass-bg, rgba(255, 255, 255, 0.16));
       border-color: var(--data-table-glass-border, rgba(255, 255, 255, 0.28));
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
     }
 
     .data_table_header_cell,
     th.data_table_selection_cell {
       background: var(--data-table-glass-hover-bg, rgba(255, 255, 255, 0.22));
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
       border-bottom-color: var(
         --data-table-glass-border,
         var(--text-color-primary)
@@ -593,7 +665,7 @@
     .data_table_selection_cell,
     .data_table_cell {
       background: unset;
-      color: var(--data-table-glass-text, var(--text-color-primary));
+      color: inherit;
       border-bottom-color: var(
         --data-table-glass-border,
         var(--text-color-primary)
@@ -616,6 +688,36 @@
   @each $key, $value in theme.$rounding {
     .data_table_round-#{$key} {
       border-radius: $value;
+
+      .data_table_toolbar {
+        border-top-left-radius: $value;
+        border-top-right-radius: $value;
+      }
+
+      .data_table_pagination {
+        border-bottom-left-radius: $value;
+        border-bottom-right-radius: $value;
+      }
+
+      &:not(:has(.data_table_toolbar)) {
+        .data_table thead th:first-child {
+          border-top-left-radius: $value;
+        }
+
+        .data_table thead th:last-child {
+          border-top-right-radius: $value;
+        }
+      }
+
+      &:not(:has(.data_table_pagination)) {
+        .data_table tbody tr:last-child > *:first-child {
+          border-bottom-left-radius: $value;
+        }
+
+        .data_table tbody tr:last-child > *:last-child {
+          border-bottom-right-radius: $value;
+        }
+      }
     }
   }
 

@@ -7,301 +7,308 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.chip {
-  position: relative;
-  z-index: 9999;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  max-width: 90vw;
-  width: fit-content;
-  min-width: 180px;
-  opacity: 1;
-  text-align: center;
-  animation: fade-in 0.3s ease-out;
-  transition:
-    transform var(--transition-default),
-    opacity var(--transition-default),
-    box-shadow var(--transition-default);
-
-  @include bp.down(sm) {
-    min-width: 150px;
-    max-width: 96vw;
-  }
-
-  @include bp.up(lg) {
-    min-width: 220px;
-    max-width: 70vw;
-  }
-
-  @each $key, $value in theme.$rounding {
-    &.round#{$key} {
-      border-radius: $value;
-    }
-  }
-
-  @each $key, $value in theme.$shadow {
-    &.shadow#{$key} {
-      box-shadow: $value;
-    }
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-  }
-}
-
-.fixed {
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-.fadeout {
-  opacity: 0;
-  transform: translate(-50%, -10px);
-}
-
-$chip-offset: 20px;
-
-.topCenter {
-  top: $chip-offset;
-}
-
-.bottomCenter {
-  bottom: $chip-offset;
-}
-
-.topLeft {
-  top: $chip-offset;
-  left: $chip-offset;
-  transform: none;
-}
-
-.topRight {
-  top: $chip-offset;
-  right: $chip-offset;
-  left: auto;
-  transform: none;
-}
-
-.bottomLeft {
-  bottom: $chip-offset;
-  left: $chip-offset;
-  transform: none;
-}
-
-.bottomRight {
-  bottom: $chip-offset;
-  right: $chip-offset;
-  left: auto;
-  transform: none;
-}
-
-.glass {
-  @include mixins.glass-surface(
-    var(--chip-glass-bg, var(--glass-background)),
-    var(--chip-glass-border, var(--glass-border-color)),
-    var(--glass-blur)
-  );
-
-  border-color: var(--chip-glass-border, var(--glass-border-color));
-  color: var(--chip-glass-text, currentcolor);
-  isolation: isolate;
-
-  &:focus-visible {
-    outline: 2px solid var(--chip-glass-border, var(--glass-border-color));
-    outline-offset: 3px;
-  }
-
-  &:hover {
-    background: var(--chip-glass-hover-bg, var(--glass-background-strong));
-  }
-}
-
-@each $name, $values in theme.$themes {
-  .#{$name} {
-    background-color: map.get($values, bg);
-    color: map.get($values, text);
-    border: 1px solid map.get($values, border);
-
-    --chip-glass-bg: #{map.get($values, glass-bg)};
-    --chip-glass-hover-bg: #{map.get($values, glass-hover)};
-    --chip-glass-border: #{map.get($values, glass-border)};
-    --chip-glass-text: #{map.get($values, text)};
-
-    &:focus-visible {
-      outline: 2px solid map.get($values, border);
-      outline-offset: 3px;
-    }
-  }
-}
-
-@each $name, $values in theme.$states {
-  .#{$name} {
-    background-color: map.get($values, bg);
-    color: map.get($values, text);
-    border: 1px solid map.get($values, border);
-
-    --chip-glass-bg: #{map.get($values, glass-bg)};
-    --chip-glass-hover-bg: #{map.get($values, glass-hover)};
-    --chip-glass-border: #{map.get($values, glass-border)};
-    --chip-glass-text: #{map.get($values, text)};
-
-    &:focus-visible {
-      outline: 2px solid map.get($values, border);
-      outline-offset: 3px;
-    }
-  }
-}
-
-.icon {
-  margin-right: var(--spacing-sm);
-  display: flex;
-  align-items: center;
-  margin-top: -0.1em;
-
-  @include bp.down(sm) {
-    margin-right: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    margin-right: var(--spacing-md);
-  }
-}
-
-.message {
-  flex-grow: 1;
-  margin-right: 12px;
-  font: inherit;
-  line-height: inherit;
-  letter-spacing: inherit;
-
-  @include bp.down(sm) {
-    margin-right: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    margin-right: var(--spacing-sm);
-  }
-}
-
-.icon_inner {
-  height: 1em;
-  width: 1em;
-}
-
-$chip-sizes: (
-  "xs": (
-    padding: 5px 9px,
-    font: var(--font-size-caption),
-    icon: 0.8rem,
-    height: 20px,
-  ),
-  "small": (
-    padding: 6px 10px,
-    font: var(--font-size-label),
-    icon: 0.9rem,
-    height: 20px,
-  ),
-  "medium": (
-    padding: 6px 12px,
-    font: var(--font-size-body-sm),
-    icon: 1.2rem,
-  ),
-  "large": (
-    padding: 6px 14px,
-    font: var(--font-size-body),
-    icon: 1.3rem,
-  ),
-  "xl": (
-    padding: 10px 18px,
-    font: var(--font-size-h6),
-    icon: 2rem,
-  ),
-);
-
-@each $size, $props in $chip-sizes {
-  .#{$size} {
-    padding: map.get($props, padding);
-
-    @if map.get($props, height) {
-      height: map.get($props, height);
-    }
-
-    .message {
-      font-size: map.get($props, font);
-    }
-
-    .icon_inner {
-      height: map.get($props, icon);
-      width: map.get($props, icon);
-    }
+  .chip {
+    position: relative;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    max-width: 90vw;
+    width: fit-content;
+    min-width: 180px;
+    opacity: 1;
+    text-align: center;
+    animation: fade-in 0.3s ease-out;
+    transition:
+      transform var(--transition-default),
+      opacity var(--transition-default),
+      box-shadow var(--transition-default);
 
     @include bp.down(sm) {
+      min-width: 150px;
+      max-width: 96vw;
+    }
+
+    @include bp.up(lg) {
+      min-width: 220px;
+      max-width: 70vw;
+    }
+
+    @each $key, $value in theme.$rounding {
+      &.round#{$key} {
+        border-radius: $value;
+      }
+    }
+
+    @each $key, $value in theme.$shadow {
+      &.shadow#{$key} {
+        box-shadow: $value;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+    }
+  }
+
+  .fixed {
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .fadeout {
+    opacity: 0;
+    transform: translate(-50%, -10px);
+  }
+
+  $chip-offset: 20px;
+
+  .topCenter {
+    top: $chip-offset;
+  }
+
+  .bottomCenter {
+    bottom: $chip-offset;
+  }
+
+  .topLeft {
+    top: $chip-offset;
+    left: $chip-offset;
+    transform: none;
+  }
+
+  .topRight {
+    top: $chip-offset;
+    right: $chip-offset;
+    left: auto;
+    transform: none;
+  }
+
+  .bottomLeft {
+    bottom: $chip-offset;
+    left: $chip-offset;
+    transform: none;
+  }
+
+  .bottomRight {
+    bottom: $chip-offset;
+    right: $chip-offset;
+    left: auto;
+    transform: none;
+  }
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+      border: 1px solid map.get($values, border);
+
+      --chip-glass-bg: #{map.get($values, glass-bg)};
+      --chip-glass-hover-bg: #{map.get($values, glass-hover)};
+      --chip-glass-border: #{map.get($values, glass-border)};
+      --chip-glass-text: #{map.get($values, text)};
+
+      &:focus-visible {
+        outline: 2px solid map.get($values, border);
+        outline-offset: 3px;
+      }
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+      border: 1px solid map.get($values, border);
+
+      --chip-glass-bg: #{map.get($values, glass-bg)};
+      --chip-glass-hover-bg: #{map.get($values, glass-hover)};
+      --chip-glass-border: #{map.get($values, glass-border)};
+      --chip-glass-text: #{map.get($values, text)};
+
+      &:focus-visible {
+        outline: 2px solid map.get($values, border);
+        outline-offset: 3px;
+      }
+    }
+  }
+
+  .glass {
+    @include mixins.glass-surface(
+      var(--chip-glass-bg, var(--glass-background)),
+      var(--chip-glass-border, var(--glass-border-color)),
+      var(--glass-blur)
+    );
+
+    border-color: var(--chip-glass-border, var(--glass-border-color));
+    color: inherit;
+    isolation: isolate;
+
+    &:focus-visible {
+      outline: 2px solid var(--chip-glass-border, var(--glass-border-color));
+      outline-offset: 3px;
+    }
+
+    &:hover {
+      background: var(--chip-glass-hover-bg, var(--glass-background-strong));
+    }
+  }
+
+  .icon {
+    margin-right: var(--spacing-sm);
+    display: flex;
+    align-items: center;
+    margin-top: -0.1em;
+
+    @include bp.down(sm) {
+      margin-right: var(--spacing-xs);
+    }
+
+    @include bp.up(lg) {
+      margin-right: var(--spacing-md);
+    }
+  }
+
+  .message {
+    flex-grow: 1;
+    margin-right: 12px;
+    font: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+
+    @include bp.down(sm) {
+      margin-right: var(--spacing-xs);
+    }
+
+    @include bp.up(lg) {
+      margin-right: var(--spacing-sm);
+    }
+  }
+
+  .close {
+    min-width: unset;
+    min-height: unset;
+    height: 1.2em;
+    width: 1.2em;
+    padding: 0;
+  }
+
+  .icon_inner {
+    height: 1em;
+    width: 1em;
+  }
+
+  $chip-sizes: (
+    "xs": (
+      padding: 5px 9px,
+      font: var(--font-size-caption),
+      icon: 0.8rem,
+      height: 20px,
+    ),
+    "small": (
+      padding: 6px 10px,
+      font: var(--font-size-label),
+      icon: 0.9rem,
+      height: 20px,
+    ),
+    "medium": (
+      padding: 6px 12px,
+      font: var(--font-size-body-sm),
+      icon: 1.2rem,
+    ),
+    "large": (
+      padding: 6px 14px,
+      font: var(--font-size-body),
+      icon: 1.3rem,
+    ),
+    "xl": (
+      padding: 10px 18px,
+      font: var(--font-size-h6),
+      icon: 2rem,
+    ),
+  );
+
+  @each $size, $props in $chip-sizes {
+    .#{$size} {
+      padding: map.get($props, padding);
+
+      @if map.get($props, height) {
+        height: map.get($props, height);
+      }
+
       .message {
         font-size: map.get($props, font);
       }
 
-      padding: 5px 10px;
-    }
-
-    @include bp.up(lg) {
-      .message {
-        font-size: calc(#{map.get($props, font)} * 1.05);
+      .icon_inner {
+        height: map.get($props, icon);
+        width: map.get($props, icon);
       }
 
-      padding: 8px 14px;
+      @include bp.down(sm) {
+        .message {
+          font-size: map.get($props, font);
+        }
 
-      @if $size == "xl" {
-        padding: 12px 20px;
+        padding: 5px 10px;
+      }
+
+      @include bp.up(lg) {
+        .message {
+          font-size: calc(#{map.get($props, font)} * 1.05);
+        }
+
+        padding: 8px 14px;
+
+        @if $size == "xl" {
+          padding: 12px 20px;
+        }
       }
     }
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  .chip,
-  .chip * {
-    animation: none !important;
-    transition: none !important;
+  @media (prefers-reduced-motion: reduce) {
+    .chip,
+    .chip * {
+      animation: none !important;
+      transition: none !important;
+    }
+
+    .chip:hover {
+      transform: none !important;
+      box-shadow: none !important;
+    }
   }
 
-  .chip:hover {
-    transform: none !important;
-    box-shadow: none !important;
-  }
-}
-
-@media (hover: none) {
-  .chip:hover {
-    transform: none;
-    box-shadow: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .chip {
-    border: 1px solid ButtonText;
-    background: Canvas;
-    color: CanvasText;
-    outline-color: Highlight;
-    box-shadow: none !important;
+  @media (hover: none) {
+    .chip:hover {
+      transform: none;
+      box-shadow: none;
+    }
   }
 
-  .glass {
-    background: Canvas;
-    border: 1px solid ButtonText;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
+  @media (forced-colors: active) {
+    .chip {
+      border: 1px solid ButtonText;
+      background: Canvas;
+      color: CanvasText;
+      outline-color: Highlight;
+      box-shadow: none !important;
+    }
+
+    .glass {
+      background: Canvas;
+      border: 1px solid ButtonText;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
   }
-}
 }

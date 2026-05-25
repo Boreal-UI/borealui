@@ -14,6 +14,13 @@ const classes = {
   static: "toolbar_static",
 
   section: "toolbar_section",
+  leftSection: "toolbar_leftSection",
+  centerSection: "toolbar_centerSection",
+  rightSection: "toolbar_rightSection",
+  sectionContent: "toolbar_sectionContent",
+  leftContent: "toolbar_leftContent",
+  centerContent: "toolbar_centerContent",
+  rightContent: "toolbar_rightContent",
   title: "toolbar_title",
   avatarWrapper: "toolbar_avatarWrapper",
 

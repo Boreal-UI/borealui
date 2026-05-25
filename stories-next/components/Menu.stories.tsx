@@ -83,7 +83,7 @@ const Target = () => (
       border: "1px dashed var(--border-color)",
       borderRadius: "var(--border-radius-md)",
       background: "var(--background-color-lighter)",
-      color: "var(--text-color-primary)",
+      color: "inherit",
     }}
   >
     Right click this project tile

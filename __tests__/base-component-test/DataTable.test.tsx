@@ -27,6 +27,7 @@ const baseData: Row[] = [
 
 const classMap = {
   wrapper: "tableWrapper",
+  scrollArea: "scrollArea",
   table: "table",
   striped: "striped",
   headerCell: "headerCell",
@@ -118,9 +119,10 @@ describe("DataTableBase", () => {
 
     fireEvent.click(screen.getByRole("checkbox", { name: /select row 1/i }));
 
-    expect(onSelectionChange).toHaveBeenCalledWith(["a1"], [
-      { id: "a1", name: "Alice", age: 28 },
-    ]);
+    expect(onSelectionChange).toHaveBeenCalledWith(
+      ["a1"],
+      [{ id: "a1", name: "Alice", age: 28 }],
+    );
   });
 
   it("renders the wrapper with default structural classes", () => {
@@ -1100,9 +1102,9 @@ describe("DataTableBase", () => {
 
     expect(screen.getByText("Alice")).toBeInTheDocument();
     expect(screen.getByText("Bob")).toBeInTheDocument();
-    expect(screen.getByTestId("data-table-pagination-status")).toHaveTextContent(
-      "Page 2 of 3",
-    );
+    expect(
+      screen.getByTestId("data-table-pagination-status"),
+    ).toHaveTextContent("Page 2 of 3");
 
     fireEvent.click(screen.getByTestId("data-table-pagination-next"));
     expect(onPageChange).toHaveBeenCalledWith(
@@ -1114,10 +1116,14 @@ describe("DataTableBase", () => {
   it("toggles column visibility from the column menu", () => {
     renderTable({ columnVisibility: true });
 
-    expect(screen.getByRole("columnheader", { name: /age/i })).toBeInTheDocument();
+    expect(
+      screen.getByRole("columnheader", { name: /age/i }),
+    ).toBeInTheDocument();
     fireEvent.click(screen.getByTestId("data-table-toggle-column-age"));
 
-    expect(screen.queryByRole("columnheader", { name: /age/i })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("columnheader", { name: /age/i }),
+    ).not.toBeInTheDocument();
     expect(screen.queryByText("28")).not.toBeInTheDocument();
   });
 
@@ -1179,7 +1185,9 @@ describe("DataTableBase", () => {
     renderTable({
       selectableRows: true,
       rowKey: (row) => row.id ?? row.name,
-      bulkActions: (keys) => <button type="button">Archive {keys.length}</button>,
+      bulkActions: (keys) => (
+        <button type="button">Archive {keys.length}</button>
+      ),
     });
 
     fireEvent.click(screen.getByTestId("data-table-select-row-a1"));
@@ -1187,7 +1195,9 @@ describe("DataTableBase", () => {
     expect(screen.getByTestId("data-table-bulk-toolbar")).toHaveTextContent(
       "1 selected",
     );
-    expect(screen.getByRole("button", { name: "Archive 1" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: "Archive 1" }),
+    ).toBeInTheDocument();
   });
 
   it("commits inline cell edits", () => {
@@ -1231,7 +1241,9 @@ describe("DataTableBase", () => {
       virtualOverscan: 1,
     });
 
-    expect(screen.getByTestId("data-table-virtual-viewport")).toBeInTheDocument();
+    expect(
+      screen.getByTestId("data-table-virtual-viewport"),
+    ).toBeInTheDocument();
     expect(screen.getByText("User 0")).toBeInTheDocument();
     expect(screen.queryByText("User 99")).not.toBeInTheDocument();
     expect(screen.getByTestId("data-table-virtual-bottom")).toBeInTheDocument();

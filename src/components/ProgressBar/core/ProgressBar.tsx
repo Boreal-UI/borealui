@@ -7,6 +7,9 @@ import { ProgressBarProps } from "../ProgressBar.types";
 const classes = {
   layout: "progress_layout",
   label: "progress_label",
+  meta: "progress_meta",
+  metaValueOnly: "progress_meta_valueOnly",
+  value: "progress_value",
 
   labelTop: "progress_label_top",
   labelBottom: "progress_label_bottom",

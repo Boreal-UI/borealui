@@ -13,8 +13,6 @@ import {
   roundingOptions,
   shadowOptions,
   sizeOptions,
-  stateOptions,
-  themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import {
   renderThemeVariants,
@@ -121,21 +119,41 @@ export const ThemeVariants: Story = {
 };
 
 export const StateVariants: Story = {
-  render: (args) => renderStateVariants({ component: Badge, args }),
+  render: (args) =>
+    renderStateVariants({
+      component: Badge,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const OutlineVariants: Story = {
-  render: (args) => renderOutlineVariants({ component: Badge, args }),
+  render: (args) =>
+    renderOutlineVariants({
+      component: Badge,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const GlassVariants: Story = {
-  render: (args) => renderGlassVariants({ component: Badge, args }),
+  render: (args) =>
+    renderGlassVariants({
+      component: Badge,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const GlassOutlineVariants: Story = {
-  render: (args) => renderGlassOutlineVariants({ component: Badge, args }),
+  render: (args) =>
+    renderGlassOutlineVariants({
+      component: Badge,
+      args: { ...args, ...defaultArgs },
+    }),
 };
 
 export const StateOutlineVariants: Story = {
-  render: (args) => renderStateOutlineVariants({ component: Badge, args }),
+  render: (args) =>
+    renderStateOutlineVariants({
+      component: Badge,
+      args: { ...args, ...defaultArgs },
+    }),
 };

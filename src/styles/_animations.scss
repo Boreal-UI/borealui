@@ -49,6 +49,12 @@
  *
  * 14. drawer-slide-in-fade-in
  *    - Combines a fade-in with a slight upward motion (used for tooltips, popups) and a fade-in.
+ * 15. bar-chart-grow
+ *    - Expands the height of a bar chart from 0% to 100%.
+ * 16. donut-chart-draw
+ *    - Animates the drawing of a donut chart by rotating and scaling it.
+ * 17. line-chart-draw
+ *    - Animates the drawing of a line chart by expanding its stroke from 0% to 100%.
  */
 
 @keyframes fade-in {
@@ -145,11 +151,11 @@
 
 @keyframes skeleton-loading {
   0% {
-    left: -100%;
+    transform: translateX(-100%);
   }
 
   100% {
-    left: 100%;
+    transform: translateX(150%);
   }
 }
 
@@ -208,5 +214,43 @@
 
   to {
     opacity: 1;
+  }
+}
+
+@keyframes bar-chart-grow {
+  from {
+    opacity: 0;
+    transform: scaleY(0.2);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes donut-chart-draw {
+  from {
+    opacity: 0;
+    transform: rotate(-8deg) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+
+@keyframes line-chart-draw {
+  from {
+    opacity: 0;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    opacity: 1;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
   }
 }

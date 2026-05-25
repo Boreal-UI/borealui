@@ -10,7 +10,7 @@
     --treeView-glass-bg: rgba(255, 255, 255, 0.18);
     --treeView-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --treeView-glass-border: rgba(255, 255, 255, 0.28);
-    --treeView-glass-text: var(--text-color-primary);
+    --treeView-glass-text: inherit;
 
     display: inline-flex;
     align-items: center;
@@ -20,7 +20,7 @@
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
-    color: var(--text-color-primary);
+    color: inherit;
     box-shadow: var(--box-shadow-sm);
     padding: var(--spacing-sm);
     transition: var(--transition-default);
@@ -103,19 +103,27 @@
       color: map.get($vals, text);
       border-color: map.get($vals, border);
 
-      &:hover {
-        background-color: if(
-          map.has-key($vals, hover),
-          map.get($vals, hover),
-          map.get($vals, bg)
-        );
+      .treeView_node {
+        &:hover {
+          background-color: if(
+            map.has-key($vals, hover),
+            map.get($vals, hover),
+            map.get($vals, bg)
+          );
+        }
       }
 
       &.treeView_outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
+
+        .treeView_node {
+          &:hover {
+            color: map.get($vals, text);
+          }
+        }
       }
     }
   }
@@ -128,7 +136,12 @@
       --treeView-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
-      color: map.get($vals, text);
+
+      &.treeView_outline {
+        background-color: transparent;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
     }
   }
 
@@ -145,11 +158,15 @@
       16px
     );
 
-    color: var(--treeView-glass-text);
+    color: inherit;
   }
 
-  .treeView_glass:hover {
+  .treeView_glass .treeView_node:hover {
     background: var(--treeView-glass-hover-bg);
+  }
+
+  .treeView_clear.treeView_glass .treeView_node:hover {
+    background: rgba(0, 0, 0, 0.322);
   }
 
   .treeView_glass.treeView_outline {

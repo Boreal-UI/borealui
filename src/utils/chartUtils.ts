@@ -97,24 +97,35 @@ export const pointsToPath = (points: Point[]) =>
 export const formatDefaultValue = (value: number) =>
   new Intl.NumberFormat(undefined, { maximumFractionDigits: 2 }).format(value);
 
+export const appendUnits = (value: string, units?: string) =>
+  units ? `${value} ${units}` : value;
+
 export const formatValueText = (
   value: number,
   valueFormatter: ChartValueFormatter = formatDefaultValue,
+  units?: string,
 ) => {
   const formatted = valueFormatter(value);
+  const formattedText =
+    typeof formatted === "string" || typeof formatted === "number"
+      ? String(formatted)
+      : formatDefaultValue(value);
 
-  return typeof formatted === "string" || typeof formatted === "number"
-    ? String(formatted)
-    : formatDefaultValue(value);
+  return appendUnits(formattedText, units);
 };
 
 export const describeData = (
   data: ChartDatum[],
   valueFormatter: ChartValueFormatter = formatDefaultValue,
+  units?: string,
 ) =>
   data
     .map(
       (datum) =>
-        `${datum.label}: ${formatValueText(datum.value, valueFormatter)}`,
+        `${datum.label}: ${formatValueText(
+          datum.value,
+          valueFormatter,
+          units,
+        )}`,
     )
     .join(", ");

@@ -5,69 +5,68 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.skeleton_loader {
-  --skeleton-sheen: var(--disabled-color);
-  --skeleton-duration: 1.5s;
-
-  background-color: var(--background-color-light);
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  min-height: 1rem;
-
-  @include bp.down(xs) {
-    min-height: 0.85rem;
-  }
-
-  @include bp.up(lg) {
-    min-height: 1.2rem;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    left: -100%;
-    display: block;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      var(--skeleton-sheen) 50%,
-      transparent 100%
-    );
-    animation: skeleton-loading var(--skeleton-duration) infinite ease-in-out;
-  }
-}
-
-@each $key, $value in theme.$rounding {
-  .skeleton_round-#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .skeleton_shadow-#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .skeleton_loader::after {
-    animation: none !important;
-    background: none !important;
-  }
-}
-
-@media (forced-colors: active) {
   .skeleton_loader {
-    background: Canvas;
-    color: CanvasText;
-    border: 1px solid ButtonText;
+    --skeleton-sheen: var(--disabled-color);
+    --skeleton-duration: 3s;
+
+    background-color: var(--background-color-light);
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    min-height: 1rem;
+
+    @include bp.down(xs) {
+      min-height: 0.85rem;
+    }
+
+    @include bp.up(lg) {
+      min-height: 1.2rem;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      left: -100%;
+      display: block;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        var(--skeleton-sheen) 50%,
+        transparent 100%
+      );
+      animation: skeleton-loading var(--skeleton-duration) infinite ease-in-out;
+    }
   }
 
-  .skeleton_loader::after {
-    content: none !important;
+  @each $key, $value in theme.$rounding {
+    .skeleton_round-#{$key} {
+      border-radius: $value;
+    }
   }
-}
+
+  @each $key, $value in theme.$shadow {
+    .skeleton_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton_loader::after {
+      animation: none !important;
+      background: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .skeleton_loader {
+      background: Canvas;
+      color: CanvasText;
+      border: 1px solid ButtonText;
+    }
+
+    .skeleton_loader::after {
+      content: none !important;
+    }
+  }
 }

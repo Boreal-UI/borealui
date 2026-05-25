@@ -256,7 +256,7 @@
           var(--glass-blur)
         );
 
-        color: var(--card-glass-text);
+        color: inherit;
       }
 
       &.glass.clickable:hover {
@@ -271,6 +271,7 @@
         background: transparent;
         border: 2px solid map.get($props, border);
         box-shadow: none;
+        color: inherit;
 
         @include bp.down(sm) {
           border-width: 1.5px;
@@ -284,7 +285,7 @@
           var(--glass-blur)
         );
 
-        color: var(--card-glass-text);
+        color: inherit;
       }
     }
   }
@@ -315,7 +316,7 @@
           var(--glass-blur)
         );
 
-        color: var(--card-glass-text);
+        color: inherit;
       }
 
       &.glass.clickable:hover {
@@ -326,7 +327,7 @@
       &.outline {
         background: transparent;
         border: 2px solid map.get($props, border);
-
+        color: inherit;
         @include bp.down(sm) {
           border-width: 1.5px;
         }
@@ -339,7 +340,7 @@
           var(--glass-blur)
         );
 
-        color: var(--card-glass-text);
+        color: inherit;
         box-shadow:
           var(--glass-shadow),
           inset 0 1px 0 var(--glass-inset-highlight);

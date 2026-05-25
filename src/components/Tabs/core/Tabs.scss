@@ -5,259 +5,259 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $sizes: (
+    "xs": (
+      font: var(--font-size-caption),
+      padding: var(--spacing-xs),
+    ),
+    "small": (
+      font: var(--font-size-label),
+      padding: var(--spacing-sm),
+    ),
+    "medium": (
+      font: var(--font-size-body-sm),
+      padding: var(--spacing-md),
+    ),
+    "large": (
+      font: var(--font-size-body),
+      padding: var(--spacing-lg),
+    ),
+    "xl": (
+      font: var(--font-size-h6),
+      padding: var(--spacing-lg),
+    ),
+  );
 
-$sizes: (
-  "xs": (
-    font: var(--font-size-caption),
-    padding: var(--spacing-xs),
-  ),
-  "small": (
-    font: var(--font-size-label),
-    padding: var(--spacing-sm),
-  ),
-  "medium": (
-    font: var(--font-size-body-sm),
-    padding: var(--spacing-md),
-  ),
-  "large": (
-    font: var(--font-size-body),
-    padding: var(--spacing-lg),
-  ),
-  "xl": (
-    font: var(--font-size-h6),
-    padding: var(--spacing-lg),
-  ),
-);
-
-.tabs_container {
-  width: 100%;
-  background-color: transparent;
-
-  &:focus-within {
-    outline: none;
-  }
-}
-
-.tabs {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: stretch;
-  border-bottom: 2px solid var(--text-color-primary);
-  padding-bottom: var(--spacing-sm);
-  gap: var(--spacing-xxs);
-  background-color: transparent;
-  font-family: var(--font-family-ui);
-
-  @include bp.down(xs) {
-    flex-direction: column;
-  }
-
-  &_icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: var(--spacing-sm);
-    line-height: 1;
-    flex-shrink: 0;
-    svg {
-      display: block;
-      width: 0.9em;
-      height: 0.9em;
-      overflow: visible;
-    }
-  }
-
-  &_tab {
-    flex: 1;
-    background-color: var(--background-color-lighter);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
+  .tabs_container {
     width: 100%;
-    border: none;
-    color: var(--text-color-primary);
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
-    cursor: pointer;
+    background-color: transparent;
+
+    &:focus-within {
+      outline: none;
+    }
+  }
+
+  .tabs {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: stretch;
+    border-bottom: 2px solid inherit;
+    padding-bottom: var(--spacing-sm);
     gap: var(--spacing-xxs);
-    transition:
-      color var(--transition-default),
-      transform 0.2s ease-in-out;
-    border-right: 0.5px solid var(--text-color-primary);
-
-    &:hover {
-      transform: translateY(-2px);
-    }
-
-    &:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 2px;
-      border-radius: 6px;
-    }
-
-    &:last-child {
-      border-right: none;
-    }
+    background-color: transparent;
+    font-family: var(--font-family-ui);
 
     @include bp.down(xs) {
-      border-right: none;
-      border-bottom: 0.5px solid var(--text-color-primary);
+      flex-direction: column;
+    }
 
-      &:first-child {
-        border-radius: 0;
-        border-top-left-radius: var(--border-radius-md);
-        border-top-right-radius: var(--border-radius-md);
+    &_icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: var(--spacing-sm);
+      line-height: 1;
+      flex-shrink: 0;
+      svg {
+        display: block;
+        width: 0.9em;
+        height: 0.9em;
+        overflow: visible;
+      }
+    }
+
+    &_tab {
+      flex: 1;
+      background-color: var(--background-color-lighter);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+      border: none;
+      color: inherit;
+      font-family: var(--font-family-ui);
+      font-size: var(--font-size-label);
+      font-weight: var(--font-weight-label);
+      line-height: var(--line-height-label);
+      letter-spacing: var(--letter-spacing-label);
+      cursor: pointer;
+      gap: var(--spacing-xxs);
+      transition:
+        color var(--transition-default),
+        transform 0.2s ease-in-out;
+      border-right: 0.5px solid inherit;
+
+      &:hover {
+        transform: translateY(-2px);
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+        border-radius: 6px;
       }
 
       &:last-child {
-        border-radius: 0;
-        border-bottom-left-radius: var(--border-radius-md);
-        border-bottom-right-radius: var(--border-radius-md);
-        border-bottom: none;
+        border-right: none;
+      }
+
+      @include bp.down(xs) {
+        border-right: none;
+        border-bottom: 0.5px solid inherit;
+
+        &:first-child {
+          border-radius: 0;
+          border-top-left-radius: var(--border-radius-md);
+          border-top-right-radius: var(--border-radius-md);
+        }
+
+        &:last-child {
+          border-radius: 0;
+          border-bottom-left-radius: var(--border-radius-md);
+          border-bottom-right-radius: var(--border-radius-md);
+          border-bottom: none;
+        }
       }
     }
-  }
 
-  @each $size, $props in $sizes {
-    &_#{$size} .tabs_tab {
-      font-size: map.get($props, font);
-      padding: map.get($props, padding);
+    @each $size, $props in $sizes {
+      &_#{$size} .tabs_tab {
+        font-size: map.get($props, font);
+        padding: map.get($props, padding);
 
-      @include bp.up(lg) {
-        font-size: calc(#{map.get($props, font)} * 1.05);
+        @include bp.up(lg) {
+          font-size: calc(#{map.get($props, font)} * 1.05);
+        }
       }
     }
-  }
 
-  @each $themeName, $color in theme.$themes {
-    &_#{$themeName} {
-      --tabs-glass-bg: #{map.get($color, glass-bg)};
-      --tabs-glass-hover-bg: #{map.get($color, glass-hover)};
-      --tabs-glass-border: #{map.get($color, glass-border)};
-      --tabs-glass-text: #{map.get($color, text)};
+    @each $themeName, $color in theme.$themes {
+      &_#{$themeName} {
+        --tabs-glass-bg: #{map.get($color, glass-bg)};
+        --tabs-glass-hover-bg: #{map.get($color, glass-hover)};
+        --tabs-glass-border: #{map.get($color, glass-border)};
+        --tabs-glass-text: #{map.get($color, text)};
 
-      .tabs_tab.tabs_active {
-        background-color: map.get($color, bg);
-        border-bottom-color: map.get($color, border);
-      }
+        .tabs_tab.tabs_active {
+          background-color: map.get($color, bg);
+          color: map.get($color, text);
+          border-bottom-color: map.get($color, border);
+        }
 
-      .tabs_tab:focus-visible {
-        outline: 2px solid map.get($color, border);
-        outline-offset: 2px;
-      }
-    }
-  }
-
-  @each $stateName, $color in theme.$states {
-    &_#{$stateName} {
-      --tabs-glass-bg: #{map.get($color, glass-bg)};
-      --tabs-glass-hover-bg: #{map.get($color, glass-hover)};
-      --tabs-glass-border: #{map.get($color, glass-border)};
-      --tabs-glass-text: #{map.get($color, text)};
-
-      .tabs_tab.tabs_active {
-        background-color: map.get($color, bg);
-        border-bottom-color: map.get($color, border);
-      }
-
-      .tabs_tab:focus-visible {
-        outline: 2px solid map.get($color, border);
-        outline-offset: 2px;
+        .tabs_tab:focus-visible {
+          outline: 2px solid map.get($color, border);
+          outline-offset: 2px;
+        }
       }
     }
-  }
 
-  &_secondary .tabs_tab.active {
-    color: var(--text-color-secondary);
-  }
-}
+    @each $stateName, $color in theme.$states {
+      &_#{$stateName} {
+        --tabs-glass-bg: #{map.get($color, glass-bg)};
+        --tabs-glass-hover-bg: #{map.get($color, glass-hover)};
+        --tabs-glass-border: #{map.get($color, glass-border)};
+        --tabs-glass-text: #{map.get($color, text)};
 
-.tabs_glass .tabs_tab {
-  @include mixins.glass-surface(
-    var(--tabs-glass-bg, rgba(255, 255, 255, 0.16)),
-    var(--tabs-glass-border, rgba(255, 255, 255, 0.32)),
-    14px
-  );
-  color: var(--tabs-glass-text, var(--text-color-primary));
-  border-right-color: var(--tabs-glass-border, rgba(255, 255, 255, 0.32));
-  box-shadow: var(--box-shadow-sm);
-}
+        .tabs_tab.tabs_active {
+          background-color: map.get($color, bg);
+          border-bottom-color: map.get($color, border);
+        }
 
-.tabs_glass .tabs_tab:hover {
-  background: var(--tabs-glass-hover-bg, rgba(255, 255, 255, 0.24));
-}
-
-.tabs_glass .tabs_tab.tabs_active {
-  background: var(--tabs-glass-hover-bg, rgba(255, 255, 255, 0.26));
-  border-color: var(--tabs-glass-border, rgba(255, 255, 255, 0.36));
-}
-
-@each $key, $value in theme.$rounding {
-  .tabs_round-#{$key}:first-child {
-    border-top-left-radius: $value;
-    border-bottom-left-radius: $value;
-  }
-
-  .tabs_round-#{$key}:last-child {
-    border-top-right-radius: $value;
-    border-bottom-right-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .tabs_shadow-#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .tabs_tab {
-    transition: none !important;
-  }
-
-  .tabs_tab:hover {
-    transform: none !important;
-  }
-}
-
-@media (hover: none) {
-  .tabs_tab:hover {
-    transform: none;
-  }
-}
-
-@media (forced-colors: active) {
-  .tabs {
-    border-bottom-color: ButtonText;
+        .tabs_tab:focus-visible {
+          outline: 2px solid map.get($color, border);
+          outline-offset: 2px;
+        }
+      }
+    }
   }
 
   .tabs_glass .tabs_tab {
-    background: ButtonFace;
-    border-color: ButtonText;
-    color: ButtonText;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
+    @include mixins.glass-surface(
+      var(--tabs-glass-bg, rgba(255, 255, 255, 0.16)),
+      var(--tabs-glass-border, rgba(255, 255, 255, 0.32)),
+      14px
+    );
+    color: inherit;
+    border-right-color: var(--tabs-glass-border, rgba(255, 255, 255, 0.32));
+    box-shadow: var(--box-shadow-sm);
   }
 
-  .tabs_tab {
-    background: ButtonFace;
-    color: ButtonText;
-    border-right: 1px solid ButtonText;
+  .tabs_glass .tabs_tab:hover {
+    background: var(--tabs-glass-hover-bg, rgba(255, 255, 255, 0.24));
   }
 
-  .tabs_tab.tabs_active {
-    background: Highlight;
-    color: HighlightText;
-    border-bottom-color: Highlight;
+  .tabs_glass .tabs_tab.tabs_active {
+    background: var(--tabs-glass-hover-bg, rgba(255, 255, 255, 0.26));
+    border-color: var(--tabs-glass-border, rgba(255, 255, 255, 0.36));
   }
 
-  .tabs_tab:focus-visible {
-    outline: 2px solid Highlight;
-    outline-offset: 2px;
+  .tabs_clear .tabs_tab.tabs_active {
+    background-color: var(--disabled-color);
   }
-}
+
+  @each $key, $value in theme.$rounding {
+    .tabs_round-#{$key}:first-child {
+      border-top-left-radius: $value;
+      border-bottom-left-radius: $value;
+    }
+
+    .tabs_round-#{$key}:last-child {
+      border-top-right-radius: $value;
+      border-bottom-right-radius: $value;
+    }
+  }
+
+  @each $key, $value in theme.$shadow {
+    .tabs_shadow-#{$key} {
+      box-shadow: $value;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tabs_tab {
+      transition: none !important;
+    }
+
+    .tabs_tab:hover {
+      transform: none !important;
+    }
+  }
+
+  @media (hover: none) {
+    .tabs_tab:hover {
+      transform: none;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .tabs {
+      border-bottom-color: ButtonText;
+    }
+
+    .tabs_glass .tabs_tab {
+      background: ButtonFace;
+      border-color: ButtonText;
+      color: ButtonText;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .tabs_tab {
+      background: ButtonFace;
+      color: ButtonText;
+      border-right: 1px solid ButtonText;
+    }
+
+    .tabs_tab.tabs_active {
+      background: Highlight;
+      color: HighlightText;
+      border-bottom-color: Highlight;
+    }
+
+    .tabs_tab:focus-visible {
+      outline: 2px solid Highlight;
+      outline-offset: 2px;
+    }
+  }
 }

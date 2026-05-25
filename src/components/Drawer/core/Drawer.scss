@@ -191,7 +191,7 @@
       var(--glass-blur)
     );
 
-    color: var(--drawer-glass-text, currentcolor);
+    color: inherit;
     box-shadow:
       inset 0 1px 0 var(--glass-inset-highlight, rgb(255 255 255 / 20%)),
       var(--drawer-glass-shadow, var(--shadow-md, none));
@@ -254,7 +254,7 @@
     .drawer_#{$name}.drawer_glass {
       background: var(--drawer-glass-bg);
       border-color: var(--drawer-glass-border);
-      color: var(--drawer-glass-text);
+      color: inherit;
     }
 
     .drawer_#{$name}.drawer_glass .drawer_close_button:hover {
@@ -283,7 +283,7 @@
     .drawer_#{$name}.drawer_glass {
       background: var(--drawer-glass-bg);
       border-color: var(--drawer-glass-border);
-      color: var(--drawer-glass-text);
+      color: inherit;
     }
 
     .drawer_#{$name}.drawer_glass .drawer_close_button:hover {

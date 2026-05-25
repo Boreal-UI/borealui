@@ -104,7 +104,6 @@
     min-width: 0;
     padding: 0;
     margin: 0;
-    border-radius: 0;
   }
 
   .input:focus-visible {
@@ -152,7 +151,7 @@
       var(--glass-blur)
     );
 
-    color: var(--date-range-picker-glass-text, currentcolor);
+    color: inherit;
   }
 
   .glass .input {
@@ -186,7 +185,7 @@
     .#{$name}.glass {
       background: var(--date-range-picker-glass-bg);
       border-color: var(--date-range-picker-glass-border);
-      color: var(--date-range-picker-glass-text);
+      color: inherit;
 
       &:hover {
         background: var(--date-range-picker-glass-hover-bg);
@@ -196,7 +195,7 @@
     .outline.#{$name} {
       background-color: transparent;
       border: 2px solid map.get($values, border);
-      color: map.get($values, text);
+      color: inherit;
 
       &:hover {
         color: map.get($values, text-hover);
@@ -210,7 +209,7 @@
         var(--glass-blur)
       );
 
-      color: var(--date-range-picker-glass-text);
+      color: inherit;
 
       &:hover {
         background: var(--date-range-picker-glass-hover-bg);
@@ -239,7 +238,7 @@
     .#{$name}.glass {
       background: var(--date-range-picker-glass-bg);
       border-color: var(--date-range-picker-glass-border);
-      color: var(--date-range-picker-glass-text);
+      color: inherit;
 
       &:hover {
         background: var(--date-range-picker-glass-hover-bg);
@@ -249,7 +248,7 @@
     .outline.#{$name} {
       background-color: transparent;
       border: 2px solid map.get($values, border);
-      color: map.get($values, text);
+      color: inherit;
 
       &:hover {
         background-color: map.get($values, hover);
@@ -264,7 +263,7 @@
         var(--glass-blur)
       );
 
-      color: var(--date-range-picker-glass-text);
+      color: inherit;
 
       &:hover {
         background: var(--date-range-picker-glass-hover-bg);

@@ -1,12 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Alert, Button } from "../../src/index.next";
 import { AlertProps } from "../../src/components/Alert/Alert.types";
-import {
-  FaCheckCircle,
-  FaExclamationTriangle,
-  FaInfoCircle,
-  FaTimesCircle,
-} from "react-icons/fa";
+import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from "react-icons/fa";
 import { useState } from "react";
 import {
   renderThemeVariants,
@@ -189,6 +184,7 @@ export const WithActions: Story = {
     title: "Deployment ready",
     children: "Your production build completed successfully.",
     state: "success",
+    dismissible: true,
     icon: <FaCheckCircle />,
     actions: (
       <>

@@ -22,6 +22,7 @@ const LineChartBase = forwardRef<HTMLDivElement, LineChartBaseProps>(
       showPoints = true,
       color = "currentColor",
       valueFormatter = formatDefaultValue,
+      units,
       theme = "primary",
       state,
       loading = false,
@@ -78,7 +79,7 @@ const LineChartBase = forwardRef<HTMLDivElement, LineChartBaseProps>(
             height={height}
             viewBox={`0 0 ${width} ${height}`}
             role="img"
-            aria-label={ariaLabel ?? describeData(data, valueFormatter)}
+            aria-label={ariaLabel ?? describeData(data, valueFormatter, units)}
             data-testid={`${testId}-chart`}
           >
             {showGrid
@@ -117,19 +118,20 @@ const LineChartBase = forwardRef<HTMLDivElement, LineChartBaseProps>(
                     <title>{`${data[index].label}: ${formatValueText(
                       data[index].value,
                       valueFormatter,
+                      units,
                     )}`}</title>
                   </circle>
                 ))
               : null}
             <text className={classMap.axisLabel} x={padding} y={padding - 8}>
-              {valueFormatter(max)}
+              {formatValueText(max, valueFormatter, units)}
             </text>
             <text
               className={classMap.axisLabel}
               x={padding}
               y={height - padding + 16}
             >
-              {valueFormatter(min)}
+              {formatValueText(min, valueFormatter, units)}
             </text>
           </svg>
         )}

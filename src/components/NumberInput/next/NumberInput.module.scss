@@ -18,7 +18,7 @@
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
     line-height: var(--line-height-label);
-    color: var(--text-color-primary);
+    color: inherit;
   }
 
   .labelTop {
@@ -43,7 +43,7 @@
     --numberInput-glass-bg: rgba(255, 255, 255, 0.18);
     --numberInput-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --numberInput-glass-border: rgba(255, 255, 255, 0.28);
-    --numberInput-glass-text: var(--text-color-primary);
+    --numberInput-glass-text: inherit;
 
     display: inline-flex;
     align-items: stretch;
@@ -52,7 +52,7 @@
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
-    color: var(--text-color-primary);
+    color: inherit;
     box-shadow: var(--box-shadow-sm);
     transition: var(--transition-default);
     overflow: hidden;
@@ -118,11 +118,13 @@
 
     &:hover:not(:disabled) {
       background: var(--background-color-light);
+      color: var(--text-color);
     }
 
-    &:focus-visible {
+    &:focus-visible,
+    &:focus {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: -10px;
+      outline-offset: 0px;
     }
 
     &:disabled {
@@ -151,9 +153,13 @@
 
       &.outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
+      }
+
+      .controls {
+        border-color: map.get($vals, text);
       }
     }
   }
@@ -166,7 +172,17 @@
       --numberInput-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
-      color: map.get($vals, text);
+
+      &.outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
+
+      .controls {
+        border-color: map.get($vals, bg);
+      }
     }
   }
 
@@ -183,7 +199,7 @@
       16px
     );
 
-    color: var(--numberInput-glass-text);
+    color: inherit;
   }
 
   .glass:hover {

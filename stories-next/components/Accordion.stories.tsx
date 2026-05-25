@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../../src/components/Accordion/next/Accordion.module.scss";
 import { Accordion } from "../../src/index.next";
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
@@ -18,27 +18,13 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 Accordion.displayName = "Accordion";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["", "success", "error", "warning"];
-const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
 
 const meta: Meta<typeof Accordion> = {
   title: "Components/Accordion",
@@ -246,25 +232,49 @@ export const ShadowVariants = () =>
   ]);
 
 export const ThemeVariants: Story = {
-  render: (args) => renderThemeVariants({ component: Accordion, args }),
+  render: (args) =>
+    renderThemeVariants({
+      component: Accordion,
+      args: { ...defaultArgs, ...args },
+    }),
 };
 
 export const StateVariants: Story = {
-  render: (args) => renderStateVariants({ component: Accordion, args }),
+  render: (args) =>
+    renderStateVariants({
+      component: Accordion,
+      args: { ...defaultArgs, ...args },
+    }),
 };
 
 export const OutlineVariants: Story = {
-  render: (args) => renderOutlineVariants({ component: Accordion, args }),
+  render: (args) =>
+    renderOutlineVariants({
+      component: Accordion,
+      args: { ...defaultArgs, ...args },
+    }),
 };
 
 export const GlassVariants: Story = {
-  render: (args) => renderGlassVariants({ component: Accordion, args }),
+  render: (args) =>
+    renderGlassVariants({
+      component: Accordion,
+      args: { ...defaultArgs, ...args },
+    }),
 };
 
 export const GlassOutlineVariants: Story = {
-  render: (args) => renderGlassOutlineVariants({ component: Accordion, args }),
+  render: (args) =>
+    renderGlassOutlineVariants({
+      component: Accordion,
+      args: { ...defaultArgs, ...args },
+    }),
 };
 
 export const StateOutlineVariants: Story = {
-  render: (args) => renderStateOutlineVariants({ component: Accordion, args }),
+  render: (args) =>
+    renderStateOutlineVariants({
+      component: Accordion,
+      args: { ...defaultArgs, ...args },
+    }),
 };

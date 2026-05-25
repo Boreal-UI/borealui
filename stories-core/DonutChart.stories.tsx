@@ -15,4 +15,5 @@ const meta: Meta<DonutChartProps> = {
 export default meta;
 type Story = StoryObj<DonutChartProps>;
 export const Default: Story = {};
+export const WithUnits: Story = { args: { units: "users" } };
 export const ThickRing: Story = { args: { thickness: 40 } };

@@ -67,6 +67,22 @@ describe("DonutChartBase", () => {
     expect(screen.getByRole("img")).toHaveAccessibleName(/Mobile: 40/);
   });
 
+  it("shows units in legend and accessible value text", () => {
+    render(
+      <DonutChartBase
+        classMap={classMap}
+        data={data}
+        units="users"
+        showLegend
+      />,
+    );
+
+    expect(screen.getByRole("img")).toHaveAccessibleName(/Desktop: 60 users/);
+    expect(screen.getByTestId("donut-chart-legend")).toHaveTextContent(
+      "60 users",
+    );
+  });
+
   it("supports loading", () => {
     render(<DonutChartBase classMap={classMap} data={data} loading />);
     expect(screen.getByTestId("donut-chart-loader")).toBeInTheDocument();

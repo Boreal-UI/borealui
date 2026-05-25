@@ -110,7 +110,7 @@
       var(--glass-blur)
     );
 
-    color: var(--divider-glass-text, currentcolor);
+    color: inherit;
     box-shadow: none;
   }
 

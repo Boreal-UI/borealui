@@ -102,7 +102,6 @@
         --popover-glass-border: #{map.get($values, glass-border)};
         --popover-glass-text: #{map.get($values, text)};
         background-color: map.get($values, bg);
-        color: map.get($values, text);
         box-shadow: if(
           map.has-key($values, shadow),
           map.get($values, shadow),
@@ -128,7 +127,7 @@
         var(--popover-glass-border, rgba(255, 255, 255, 0.34)),
         16px
       );
-      color: var(--popover-glass-text, var(--text-color-primary));
+      color: inherit;
       box-shadow: var(--box-shadow-md);
     }
 

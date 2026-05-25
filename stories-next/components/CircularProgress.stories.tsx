@@ -55,6 +55,17 @@ export const ShowRawScore: Story = {
   },
 };
 
+export const ShowRawWithUnits: Story = {
+  args: {
+    ...defaultArgs,
+    value: 42,
+    max: 128,
+    showRaw: true,
+    units: "MB",
+    label: "Storage used",
+  },
+};
+
 export const LowScore: Story = {
   args: {
     ...defaultArgs,

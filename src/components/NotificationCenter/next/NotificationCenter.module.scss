@@ -6,193 +6,106 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  $notification-colors: (
+    primary: var(--primary-color),
+    success: var(--success-color),
+    error: var(--error-color),
+    warning: var(--warning-color),
+    info: var(--info-color),
+  );
 
-$notification-colors: (
-  primary: var(--primary-color),
-  success: var(--success-color),
-  error: var(--error-color),
-  warning: var(--warning-color),
-  info: var(--info-color),
-);
-
-.wrapper {
-  position: relative;
-  width: fit-content;
-  max-width: 400px;
-  padding: var(--spacing-sm);
-  overflow: hidden;
-  font-family: var(--font-family-body);
-
-  @include bp.down(sm) {
-    max-width: 100%;
-    padding: var(--spacing-xs);
-  }
-
-  @include bp.up(lg) {
-    max-width: 520px;
-    padding: var(--spacing-md);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 3px;
-    border-radius: 8px;
-  }
-}
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  margin-bottom: var(--spacing-sm);
-  gap: var(--spacing-xs);
-
-  @include bp.down(sm) {
-    margin-bottom: var(--spacing-xs);
-    flex-direction: column;
-  }
-
-  @include bp.up(lg) {
-    margin-bottom: var(--spacing-md);
-  }
-}
-
-.body {
-  width: 100%;
-  overflow-x: auto;
-}
-
-.list {
-  display: flex;
-  width: fit-content;
-  height: fit-content;
-  flex-direction: column;
-  gap: var(--spacing-xs);
-  margin: 0;
-  padding: 4px;
-  list-style: none;
-  max-height: 340px;
-  overflow-y: auto;
-
-  @include bp.down(sm) {
-    max-height: 50vh;
-    gap: var(--spacing-xxs);
-    padding: 2px;
-  }
-
-  @include bp.up(lg) {
-    max-height: 60vh;
-    gap: var(--spacing-sm);
-  }
-}
-
-.notification {
-  display: flex;
-  align-items: center;
-  padding: var(--spacing-xs);
-  overflow-x: auto;
-  background-color: var(--background-color-dark);
-  border-left: 4px solid transparent;
-  animation: fade-in-up 0.3s ease;
-  transition:
-    background-color var(--transition-default),
-    transform var(--transition-default),
-    box-shadow var(--transition-default);
-
-  &:hover {
-    background-color: var(--background-color-darker);
-  }
-
-  &:focus-visible {
-    outline: 2px solid var(--focus-outline-color, var(--primary-color));
-    outline-offset: 2px;
-    border-radius: 4px;
-  }
-
-  @include bp.down(sm) {
-    padding: var(--spacing-xxs);
-  }
-
-  @include bp.up(lg) {
+  .wrapper {
+    position: relative;
+    width: fit-content;
+    max-width: 400px;
     padding: var(--spacing-sm);
-  }
-
-  @each $type, $color in $notification-colors {
-    &.#{$type} {
-      border-color: $color;
-    }
-  }
-
-  .icon {
-    margin-right: var(--spacing-sm);
-    font-size: 1.2rem;
+    overflow: hidden;
+    font-family: var(--font-family-body);
 
     @include bp.down(sm) {
-      margin-right: var(--spacing-xs);
-      font-size: 1rem;
+      max-width: 100%;
+      padding: var(--spacing-xs);
     }
 
     @include bp.up(lg) {
-      font-size: 1.3rem;
+      max-width: 520px;
+      padding: var(--spacing-md);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 3px;
+      border-radius: 8px;
     }
   }
 
-  .content {
-    flex-grow: 1;
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    margin-bottom: var(--spacing-sm);
+    gap: var(--spacing-xs);
 
-    .message {
-      display: block;
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-body);
-      font-weight: var(--font-weight-body);
-      line-height: var(--line-height-body);
-      letter-spacing: var(--letter-spacing-body);
-
-      @include bp.down(sm) {
-        font-size: var(--font-size-body-sm);
-      }
-
-      @include bp.up(lg) {
-        font-size: var(--font-size-body);
-      }
+    @include bp.down(sm) {
+      margin-bottom: var(--spacing-xs);
+      flex-direction: column;
     }
 
-    .timestamp {
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-caption);
-      font-weight: var(--font-weight-body);
-      line-height: var(--line-height-body);
-      letter-spacing: var(--letter-spacing-body);
-      color: var(--text-color-secondary);
-
-      @include bp.down(sm) {
-        font-size: var(--font-size-caption);
-      }
-
-      @include bp.up(lg) {
-        font-size: var(--font-size-label);
-      }
+    @include bp.up(lg) {
+      margin-bottom: var(--spacing-md);
     }
   }
 
-  .close {
-    margin-left: var(--spacing-sm);
-    background: transparent;
-    color: inherit;
-    border: none;
-    box-shadow: none;
-    cursor: pointer;
-    padding: var(--spacing-xxs);
-    line-height: 1;
-    transition: opacity var(--transition-default);
+  .body {
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .list {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    margin: 0;
+    padding: 4px;
+    list-style: none;
+    max-height: 340px;
+    overflow-y: auto;
+
+    @include bp.down(sm) {
+      max-height: 50vh;
+      gap: var(--spacing-xxs);
+      padding: 2px;
+    }
+
+    @include bp.up(lg) {
+      max-height: 60vh;
+      gap: var(--spacing-sm);
+    }
+  }
+
+  .notification {
+    display: flex;
+    align-items: center;
+    padding: var(--spacing-xs);
+    overflow-x: auto;
+    overflow-y: hidden;
+    background-color: var(--background-color-dark);
+    border-left: 4px solid transparent;
+    animation: fade-in-up 0.3s ease;
+    transition:
+      background-color var(--transition-default),
+      transform var(--transition-default),
+      box-shadow var(--transition-default);
 
     &:hover {
-      opacity: 0.7;
+      background-color: var(--background-color-darker);
     }
 
     &:focus-visible {
@@ -202,54 +115,140 @@ $notification-colors: (
     }
 
     @include bp.down(sm) {
-      margin-left: var(--spacing-xs);
+      padding: var(--spacing-xxs);
+    }
+
+    @include bp.up(lg) {
+      padding: var(--spacing-sm);
+    }
+
+    @each $type, $color in $notification-colors {
+      &.#{$type} {
+        border-color: $color;
+      }
+    }
+
+    .icon {
+      margin-right: var(--spacing-sm);
+      font-size: 1.2rem;
+
+      @include bp.down(sm) {
+        margin-right: var(--spacing-xs);
+        font-size: 1rem;
+      }
+
+      @include bp.up(lg) {
+        font-size: 1.3rem;
+      }
+    }
+
+    .content {
+      flex-grow: 1;
+
+      .message {
+        display: block;
+        font-family: var(--font-family-body);
+        font-size: var(--font-size-body);
+        font-weight: var(--font-weight-body);
+        line-height: var(--line-height-body);
+        letter-spacing: var(--letter-spacing-body);
+
+        @include bp.down(sm) {
+          font-size: var(--font-size-body-sm);
+        }
+
+        @include bp.up(lg) {
+          font-size: var(--font-size-body);
+        }
+      }
+
+      .timestamp {
+        font-family: var(--font-family-body);
+        font-size: var(--font-size-caption);
+        font-weight: var(--font-weight-body);
+        line-height: var(--line-height-body);
+        letter-spacing: var(--letter-spacing-body);
+
+        @include bp.down(sm) {
+          font-size: var(--font-size-caption);
+        }
+
+        @include bp.up(lg) {
+          font-size: var(--font-size-label);
+        }
+      }
+    }
+
+    .close {
+      margin-left: var(--spacing-sm);
+      background: transparent;
+      color: inherit;
+      border: none;
+      box-shadow: none;
+      cursor: pointer;
+      padding: var(--spacing-xxs);
+      line-height: 1;
+      transition: opacity var(--transition-default);
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--focus-outline-color, var(--primary-color));
+        outline-offset: 2px;
+        border-radius: 4px;
+      }
+
+      @include bp.down(sm) {
+        margin-left: var(--spacing-xs);
+      }
     }
   }
-}
 
-@each $key, $value in theme.$rounding {
-  .round#{$key} {
-    border-radius: $value;
-  }
-}
-
-@each $key, $value in theme.$shadow {
-  .shadow#{$key} {
-    box-shadow: $value;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wrapper,
-  .wrapper * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (hover: none) {
-  .notification:hover {
-    background-color: var(--background-color-dark);
+  @each $key, $value in theme.$rounding {
+    .round#{$key} {
+      border-radius: $value;
+    }
   }
 
-  .header .clearAll:hover,
-  .notification .close:hover {
-    opacity: 1;
-  }
-}
-
-@media (forced-colors: active) {
-  .notification {
-    background: Canvas;
-    color: CanvasText;
-    border-left: 3px solid Highlight;
+  @each $key, $value in theme.$shadow {
+    .shadow#{$key} {
+      box-shadow: $value;
+    }
   }
 
-  .header .clearAll,
-  .notification .close {
-    color: ButtonText;
-    border: 1px solid ButtonText;
-    border-radius: 4px;
+  @media (prefers-reduced-motion: reduce) {
+    .wrapper,
+    .wrapper * {
+      transition: none !important;
+      animation: none !important;
+    }
   }
-}
+
+  @media (hover: none) {
+    .notification:hover {
+      background-color: var(--background-color-dark);
+    }
+
+    .header .clearAll:hover,
+    .notification .close:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .notification {
+      background: Canvas;
+      color: CanvasText;
+      border-left: 3px solid Highlight;
+    }
+
+    .header .clearAll,
+    .notification .close {
+      color: ButtonText;
+      border: 1px solid ButtonText;
+      border-radius: 4px;
+    }
+  }
 }

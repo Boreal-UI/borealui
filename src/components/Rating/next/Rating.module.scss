@@ -54,7 +54,7 @@
   .label {
     font-size: var(--font-size-label);
     line-height: 1;
-    color: var(--text-color-primary);
+    color: inherit;
     margin: 0;
     display: inline-flex;
     align-items: center;
@@ -145,8 +145,13 @@
 
   .clear {
     .active {
-      color: var(--text-color-primary);
+      color: inherit;
     }
+  }
+
+  .clear.glass .active {
+    color: var(--text-color);
+    opacity: 0.9;
   }
 
   @media (prefers-reduced-motion: reduce) {

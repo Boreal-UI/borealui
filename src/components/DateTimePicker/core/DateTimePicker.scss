@@ -2,474 +2,343 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
+@use "../../../styles/_animations";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  .datetime_picker {
-    &_wrapper {
-      display: grid;
-      grid-template-areas:
-        "label"
-        "input"
-        "description";
-      gap: var(--spacing-xs);
-      width: fit-content;
-      min-width: 0;
-      font-family: var(--font-family-ui);
+  .dateTimePicker_container {
+    display: inline-flex;
+    gap: var(--spacing-xs);
+    align-items: flex-start;
+    max-width: 100%;
+    font-family: var(--font-family-body);
+  }
 
-      @include bp.down(sm) {
-        gap: var(--spacing-xxs);
-      }
+  .dateTimePicker_label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-ui);
+    line-height: var(--line-height-label);
+    color: var(--text-color-primary);
+  }
 
-      @include bp.up(lg) {
-        gap: var(--spacing-sm);
-      }
-    }
+  .dateTimePicker_labelTop {
+    flex-direction: column;
+  }
 
-    &_full_width {
-      width: 100%;
-    }
+  .dateTimePicker_labelBottom {
+    flex-direction: column-reverse;
+  }
 
-    &_input[type="datetime-local"]::-webkit-calendar-picker-indicator {
-      display: none;
-      appearance: none;
-    }
+  .dateTimePicker_labelLeft {
+    flex-direction: row;
+    align-items: center;
+  }
 
-    &_input[type="time"]::-webkit-calendar-picker-indicator {
-      display: none;
-      appearance: none;
-    }
+  .dateTimePicker_labelRight {
+    flex-direction: row-reverse;
+    align-items: center;
+  }
 
-    &_input[type="date"]::-webkit-calendar-picker-indicator {
-      display: none;
-      appearance: none;
-    }
+  .dateTimePicker {
+    --dateTimePicker-glass-bg: rgba(255, 255, 255, 0.18);
+    --dateTimePicker-glass-hover-bg: rgba(255, 255, 255, 0.24);
+    --dateTimePicker-glass-border: rgba(255, 255, 255, 0.28);
+    --dateTimePicker-glass-text: var(--text-color-primary);
 
-    &_input[type="datetime-local"] {
-      border: 0;
-    }
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    min-width: 0;
+    max-width: 100%;
+    height: fit-content;
+    border: 1px solid transparent;
+    border-radius: var(--border-radius-md);
+    background: var(--background-color);
+    color: var(--text-color-primary);
+    box-shadow: var(--box-shadow-sm);
+    transition: var(--transition-default);
+  }
 
-    &_input[type="date"] {
-      border: 0;
-    }
+  .dateTimePicker_content {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
 
-    &_input[type="time"] {
-      border: 0;
-    }
+  .dateTimePicker_fullWidth {
+    width: 100%;
+  }
 
-    &_label {
-      grid-area: label;
-      font-family: var(--font-family-ui);
-      font-size: var(--font-size-label);
-      font-weight: var(--font-weight-label);
-      line-height: var(--line-height-label);
-      letter-spacing: var(--letter-spacing-label);
-      margin: 0;
-      color: inherit;
+  .dateTimePicker_fullWidth .dateTimePicker_inputWrapper {
+    width: 100%;
+  }
 
-      @include bp.down(sm) {
-        font-size: var(--font-size-caption);
-      }
+  .dateTimePicker_inputWrapper {
+    display: flex;
+    align-items: stretch;
+    width: min(100%, 18rem);
+    min-width: 0;
+    overflow: hidden;
+    color: inherit;
+    border-radius: inherit;
+  }
 
-      @include bp.up(lg) {
-        font-size: var(--font-size-body-sm);
-      }
-    }
+  .dateTimePicker_inputWrapper:focus-within {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: 2px;
+  }
 
-    &_input_wrapper {
-      grid-area: input;
-      position: relative;
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      align-items: center;
-      width: 100%;
-      min-width: 0;
-      gap: var(--spacing-xs);
-    }
+  .dateTimePicker_input {
+    flex: 1 1 auto;
+    width: 100%;
+    min-width: 0;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font: inherit;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    color-scheme: dark;
+  }
 
-    &_description {
-      grid-area: description;
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-body-sm);
-      font-weight: var(--font-weight-body);
-      line-height: var(--line-height-body);
-      letter-spacing: var(--letter-spacing-body);
-      color: var(--text-color-primary);
+  .dateTimePicker_input::-webkit-calendar-picker-indicator {
+    display: none;
+    opacity: 0;
+  }
 
-      @include bp.down(sm) {
-        font-size: var(--font-size-label);
-      }
+  .dateTimePicker_button {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    min-width: 2.25rem;
+    color: inherit;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+    border-left: 1px solid var(--border-color);
+  }
 
-      @include bp.up(lg) {
-        font-size: var(--font-size-body);
-      }
-    }
+  .dateTimePicker_button svg {
+    width: 1rem;
+    height: 1rem;
+  }
 
-    &_label_top {
-      grid-template-areas:
-        "label"
-        "input"
-        "description";
-    }
+  .dateTimePicker_button:focus-visible {
+    outline: 2px solid var(--focus-outline-color);
+    outline-offset: -2px;
+  }
 
-    &_label_bottom {
-      grid-template-areas:
-        "input"
-        "label"
-        "description";
-    }
+  .dateTimePicker_button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 
-    &_label_left,
-    &_label_right {
-      grid-template-columns: max-content minmax(0, 1fr);
-      align-items: center;
-      column-gap: var(--spacing-sm);
-      row-gap: var(--spacing-xs);
+  .dateTimePicker_description,
+  .dateTimePicker_helperText,
+  .dateTimePicker_errorText {
+    max-width: 100%;
+    margin: 0;
+    font-size: var(--font-size-body-sm);
+    line-height: 1.4;
+    color: inherit;
+    overflow-wrap: anywhere;
+  }
 
-      @include bp.down(sm) {
-        grid-template-columns: 1fr;
-      }
-    }
+  .dateTimePicker_description,
+  .dateTimePicker_helperText {
+    color: inherit;
+  }
 
-    &_label_left {
-      grid-template-areas:
-        "label input"
-        ". description";
+  .dateTimePicker_errorText {
+    color: var(--error-color);
+  }
 
-      @include bp.down(sm) {
-        grid-template-areas:
-          "label"
-          "input"
-          "description";
-      }
-    }
+  .dateTimePicker_loader {
+    display: inline-block;
+    flex: 0 0 auto;
+    width: 1rem;
+    height: 1rem;
+    padding: 2px;
+    border: 2px solid currentcolor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    opacity: 0.72;
+    animation: spin 700ms linear infinite;
+  }
 
-    &_label_right {
-      grid-template-areas:
-        "input label"
-        "description .";
-
-      @include bp.down(sm) {
-        grid-template-areas:
-          "input"
-          "label"
-          "description";
-      }
-    }
-
-    &_input {
-      z-index: 1;
-      width: 100%;
-      min-width: 0;
-      padding: 0;
-      cursor: pointer;
-      border: 2px solid transparent;
-      font-family: var(--font-family-ui);
-      font-size: var(--font-size-body);
-      font-weight: var(--font-weight-body);
-      line-height: var(--line-height-body);
-      letter-spacing: var(--letter-spacing-body);
-      background-color: transparent;
-      color: var(--text-color-primary);
-      border-radius: var(--border-radius-md) 0 0 var(--border-radius-md);
-      transition:
-        border-color var(--transition-default),
-        background-color var(--transition-default);
-
-      @include bp.down(sm) {
-        font-size: var(--font-size-label);
-        border-width: 1.2px;
-      }
-
-      @include bp.up(lg) {
-        font-size: var(--font-size-h6);
-      }
-
-      &:focus {
-        outline: none;
-        border-color: var(--focus-outline-color, var(--primary-color));
-      }
-
-      &:focus-visible {
-        outline: 2px solid var(--focus-outline-color, var(--primary-color));
-        outline-offset: 2px;
-      }
-
-      &::-webkit-calendar-picker-indicator {
-        opacity: 1;
-        filter: invert(1);
-        z-index: 2;
-        cursor: pointer;
-      }
-    }
-
-    &_icon {
-      z-index: 2;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      justify-self: end;
-      flex-shrink: 0;
-      font-size: var(--font-size-body);
-      cursor: pointer;
-      pointer-events: auto;
-      color: var(--text-color-primary);
-      line-height: 1;
-      background-color: transparent;
-      border: none;
-      margin: 0;
-      border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
-      border-left: 1px solid var(--border-color);
-
-      @include bp.down(sm) {
-        font-size: var(--font-size-label);
-      }
-
-      @include bp.up(lg) {
-        font-size: var(--font-size-h6);
-      }
+  @each $themeName, $vals in theme.$themes {
+    .dateTimePicker_#{$themeName} {
+      --dateTimePicker-glass-bg: #{map.get($vals, glass-bg)};
+      --dateTimePicker-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --dateTimePicker-glass-border: #{map.get($vals, glass-border)};
+      --dateTimePicker-glass-text: #{map.get($vals, text)};
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+      border-color: map.get($vals, border);
 
       &:hover {
-        transform: translateY(-1px);
+        background-color: if(
+          map.has-key($vals, hover),
+          map.get($vals, hover),
+          map.get($vals, bg)
+        );
       }
 
-      &:focus-visible {
-        outline: 2px solid var(--focus-outline-color, var(--primary-color));
-        outline-offset: 2px;
-      }
-    }
-
-    @each $theme-name, $values in theme.$themes {
-      &_#{$theme-name} {
-        --datetime-picker-glass-bg: #{map.get($values, glass-bg)};
-        --datetime-picker-glass-hover-bg: #{map.get($values, glass-hover)};
-        --datetime-picker-glass-border: #{map.get($values, glass-border)};
-        --datetime-picker-glass-text: #{map.get($values, text)};
+      .dateTimePicker_button {
+        border-color: inherit;
       }
 
-      &_#{$theme-name} &_input_wrapper {
-        background-color: map.get($values, bg);
-        color: map.get($values, text);
+      &.dateTimePicker_outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
 
-        &:focus-within {
-          border-color: map.get($values, border);
+        .dateTimePicker_button {
+          border-color: map.get($vals, border);
         }
-      }
-
-      &_#{$theme-name}.datetime_picker_outline &_input_wrapper {
-        border: 2px solid map.get($values, bg);
-
-        @include bp.down(sm) {
-          border-width: 1.5px;
-        }
-
-        &:focus-within {
-          border-color: map.get($values, border);
-        }
-
-        &:hover {
-          border-color: map.get($values, hover);
-        }
-      }
-    }
-
-    @each $state-name, $values in theme.$states {
-      &_#{$state-name} {
-        --datetime-picker-glass-bg: #{map.get($values, glass-bg)};
-        --datetime-picker-glass-hover-bg: #{map.get($values, glass-hover)};
-        --datetime-picker-glass-border: #{map.get($values, glass-border)};
-        --datetime-picker-glass-text: #{map.get($values, text)};
-      }
-
-      &_#{$state-name} &_input_wrapper {
-        background-color: map.get($values, bg);
-        color: map.get($values, text);
-
-        &:focus-within {
-          border-color: map.get($values, border);
-        }
-      }
-
-      &_#{$state-name}.datetime_picker_outline &_input_wrapper {
-        border: 2px solid map.get($values, bg);
-
-        @include bp.down(sm) {
-          border-width: 1.5px;
-        }
-
-        &:focus-within {
-          border-color: map.get($values, border);
-        }
-
-        &:hover {
-          border-color: map.get($values, hover);
-        }
-      }
-    }
-
-    &_outline .datetime_picker_input_wrapper {
-      background-color: transparent;
-      box-shadow: none;
-    }
-
-    &_glass .datetime_picker_input_wrapper {
-      @include mixins.glass-surface(
-        var(--datetime-picker-glass-bg, rgba(255, 255, 255, 0.18)),
-        var(--datetime-picker-glass-border, rgba(255, 255, 255, 0.34)),
-        16px
-      );
-      color: var(--datetime-picker-glass-text, var(--text-color-primary));
-    }
-
-    &_glass .datetime_picker_input_wrapper:hover {
-      background: var(
-        --datetime-picker-glass-hover-bg,
-        rgba(255, 255, 255, 0.24)
-      );
-    }
-
-    &_clear.datetime_picker_outline .datetime_picker_input_wrapper {
-      color: var(--text-color-primary);
-      border: 2px solid var(--text-color-primary);
-
-      @include bp.down(sm) {
-        border-width: 1.5px;
-      }
-    }
-
-    &_disabled .datetime_picker_input_wrapper {
-      opacity: 0.6;
-      background-color: var(--disabled-color);
-      color: var(--text-color-secondary);
-      cursor: not-allowed;
-
-      .datetime_picker_input {
-        cursor: not-allowed;
-      }
-    }
-
-    &_disabled .datetime_picker_icon {
-      opacity: 0.6;
-      pointer-events: none;
-      color: var(--text-color-secondary);
-      cursor: not-allowed;
-    }
-
-    $input-sizes: (
-      "xs": (
-        padding: 4px 3px,
-        font-size: var(--font-size-caption),
-        max-width: 170px,
-        icon-size: 15px,
-      ),
-      "small": (
-        padding: 6px 10px,
-        font-size: var(--font-size-label),
-        max-width: 190px,
-        icon-size: 20px,
-      ),
-      "medium": (
-        padding: 6px 10px,
-        font-size: var(--font-size-body-sm),
-        max-width: 215px,
-        icon-size: 22px,
-      ),
-      "large": (
-        padding: 8px 16px,
-        font-size: var(--font-size-body),
-        max-width: 250px,
-        icon-size: 25px,
-      ),
-      "xl": (
-        padding: 10px 20px,
-        font-size: var(--font-size-h6),
-        max-width: 330px,
-        icon-size: 30px,
-      ),
-    );
-
-    @each $size, $props in $input-sizes {
-      &_#{$size} .datetime_picker_input_wrapper {
-        padding: map.get($props, padding);
-      }
-
-      &_#{$size} .datetime_picker_input {
-        font-size: map.get($props, font-size);
-      }
-
-      &_#{$size} .datetime_picker_icon {
-        svg {
-          height: map.get($props, icon-size);
-          width: map.get($props, icon-size);
-        }
-      }
-    }
-
-    &_description {
-      font-family: var(--font-family-body);
-      font-size: var(--font-size-body-sm);
-      font-weight: var(--font-weight-body);
-      line-height: var(--line-height-body);
-      letter-spacing: var(--letter-spacing-body);
-      color: var(--text-color-primary);
-
-      @include bp.down(sm) {
-        font-size: var(--font-size-label);
-      }
-
-      @include bp.up(lg) {
-        font-size: var(--font-size-body);
       }
     }
   }
 
+  @each $state, $vals in theme.$states {
+    .dateTimePicker_#{$state} {
+      --dateTimePicker-glass-bg: #{map.get($vals, glass-bg)};
+      --dateTimePicker-glass-hover-bg: #{map.get($vals, glass-hover)};
+      --dateTimePicker-glass-border: #{map.get($vals, glass-border)};
+      --dateTimePicker-glass-text: #{map.get($vals, text)};
+      border-width: 2px;
+      border-color: map.get($vals, border);
+      color: map.get($vals, text);
+
+      .dateTimePicker_button {
+        border-color: map.get($vals, border);
+      }
+
+      &.dateTimePicker_outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+
+        .dateTimePicker_button {
+          border-color: map.get($vals, border);
+        }
+      }
+    }
+  }
+
+  .dateTimePicker_clear {
+    background: transparent;
+    border-color: transparent;
+    box-shadow: none;
+  }
+
+  .dateTimePicker_glass {
+    @include mixins.glass-surface(
+      var(--dateTimePicker-glass-bg),
+      var(--dateTimePicker-glass-border),
+      16px
+    );
+
+    .dateTimePicker_button {
+      border-color: var(--dateTimePicker-glass-border);
+    }
+
+    color: inherit;
+  }
+
+  .dateTimePicker_glass:hover {
+    background: var(--dateTimePicker-glass-hover-bg);
+  }
+
+  .dateTimePicker_glass.dateTimePicker_outline {
+    border-color: var(--dateTimePicker-glass-border);
+
+    .dateTimePicker_button {
+      border-color: var(--dateTimePicker-glass-border);
+    }
+  }
+
+  .dateTimePicker_disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+    background-color: var(--disabled-color);
+    border-color: var(--disabled-color);
+
+    .dateTimePicker_input {
+      cursor: not-allowed;
+    }
+
+    &:hover {
+      background-color: var(--disabled-color);
+    }
+  }
+
+  .dateTimePicker_loading {
+    cursor: progress;
+  }
+
+  .dateTimePicker_disabled .dateTimePicker_inputWrapper,
+  .dateTimePicker_loading .dateTimePicker_inputWrapper {
+    opacity: 0.72;
+  }
+
+  .dateTimePicker_readOnly .dateTimePicker_button {
+    cursor: default;
+  }
+
   @each $key, $value in theme.$rounding {
-    .datetime_picker_round-#{$key} .datetime_picker_input_wrapper {
+    .dateTimePicker_round-#{$key} {
       border-radius: $value;
     }
   }
 
   @each $key, $value in theme.$shadow {
-    .datetime_picker_shadow-#{$key} .datetime_picker_input_wrapper {
+    .dateTimePicker_shadow-#{$key} {
       box-shadow: $value;
     }
   }
 
+  @include bp.down(xs) {
+    .dateTimePicker_container,
+    .dateTimePicker {
+      width: 100%;
+    }
+
+    .dateTimePicker_labelLeft,
+    .dateTimePicker_labelRight {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .datetime_picker,
-    .datetime_picker * {
+    .dateTimePicker,
+    .dateTimePicker * {
       transition: none !important;
       animation: none !important;
     }
   }
 
-  @media (hover: none) {
-    .datetime_picker_icon:hover {
-      transform: none;
-    }
-  }
-
   @media (forced-colors: active) {
-    .datetime_picker_glass .datetime_picker_input_wrapper {
+    .dateTimePicker {
       background: Canvas;
       color: CanvasText;
+      border: 1px solid ButtonText;
+      box-shadow: none;
+    }
+
+    .dateTimePicker_glass {
+      background: Canvas;
       border-color: ButtonText;
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
-    }
-
-    .datetime_picker_input_wrapper {
-      background: Canvas;
-      color: CanvasText;
-      border: 1px solid ButtonText !important;
-      outline-color: Highlight;
-      box-shadow: none !important;
-    }
-
-    .datetime_picker_icon {
-      color: ButtonText;
-      border: 1px solid ButtonText;
-      border-radius: 4px;
     }
   }
 }

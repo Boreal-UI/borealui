@@ -23,6 +23,17 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   rounding = getDefaultRounding(),
   className,
   titleClassName,
+  leftClassName,
+  centerClassName,
+  rightClassName,
+  leftSectionClassName,
+  centerSectionClassName,
+  rightSectionClassName,
+  leftContentClassName,
+  centerContentClassName,
+  rightContentClassName,
+  avatarWrapperClassName,
+  avatarClassName,
   "data-testid": dataTestId,
   testId = dataTestId ?? "toolbar",
   "aria-label": ariaLabel = "Toolbar",
@@ -72,45 +83,91 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
       data-testid={testId}
     >
       <div
-        className={classMap.section}
+        className={combineClassNames(
+          classMap.section,
+          classMap.leftSection,
+          leftClassName,
+          leftSectionClassName,
+        )}
         role="group"
         aria-label={leftAriaLabel}
         data-testid={`${testId}-left`}
       >
-        {left}
+        <div
+          className={combineClassNames(
+            classMap.sectionContent,
+            classMap.leftContent,
+            leftContentClassName,
+          )}
+          data-testid={`${testId}-left-content`}
+        >
+          {left}
+        </div>
       </div>
 
       <div
-        className={classMap.section}
+        className={combineClassNames(
+          classMap.section,
+          classMap.centerSection,
+          centerClassName,
+          centerSectionClassName,
+        )}
         role="group"
         aria-label={centerAriaLabel}
         data-testid={`${testId}-center`}
       >
-        {title && (
-          <TitleTag
-            id={resolvedTitleId}
-            className={combineClassNames(classMap.title, titleClassName)}
-            data-testid={`${testId}-title`}
-          >
-            {title}
-          </TitleTag>
-        )}
-        {center}
+        <div
+          className={combineClassNames(
+            classMap.sectionContent,
+            classMap.centerContent,
+            centerContentClassName,
+          )}
+          data-testid={`${testId}-center-content`}
+        >
+          {title && (
+            <TitleTag
+              id={resolvedTitleId}
+              className={combineClassNames(classMap.title, titleClassName)}
+              data-testid={`${testId}-title`}
+            >
+              {title}
+            </TitleTag>
+          )}
+          {center}
+        </div>
       </div>
 
       <div
-        className={classMap.section}
+        className={combineClassNames(
+          classMap.section,
+          classMap.rightSection,
+          rightClassName,
+          rightSectionClassName,
+        )}
         role="group"
         aria-label={rightAriaLabel}
         data-testid={`${testId}-right`}
       >
-        {right}
+        <div
+          className={combineClassNames(
+            classMap.sectionContent,
+            classMap.rightContent,
+            rightContentClassName,
+          )}
+          data-testid={`${testId}-right-content`}
+        >
+          {right}
+        </div>
         {avatar && (
           <div
-            className={classMap.avatarWrapper}
+            className={combineClassNames(
+              classMap.avatarWrapper,
+              avatarWrapperClassName,
+            )}
             data-testid={`${testId}-avatar`}
           >
             <AvatarComponent
+              className={avatarClassName}
               name={avatar.name}
               src={avatar.src}
               size={avatar.size || "medium"}

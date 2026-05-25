@@ -145,12 +145,13 @@
     margin: 0;
     font-size: var(--font-size-body-sm);
     line-height: 1.4;
+    color: inherit;
     overflow-wrap: anywhere;
   }
 
   .datePicker_description,
   .datePicker_helperText {
-    color: var(--text-color-secondary);
+    color: inherit;
   }
 
   .datePicker_errorText {
@@ -165,6 +166,7 @@
     border: 2px solid currentcolor;
     border-right-color: transparent;
     border-radius: 50%;
+    padding: 2px;
     opacity: 0.72;
     animation: spin 700ms linear infinite;
   }
@@ -187,11 +189,19 @@
         );
       }
 
+      .datePicker_button {
+        border-color: inherit;
+      }
+
       &.datePicker_outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
+
+        .datePicker_button {
+          border-color: map.get($vals, border);
+        }
       }
     }
   }
@@ -205,6 +215,21 @@
       border-width: 2px;
       border-color: map.get($vals, border);
       color: map.get($vals, text);
+
+      .datePicker_button {
+        border-color: map.get($vals, border);
+      }
+
+      &.datePicker_outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+
+        .datePicker_button {
+          border-color: map.get($vals, border);
+        }
+      }
     }
   }
 
@@ -221,7 +246,11 @@
       16px
     );
 
-    color: var(--datePicker-glass-text);
+    .datePicker_button {
+      border-color: var(--datePicker-glass-border);
+    }
+
+    color: inherit;
   }
 
   .datePicker_glass:hover {
@@ -230,6 +259,9 @@
 
   .datePicker_glass.datePicker_outline {
     border-color: var(--datePicker-glass-border);
+    .datePicker_button {
+      border-color: var(--datePicker-glass-border);
+    }
   }
 
   .datePicker_disabled {

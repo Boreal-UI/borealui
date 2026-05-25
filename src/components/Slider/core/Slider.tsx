@@ -8,10 +8,17 @@ import { combineClassNames } from "../../../utils/classNames";
 const coreStyles = {
   container: "slider_container",
   label: "slider_label",
+  meta: "slider_meta",
+  metaValueOnly: "slider_meta_valueOnly",
   wrapper: "slider_wrapper",
   slider: "slider",
   glass: "slider_glass",
   value: "slider_value",
+
+  labelTop: "slider_label_top",
+  labelBottom: "slider_label_bottom",
+  labelLeft: "slider_label_left",
+  labelRight: "slider_label_right",
 
   xs: "slider_xs",
   small: "slider_small",

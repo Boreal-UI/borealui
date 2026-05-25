@@ -14,7 +14,7 @@
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-body);
   }
 
@@ -39,7 +39,7 @@
     max-width: 100%;
     margin: 0;
     border: none;
-    color: var(--text-color-primary);
+    color: inherit;
     box-shadow: var(--box-shadow-sm);
     padding: var(--spacing-sm);
     transition: var(--transition-default);
@@ -71,7 +71,7 @@
 
   .fieldSet_optional {
     margin-inline-start: var(--spacing-xs);
-    color: var(--text-color-secondary);
+    color: inherit;
     font-size: var(--font-size-body-xs);
     font-weight: var(--font-weight-normal);
   }
@@ -90,7 +90,7 @@
   .fieldSet_description,
   .fieldSet_helperText,
   .fieldSet_loadingMessage {
-    color: var(--text-color-secondary);
+    color: inherit;
   }
 
   .fieldSet_errorText {
@@ -213,7 +213,7 @@
 
       &.fieldSet_outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
       }
@@ -228,7 +228,13 @@
       --fieldSet-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
-      color: map.get($vals, text);
+
+      &.fieldSet_outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
     }
   }
 
@@ -245,7 +251,7 @@
       16px
     );
 
-    color: var(--fieldSet-glass-text);
+    color: inherit;
   }
 
   .fieldSet_glass:hover {
@@ -258,7 +264,7 @@
 
   .fieldSet_disabled {
     cursor: not-allowed;
-    opacity: 0.6;
+    opacity: 0.4;
     background-color: var(--disabled-color);
     border-color: var(--disabled-color);
 

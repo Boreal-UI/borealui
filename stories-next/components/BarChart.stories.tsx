@@ -16,6 +16,7 @@ const meta: Meta<BarChartProps> = {
 export default meta;
 type Story = StoryObj<BarChartProps>;
 export const Default: Story = {};
+export const WithUnits: Story = { args: { units: "k USD" } };
 export const WithoutGrid: Story = { args: { showGrid: false } };
 export const Compact: Story = {
   args: { width: 240, height: 140, showLabels: false },

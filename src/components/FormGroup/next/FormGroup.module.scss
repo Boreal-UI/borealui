@@ -3,194 +3,193 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--spacing-md);
+    width: fit-content;
+    font-family: var(--font-family-body);
 
-.wrapper {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: var(--spacing-md);
-  width: fit-content;
-  font-family: var(--font-family-body);
-
-  @include bp.down(sm) {
-    width: 100%;
-  }
-}
-
-.label {
-  color: var(--text-color-primary);
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label);
-  font-weight: var(--font-weight-label);
-  line-height: var(--line-height-label);
-  letter-spacing: var(--letter-spacing-label);
-  margin-bottom: var(--spacing-xxs);
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-caption);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body-sm);
-  }
-}
-
-.required {
-  color: var(--error-color);
-  margin-left: 4px;
-}
-
-.inputWrapper {
-  display: flex;
-  flex-direction: column;
-
-  @include bp.up(sm) {
-    flex-direction: row;
-    gap: var(--spacing-sm);
-    align-items: center;
-  }
-}
-
-.inputField {
-  width: fit-content;
-
-  @include bp.down(sm) {
-    width: 100%;
-  }
-}
-
-.controller {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: var(--spacing-xs);
-
-  @include bp.up(xs) {
-    margin-top: 0;
-  }
-}
-
-.description,
-.errorMessage {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body-sm);
-  font-weight: var(--font-weight-body);
-  line-height: var(--line-height-body);
-  letter-spacing: var(--letter-spacing-body);
-  margin-top: 4px;
-
-  @include bp.down(xs) {
-    font-size: var(--font-size-caption);
-  }
-
-  @include bp.up(lg) {
-    font-size: var(--font-size-body);
-  }
-}
-
-.description {
-  color: var(--text-color-primary);
-}
-
-.errorMessage {
-  color: var(--error-color);
-}
-
-.horizontal {
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: center;
-
-  &_label {
-    margin-bottom: 0;
-    margin-right: var(--spacing-sm);
-    width: auto;
-    text-align: left;
-
-    @include bp.up(sm) {
-      width: 150px;
-      text-align: right;
+    @include bp.down(sm) {
+      width: 100%;
     }
   }
 
+  .label {
+    color: inherit;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+    letter-spacing: var(--letter-spacing-label);
+    margin-bottom: var(--spacing-xxs);
+
+    @include bp.down(xs) {
+      font-size: var(--font-size-caption);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body-sm);
+    }
+  }
+
+  .required {
+    color: var(--error-color);
+    margin-left: 4px;
+  }
+
   .inputWrapper {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 
     @include bp.up(sm) {
-      align-items: flex-start;
-      gap: var(--spacing-xxs);
+      flex-direction: row;
+      gap: var(--spacing-sm);
+      align-items: center;
     }
   }
 
   .inputField {
     width: fit-content;
-    flex: 1;
 
-    &.formError {
-      border: 1px solid var(--error-color);
+    @include bp.down(sm) {
+      width: 100%;
     }
   }
 
   .controller {
-    margin-left: auto;
-    margin-right: var(--spacing-sm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: var(--spacing-xs);
+
+    @include bp.up(xs) {
+      margin-top: 0;
+    }
   }
 
   .description,
   .errorMessage {
-    margin-left: 0;
-    margin-bottom: 0;
-    text-align: left;
-    line-height: 1em;
-  }
-}
-
-$size-margins: (
-  "xs": var(--spacing-xs),
-  "small": var(--spacing-sm),
-  "medium": var(--spacing-md),
-  "large": var(--spacing-lg),
-  "xl": var(--spacing-xl),
-);
-
-@each $size, $spacing in $size-margins {
-  .#{$size} {
-    .inputWrapper {
-      margin-bottom: $spacing;
-    }
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm);
+    font-weight: var(--font-weight-body);
+    line-height: var(--line-height-body);
+    letter-spacing: var(--letter-spacing-body);
+    margin-top: 4px;
 
     @include bp.down(xs) {
+      font-size: var(--font-size-caption);
+    }
+
+    @include bp.up(lg) {
+      font-size: var(--font-size-body);
+    }
+  }
+
+  .description {
+    color: inherit;
+  }
+
+  .errorMessage {
+    color: var(--error-color);
+  }
+
+  .horizontal {
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+
+    &_label {
+      margin-bottom: 0;
+      margin-right: var(--spacing-sm);
+      width: auto;
+      text-align: left;
+
+      @include bp.up(sm) {
+        width: 150px;
+        text-align: right;
+      }
+    }
+
+    .inputWrapper {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      @include bp.up(sm) {
+        align-items: flex-start;
+        gap: var(--spacing-xxs);
+      }
+    }
+
+    .inputField {
+      width: fit-content;
+      flex: 1;
+
+      &.formError {
+        border: 1px solid var(--error-color);
+      }
+    }
+
+    .controller {
+      margin-left: auto;
+      margin-right: var(--spacing-sm);
+    }
+
+    .description,
+    .errorMessage {
+      margin-left: 0;
+      margin-bottom: 0;
+      text-align: left;
+      line-height: 1em;
+    }
+  }
+
+  $size-margins: (
+    "xs": var(--spacing-xs),
+    "small": var(--spacing-sm),
+    "medium": var(--spacing-md),
+    "large": var(--spacing-lg),
+    "xl": var(--spacing-xl),
+  );
+
+  @each $size, $spacing in $size-margins {
+    .#{$size} {
       .inputWrapper {
-        margin-bottom: max(#{$spacing} - 4px, var(--spacing-xs));
+        margin-bottom: $spacing;
+      }
+
+      @include bp.down(xs) {
+        .inputWrapper {
+          margin-bottom: max(#{$spacing} - 4px, var(--spacing-xs));
+        }
       }
     }
   }
-}
 
-.inputWrapper > :focus-visible {
-  outline: 2px solid var(--focus-outline-color, var(--primary-color));
-  outline-offset: 2px;
-  border-radius: 4px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .wrapper,
-  .wrapper * {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (forced-colors: active) {
-  .wrapper {
-    color: CanvasText;
+  .inputWrapper > :focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 4px;
   }
 
-  .horizontal .inputField.formError {
-    border-color: Highlight !important;
+  @media (prefers-reduced-motion: reduce) {
+    .wrapper,
+    .wrapper * {
+      transition: none !important;
+      animation: none !important;
+    }
   }
-}
+
+  @media (forced-colors: active) {
+    .wrapper {
+      color: CanvasText;
+    }
+
+    .horizontal .inputField.formError {
+      border-color: Highlight !important;
+    }
+  }
 }

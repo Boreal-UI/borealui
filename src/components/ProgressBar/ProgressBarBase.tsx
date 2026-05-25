@@ -27,6 +27,8 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   "aria-describedby": ariaDescribedBy,
   "aria-valuetext": ariaValueText,
   label,
+  showValue = false,
+  units = "%",
   labelPosition = "top",
   labelId,
   description,
@@ -55,6 +57,9 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
 
   const computedAriaValueText =
     ariaValueText || (indeterminate ? "Loading" : `${progressValue}% complete`);
+  const showMetaRow =
+    (resolvedLabelPosition === "top" || resolvedLabelPosition === "bottom") &&
+    (label || showValue);
 
   const layoutClass = useMemo(() => {
     const posClass = classMap[`label${capitalize(resolvedLabelPosition)}`];
@@ -100,6 +105,26 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
     </div>
   ) : null;
 
+  const valueNode = showValue && !indeterminate ? (
+    <div className={classMap.value} data-testid={`${testId}-value`}>
+      {progressValue}
+      {units}
+    </div>
+  ) : null;
+
+  const metaNode = showMetaRow ? (
+    <div
+      className={combineClassNames(
+        classMap.meta,
+        !label && classMap.metaValueOnly,
+      )}
+      data-testid={`${testId}-meta`}
+    >
+      {labelNode}
+      {valueNode}
+    </div>
+  ) : null;
+
   const descriptionNode = description ? (
     <div id={resolvedDescriptionId} data-testid={`${testId}-description`}>
       {description}
@@ -108,9 +133,8 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
 
   return (
     <div className={layoutClass}>
-      {(resolvedLabelPosition === "top" ||
-        resolvedLabelPosition === "left") &&
-        labelNode}
+      {resolvedLabelPosition === "top" && metaNode}
+      {resolvedLabelPosition === "left" && labelNode}
 
       <div
         className={wrapperClass}
@@ -131,10 +155,14 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
           data-testid={`${testId}-bar`}
         />
       </div>
+      {showValue &&
+        !showMetaRow &&
+        resolvedLabelPosition !== "right" &&
+        valueNode}
 
-      {(resolvedLabelPosition === "bottom" ||
-        resolvedLabelPosition === "right") &&
-        labelNode}
+      {resolvedLabelPosition === "bottom" && metaNode}
+      {resolvedLabelPosition === "right" && labelNode}
+      {showValue && resolvedLabelPosition === "right" && valueNode}
       {descriptionNode}
     </div>
   );

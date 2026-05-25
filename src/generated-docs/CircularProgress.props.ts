@@ -167,6 +167,14 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default theme (fallback: \"primary\")"
     },
     {
+      "name": "units",
+      "type": "string",
+      "description": "Optional unit label shown beside raw values.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "value",
       "type": "number",
       "description": "Current value to be visualized (e.g., 75).",

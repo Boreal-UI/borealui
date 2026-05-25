@@ -144,12 +144,13 @@
     margin: 0;
     font-size: var(--font-size-body-sm);
     line-height: 1.4;
+    color: inherit;
     overflow-wrap: anywhere;
   }
 
   .description,
   .helperText {
-    color: var(--text-color-secondary);
+    color: inherit;
   }
 
   .errorText {
@@ -186,11 +187,19 @@
         );
       }
 
+      .button {
+        border-color: inherit;
+      }
+
       &.outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
+
+        .button {
+          border-color: map.get($vals, border);
+        }
       }
     }
   }
@@ -204,6 +213,21 @@
       border-width: 2px;
       border-color: map.get($vals, border);
       color: map.get($vals, text);
+
+      &.outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+
+        .button {
+          border-color: map.get($vals, border);
+        }
+      }
+
+      .button {
+        border-color: map.get($vals, border);
+      }
     }
   }
 
@@ -220,7 +244,11 @@
       16px
     );
 
-    color: var(--datePicker-glass-text);
+    .button {
+      border-color: var(--datePicker-glass-border);
+    }
+
+    color: inherit;
   }
 
   .glass:hover {

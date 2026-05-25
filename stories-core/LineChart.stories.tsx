@@ -17,5 +17,6 @@ const meta: Meta<LineChartProps> = {
 export default meta;
 type Story = StoryObj<LineChartProps>;
 export const Default: Story = {};
+export const WithUnits: Story = { args: { units: "visits" } };
 export const WithoutPoints: Story = { args: { showPoints: false } };
 export const CustomColor: Story = { args: { color: "#22c55e" } };

@@ -27,12 +27,13 @@
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
     line-height: var(--line-height-label);
-    color: var(--text-color-primary);
+    color: inherit;
     overflow-wrap: anywhere;
   }
 
   .optional {
-    color: var(--text-color-secondary);
+    color: inherit;
+    opacity: 0.78;
     font-size: var(--font-size-body-xs);
     font-weight: var(--font-weight-normal);
   }
@@ -141,6 +142,13 @@
     font: inherit;
   }
 
+  .content > input::placeholder,
+  .content > select::placeholder,
+  .content > textarea::placeholder {
+    color: currentcolor;
+    opacity: 0.78;
+  }
+
   .prefix,
   .suffix,
   .addon,
@@ -156,7 +164,7 @@
 
   .prefix,
   .suffix {
-    color: var(--text-color-secondary);
+    color: inherit;
   }
 
   .addon {
@@ -208,7 +216,7 @@
 
   .description,
   .helperText {
-    color: var(--text-color-secondary);
+    color: inherit;
   }
 
   .helperText {
@@ -253,7 +261,7 @@
 
       &.outline {
         background-color: transparent;
-        color: map.get($vals, text);
+        color: inherit;
         box-shadow: none;
         border: 2px solid map.get($vals, border);
       }
@@ -269,6 +277,13 @@
       border-width: 2px;
       border-color: map.get($vals, border);
       color: map.get($vals, text);
+
+      &.outline {
+        background-color: transparent;
+        color: inherit;
+        box-shadow: none;
+        border: 2px solid map.get($vals, border);
+      }
     }
   }
 
@@ -285,7 +300,7 @@
       16px
     );
 
-    color: var(--inputGroup-glass-text);
+    color: inherit;
   }
 
   .glass:hover {

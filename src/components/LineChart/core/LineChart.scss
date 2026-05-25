@@ -1,49 +1,91 @@
 @use "../../../styles/_animations";
 
+@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 
 @layer boreal-ui.components {
   .lineChart,
   .root {
-    display: inline-flex;
+    display: flex;
     flex-direction: column;
     gap: var(--spacing-sm);
+    width: 100%;
     max-width: 100%;
-    color: var(--text-color-primary);
+    min-width: 0;
+    color: inherit;
     font-family: var(--font-family-ui);
+    animation: fade-in-up 240ms ease-out both;
   }
+
   .lineChart_label,
   .label {
+    max-width: 100%;
+    color: inherit;
     font-size: var(--font-size-body-sm);
     font-weight: var(--font-weight-ui);
-    color: var(--text-color-primary);
+    line-height: var(--line-height-body, 1.4);
+    overflow-wrap: anywhere;
   }
+
   .lineChart_svg,
   .svg {
     display: block;
+    width: 100%;
     max-width: 100%;
+    height: auto;
+    min-width: 0;
     overflow: visible;
+    color: inherit;
   }
+
   .lineChart_gridLine,
   .gridLine {
     stroke: var(--border-color);
     stroke-width: 1;
     opacity: 0.16;
+    vector-effect: non-scaling-stroke;
   }
+
   .lineChart_line,
   .line {
     vector-effect: non-scaling-stroke;
+    animation: line-chart-draw 520ms ease-out both;
+    transition:
+      opacity var(--transition-default),
+      filter var(--transition-default);
   }
+
   .lineChart_point,
   .point {
     stroke: var(--background-color);
     stroke-width: 2;
+    vector-effect: non-scaling-stroke;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: line-chart-point-in 320ms ease-out both;
+    transition:
+      opacity var(--transition-default),
+      r var(--transition-default),
+      filter var(--transition-default);
   }
+
+  @media (hover: hover) and (pointer: fine) {
+    .lineChart_line:hover,
+    .line:hover,
+    .lineChart_point:hover,
+    .point:hover {
+      opacity: 0.78;
+    }
+  }
+
   .lineChart_axisLabel,
   .axisLabel {
-    fill: var(--text-color-primary);
-    font-size: 0.7rem;
+    fill: currentcolor;
+    font-size: clamp(0.55rem, 2.4cqi, 0.7rem);
+    line-height: 1;
     opacity: 0.72;
+    pointer-events: none;
   }
+
   .lineChart_loader,
   .loader {
     width: 1rem;
@@ -53,44 +95,138 @@
     border-radius: 50%;
     animation: spin 700ms linear infinite;
   }
-  .lineChart_primary,
-  .primary {
-    color: var(--primary-color);
-  }
-  .lineChart_secondary,
-  .secondary {
-    color: var(--secondary-color);
-  }
-  .lineChart_tertiary,
-  .tertiary {
-    color: var(--tertiary-color);
-  }
-  .lineChart_quaternary,
-  .quaternary {
-    color: var(--quaternary-color);
-  }
-  .lineChart_clear,
-  .clear {
-    color: var(--text-color-primary);
-  }
-  .lineChart_success,
-  .success {
-    color: var(--success-color);
-  }
-  .lineChart_info,
-  .info {
-    color: var(--info-color);
-  }
-  .lineChart_warning,
-  .warning {
-    color: var(--warning-color);
-  }
-  .lineChart_error,
-  .error {
-    color: var(--error-color);
-  }
+
   .lineChart_loading,
   .loading {
     cursor: progress;
+  }
+
+  @media (max-width: 420px) {
+    .lineChart,
+    .root {
+      gap: var(--spacing-xs, 0.5rem);
+    }
+
+    .lineChart_label,
+    .label {
+      font-size: var(--font-size-body-xs, 0.8rem);
+    }
+
+    .lineChart_axisLabel,
+    .axisLabel {
+      font-size: 0.62rem;
+    }
+
+    .lineChart_point,
+    .point {
+      stroke-width: 1.5;
+    }
+  }
+
+  @media (max-width: 280px) {
+    .lineChart_axisLabel,
+    .axisLabel {
+      font-size: 0.56rem;
+      opacity: 0.68;
+    }
+
+    .lineChart_point,
+    .point {
+      stroke-width: 1.25;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lineChart,
+    .root,
+    .lineChart_line,
+    .line,
+    .lineChart_point,
+    .point,
+    .lineChart_loader,
+    .loader {
+      animation: none;
+      transition: none;
+    }
+
+    .lineChart_line,
+    .line,
+    .lineChart_point,
+    .point {
+      opacity: 1;
+      transform: none;
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (hover: none) {
+    .lineChart_line,
+    .line,
+    .lineChart_point,
+    .point {
+      transition: none;
+    }
+
+    .lineChart_line:hover,
+    .line:hover,
+    .lineChart_point:hover,
+    .point:hover {
+      opacity: 1;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .lineChart,
+    .root {
+      color: CanvasText;
+    }
+
+    .lineChart_svg,
+    .svg {
+      color: CanvasText;
+    }
+
+    .lineChart_label,
+    .label,
+    .lineChart_axisLabel,
+    .axisLabel {
+      color: CanvasText;
+      fill: CanvasText;
+      opacity: 1;
+    }
+
+    .lineChart_gridLine,
+    .gridLine {
+      stroke: GrayText;
+      opacity: 1;
+    }
+
+    .lineChart_line,
+    .line {
+      stroke: Highlight;
+      opacity: 1;
+    }
+
+    .lineChart_point,
+    .point {
+      fill: Highlight;
+      stroke: Canvas;
+      stroke-width: 2;
+      opacity: 1;
+    }
+
+    .lineChart_line:hover,
+    .line:hover,
+    .lineChart_point:hover,
+    .point:hover {
+      opacity: 1;
+    }
+
+    .lineChart_loader,
+    .loader {
+      border-color: CanvasText;
+      border-right-color: Canvas;
+    }
   }
 }

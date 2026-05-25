@@ -32,6 +32,8 @@ import {
 
 const shellDemoStyles = `
   .demo {
+    width: 100%;
+    min-width: 0;
     min-height: 100%;
   }
 
@@ -40,61 +42,68 @@ const shellDemoStyles = `
     align-items: center;
     justify-content: space-between;
     gap: var(--spacing-md, 1rem);
+    min-width: 0;
   }
 
   .brand-row,
   .actions {
     display: flex;
     align-items: center;
+    min-width: 0;
   }
 
   .brand-row {
-    gap: var(--spacing-xl, 2rem);
-  }
-
-  .logo {
-    font-size: 1.35rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
-  }
-
-  .actions {
     gap: var(--spacing-sm, 0.75rem);
   }
 
+  .logo {
+    min-width: 0;
+    font-size: clamp(1rem, 2vw, 1.35rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    overflow-wrap: anywhere;
+  }
+
+  .actions {
+    flex: 0 0 auto;
+    gap: var(--spacing-xs, 0.5rem);
+  }
 
   .sidebar {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg, 1.5rem);
-
+    gap: var(--spacing-md, 1rem);
+    width: 100%;
+    min-width: 0;
   }
 
   .sidebar-header {
-    padding-inline: var(--spacing-xs, 0.5rem);
+    min-width: 0;
   }
 
   .side-nav {
-    flex: 1;
-    width: 95%;
+    width: 100%;
+    min-width: 0;
   }
 
   .collapse {
     margin-top: auto;
     padding-top: var(--spacing-md, 1rem);
-    border-top: 1px solid var(--border);
+    border-top: 1px solid color-mix(in srgb, currentcolor 18%, transparent);
   }
 
   .collapse-button {
     display: inline-flex;
     align-items: center;
+    justify-content: flex-start;
     gap: var(--spacing-sm, 0.75rem);
     width: 100%;
+    min-width: 0;
     padding: 0.7rem 0.9rem;
     border: 0;
     border-radius: var(--border-radius-md, 0.75rem);
     background: transparent;
-    color: var(--muted);
+    color: inherit;
     font: inherit;
     font-weight: 700;
     text-align: left;
@@ -102,18 +111,20 @@ const shellDemoStyles = `
   }
 
   .collapse-button:hover {
-    background: var(--surface-mid);
+    background: color-mix(in srgb, currentcolor 10%, transparent);
   }
 
   .main {
     display: grid;
     gap: var(--spacing-xl, 2rem);
-    padding: var(--spacing-xl, 2rem);
+    width: 100%;
+    min-width: 0;
   }
 
   .hero {
     display: grid;
     gap: var(--spacing-xs, 0.5rem);
+    min-width: 0;
   }
 
   .hero > * {
@@ -121,15 +132,20 @@ const shellDemoStyles = `
   }
 
   .metrics {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
   }
 
   .metricCard {
-height: 100%;}
+    height: 100%;
+    min-width: 0;
+  }
 
   .panel {
+    min-width: 0;
     overflow: hidden;
-    border: 1px solid var(--border);
+    border: 1px solid color-mix(in srgb, currentcolor 18%, transparent);
     border-radius: var(--border-radius-lg, 1rem);
   }
 
@@ -138,30 +154,42 @@ height: 100%;}
     align-items: center;
     justify-content: space-between;
     gap: var(--spacing-md, 1rem);
+    min-width: 0;
+    padding: var(--spacing-md, 1rem);
+    border-bottom: 1px solid color-mix(in srgb, currentcolor 14%, transparent);
   }
 
   .panel-header h2 {
+    min-width: 0;
     margin: 0;
   }
 
   .link-button {
+    flex: 0 0 auto;
     width: auto;
   }
 
   .table-wrap {
+    width: 100%;
+    min-width: 0;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .table {
-    min-width: 42rem;
+    min-width: min(42rem, 100%);
   }
 
   .aside {
     display: grid;
     gap: var(--spacing-md, 1rem);
     align-content: start;
-    min-height: 100%;
-    padding: var(--spacing-lg, 1.5rem);
+    width: 100%;
+    min-width: 0;
+  }
+
+  .aside-card {
+    min-width: 0;
   }
 
   .aside-card h3,
@@ -173,58 +201,90 @@ height: 100%;}
     margin-bottom: var(--spacing-xs, 0.5rem);
   }
 
-
   .footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: var(--spacing-md, 1rem);
-    padding: var(--spacing-md, 1rem) var(--spacing-lg, 1.5rem);
+    min-width: 0;
   }
-
 
   .footer-links {
     display: flex;
     align-items: center;
     gap: var(--spacing-md, 1rem);
     flex-wrap: wrap;
+    min-width: 0;
   }
 
   .footer-links a {
+    color: inherit;
     font-size: 0.85rem;
     font-weight: 700;
     text-decoration: none;
   }
 
-  @media (max-width: 960px) {
-    .nav,
-    .aside {
-      display: none;
-    }
-
-    .metrics {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
+  .footer-links a:hover {
+    text-decoration: underline;
   }
 
   @media (max-width: 640px) {
-    .topbar,
-    .main,
-    .footer {
-      padding-inline: var(--spacing-md, 1rem);
+    .topbar {
+      align-items: flex-start;
+      flex-direction: column;
     }
 
-    .brand-row {
-      gap: var(--spacing-md, 1rem);
+    .actions {
+      align-self: flex-start;
     }
 
-    .metrics {
-      grid-template-columns: 1fr;
-    }
-
+    .panel-header,
     .footer {
       align-items: flex-start;
       flex-direction: column;
+    }
+
+    .link-button {
+      width: 100%;
+    }
+  }
+
+  @media (hover: none) {
+    .collapse-button:hover,
+    .footer-links a:hover {
+      background: transparent;
+      text-decoration: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .demo,
+    .demo * {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .panel,
+    .panel-header,
+    .collapse,
+    .aside-card {
+      border-color: ButtonText;
+    }
+
+    .collapse-button {
+      color: ButtonText;
+      border: 1px solid ButtonText;
+    }
+
+    .collapse-button:hover {
+      background: Canvas;
+    }
+
+    .footer-links a {
+      color: LinkText;
     }
   }
 `;

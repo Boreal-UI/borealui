@@ -29,87 +29,6 @@
       outline-offset: 3px;
       border-radius: 8px;
     }
-
-    @each $themeName, $values in theme.$themes {
-      &.select_#{$themeName} {
-        --select-glass-bg: #{map.get($values, glass-bg)};
-        --select-glass-hover-bg: #{map.get($values, glass-hover)};
-        --select-glass-border: #{map.get($values, glass-border)};
-        --select-glass-text: #{map.get($values, text)};
-        background-color: map.get($values, bg);
-        color: map.get($values, text);
-
-        &:hover {
-          background-color: map.get($values, hover);
-        }
-      }
-
-      &.select_#{$themeName}.select_outline {
-        background-color: transparent;
-        color: map.get($values, text);
-        border: 1px solid map.get($values, border);
-
-        @include bp.down(sm) {
-          border-width: 1.5px;
-        }
-      }
-
-      &_clear.select_#{$themeName} {
-        background-color: transparent;
-      }
-    }
-
-    @each $stateName, $values in theme.$states {
-      &.select_#{$stateName} {
-        --select-glass-bg: #{map.get($values, glass-bg)};
-        --select-glass-hover-bg: #{map.get($values, glass-hover)};
-        --select-glass-border: #{map.get($values, glass-border)};
-        --select-glass-text: #{map.get($values, text)};
-        background-color: map.get($values, bg);
-        color: map.get($values, text);
-
-        &:hover {
-          background-color: map.get($values, hover);
-        }
-      }
-
-      &.select_#{$stateName}.select_outline {
-        background-color: transparent;
-        color: map.get($values, text);
-        border: 1px solid map.get($values, border);
-
-        @include bp.down(sm) {
-          border-width: 1.5px;
-        }
-      }
-    }
-
-    &.select_glass {
-      @include mixins.glass-surface(
-        var(--select-glass-bg, rgba(255, 255, 255, 0.18)),
-        var(--select-glass-border, rgba(255, 255, 255, 0.34)),
-        16px
-      );
-      color: var(--select-glass-text, var(--text-color-primary));
-    }
-
-    &.select_glass:hover {
-      background: var(--select-glass-hover-bg, rgba(255, 255, 255, 0.24));
-    }
-
-    &.select_glass.select_outline {
-      background: var(--select-glass-bg, rgba(255, 255, 255, 0.14));
-    }
-
-    &.select_disabled,
-    &.select:disabled {
-      background-color: var(--disabled-color);
-      cursor: not-allowed;
-
-      &:hover {
-        background-color: var(--disabled-color);
-      }
-    }
   }
 
   @each $key, $value in theme.$rounding {
@@ -121,27 +40,6 @@
   @each $key, $value in theme.$shadow {
     .select_shadow-#{$key} {
       box-shadow: $value;
-    }
-  }
-
-  .select_icon {
-    position: absolute;
-    height: 1.4rem;
-    width: 1.4rem;
-    z-index: 1;
-    pointer-events: none;
-    font-size: 12px;
-    color: var(--text-color-primary);
-    transform-origin: center;
-    background-color: transparent !important;
-    inset-inline-end: var(--spacing-sm);
-
-    @include bp.down(xs) {
-      font-size: 11px;
-    }
-
-    @include bp.up(lg) {
-      font-size: 14px;
     }
   }
 
@@ -157,7 +55,7 @@
     letter-spacing: var(--letter-spacing-label);
     appearance: none;
     border: none;
-    color: var(--text-color-primary);
+    color: inherit;
     background: transparent;
     cursor: pointer;
     transition:
@@ -181,7 +79,7 @@
     option {
       background-color: var(--background-color);
       border: none;
-      color: var(--text-color-primary);
+      color: inherit;
       font-family: var(--font-family-body);
       font-size: var(--font-size-label);
     }
@@ -253,6 +151,121 @@
 
   .select:disabled {
     cursor: not-allowed;
+  }
+
+  @each $themeName, $values in theme.$themes {
+    .select_#{$themeName} {
+      --select-glass-bg: #{map.get($values, glass-bg)};
+      --select-glass-hover-bg: #{map.get($values, glass-hover)};
+      --select-glass-border: #{map.get($values, glass-border)};
+      --select-glass-text: #{map.get($values, text)};
+      background-color: map.get($values, bg);
+      color: map.get($values, text);
+
+      option {
+        color: var(--text-color);
+      }
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+    }
+
+    .select_#{$themeName}.select_outline {
+      background-color: transparent;
+      color: inherit;
+      border: 1px solid map.get($values, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
+
+    .select_clear.select_#{$themeName} {
+      background-color: transparent;
+    }
+  }
+
+  @each $stateName, $values in theme.$states {
+    .select_#{$stateName} {
+      --select-glass-bg: #{map.get($values, glass-bg)};
+      --select-glass-hover-bg: #{map.get($values, glass-hover)};
+      --select-glass-border: #{map.get($values, glass-border)};
+      --select-glass-text: #{map.get($values, text)};
+      background-color: map.get($values, bg);
+
+      &:hover {
+        background-color: map.get($values, hover);
+      }
+
+      &.select_#{$stateName}.select_outline {
+        background-color: transparent;
+        color: inherit;
+        border: 1px solid map.get($values, border);
+
+        @include bp.down(sm) {
+          border-width: 1.5px;
+        }
+      }
+    }
+
+    .select_#{$stateName}.select_outline {
+      background-color: transparent;
+      color: inherit;
+      border: 1px solid map.get($values, border);
+
+      @include bp.down(sm) {
+        border-width: 1.5px;
+      }
+    }
+  }
+
+  .select_glass {
+    @include mixins.glass-surface(
+      var(--select-glass-bg, rgba(255, 255, 255, 0.18)),
+      var(--select-glass-border, rgba(255, 255, 255, 0.34)),
+      16px
+    );
+    color: inherit;
+  }
+
+  .select_glass:hover {
+    background: var(--select-glass-hover-bg, rgba(255, 255, 255, 0.24));
+  }
+
+  .select_glass.select_outline {
+    background: var(--select-glass-bg, rgba(255, 255, 255, 0.14));
+  }
+
+  .select_disabled,
+  .select:disabled {
+    background-color: var(--disabled-color);
+    cursor: not-allowed;
+
+    &:hover {
+      background-color: var(--disabled-color);
+    }
+  }
+
+  .select_icon {
+    position: absolute;
+    height: 1.4rem;
+    width: 1.4rem;
+    z-index: 1;
+    pointer-events: none;
+    font-size: 12px;
+    color: inherit;
+    transform-origin: center;
+    background-color: transparent;
+    inset-inline-end: var(--spacing-sm);
+
+    @include bp.down(xs) {
+      font-size: 11px;
+    }
+
+    @include bp.up(lg) {
+      font-size: 14px;
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -266,7 +266,7 @@
   }
 
   .checkbox_label {
-    color: var(--text-color-primary);
+    color: inherit;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-label);
@@ -286,10 +286,8 @@
 
   @each $name, $props in theme.$themes {
     .checkbox_#{$name} {
-      color: map.get($props, border);
-
       --checkbox-fill-color: #{map.get($props, border)};
-      --checkbox-check-color: var(--text-color);
+      --checkbox-check-color: #{map.get($props, text)};
 
       --checkbox-glass-bg: #{map.get($props, glass-bg)};
       --checkbox-glass-hover-bg: #{map.get($props, glass-hover)};
@@ -305,12 +303,12 @@
     .checkbox_input:checked + .checkbox_box.checkbox_#{$name} {
       background-color: map.get($props, border);
       border-color: map.get($props, border);
-      color: var(--text-color);
+      color: var(--checkbox-check-color);
     }
 
     .checkbox_#{$name} .checkbox_input:checked + .checkbox_box::after,
     .checkbox_input:checked + .checkbox_box.checkbox_#{$name}::after {
-      border-color: var(--text-color);
+      border-color: var(--checkbox-check-color);
     }
 
     .checkbox_#{$name}.checkbox_glass .checkbox_input:checked + .checkbox_box,
@@ -331,10 +329,8 @@
 
   @each $state, $props in theme.$states {
     .checkbox_#{$state} {
-      color: map.get($props, bg);
-
       --checkbox-fill-color: #{map.get($props, bg)};
-      --checkbox-check-color: var(--text-color);
+      --checkbox-check-color: #{map.get($props, text)};
 
       --checkbox-glass-bg: #{map.get($props, glass-bg)};
       --checkbox-glass-hover-bg: #{map.get($props, glass-hover)};
@@ -350,12 +346,12 @@
     .checkbox_input:checked + .checkbox_box.checkbox_#{$state} {
       background-color: map.get($props, bg);
       border-color: map.get($props, bg);
-      color: var(--text-color);
+      color: var(--checkbox-check-color);
     }
 
     .checkbox_#{$state} .checkbox_input:checked + .checkbox_box::after,
     .checkbox_input:checked + .checkbox_box.checkbox_#{$state}::after {
-      border-color: var(--text-color);
+      border-color: var(--checkbox-check-color);
     }
 
     .checkbox_#{$state}.checkbox_glass .checkbox_input:checked + .checkbox_box,

@@ -61,6 +61,14 @@ describe("LineChartBase", () => {
     expect(screen.getByRole("img")).toHaveAccessibleName(/Tue: 9/);
   });
 
+  it("shows units in axis and accessible value text", () => {
+    render(<LineChartBase classMap={classMap} data={data} units="visits" />);
+
+    expect(screen.getByRole("img")).toHaveAccessibleName(/Tue: 9 visits/);
+    expect(screen.getByText("9 visits")).toBeInTheDocument();
+    expect(screen.getByText("0 visits")).toBeInTheDocument();
+  });
+
   it("can hide point markers", () => {
     render(
       <LineChartBase classMap={classMap} data={data} showPoints={false} />,

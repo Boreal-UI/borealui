@@ -6,8 +6,6 @@ import {
   roundingOptions,
   shadowOptions,
   sizeOptions,
-  stateOptions,
-  themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import {
   renderThemeVariants,
@@ -27,6 +25,8 @@ const meta: Meta<EmptyStateProps> = {
     message: "This section doesn't have any content yet.",
     theme: "primary",
     size: "medium",
+    actionLabel: "Take Action",
+    onActionClick: () => alert("Action button clicked!"),
   },
 };
 
@@ -118,7 +118,8 @@ export const OutlineVariants: Story = {
 };
 
 export const GlassVariants: Story = {
-  render: (args) => renderGlassVariants({ component: EmptyState, args }),
+  render: (args) =>
+    renderGlassVariants({ component: EmptyState, args: { ...args } }),
 };
 
 export const GlassOutlineVariants: Story = {

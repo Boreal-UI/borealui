@@ -1,12 +1,5 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import {
-  EmptyState,
-  RoundingType,
-  ShadowType,
-  SizeType,
-  StateType,
-  ThemeType,
-} from "../../src/index.next";
+import { EmptyState } from "../../src/index.next";
 import type { EmptyStateProps } from "../../src/components/EmptyState/EmptyState.types";
 import { FaInbox, FaBug, FaFolderOpen } from "react-icons/fa";
 import {
@@ -17,24 +10,11 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
-const stateOptions: StateType[] = ["success", "error", "warning"];
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const meta: Meta<EmptyStateProps> = {
   title: "Components/EmptyState",
@@ -45,6 +25,8 @@ const meta: Meta<EmptyStateProps> = {
     message: "This section doesn't have any content yet.",
     theme: "primary",
     size: "medium",
+    actionLabel: "Take Action",
+    onActionClick: () => alert("Action button clicked!"),
   },
 };
 

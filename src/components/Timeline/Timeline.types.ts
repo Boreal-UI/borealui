@@ -38,6 +38,14 @@ export interface TimelineProps extends Omit<
   items: TimelineItem[];
 
   /**
+   * Whether timeline item content should display skeleton placeholders.
+   * Markers and connector bars remain visible.
+   *
+   * @default false
+   */
+  loading?: boolean;
+
+  /**
    * Accessible label for the timeline.
    * Defaults to "Timeline".
    *
@@ -118,4 +126,22 @@ export interface TimelineProps extends Omit<
    * Additional CSS class names for custom styling.
    */
   className?: string;
+}
+
+export interface TimelineBaseProps extends TimelineProps {
+  /**
+   * Framework-specific class name map supplied by the core or Next wrapper.
+   */
+  classMap: Record<string, string>;
+
+  /**
+   * Component implementation used to render loading skeletons.
+   */
+  SkeletonComponent?: React.FC<{
+    width: string;
+    height: string;
+    className?: string;
+    ["data-testid"]?: string;
+    "aria-hidden"?: boolean;
+  }>;
 }

@@ -11,6 +11,9 @@ export interface CircularProgressProps extends Omit<
   /** Current value to be visualized (e.g., 75). */
   value: number;
 
+  /** Optional unit label shown beside raw values. */
+  units?: string;
+
   /**
    * Minimum value for the range (default: 0).
    *
