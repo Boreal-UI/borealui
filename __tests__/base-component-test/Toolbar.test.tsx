@@ -10,6 +10,13 @@ const mockStyles = {
   toolbar: "toolbar",
   glass: "glass",
   section: "section",
+  leftSection: "leftSection",
+  centerSection: "centerSection",
+  rightSection: "rightSection",
+  sectionContent: "sectionContent",
+  leftContent: "leftContent",
+  centerContent: "centerContent",
+  rightContent: "rightContent",
   title: "title",
   avatarWrapper: "avatarWrapper",
   avatarButton: "avatarButton",
@@ -317,6 +324,77 @@ describe("ToolbarBase", () => {
     expect(toolbar).toHaveClass("roundLarge");
     expect(toolbar).toHaveClass("shadowStrong");
     expect(toolbar).toHaveClass("customToolbar");
+  });
+
+  it("applies custom class names to sections, section content, title, and avatar wrapper", () => {
+    render(
+      <ToolbarBase
+        title="Custom sections"
+        left={<button type="button">Back</button>}
+        center={<span>Context</span>}
+        right={<button type="button">Save</button>}
+        avatar={{ name: "JD" }}
+        leftClassName="aliasLeftSection"
+        centerClassName="aliasCenterSection"
+        rightClassName="aliasRightSection"
+        leftSectionClassName="customLeftSection"
+        centerSectionClassName="customCenterSection"
+        rightSectionClassName="customRightSection"
+        leftContentClassName="customLeftContent"
+        centerContentClassName="customCenterContent"
+        rightContentClassName="customRightContent"
+        titleClassName="customTitle"
+        avatarWrapperClassName="customAvatarWrapper"
+        avatarClassName="customAvatar"
+        AvatarComponent={DummyAvatar}
+        classMap={mockStyles}
+      />,
+    );
+
+    expect(screen.getByTestId("toolbar-left")).toHaveClass(
+      "section",
+      "leftSection",
+      "aliasLeftSection",
+      "customLeftSection",
+    );
+    expect(screen.getByTestId("toolbar-center")).toHaveClass(
+      "section",
+      "centerSection",
+      "aliasCenterSection",
+      "customCenterSection",
+    );
+    expect(screen.getByTestId("toolbar-right")).toHaveClass(
+      "section",
+      "rightSection",
+      "aliasRightSection",
+      "customRightSection",
+    );
+    expect(screen.getByTestId("toolbar-left-content")).toHaveClass(
+      "sectionContent",
+      "leftContent",
+      "customLeftContent",
+    );
+    expect(screen.getByTestId("toolbar-center-content")).toHaveClass(
+      "sectionContent",
+      "centerContent",
+      "customCenterContent",
+    );
+    expect(screen.getByTestId("toolbar-right-content")).toHaveClass(
+      "sectionContent",
+      "rightContent",
+      "customRightContent",
+    );
+    expect(screen.getByTestId("toolbar-title")).toHaveClass(
+      "title",
+      "customTitle",
+    );
+    expect(screen.getByTestId("toolbar-avatar")).toHaveClass(
+      "avatarWrapper",
+      "customAvatarWrapper",
+    );
+    expect(screen.getByRole("button", { name: "JD" })).toHaveClass(
+      "customAvatar",
+    );
   });
 
   it("passes glass to the nested avatar by default and allows avatar override", () => {

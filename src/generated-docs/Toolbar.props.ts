@@ -54,6 +54,22 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "avatarClassName",
+      "type": "string",
+      "description": "Optional additional class names for the rendered avatar component.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "avatarWrapperClassName",
+      "type": "string",
+      "description": "Optional additional class names for the avatar wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "center",
       "type": "ReactNode",
       "description": "Content to render in the center section, below the title if present.",
@@ -69,6 +85,30 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"Toolbar center section\""
+    },
+    {
+      "name": "centerClassName",
+      "type": "string",
+      "description": "Optional additional class names for the center section wrapper. Alias for `centerSectionClassName`.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "centerContentClassName",
+      "type": "string",
+      "description": "Optional additional class names for the center section content wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "centerSectionClassName",
+      "type": "string",
+      "description": "Optional additional class names for the center section wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "className",
@@ -113,6 +153,30 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"Toolbar left section\""
     },
     {
+      "name": "leftClassName",
+      "type": "string",
+      "description": "Optional additional class names for the left section wrapper. Alias for `leftSectionClassName`.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "leftContentClassName",
+      "type": "string",
+      "description": "Optional additional class names for the left section content wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "leftSectionClassName",
+      "type": "string",
+      "description": "Optional additional class names for the left section wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "right",
       "type": "ReactNode",
       "description": "Content to render in the right section of the toolbar, before the avatar.",
@@ -128,6 +192,30 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"Toolbar right section\""
+    },
+    {
+      "name": "rightClassName",
+      "type": "string",
+      "description": "Optional additional class names for the right section wrapper. Alias for `rightSectionClassName`.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "rightContentClassName",
+      "type": "string",
+      "description": "Optional additional class names for the right section content wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "rightSectionClassName",
+      "type": "string",
+      "description": "Optional additional class names for the right section wrapper.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "rounding",

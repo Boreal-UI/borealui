@@ -88,11 +88,46 @@
         }
       }
 
-      > *:focus-visible {
-        outline: 2px solid var(--focus-outline-color, var(--primary-color));
-        outline-offset: 2px;
-        border-radius: 6px;
-      }
+    }
+
+    &_leftSection {
+      justify-content: flex-start;
+    }
+
+    &_centerSection {
+      justify-content: center;
+    }
+
+    &_rightSection {
+      justify-content: flex-end;
+    }
+
+    &_sectionContent {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      max-width: 100%;
+      gap: var(--spacing-sm);
+    }
+
+    &_leftContent {
+      justify-content: flex-start;
+    }
+
+    &_centerContent {
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+    }
+
+    &_rightContent {
+      justify-content: flex-end;
+    }
+
+    &_sectionContent > *:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: 2px;
+      border-radius: 6px;
     }
 
     &_title {
@@ -150,7 +185,7 @@
       border-bottom: 1px solid ButtonText;
     }
 
-    .toolbar_section > *:focus-visible {
+    .toolbar_sectionContent > *:focus-visible {
       outline: 2px solid Highlight;
       outline-offset: 2px;
     }

@@ -90,11 +90,46 @@
       }
     }
 
-    > *:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 2px;
-      border-radius: 6px;
-    }
+  }
+
+  .leftSection {
+    justify-content: flex-start;
+  }
+
+  .centerSection {
+    justify-content: center;
+  }
+
+  .rightSection {
+    justify-content: flex-end;
+  }
+
+  .sectionContent {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    max-width: 100%;
+    gap: var(--spacing-sm);
+  }
+
+  .leftContent {
+    justify-content: flex-start;
+  }
+
+  .centerContent {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .rightContent {
+    justify-content: flex-end;
+  }
+
+  .sectionContent > *:focus-visible {
+    outline: 2px solid var(--focus-outline-color, var(--primary-color));
+    outline-offset: 2px;
+    border-radius: 6px;
   }
 
   .title {
@@ -151,7 +186,7 @@
       border-bottom: 1px solid ButtonText;
     }
 
-    .section > *:focus-visible {
+    .sectionContent > *:focus-visible {
       outline: 2px solid Highlight;
       outline-offset: 2px;
     }
