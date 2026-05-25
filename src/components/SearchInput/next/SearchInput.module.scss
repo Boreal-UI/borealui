@@ -278,6 +278,9 @@
 
   .loading {
     cursor: progress;
+    input {
+      cursor: progress;
+    }
   }
 
   @each $key, $value in theme.$rounding {

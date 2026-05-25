@@ -191,6 +191,7 @@ export const WithActions: Story = {
     children: "Your production build completed successfully.",
     state: "success",
     icon: <FaCheckCircle />,
+    dismissible: true,
     actions: (
       <>
         <Button size="small">View build</Button>

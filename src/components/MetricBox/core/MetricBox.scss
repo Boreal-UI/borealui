@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: center;
     background: var(--background-primary-light-color);
-    min-width: 120px;
+    min-width: 0;
     width: max-content;
     max-width: 100%;
     height: fit-content;
@@ -273,6 +273,30 @@
   .metricBox_glass.metricBox_outline {
     background: transparent;
     border-color: var(--metric-box-glass-border, var(--glass-border-color));
+  }
+
+  .metricBox_loading {
+    background: none;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .metricBox_loading_skeleton {
+      min-width: 120px;
+      min-height: 7rem;
+      width: min(100%, 12rem);
+      height: min(100%, 8rem);
+      @include bp.up(lg) {
+        min-width: 140px;
+        min-height: 8rem;
+      }
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {

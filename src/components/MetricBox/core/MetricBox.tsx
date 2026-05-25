@@ -2,12 +2,15 @@ import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseMetricBox from "../MetricBoxBase";
 import "./MetricBox.scss";
+import Skeleton from "../../Skeleton/core/Skeleton";
 import { MetricBoxProps } from "../MetricBox.types";
 
 const classes = {
   wrapper: "metricBox",
   outline: "metricBox_outline",
   glass: "metricBox_glass",
+  loading: "metricBox_loading",
+  loadingSkeleton: "metricBox_loading_skeleton",
 
   primary: "metricBox_primary",
   secondary: "metricBox_secondary",
@@ -50,7 +53,13 @@ const classes = {
 };
 
 const MetricBox: React.FC<MetricBoxProps> = (props) => {
-  return <BaseMetricBox {...props} classMap={expandClassMap(classes)} />;
+  return (
+    <BaseMetricBox
+      {...props}
+      classMap={expandClassMap(classes)}
+      SkeletonComponent={Skeleton}
+    />
+  );
 };
 MetricBox.displayName = "MetricBox";
 export default MetricBox;

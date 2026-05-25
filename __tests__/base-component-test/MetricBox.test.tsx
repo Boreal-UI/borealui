@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BaseMetricBox from "@/components/MetricBox/MetricBoxBase";
 import { FaUsers } from "react-icons/fa";
+import { DummySkeleton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 
@@ -9,6 +10,7 @@ const classNames = {
   wrapper: "metricWrapper",
   outline: "metricOutline",
   glass: "metricGlass",
+  loading: "metricLoading",
   primary: "themePrimary",
   secondary: "themeSecondary",
   success: "stateSuccess",
@@ -36,6 +38,7 @@ describe("BaseMetricBox", () => {
         subtext="Since yesterday"
         icon={FaUsers}
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -71,6 +74,7 @@ describe("BaseMetricBox", () => {
         title="Active Users"
         value="24"
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -87,6 +91,7 @@ describe("BaseMetricBox", () => {
         title="Downloads"
         value="144"
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -102,6 +107,7 @@ describe("BaseMetricBox", () => {
         subtext="Updated hourly"
         aria-label="Revenue metric showing four hundred fifty dollars"
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -132,6 +138,7 @@ describe("BaseMetricBox", () => {
           aria-labelledby="external-label"
           aria-describedby="external-description"
           classMap={classNames}
+          SkeletonComponent={DummySkeleton}
           data-testid="metric-box"
         />
       </>,
@@ -154,6 +161,7 @@ describe("BaseMetricBox", () => {
         aria-live="polite"
         aria-atomic={true}
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -173,6 +181,7 @@ describe("BaseMetricBox", () => {
         decorativeIcon={false}
         iconAriaLabel="Users icon"
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -202,6 +211,7 @@ describe("BaseMetricBox", () => {
         rounding="medium"
         className="customClass"
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -233,6 +243,7 @@ describe("BaseMetricBox", () => {
         valueClassName="custom-value"
         subtextClassName="custom-subtext"
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -265,6 +276,7 @@ describe("BaseMetricBox", () => {
         title={""}
         value="77"
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -284,6 +296,7 @@ describe("BaseMetricBox", () => {
         title="Projects"
         value={9}
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -300,6 +313,7 @@ describe("BaseMetricBox", () => {
         value={42}
         units="GB"
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -317,6 +331,7 @@ describe("BaseMetricBox", () => {
         subtext="Current total"
         icon={FaUsers}
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -328,6 +343,35 @@ describe("BaseMetricBox", () => {
     expect(screen.getByTestId("metric-box-subtext")).toBeInTheDocument();
   });
 
+  it("renders a filling skeleton and hides metric content when loading is true", () => {
+    render(
+      <BaseMetricBox
+        title="Loading Metric"
+        value="120"
+        subtext="Current total"
+        icon={FaUsers}
+        loading
+        classMap={classNames}
+        SkeletonComponent={DummySkeleton}
+        data-testid="metric-box"
+      />,
+    );
+
+    const wrapper = screen.getByTestId("metric-box");
+    const skeleton = screen.getByTestId("metric-box-skeleton");
+
+    expect(wrapper).toHaveAttribute("aria-busy", "true");
+    expect(wrapper).toHaveAttribute("aria-label", "Loading Metric");
+    expect(wrapper).toHaveClass("metricLoading");
+    expect(wrapper).not.toHaveAttribute("aria-labelledby");
+    expect(wrapper).not.toHaveAttribute("aria-describedby");
+    expect(skeleton).toHaveStyle({ width: "100%", height: "100%" });
+    expect(screen.queryByTestId("metric-box-icon")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("metric-box-title")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("metric-box-value")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("metric-box-subtext")).not.toBeInTheDocument();
+  });
+
   it("has no accessibility violations with default semantics", async () => {
     const { container } = render(
       <BaseMetricBox
@@ -336,6 +380,7 @@ describe("BaseMetricBox", () => {
         subtext="Accessible"
         icon={FaUsers}
         classMap={classNames}
+        SkeletonComponent={DummySkeleton}
         data-testid="metric-box"
       />,
     );
@@ -361,6 +406,7 @@ describe("BaseMetricBox", () => {
           aria-live="polite"
           aria-atomic={true}
           classMap={classNames}
+          SkeletonComponent={DummySkeleton}
           data-testid="metric-box"
         />
       </>,

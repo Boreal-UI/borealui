@@ -39,7 +39,7 @@
   .icon {
     display: inline-flex;
     flex: 0 0 auto;
-    margin-top: 0.125rem;
+    margin-top: 0.4rem;
   }
 
   .actions {
@@ -50,8 +50,9 @@
   }
 
   .dismissButton {
-    min-width: 2rem;
-    min-height: 2rem;
+    min-width: 1rem;
+    min-height: 1rem;
+    margin-top: -0.6rem;
     border: 0;
     border-radius: var(--border-radius-sm);
     background: transparent;
@@ -177,7 +178,7 @@
     }
 
     .title {
-      font-size: var(--font-size-body-sm);
+      font-size: var(--font-size-body);
     }
 
     .message {
@@ -188,7 +189,24 @@
       flex-wrap: wrap;
     }
 
+    .icon {
+      order: 1;
+    }
+
+    .content {
+      order: 2;
+      flex: 1 1 0;
+    }
+
+    .dismissButton {
+      order: 3;
+      align-self: flex-start;
+      margin-left: auto;
+      margin-top: 0;
+    }
+
     .hasActions .actions {
+      order: 4;
       flex: 1 1 100%;
       justify-content: center;
     }
@@ -238,7 +256,6 @@
 
     .icon {
       grid-column: auto;
-      margin-top: 0.1rem;
     }
 
     .content {

@@ -127,6 +127,15 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "loading",
+      "type": "boolean",
+      "description": "Whether the metric box is in a loading state (shows skeleton).",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
       "name": "outline",
       "type": "boolean",
       "description": "Optional outline style for the component (default: false).",

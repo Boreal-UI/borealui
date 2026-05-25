@@ -250,6 +250,29 @@
     border-color: var(--metric-box-glass-border, var(--glass-border-color));
   }
 
+  .loading {
+    background: none;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .loadingSkeleton {
+      min-width: 120px;
+      min-height: 7rem;
+      width: min(100%, 12rem);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+
+      @include bp.up(lg) {
+        min-width: 140px;
+        min-height: 8rem;
+      }
+    }
+  }
+
   $sizes: (
     "xs": (
       icon-size: 1.5rem,

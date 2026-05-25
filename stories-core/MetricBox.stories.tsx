@@ -69,6 +69,12 @@ export const WithUnits: Story = {
   },
 };
 
+export const Loading: Story = {
+  args: {
+    loading: true,
+  },
+};
+
 export const AlignmentVariants: Story = {
   render: () => {
     const alignments = ["left", "center", "right"] as const;
