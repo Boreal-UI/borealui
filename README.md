@@ -8,7 +8,7 @@ Use it when you want production-ready UI primitives that can be themed globally,
 
 ## Highlights
 
-- **React and Next.js builds:** import from `boreal-ui/core` for React apps or `boreal-ui/next` for Next.js apps.
+- **Split React and Next.js packages:** install `@boreal-ui/core` for React apps or `@boreal-ui/next` for Next.js apps when you want only that build's runtime code.
 - **Deep component set:** buttons, forms, navigation, data display, feedback, overlays, layout primitives, and utility components.
 - **Theme system:** curated color schemes, custom schemes, runtime theme selection, CSS variables, and `ThemeSelect`.
 - **Global defaults:** configure default theme, size, rounding, shadow, border width, glass, outline, and color scheme once with `borealConfig` or `setBorealStyleConfig`.
@@ -23,22 +23,35 @@ Use it when you want production-ready UI primitives that can be themed globally,
 npm install boreal-ui
 ```
 
-Boreal UI expects React and React DOM in the consuming app. Next.js users should also have Next installed. `marked` and `uuid` are peer dependencies because some components and utilities rely on them.
+For the smallest install, use the split packages:
+
+```bash
+npm install @boreal-ui/core
+npm install @boreal-ui/next
+```
+
+For TypeScript declarations, add:
+
+```bash
+npm install @boreal-ui/types
+```
+
+`@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js. The legacy `boreal-ui` package still exposes both `boreal-ui/core` and `boreal-ui/next` for compatibility. `marked` and `uuid` are peer dependencies because some components and utilities rely on them.
 
 ## CLI Setup
 
 Use the CLI inside an existing React or Next.js project to add only the file changes Boreal UI needs: the package dependency, the global stylesheet import, `ThemeProvider`, and default style config.
 
 ```bash
-npx boreal-ui@latest init
+npx @boreal-ui/cli@latest init
 ```
 
 You can preview changes or run non-interactively:
 
 ```bash
-npx boreal-ui init --dry-run
-npx boreal-ui init --framework next --yes
-npx boreal-ui init --framework next --recommended-globals
+npx @boreal-ui/cli init --dry-run
+npx @boreal-ui/cli init --framework next --yes
+npx @boreal-ui/cli init --framework next --recommended-globals
 ```
 
 See [CLI guide](./docs/cli.md) for all commands, options, prompts, and generated file changes.
@@ -68,6 +81,13 @@ export function Example() {
     </Card>
   );
 }
+```
+
+With the split core package, use:
+
+```tsx
+import { Button, Card, TextInput } from "@boreal-ui/core";
+import "@boreal-ui/core/globals.css";
 ```
 
 ### Next.js
@@ -109,7 +129,7 @@ body {
 The CLI can create or repair that safer baseline for Next.js apps:
 
 ```bash
-npx boreal-ui init --framework next --recommended-globals
+npx @boreal-ui/cli init --framework next --recommended-globals
 ```
 
 Interactive Next.js setup prompts for this by default. Use `--recommended-globals` to apply it without the prompt, or `--no-recommended-globals` to skip it.
@@ -131,6 +151,13 @@ export default function Example() {
     </Card>
   );
 }
+```
+
+With the split Next package, use:
+
+```tsx
+import { Button, Card, TextInput } from "@boreal-ui/next";
+import "@boreal-ui/next/globals.css";
 ```
 
 You can also import standalone components:
@@ -244,7 +271,7 @@ Component props still win over global defaults:
 ```tsx
 "use client";
 
-import { ThemeProvider } from "boreal-ui/next";
+import { ThemeProvider } from "@boreal-ui/next";
 
 const customSchemes = [
   {
@@ -262,7 +289,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
       customSchemes={customSchemes}
-      enableThemeScript={false}
       initialSchemeName="Cyberpunk Pulse"
     >
       {children}

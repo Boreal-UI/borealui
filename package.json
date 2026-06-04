@@ -9,14 +9,8 @@
   "module": "./dist/core/index.js",
   "types": "./dist/types/index.core.d.ts",
   "type": "module",
-  "bin": {
-    "boreal-ui": "./packages/cli/src/index.js",
-    "create-boreal-ui": "./packages/cli/src/index.js"
-  },
   "files": [
     "dist",
-    "dist/types",
-    "packages/cli/src",
     "docs",
     "README.md",
     "LICENSE"
@@ -28,6 +22,10 @@
     "audit:test": "jest --coverage",
     "audit:build": "npm run build",
     "audit:package": "npm pack --dry-run",
+    "audit:package:core": "npm run stage:core-package && npm pack ./packages/core --dry-run",
+    "audit:package:next": "npm run stage:next-package && npm pack ./packages/next --dry-run",
+    "audit:package:types": "npm run stage:types-package && npm pack ./packages/types --dry-run",
+    "audit:package:cli": "npm run stage:cli-package && npm pack ./packages/cli --dry-run",
     "audit": "npm run audit:types && npm run audit:lint && npm run audit:styles && npm run audit:test && npm run audit:build && npm run audit:package",
     "cli:check": "node --check packages/cli/src/index.js",
     "dev": "vite",
@@ -36,10 +34,20 @@
     "build:core": "vite build --config vite.config.core.ts",
     "build:next": "vite build --config vite.config.next.ts",
     "build:docs": "tsc -p tsconfig.docs.json --incremental false && node scripts/patchGeneratedDocsImports.cjs",
-    "build:types": "tsc -p tsconfig.build.json",
-    "build:types:public": "tsc -p tsconfig.build.json && node scripts/generateTypesBarrel.cjs",
+    "build:types": "tsc -p tsconfig.build.json && node scripts/generateTypesBarrel.cjs && node scripts/patchDeclarations.cjs",
+    "build:types:public": "node scripts/generateTypesBarrel.cjs && node scripts/patchDeclarations.cjs",
     "build:css-next": "sass --load-path=node_modules src/styles/globals.scss src/styles/style.css --no-source-map",
     "build": "npm run clean && npm run build:core && npm run build:next && npm run patch:useClient && npm run build:docs && npm run build:types && npm run build:types:public",
+    "stage:core-package": "node scripts/stageSplitPackage.cjs core",
+    "stage:next-package": "node scripts/stageSplitPackage.cjs next",
+    "stage:types-package": "node scripts/stageSplitPackage.cjs types",
+    "stage:cli-package": "node scripts/stageSplitPackage.cjs cli",
+    "stage:split-packages": "node scripts/stageSplitPackage.cjs all",
+    "pack:core": "npm run build && npm run stage:core-package && npm pack ./packages/core",
+    "pack:next": "npm run build && npm run stage:next-package && npm pack ./packages/next",
+    "pack:types": "npm run build && npm run stage:types-package && npm pack ./packages/types",
+    "pack:cli": "npm run stage:cli-package && npm pack ./packages/cli",
+    "pack:split": "npm run build && npm run stage:split-packages && npm pack ./packages/types && npm pack ./packages/core && npm pack ./packages/next && npm pack ./packages/cli",
     "lint:styles": "stylelint '**/*.{css,scss}'",
     "lint:styles:fix": "stylelint '**/*.{css,scss}' --fix",
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" \"cypress/**/*.{ts,tsx}\" \"*.config.ts\" --fix",
@@ -84,6 +92,11 @@
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0",
     "uuid": ">=9.0.0"
+  },
+  "peerDependenciesMeta": {
+    "next": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@axe-core/react": "^4.10.1",

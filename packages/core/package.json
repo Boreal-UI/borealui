@@ -1,0 +1,61 @@
+{
+  "name": "@boreal-ui/core",
+  "version": "0.0.9011",
+  "readme": "README.md",
+  "description": "Core React components for Boreal UI",
+  "author": "Davin Chiupka",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/core/index.cjs.js",
+  "module": "./dist/core/index.js",
+  "types": "./dist/types/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
+  "peerDependencies": {
+    "@boreal-ui/types": "0.0.9011",
+    "marked": ">=12.0.0",
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0",
+    "uuid": ">=9.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@boreal-ui/types": {
+      "optional": true
+    }
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/core/index.js",
+      "require": "./dist/core/index.cjs.js"
+    },
+    "./globals": {
+      "types": "./dist/types/core/globals.d.ts",
+      "import": "./dist/core/globals.js",
+      "require": "./dist/core/globals.cjs.js"
+    },
+    "./globals.css": {
+      "style": "./dist/core/globals.css",
+      "default": "./dist/core/globals.css"
+    },
+    "./types": {
+      "types": "./dist/types/public.types.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./*": {
+      "types": "./dist/types/core/*.d.ts",
+      "import": "./dist/core/*.js",
+      "require": "./dist/core/*.cjs.js"
+    }
+  }
+}

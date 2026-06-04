@@ -25,8 +25,7 @@ const BOREAL_CONFIG_CALL = `setBorealStyleConfig({
   defaultColorSchemeName: "Forest Dusk",
 });
 `;
-const NEXT_APP_THEME_PROVIDER_PROPS =
-  'initialSchemeName="Forest Dusk" enableThemeScript={false}';
+const NEXT_APP_THEME_PROVIDER_PROPS = 'initialSchemeName="Forest Dusk"';
 const NEXT_RECOMMENDED_GLOBALS = `html {
   box-sizing: border-box;
 }
@@ -41,6 +40,18 @@ body {
   margin: 0;
 }
 `;
+const BOREAL_PACKAGES = {
+  react: {
+    packageName: "@boreal-ui/core",
+    globalsSpecifier: "@boreal-ui/core/globals.css",
+    importSpecifier: "@boreal-ui/core",
+  },
+  next: {
+    packageName: "@boreal-ui/next",
+    globalsSpecifier: "@boreal-ui/next/globals.css",
+    importSpecifier: "@boreal-ui/next",
+  },
+};
 
 export async function initCommand(rawOptions) {
   const options = await promptForOptions(rawOptions);
@@ -218,7 +229,7 @@ async function resolveRecommendedGlobalsOption(options, framework) {
 function createSetupPlan(root, packageJsonPath, packageJson, framework, options) {
   const changes = [];
 
-  addPackageJsonChange(changes, packageJsonPath, packageJson);
+  addPackageJsonChange(changes, packageJsonPath, packageJson, framework);
 
   if (framework === "next") {
     addNextChanges(changes, root, options);
@@ -229,11 +240,12 @@ function createSetupPlan(root, packageJsonPath, packageJson, framework, options)
   return changes;
 }
 
-function addPackageJsonChange(changes, packageJsonPath, packageJson) {
+function addPackageJsonChange(changes, packageJsonPath, packageJson, framework) {
+  const { packageName } = BOREAL_PACKAGES[framework];
   const hasBoreal =
-    packageJson.dependencies?.["boreal-ui"] ||
-    packageJson.devDependencies?.["boreal-ui"] ||
-    packageJson.peerDependencies?.["boreal-ui"];
+    packageJson.dependencies?.[packageName] ||
+    packageJson.devDependencies?.[packageName] ||
+    packageJson.peerDependencies?.[packageName];
 
   if (hasBoreal) return;
 
@@ -241,13 +253,13 @@ function addPackageJsonChange(changes, packageJsonPath, packageJson) {
     ...packageJson,
     dependencies: {
       ...packageJson.dependencies,
-      "boreal-ui": `^${VERSION}`,
+      [packageName]: `^${VERSION}`,
     },
   };
 
   changes.push({
     path: packageJsonPath,
-    summary: 'Add "boreal-ui" to dependencies.',
+    summary: `Add "${packageName}" to dependencies.`,
     nextContents: `${JSON.stringify(nextPackageJson, null, 2)}\n`,
   });
 }
@@ -262,11 +274,15 @@ function addReactChanges(changes, root) {
   let source = readProjectFile(root, entryPath);
   let nextSource = source;
 
-  nextSource = ensureSideEffectImport(nextSource, "boreal-ui/core/globals.css");
-  nextSource = ensureNamedImport(nextSource, "boreal-ui/core", [
-    "ThemeProvider",
-    "setBorealStyleConfig",
-  ]);
+  nextSource = ensureSideEffectImport(
+    nextSource,
+    BOREAL_PACKAGES.react.globalsSpecifier,
+  );
+  nextSource = ensureNamedImport(
+    nextSource,
+    BOREAL_PACKAGES.react.importSpecifier,
+    ["ThemeProvider", "setBorealStyleConfig"],
+  );
   nextSource = ensureBorealConfig(nextSource);
   nextSource = ensureReactThemeProvider(nextSource);
 
@@ -323,18 +339,22 @@ function addNextPagesRouterChange(changes, root, pagesAppPath, globalsPath) {
   const source = readProjectFile(root, pagesAppPath);
   let nextSource = source;
 
-  nextSource = ensureSideEffectImport(nextSource, "boreal-ui/next/globals.css");
+  nextSource = ensureSideEffectImport(
+    nextSource,
+    BOREAL_PACKAGES.next.globalsSpecifier,
+  );
   if (globalsPath) {
     nextSource = ensureSideEffectImportAfter(
       nextSource,
       toImportSpecifier(pagesAppPath, globalsPath),
-      "boreal-ui/next/globals.css",
+      BOREAL_PACKAGES.next.globalsSpecifier,
     );
   }
-  nextSource = ensureNamedImport(nextSource, "boreal-ui/next", [
-    "ThemeProvider",
-    "setBorealStyleConfig",
-  ]);
+  nextSource = ensureNamedImport(
+    nextSource,
+    BOREAL_PACKAGES.next.importSpecifier,
+    ["ThemeProvider", "setBorealStyleConfig"],
+  );
   nextSource = ensureBorealConfig(nextSource);
   nextSource = ensureNextPagesThemeProvider(nextSource);
 
@@ -354,12 +374,15 @@ function addNextLayoutChange(changes, root, layoutPath, providerImportPath, glob
   const providerImportName =
     getDefaultImportName(source, providerImportPath) ?? "BorealProvider";
 
-  nextSource = ensureSideEffectImport(nextSource, "boreal-ui/next/globals.css");
+  nextSource = ensureSideEffectImport(
+    nextSource,
+    BOREAL_PACKAGES.next.globalsSpecifier,
+  );
   if (globalsPath) {
     nextSource = ensureSideEffectImportAfter(
       nextSource,
       toImportSpecifier(layoutPath, globalsPath),
-      "boreal-ui/next/globals.css",
+      BOREAL_PACKAGES.next.globalsSpecifier,
     );
   }
   nextSource = ensureDefaultImport(nextSource, providerImportName, providerImportPath);
@@ -384,10 +407,11 @@ function addNextProviderChange(changes, root, providerPath) {
     nextSource = getNextProviderContents(extensionFor(providerPath));
   } else {
     nextSource = ensureUseClient(nextSource);
-    nextSource = ensureNamedImport(nextSource, "boreal-ui/next", [
-      "ThemeProvider",
-      "setBorealStyleConfig",
-    ]);
+    nextSource = ensureNamedImport(
+      nextSource,
+      BOREAL_PACKAGES.next.importSpecifier,
+      ["ThemeProvider", "setBorealStyleConfig"],
+    );
     nextSource = ensureBorealConfig(nextSource);
     nextSource = ensureProviderComponent(nextSource);
   }
@@ -610,10 +634,6 @@ function ensureNextAppThemeProviderProps(source) {
       nextAttrs += ' initialSchemeName="Forest Dusk"';
     }
 
-    if (!/\benableThemeScript(?:\s|=|$)/.test(nextAttrs)) {
-      nextAttrs += " enableThemeScript={false}";
-    }
-
     return nextAttrs === attrs ? match : `<ThemeProvider${nextAttrs}>`;
   });
 }
@@ -700,7 +720,7 @@ function getNextProviderContents(extension) {
   return `"use client";
 
 import React from "react";
-import { ThemeProvider, setBorealStyleConfig } from "boreal-ui/next";
+import { ThemeProvider, setBorealStyleConfig } from "@boreal-ui/next";
 
 ${BOREAL_CONFIG_CALL}
 export default function BorealProvider(${props}) {
@@ -819,7 +839,7 @@ function printSuccess(root, framework, packageManager, installWasRun) {
 Boreal UI setup complete.
 
 ${installWasRun ? "" : `Run ${installCommand} if dependencies have not been installed yet.\n`}
-Use components from ${framework === "next" ? "boreal-ui/next" : "boreal-ui/core"}.
+Use components from ${BOREAL_PACKAGES[framework].importSpecifier}.
 `);
 }
 

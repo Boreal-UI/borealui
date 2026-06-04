@@ -1,0 +1,24 @@
+{
+  "name": "@boreal-ui/cli",
+  "version": "0.0.9011",
+  "readme": "README.md",
+  "description": "Standalone CLI for setting up Boreal UI in React and Next.js apps",
+  "author": "Davin Chiupka",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "bin": {
+    "boreal-ui": "./src/index.js",
+    "create-boreal-ui": "./src/index.js"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": "./src/index.js"
+  }
+}

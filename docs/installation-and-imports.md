@@ -85,7 +85,7 @@ If your app needs additional layout resets, scope them to your own shell classes
 The CLI can create or repair that safer baseline for Next.js apps:
 
 ```bash
-npx boreal-ui init --framework next --recommended-globals
+npx @boreal-ui/cli init --framework next --recommended-globals
 ```
 
 Interactive Next.js setup prompts for this by default. Use `--recommended-globals` to apply it without the prompt, or `--no-recommended-globals` to skip it.

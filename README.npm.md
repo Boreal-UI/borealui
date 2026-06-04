@@ -6,7 +6,7 @@ Use it when you want production-ready UI primitives that can be themed globally,
 
 ## Highlights
 
-- **React and Next.js builds:** import from `boreal-ui/core` for React apps or `boreal-ui/next` for Next.js apps.
+- **Split React and Next.js packages:** install `@boreal-ui/core` for React apps or `@boreal-ui/next` for Next.js apps when you want only that build's runtime code.
 - **Deep component set:** buttons, forms, navigation, data display, feedback, overlays, layout primitives, and utility components.
 - **Theme system:** curated color schemes, custom schemes, runtime theme selection, CSS variables, and `ThemeSelect`.
 - **Global defaults:** configure default theme, size, rounding, shadow, border width, glass, outline, and color scheme once with `borealConfig`.
@@ -20,7 +20,20 @@ Use it when you want production-ready UI primitives that can be themed globally,
 npm install boreal-ui
 ```
 
-Boreal UI expects React and React DOM in the consuming app. Next.js users should also have Next installed.
+For the smallest install, use the split packages:
+
+```bash
+npm install @boreal-ui/core
+npm install @boreal-ui/next
+```
+
+For TypeScript declarations, add:
+
+```bash
+npm install @boreal-ui/types
+```
+
+`@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js. The legacy `boreal-ui` package still exposes both `boreal-ui/core` and `boreal-ui/next` for compatibility.
 
 Some components and utilities rely on `marked` and `uuid`, so make sure they are available if your package manager does not install peer dependencies automatically.
 
@@ -29,25 +42,25 @@ Some components and utilities rely on `marked` and `uuid`, so make sure they are
 Use the CLI inside an existing React or Next.js project to add the package dependency, global stylesheet import, `ThemeProvider`, and default style config.
 
 ```bash
-npx boreal-ui@latest init
+npx @boreal-ui/cli@latest init
 ```
 
 Preview changes before writing files:
 
 ```bash
-npx boreal-ui init --dry-run
+npx @boreal-ui/cli init --dry-run
 ```
 
 Run non-interactively:
 
 ```bash
-npx boreal-ui init --framework next --yes
+npx @boreal-ui/cli init --framework next --yes
 ```
 
 For Next.js projects, you can also apply Boreal’s recommended global CSS baseline:
 
 ```bash
-npx boreal-ui init --framework next --recommended-globals
+npx @boreal-ui/cli init --framework next --recommended-globals
 ```
 
 See [CLI guide](./docs/cli.md) for all commands, options, prompts, and generated file changes.
@@ -79,6 +92,13 @@ export function Example() {
 }
 ```
 
+With the split core package, use:
+
+```tsx
+import { Button, Card, TextInput } from "@boreal-ui/core";
+import "@boreal-ui/core/globals.css";
+```
+
 ## Next.js
 
 Import the Next stylesheet once from `app/layout.tsx`, `pages/_app.tsx`, or your global stylesheet.
@@ -104,6 +124,13 @@ export default function Example() {
     </Card>
   );
 }
+```
+
+With the split Next package, use:
+
+```tsx
+import { Button, Card, TextInput } from "@boreal-ui/next";
+import "@boreal-ui/next/globals.css";
 ```
 
 ### Next.js Global CSS Note
@@ -318,7 +345,7 @@ Component props still win over global defaults:
 ```tsx
 "use client";
 
-import { ThemeProvider } from "boreal-ui/next";
+import { ThemeProvider } from "@boreal-ui/next";
 
 const customSchemes = [
   {
@@ -336,7 +363,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
       customSchemes={customSchemes}
-      enableThemeScript={false}
       initialSchemeName="Cyberpunk Pulse"
     >
       {children}
@@ -350,8 +376,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
 | Prop                   | Description                                                                              |
 | ---------------------- | ---------------------------------------------------------------------------------------- |
 | `customSchemes`        | Register additional color schemes at runtime.                                            |
-| `enableThemeScript`    | Render the pre-hydration theme script. Defaults to `true` for core and `false` for Next. |
 | `initialSchemeName`    | Select an initial scheme by name.                                                        |
+| `enableThemeScript`    | Render the pre-hydration theme script. Defaults to `true` for core and `false` for Next. |
 | `useOnlyCustomSchemes` | Use only custom schemes instead of the built-in list.                                    |
 
 ### Color Scheme Shape

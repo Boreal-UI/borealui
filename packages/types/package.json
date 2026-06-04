@@ -1,0 +1,56 @@
+{
+  "name": "@boreal-ui/types",
+  "version": "0.0.9011",
+  "readme": "README.md",
+  "description": "Shared TypeScript declarations for Boreal UI split packages",
+  "author": "Davin Chiupka",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "types": "./dist/types/public.types.d.ts",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "peerDependencies": {
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/public.types.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./core": {
+      "types": "./dist/types/index.core.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next": {
+      "types": "./dist/types/index.next.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./core/*": {
+      "types": "./dist/types/core/*.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/*": {
+      "types": "./dist/types/next/*.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./docs": {
+      "types": "./dist/types/generated-docs/index.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./docs/*": {
+      "types": "./dist/types/generated-docs/*.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./public": {
+      "types": "./dist/types/public.types.d.ts",
+      "default": "./dist/empty.js"
+    }
+  }
+}
