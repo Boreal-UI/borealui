@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import type { CircularProgressBaseProps } from "./CircularProgress.types";
 import { combineClassNames } from "../../utils/classNames";
-import { capitalize } from "../../utils/capitalize";
 import {
   appendUnits,
   formatDefaultValue,
@@ -9,7 +8,7 @@ import {
 } from "../../utils/chartUtils";
 import {
   getDefaultGlass,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -27,7 +26,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   min = 0,
   max = 100,
   label = "Progress",
-  shadow = getDefaultShadow(),
+  shadow,
   showRaw = false,
   size = getDefaultSize(),
   theme = getDefaultTheme(),
@@ -76,7 +75,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
         classMap[size],
         state && classMap[state],
         glass && classMap.glass,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         className,
       ),
     [classMap, theme, size, state, glass, shadow, className],
@@ -85,20 +84,10 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   const clampedText = formatDefaultValue(clamped);
   const maxText = formatDefaultValue(max);
 
-  const rawValueText = units
-    ? `${clampedText} out of ${appendUnits(maxText, units)}`
-    : `${clampedText} out of ${maxText}`;
-
   const percentText = formatValueText(
     displayPercent,
     (percentValue) => `${percentValue}%`,
   );
-
-  const valueText = showRaw
-    ? units
-      ? `${clampedText}/${maxText}${units}`
-      : `${clampedText}/${maxText}`
-    : percentText;
 
   const resolvedAriaValueText =
     ariaValueText ??

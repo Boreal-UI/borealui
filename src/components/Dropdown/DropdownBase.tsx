@@ -20,7 +20,7 @@ import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -83,8 +83,8 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   glass = getDefaultGlass(),
   toggleRounding = getDefaultRounding(),
   menuRounding = getDefaultRounding(),
-  toggleShadow = getDefaultShadow(),
-  menuShadow = getDefaultShadow(),
+  toggleShadow,
+  menuShadow,
   toggleOutline = false,
   state,
   title,
@@ -479,7 +479,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
         classMap[theme],
         state && classMap[state],
         glass && classMap.glass,
-        menuShadow && classMap[`shadow${capitalize(menuShadow)}`],
+        getShadowClassName(classMap, theme, menuShadow),
         menuRounding && classMap[`round${capitalize(menuRounding)}`],
         menuClassName,
         menuProps?.className,
@@ -516,7 +516,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       classMap[theme],
       state && classMap[state],
       glass && classMap.glass,
-      menuShadow && classMap[`shadow${capitalize(menuShadow)}`],
+      getShadowClassName(classMap, theme, menuShadow),
       menuRounding && classMap[`round${capitalize(menuRounding)}`],
     );
 

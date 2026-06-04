@@ -75,8 +75,8 @@ function createExportTarget({ types, importPath, requirePath, defaultPath, style
   if (types) target.types = types;
   if (importPath) target.import = importPath;
   if (requirePath) target.require = requirePath;
-  if (defaultPath) target.default = defaultPath;
   if (style) target.style = style;
+  if (defaultPath) target.default = defaultPath;
 
   return target;
 }
@@ -84,17 +84,14 @@ function createExportTarget({ types, importPath, requirePath, defaultPath, style
 function buildRuntimeExports(flavor) {
   const runtimeDir = path.join(rootDir, "dist", flavor);
   const typesDir = path.join(rootDir, "dist", "types", flavor);
-  const hasCjs = flavor === "core";
   const exports = {
     ".": createExportTarget({
       types: "./dist/types/index.d.ts",
       importPath: `./dist/${flavor}/index.js`,
-      requirePath: hasCjs ? `./dist/${flavor}/index.cjs.js` : undefined,
     }),
     "./globals": createExportTarget({
       types: `./dist/types/${flavor}/globals.d.ts`,
       importPath: `./dist/${flavor}/globals.js`,
-      requirePath: hasCjs ? `./dist/${flavor}/globals.cjs.js` : undefined,
     }),
     "./globals.css": createExportTarget({
       style: `./dist/${flavor}/globals.css`,
@@ -118,13 +115,18 @@ function buildRuntimeExports(flavor) {
     exports[`./${name}`] = createExportTarget({
       types: `./dist/types/${flavor}/${name}.d.ts`,
       importPath,
-      requirePath: hasCjs && fs.existsSync(path.join(runtimeDir, `${name}.cjs.js`))
-        ? requirePath
-        : undefined,
     });
   }
 
   return exports;
+}
+
+function removeCommonJsArtifacts(packageRuntimeDir) {
+  for (const file of fs.readdirSync(packageRuntimeDir)) {
+    if (file.includes(".cjs")) {
+      fs.rmSync(path.join(packageRuntimeDir, file), { force: true });
+    }
+  }
 }
 
 function buildTypesExports() {
@@ -140,10 +142,6 @@ function buildTypesExports() {
     }),
     "./next": createExportTarget({
       types: "./dist/types/index.next.d.ts",
-      defaultPath: "./dist/empty.js",
-    }),
-    "./docs": createExportTarget({
-      types: "./dist/types/generated-docs/index.d.ts",
       defaultPath: "./dist/empty.js",
     }),
     "./public": createExportTarget({
@@ -163,23 +161,6 @@ function buildTypesExports() {
     for (const name of entries) {
       exports[`./${flavor}/${name}`] = createExportTarget({
         types: `./dist/types/${flavor}/${name}.d.ts`,
-        defaultPath: "./dist/empty.js",
-      });
-    }
-  }
-
-  const docsDir = path.join(typesRoot, "generated-docs");
-  if (fs.existsSync(docsDir)) {
-    const docsEntries = fs
-      .readdirSync(docsDir)
-      .filter((file) => file.endsWith(".d.ts"))
-      .map((file) => file.replace(/\.d\.ts$/, ""))
-      .filter((name) => name !== "index")
-      .sort((a, b) => a.localeCompare(b));
-
-    for (const name of docsEntries) {
-      exports[`./docs/${name}`] = createExportTarget({
-        types: `./dist/types/generated-docs/${name}.d.ts`,
         defaultPath: "./dist/empty.js",
       });
     }
@@ -298,6 +279,7 @@ function stageRuntimePackage(flavor) {
     path.join(rootDir, "dist", flavor),
     path.join(packageDistDir, flavor),
   );
+  removeCommonJsArtifacts(path.join(packageDistDir, flavor));
   stageRuntimeTypes(packageDistDir, flavor);
   writeEmptyRuntimeStub(packageDistDir);
   copyFileIfExists(path.join(rootDir, "LICENSE"), path.join(packageDir, "LICENSE"));

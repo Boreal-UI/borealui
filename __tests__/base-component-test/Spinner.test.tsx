@@ -13,6 +13,7 @@ const mockStyles = {
   label: "spinner-label",
   primary: "theme-primary",
   secondary: "theme-secondary",
+  clear: "theme-clear",
   success: "state-success",
   error: "state-error",
   shadowNone: "shadow-none",
@@ -103,6 +104,28 @@ describe("SpinnerBase", () => {
     const ring = screen.getByTestId("spinner-ring");
     const shadow = ring.previousElementSibling as HTMLElement;
 
+    expect(shadow).toHaveClass("spinner-shadow");
+    expect(shadow).toHaveClass("shadow-strong");
+  });
+
+  it("does not apply the default shadow class when the clear theme is used", () => {
+    render(<SpinnerBase theme="clear" classMap={mockStyles} />);
+
+    const ring = screen.getByTestId("spinner-ring");
+    const shadow = ring.previousElementSibling as HTMLElement;
+
+    expect(ring).toHaveClass("theme-clear");
+    expect(shadow).toHaveClass("spinner-shadow");
+    expect(shadow).not.toHaveClass("shadow-light");
+  });
+
+  it("applies an explicit shadow class when the clear theme is used", () => {
+    render(<SpinnerBase theme="clear" shadow="strong" classMap={mockStyles} />);
+
+    const ring = screen.getByTestId("spinner-ring");
+    const shadow = ring.previousElementSibling as HTMLElement;
+
+    expect(ring).toHaveClass("theme-clear");
     expect(shadow).toHaveClass("spinner-shadow");
     expect(shadow).toHaveClass("shadow-strong");
   });

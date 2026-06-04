@@ -6,7 +6,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -28,7 +28,7 @@ const BreadCrumbPageHeaderBase = forwardRef<
       BreadCrumbsComponent,
       breadcrumbProps,
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       disabled = false,
       loading = false,
       classMap,
@@ -50,7 +50,7 @@ const BreadCrumbPageHeaderBase = forwardRef<
       glass && classMap.glass,
       disabled && classMap.disabled,
       loading && classMap.loading,
-      shadow && classMap[`shadow${capitalize(shadow)}`],
+      getShadowClassName(classMap, theme, shadow),
       rounding && classMap[`round${capitalize(rounding)}`],
       className,
     );

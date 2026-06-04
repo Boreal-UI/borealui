@@ -5,7 +5,7 @@ import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -27,7 +27,7 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       theme = getDefaultTheme(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       state,
       size = getDefaultSize(),
       disabled = false,
@@ -98,10 +98,10 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
           classMap.toggle,
           glass && classMap.glassTrack,
           checked && classMap.active,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
         ),
-      [classMap, glass, checked, shadow, rounding],
+      [classMap, theme, glass, checked, shadow, rounding],
     );
 
     return (

@@ -40,6 +40,7 @@ import {
   SizeType,
   ThemeType,
 } from "../types/types";
+import { capitalize } from "../utils/capitalize";
 import { resolveThemeAlias } from "../utils/propAliases";
 
 /**
@@ -109,6 +110,25 @@ export const getDefaultRounding = (): RoundingType =>
  */
 export const getDefaultShadow = (): ShadowType =>
   userConfig.defaultShadow ?? fallback.defaultShadow;
+
+/**
+ * Resolves the class for component shadows while keeping the clear theme layout-first.
+ *
+ * Clear-themed components omit the configured default shadow, but still honor an
+ * explicit shadow prop from consumers.
+ */
+export const getShadowClassName = (
+  classMap: Record<string, string>,
+  theme: ThemeType,
+  shadow?: ShadowType,
+): string | undefined => {
+  const resolvedShadow =
+    shadow ?? (theme === "clear" ? undefined : getDefaultShadow());
+
+  return resolvedShadow
+    ? classMap[`shadow${capitalize(resolvedShadow)}`]
+    : undefined;
+};
 
 /**
  * Gets the default component size (e.g., "small", "medium", "large").

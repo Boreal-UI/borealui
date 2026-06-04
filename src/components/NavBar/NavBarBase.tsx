@@ -4,7 +4,7 @@ import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 import { BaseNavBarProps } from "./NavBar.types";
@@ -24,7 +24,7 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
   theme = getDefaultTheme(),
   glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   className,
   listClassName,
   listItemClassName,
@@ -55,11 +55,11 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
     () =>
       combineClassNames(
         classMap.item,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         itemClassName,
       ),
-    [classMap, shadow, rounding, itemClassName],
+    [classMap, theme, shadow, rounding, itemClassName],
   );
 
   return (

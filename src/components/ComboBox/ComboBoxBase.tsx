@@ -13,7 +13,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 import { ComboBoxBaseProps, ComboBoxOption } from "./ComboBox.types";
@@ -39,7 +39,7 @@ export default function ComboBoxBase({
   outline = getDefaultOutline(),
   glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   className,
   layoutClassName,
   labelClassName,
@@ -126,7 +126,7 @@ export default function ComboBoxBase({
         state && classMap[state],
         outline && classMap.outline,
         glass && classMap.glass,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
         className,

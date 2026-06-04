@@ -261,10 +261,14 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
     const r = new marked.Renderer();
 
     if (!allowHtml) {
-      r.html = ({ text }) => escapeHtml(text);
+      r.html = (html: string) => escapeHtml(html);
     }
 
-    r.link = ({ href, title, text }) => {
+    r.link = (
+      href: string,
+      title: string | null | undefined,
+      text: string,
+    ) => {
       const url = href ?? "#";
       const isExternal = /^https?:\/\//i.test(url);
       const t = title ? ` title="${escapeHtml(title)}"` : "";
@@ -273,7 +277,7 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
       return `<a href="${escapeHtml(url)}"${t}${target}${rel}>${text}</a>`;
     };
 
-    r.image = ({ href, title, text }) => {
+    r.image = (href: string, title: string | null, text: string) => {
       const url = href ?? "";
       const t = title ? ` title="${escapeHtml(title)}"` : "";
       const alt = escapeHtml(text || "");

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import {
   ShadowType,
@@ -6,7 +6,12 @@ import {
   SizeType,
   ThemeType,
 } from "../src/types/types";
-import { Button, Card, Typography, setBorealStyleConfig } from "boreal-ui";
+import {
+  Button,
+  Card,
+  Typography,
+  setBorealStyleConfig,
+} from "../src/index.core";
 import {
   roundingOptions,
   shadowOptions,

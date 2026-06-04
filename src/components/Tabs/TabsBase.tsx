@@ -6,7 +6,7 @@ import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -35,7 +35,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   "aria-live": ariaLive,
   tabListId,
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   className,
   theme = getDefaultTheme(),
   glass = getDefaultGlass(),
@@ -103,17 +103,14 @@ const TabsBase: React.FC<BaseTabsProps> = ({
 
   const tabBaseClassNames = useMemo(() => {
     const tabClass = getClass(classMap, ["tab", "tabs_tab"]) ?? "";
-    const shadowClass = shadow
-      ? (classMap[`shadow${capitalize(shadow)}`] ??
-        classMap[`tabs_shadow-${capitalize(shadow)}`])
-      : "";
+    const shadowClass = getShadowClassName(classMap, theme, shadow) ?? "";
     const roundingClass = rounding
       ? (classMap[`round${capitalize(rounding)}`] ??
         classMap[`tabs_round-${capitalize(rounding)}`])
       : "";
 
     return combineClassNames(tabClass, shadowClass, roundingClass);
-  }, [classMap, shadow, rounding]);
+  }, [classMap, theme, shadow, rounding]);
 
   const activeClass = useMemo(() => {
     return getClass(classMap, ["active", "tabs_active"]) ?? "";

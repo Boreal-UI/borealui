@@ -41,8 +41,8 @@
       "import": "./dist/next/globals.js"
     },
     "./globals.css": {
-      "default": "./dist/next/globals.css",
-      "style": "./dist/next/globals.css"
+      "style": "./dist/next/globals.css",
+      "default": "./dist/next/globals.css"
     },
     "./Accordion": {
       "types": "./dist/types/next/Accordion.d.ts",
