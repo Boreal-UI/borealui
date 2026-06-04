@@ -80,6 +80,5 @@ export * from "./core/colorSchemes";
 export * from "./core/registerColorScheme";
 export * from "./core/styleConfig";
 export * from "./core/ThemeProvider";
-export * from "./generated-docs/index";
 export * from "./types/index";
 import "./styles/globals.scss";

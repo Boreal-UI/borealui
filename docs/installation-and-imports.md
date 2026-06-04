@@ -138,7 +138,7 @@ import NextDataTable from "@boreal-ui/next/DataTable";
 
 | Entry point | Purpose |
 | --- | --- |
-| `@boreal-ui/core` | React components, theme APIs, style config, generated prop docs, and public types. |
+| `@boreal-ui/core` | React components, theme APIs, style config, and public types. |
 | `@boreal-ui/next` | Next.js wrappers with the same public API shape. |
 | `@boreal-ui/core/Button` | Standalone core component import. |
 | `@boreal-ui/next/Button` | Standalone Next component import. |
@@ -147,8 +147,8 @@ import NextDataTable from "@boreal-ui/next/DataTable";
 | `@boreal-ui/types` | Shared public type declarations. |
 | `@boreal-ui/types/core/Button` | Core component prop declarations. |
 | `@boreal-ui/types/next/Button` | Next component prop declarations. |
-| `@boreal-ui/core` | Generated component prop metadata for React docs tools and prop tables. |
-| `@boreal-ui/next` | Generated component prop metadata for Next docs tools and prop tables. |
+| `@boreal-ui/core/docs` | Generated component prop metadata for React docs tools and prop tables. |
+| `@boreal-ui/next/docs` | Generated component prop metadata for Next docs tools and prop tables. |
 | `@boreal-ui/core/registerColorScheme` | Standalone color-scheme registration helper for React consumers. |
 | `@boreal-ui/next/registerColorScheme` | Standalone color-scheme registration helper for Next consumers. |
 

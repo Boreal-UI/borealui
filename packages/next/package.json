@@ -136,6 +136,10 @@
       "types": "./dist/types/next/Divider.d.ts",
       "import": "./dist/next/Divider.js"
     },
+    "./docs": {
+      "types": "./dist/types/next/docs.d.ts",
+      "import": "./dist/next/docs.js"
+    },
     "./DonutChart": {
       "types": "./dist/types/next/DonutChart.d.ts",
       "import": "./dist/next/DonutChart.js"

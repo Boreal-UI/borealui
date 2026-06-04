@@ -421,10 +421,10 @@ import type { SizeType, ThemeType } from "@boreal-ui/types";
 
 ## Generated Prop Docs
 
-Boreal UI exports generated prop metadata for documentation sites, playgrounds, and prop tables.
+Boreal UI exports generated prop metadata for documentation sites, playgrounds, and prop tables through dedicated docs entry points.
 
 ```tsx
-import { buttonPropDocs, dataTablePropDocs } from "@boreal-ui/core";
+import { buttonPropDocs, dataTablePropDocs } from "@boreal-ui/core/docs";
 
 console.log(buttonPropDocs.name);
 console.log(dataTablePropDocs.props);

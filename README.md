@@ -326,10 +326,10 @@ console.log(defaultColorSchemes.map((scheme) => scheme.name));
 
 ## Generated Prop Docs
 
-Boreal UI exports generated prop metadata for documentation sites, playgrounds, or prop tables.
+Boreal UI exports generated prop metadata for documentation sites, playgrounds, or prop tables through dedicated docs entry points.
 
 ```tsx
-import { buttonPropDocs, dataTablePropDocs } from "@boreal-ui/core";
+import { buttonPropDocs, dataTablePropDocs } from "@boreal-ui/core/docs";
 
 console.log(buttonPropDocs.name);
 console.log(dataTablePropDocs.props);

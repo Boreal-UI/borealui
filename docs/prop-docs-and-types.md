@@ -79,7 +79,7 @@ export function SaveButton({ label = "Save", ...props }: SaveButtonProps) {
 
 ## Generated Prop Metadata
 
-Generated prop docs are exported from `@boreal-ui/core` and from the main build entries.
+Generated prop docs are exported from dedicated docs entry points so application bundles do not load documentation metadata through the main component barrels.
 
 ```ts
 import {
@@ -93,7 +93,7 @@ import {
   themeSelectPropDocs,
   type GeneratedComponentDoc,
   type GeneratedPropDoc,
-} from "@boreal-ui/core";
+} from "@boreal-ui/core/docs";
 ```
 
 Each component doc object follows this shape:
@@ -123,7 +123,7 @@ type GeneratedPropDoc = {
 ## Rendering a Prop Table
 
 ```tsx
-import { buttonPropDocs } from "@boreal-ui/core";
+import { buttonPropDocs } from "@boreal-ui/core/docs";
 
 export function ButtonPropTable() {
   return (
@@ -166,7 +166,7 @@ import {
   cardPropDocs,
   dataTablePropDocs,
   type GeneratedComponentDoc,
-} from "@boreal-ui/core";
+} from "@boreal-ui/core/docs";
 
 const docs: GeneratedComponentDoc[] = [
   buttonPropDocs,
