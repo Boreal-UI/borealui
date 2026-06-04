@@ -32,6 +32,7 @@
     "build:types:public": "node scripts/generateTypesBarrel.cjs && node scripts/patchDeclarations.cjs",
     "build:css-next": "sass --load-path=node_modules src/styles/globals.scss src/styles/style.css --no-source-map",
     "build": "npm run clean && npm run build:core && npm run build:next && npm run patch:useClient && npm run build:docs && npm run build:types && npm run build:types:public",
+    "version:packages": "node scripts/updatePackageVersions.cjs",
     "stage:core-package": "node scripts/stageSplitPackage.cjs core",
     "stage:next-package": "node scripts/stageSplitPackage.cjs next",
     "stage:types-package": "node scripts/stageSplitPackage.cjs types",
