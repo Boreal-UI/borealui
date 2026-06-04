@@ -628,10 +628,18 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
             classMap.itemWrapper,
             hasSubmenu && classMap.hasSubmenu,
           )}
+          role="presentation"
           data-dropdown-item-wrapper="true"
           data-dropdown-item-path={itemPath}
           onPointerEnter={handleDirectItemHover}
           onPointerOver={handleSubmenuWrapperOver}
+          onMouseEnter={handleDirectItemHover}
+          onMouseOver={handleSubmenuWrapperOver}
+          onFocus={(event) => {
+            if (event.target === event.currentTarget) {
+              handleDirectItemHover();
+            }
+          }}
         >
           {hasSubmenu ? (
             <button
@@ -640,6 +648,9 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
               {...commonProps}
               onPointerEnter={openCurrentSubmenu}
               onPointerOver={openDirectSubmenu}
+              onMouseEnter={openCurrentSubmenu}
+              onMouseOver={openDirectSubmenu}
+              onFocus={() => undefined}
               onClick={(event) => {
                 event.stopPropagation();
                 openDirectSubmenu();

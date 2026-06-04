@@ -163,6 +163,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
             ) : (
               <>
                 <span className={classMap.valueNumber}>{displayPercent}</span>
+                %
                 {units && <span className={classMap.valueUnits}>{units}</span>}
               </>
             )}

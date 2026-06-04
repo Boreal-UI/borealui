@@ -32,6 +32,14 @@ jest.mock("../../src/config/boreal-style-config", () => ({
   getDefaultRounding: jest.fn(() => "medium"),
   getDefaultShadow: jest.fn(() => "light"),
   getDefaultTheme: jest.fn(() => "primary"),
+  getShadowClassName: jest.fn((classMap, _theme, shadow) => {
+    const resolvedShadow = shadow ?? "light";
+    const key = `shadow${
+      resolvedShadow.charAt(0).toUpperCase() + resolvedShadow.slice(1)
+    }`;
+
+    return classMap[key];
+  }),
 }));
 
 import { defaultColorSchemes } from "../../src/styles/Themes";

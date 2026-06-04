@@ -787,6 +787,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
           data-menu-item-path={itemPath}
           onPointerEnter={handleDirectItemHover}
           onPointerOver={handleSubmenuWrapperOver}
+          onMouseEnter={handleDirectItemHover}
+          onMouseOver={handleSubmenuWrapperOver}
+          onFocus={handleDirectItemHover}
         >
           {hasSubmenu ? (
             <button
@@ -795,6 +798,8 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
               {...commonProps}
               onPointerEnter={handleSubmenuTriggerEnter}
               onPointerOver={handleSubmenuTriggerOver}
+              onMouseEnter={handleSubmenuTriggerEnter}
+              onMouseOver={handleSubmenuTriggerOver}
               onFocus={handleSubmenuTriggerEnter}
               onClick={(event) => {
                 event.stopPropagation();
