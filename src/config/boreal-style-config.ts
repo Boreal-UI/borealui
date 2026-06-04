@@ -85,6 +85,11 @@ export const setBorealStyleConfig = (config: Partial<BorealStyleConfig>) => {
 export const borealConfig = setBorealStyleConfig;
 
 /**
+ * Alias matching the package-level Boreal config naming.
+ */
+export const setBorealConfig = setBorealStyleConfig;
+
+/**
  * Gets the complete effective Boreal UI styling configuration.
  */
 export const getBorealStyleConfig = (): BorealStyleConfig => ({

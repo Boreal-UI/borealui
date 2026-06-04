@@ -1,4 +1,5 @@
 export {
+  default,
   default as ThemeProvider,
   getThemeInitializationScript,
   ThemeContext,
