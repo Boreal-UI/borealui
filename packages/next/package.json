@@ -1,8 +1,29 @@
 {
   "name": "@boreal-ui/next",
-  "version": "0.0.9011",
+  "version": "0.0.9012-alpha.0",
   "readme": "README.md",
-  "description": "Next.js components for Boreal UI",
+  "description": "Accessible, themeable Boreal UI components for Next.js app-router projects.",
+  "keywords": [
+    "boreal-ui",
+    "nextjs",
+    "next",
+    "react",
+    "components",
+    "component-library",
+    "design-system",
+    "scss-modules",
+    "accessibility",
+    "typescript"
+  ],
+  "homepage": "https://www.borealui.ca",
+  "bugs": {
+    "url": "https://github.com/DaveC6662/borealui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaveC6662/borealui.git",
+    "directory": "packages/next"
+  },
   "author": "Davin Chiupka",
   "license": "MIT",
   "publishConfig": {
@@ -29,7 +50,7 @@
     "uuid": ">=9.0.0"
   },
   "devDependencies": {
-    "@boreal-ui/types": "0.0.9011"
+    "@boreal-ui/types": "0.0.9012-alpha.0"
   },
   "exports": {
     ".": {

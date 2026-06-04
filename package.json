@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/workspace",
-  "version": "0.0.9011",
+  "version": "0.0.9012-alpha.0",
   "readme": "README.md",
   "description": "Workspace for Boreal UI scoped packages",
   "author": "Davin Chiupka",

@@ -1,8 +1,28 @@
 {
   "name": "@boreal-ui/core",
-  "version": "0.0.9011",
+  "version": "0.0.9012-alpha.0",
   "readme": "README.md",
-  "description": "Core React components for Boreal UI",
+  "description": "Accessible, themeable React components for Boreal UI core consumers.",
+  "keywords": [
+    "boreal-ui",
+    "react",
+    "components",
+    "component-library",
+    "design-system",
+    "scss",
+    "accessibility",
+    "typescript",
+    "themeable-ui"
+  ],
+  "homepage": "https://www.borealui.ca",
+  "bugs": {
+    "url": "https://github.com/DaveC6662/borealui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaveC6662/borealui.git",
+    "directory": "packages/core"
+  },
   "author": "Davin Chiupka",
   "license": "MIT",
   "publishConfig": {
@@ -28,7 +48,7 @@
     "uuid": ">=9.0.0"
   },
   "devDependencies": {
-    "@boreal-ui/types": "0.0.9011"
+    "@boreal-ui/types": "0.0.9012-alpha.0"
   },
   "exports": {
     ".": {

@@ -1,8 +1,27 @@
 {
   "name": "@boreal-ui/types",
-  "version": "0.0.9011",
+  "version": "0.0.9012-alpha.0",
   "readme": "README.md",
-  "description": "Shared TypeScript declarations for Boreal UI split packages",
+  "description": "Shared TypeScript declarations for Boreal UI core and Next.js packages.",
+  "keywords": [
+    "boreal-ui",
+    "typescript",
+    "types",
+    "declarations",
+    "react",
+    "nextjs",
+    "components",
+    "design-system"
+  ],
+  "homepage": "https://www.borealui.ca",
+  "bugs": {
+    "url": "https://github.com/DaveC6662/borealui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaveC6662/borealui.git",
+    "directory": "packages/types"
+  },
   "author": "Davin Chiupka",
   "license": "MIT",
   "publishConfig": {
@@ -15,6 +34,7 @@
     "README.md",
     "LICENSE"
   ],
+  "sideEffects": false,
   "peerDependencies": {
     "react": ">=18.2.0",
     "react-dom": ">=18.2.0"

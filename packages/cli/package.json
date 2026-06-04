@@ -1,14 +1,37 @@
 {
   "name": "@boreal-ui/cli",
-  "version": "0.0.9011",
+  "version": "0.0.9012-alpha.0",
   "readme": "README.md",
-  "description": "Standalone CLI for setting up Boreal UI in React and Next.js apps",
+  "description": "Command-line setup assistant for adding Boreal UI to React and Next.js apps.",
+  "keywords": [
+    "boreal-ui",
+    "cli",
+    "create",
+    "react",
+    "nextjs",
+    "design-system",
+    "components",
+    "scaffold"
+  ],
+  "homepage": "https://www.borealui.ca",
+  "bugs": {
+    "url": "https://github.com/DaveC6662/borealui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaveC6662/borealui.git",
+    "directory": "packages/cli"
+  },
   "author": "Davin Chiupka",
   "license": "MIT",
   "publishConfig": {
     "access": "public"
   },
   "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
   "bin": {
     "boreal-ui": "./src/index.js",
     "create-boreal-ui": "./src/index.js"
