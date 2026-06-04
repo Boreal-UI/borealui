@@ -62,9 +62,137 @@ function syncPackageVersion(packageDir) {
 
   packageJson.version = rootPackage.version;
 
-  if (packageJson.peerDependencies?.["@boreal-ui/types"]) {
-    packageJson.peerDependencies["@boreal-ui/types"] = rootPackage.version;
+  if (packageJson.devDependencies?.["@boreal-ui/types"]) {
+    packageJson.devDependencies["@boreal-ui/types"] = rootPackage.version;
   }
+
+  writeJson(packageJsonPath, packageJson);
+}
+
+function createExportTarget({ types, importPath, requirePath, defaultPath, style }) {
+  const target = {};
+
+  if (types) target.types = types;
+  if (importPath) target.import = importPath;
+  if (requirePath) target.require = requirePath;
+  if (defaultPath) target.default = defaultPath;
+  if (style) target.style = style;
+
+  return target;
+}
+
+function buildRuntimeExports(flavor) {
+  const runtimeDir = path.join(rootDir, "dist", flavor);
+  const typesDir = path.join(rootDir, "dist", "types", flavor);
+  const hasCjs = flavor === "core";
+  const exports = {
+    ".": createExportTarget({
+      types: "./dist/types/index.d.ts",
+      importPath: `./dist/${flavor}/index.js`,
+      requirePath: hasCjs ? `./dist/${flavor}/index.cjs.js` : undefined,
+    }),
+    "./globals": createExportTarget({
+      types: `./dist/types/${flavor}/globals.d.ts`,
+      importPath: `./dist/${flavor}/globals.js`,
+      requirePath: hasCjs ? `./dist/${flavor}/globals.cjs.js` : undefined,
+    }),
+    "./globals.css": createExportTarget({
+      style: `./dist/${flavor}/globals.css`,
+      defaultPath: `./dist/${flavor}/globals.css`,
+    }),
+  };
+
+  const entryFiles = fs
+    .readdirSync(typesDir)
+    .filter((file) => file.endsWith(".d.ts"))
+    .map((file) => file.replace(/\.d\.ts$/, ""))
+    .filter((name) => name !== "globals")
+    .sort((a, b) => a.localeCompare(b));
+
+  for (const name of entryFiles) {
+    const importPath = `./dist/${flavor}/${name}.js`;
+    const requirePath = `./dist/${flavor}/${name}.cjs.js`;
+
+    if (!fs.existsSync(path.join(runtimeDir, `${name}.js`))) continue;
+
+    exports[`./${name}`] = createExportTarget({
+      types: `./dist/types/${flavor}/${name}.d.ts`,
+      importPath,
+      requirePath: hasCjs && fs.existsSync(path.join(runtimeDir, `${name}.cjs.js`))
+        ? requirePath
+        : undefined,
+    });
+  }
+
+  return exports;
+}
+
+function buildTypesExports() {
+  const typesRoot = path.join(rootDir, "dist", "types");
+  const exports = {
+    ".": createExportTarget({
+      types: "./dist/types/public.types.d.ts",
+      defaultPath: "./dist/empty.js",
+    }),
+    "./core": createExportTarget({
+      types: "./dist/types/index.core.d.ts",
+      defaultPath: "./dist/empty.js",
+    }),
+    "./next": createExportTarget({
+      types: "./dist/types/index.next.d.ts",
+      defaultPath: "./dist/empty.js",
+    }),
+    "./docs": createExportTarget({
+      types: "./dist/types/generated-docs/index.d.ts",
+      defaultPath: "./dist/empty.js",
+    }),
+    "./public": createExportTarget({
+      types: "./dist/types/public.types.d.ts",
+      defaultPath: "./dist/empty.js",
+    }),
+  };
+
+  for (const flavor of ["core", "next"]) {
+    const flavorDir = path.join(typesRoot, flavor);
+    const entries = fs
+      .readdirSync(flavorDir)
+      .filter((file) => file.endsWith(".d.ts"))
+      .map((file) => file.replace(/\.d\.ts$/, ""))
+      .sort((a, b) => a.localeCompare(b));
+
+    for (const name of entries) {
+      exports[`./${flavor}/${name}`] = createExportTarget({
+        types: `./dist/types/${flavor}/${name}.d.ts`,
+        defaultPath: "./dist/empty.js",
+      });
+    }
+  }
+
+  const docsDir = path.join(typesRoot, "generated-docs");
+  if (fs.existsSync(docsDir)) {
+    const docsEntries = fs
+      .readdirSync(docsDir)
+      .filter((file) => file.endsWith(".d.ts"))
+      .map((file) => file.replace(/\.d\.ts$/, ""))
+      .filter((name) => name !== "index")
+      .sort((a, b) => a.localeCompare(b));
+
+    for (const name of docsEntries) {
+      exports[`./docs/${name}`] = createExportTarget({
+        types: `./dist/types/generated-docs/${name}.d.ts`,
+        defaultPath: "./dist/empty.js",
+      });
+    }
+  }
+
+  return exports;
+}
+
+function syncPackageExports(packageDir, exports) {
+  const packageJsonPath = path.join(packageDir, "package.json");
+  const packageJson = readJson(packageJsonPath);
+
+  packageJson.exports = exports;
 
   writeJson(packageJsonPath, packageJson);
 }
@@ -101,6 +229,7 @@ function stageTypesPackage() {
   copyDirectory(path.join(rootDir, "dist", "types"), path.join(packageDistDir, "types"));
   writeEmptyRuntimeStub(packageDistDir);
   copyFileIfExists(path.join(rootDir, "LICENSE"), path.join(packageDir, "LICENSE"));
+  syncPackageExports(packageDir, buildTypesExports());
 
   console.log("Staged @boreal-ui/types package output.");
 }
@@ -172,6 +301,7 @@ function stageRuntimePackage(flavor) {
   stageRuntimeTypes(packageDistDir, flavor);
   writeEmptyRuntimeStub(packageDistDir);
   copyFileIfExists(path.join(rootDir, "LICENSE"), path.join(packageDir, "LICENSE"));
+  syncPackageExports(packageDir, buildRuntimeExports(flavor));
 
   console.log(`Staged @boreal-ui/${flavor} package output.`);
 }

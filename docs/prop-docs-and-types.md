@@ -4,7 +4,11 @@ Boreal UI publishes TypeScript types and generated prop metadata so consumers ca
 
 ## Public Types
 
-Shared public types are exported from both builds.
+Shared public types are exported from `@boreal-ui/types`, which TypeScript consumers should install as a dev dependency.
+
+```bash
+npm install -D @boreal-ui/types
+```
 
 ```ts
 import type {
@@ -15,14 +19,13 @@ import type {
   SizeType,
   StateType,
   ThemeType,
-} from "boreal-ui/core";
+} from "@boreal-ui/types";
 ```
 
-You can also import from the dedicated type entry point.
+You can also import individual shared types from the same entry point.
 
 ```ts
-import type { ThemeType } from "boreal-ui/core/types";
-import type { SizeType } from "boreal-ui/next/types";
+import type { SizeType, ThemeType } from "@boreal-ui/types";
 ```
 
 Common shared types:
@@ -42,24 +45,24 @@ Common shared types:
 Component prop types are available through component entry points.
 
 ```ts
-import type { ButtonProps } from "boreal-ui/core/Button";
-import type { DataTableProps, Column } from "boreal-ui/core/DataTable";
-import type { NumberInputProps } from "boreal-ui/core/NumberInput";
-import type { SparklineProps } from "boreal-ui/core/Sparkline";
+import type { ButtonProps } from "@boreal-ui/types/core/Button";
+import type { DataTableProps, Column } from "@boreal-ui/types/core/DataTable";
+import type { NumberInputProps } from "@boreal-ui/types/core/NumberInput";
+import type { SparklineProps } from "@boreal-ui/types/core/Sparkline";
 ```
 
 For Next.js consumers:
 
 ```ts
-import type { ButtonProps } from "boreal-ui/next/Button";
-import type { Column } from "boreal-ui/next/DataTable";
+import type { ButtonProps } from "@boreal-ui/types/next/Button";
+import type { Column } from "@boreal-ui/types/next/DataTable";
 ```
 
 Use these types when wrapping Boreal components in app-specific components.
 
 ```tsx
-import { Button } from "boreal-ui/core";
-import type { ButtonProps } from "boreal-ui/core/Button";
+import { Button } from "@boreal-ui/core";
+import type { ButtonProps } from "@boreal-ui/types/core/Button";
 
 type SaveButtonProps = Omit<ButtonProps, "type" | "children"> & {
   label?: string;
@@ -76,7 +79,7 @@ export function SaveButton({ label = "Save", ...props }: SaveButtonProps) {
 
 ## Generated Prop Metadata
 
-Generated prop docs are exported from `boreal-ui/docs` and from the main build entries.
+Generated prop docs are exported from `@boreal-ui/core` and from the main build entries.
 
 ```ts
 import {
@@ -90,7 +93,7 @@ import {
   themeSelectPropDocs,
   type GeneratedComponentDoc,
   type GeneratedPropDoc,
-} from "boreal-ui/docs";
+} from "@boreal-ui/core";
 ```
 
 Each component doc object follows this shape:
@@ -120,7 +123,7 @@ type GeneratedPropDoc = {
 ## Rendering a Prop Table
 
 ```tsx
-import { buttonPropDocs } from "boreal-ui/docs";
+import { buttonPropDocs } from "@boreal-ui/core";
 
 export function ButtonPropTable() {
   return (
@@ -163,7 +166,7 @@ import {
   cardPropDocs,
   dataTablePropDocs,
   type GeneratedComponentDoc,
-} from "boreal-ui/docs";
+} from "@boreal-ui/core";
 
 const docs: GeneratedComponentDoc[] = [
   buttonPropDocs,

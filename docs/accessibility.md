@@ -35,7 +35,7 @@ You are still responsible for:
 Interactive controls need an accessible name. Text children usually provide one automatically.
 
 ```tsx
-import { Button } from "boreal-ui/core";
+import { Button } from "@boreal-ui/core";
 
 export function SubmitAction() {
   return <Button type="submit">Submit request</Button>;
@@ -45,7 +45,7 @@ export function SubmitAction() {
 Icon-only controls need an explicit label.
 
 ```tsx
-import { IconButton } from "boreal-ui/core";
+import { IconButton } from "@boreal-ui/core";
 
 function CloseIcon({ className }: { className?: string }) {
   return (
@@ -75,7 +75,7 @@ Use `aria-labelledby` when a visible element outside the control should provide 
 Prefer visible labels. Do not rely on placeholder text as the only label.
 
 ```tsx
-import { TextInput } from "boreal-ui/core";
+import { TextInput } from "@boreal-ui/core";
 
 export function EmailField() {
   return (
@@ -145,7 +145,7 @@ Avoid using disabled controls as the only way to explain what happened. Pair dis
 Give `DataTable` a caption, `aria-label`, or `aria-labelledby`.
 
 ```tsx
-import { DataTable } from "boreal-ui/core";
+import { DataTable } from "@boreal-ui/core";
 
 <DataTable
   caption="Invoices"
@@ -184,7 +184,7 @@ For interactive rows, provide labels that explain the action.
 `Modal` should have a visible `title`, `aria-label`, or `aria-labelledby`. Add `aria-describedby` when supporting text explains the decision.
 
 ```tsx
-import { Button, Modal } from "boreal-ui/core";
+import { Button, Modal } from "@boreal-ui/core";
 
 export function DeleteProjectDialog({
   open,
@@ -244,8 +244,8 @@ Boreal derives foreground tokens for each registered color scheme with a WCAG 2.
 When registering custom schemes, still verify borders, focus indicators, success/error/warning states, outline variants, glass surfaces, and any app-specific CSS variable overrides against the backgrounds where they appear.
 
 ```tsx
-import { ThemeProvider } from "boreal-ui/core";
-import type { ColorScheme } from "boreal-ui/core/types";
+import { ThemeProvider } from "@boreal-ui/core";
+import type { ColorScheme } from "@boreal-ui/types";
 
 const schemes: ColorScheme[] = [
   {
@@ -289,7 +289,7 @@ Use Testing Library role and name queries first.
 
 ```tsx
 import { render, screen } from "@testing-library/react";
-import { Button } from "boreal-ui/core";
+import { Button } from "@boreal-ui/core";
 
 it("renders an accessible submit button", () => {
   render(<Button type="submit">Submit request</Button>);
@@ -305,7 +305,7 @@ Use `jest-axe` for automated accessibility checks.
 ```tsx
 import { render } from "@testing-library/react";
 import { axe } from "jest-axe";
-import { TextInput } from "boreal-ui/core";
+import { TextInput } from "@boreal-ui/core";
 
 it("has no accessibility violations", async () => {
   const { container } = render(<TextInput label="Email" name="email" />);

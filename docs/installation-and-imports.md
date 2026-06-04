@@ -2,15 +2,22 @@
 
 Boreal UI ships two consumer builds:
 
-- `boreal-ui/core` for standard React apps.
-- `boreal-ui/next` for Next.js apps, including app-router projects.
-
-The root `boreal-ui` entry currently resolves to the core build. Prefer the explicit build entry so your intent is clear.
+- `@boreal-ui/core` for standard React apps.
+- `@boreal-ui/next` for Next.js apps, including app-router projects.
 
 ## Install
 
+Choose one runtime package:
+
 ```bash
-npm install boreal-ui
+npm install @boreal-ui/core
+npm install @boreal-ui/next
+```
+
+For TypeScript projects, install declarations as a dev dependency:
+
+```bash
+npm install -D @boreal-ui/types
 ```
 
 Boreal UI expects these peer dependencies in the consuming app:
@@ -26,13 +33,13 @@ Next.js apps should also install `next`.
 Import the core stylesheet once near the top of your app.
 
 ```tsx
-import "boreal-ui/core/globals.css";
+import "@boreal-ui/core/globals.css";
 ```
 
 Then import components from the core build.
 
 ```tsx
-import { Button, Card, TextInput } from "boreal-ui/core";
+import { Button, Card, TextInput } from "@boreal-ui/core";
 
 export function ProjectForm() {
   return (
@@ -49,7 +56,7 @@ export function ProjectForm() {
 Import the Next stylesheet once from `app/layout.tsx`, `pages/_app.tsx`, or another global stylesheet loaded by the app.
 
 ```tsx
-import "boreal-ui/next/globals.css";
+import "@boreal-ui/next/globals.css";
 ```
 
 Next.js starter projects often include this broad reset in the app's default `globals.css`:
@@ -97,7 +104,7 @@ Use the Next build for components.
 ```tsx
 "use client";
 
-import { Button, Card, TextInput } from "boreal-ui/next";
+import { Button, Card, TextInput } from "@boreal-ui/next";
 
 export default function ProjectForm() {
   return (
@@ -116,34 +123,36 @@ Use `"use client"` in your own Next.js component when you render Boreal componen
 Standalone imports are available when you want a narrower import path.
 
 ```tsx
-import Button from "boreal-ui/core/Button";
-import Card from "boreal-ui/next/Card";
+import Button from "@boreal-ui/core/Button";
+import Card from "@boreal-ui/next/Card";
 ```
 
 Standalone paths follow the same core/next split:
 
 ```tsx
-import DataTable from "boreal-ui/core/DataTable";
-import NextDataTable from "boreal-ui/next/DataTable";
+import DataTable from "@boreal-ui/core/DataTable";
+import NextDataTable from "@boreal-ui/next/DataTable";
 ```
 
 ## Public API Entry Points
 
 | Entry point | Purpose |
 | --- | --- |
-| `boreal-ui/core` | React components, theme APIs, style config, generated prop docs, and public types. |
-| `boreal-ui/next` | Next.js wrappers with the same public API shape. |
-| `boreal-ui/core/Button` | Standalone core component import. |
-| `boreal-ui/next/Button` | Standalone Next component import. |
-| `boreal-ui/core/globals.css` | Core global CSS import. |
-| `boreal-ui/next/globals.css` | Next global CSS import. |
-| `boreal-ui/core/types` | Shared public type entry point. |
-| `boreal-ui/next/types` | Shared public type entry point for Next consumers. |
-| `boreal-ui/docs` | Generated component prop metadata for docs tools and prop tables. |
-| `boreal-ui/core/registerColorScheme` | Standalone color-scheme registration helper for React consumers. |
-| `boreal-ui/next/registerColorScheme` | Standalone color-scheme registration helper for Next consumers. |
+| `@boreal-ui/core` | React components, theme APIs, style config, generated prop docs, and public types. |
+| `@boreal-ui/next` | Next.js wrappers with the same public API shape. |
+| `@boreal-ui/core/Button` | Standalone core component import. |
+| `@boreal-ui/next/Button` | Standalone Next component import. |
+| `@boreal-ui/core/globals.css` | Core global CSS import. |
+| `@boreal-ui/next/globals.css` | Next global CSS import. |
+| `@boreal-ui/types` | Shared public type declarations. |
+| `@boreal-ui/types/core/Button` | Core component prop declarations. |
+| `@boreal-ui/types/next/Button` | Next component prop declarations. |
+| `@boreal-ui/core` | Generated component prop metadata for React docs tools and prop tables. |
+| `@boreal-ui/next` | Generated component prop metadata for Next docs tools and prop tables. |
+| `@boreal-ui/core/registerColorScheme` | Standalone color-scheme registration helper for React consumers. |
+| `@boreal-ui/next/registerColorScheme` | Standalone color-scheme registration helper for Next consumers. |
 
-For a complete list of barrel exports, standalone component paths, generated prop-doc objects, and compatibility aliases, see [Public API Reference](./public-api-reference.md).
+For a complete list of barrel exports, standalone component paths, and generated prop-doc objects, see [Public API Reference](./public-api-reference.md).
 
 ## Choosing Core or Next
 

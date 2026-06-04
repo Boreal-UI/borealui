@@ -16,5 +16,5 @@ Use this package when you want the Next.js wrappers and `next/link`, `next/image
 TypeScript consumers should also install the shared declarations:
 
 ```sh
-npm install @boreal-ui/types
+npm install -D @boreal-ui/types
 ```

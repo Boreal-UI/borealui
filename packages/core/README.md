@@ -16,5 +16,5 @@ Use this package when you do not need Next.js-specific components or `next` peer
 TypeScript consumers should also install the shared declarations:
 
 ```sh
-npm install @boreal-ui/types
+npm install -D @boreal-ui/types
 ```

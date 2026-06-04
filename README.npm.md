@@ -16,24 +16,20 @@ Use it when you want production-ready UI primitives that can be themed globally,
 
 ## Installation
 
-```bash
-npm install boreal-ui
-```
-
-For the smallest install, use the split packages:
+Choose the runtime package for your framework:
 
 ```bash
 npm install @boreal-ui/core
 npm install @boreal-ui/next
 ```
 
-For TypeScript declarations, add:
+For TypeScript declarations, add the types package as a dev dependency:
 
 ```bash
-npm install @boreal-ui/types
+npm install -D @boreal-ui/types
 ```
 
-`@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js. The legacy `boreal-ui` package still exposes both `boreal-ui/core` and `boreal-ui/next` for compatibility.
+`@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js.
 
 Some components and utilities rely on `marked` and `uuid`, so make sure they are available if your package manager does not install peer dependencies automatically.
 
@@ -72,13 +68,13 @@ Import the global stylesheet once near the top of your application.
 ## React
 
 ```tsx
-import "boreal-ui/core/globals.css";
+import "@boreal-ui/core/globals.css";
 ```
 
 Then import components from the core build:
 
 ```tsx
-import { Button, Card, TextInput } from "boreal-ui/core";
+import { Button, Card, TextInput } from "@boreal-ui/core";
 
 export function Example() {
   return (
@@ -92,19 +88,12 @@ export function Example() {
 }
 ```
 
-With the split core package, use:
-
-```tsx
-import { Button, Card, TextInput } from "@boreal-ui/core";
-import "@boreal-ui/core/globals.css";
-```
-
 ## Next.js
 
 Import the Next stylesheet once from `app/layout.tsx`, `pages/_app.tsx`, or your global stylesheet.
 
 ```tsx
-import "boreal-ui/next/globals.css";
+import "@boreal-ui/next/globals.css";
 ```
 
 Then import components from the Next build:
@@ -112,7 +101,7 @@ Then import components from the Next build:
 ```tsx
 "use client";
 
-import { Button, Card, TextInput } from "boreal-ui/next";
+import { Button, Card, TextInput } from "@boreal-ui/next";
 
 export default function Example() {
   return (
@@ -124,13 +113,6 @@ export default function Example() {
     </Card>
   );
 }
-```
-
-With the split Next package, use:
-
-```tsx
-import { Button, Card, TextInput } from "@boreal-ui/next";
-import "@boreal-ui/next/globals.css";
 ```
 
 ### Next.js Global CSS Note
@@ -170,23 +152,23 @@ body {
 You can import individual components directly:
 
 ```tsx
-import Button from "boreal-ui/core/Button";
-import Card from "boreal-ui/next/Card";
+import Button from "@boreal-ui/core/Button";
+import Card from "@boreal-ui/next/Card";
 ```
 
 ## Package Entry Points
 
 ```tsx
-import { Button } from "boreal-ui/core";
-import Button from "boreal-ui/core/Button";
-import "boreal-ui/core/globals.css";
+import { Button } from "@boreal-ui/core";
+import Button from "@boreal-ui/core/Button";
+import "@boreal-ui/core/globals.css";
 
-import { Button as NextButton } from "boreal-ui/next";
-import NextCard from "boreal-ui/next/Card";
-import "boreal-ui/next/globals.css";
+import { Button as NextButton } from "@boreal-ui/next";
+import NextCard from "@boreal-ui/next/Card";
+import "@boreal-ui/next/globals.css";
 ```
 
-The root `boreal-ui` entry currently points to the core build. For Next.js apps, prefer `boreal-ui/next` so the Next wrappers and client directives are used.
+Use the scoped package that matches your framework; pre-alpha builds do not publish a root `boreal-ui` package.
 
 ## Components
 
@@ -310,7 +292,7 @@ Exact props vary by component. TypeScript and the generated prop docs are the so
 Call `borealConfig` once before rendering your app to set project-wide defaults.
 
 ```tsx
-import { borealConfig } from "boreal-ui/core";
+import { borealConfig } from "@boreal-ui/core";
 
 borealConfig({
   defaultTheme: "secondary",
@@ -324,10 +306,10 @@ borealConfig({
 });
 ```
 
-For Next.js, import the same API from `boreal-ui/next`:
+For Next.js, import the same API from `@boreal-ui/next`:
 
 ```tsx
-import { borealConfig } from "boreal-ui/next";
+import { borealConfig } from "@boreal-ui/next";
 ```
 
 Component props still win over global defaults:
@@ -401,7 +383,7 @@ import {
   defaultColorSchemes,
   registerColorScheme,
   ThemeSelect,
-} from "boreal-ui/core";
+} from "@boreal-ui/core";
 
 registerColorScheme({
   name: "Brand Night",
@@ -428,14 +410,13 @@ import type {
   ShadowType,
   SizeType,
   ThemeType,
-} from "boreal-ui/core";
+} from "@boreal-ui/core";
 ```
 
 Standalone type entry points are also available:
 
 ```ts
-import type { ThemeType } from "boreal-ui/core/types";
-import type { SizeType } from "boreal-ui/next/types";
+import type { SizeType, ThemeType } from "@boreal-ui/types";
 ```
 
 ## Generated Prop Docs
@@ -443,7 +424,7 @@ import type { SizeType } from "boreal-ui/next/types";
 Boreal UI exports generated prop metadata for documentation sites, playgrounds, and prop tables.
 
 ```tsx
-import { buttonPropDocs, dataTablePropDocs } from "boreal-ui/core";
+import { buttonPropDocs, dataTablePropDocs } from "@boreal-ui/core";
 
 console.log(buttonPropDocs.name);
 console.log(dataTablePropDocs.props);
@@ -493,7 +474,7 @@ Boreal UI is designed for Testing Library, Jest, jest-axe, Cypress, and Storyboo
 
 ```tsx
 import { render, screen } from "@testing-library/react";
-import { Button } from "boreal-ui/core";
+import { Button } from "@boreal-ui/core";
 
 it("renders an accessible button", () => {
   render(<Button>Submit</Button>);

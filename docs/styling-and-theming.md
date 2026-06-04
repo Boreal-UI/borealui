@@ -7,13 +7,13 @@ Boreal UI styles are driven by CSS variables, shared style props, global default
 Import the global stylesheet once.
 
 ```tsx
-import "boreal-ui/core/globals.css";
+import "@boreal-ui/core/globals.css";
 ```
 
 For Next.js:
 
 ```tsx
-import "boreal-ui/next/globals.css";
+import "@boreal-ui/next/globals.css";
 ```
 
 The global stylesheet provides CSS variables, resets, theme values, animations, and shared utility styles used by components.
@@ -75,7 +75,7 @@ Many components support a common styling vocabulary.
 Exact support varies by component. Use TypeScript or generated prop docs to confirm a component's full API. Structural utilities such as `Portal` intentionally keep a smaller styling surface because they render content into another DOM container rather than owning a themed visual surface.
 
 ```tsx
-import { Button, Card } from "boreal-ui/core";
+import { Button, Card } from "@boreal-ui/core";
 
 export function Actions() {
   return (
@@ -93,7 +93,7 @@ export function Actions() {
 Use `borealConfig` to set project-wide defaults for components that read Boreal style config. `setBorealStyleConfig` is still exported for the same behavior.
 
 ```tsx
-import { borealConfig } from "boreal-ui/core";
+import { borealConfig } from "@boreal-ui/core";
 
 borealConfig({
   defaultTheme: "secondary",
@@ -110,7 +110,7 @@ borealConfig({
 For Next.js:
 
 ```tsx
-import { borealConfig } from "boreal-ui/next";
+import { borealConfig } from "@boreal-ui/next";
 ```
 
 Component props override global defaults.
@@ -126,7 +126,7 @@ Component props override global defaults.
 `ThemeProvider` manages the active color scheme and writes it into CSS variables. It resolves text colors against the active surfaces with a WCAG 2.1 AA normal-text contrast target, so low-contrast custom schemes fall back to readable foreground colors instead of blindly using `forceTextColor`.
 
 ```tsx
-import { ThemeProvider } from "boreal-ui/core";
+import { ThemeProvider } from "@boreal-ui/core";
 
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
@@ -156,7 +156,7 @@ The Next provider defaults to a hydration-safe setup. Boreal applies the selecte
 To reduce first-paint color flashing outside that stricter hydration-safe setup, render Boreal's initialization script as early as possible in the document. In Next.js app router projects, this root-level script intentionally changes `<html>` before hydration, so the root element also needs React's `suppressHydrationWarning` prop:
 
 ```tsx
-import { getThemeInitializationScript } from "boreal-ui/next";
+import { getThemeInitializationScript } from "@boreal-ui/next";
 
 export default function RootLayout({
   children,
@@ -190,8 +190,8 @@ When `initialSchemeName` is provided, it is preferred over the saved theme name.
 ## Custom Color Schemes
 
 ```tsx
-import { ThemeProvider } from "boreal-ui/core";
-import type { ColorScheme } from "boreal-ui/core/types";
+import { ThemeProvider } from "@boreal-ui/core";
+import type { ColorScheme } from "@boreal-ui/types";
 
 const schemes: ColorScheme[] = [
   {
@@ -217,7 +217,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
 You can also register a scheme outside the provider.
 
 ```tsx
-import { registerColorScheme } from "boreal-ui/core";
+import { registerColorScheme } from "@boreal-ui/core";
 
 registerColorScheme({
   name: "Brand Light",
@@ -234,7 +234,7 @@ registerColorScheme({
 `ThemeSelect` renders a control for selecting registered color schemes.
 
 ```tsx
-import { ThemeProvider, ThemeSelect } from "boreal-ui/core";
+import { ThemeProvider, ThemeSelect } from "@boreal-ui/core";
 
 export function Settings() {
   return (
