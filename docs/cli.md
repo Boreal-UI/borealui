@@ -77,6 +77,8 @@ The CLI only writes files when there is a missing or repairable setup step. If t
 For every supported project, it can:
 
 - Add `@boreal-ui/core` or `@boreal-ui/next` to `package.json` dependencies when the framework package is missing.
+- Detect TypeScript projects and optionally add `@boreal-ui/types` to `package.json` dev dependencies.
+- Optionally create a consumer-focused `AGENTS.md` that teaches AI agents how to use Boreal UI correctly in the app.
 - Preserve an existing framework-specific Boreal UI dependency version.
 - Print a plan before applying changes.
 - Ask before each file edit unless `--yes` is used.
@@ -218,6 +220,8 @@ Without flags, the CLI may ask:
 - Which framework to use, unless it can be auto-detected or you pass `--framework`.
 - Whether to run dependency installation after edits.
 - Whether to create or repair the recommended Next.js globals baseline.
+- Whether to add `@boreal-ui/types` when TypeScript is detected.
+- Whether to add an `AGENTS.md` guide for AI agents using Boreal UI in the consumer project.
 - Whether to apply each proposed file edit.
 
 For CI, template scripts, or repeatable setup, prefer:

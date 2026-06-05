@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/next",
-  "version": "0.1.0",
+  "version": "0.1.01",
   "readme": "README.md",
   "description": "Accessible, themeable Boreal UI components for Next.js app-router projects.",
   "keywords": [

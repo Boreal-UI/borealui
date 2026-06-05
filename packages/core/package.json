@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/core",
-  "version": "0.1.0",
+  "version": "0.1.01",
   "readme": "README.md",
   "description": "Accessible, themeable React components for Boreal UI core consumers.",
   "keywords": [

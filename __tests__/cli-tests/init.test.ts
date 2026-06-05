@@ -199,6 +199,169 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     expect(packageJson.dependencies["@boreal-ui/next"]).toBe(`^${VERSION}`);
   });
 
+  it("adds @boreal-ui/types as a dev dependency for TypeScript apps with --yes", async () => {
+    writeNextApp(`export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <body>{children}</body>
+    </html>
+  );
+}
+`);
+
+    await initCommand({
+      cwd: root,
+      framework: "next",
+      install: false,
+      recommendedGlobals: false,
+      yes: true,
+    });
+
+    const packageJson = JSON.parse(
+      readFileSync(join(root, "package.json"), "utf8"),
+    ) as {
+      devDependencies: Record<string, string>;
+    };
+
+    expect(packageJson.devDependencies["@boreal-ui/types"]).toBe(
+      `^${VERSION}`,
+    );
+  });
+
+  it("does not add @boreal-ui/types for JavaScript apps", async () => {
+    mkdirSync(join(root, "src"), { recursive: true });
+
+    writePackageJson({
+      "@vitejs/plugin-react": "^5.0.0",
+      react: "^19.0.0",
+      "react-dom": "^19.0.0",
+    });
+
+    writeFileSync(
+      join(root, "src", "main.jsx"),
+      `import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+
+createRoot(document.getElementById("root")).render(<App />);
+`,
+      "utf8",
+    );
+
+    await initCommand({
+      cwd: root,
+      framework: "react",
+      install: false,
+      yes: true,
+    });
+
+    const packageJson = JSON.parse(
+      readFileSync(join(root, "package.json"), "utf8"),
+    ) as {
+      devDependencies?: Record<string, string>;
+    };
+
+    expect(packageJson.devDependencies?.["@boreal-ui/types"]).toBeUndefined();
+  });
+
+  it("prompts before adding @boreal-ui/types when TypeScript is detected", async () => {
+    writePackageJson({
+      react: "^19.0.0",
+      "react-dom": "^19.0.0",
+    });
+    writeFileSync(join(root, "tsconfig.json"), "{}", "utf8");
+
+    const prompt = jest.fn<Promise<boolean>, []>().mockResolvedValue(false);
+
+    await expect(
+      __testing.resolveTypesPackageOption(
+        {
+          dryRun: false,
+          yes: false,
+        },
+        root,
+        JSON.parse(readFileSync(join(root, "package.json"), "utf8")),
+        prompt,
+      ),
+    ).resolves.toBe(false);
+
+    expect(prompt).toHaveBeenCalledTimes(1);
+  });
+
+  it("adds an AGENTS.md guide for Boreal UI consumers with --yes", async () => {
+    writeReactApp(`import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+
+createRoot(document.getElementById("root")!).render(<App />);
+`);
+
+    await initCommand({
+      cwd: root,
+      framework: "react",
+      install: false,
+      yes: true,
+    });
+
+    const agentsGuide = readFileSync(join(root, "AGENTS.md"), "utf8");
+
+    expect(agentsGuide).toContain(
+      "Guidance for AI agents working in this React project with Boreal UI.",
+    );
+    expect(agentsGuide).toContain(
+      "Import components from `@boreal-ui/core`.",
+    );
+    expect(agentsGuide).toContain(
+      "Import Boreal globals once from `@boreal-ui/core/globals.css`",
+    );
+    expect(agentsGuide).toContain(
+      "Use `@boreal-ui/types` for public type imports in TypeScript projects.",
+    );
+  });
+
+  it("does not overwrite an existing AGENTS.md guide", async () => {
+    writeReactApp(`import React from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+
+createRoot(document.getElementById("root")!).render(<App />);
+`);
+    writeFileSync(join(root, "AGENTS.md"), "Existing guidance\n", "utf8");
+
+    await initCommand({
+      cwd: root,
+      framework: "react",
+      install: false,
+      yes: true,
+    });
+
+    expect(readFileSync(join(root, "AGENTS.md"), "utf8")).toBe(
+      "Existing guidance\n",
+    );
+  });
+
+  it("prompts before adding an AGENTS.md guide when it is missing", async () => {
+    writePackageJson({
+      react: "^19.0.0",
+      "react-dom": "^19.0.0",
+    });
+
+    const prompt = jest.fn<Promise<boolean>, []>().mockResolvedValue(false);
+
+    await expect(
+      __testing.resolveAgentsGuideOption(
+        {
+          dryRun: false,
+          yes: false,
+        },
+        root,
+        prompt,
+      ),
+    ).resolves.toBe(false);
+
+    expect(prompt).toHaveBeenCalledTimes(1);
+  });
+
   it("does not duplicate @boreal-ui/next when it already exists", async () => {
     mkdirSync(join(root, "app"), { recursive: true });
 
@@ -541,6 +704,7 @@ createRoot(document.getElementById("root")!).render(<App />);
       react: "^19.0.0",
       "react-dom": "^19.0.0",
       "@boreal-ui/next": `^${VERSION}`,
+      "@boreal-ui/types": `^${VERSION}`,
     });
 
     writeFileSync(
@@ -583,6 +747,7 @@ export default function BorealProvider({ children }: { children: React.ReactNode
 `,
       "utf8",
     );
+    writeFileSync(join(root, "AGENTS.md"), "Existing guidance\n", "utf8");
 
     await initCommand({
       cwd: root,

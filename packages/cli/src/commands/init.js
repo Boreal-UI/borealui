@@ -16,6 +16,9 @@ import { fail } from "../utils/help.js";
 import { promptForOptions } from "../utils/prompts.js";
 
 const SOURCE_EXTENSIONS = ["tsx", "jsx", "ts", "js"];
+const TYPESCRIPT_EXTENSIONS = new Set(["tsx", "ts"]);
+const BOREAL_TYPES_PACKAGE = "@boreal-ui/types";
+const AGENTS_GUIDE_FILE = "AGENTS.md";
 const BOREAL_CONFIG_CALL = `setBorealStyleConfig({
   defaultTheme: "primary",
   defaultSize: "medium",
@@ -66,6 +69,8 @@ export async function initCommand(rawOptions) {
   const framework = resolveFramework(root, packageJson, options.framework);
   const packageManager = resolvePackageManager(root, options.packageManager);
   options.recommendedGlobals = await resolveRecommendedGlobalsOption(options, framework);
+  options.installTypes = await resolveTypesPackageOption(options, root, packageJson);
+  options.addAgentsGuide = await resolveAgentsGuideOption(options, root);
   const plan = createSetupPlan(root, packageJsonPath, packageJson, framework, options);
 
   if (plan.length === 0) {
@@ -229,7 +234,14 @@ async function resolveRecommendedGlobalsOption(options, framework) {
 function createSetupPlan(root, packageJsonPath, packageJson, framework, options) {
   const changes = [];
 
-  addPackageJsonChange(changes, packageJsonPath, packageJson, framework);
+  addPackageJsonChange(
+    changes,
+    packageJsonPath,
+    packageJson,
+    framework,
+    options.installTypes,
+  );
+  addAgentsGuideChange(changes, root, framework, options.addAgentsGuide);
 
   if (framework === "next") {
     addNextChanges(changes, root, options);
@@ -240,28 +252,180 @@ function createSetupPlan(root, packageJsonPath, packageJson, framework, options)
   return changes;
 }
 
-function addPackageJsonChange(changes, packageJsonPath, packageJson, framework) {
+function addPackageJsonChange(
+  changes,
+  packageJsonPath,
+  packageJson,
+  framework,
+  installTypes,
+) {
   const { packageName } = BOREAL_PACKAGES[framework];
-  const hasBoreal =
-    packageJson.dependencies?.[packageName] ||
-    packageJson.devDependencies?.[packageName] ||
-    packageJson.peerDependencies?.[packageName];
+  const hasBoreal = hasPackage(packageJson, packageName);
+  const hasTypes = hasPackage(packageJson, BOREAL_TYPES_PACKAGE);
 
-  if (hasBoreal) return;
+  if (hasBoreal && (!installTypes || hasTypes)) return;
 
-  const nextPackageJson = {
-    ...packageJson,
-    dependencies: {
-      ...packageJson.dependencies,
+  const nextPackageJson = { ...packageJson };
+  const summaries = [];
+
+  if (!hasBoreal) {
+    nextPackageJson.dependencies = {
+      ...nextPackageJson.dependencies,
       [packageName]: `^${VERSION}`,
-    },
-  };
+    };
+    summaries.push(`"${packageName}" to dependencies`);
+  }
+
+  if (installTypes && !hasTypes) {
+    nextPackageJson.devDependencies = {
+      ...nextPackageJson.devDependencies,
+      [BOREAL_TYPES_PACKAGE]: `^${VERSION}`,
+    };
+    summaries.push(`"${BOREAL_TYPES_PACKAGE}" to devDependencies`);
+  }
 
   changes.push({
     path: packageJsonPath,
-    summary: `Add "${packageName}" to dependencies.`,
+    summary: `Add ${summaries.join(" and ")}.`,
     nextContents: `${JSON.stringify(nextPackageJson, null, 2)}\n`,
   });
+}
+
+async function resolveTypesPackageOption(
+  options,
+  root,
+  packageJson,
+  prompt = promptForTypesPackage,
+) {
+  if (!usesTypeScript(root, packageJson)) return false;
+  if (hasPackage(packageJson, BOREAL_TYPES_PACKAGE)) return false;
+  if (options.dryRun) return true;
+  if (options.yes) return true;
+
+  return await prompt();
+}
+
+async function promptForTypesPackage() {
+  const rl = createInterface({ input, output });
+
+  try {
+    return await promptBoolean(
+      rl,
+      "TypeScript detected. Install @boreal-ui/types as a dev dependency?",
+      true,
+    );
+  } finally {
+    rl.close();
+  }
+}
+
+function usesTypeScript(root, packageJson) {
+  if (hasPackage(packageJson, "typescript")) return true;
+  if (projectFileExists(root, resolveProjectPath(root, "tsconfig.json"))) return true;
+
+  const entryCandidates = [
+    ...reactEntryCandidates(),
+    ...nextLayoutCandidates(),
+    ...nextPagesAppCandidates(),
+  ].filter((candidate) => TYPESCRIPT_EXTENSIONS.has(extensionFor(candidate)));
+
+  return Boolean(findFirst(root, entryCandidates));
+}
+
+function hasPackage(packageJson, packageName) {
+  return Boolean(
+    packageJson.dependencies?.[packageName] ||
+      packageJson.devDependencies?.[packageName] ||
+      packageJson.peerDependencies?.[packageName],
+  );
+}
+
+async function resolveAgentsGuideOption(
+  options,
+  root,
+  prompt = promptForAgentsGuide,
+) {
+  if (projectFileExists(root, resolveProjectPath(root, AGENTS_GUIDE_FILE))) {
+    return false;
+  }
+  if (options.dryRun) return true;
+  if (options.yes) return true;
+
+  return await prompt();
+}
+
+async function promptForAgentsGuide() {
+  const rl = createInterface({ input, output });
+
+  try {
+    return await promptBoolean(
+      rl,
+      "Add an AGENTS.md guide for using Boreal UI in this project?",
+      true,
+    );
+  } finally {
+    rl.close();
+  }
+}
+
+function addAgentsGuideChange(changes, root, framework, enabled) {
+  if (!enabled) return;
+
+  const agentsPath = resolveProjectPath(root, AGENTS_GUIDE_FILE);
+
+  if (projectFileExists(root, agentsPath)) return;
+
+  changes.push({
+    path: agentsPath,
+    summary: "Create AGENTS.md with Boreal UI consumer guidance.",
+    nextContents: createAgentsGuide(framework),
+  });
+}
+
+function createAgentsGuide(framework) {
+  const { globalsSpecifier, importSpecifier } = BOREAL_PACKAGES[framework];
+  const frameworkName = framework === "next" ? "Next.js" : "React";
+  const frameworkNotes =
+    framework === "next"
+      ? `## Next.js Notes
+
+- Keep client-only Boreal providers and interactive components behind \`"use client"\` boundaries.
+- Import from \`@boreal-ui/next\` unless this project intentionally uses the core React build.
+`
+      : `## React Notes
+
+- Import from \`@boreal-ui/core\` unless this project intentionally uses the Next.js build.
+- Keep the Boreal provider near the root of the React tree so components share the same theme context.
+`;
+
+  return `# AGENTS.md
+
+Guidance for AI agents working in this ${frameworkName} project with Boreal UI.
+
+## Boreal UI Usage
+
+- Import components from \`${importSpecifier}\`.
+- Import Boreal globals once from \`${globalsSpecifier}\`, usually in the app entry or root layout.
+- Use \`@boreal-ui/types\` for public type imports in TypeScript projects.
+- Do not import from Boreal source files, package internals, or generated build paths.
+- Prefer Boreal components over hand-rolled equivalents when a matching component exists.
+
+## Theming And Styling
+
+- Wrap the app in Boreal \`ThemeProvider\` when using themes or color schemes.
+- Set app-wide defaults with \`setBorealStyleConfig\` instead of repeating props everywhere.
+- Customize components with supported props, class names, CSS variables, and the Boreal theme system.
+- Keep Boreal global styles loaded once; avoid broad resets that remove component spacing.
+- Do not edit \`node_modules\` or Boreal package files to change component appearance.
+
+## Accessibility
+
+- Keep semantic labels, ARIA props, helper text, and error text connected when using Boreal form components.
+- Prefer accessible names for icon-only buttons and controls.
+- Preserve keyboard interaction and visible focus states when wrapping or composing Boreal components.
+
+${frameworkNotes}
+`;
 }
 
 function addReactChanges(changes, root) {
@@ -844,5 +1008,9 @@ Use components from ${BOREAL_PACKAGES[framework].importSpecifier}.
 }
 
 export const __testing = {
+  createAgentsGuide,
+  resolveAgentsGuideOption,
   resolveProjectPath,
+  resolveTypesPackageOption,
+  usesTypeScript,
 };
