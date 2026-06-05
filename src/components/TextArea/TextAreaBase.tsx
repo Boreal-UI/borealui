@@ -7,7 +7,7 @@ import {
   getDefaultOutline,
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -28,7 +28,7 @@ const TextAreaBase = forwardRef<
       theme = getDefaultTheme(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       state,
       resizable = true,
       "aria-description": ariaDescription,
@@ -78,7 +78,7 @@ const TextAreaBase = forwardRef<
           outline && classMap.outline,
           glass && classMap.glass,
           disabled && classMap.disabled,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           className,
         ),

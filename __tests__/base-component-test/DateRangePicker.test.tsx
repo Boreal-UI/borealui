@@ -67,7 +67,21 @@ type DummyDatePickerProps = React.InputHTMLAttributes<HTMLInputElement> & {
 const DummyDatePicker = React.forwardRef<
   HTMLInputElement,
   DummyDatePickerProps
->(({ ...inputProps }, ref) => <input ref={ref} {...inputProps} />);
+>(
+  (
+    {
+      theme: _theme,
+      state: _state,
+      fullWidth: _fullWidth,
+      shadow: _shadow,
+      glass: _glass,
+      outline: _outline,
+      rounding: _rounding,
+      ...inputProps
+    },
+    ref,
+  ) => <input ref={ref} {...inputProps} />,
+);
 
 DummyDatePicker.displayName = "DummyDatePicker";
 

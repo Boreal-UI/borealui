@@ -43,6 +43,16 @@ const classMap = {
 };
 
 describe("CircularProgressBase", () => {
+  const getValueText = () => {
+    const valueText = screen
+      .getByTestId("circular-progress")
+      .querySelector(".valueText");
+
+    expect(valueText).toBeInTheDocument();
+
+    return valueText as HTMLElement;
+  };
+
   const renderProgress = (
     props: Partial<React.ComponentProps<typeof CircularProgressBase>> = {},
   ) =>
@@ -76,7 +86,7 @@ describe("CircularProgressBase", () => {
 
     expect(progressbar).toHaveAttribute("aria-valuenow", "50");
     expect(progressbar).toHaveAttribute("aria-valuetext", "50%");
-    expect(screen.getByText("50%")).toBeInTheDocument();
+    expect(getValueText()).toHaveTextContent("50%");
   });
 
   it("renders the correct raw format when showRaw=true", () => {
@@ -104,7 +114,7 @@ describe("CircularProgressBase", () => {
     const progressbar = screen.getByRole("progressbar");
 
     expect(progressbar).toHaveAttribute("aria-valuetext", "30 out of 120 MB");
-    expect(screen.getByText("30/120 MB")).toBeInTheDocument();
+    expect(getValueText()).toHaveTextContent(/30\/120\s*MB/);
   });
 
   it("uses label as the default accessible name when aria props are not provided", () => {
@@ -235,7 +245,7 @@ describe("CircularProgressBase", () => {
     const progressbar = screen.getByRole("progressbar");
     expect(progressbar).toHaveAttribute("aria-valuenow", "100");
     expect(progressbar).toHaveAttribute("aria-valuetext", "100%");
-    expect(screen.getByText("100%")).toBeInTheDocument();
+    expect(getValueText()).toHaveTextContent("100%");
   });
 
   it("clamps value below min", () => {
@@ -248,7 +258,7 @@ describe("CircularProgressBase", () => {
     const progressbar = screen.getByRole("progressbar");
     expect(progressbar).toHaveAttribute("aria-valuenow", "0");
     expect(progressbar).toHaveAttribute("aria-valuetext", "0%");
-    expect(screen.getByText("0%")).toBeInTheDocument();
+    expect(getValueText()).toHaveTextContent("0%");
   });
 
   it("calculates percent correctly with a non-zero min", () => {
@@ -262,7 +272,7 @@ describe("CircularProgressBase", () => {
     const progressbar = screen.getByRole("progressbar");
     expect(progressbar).toHaveAttribute("aria-valuenow", "75");
     expect(progressbar).toHaveAttribute("aria-valuetext", "50%");
-    expect(screen.getByText("50%")).toBeInTheDocument();
+    expect(getValueText()).toHaveTextContent("50%");
   });
 
   it("renders 0 percent when max equals min", () => {
@@ -275,7 +285,7 @@ describe("CircularProgressBase", () => {
     const progressbar = screen.getByRole("progressbar");
     expect(progressbar).toHaveAttribute("aria-valuenow", "50");
     expect(progressbar).toHaveAttribute("aria-valuetext", "0%");
-    expect(screen.getByText("0%")).toBeInTheDocument();
+    expect(getValueText()).toHaveTextContent("0%");
   });
 
   it("applies theme, size, shadow, and custom className", () => {
@@ -334,11 +344,12 @@ describe("CircularProgressBase", () => {
     const root = screen.getByTestId("circular-progress");
     const border = root.firstChild as HTMLElement;
     const innerCircle = border.firstChild as HTMLElement;
-    const valueText = screen.getByText("25%");
+    const valueText = getValueText();
 
     expect(border).toHaveClass("circleBorder");
     expect(innerCircle).toHaveClass("innerCircle");
     expect(valueText).toHaveClass("valueText");
+    expect(valueText).toHaveTextContent("25%");
   });
 
   it("hides the inner value text from assistive technology by default", () => {
@@ -346,8 +357,9 @@ describe("CircularProgressBase", () => {
       value: 25,
     });
 
-    const valueText = screen.getByText("25%");
+    const valueText = getValueText();
 
+    expect(valueText).toHaveTextContent("25%");
     expect(valueText).toHaveAttribute("aria-hidden", "true");
     expect(valueText).not.toHaveAttribute("aria-live");
     expect(valueText).not.toHaveAttribute("aria-atomic");
@@ -359,8 +371,9 @@ describe("CircularProgressBase", () => {
       announceInnerValue: true,
     });
 
-    const valueText = screen.getByText("25%");
+    const valueText = getValueText();
 
+    expect(valueText).toHaveTextContent("25%");
     expect(valueText).not.toHaveAttribute("aria-hidden");
     expect(valueText).toHaveAttribute("aria-live", "polite");
     expect(valueText).toHaveAttribute("aria-atomic", "true");
@@ -391,7 +404,7 @@ describe("CircularProgressBase", () => {
       />,
     );
 
-    expect(screen.getByText("10%")).toBeInTheDocument();
+    expect(getValueText()).toHaveTextContent("10%");
 
     rerender(
       <CircularProgressBase
@@ -401,7 +414,7 @@ describe("CircularProgressBase", () => {
       />,
     );
 
-    expect(screen.getByText("75%")).toBeInTheDocument();
+    expect(getValueText()).toHaveTextContent("75%");
   });
 
   it("passes through additional HTML attributes", () => {

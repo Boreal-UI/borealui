@@ -9,25 +9,25 @@ Use it when you want the setup edits generated for you instead of applying the R
 Run the CLI from the root of an existing app:
 
 ```bash
-npx boreal-ui@latest init
+npx @boreal-ui/cli@latest init
 ```
 
 Preview the planned edits without writing files:
 
 ```bash
-npx boreal-ui@latest init --dry-run
+npx @boreal-ui/cli@latest init --dry-run
 ```
 
 Run setup without prompts:
 
 ```bash
-npx boreal-ui@latest init --framework next --yes
+npx @boreal-ui/cli@latest init --framework next --yes
 ```
 
-You can also use the package bin directly after installing Boreal UI:
+You can also use the package bin directly after installing the standalone CLI:
 
 ```bash
-npm install boreal-ui
+npm install --save-dev @boreal-ui/cli
 npx boreal-ui init
 ```
 
@@ -46,9 +46,9 @@ All CLI commands currently run the setup workflow.
 Examples:
 
 ```bash
-npx boreal-ui@latest init ./apps/web
-npx boreal-ui@latest setup --cwd ./apps/web
-npx --package boreal-ui@latest create-boreal-ui ./apps/web --framework react
+npx @boreal-ui/cli@latest init ./apps/web
+npx @boreal-ui/cli@latest setup --cwd ./apps/web
+npx --package @boreal-ui/cli@latest create-boreal-ui ./apps/web --framework react
 ```
 
 ## Options
@@ -76,8 +76,10 @@ The CLI only writes files when there is a missing or repairable setup step. If t
 
 For every supported project, it can:
 
-- Add `boreal-ui` to `package.json` dependencies when the package is missing.
-- Preserve an existing `boreal-ui` dependency version.
+- Add `@boreal-ui/core` or `@boreal-ui/next` to `package.json` dependencies when the framework package is missing.
+- Detect TypeScript projects and optionally add `@boreal-ui/types` to `package.json` dev dependencies.
+- Optionally create a consumer-focused `AGENTS.md` that teaches AI agents how to use Boreal UI correctly in the app.
+- Preserve an existing framework-specific Boreal UI dependency version.
 - Print a plan before applying changes.
 - Ask before each file edit unless `--yes` is used.
 
@@ -98,21 +100,21 @@ src/index.js
 
 It then updates the entry file to:
 
-- Import `boreal-ui/core/globals.css`.
-- Import `ThemeProvider` and `setBorealStyleConfig` from `boreal-ui/core`.
+- Import `@boreal-ui/core/globals.css`.
+- Import `ThemeProvider` and `setBorealStyleConfig` from `@boreal-ui/core`.
 - Add a default Boreal style config when one is not already present.
 - Wrap `<App />` in `ThemeProvider`.
 
 Typical command:
 
 ```bash
-npx boreal-ui@latest init --framework react
+npx @boreal-ui/cli@latest init --framework react
 ```
 
 After setup, import React components from the core build:
 
 ```tsx
-import { Button, Card } from "boreal-ui/core";
+import { Button, Card } from "@boreal-ui/core";
 ```
 
 ## Next.js Setup
@@ -145,33 +147,32 @@ src/pages/_app.ts
 src/pages/_app.js
 ```
 
-For app router projects, the CLI updates the root layout to import `boreal-ui/next/globals.css` and wrap `{children}` in a client provider. It reuses an existing `providers`, `provider`, or `boreal-provider` file in the layout directory when one exists, or creates `boreal-provider` next to the layout.
+For app router projects, the CLI updates the root layout to import `@boreal-ui/next/globals.css` and wrap `{children}` in a client provider. It reuses an existing `providers`, `provider`, or `boreal-provider` file in the layout directory when one exists, or creates `boreal-provider` next to the layout.
 
 The provider file is updated or created with:
 
 - `"use client"`.
-- `ThemeProvider` and `setBorealStyleConfig` from `boreal-ui/next`.
+- `ThemeProvider` and `setBorealStyleConfig` from `@boreal-ui/next`.
 - Default Boreal style config.
 - `initialSchemeName="Forest Dusk"`.
-- `enableThemeScript={false}` to avoid pre-hydration HTML mutation in the app router.
 
 For pages router projects, the CLI updates `_app` to:
 
-- Import `boreal-ui/next/globals.css`.
-- Import `ThemeProvider` and `setBorealStyleConfig` from `boreal-ui/next`.
+- Import `@boreal-ui/next/globals.css`.
+- Import `ThemeProvider` and `setBorealStyleConfig` from `@boreal-ui/next`.
 - Add default Boreal style config.
 - Wrap `<Component {...pageProps} />` in `ThemeProvider`.
 
 Typical command:
 
 ```bash
-npx boreal-ui@latest init --framework next
+npx @boreal-ui/cli@latest init --framework next
 ```
 
 After setup, import Next.js components from the Next build:
 
 ```tsx
-import { Button, Card } from "boreal-ui/next";
+import { Button, Card } from "@boreal-ui/next";
 ```
 
 ## Recommended Next Globals
@@ -189,7 +190,7 @@ Next.js starter apps often include a broad reset like this:
 That global `padding` and `margin` reset can remove spacing from Boreal components and nested content. The CLI can create or repair a safer baseline:
 
 ```bash
-npx boreal-ui@latest init --framework next --recommended-globals
+npx @boreal-ui/cli@latest init --framework next --recommended-globals
 ```
 
 The generated baseline is:
@@ -219,18 +220,20 @@ Without flags, the CLI may ask:
 - Which framework to use, unless it can be auto-detected or you pass `--framework`.
 - Whether to run dependency installation after edits.
 - Whether to create or repair the recommended Next.js globals baseline.
+- Whether to add `@boreal-ui/types` when TypeScript is detected.
+- Whether to add an `AGENTS.md` guide for AI agents using Boreal UI in the consumer project.
 - Whether to apply each proposed file edit.
 
 For CI, template scripts, or repeatable setup, prefer:
 
 ```bash
-npx boreal-ui@latest init --framework next --yes --no-install
+npx @boreal-ui/cli@latest init --framework next --yes --no-install
 ```
 
 Add `--dry-run` when you want to validate the plan without changing files:
 
 ```bash
-npx boreal-ui@latest init --framework next --dry-run --no-recommended-globals
+npx @boreal-ui/cli@latest init --framework next --dry-run --no-recommended-globals
 ```
 
 ## Package Manager Detection
@@ -248,8 +251,8 @@ The package manager is only run when `--install` is passed or you approve the in
 If framework detection fails, pass the framework explicitly:
 
 ```bash
-npx boreal-ui@latest init --framework react
-npx boreal-ui@latest init --framework next
+npx @boreal-ui/cli@latest init --framework react
+npx @boreal-ui/cli@latest init --framework next
 ```
 
 If the CLI cannot find an expected entry file, create the app entry first or pass `--cwd` to the actual app directory.
@@ -257,5 +260,5 @@ If the CLI cannot find an expected entry file, create the app entry first or pas
 If you want to inspect the exact edits before applying them, run:
 
 ```bash
-npx boreal-ui@latest init --dry-run
+npx @boreal-ui/cli@latest init --dry-run
 ```

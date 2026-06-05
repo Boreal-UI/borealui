@@ -3,7 +3,6 @@ import { combineClassNames } from "../../utils/classNames";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -19,7 +18,7 @@ const StepperBase: React.FC<StepperBaseProps> = ({
   glass = getDefaultGlass(),
   state,
   size = getDefaultSize(),
-  shadow = getDefaultShadow(),
+  shadow,
   rounding = getDefaultRounding(),
   "data-testid": dataTestId,
   testId = dataTestId ?? "stepper",

@@ -8,7 +8,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -38,7 +38,7 @@ const DateTimePickerBase = forwardRef<HTMLDivElement, DateTimePickerBaseProps>(
       outline = getDefaultOutline(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       disabled = false,
       loading = false,
       pickerButtonAriaLabel = "Open date and time picker",
@@ -132,7 +132,7 @@ const DateTimePickerBase = forwardRef<HTMLDivElement, DateTimePickerBaseProps>(
           readOnly && classMap.readOnly,
           loading && classMap.loading,
           fullWidth && classMap.fullWidth,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           className,
         ),

@@ -5,7 +5,7 @@ import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -19,7 +19,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   theme = getDefaultTheme(),
   glass = getDefaultGlass(),
   attachment = "static",
-  shadow = getDefaultShadow(),
+  shadow,
   rounding = getDefaultRounding(),
   className,
   titleClassName,
@@ -57,7 +57,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
         glass && classMap.glass,
         classMap[attachment],
         className,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
       ),
     [classMap, theme, glass, attachment, className, shadow, rounding],

@@ -5,7 +5,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 import {
@@ -34,7 +34,7 @@ export default function DateRangePickerBase({
   outline = getDefaultOutline(),
   glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   className,
   labelClassName,
   groupClassName,
@@ -71,7 +71,7 @@ export default function DateRangePickerBase({
         state && classMap[state],
         outline && classMap.outline,
         glass && classMap.glass,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
         groupClassName,

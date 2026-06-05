@@ -22,9 +22,10 @@ Options:
   --help, -h                      Show this help message
   --version, -v                   Show CLI version
 
-The CLI configures an existing React or Next.js app. It adds the Boreal UI
-dependency when needed, imports the correct globals.css entry, wraps the app in
-ThemeProvider, and places the Boreal style config in the app entry/provider.
+The CLI configures an existing React or Next.js app. It adds the split Boreal UI
+dependency for the selected framework, imports the correct globals.css entry,
+wraps the app in ThemeProvider, and places the Boreal style config in the app
+entry/provider.
 `);
 }
 

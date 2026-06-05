@@ -6,7 +6,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -31,7 +31,7 @@ const PageHeaderBase = forwardRef<HTMLElement, PageHeaderBaseProps>(
       outline = getDefaultOutline(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       disabled = false,
       loading = false,
       classMap,
@@ -60,7 +60,7 @@ const PageHeaderBase = forwardRef<HTMLElement, PageHeaderBaseProps>(
           loading && classMap.loading,
           compact && classMap.compact,
           fullWidth && classMap.fullWidth,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           className,
         ),

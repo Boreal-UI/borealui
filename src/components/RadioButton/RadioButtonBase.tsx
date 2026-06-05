@@ -6,7 +6,7 @@ import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -22,7 +22,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       theme = getDefaultTheme(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       state,
       disabled = false,
       className,
@@ -70,10 +70,10 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
         combineClassNames(
           classMap.circle,
           glass && classMap.glassCircle,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
         ),
-      [classMap, glass, rounding, shadow],
+      [classMap, theme, glass, rounding, shadow],
     );
 
     const resolvedAriaLabelledBy =

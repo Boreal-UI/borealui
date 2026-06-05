@@ -16,7 +16,7 @@ import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -29,7 +29,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   debounceMs = 300,
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   state,
   glass = getDefaultGlass(),
   classMap,
@@ -322,7 +322,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           classMap.command_palette,
           classMap[theme],
           state && classMap[state],
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           glass && classMap.glass,
           className,

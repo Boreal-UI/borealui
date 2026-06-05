@@ -1,13 +1,12 @@
 import React, { useMemo, useState } from "react";
 import { Breadcrumb, BreadcrumbsBaseProps } from "./Breadcrumbs.types";
 import { combineClassNames } from "../../utils/classNames";
-import { ArrowRightIcon } from "../../Icons/index";
 import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultOutline,
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -21,7 +20,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   "aria-describedby": ariaDescribedBy,
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   state,
   separator,
   classMap,
@@ -59,7 +58,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
         classMap[theme],
         state && classMap[state],
         classMap[size],
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
         outline && classMap.outline,
@@ -191,7 +190,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
 
               {!isLast && (
                 <span className={classMap.separator} aria-hidden="true">
-                  {separator ?? <ArrowRightIcon />}
+                  {separator ?? "/"}
                 </span>
               )}
 

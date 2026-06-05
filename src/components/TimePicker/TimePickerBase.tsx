@@ -8,7 +8,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -38,7 +38,7 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
       outline = getDefaultOutline(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       disabled = false,
       loading = false,
       pickerButtonAriaLabel = "Open time picker",
@@ -118,7 +118,7 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
           readOnly && classMap.readOnly,
           loading && classMap.loading,
           fullWidth && classMap.fullWidth,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           className,
         ),

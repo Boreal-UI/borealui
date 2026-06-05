@@ -11,11 +11,10 @@ import { AvatarBaseProps } from "./Avatar.types";
 import { getInitials } from "../../utils/getInitials";
 import { combineClassNames } from "../../utils/classNames";
 import { FallbackUserIcon } from "../../Icons/index";
-import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultOutline,
   getDefaultGlass,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -41,7 +40,7 @@ export const AvatarBase = forwardRef<
     fallback,
     children,
     size = getDefaultSize(),
-    shadow = getDefaultShadow(),
+    shadow,
     shape = "circle",
     outline = getDefaultOutline(),
     glass = getDefaultGlass(),
@@ -116,7 +115,7 @@ export const AvatarBase = forwardRef<
         state && classMap[state],
         classMap[shape],
         classMap[size],
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         disabled && classMap.disabled,
         outline && classMap.outline,
         glass && classMap.glass,
