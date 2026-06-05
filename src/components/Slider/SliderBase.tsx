@@ -6,7 +6,7 @@ import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -26,7 +26,7 @@ const SliderBase: React.FC<
   labelPosition = "top",
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   theme = getDefaultTheme(),
   glass = getDefaultGlass(),
   state,
@@ -73,7 +73,7 @@ const SliderBase: React.FC<
         classMap[theme],
         state && classMap[state],
         glass && classMap.glass,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         className,
       ),

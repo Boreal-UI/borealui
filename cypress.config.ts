@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 
 export default defineConfig({
+  allowCypressEnv: false,
   component: {
     specPattern: "cypress/component/**/*.cy.{ts,tsx}",
     supportFile: "cypress/support/component.ts",

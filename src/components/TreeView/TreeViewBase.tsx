@@ -7,7 +7,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -42,7 +42,7 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
       outline = getDefaultOutline(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       classMap,
       className,
       contentClassName,
@@ -123,7 +123,7 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
       glass && classMap.glass,
       disabled && classMap.disabled,
       loading && classMap.loading,
-      shadow && classMap[`shadow${capitalize(shadow)}`],
+      getShadowClassName(classMap, theme, shadow),
       rounding && classMap[`round${capitalize(rounding)}`],
       className,
     );

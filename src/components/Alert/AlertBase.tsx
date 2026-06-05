@@ -4,7 +4,7 @@ import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 import { AlertBaseProps } from "./Alert.types";
@@ -20,7 +20,7 @@ export default function AlertBase({
   glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
   outline = false,
-  shadow = getDefaultShadow(),
+  shadow,
   dismissible = false,
   onDismiss,
   role = state === "error" ? "alert" : "status",
@@ -46,7 +46,7 @@ export default function AlertBase({
         classMap[variant],
         outline && classMap.outline,
         glass && classMap.glass,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         icon ? classMap.hasIcon : null,
         actions ? classMap.hasActions : null,

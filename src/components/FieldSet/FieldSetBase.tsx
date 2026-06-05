@@ -7,7 +7,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -32,7 +32,7 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
       outline = getDefaultOutline(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       disabled = false,
       loading = false,
       loadingMessage = "Loading",
@@ -101,7 +101,7 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
           outline && classMap.outline,
           glass && classMap.glass,
           disabled && classMap.disabled,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           containerClassName,
         ),

@@ -4,7 +4,7 @@ import {
   getDefaultOutline,
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "@/config/boreal-style-config";
 import { capitalize } from "@/utils/capitalize";
@@ -19,7 +19,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
   hasActiveChild,
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   state,
   showFooter = false,
   footerLinks,
@@ -116,7 +116,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
         className,
         classMap[theme],
         state && classMap[state],
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         outline && classMap.outline,
         glass && classMap.glass,

@@ -13,7 +13,7 @@ import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -37,7 +37,7 @@ const TooltipBase = forwardRef<
     theme = getDefaultTheme(),
     glass = getDefaultGlass(),
     rounding = getDefaultRounding(),
-    shadow = getDefaultShadow(),
+    shadow,
     state,
     children,
     className,
@@ -84,7 +84,7 @@ const TooltipBase = forwardRef<
         state && classMap[state],
         glass && classMap.glass,
         visible && classMap.visible,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
       ),
     [classMap, position, theme, state, glass, visible, shadow, rounding],

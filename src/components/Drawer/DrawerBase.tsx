@@ -4,7 +4,7 @@ import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 import { DrawerBaseProps } from "./Drawer.types";
@@ -23,7 +23,7 @@ export default function DrawerBase({
   state,
   glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   className,
   overlayClassName,
   panelClassName,
@@ -80,7 +80,7 @@ export default function DrawerBase({
         classMap.panel,
         classMap[theme],
         glass && classMap.glass,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         state && classMap[state],
         panelClassName,

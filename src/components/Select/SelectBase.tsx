@@ -17,7 +17,7 @@ import {
   getDefaultOutline,
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 import { BaseSelectProps } from "./Select.types";
@@ -30,7 +30,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       state,
       outline = getDefaultOutline(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       options,
       value,
       onChange,
@@ -169,7 +169,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           state && classMap[state],
           glass && classMap.glass,
           className,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           outline && classMap.outline,
           disabled && classMap.disabled,

@@ -1,0 +1,401 @@
+{
+  "name": "@boreal-ui/next",
+  "version": "0.1.02",
+  "readme": "README.md",
+  "description": "Accessible, themeable Boreal UI components for Next.js app-router projects.",
+  "keywords": [
+    "boreal-ui",
+    "nextjs",
+    "next",
+    "react",
+    "components",
+    "component-library",
+    "design-system",
+    "scss-modules",
+    "accessibility",
+    "typescript"
+  ],
+  "homepage": "https://www.borealui.ca",
+  "bugs": {
+    "url": "https://github.com/DaveC6662/borealui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaveC6662/borealui.git",
+    "directory": "packages/next"
+  },
+  "author": "Davin Chiupka",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/next/index.js",
+  "module": "./dist/next/index.js",
+  "types": "./dist/types/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": [
+    "**/*.css",
+    "**/*.scss"
+  ],
+  "peerDependencies": {
+    "marked": ">=12.0.0",
+    "next": ">=13.0.0",
+    "react": ">=18.2.0",
+    "react-dom": ">=18.2.0",
+    "uuid": ">=9.0.0"
+  },
+  "devDependencies": {
+    "@boreal-ui/types": "0.1.0"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/next/index.js"
+    },
+    "./globals": {
+      "types": "./dist/types/next/globals.d.ts",
+      "import": "./dist/next/globals.js"
+    },
+    "./globals.css": {
+      "style": "./dist/next/globals.css",
+      "default": "./dist/next/globals.css"
+    },
+    "./Accordion": {
+      "types": "./dist/types/next/Accordion.d.ts",
+      "import": "./dist/next/Accordion.js"
+    },
+    "./Alert": {
+      "types": "./dist/types/next/Alert.d.ts",
+      "import": "./dist/next/Alert.js"
+    },
+    "./AppShell": {
+      "types": "./dist/types/next/AppShell.d.ts",
+      "import": "./dist/next/AppShell.js"
+    },
+    "./Avatar": {
+      "types": "./dist/types/next/Avatar.d.ts",
+      "import": "./dist/next/Avatar.js"
+    },
+    "./Badge": {
+      "types": "./dist/types/next/Badge.d.ts",
+      "import": "./dist/next/Badge.js"
+    },
+    "./BarChart": {
+      "types": "./dist/types/next/BarChart.d.ts",
+      "import": "./dist/next/BarChart.js"
+    },
+    "./BreadCrumbPageHeader": {
+      "types": "./dist/types/next/BreadCrumbPageHeader.d.ts",
+      "import": "./dist/next/BreadCrumbPageHeader.js"
+    },
+    "./Breadcrumbs": {
+      "types": "./dist/types/next/Breadcrumbs.d.ts",
+      "import": "./dist/next/Breadcrumbs.js"
+    },
+    "./Button": {
+      "types": "./dist/types/next/Button.d.ts",
+      "import": "./dist/next/Button.js"
+    },
+    "./Card": {
+      "types": "./dist/types/next/Card.d.ts",
+      "import": "./dist/next/Card.js"
+    },
+    "./CheckBox": {
+      "types": "./dist/types/next/CheckBox.d.ts",
+      "import": "./dist/next/CheckBox.js"
+    },
+    "./Chip": {
+      "types": "./dist/types/next/Chip.d.ts",
+      "import": "./dist/next/Chip.js"
+    },
+    "./ChipGroup": {
+      "types": "./dist/types/next/ChipGroup.d.ts",
+      "import": "./dist/next/ChipGroup.js"
+    },
+    "./CircularProgress": {
+      "types": "./dist/types/next/CircularProgress.d.ts",
+      "import": "./dist/next/CircularProgress.js"
+    },
+    "./ColorPicker": {
+      "types": "./dist/types/next/ColorPicker.d.ts",
+      "import": "./dist/next/ColorPicker.js"
+    },
+    "./colorSchemes": {
+      "types": "./dist/types/next/colorSchemes.d.ts",
+      "import": "./dist/next/colorSchemes.js"
+    },
+    "./ComboBox": {
+      "types": "./dist/types/next/ComboBox.d.ts",
+      "import": "./dist/next/ComboBox.js"
+    },
+    "./CommandPalette": {
+      "types": "./dist/types/next/CommandPalette.d.ts",
+      "import": "./dist/next/CommandPalette.js"
+    },
+    "./DataTable": {
+      "types": "./dist/types/next/DataTable.d.ts",
+      "import": "./dist/next/DataTable.js"
+    },
+    "./DatePicker": {
+      "types": "./dist/types/next/DatePicker.d.ts",
+      "import": "./dist/next/DatePicker.js"
+    },
+    "./DateRangePicker": {
+      "types": "./dist/types/next/DateRangePicker.d.ts",
+      "import": "./dist/next/DateRangePicker.js"
+    },
+    "./DateTimePicker": {
+      "types": "./dist/types/next/DateTimePicker.d.ts",
+      "import": "./dist/next/DateTimePicker.js"
+    },
+    "./Divider": {
+      "types": "./dist/types/next/Divider.d.ts",
+      "import": "./dist/next/Divider.js"
+    },
+    "./docs": {
+      "types": "./dist/types/next/docs.d.ts",
+      "import": "./dist/next/docs.js"
+    },
+    "./DonutChart": {
+      "types": "./dist/types/next/DonutChart.d.ts",
+      "import": "./dist/next/DonutChart.js"
+    },
+    "./Drawer": {
+      "types": "./dist/types/next/Drawer.d.ts",
+      "import": "./dist/next/Drawer.js"
+    },
+    "./Dropdown": {
+      "types": "./dist/types/next/Dropdown.d.ts",
+      "import": "./dist/next/Dropdown.js"
+    },
+    "./EmptyState": {
+      "types": "./dist/types/next/EmptyState.d.ts",
+      "import": "./dist/next/EmptyState.js"
+    },
+    "./FieldSet": {
+      "types": "./dist/types/next/FieldSet.d.ts",
+      "import": "./dist/next/FieldSet.js"
+    },
+    "./FileUpload": {
+      "types": "./dist/types/next/FileUpload.d.ts",
+      "import": "./dist/next/FileUpload.js"
+    },
+    "./Footer": {
+      "types": "./dist/types/next/Footer.d.ts",
+      "import": "./dist/next/Footer.js"
+    },
+    "./FormField": {
+      "types": "./dist/types/next/FormField.d.ts",
+      "import": "./dist/next/FormField.js"
+    },
+    "./FormGroup": {
+      "types": "./dist/types/next/FormGroup.d.ts",
+      "import": "./dist/next/FormGroup.js"
+    },
+    "./IconButton": {
+      "types": "./dist/types/next/IconButton.d.ts",
+      "import": "./dist/next/IconButton.js"
+    },
+    "./InputGroup": {
+      "types": "./dist/types/next/InputGroup.d.ts",
+      "import": "./dist/next/InputGroup.js"
+    },
+    "./Layout": {
+      "types": "./dist/types/next/Layout.d.ts",
+      "import": "./dist/next/Layout.js"
+    },
+    "./Legend": {
+      "types": "./dist/types/next/Legend.d.ts",
+      "import": "./dist/next/Legend.js"
+    },
+    "./LineChart": {
+      "types": "./dist/types/next/LineChart.d.ts",
+      "import": "./dist/next/LineChart.js"
+    },
+    "./MarkdownRenderer": {
+      "types": "./dist/types/next/MarkdownRenderer.d.ts",
+      "import": "./dist/next/MarkdownRenderer.js"
+    },
+    "./Menu": {
+      "types": "./dist/types/next/Menu.d.ts",
+      "import": "./dist/next/Menu.js"
+    },
+    "./MessagePopup": {
+      "types": "./dist/types/next/MessagePopup.d.ts",
+      "import": "./dist/next/MessagePopup.js"
+    },
+    "./MetricBox": {
+      "types": "./dist/types/next/MetricBox.d.ts",
+      "import": "./dist/next/MetricBox.js"
+    },
+    "./Modal": {
+      "types": "./dist/types/next/Modal.d.ts",
+      "import": "./dist/next/Modal.js"
+    },
+    "./MultiSelect": {
+      "types": "./dist/types/next/MultiSelect.d.ts",
+      "import": "./dist/next/MultiSelect.js"
+    },
+    "./NavBar": {
+      "types": "./dist/types/next/NavBar.d.ts",
+      "import": "./dist/next/NavBar.js"
+    },
+    "./NotificationCenter": {
+      "types": "./dist/types/next/NotificationCenter.d.ts",
+      "import": "./dist/next/NotificationCenter.js"
+    },
+    "./NumberInput": {
+      "types": "./dist/types/next/NumberInput.d.ts",
+      "import": "./dist/next/NumberInput.js"
+    },
+    "./PageHeader": {
+      "types": "./dist/types/next/PageHeader.d.ts",
+      "import": "./dist/next/PageHeader.js"
+    },
+    "./Pager": {
+      "types": "./dist/types/next/Pager.d.ts",
+      "import": "./dist/next/Pager.js"
+    },
+    "./PopOver": {
+      "types": "./dist/types/next/PopOver.d.ts",
+      "import": "./dist/next/PopOver.js"
+    },
+    "./Portal": {
+      "types": "./dist/types/next/Portal.d.ts",
+      "import": "./dist/next/Portal.js"
+    },
+    "./ProgressBar": {
+      "types": "./dist/types/next/ProgressBar.d.ts",
+      "import": "./dist/next/ProgressBar.js"
+    },
+    "./RadioButton": {
+      "types": "./dist/types/next/RadioButton.d.ts",
+      "import": "./dist/next/RadioButton.js"
+    },
+    "./RadioGroup": {
+      "types": "./dist/types/next/RadioGroup.d.ts",
+      "import": "./dist/next/RadioGroup.js"
+    },
+    "./Rating": {
+      "types": "./dist/types/next/Rating.d.ts",
+      "import": "./dist/next/Rating.js"
+    },
+    "./registerColorScheme": {
+      "types": "./dist/types/next/registerColorScheme.d.ts",
+      "import": "./dist/next/registerColorScheme.js"
+    },
+    "./ScrollToTop": {
+      "types": "./dist/types/next/ScrollToTop.d.ts",
+      "import": "./dist/next/ScrollToTop.js"
+    },
+    "./SearchInput": {
+      "types": "./dist/types/next/SearchInput.d.ts",
+      "import": "./dist/next/SearchInput.js"
+    },
+    "./SegmentedControl": {
+      "types": "./dist/types/next/SegmentedControl.d.ts",
+      "import": "./dist/next/SegmentedControl.js"
+    },
+    "./Select": {
+      "types": "./dist/types/next/Select.d.ts",
+      "import": "./dist/next/Select.js"
+    },
+    "./Sidebar": {
+      "types": "./dist/types/next/Sidebar.d.ts",
+      "import": "./dist/next/Sidebar.js"
+    },
+    "./Skeleton": {
+      "types": "./dist/types/next/Skeleton.d.ts",
+      "import": "./dist/next/Skeleton.js"
+    },
+    "./Slider": {
+      "types": "./dist/types/next/Slider.d.ts",
+      "import": "./dist/next/Slider.js"
+    },
+    "./Sparkline": {
+      "types": "./dist/types/next/Sparkline.d.ts",
+      "import": "./dist/next/Sparkline.js"
+    },
+    "./Spinner": {
+      "types": "./dist/types/next/Spinner.d.ts",
+      "import": "./dist/next/Spinner.js"
+    },
+    "./SplitPane": {
+      "types": "./dist/types/next/SplitPane.d.ts",
+      "import": "./dist/next/SplitPane.js"
+    },
+    "./Stepper": {
+      "types": "./dist/types/next/Stepper.d.ts",
+      "import": "./dist/next/Stepper.js"
+    },
+    "./styleConfig": {
+      "types": "./dist/types/next/styleConfig.d.ts",
+      "import": "./dist/next/styleConfig.js"
+    },
+    "./Tabs": {
+      "types": "./dist/types/next/Tabs.d.ts",
+      "import": "./dist/next/Tabs.js"
+    },
+    "./TagInput": {
+      "types": "./dist/types/next/TagInput.d.ts",
+      "import": "./dist/next/TagInput.js"
+    },
+    "./TextArea": {
+      "types": "./dist/types/next/TextArea.d.ts",
+      "import": "./dist/next/TextArea.js"
+    },
+    "./TextInput": {
+      "types": "./dist/types/next/TextInput.d.ts",
+      "import": "./dist/next/TextInput.js"
+    },
+    "./ThemeProvider": {
+      "types": "./dist/types/next/ThemeProvider.d.ts",
+      "import": "./dist/next/ThemeProvider.js"
+    },
+    "./ThemeSelect": {
+      "types": "./dist/types/next/ThemeSelect.d.ts",
+      "import": "./dist/next/ThemeSelect.js"
+    },
+    "./Timeline": {
+      "types": "./dist/types/next/Timeline.d.ts",
+      "import": "./dist/next/Timeline.js"
+    },
+    "./TimePicker": {
+      "types": "./dist/types/next/TimePicker.d.ts",
+      "import": "./dist/next/TimePicker.js"
+    },
+    "./ToastProvider": {
+      "types": "./dist/types/next/ToastProvider.d.ts",
+      "import": "./dist/next/ToastProvider.js"
+    },
+    "./Toggle": {
+      "types": "./dist/types/next/Toggle.d.ts",
+      "import": "./dist/next/Toggle.js"
+    },
+    "./Toolbar": {
+      "types": "./dist/types/next/Toolbar.d.ts",
+      "import": "./dist/next/Toolbar.js"
+    },
+    "./Tooltip": {
+      "types": "./dist/types/next/Tooltip.d.ts",
+      "import": "./dist/next/Tooltip.js"
+    },
+    "./TreeView": {
+      "types": "./dist/types/next/TreeView.d.ts",
+      "import": "./dist/next/TreeView.js"
+    },
+    "./Typography": {
+      "types": "./dist/types/next/Typography.d.ts",
+      "import": "./dist/next/Typography.js"
+    },
+    "./ValidationSummary": {
+      "types": "./dist/types/next/ValidationSummary.d.ts",
+      "import": "./dist/next/ValidationSummary.js"
+    }
+  }
+}

@@ -6,7 +6,7 @@ import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -23,7 +23,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   theme = getDefaultTheme(),
   glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   state,
   position = "topCenter",
   usePortal = true,
@@ -91,7 +91,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
     classMap[size],
     classMap[position],
     glass && classMap.glass,
-    shadow && classMap[`shadow${capitalize(shadow)}`],
+    getShadowClassName(classMap, theme, shadow),
     rounding && classMap[`round${capitalize(rounding)}`],
     closing && classMap.fadeout,
     usePortal && classMap.fixed,

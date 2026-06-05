@@ -110,6 +110,24 @@ describe("ButtonBase", () => {
     expect(svg).toHaveAttribute("focusable", "false");
   });
 
+  it("does not apply the default shadow class when the clear theme is used", () => {
+    renderButton({ theme: "clear" });
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn-clear");
+    expect(button).not.toHaveClass("btn-shadow-light");
+  });
+
+  it("applies an explicit shadow class when the clear theme is used", () => {
+    renderButton({ theme: "clear", shadow: "strong" });
+
+    const button = screen.getByTestId("button-test");
+
+    expect(button).toHaveClass("btn-clear");
+    expect(button).toHaveClass("btn-shadow-strong");
+  });
+
   it("defaults iconPosition to left when an icon is provided", () => {
     renderButton(
       {

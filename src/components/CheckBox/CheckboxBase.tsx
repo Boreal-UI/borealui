@@ -13,7 +13,7 @@ import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -27,7 +27,7 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
       theme = getDefaultTheme(),
       rounding = getDefaultRounding(),
       size = getDefaultSize(),
-      shadow = getDefaultShadow(),
+      shadow,
       state,
       glass = getDefaultGlass(),
       disabled = false,
@@ -81,7 +81,7 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
           state && classMap[state],
           classMap[resolvedLabelPosition],
           classMap[size],
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           disabled && classMap.disabled,
           invalid && classMap.invalid,
