@@ -56,7 +56,7 @@ The package publishes:
 
 - `dist/core` for React consumers.
 - `dist/next` for Next.js consumers.
-- `dist/generated-docs` for docs metadata.
+- `dist/core/docs.js`, `dist/next/docs.js`, and `dist/generated-docs` for docs metadata.
 - `dist/types` for TypeScript declarations.
 - `docs` for markdown API guides.
 - `packages/cli/src` for the setup CLI.

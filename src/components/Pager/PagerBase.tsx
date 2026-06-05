@@ -3,7 +3,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "../../Icons";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -22,7 +22,7 @@ const BasePager: React.FC<BasePagerProps> = ({
   theme = getDefaultTheme(),
   glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   state,
   "aria-label": ariaLabel = "Pagination",
   "aria-describedby": ariaDescribedBy,
@@ -63,7 +63,7 @@ const BasePager: React.FC<BasePagerProps> = ({
 
   const buttonBaseClass = combineClassNames(
     classMap.button,
-    shadow && classMap[`shadow${capitalize(shadow)}`],
+    getShadowClassName(classMap, theme, shadow),
     rounding && classMap[`round${capitalize(rounding)}`],
     size && classMap[`size${capitalize(size)}`],
   );

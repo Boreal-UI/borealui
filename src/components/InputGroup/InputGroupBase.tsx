@@ -16,7 +16,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -54,7 +54,7 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
       outline = getDefaultOutline(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       disabled = false,
       loading = false,
       loadingMessage = "Loading",
@@ -180,7 +180,7 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
           loading && classMap.loading,
           hasAddons && classMap.withAddons,
           hasInlineAddons && classMap.withInlineAddons,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           className,
         ),

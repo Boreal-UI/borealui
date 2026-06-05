@@ -18,7 +18,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -56,7 +56,7 @@ const ValidationSummaryBase = forwardRef<
       outline = getDefaultOutline(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       disabled = false,
       loading = false,
       loadingMessage = "Checking validation",
@@ -143,7 +143,7 @@ const ValidationSummaryBase = forwardRef<
           disabled && classMap.disabled,
           loading && classMap.loading,
           !hasItems && classMap.empty,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           className,
         ),

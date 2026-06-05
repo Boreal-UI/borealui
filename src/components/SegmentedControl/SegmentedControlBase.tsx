@@ -18,7 +18,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -52,7 +52,7 @@ const SegmentedControlBase = forwardRef<
       outline = getDefaultOutline(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       disabled = false,
       loading = false,
       classMap,
@@ -135,7 +135,7 @@ const SegmentedControlBase = forwardRef<
           orientation === "vertical" && classMap.vertical,
           fullWidth && classMap.fullWidth,
           equalWidth && classMap.equalWidth,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           className,
         ),

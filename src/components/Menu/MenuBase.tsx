@@ -16,7 +16,7 @@ import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -68,7 +68,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
   theme = getDefaultTheme(),
   glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   state,
   className,
   targetClassName,
@@ -325,7 +325,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
         classMap[theme],
         state && classMap[state],
         glass && classMap.glass,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         menuClassName,
         menuProps?.className,
@@ -350,7 +350,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       classMap[theme],
       state && classMap[state],
       glass && classMap.glass,
-      shadow && classMap[`shadow${capitalize(shadow)}`],
+      getShadowClassName(classMap, theme, shadow),
       rounding && classMap[`round${capitalize(rounding)}`],
     );
 
@@ -787,6 +787,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
           data-menu-item-path={itemPath}
           onPointerEnter={handleDirectItemHover}
           onPointerOver={handleSubmenuWrapperOver}
+          onMouseEnter={handleDirectItemHover}
+          onMouseOver={handleSubmenuWrapperOver}
+          onFocus={handleDirectItemHover}
         >
           {hasSubmenu ? (
             <button
@@ -795,6 +798,8 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
               {...commonProps}
               onPointerEnter={handleSubmenuTriggerEnter}
               onPointerOver={handleSubmenuTriggerOver}
+              onMouseEnter={handleSubmenuTriggerEnter}
+              onMouseOver={handleSubmenuTriggerOver}
               onFocus={handleSubmenuTriggerEnter}
               onClick={(event) => {
                 event.stopPropagation();

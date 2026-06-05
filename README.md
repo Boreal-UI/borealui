@@ -8,7 +8,7 @@ Use it when you want production-ready UI primitives that can be themed globally,
 
 ## Highlights
 
-- **React and Next.js builds:** import from `boreal-ui/core` for React apps or `boreal-ui/next` for Next.js apps.
+- **Split React and Next.js packages:** install `@boreal-ui/core` for React apps or `@boreal-ui/next` for Next.js apps when you want only that build's runtime code.
 - **Deep component set:** buttons, forms, navigation, data display, feedback, overlays, layout primitives, and utility components.
 - **Theme system:** curated color schemes, custom schemes, runtime theme selection, CSS variables, and `ThemeSelect`.
 - **Global defaults:** configure default theme, size, rounding, shadow, border width, glass, outline, and color scheme once with `borealConfig` or `setBorealStyleConfig`.
@@ -19,26 +19,35 @@ Use it when you want production-ready UI primitives that can be themed globally,
 
 ## Installation
 
+Choose the runtime package for your framework:
+
 ```bash
-npm install boreal-ui
+npm install @boreal-ui/core
+npm install @boreal-ui/next
 ```
 
-Boreal UI expects React and React DOM in the consuming app. Next.js users should also have Next installed. `marked` and `uuid` are peer dependencies because some components and utilities rely on them.
+For TypeScript declarations, add the types package as a dev dependency:
+
+```bash
+npm install -D @boreal-ui/types
+```
+
+`@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js. `marked` and `uuid` are peer dependencies because some components and utilities rely on them.
 
 ## CLI Setup
 
 Use the CLI inside an existing React or Next.js project to add only the file changes Boreal UI needs: the package dependency, the global stylesheet import, `ThemeProvider`, and default style config.
 
 ```bash
-npx boreal-ui@latest init
+npx @boreal-ui/cli@latest init
 ```
 
 You can preview changes or run non-interactively:
 
 ```bash
-npx boreal-ui init --dry-run
-npx boreal-ui init --framework next --yes
-npx boreal-ui init --framework next --recommended-globals
+npx @boreal-ui/cli init --dry-run
+npx @boreal-ui/cli init --framework next --yes
+npx @boreal-ui/cli init --framework next --recommended-globals
 ```
 
 See [CLI guide](./docs/cli.md) for all commands, options, prompts, and generated file changes.
@@ -50,13 +59,13 @@ Import the global stylesheet once near the top of your application.
 ### React
 
 ```tsx
-import "boreal-ui/core/globals.css";
+import "@boreal-ui/core/globals.css";
 ```
 
 Then import components from the core build:
 
 ```tsx
-import { Button, Card, TextInput } from "boreal-ui/core";
+import { Button, Card, TextInput } from "@boreal-ui/core";
 
 export function Example() {
   return (
@@ -75,7 +84,7 @@ export function Example() {
 Import the Next stylesheet once from `app/layout.tsx`, `pages/_app.tsx`, or your global stylesheet.
 
 ```tsx
-import "boreal-ui/next/globals.css";
+import "@boreal-ui/next/globals.css";
 ```
 
 If your Next.js app still has the starter `globals.css` reset below, avoid loading it after Boreal styles:
@@ -109,7 +118,7 @@ body {
 The CLI can create or repair that safer baseline for Next.js apps:
 
 ```bash
-npx boreal-ui init --framework next --recommended-globals
+npx @boreal-ui/cli init --framework next --recommended-globals
 ```
 
 Interactive Next.js setup prompts for this by default. Use `--recommended-globals` to apply it without the prompt, or `--no-recommended-globals` to skip it.
@@ -119,7 +128,7 @@ Then import components from the Next build:
 ```tsx
 "use client";
 
-import { Button, Card, TextInput } from "boreal-ui/next";
+import { Button, Card, TextInput } from "@boreal-ui/next";
 
 export default function Example() {
   return (
@@ -136,8 +145,8 @@ export default function Example() {
 You can also import standalone components:
 
 ```tsx
-import Button from "boreal-ui/core/Button";
-import Card from "boreal-ui/next/Card";
+import Button from "@boreal-ui/core/Button";
+import Card from "@boreal-ui/next/Card";
 ```
 
 ## Components
@@ -209,7 +218,7 @@ Exact props vary by component. TypeScript and the generated prop docs are the so
 Call `borealConfig` once before rendering your app to set project-wide defaults. `setBorealStyleConfig` remains available as the explicit API name.
 
 ```tsx
-import { borealConfig } from "boreal-ui/core";
+import { borealConfig } from "@boreal-ui/core";
 
 borealConfig({
   defaultTheme: "secondary",
@@ -223,10 +232,10 @@ borealConfig({
 });
 ```
 
-For Next.js, import the same API from `boreal-ui/next`:
+For Next.js, import the same API from `@boreal-ui/next`:
 
 ```tsx
-import { borealConfig } from "boreal-ui/next";
+import { borealConfig } from "@boreal-ui/next";
 ```
 
 Component props still win over global defaults:
@@ -244,7 +253,7 @@ Component props still win over global defaults:
 ```tsx
 "use client";
 
-import { ThemeProvider } from "boreal-ui/next";
+import { ThemeProvider } from "@boreal-ui/next";
 
 const customSchemes = [
   {
@@ -262,7 +271,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <ThemeProvider
       customSchemes={customSchemes}
-      enableThemeScript={false}
       initialSchemeName="Cyberpunk Pulse"
     >
       {children}
@@ -301,7 +309,7 @@ import {
   defaultColorSchemes,
   registerColorScheme,
   ThemeSelect,
-} from "boreal-ui/core";
+} from "@boreal-ui/core";
 
 registerColorScheme({
   name: "Brand Night",
@@ -318,10 +326,10 @@ console.log(defaultColorSchemes.map((scheme) => scheme.name));
 
 ## Generated Prop Docs
 
-Boreal UI exports generated prop metadata for documentation sites, playgrounds, or prop tables.
+Boreal UI exports generated prop metadata for documentation sites, playgrounds, or prop tables through dedicated docs entry points.
 
 ```tsx
-import { buttonPropDocs, dataTablePropDocs } from "boreal-ui/core";
+import { buttonPropDocs, dataTablePropDocs } from "@boreal-ui/core/docs";
 
 console.log(buttonPropDocs.name);
 console.log(dataTablePropDocs.props);
@@ -343,14 +351,13 @@ import type {
   ShadowType,
   SizeType,
   ThemeType,
-} from "boreal-ui/core";
+} from "@boreal-ui/core";
 ```
 
 Standalone type entry points are also available:
 
 ```ts
-import type { ThemeType } from "boreal-ui/core/types";
-import type { SizeType } from "boreal-ui/next/types";
+import type { SizeType, ThemeType } from "@boreal-ui/types";
 ```
 
 ## CSS Customization
@@ -387,7 +394,7 @@ For a full consumer guide, see [Accessibility](./docs/accessibility.md).
 
 ```tsx
 import { render, screen } from "@testing-library/react";
-import { Button } from "boreal-ui/core";
+import { Button } from "@boreal-ui/core";
 
 it("renders an accessible button", () => {
   render(<Button>Submit</Button>);
@@ -426,16 +433,16 @@ Contributor documentation for component structure, generated docs, package outpu
 ## Package Entry Points
 
 ```tsx
-import { Button } from "boreal-ui/core";
-import Button from "boreal-ui/core/Button";
-import "boreal-ui/core/globals.css";
+import { Button } from "@boreal-ui/core";
+import Button from "@boreal-ui/core/Button";
+import "@boreal-ui/core/globals.css";
 
-import { Button as NextButton } from "boreal-ui/next";
-import NextCard from "boreal-ui/next/Card";
-import "boreal-ui/next/globals.css";
+import { Button as NextButton } from "@boreal-ui/next";
+import NextCard from "@boreal-ui/next/Card";
+import "@boreal-ui/next/globals.css";
 ```
 
-The root `boreal-ui` entry currently points to the core build. For Next.js apps, prefer `boreal-ui/next` so the Next wrappers and client directives are used.
+Use the scoped package that matches your framework; pre-alpha builds do not publish a root `boreal-ui` package.
 
 ## Contributing
 

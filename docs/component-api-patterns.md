@@ -7,7 +7,7 @@ Boreal UI components are typed React components with a consistent API shape acro
 Components use semantic HTML first and expose ARIA props where they are useful.
 
 ```tsx
-import { IconButton } from "boreal-ui/core";
+import { IconButton } from "@boreal-ui/core";
 
 function TrashIcon({ className }: { className?: string }) {
   return (
@@ -35,7 +35,7 @@ export function DeleteAction() {
 Form components should receive visible labels when possible.
 
 ```tsx
-import { TextInput } from "boreal-ui/core";
+import { TextInput } from "@boreal-ui/core";
 
 <>
   <TextInput
@@ -56,7 +56,7 @@ If a visible label is not appropriate, provide `aria-label` or `aria-labelledby`
 `Button` can render as a native button, a link through `href`, or a custom element through `as`.
 
 ```tsx
-import { Button } from "boreal-ui/core";
+import { Button } from "@boreal-ui/core";
 
 export function ButtonExamples() {
   return (
@@ -87,7 +87,7 @@ import {
   Select,
   TextArea,
   TextInput,
-} from "boreal-ui/core";
+} from "@boreal-ui/core";
 
 export function ContactFields() {
   const [priority, setPriority] = useState("low");
@@ -122,8 +122,8 @@ Use `InputGroup` to compose prefixes, suffixes, addons, and custom controls arou
 `DataTable` is generic. Define a row type, create typed columns, and pass row data.
 
 ```tsx
-import { DataTable } from "boreal-ui/core";
-import type { Column } from "boreal-ui/core/DataTable";
+import { DataTable } from "@boreal-ui/core";
+import type { Column } from "@boreal-ui/core/DataTable";
 
 type Invoice = {
   id: string;
@@ -183,7 +183,7 @@ Use `serverSort` with `onSortChange` when sorting is handled by your API.
 Components such as `Modal`, `Dropdown`, `PopOver`, `Tooltip`, `Tabs`, `Accordion`, `CommandPalette`, and `NotificationCenter` include keyboard and ARIA behavior. Prefer their public props instead of rebuilding focus or disclosure state around their internals.
 
 ```tsx
-import { Modal, Button } from "boreal-ui/core";
+import { Modal, Button } from "@boreal-ui/core";
 
 export function ConfirmDialog({
   open,
@@ -213,7 +213,7 @@ export function ConfirmDialog({
 Use `AppShell`, `PageHeader`, `BreadCrumbPageHeader`, `Sidebar`, `SplitPane`, and the layout primitives to compose application pages without rebuilding common structure.
 
 ```tsx
-import { AppShell, PageHeader, SplitPane, TreeView } from "boreal-ui/core";
+import { AppShell, PageHeader, SplitPane, TreeView } from "@boreal-ui/core";
 
 export function ProjectWorkspace() {
   return (
@@ -247,7 +247,7 @@ import {
   DonutChart,
   Legend,
   Sparkline,
-} from "boreal-ui/core";
+} from "@boreal-ui/core";
 
 export function RevenueSnapshot() {
   return (
@@ -279,7 +279,7 @@ Components support stable test IDs. Prefer role and accessible-name queries firs
 
 ```tsx
 import { render, screen } from "@testing-library/react";
-import { Button } from "boreal-ui/core";
+import { Button } from "@boreal-ui/core";
 
 it("submits the form", () => {
   render(<Button data-testid="save-action">Save</Button>);

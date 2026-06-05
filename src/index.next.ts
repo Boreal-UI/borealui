@@ -77,7 +77,6 @@ export { default as Tooltip } from "./next/Tooltip";
 export { default as TreeView } from "./next/TreeView";
 export { default as Typography } from "./next/Typography";
 export { default as ValidationSummary } from "./next/ValidationSummary";
-export * from "./generated-docs/index";
 export * from "./next/colorSchemes";
 export * from "./next/registerColorScheme";
 export * from "./next/styleConfig";

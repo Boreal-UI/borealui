@@ -5,7 +5,7 @@ import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -35,7 +35,7 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
   theme = getDefaultTheme(),
   glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   classMap,
   SkeletonComponent = FallbackSkeleton,
   className,
@@ -75,7 +75,7 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
         classMap[theme],
         classMap[orientation],
         glass && classMap.glass,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
       ),
     [classMap, theme, orientation, glass, shadow],
   );
@@ -88,7 +88,7 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
         classMap[theme],
         glass && classMap.glass,
         loading && classMap.loadingContent,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
       ),
     [classMap, orientation, theme, glass, loading, shadow, rounding],

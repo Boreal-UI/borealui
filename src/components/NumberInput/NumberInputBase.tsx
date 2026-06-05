@@ -13,7 +13,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -66,7 +66,7 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
       outline = getDefaultOutline(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       disabled = false,
       readOnly = false,
       required = false,
@@ -194,7 +194,7 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
           outline && classMap.outline,
           glass && classMap.glass,
           disabled && classMap.disabled,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           className,
         ),

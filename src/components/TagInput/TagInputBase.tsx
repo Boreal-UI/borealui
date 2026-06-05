@@ -13,7 +13,7 @@ import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -41,7 +41,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   state,
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   idBase,
   "data-testid": dataTestId,
   testId = dataTestId ?? "tag-input",
@@ -214,10 +214,10 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
     () =>
       combineClassNames(
         classMap.tag,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
       ),
-    [classMap, shadow, rounding],
+    [classMap, theme, shadow, rounding],
   );
 
   const handleSuggestionClick = (suggestion: string): void => {

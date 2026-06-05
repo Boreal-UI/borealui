@@ -14,7 +14,7 @@ import {
   getDefaultGlass,
   getDefaultOutline,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -41,7 +41,7 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
       outline = getDefaultOutline(),
       glass = getDefaultGlass(),
       rounding = getDefaultRounding(),
-      shadow = getDefaultShadow(),
+      shadow,
       disabled = false,
       readOnly = false,
       required = false,
@@ -183,7 +183,7 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
           loading && classMap.loading,
           Icon && iconPosition === "left" && classMap.iconLeft,
           Icon && iconPosition === "right" && classMap.iconRight,
-          shadow && classMap[`shadow${capitalize(shadow)}`],
+          getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           className,
         ),

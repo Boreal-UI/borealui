@@ -5,7 +5,7 @@ import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -18,7 +18,7 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   state,
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   animated = true,
   indeterminate = false,
   className,
@@ -74,7 +74,7 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
         glass && classMap[theme],
         glass && state && classMap[state],
         glass && classMap.glass,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         className,
       ),

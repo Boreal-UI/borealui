@@ -1,10 +1,9 @@
 import React, { useMemo, useId } from "react";
 import { SpinnerProps } from "./Spinner.types";
 import { combineClassNames } from "../../utils/classNames";
-import { capitalize } from "../../utils/capitalize";
 import {
   getDefaultGlass,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -15,7 +14,7 @@ const SpinnerBase: React.FC<
   glass = getDefaultGlass(),
   state,
   size = 50,
-  shadow = getDefaultShadow(),
+  shadow,
   className,
   "data-testid": dataTestId,
   testId = dataTestId ?? "spinner",
@@ -54,9 +53,9 @@ const SpinnerBase: React.FC<
     () =>
       combineClassNames(
         classMap.shadowElement,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
       ),
-    [classMap, shadow],
+    [classMap, theme, shadow],
   );
 
   const accessibleNameProps = ariaLabelledBy

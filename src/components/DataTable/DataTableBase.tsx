@@ -14,7 +14,7 @@ import {
   getDefaultOutline,
   getDefaultGlass,
   getDefaultRounding,
-  getDefaultShadow,
+  getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -51,7 +51,7 @@ function DataTableBase<T extends object>({
   classMap,
   theme = getDefaultTheme(),
   rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
+  shadow,
   state,
   outline = getDefaultOutline(),
   glass = getDefaultGlass(),
@@ -584,7 +584,7 @@ function DataTableBase<T extends object>({
         classMap[theme],
         state && classMap[state],
         glass && classMap.glass,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
+        getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         striped && classMap.striped,
         virtualized && classMap.virtualized,
