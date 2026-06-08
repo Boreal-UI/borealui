@@ -1,2 +1,3 @@
+import "../components/SplitPane/next/SplitPane.module.scss";
 export { default } from "../components/SplitPane/next/SplitPane";
-export type { SplitPaneProps } from "../components/SplitPane/SplitPane.types";
+export * from "../components/SplitPane/SplitPane.types";

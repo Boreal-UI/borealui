@@ -1,2 +1,3 @@
+import "../components/BreadCrumbPageHeader/next/BreadCrumbPageHeader.module.scss";
 export { default } from "../components/BreadCrumbPageHeader/next/BreadCrumbPageHeader";
-export type { BreadCrumbPageHeaderProps } from "../components/BreadCrumbPageHeader/BreadCrumbPageHeader.types";
+export * from "../components/BreadCrumbPageHeader/BreadCrumbPageHeader.types";

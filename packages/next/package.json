@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/next",
-  "version": "0.1.02",
+  "version": "0.1.0",
   "readme": "README.md",
   "description": "Accessible, themeable Boreal UI components for Next.js app-router projects.",
   "keywords": [
@@ -304,6 +304,98 @@
     "./Select": {
       "types": "./dist/types/next/Select.d.ts",
       "import": "./dist/next/Select.js"
+    },
+    "./server/Alert": {
+      "types": "./dist/types/next/server/Alert.d.ts",
+      "import": "./dist/next/server/Alert.js"
+    },
+    "./server/Avatar": {
+      "types": "./dist/types/next/server/Avatar.d.ts",
+      "import": "./dist/next/server/Avatar.js"
+    },
+    "./server/Badge": {
+      "types": "./dist/types/next/server/Badge.d.ts",
+      "import": "./dist/next/server/Badge.js"
+    },
+    "./server/BarChart": {
+      "types": "./dist/types/next/server/BarChart.d.ts",
+      "import": "./dist/next/server/BarChart.js"
+    },
+    "./server/Breadcrumbs": {
+      "types": "./dist/types/next/server/Breadcrumbs.d.ts",
+      "import": "./dist/next/server/Breadcrumbs.js"
+    },
+    "./server/Button": {
+      "types": "./dist/types/next/server/Button.d.ts",
+      "import": "./dist/next/server/Button.js"
+    },
+    "./server/Card": {
+      "types": "./dist/types/next/server/Card.d.ts",
+      "import": "./dist/next/server/Card.js"
+    },
+    "./server/CheckBox": {
+      "types": "./dist/types/next/server/CheckBox.d.ts",
+      "import": "./dist/next/server/CheckBox.js"
+    },
+    "./server/Divider": {
+      "types": "./dist/types/next/server/Divider.d.ts",
+      "import": "./dist/next/server/Divider.js"
+    },
+    "./server/index": {
+      "types": "./dist/types/next/server/index.d.ts",
+      "import": "./dist/next/server/index.js"
+    },
+    "./server/Layout": {
+      "types": "./dist/types/next/server/Layout.d.ts",
+      "import": "./dist/next/server/Layout.js"
+    },
+    "./server/Legend": {
+      "types": "./dist/types/next/server/Legend.d.ts",
+      "import": "./dist/next/server/Legend.js"
+    },
+    "./server/LineChart": {
+      "types": "./dist/types/next/server/LineChart.d.ts",
+      "import": "./dist/next/server/LineChart.js"
+    },
+    "./server/PageHeader": {
+      "types": "./dist/types/next/server/PageHeader.d.ts",
+      "import": "./dist/next/server/PageHeader.js"
+    },
+    "./server/ProgressBar": {
+      "types": "./dist/types/next/server/ProgressBar.d.ts",
+      "import": "./dist/next/server/ProgressBar.js"
+    },
+    "./server/RadioButton": {
+      "types": "./dist/types/next/server/RadioButton.d.ts",
+      "import": "./dist/next/server/RadioButton.js"
+    },
+    "./server/RadioGroup": {
+      "types": "./dist/types/next/server/RadioGroup.d.ts",
+      "import": "./dist/next/server/RadioGroup.js"
+    },
+    "./server/Select": {
+      "types": "./dist/types/next/server/Select.d.ts",
+      "import": "./dist/next/server/Select.js"
+    },
+    "./server/Skeleton": {
+      "types": "./dist/types/next/server/Skeleton.d.ts",
+      "import": "./dist/next/server/Skeleton.js"
+    },
+    "./server/Sparkline": {
+      "types": "./dist/types/next/server/Sparkline.d.ts",
+      "import": "./dist/next/server/Sparkline.js"
+    },
+    "./server/TextArea": {
+      "types": "./dist/types/next/server/TextArea.d.ts",
+      "import": "./dist/next/server/TextArea.js"
+    },
+    "./server/TextInput": {
+      "types": "./dist/types/next/server/TextInput.d.ts",
+      "import": "./dist/next/server/TextInput.js"
+    },
+    "./server/Typography": {
+      "types": "./dist/types/next/server/Typography.d.ts",
+      "import": "./dist/next/server/Typography.js"
     },
     "./Sidebar": {
       "types": "./dist/types/next/Sidebar.d.ts",

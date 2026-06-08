@@ -1,2 +1,3 @@
+import "../components/DonutChart/next/DonutChart.module.scss";
 export { default } from "../components/DonutChart/next/DonutChart";
-export type { DonutChartProps } from "../components/DonutChart/DonutChart.types";
+export * from "../components/DonutChart/DonutChart.types";

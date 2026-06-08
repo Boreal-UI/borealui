@@ -81,6 +81,25 @@ function createExportTarget({ types, importPath, requirePath, defaultPath, style
   return target;
 }
 
+function listDeclarationEntries(dir, prefix = "") {
+  if (!fs.existsSync(dir)) return [];
+
+  return fs
+    .readdirSync(dir, { withFileTypes: true })
+    .flatMap((dirent) => {
+      const fullPath = path.join(dir, dirent.name);
+
+      if (dirent.isDirectory()) {
+        return listDeclarationEntries(fullPath, `${prefix}${dirent.name}/`);
+      }
+
+      if (!dirent.name.endsWith(".d.ts")) return [];
+
+      return `${prefix}${dirent.name.replace(/\.d\.ts$/, "")}`;
+    })
+    .sort((a, b) => a.localeCompare(b));
+}
+
 function buildRuntimeExports(flavor) {
   const runtimeDir = path.join(rootDir, "dist", flavor);
   const typesDir = path.join(rootDir, "dist", "types", flavor);
@@ -99,16 +118,12 @@ function buildRuntimeExports(flavor) {
     }),
   };
 
-  const entryFiles = fs
-    .readdirSync(typesDir)
-    .filter((file) => file.endsWith(".d.ts"))
-    .map((file) => file.replace(/\.d\.ts$/, ""))
-    .filter((name) => name !== "globals")
-    .sort((a, b) => a.localeCompare(b));
+  const entryFiles = listDeclarationEntries(typesDir).filter(
+    (name) => name !== "globals",
+  );
 
   for (const name of entryFiles) {
     const importPath = `./dist/${flavor}/${name}.js`;
-    const requirePath = `./dist/${flavor}/${name}.cjs.js`;
 
     if (!fs.existsSync(path.join(runtimeDir, `${name}.js`))) continue;
 
@@ -152,11 +167,7 @@ function buildTypesExports() {
 
   for (const flavor of ["core", "next"]) {
     const flavorDir = path.join(typesRoot, flavor);
-    const entries = fs
-      .readdirSync(flavorDir)
-      .filter((file) => file.endsWith(".d.ts"))
-      .map((file) => file.replace(/\.d\.ts$/, ""))
-      .sort((a, b) => a.localeCompare(b));
+    const entries = listDeclarationEntries(flavorDir);
 
     for (const name of entries) {
       exports[`./${flavor}/${name}`] = createExportTarget({
@@ -252,14 +263,11 @@ function stageRuntimeTypes(packageDistDir, flavor) {
     path.join(rootDir, "dist", "types", "public.types.d.ts"),
   );
 
-  for (const file of fs.readdirSync(sourceTypesDir)) {
-    if (!file.endsWith(".d.ts")) continue;
-
-    const name = file.replace(/\.d\.ts$/, "");
+  for (const name of listDeclarationEntries(sourceTypesDir)) {
     writeTypeProxy(
-      path.join(targetTypesDir, file),
+      path.join(targetTypesDir, `${name}.d.ts`),
       `@boreal-ui/types/${flavor}/${name}`,
-      path.join(sourceTypesDir, file),
+      path.join(sourceTypesDir, `${name}.d.ts`),
     );
   }
 }

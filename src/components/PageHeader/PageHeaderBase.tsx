@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from "react";
+import { forwardRef } from "react";
 import { PageHeaderBaseProps } from "./PageHeader.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -48,36 +48,19 @@ const PageHeaderBase = forwardRef<HTMLElement, PageHeaderBaseProps>(
     },
     ref,
   ) => {
-    const rootClass = useMemo(
-      () =>
-        combineClassNames(
-          classMap.root,
-          classMap[theme],
-          state && classMap[state],
-          outline && classMap.outline,
-          glass && classMap.glass,
-          disabled && classMap.disabled,
-          loading && classMap.loading,
-          compact && classMap.compact,
-          fullWidth && classMap.fullWidth,
-          getShadowClassName(classMap, theme, shadow),
-          rounding && classMap[`round${capitalize(rounding)}`],
-          className,
-        ),
-      [
-        classMap,
-        theme,
-        state,
-        outline,
-        glass,
-        disabled,
-        loading,
-        compact,
-        fullWidth,
-        shadow,
-        rounding,
-        className,
-      ],
+    const rootClass = combineClassNames(
+      classMap.root,
+      classMap[theme],
+      state && classMap[state],
+      outline && classMap.outline,
+      glass && classMap.glass,
+      disabled && classMap.disabled,
+      loading && classMap.loading,
+      compact && classMap.compact,
+      fullWidth && classMap.fullWidth,
+      getShadowClassName(classMap, theme, shadow),
+      rounding && classMap[`round${capitalize(rounding)}`],
+      className,
     );
 
     const Root = Component as "header";

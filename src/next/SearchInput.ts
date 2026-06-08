@@ -1,2 +1,3 @@
+import "../components/SearchInput/next/SearchInput.module.scss";
 export { default } from "../components/SearchInput/next/SearchInput";
-export type { SearchInputProps } from "../components/SearchInput/SearchInput.types";
+export * from "../components/SearchInput/SearchInput.types";

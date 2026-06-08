@@ -20,6 +20,47 @@ const nestedEntries = [
   },
 ];
 
+const serverEntries = [
+  "Alert",
+  "Avatar",
+  "Badge",
+  "BarChart",
+  "BreadCrumbPageHeader",
+  "Breadcrumbs",
+  "Button",
+  "Card",
+  "CheckBox",
+  "Divider",
+  "EmptyState",
+  "Footer",
+  "Layout",
+  "Legend",
+  "LineChart",
+  "MetricBox",
+  "PageHeader",
+  "ProgressBar",
+  "RadioButton",
+  "RadioGroup",
+  "Select",
+  "Skeleton",
+  "Sparkline",
+  "TextArea",
+  "TextInput",
+  "Timeline",
+  "Toolbar",
+  "Typography",
+  "ValidationSummary",
+];
+
+function writeFileIfChanged(filePath, content) {
+  const existing = fs.existsSync(filePath) ? fs.readFileSync(filePath, "utf8") : "";
+  const normalize = (value) => value.replace(/\r\n/g, "\n");
+
+  if (normalize(existing) !== normalize(content)) {
+    fs.writeFileSync(filePath, content);
+  }
+}
+
 function writeEntrypoint({
   type,
   outDir,
@@ -114,4 +155,71 @@ function generateEntrypoints(type) {
 
 generateEntrypoints("core");
 generateEntrypoints("next");
+generateServerEntrypoints();
 console.log("Generated entrypoint files!");
+
+function writeServerEntrypoint({ outDir, name, componentPath, typesPath, styleName }) {
+  const componentsDir = path.resolve(__dirname, "../src/components");
+  const resolvedStyleName = styleName ?? name;
+  const stylePath = path.resolve(
+    componentsDir,
+    componentPath,
+    "next",
+    `${resolvedStyleName}.module.scss`,
+  );
+  const styleImport = fs.existsSync(stylePath)
+    ? `import "../../components/${componentPath}/next/${resolvedStyleName}.module.scss";`
+    : "";
+
+  const content =
+    name === "Layout"
+      ? `
+${styleImport}
+export {
+  Container,
+  Grid,
+  Inline,
+  Section,
+  Stack,
+} from "../../components/${componentPath}/server/${name}";
+export * from "../../components/${typesPath}";
+`.trim() + "\n"
+      : `
+${styleImport}
+export { default } from "../../components/${componentPath}/server/${name}";
+export * from "../../components/${typesPath}";
+`.trim() + "\n";
+
+  writeFileIfChanged(path.join(outDir, `${name}.ts`), content);
+}
+
+function generateServerEntrypoints() {
+  const outDir = path.resolve(__dirname, "../src/next/server");
+
+  if (!fs.existsSync(outDir)) {
+    fs.mkdirSync(outDir, { recursive: true });
+  }
+
+  serverEntries.forEach((name) =>
+    writeServerEntrypoint({
+      outDir,
+      name,
+      componentPath: name === "RadioGroup" ? "RadioButton" : name,
+      typesPath:
+        name === "RadioGroup"
+          ? "RadioButton/RadioButton.types"
+          : `${name}/${name}.types`,
+      styleName: name === "RadioGroup" ? "RadioButton" : name,
+    }),
+  );
+
+  const indexExports = serverEntries
+    .map((name) =>
+      name === "Layout"
+        ? 'export { Container, Grid, Inline, Section, Stack } from "./Layout";'
+        : `export { default as ${name} } from "./${name}";`,
+    )
+    .join("\n");
+
+  writeFileIfChanged(path.join(outDir, "index.ts"), `${indexExports}\n`);
+}

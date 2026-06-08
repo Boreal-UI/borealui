@@ -99,6 +99,23 @@ import "@boreal-ui/next/globals.css";
 Then import components from the Next build:
 
 ```tsx
+import { Button, Card } from "@boreal-ui/next";
+```
+
+Static components can stay outside the client bundle by using the dedicated
+server entries:
+
+```tsx
+import { Button, Container, ProgressBar, TextInput, Typography } from "@boreal-ui/next/server";
+import BarChart from "@boreal-ui/next/server/BarChart";
+```
+
+Normally interactive server entries are stripped variants: they support static
+links, read-only fields, and native initial form state, but omit callbacks and
+client-only behavior. Use the standard Next entries when interactivity is
+required.
+
+```tsx
 "use client";
 
 import { Button, Card, TextInput } from "@boreal-ui/next";

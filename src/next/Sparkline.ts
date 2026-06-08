@@ -1,2 +1,3 @@
+import "../components/Sparkline/next/Sparkline.module.scss";
 export { default } from "../components/Sparkline/next/Sparkline";
-export type { SparklineProps } from "../components/Sparkline/Sparkline.types";
+export * from "../components/Sparkline/Sparkline.types";
