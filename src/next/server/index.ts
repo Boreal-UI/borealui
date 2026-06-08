@@ -27,3 +27,13 @@ export { default as Timeline } from "./Timeline";
 export { default as Toolbar } from "./Toolbar";
 export { default as Typography } from "./Typography";
 export { default as ValidationSummary } from "./ValidationSummary";
+export {
+  getThemeAttributes,
+  getThemeStyle,
+  readSavedSchemeCookie,
+  resolveThemeScheme,
+  THEME_COOKIE_NAME,
+  type ServerThemeResolutionOptions,
+  type ThemeHtmlAttributes,
+  type ThemeStyle,
+} from "./ThemeProvider";

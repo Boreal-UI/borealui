@@ -220,6 +220,19 @@ function generateServerEntrypoints() {
         : `export { default as ${name} } from "./${name}";`,
     )
     .join("\n");
+  const themeProviderExports = `export {
+  getThemeAttributes,
+  getThemeStyle,
+  readSavedSchemeCookie,
+  resolveThemeScheme,
+  THEME_COOKIE_NAME,
+  type ServerThemeResolutionOptions,
+  type ThemeHtmlAttributes,
+  type ThemeStyle,
+} from "./ThemeProvider";`;
 
-  writeFileIfChanged(path.join(outDir, "index.ts"), `${indexExports}\n`);
+  writeFileIfChanged(
+    path.join(outDir, "index.ts"),
+    `${indexExports}\n${themeProviderExports}\n`,
+  );
 }

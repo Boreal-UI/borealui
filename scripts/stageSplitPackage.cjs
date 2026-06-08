@@ -131,6 +131,13 @@ function buildRuntimeExports(flavor) {
       types: `./dist/types/${flavor}/${name}.d.ts`,
       importPath,
     });
+
+    if (name.endsWith("/index")) {
+      exports[`./${name.slice(0, -"/index".length)}`] = createExportTarget({
+        types: `./dist/types/${flavor}/${name}.d.ts`,
+        importPath,
+      });
+    }
   }
 
   return exports;
@@ -174,6 +181,15 @@ function buildTypesExports() {
         types: `./dist/types/${flavor}/${name}.d.ts`,
         defaultPath: "./dist/empty.js",
       });
+
+      if (name.endsWith("/index")) {
+        exports[
+          `./${flavor}/${name.slice(0, -"/index".length)}`
+        ] = createExportTarget({
+          types: `./dist/types/${flavor}/${name}.d.ts`,
+          defaultPath: "./dist/empty.js",
+        });
+      }
     }
   }
 

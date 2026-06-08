@@ -832,6 +832,10 @@
       "types": "./dist/types/next/server/TextInput.d.ts",
       "default": "./dist/empty.js"
     },
+    "./next/server/ThemeProvider": {
+      "types": "./dist/types/next/server/ThemeProvider.d.ts",
+      "default": "./dist/empty.js"
+    },
     "./next/server/Timeline": {
       "types": "./dist/types/next/server/Timeline.d.ts",
       "default": "./dist/empty.js"
