@@ -24,6 +24,7 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
       "aria-describedby": ariaDescribedBy,
       "aria-invalid": ariaInvalid,
       "aria-required": ariaRequired,
+      className,
       disabled,
       label,
       labelPosition,
@@ -62,6 +63,7 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
           theme={theme}
           glass={glass}
           state={state}
+          className={className}
           shadow={shadow}
           rounding={rounding}
           options={options}

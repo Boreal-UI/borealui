@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/next",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "readme": "README.md",
   "description": "Accessible, themeable Boreal UI components for Next.js app-router projects.",
   "keywords": [
@@ -309,10 +309,6 @@
       "types": "./dist/types/next/server/Alert.d.ts",
       "import": "./dist/next/server/Alert.js"
     },
-    "./server": {
-      "types": "./dist/types/next/server/index.d.ts",
-      "import": "./dist/next/server/index.js"
-    },
     "./server/Avatar": {
       "types": "./dist/types/next/server/Avatar.d.ts",
       "import": "./dist/next/server/Avatar.js"
@@ -358,6 +354,10 @@
       "import": "./dist/next/server/Footer.js"
     },
     "./server/index": {
+      "types": "./dist/types/next/server/index.d.ts",
+      "import": "./dist/next/server/index.js"
+    },
+    "./server": {
       "types": "./dist/types/next/server/index.d.ts",
       "import": "./dist/next/server/index.js"
     },
