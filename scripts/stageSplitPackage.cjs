@@ -62,6 +62,10 @@ function syncPackageVersion(packageDir) {
 
   packageJson.version = rootPackage.version;
 
+  if (packageJson.dependencies?.["@boreal-ui/types"]) {
+    packageJson.dependencies["@boreal-ui/types"] = rootPackage.version;
+  }
+
   if (packageJson.devDependencies?.["@boreal-ui/types"]) {
     packageJson.devDependencies["@boreal-ui/types"] = rootPackage.version;
   }
