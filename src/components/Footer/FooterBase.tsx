@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import {
   BaseFooterProps,
   FooterLink,
@@ -89,28 +89,15 @@ const FooterBase: React.FC<BaseFooterProps> = ({
 }) => {
   const resolvedAttachment = resolvePropAlias(attachment);
 
-  const footerClass = useMemo(
-    () =>
-      combineClassNames(
-        classMap.footer,
-        classMap[theme],
-        glass && classMap.glass,
-        layout !== "inline" && classMap[`layout${capitalize(layout)}`],
-        shadow !== "none" && classMap[`shadow${capitalize(shadow)}`],
-        rounding !== "none" && classMap[`round${capitalize(rounding)}`],
-        classMap[`attachment${capitalize(resolvedAttachment)}`],
-        className,
-      ),
-    [
-      classMap,
-      theme,
-      glass,
-      layout,
-      shadow,
-      rounding,
-      resolvedAttachment,
-      className,
-    ],
+  const footerClass = combineClassNames(
+    classMap.footer,
+    classMap[theme],
+    glass && classMap.glass,
+    layout !== "inline" && classMap[`layout${capitalize(layout)}`],
+    shadow !== "none" && classMap[`shadow${capitalize(shadow)}`],
+    rounding !== "none" && classMap[`round${capitalize(rounding)}`],
+    classMap[`attachment${capitalize(resolvedAttachment)}`],
+    className,
   );
 
   const isLogoImage = (

@@ -1,4 +1,4 @@
-import React, { JSX, useMemo } from "react";
+import React, { JSX } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { ToolbarBaseProps } from "./Toolbar.types";
 import { capitalize } from "../../utils/capitalize";
@@ -49,18 +49,14 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   const safeHeading = Math.min(6, Math.max(1, headingLevel));
   const TitleTag = `h${safeHeading}` as keyof JSX.IntrinsicElements;
 
-  const toolbarClass = useMemo(
-    () =>
-      combineClassNames(
-        classMap.toolbar,
-        classMap[theme],
-        glass && classMap.glass,
-        classMap[attachment],
-        className,
-        getShadowClassName(classMap, theme, shadow),
-        rounding && classMap[`round${capitalize(rounding)}`],
-      ),
-    [classMap, theme, glass, attachment, className, shadow, rounding],
+  const toolbarClass = combineClassNames(
+    classMap.toolbar,
+    classMap[theme],
+    glass && classMap.glass,
+    classMap[attachment],
+    className,
+    getShadowClassName(classMap, theme, shadow),
+    rounding && classMap[`round${capitalize(rounding)}`],
   );
 
   const resolvedAriaLabel = ariaLabelledBy ? undefined : ariaLabel;

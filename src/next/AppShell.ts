@@ -1,2 +1,3 @@
+import "../components/AppShell/next/AppShell.module.scss";
 export { default } from "../components/AppShell/next/AppShell";
-export type { AppShellProps } from "../components/AppShell/AppShell.types";
+export * from "../components/AppShell/AppShell.types";

@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/types",
-  "version": "0.1.01",
+  "version": "0.1.41",
   "readme": "README.md",
   "description": "Shared TypeScript declarations for Boreal UI core and Next.js packages.",
   "keywords": [
@@ -634,6 +634,134 @@
     },
     "./next/Select": {
       "types": "./dist/types/next/Select.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Alert": {
+      "types": "./dist/types/next/server/Alert.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Avatar": {
+      "types": "./dist/types/next/server/Avatar.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Badge": {
+      "types": "./dist/types/next/server/Badge.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/BarChart": {
+      "types": "./dist/types/next/server/BarChart.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/BreadCrumbPageHeader": {
+      "types": "./dist/types/next/server/BreadCrumbPageHeader.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Breadcrumbs": {
+      "types": "./dist/types/next/server/Breadcrumbs.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Button": {
+      "types": "./dist/types/next/server/Button.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Card": {
+      "types": "./dist/types/next/server/Card.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/CheckBox": {
+      "types": "./dist/types/next/server/CheckBox.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Divider": {
+      "types": "./dist/types/next/server/Divider.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/EmptyState": {
+      "types": "./dist/types/next/server/EmptyState.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Footer": {
+      "types": "./dist/types/next/server/Footer.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/index": {
+      "types": "./dist/types/next/server/index.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server": {
+      "types": "./dist/types/next/server/index.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Layout": {
+      "types": "./dist/types/next/server/Layout.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Legend": {
+      "types": "./dist/types/next/server/Legend.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/LineChart": {
+      "types": "./dist/types/next/server/LineChart.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/MetricBox": {
+      "types": "./dist/types/next/server/MetricBox.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/PageHeader": {
+      "types": "./dist/types/next/server/PageHeader.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/ProgressBar": {
+      "types": "./dist/types/next/server/ProgressBar.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/RadioButton": {
+      "types": "./dist/types/next/server/RadioButton.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/RadioGroup": {
+      "types": "./dist/types/next/server/RadioGroup.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Select": {
+      "types": "./dist/types/next/server/Select.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Skeleton": {
+      "types": "./dist/types/next/server/Skeleton.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Sparkline": {
+      "types": "./dist/types/next/server/Sparkline.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/TextArea": {
+      "types": "./dist/types/next/server/TextArea.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/TextInput": {
+      "types": "./dist/types/next/server/TextInput.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/ThemeProvider": {
+      "types": "./dist/types/next/server/ThemeProvider.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Timeline": {
+      "types": "./dist/types/next/server/Timeline.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Toolbar": {
+      "types": "./dist/types/next/server/Toolbar.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/Typography": {
+      "types": "./dist/types/next/server/Typography.d.ts",
+      "default": "./dist/empty.js"
+    },
+    "./next/server/ValidationSummary": {
+      "types": "./dist/types/next/server/ValidationSummary.d.ts",
       "default": "./dist/empty.js"
     },
     "./next/Sidebar": {

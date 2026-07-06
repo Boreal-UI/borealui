@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
@@ -61,38 +61,31 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
     (resolvedLabelPosition === "top" || resolvedLabelPosition === "bottom") &&
     (label || showValue);
 
-  const layoutClass = useMemo(() => {
-    const posClass = classMap[`label${capitalize(resolvedLabelPosition)}`];
-    return combineClassNames(classMap.layout, Boolean(label) && posClass);
-  }, [classMap, label, resolvedLabelPosition]);
-
-  const wrapperClass = useMemo(
-    () =>
-      combineClassNames(
-        classMap.container,
-        classMap[size],
-        glass && classMap[theme],
-        glass && state && classMap[state],
-        glass && classMap.glass,
-        getShadowClassName(classMap, theme, shadow),
-        rounding && classMap[`round${capitalize(rounding)}`],
-        className,
-      ),
-    [classMap, size, theme, state, glass, shadow, rounding, className],
+  const posClass = classMap[`label${capitalize(resolvedLabelPosition)}`];
+  const layoutClass = combineClassNames(
+    classMap.layout,
+    Boolean(label) && posClass,
   );
 
-  const barClass = useMemo(
-    () =>
-      combineClassNames(
-        classMap.bar,
-        classMap[theme],
-        state && classMap[state],
-        glass && classMap.glassBar,
-        animated && classMap.animated,
-        rounding && classMap[`round${capitalize(rounding)}`],
-        indeterminate && classMap.indeterminate,
-      ),
-    [classMap, theme, state, glass, rounding, indeterminate, animated],
+  const wrapperClass = combineClassNames(
+    classMap.container,
+    classMap[size],
+    glass && classMap[theme],
+    glass && state && classMap[state],
+    glass && classMap.glass,
+    getShadowClassName(classMap, theme, shadow),
+    rounding && classMap[`round${capitalize(rounding)}`],
+    className,
+  );
+
+  const barClass = combineClassNames(
+    classMap.bar,
+    classMap[theme],
+    state && classMap[state],
+    glass && classMap.glassBar,
+    animated && classMap.animated,
+    rounding && classMap[`round${capitalize(rounding)}`],
+    indeterminate && classMap.indeterminate,
   );
 
   const labelNode = label ? (

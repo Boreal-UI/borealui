@@ -1,3 +1,4 @@
+import "../components/Layout/core/Layout.scss";
 export {
   Container,
   Grid,

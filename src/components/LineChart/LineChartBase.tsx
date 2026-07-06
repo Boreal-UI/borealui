@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from "react";
+import { forwardRef } from "react";
 import { LineChartBaseProps } from "./LineChart.types";
 import {
   buildPoints,
@@ -35,10 +35,7 @@ const LineChartBase = forwardRef<HTMLDivElement, LineChartBaseProps>(
     },
     ref,
   ) => {
-    const points = useMemo(
-      () => buildPoints(data, width, height, padding, true),
-      [data, height, padding, width],
-    );
+    const points = buildPoints(data, width, height, padding, true);
     const path = pointsToPath(points);
     const { min, max } = getValueRange(
       data.map((datum) => datum.value),

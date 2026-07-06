@@ -1,2 +1,3 @@
+import "../components/TreeView/core/TreeView.scss";
 export { default } from "../components/TreeView/core/TreeView";
-export type { TreeViewProps } from "../components/TreeView/TreeView.types";
+export * from "../components/TreeView/TreeView.types";

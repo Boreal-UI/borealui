@@ -14,9 +14,17 @@ src/components/ComponentName/
   core/ComponentName.scss
   next/ComponentName.tsx
   next/ComponentName.module.scss
+  server/ComponentName.tsx
 ```
 
 Base components own shared behavior, ARIA wiring, keyboard handling, state, test IDs, and class composition. Core wrappers import global SCSS and pass string class maps. Next wrappers import SCSS Modules and include `"use client"` when the wrapper or base behavior uses client-only React behavior.
+
+Add a `server` wrapper only when the component has useful static rendering
+behavior. Server wrappers must avoid `"use client"`, hooks, browser APIs, and
+callback props. Reuse a hook-free base where possible; otherwise create a
+stripped static renderer. Add the entry to `serverEntries` in
+`scripts/generateEntryPoints.cjs`, update server stories and tests, and document
+any omitted or replacement props.
 
 When a component has multiple public pieces, such as `RadioButton` and `RadioGroup`, keep each public prop interface documented and exported.
 
@@ -32,6 +40,7 @@ When changing a public component, update the full surface:
 6. Stories, if the behavior is user-facing.
 7. Generated prop docs with `npm run gen:docs`.
 8. Public entry points or package exports, if the import surface changes.
+9. Server wrapper, tests, stories, and docs when the component has a server entry.
 
 Use `combineClassNames` from `src/utils/classNames.ts` for class composition.
 
@@ -56,6 +65,7 @@ The package publishes:
 
 - `dist/core` for React consumers.
 - `dist/next` for Next.js consumers.
+- `dist/next/server` for Next.js React Server Component entries.
 - `dist/core/docs.js`, `dist/next/docs.js`, and `dist/generated-docs` for docs metadata.
 - `dist/types` for TypeScript declarations.
 - `docs` for markdown API guides.
@@ -98,6 +108,7 @@ Before merging public API changes:
 - `npm run gen:docs` has been run.
 - `docs/public-api-reference.md` is updated when import paths, barrel exports, or standalone exports change.
 - `docs/installation-and-imports.md` is updated when setup or package entry points change.
+- `docs/server-components.md` is updated when server entries or stripped behavior change.
 - `docs/styling-and-theming.md` is updated when style config, theme, color-scheme, or CSS variable APIs change.
 - `docs/accessibility.md` is updated when ARIA, keyboard, focus, or labeling behavior changes.
 - `README.md` is updated for user-facing capabilities, scripts, or package entry points.

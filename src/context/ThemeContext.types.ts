@@ -20,6 +20,8 @@ import { ReactNode } from "react";
  * @property {boolean} [useOnlyCustomSchemes] - Optional flag to indicate if only custom schemes should be used, ignoring default schemes.
  * @property {boolean} [enableThemeScript] - Optional flag to render the pre-hydration script that applies theme variables before React effects run.
  *                                           Defaults to true for core and false for Next.
+ * @property {boolean} [syncThemeCookie] - Optional flag to persist the selected scheme into a cookie for SSR.
+ * @property {string} [themeCookieName] - Optional cookie name used when syncThemeCookie is true.
  *
  * @example
  * <ThemeProvider customSchemes={[customTheme]}>
@@ -31,6 +33,8 @@ export interface ThemeProviderProps {
   customSchemes?: ColorScheme[];
   enableThemeScript?: boolean;
   initialSchemeName?: string;
+  syncThemeCookie?: boolean;
+  themeCookieName?: string;
   useOnlyCustomSchemes?: boolean;
 }
 

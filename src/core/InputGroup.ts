@@ -1,2 +1,3 @@
+import "../components/InputGroup/core/InputGroup.scss";
 export { default } from "../components/InputGroup/core/InputGroup";
-export type { InputGroupProps } from "../components/InputGroup/InputGroup.types";
+export * from "../components/InputGroup/InputGroup.types";

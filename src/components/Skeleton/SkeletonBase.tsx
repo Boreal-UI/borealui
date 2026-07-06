@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -34,16 +34,12 @@ const SkeletonBase: React.FC<SkeletonBaseProps & ExtraProps> = ({
 
   const shouldAnnounce = announce && ariaHidden !== true;
 
-  const skeletonClasses = useMemo(
-    () =>
-      combineClassNames(
-        classMap.skeleton,
-        animate && classMap.animated,
-        shadow && classMap[`shadow${capitalize(shadow)}`],
-        rounding && classMap[`round${capitalize(rounding)}`],
-        className,
-      ),
-    [classMap, animate, shadow, rounding, className],
+  const skeletonClasses = combineClassNames(
+    classMap.skeleton,
+    animate && classMap.animated,
+    shadow && classMap[`shadow${capitalize(shadow)}`],
+    rounding && classMap[`round${capitalize(rounding)}`],
+    className,
   );
 
   const computedAriaDescribedBy = shouldAnnounce

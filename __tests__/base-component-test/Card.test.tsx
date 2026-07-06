@@ -47,6 +47,23 @@ const classMap = {
   content: "card-content",
   media: "card-media",
   image: "card-img",
+  insetNone: "card-img-inset-none",
+  insetXs: "card-img-inset-xs",
+  insetSmall: "card-img-inset-small",
+  insetSm: "card-img-inset-small",
+  insetMedium: "card-img-inset-medium",
+  insetMd: "card-img-inset-medium",
+  insetLarge: "card-img-inset-large",
+  insetLg: "card-img-inset-large",
+  insetXl: "card-img-inset-xl",
+  imageRoundNone: "card-img-round-none",
+  imageRoundSmall: "card-img-round-small",
+  imageRoundSm: "card-img-round-small",
+  imageRoundMedium: "card-img-round-medium",
+  imageRoundMd: "card-img-round-medium",
+  imageRoundLarge: "card-img-round-large",
+  imageRoundLg: "card-img-round-large",
+  imageRoundFull: "card-img-round-full",
   header: "card-header",
   title: "card-title",
   icon: "card-icon",
@@ -229,6 +246,65 @@ describe("CardBase", () => {
     expect(image).toHaveAttribute("height", "500");
   });
 
+  it("applies the default none inset class to the image", () => {
+    renderCard({
+      imageUrl: "/img.jpg",
+      imageAlt: "Default inset image",
+    });
+
+    expect(screen.getByTestId("card-image")).toHaveClass(
+      "card-img-inset-none",
+    );
+    expect(screen.getByTestId("card-image")).not.toHaveClass(
+      "card-img-round-medium",
+    );
+  });
+
+  it.each([
+    ["xs", "card-img-inset-xs"],
+    ["small", "card-img-inset-small"],
+    ["sm", "card-img-inset-small"],
+    ["medium", "card-img-inset-medium"],
+    ["md", "card-img-inset-medium"],
+    ["large", "card-img-inset-large"],
+    ["lg", "card-img-inset-large"],
+    ["xl", "card-img-inset-xl"],
+  ])("applies the %s image inset class", (imageInset, expectedClass) => {
+    renderCard({
+      imageUrl: "/img.jpg",
+      imageAlt: `${imageInset} inset image`,
+      imageInset,
+    });
+
+    expect(screen.getByTestId("card-image")).toHaveClass(expectedClass);
+  });
+
+  it("matches the card rounding when an image inset is applied", () => {
+    renderCard({
+      imageUrl: "/img.jpg",
+      imageAlt: "Rounded inset image",
+      imageInset: "medium",
+      rounding: "large",
+    });
+
+    expect(screen.getByTestId("card-image")).toHaveClass(
+      "card-img-round-large",
+    );
+  });
+
+  it("supports rounding aliases for inset images", () => {
+    renderCard({
+      imageUrl: "/img.jpg",
+      imageAlt: "Alias rounded inset image",
+      imageInset: "small",
+      rounding: "lg",
+    });
+
+    expect(screen.getByTestId("card-image")).toHaveClass(
+      "card-img-round-large",
+    );
+  });
+
   it("uses fallback image alt text when imageAlt is not provided", () => {
     renderCard({
       imageUrl: "/img.jpg",
@@ -287,11 +363,14 @@ describe("CardBase", () => {
       imageUrl: "/img.jpg",
       imageAlt: "Fill image",
       imageFill: true,
+      imageInset: "large",
     });
 
     const image = screen.getByTestId("card-image");
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute("data-fill", "true");
+    expect(image).toHaveClass("card-img-inset-large");
+    expect(image).toHaveClass("card-img-round-medium");
     expect(image.parentElement).toHaveClass("card-media");
   });
 
