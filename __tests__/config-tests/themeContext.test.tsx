@@ -76,9 +76,7 @@ const Consumer = () => {
   return (
     <div>
       <div data-testid="selected-scheme">{context.selectedScheme}</div>
-      <div data-testid="selected-scheme-name">
-        {context.selectedSchemeName}
-      </div>
+      <div data-testid="selected-scheme-name">{context.selectedSchemeName}</div>
       <div data-testid="scheme-count">{context.schemes.length}</div>
       <div data-testid="scheme-names">
         {context.schemes.map((scheme) => scheme.name).join(", ")}
@@ -312,6 +310,11 @@ describe("ThemeProvider", () => {
         document.documentElement.style.getPropertyValue("--background-color"),
       ).toBe("#ffffff");
       expect(
+        document.documentElement.style.getPropertyValue(
+          "--background-color-surface",
+        ),
+      ).toBe(buildThemeVariables(baseSchemes[0])["--background-color-surface"]);
+      expect(
         document.documentElement.style.getPropertyValue("--border-color"),
       ).not.toBe("");
       expect(
@@ -357,6 +360,22 @@ describe("ThemeProvider", () => {
     ).toBeGreaterThanOrEqual(4.5);
   });
 
+  it("derives the surface background token from the active background color", () => {
+    const vars = buildThemeVariables({
+      name: "Deep Surface",
+      primaryColor: "#336699",
+      secondaryColor: "#993366",
+      tertiaryColor: "#669933",
+      quaternaryColor: "#cc9933",
+      backgroundColor: "#101820",
+    });
+
+    expect(vars["--background-color-surface"]).not.toBe("#384b4b");
+    expect(vars["--background-color-surface"]).toBe(
+      vars["--background-color-surface"],
+    );
+  });
+
   it("creates a bootstrap script that applies the saved scheme before React effects run", () => {
     localStorage.setItem(STORAGE_KEY, "Ocean Breeze");
 
@@ -380,6 +399,11 @@ describe("ThemeProvider", () => {
     expect(
       document.documentElement.style.getPropertyValue("--primary-color"),
     ).toBe("#005577");
+    expect(
+      document.documentElement.style.getPropertyValue(
+        "--background-color-surface",
+      ),
+    ).toBe(buildThemeVariables(baseSchemes[1])["--background-color-surface"]);
     expect(document.documentElement.dataset.borealTheme).toBe("Ocean Breeze");
   });
 
@@ -392,10 +416,13 @@ describe("ThemeProvider", () => {
     expect(style["--primary-color"]).toBe("#005577");
     expect(attributes["data-boreal-theme"]).toBe("Ocean Breeze");
     expect(attributes.style["--background-color"]).toBe("#f4faff");
+    expect(attributes.style["--background-color-surface"]).toBe(
+      style["--background-color-surface"],
+    );
     expect(resolveServerThemeScheme("Ocean Breeze").name).toBe("Ocean Breeze");
-    expect(
-      getServerThemeAttributes(scheme)["data-boreal-theme"],
-    ).toBe("Ocean Breeze");
+    expect(getServerThemeAttributes(scheme)["data-boreal-theme"]).toBe(
+      "Ocean Breeze",
+    );
   });
 
   it("reads encoded saved theme cookies", () => {
@@ -494,9 +521,7 @@ describe("ThemeProvider", () => {
       expect(footerSelect.value).toBe("Ocean Breeze");
       expect(pageSelect.value).toBe("Ocean Breeze");
       expect(localStorage.getItem(STORAGE_KEY)).toBe("Ocean Breeze");
-      expect(document.documentElement.dataset.borealTheme).toBe(
-        "Ocean Breeze",
-      );
+      expect(document.documentElement.dataset.borealTheme).toBe("Ocean Breeze");
     });
   });
 
@@ -517,9 +542,7 @@ describe("ThemeProvider", () => {
       expect(select.value).toBe("Ocean Breeze");
       expect(select.selectedOptions[0]).toHaveTextContent("Ocean Breeze");
       expect(localStorage.getItem(STORAGE_KEY)).toBe("Ocean Breeze");
-      expect(document.documentElement.dataset.borealTheme).toBe(
-        "Ocean Breeze",
-      );
+      expect(document.documentElement.dataset.borealTheme).toBe("Ocean Breeze");
     });
   });
 

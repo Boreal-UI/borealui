@@ -387,6 +387,7 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
   const tertiaryTextColor = getReadableColor(tertiaryColor);
   const quaternaryTextColor = getReadableColor(quaternaryColor);
 
+
   return {
     "--primary-color": primaryColor,
     "--primary-color-light": adjustLightness(primaryColor, 10),
@@ -428,6 +429,7 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     ),
     "--text-color-quaternary": quaternaryTextColor,
     "--background-color": backgroundColor,
+    "--background-color-surface": adjustLightness(backgroundColor, 5),
     "--background-color-dark": adjustLightness(backgroundColor, -10),
     "--background-color-darker": adjustLightness(backgroundColor, -25),
     "--background-color-light": adjustLightness(backgroundColor, 10),
@@ -529,6 +531,10 @@ export function getThemeInitializationScript({
 }: Omit<ThemeResolutionOptions, "savedSchemeName"> = {}): string {
   const schemes = getAvailableSchemes({ customSchemes, useOnlyCustomSchemes });
   const defaultSchemeName = getDefaultColorSchemeName();
+  const schemesWithVariables = schemes.map((scheme) => ({
+    name: scheme.name,
+    variables: buildThemeVariables(scheme),
+  }));
 
-  return `(function(){try{var s=${JSON.stringify(schemes).replace(/</g, "\\u003c")};var k=${JSON.stringify(THEME_STORAGE_KEY)};var ck=${JSON.stringify(themeCookieName)};var initial=${JSON.stringify(initialSchemeName ?? null)};var fallback=${JSON.stringify(defaultSchemeName)};var saved=null;try{saved=localStorage.getItem(k)}catch(e){}var cv=null;try{var n=encodeURIComponent(ck)+"=";var c=(document.cookie||"").split(";").map(function(x){return x.trim()}).find(function(x){return x.indexOf(n)===0});if(c)cv=decodeURIComponent(c.slice(n.length))}catch(e){}var name=initial||saved||cv||fallback;var scheme=s.find(function(x){return x.name===name})||s.find(function(x){return x.name===fallback})||s[0];if(!scheme)return;var d=document.documentElement.style;var hex=function(v){v=String(v||"").trim();var m=/^#([\\da-f])([\\da-f])([\\da-f])$/i.exec(v);if(m)return("#"+m[1]+m[1]+m[2]+m[2]+m[3]+m[3]).toLowerCase();return /^#[\\da-f]{6}([\\da-f]{2})?$/i.test(v)?v.slice(0,7).toLowerCase():"#000000"};var lum=function(v){v=hex(v);var r=[1,3,5].map(function(i){var c=parseInt(v.slice(i,i+2),16)/255;return c<=.03928?c/12.92:Math.pow((c+.055)/1.055,2.4)});return .2126*r[0]+.7152*r[1]+.0722*r[2]};var contrast=function(a,b){var x=lum(a),y=lum(b),l=Math.max(x,y),q=Math.min(x,y);return(l+.05)/(q+.05)};var text=function(bg,preferred,min){min=min||4.5;if(preferred&&contrast(bg,preferred)>=min)return preferred;return contrast(bg,"#000000")>=contrast(bg,"#ffffff")?"#000000":"#ffffff"};var set=function(n,v){d.setProperty(n,v)};var page=text(scheme.backgroundColor,scheme.forceTextColor);set("--primary-color",scheme.primaryColor);set("--secondary-color",scheme.secondaryColor);set("--tertiary-color",scheme.tertiaryColor);set("--quaternary-color",scheme.quaternaryColor);set("--background-color",scheme.backgroundColor);set("--text-color",page);set("--text-color-primary",text(scheme.primaryColor,scheme.forceTextColor));set("--text-color-primary-contrast",page);set("--text-color-secondary",text(scheme.secondaryColor));set("--text-color-tertiary",text(scheme.tertiaryColor));set("--text-color-quaternary",text(scheme.quaternaryColor));set("--link-color",page);set("--focus-outline-color",page);document.documentElement.dataset.borealTheme=scheme.name}catch(e){}})();`;
+  return `(function(){try{var s=${JSON.stringify(schemesWithVariables).replace(/</g, "\\u003c")};var k=${JSON.stringify(THEME_STORAGE_KEY)};var ck=${JSON.stringify(themeCookieName)};var initial=${JSON.stringify(initialSchemeName ?? null)};var fallback=${JSON.stringify(defaultSchemeName)};var saved=null;try{saved=localStorage.getItem(k)}catch(e){}var cv=null;try{var n=encodeURIComponent(ck)+"=";var c=(document.cookie||"").split(";").map(function(x){return x.trim()}).find(function(x){return x.indexOf(n)===0});if(c)cv=decodeURIComponent(c.slice(n.length))}catch(e){}var name=initial||saved||cv||fallback;var scheme=s.find(function(x){return x.name===name})||s.find(function(x){return x.name===fallback})||s[0];if(!scheme)return;var d=document.documentElement.style;Object.keys(scheme.variables).forEach(function(key){d.setProperty(key,scheme.variables[key])});document.documentElement.dataset.borealTheme=scheme.name}catch(e){}})();`;
 }
