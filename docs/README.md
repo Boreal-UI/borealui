@@ -5,6 +5,7 @@ These guides cover the public APIs consumers use when installing, importing, sty
 Start here:
 
 - [Installation and Imports](./installation-and-imports.md)
+- [Next.js Server Components](./server-components.md)
 - [CLI](./cli.md)
 - [Public API Reference](./public-api-reference.md)
 - [Styling and Theming](./styling-and-theming.md)

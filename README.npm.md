@@ -99,6 +99,32 @@ import "@boreal-ui/next/globals.css";
 Then import components from the Next build:
 
 ```tsx
+import { Button, Card } from "@boreal-ui/next";
+```
+
+Static components can stay outside the client bundle by using the dedicated
+server entries:
+
+```tsx
+import { Button, Container, ProgressBar, TextInput, Typography } from "@boreal-ui/next/server";
+import BarChart from "@boreal-ui/next/server/BarChart";
+```
+
+Available server entries are `Alert`, `Avatar`, `Badge`, `BarChart`,
+`BreadCrumbPageHeader`, `Breadcrumbs`, `Button`, `Card`, `CheckBox`, `Divider`,
+`EmptyState`, `Footer`, `Layout`, `Legend`, `LineChart`, `MetricBox`,
+`PageHeader`, `ProgressBar`, `RadioButton`, `RadioGroup`, `Select`, `Skeleton`,
+`Sparkline`, `TextArea`, `TextInput`, `ThemeProvider`, `Timeline`, `Toolbar`,
+`Typography`, and `ValidationSummary`.
+
+Normally interactive server entries are stripped variants: they support static
+links, read-only fields, and native initial form state, but omit callbacks and
+client-only behavior. `EmptyState` uses `actionHref`, `Footer` omits its theme
+selector, toolbar avatars are static, and validation summary items render as
+links or text without focus behavior. Use the standard Next entries when
+interactivity is required.
+
+```tsx
 "use client";
 
 import { Button, Card, TextInput } from "@boreal-ui/next";

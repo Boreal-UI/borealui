@@ -1,2 +1,3 @@
+import "../components/MultiSelect/core/MultiSelect.scss";
 export { default } from "../components/MultiSelect/core/MultiSelect";
-export type { MultiSelectProps } from "../components/MultiSelect/MultiSelect.types";
+export * from "../components/MultiSelect/MultiSelect.types";

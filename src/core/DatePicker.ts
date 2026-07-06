@@ -1,2 +1,3 @@
+import "../components/DatePicker/core/DatePicker.scss";
 export { default } from "../components/DatePicker/core/DatePicker";
-export type { DatePickerProps } from "../components/DatePicker/DatePicker.types";
+export * from "../components/DatePicker/DatePicker.types";

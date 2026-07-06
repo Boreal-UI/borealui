@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -37,36 +36,19 @@ export default function AlertBase({
   classMap,
 }: AlertBaseProps) {
   const resolvedTestId = testId ?? dataTestId ?? "alert";
-  const alertClassName = useMemo(
-    () =>
-      combineClassNames(
-        classMap.alert,
-        classMap[theme],
-        state && classMap[state],
-        classMap[variant],
-        outline && classMap.outline,
-        glass && classMap.glass,
-        getShadowClassName(classMap, theme, shadow),
-        rounding && classMap[`round${capitalize(rounding)}`],
-        icon ? classMap.hasIcon : null,
-        actions ? classMap.hasActions : null,
-        dismissible && classMap.dismissible,
-        className,
-      ),
-    [
-      classMap,
-      theme,
-      state,
-      variant,
-      outline,
-      glass,
-      shadow,
-      rounding,
-      icon,
-      actions,
-      dismissible,
-      className,
-    ],
+  const alertClassName = combineClassNames(
+    classMap.alert,
+    classMap[theme],
+    state && classMap[state],
+    classMap[variant],
+    outline && classMap.outline,
+    glass && classMap.glass,
+    getShadowClassName(classMap, theme, shadow),
+    rounding && classMap[`round${capitalize(rounding)}`],
+    icon ? classMap.hasIcon : null,
+    actions ? classMap.hasActions : null,
+    dismissible && classMap.dismissible,
+    className,
   );
 
   return (

@@ -1,2 +1,3 @@
+import "../components/TimePicker/core/TimePicker.scss";
 export { default } from "../components/TimePicker/core/TimePicker";
-export type { TimePickerProps } from "../components/TimePicker/TimePicker.types";
+export * from "../components/TimePicker/TimePicker.types";

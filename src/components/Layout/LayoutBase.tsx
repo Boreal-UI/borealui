@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { LayoutBaseProps } from "./Layout.types";
@@ -24,20 +23,16 @@ export default function LayoutBase({
 }: LayoutBaseProps) {
   const Component = as ?? (variant === "section" ? "section" : "div");
   const resolvedTestId = testId ?? dataTestId ?? variant;
-  const layoutClassName = useMemo(
-    () =>
-      combineClassNames(
-        classMap[variant],
-        classMap[`gap${capitalize(gap)}`],
-        align && classMap[`align${capitalize(align)}`],
-        justify && classMap[`justify${capitalize(justify)}`],
-        variant === "container" && size && classMap[`size${capitalize(size)}`],
-        padded && classMap.padded,
-        wrap && classMap.wrap,
-        variant === "section" && classMap[`tone${capitalize(tone)}`],
-        className,
-      ),
-    [classMap, variant, gap, align, justify, size, padded, wrap, tone, className],
+  const layoutClassName = combineClassNames(
+    classMap[variant],
+    classMap[`gap${capitalize(gap)}`],
+    align && classMap[`align${capitalize(align)}`],
+    justify && classMap[`justify${capitalize(justify)}`],
+    variant === "container" && size && classMap[`size${capitalize(size)}`],
+    padded && classMap.padded,
+    wrap && classMap.wrap,
+    variant === "section" && classMap[`tone${capitalize(tone)}`],
+    className,
   );
 
   return (

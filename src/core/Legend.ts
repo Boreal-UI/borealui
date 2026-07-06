@@ -1,2 +1,3 @@
+import "../components/Legend/core/Legend.scss";
 export { default } from "../components/Legend/core/Legend";
-export type { LegendProps } from "../components/Legend/Legend.types";
+export * from "../components/Legend/Legend.types";

@@ -9,8 +9,8 @@ import {
 
 /**
  * Represents a single option in the Select component.
-   * @default false
-   */
+ * @default false
+ */
 export interface Option {
   /** The value to be used for the option. */
   value: string;
@@ -324,4 +324,7 @@ export interface ThemeSelectProps {
    * HTML id applied to the relevant element.
    */
   id?: string;
+
+  /* Optional class name for custom styling. */
+  className?: string;
 }

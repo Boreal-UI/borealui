@@ -1,2 +1,3 @@
+import "../components/Legend/next/Legend.module.scss";
 export { default } from "../components/Legend/next/Legend";
-export type { LegendProps } from "../components/Legend/Legend.types";
+export * from "../components/Legend/Legend.types";

@@ -118,6 +118,26 @@ export default function ProjectForm() {
 
 Use `"use client"` in your own Next.js component when you render Boreal components inside a file that uses browser-only behavior, events, hooks, local state, or context. Boreal's Next entry points preserve their own client boundaries.
 
+### Next.js Server Components
+
+Static UI can use the dedicated server barrel or per-component server paths
+without adding a client boundary:
+
+```tsx
+import {
+  BreadCrumbPageHeader,
+  Card,
+  Container,
+  MetricBox,
+  Timeline,
+} from "@boreal-ui/next/server";
+import ValidationSummary from "@boreal-ui/next/server/ValidationSummary";
+```
+
+Normally interactive server entries deliberately omit callbacks and
+client-managed behavior. See [Next.js Server Components](./server-components.md)
+for the complete entry list, stripped behavior, and examples.
+
 ## Standalone Component Imports
 
 Standalone imports are available when you want a narrower import path.
@@ -140,6 +160,8 @@ import NextDataTable from "@boreal-ui/next/DataTable";
 | --- | --- |
 | `@boreal-ui/core` | React components, theme APIs, style config, and public types. |
 | `@boreal-ui/next` | Next.js wrappers with the same public API shape. |
+| `@boreal-ui/next/server` | Static React Server Component barrel for Next.js. |
+| `@boreal-ui/next/server/MetricBox` | Standalone Next.js server component import. |
 | `@boreal-ui/core/Button` | Standalone core component import. |
 | `@boreal-ui/next/Button` | Standalone Next component import. |
 | `@boreal-ui/core/globals.css` | Core global CSS import. |

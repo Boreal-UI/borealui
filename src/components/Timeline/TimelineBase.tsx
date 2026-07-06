@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { TimelineBaseProps } from "./Timeline.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -43,55 +43,39 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
   testId = dataTestId ?? "timeline",
   ...rest
 }) => {
-  const outerWrapper = useMemo(
-    () =>
-      combineClassNames(
-        classMap.timeline,
-        classMap[orientation],
-        classMap[theme],
-        glass && classMap.glass,
-        loading && classMap.loading,
-        className,
-      ),
-    [classMap, orientation, theme, glass, loading, className],
+  const outerWrapper = combineClassNames(
+    classMap.timeline,
+    classMap[orientation],
+    classMap[theme],
+    glass && classMap.glass,
+    loading && classMap.loading,
+    className,
   );
 
-  const itemClassName = useMemo(
-    () =>
-      combineClassNames(
-        classMap.item,
-        classMap[orientation],
-        classMap[theme],
-        glass && classMap.glass,
-        loading && classMap.loadingItem,
-      ),
-    [classMap, orientation, theme, glass, loading],
+  const itemClassName = combineClassNames(
+    classMap.item,
+    classMap[orientation],
+    classMap[theme],
+    glass && classMap.glass,
+    loading && classMap.loadingItem,
   );
 
-  const markerClassName = useMemo(
-    () =>
-      combineClassNames(
-        classMap.marker,
-        classMap[theme],
-        classMap[orientation],
-        glass && classMap.glass,
-        getShadowClassName(classMap, theme, shadow),
-      ),
-    [classMap, theme, orientation, glass, shadow],
+  const markerClassName = combineClassNames(
+    classMap.marker,
+    classMap[theme],
+    classMap[orientation],
+    glass && classMap.glass,
+    getShadowClassName(classMap, theme, shadow),
   );
 
-  const contentClassName = useMemo(
-    () =>
-      combineClassNames(
-        classMap.content,
-        classMap[orientation],
-        classMap[theme],
-        glass && classMap.glass,
-        loading && classMap.loadingContent,
-        getShadowClassName(classMap, theme, shadow),
-        rounding && classMap[`round${capitalize(rounding)}`],
-      ),
-    [classMap, orientation, theme, glass, loading, shadow, rounding],
+  const contentClassName = combineClassNames(
+    classMap.content,
+    classMap[orientation],
+    classMap[theme],
+    glass && classMap.glass,
+    loading && classMap.loadingContent,
+    getShadowClassName(classMap, theme, shadow),
+    rounding && classMap[`round${capitalize(rounding)}`],
   );
 
   const setSize = items.length;

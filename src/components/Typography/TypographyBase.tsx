@@ -1,4 +1,4 @@
-import { createElement, JSX, useMemo } from "react";
+import { createElement, JSX } from "react";
 import { getDefaultGlass } from "../../config/boreal-style-config";
 import {
   TypographyAlign,
@@ -105,37 +105,19 @@ function TypographyBase({
 }: TypographyBaseProps): JSX.Element {
   const Component = as ?? DEFAULT_TAG_BY_VARIANT[variant];
 
-  const resolvedClassName = useMemo(
-    () =>
-      combineClassNames(
-        classMap.typography,
-        classMap[variantClassMap[variant]],
-        classMap[alignClassMap[align]],
-        classMap[weightClassMap[weight]],
-        classMap[themeClassMap[theme]],
-        glass && classMap.glass,
-        italic && classMap.italic,
-        underline && classMap.underline,
-        truncate && classMap.truncate,
-        noWrap && classMap.noWrap,
-        srOnly && classMap.srOnly,
-        className,
-      ),
-    [
-      classMap,
-      variant,
-      align,
-      weight,
-      theme,
-      glass,
-      italic,
-      underline,
-      truncate,
-      noWrap,
-      srOnly,
-      className,
-      combineClassNames,
-    ],
+  const resolvedClassName = combineClassNames(
+    classMap.typography,
+    classMap[variantClassMap[variant]],
+    classMap[alignClassMap[align]],
+    classMap[weightClassMap[weight]],
+    classMap[themeClassMap[theme]],
+    glass && classMap.glass,
+    italic && classMap.italic,
+    underline && classMap.underline,
+    truncate && classMap.truncate,
+    noWrap && classMap.noWrap,
+    srOnly && classMap.srOnly,
+    className,
   );
 
   return createElement(

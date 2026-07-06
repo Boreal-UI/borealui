@@ -1,2 +1,3 @@
+import "../components/PageHeader/core/PageHeader.scss";
 export { default } from "../components/PageHeader/core/PageHeader";
-export type { PageHeaderProps } from "../components/PageHeader/PageHeader.types";
+export * from "../components/PageHeader/PageHeader.types";

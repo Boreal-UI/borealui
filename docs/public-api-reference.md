@@ -8,6 +8,8 @@ This page lists the public API surfaces Boreal UI publishes for consumers and do
 | ------------------------------ | ------------------------------------------------------------- |
 | `@boreal-ui/core`              | Standard React component barrel.                              |
 | `@boreal-ui/next`              | Next.js component barrel with client-boundary-safe wrappers.  |
+| `@boreal-ui/next/server`       | Static React Server Component barrel for Next.js.             |
+| `@boreal-ui/next/server/Card`  | Standalone Next.js server component path.                     |
 | `@boreal-ui/core/globals.css`  | Core global stylesheet. Import once.                          |
 | `@boreal-ui/next/globals.css`  | Next global stylesheet. Import once.                          |
 | `@boreal-ui/types`             | Shared public type declarations. Install as a dev dependency. |
@@ -29,6 +31,34 @@ import { Button, Card, ThemeProvider } from "@boreal-ui/core";
 import "@boreal-ui/next/globals.css";
 import { Button, Card, ThemeProvider } from "@boreal-ui/next";
 ```
+
+## Next.js Server Component Exports
+
+Import static server-rendered UI from `@boreal-ui/next/server` or a
+per-component server path:
+
+```tsx
+import {
+  BreadCrumbPageHeader,
+  Card,
+  MetricBox,
+  Timeline,
+} from "@boreal-ui/next/server";
+import Footer from "@boreal-ui/next/server/Footer";
+```
+
+Available server entries:
+
+`Alert`, `Avatar`, `Badge`, `BarChart`, `BreadCrumbPageHeader`, `Breadcrumbs`,
+`Button`, `Card`, `CheckBox`, `Divider`, `EmptyState`, `Footer`, `Layout`,
+`Legend`, `LineChart`, `MetricBox`, `PageHeader`, `ProgressBar`, `RadioButton`,
+`RadioGroup`, `Select`, `Skeleton`, `Sparkline`, `TextArea`, `TextInput`,
+`ThemeProvider`, `Timeline`, `Toolbar`, `Typography`, and `ValidationSummary`.
+
+The `Layout` server entry exports `Container`, `Grid`, `Inline`, `Section`, and
+`Stack`. Normally interactive entries expose stripped static APIs without
+callbacks. See [Next.js Server Components](./server-components.md) for behavior
+and examples.
 
 ## Barrel Component Exports
 

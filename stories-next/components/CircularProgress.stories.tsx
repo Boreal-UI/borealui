@@ -66,6 +66,17 @@ export const ShowRawWithUnits: Story = {
   },
 };
 
+export const ShowRawWithPercent: Story = {
+  args: {
+    ...defaultArgs,
+    value: 42,
+    max: 128,
+    showRaw: true,
+    units: "%",
+    label: "Storage used",
+  },
+};
+
 export const LowScore: Story = {
   args: {
     ...defaultArgs,
