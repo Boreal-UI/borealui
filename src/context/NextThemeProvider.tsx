@@ -3,6 +3,15 @@
 import ThemeProvider from "./ThemeContext";
 import { ThemeProviderProps } from "./ThemeContext.types";
 
-export default function NextThemeProvider(props: ThemeProviderProps) {
-  return <ThemeProvider enableThemeScript={false} {...props} />;
+export default function NextThemeProvider({
+  syncThemeCookie = true,
+  ...props
+}: ThemeProviderProps) {
+  return (
+    <ThemeProvider
+      enableThemeScript={false}
+      syncThemeCookie={syncThemeCookie}
+      {...props}
+    />
+  );
 }

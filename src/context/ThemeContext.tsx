@@ -18,7 +18,9 @@ import {
   readSavedSchemeName,
   resolveSchemeIndex,
   THEME_CHANGE_EVENT,
+  THEME_COOKIE_NAME,
   THEME_STORAGE_KEY,
+  writeSavedSchemeCookie,
   writeSavedSchemeName,
 } from "./themeRuntime";
 
@@ -34,6 +36,8 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   customSchemes = [],
   enableThemeScript = true,
   initialSchemeName,
+  syncThemeCookie = false,
+  themeCookieName = THEME_COOKIE_NAME,
   useOnlyCustomSchemes = false,
 }) => {
   const customSchemesKey = useMemo(
@@ -204,7 +208,19 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     if (didSave) {
       dispatchThemeChange(scheme.name);
     }
-  }, [hasResolvedInitialScheme, selectedScheme, schemes]);
+
+    if (syncThemeCookie && typeof document !== "undefined") {
+      writeSavedSchemeCookie(document, scheme.name, {
+        cookieName: themeCookieName,
+      });
+    }
+  }, [
+    hasResolvedInitialScheme,
+    selectedScheme,
+    schemes,
+    syncThemeCookie,
+    themeCookieName,
+  ]);
 
   return (
     <ThemeContext.Provider
@@ -221,6 +237,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
           {getThemeInitializationScript({
             customSchemes: parsedCustomSchemes,
             initialSchemeName,
+            themeCookieName,
             useOnlyCustomSchemes,
           })}
         </script>

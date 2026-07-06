@@ -26,6 +26,7 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
       "aria-describedby": ariaDescribedBy,
       "aria-invalid": ariaInvalid,
       "aria-required": ariaRequired,
+      className,
       disabled,
       label,
       labelPosition,
@@ -70,6 +71,7 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
           data-testid={testId}
           value={selectedSchemeName}
           aria-label={ariaLabel}
+          className={className}
           aria-description={ariaDescription}
           aria-labelledby={ariaLabelledBy}
           aria-describedby={ariaDescribedBy}

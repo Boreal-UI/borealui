@@ -142,6 +142,29 @@ export default function Example() {
 }
 ```
 
+Static UI can use the dedicated React Server Component entries:
+
+```tsx
+import {
+  BreadCrumbPageHeader,
+  Card,
+  MetricBox,
+  Timeline,
+} from "@boreal-ui/next/server";
+import Footer from "@boreal-ui/next/server/Footer";
+```
+
+Available server entries are `Alert`, `Avatar`, `Badge`, `BarChart`,
+`BreadCrumbPageHeader`, `Breadcrumbs`, `Button`, `Card`, `CheckBox`, `Divider`,
+`EmptyState`, `Footer`, `Layout`, `Legend`, `LineChart`, `MetricBox`,
+`PageHeader`, `ProgressBar`, `RadioButton`, `RadioGroup`, `Select`, `Skeleton`,
+`Sparkline`, `TextArea`, `TextInput`, `ThemeProvider`, `Timeline`, `Toolbar`,
+`Typography`, and `ValidationSummary`.
+
+Normally interactive server entries expose stripped static APIs without
+callbacks or client-managed behavior. See
+[Next.js Server Components](./docs/server-components.md) for details.
+
 You can also import standalone components:
 
 ```tsx

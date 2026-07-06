@@ -73,6 +73,58 @@
       display: block;
     }
 
+    &_insetNone,
+    &_insetXs,
+    &_insetSmall,
+    &_insetMedium,
+    &_insetLarge,
+    &_insetXl {
+      box-sizing: border-box;
+    }
+
+    &_insetNone {
+      --card-image-inset: 0;
+
+      padding: 0;
+    }
+
+    &_insetXs {
+      --card-image-inset: var(--spacing-xxs);
+
+      padding: var(--spacing-xxs);
+    }
+
+    &_insetSmall {
+      --card-image-inset: var(--spacing-xs);
+
+      padding: var(--spacing-xs);
+    }
+
+    &_insetMedium {
+      --card-image-inset: var(--spacing-sm);
+
+      padding: var(--spacing-sm);
+    }
+
+    &_insetLarge {
+      --card-image-inset: var(--spacing-md);
+
+      padding: var(--spacing-md);
+    }
+
+    &_insetXl {
+      --card-image-inset: var(--spacing-lg);
+
+      padding: var(--spacing-lg);
+    }
+
+    @each $key, $value in theme.$rounding {
+      &_imageRound-#{$key} {
+        border-radius: $value;
+        clip-path: inset(var(--card-image-inset, 0) round $value);
+      }
+    }
+
     &_vertical {
       flex-direction: column;
 

@@ -253,6 +253,13 @@ export interface CardProps {
   imageFill?: boolean;
 
   /**
+   * Adds inset padding around the image instead of filling its entire block.
+   *
+   * @default "none"
+   */
+  imageInset?: SizeType | "none";
+
+  /**
    * Marks the image as decorative and forces empty alt text.
    *
    * @default false

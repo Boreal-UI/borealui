@@ -72,6 +72,23 @@ export const WithImage: Story = {
   },
 };
 
+export const WithInsetImage: Story = {
+  args: {
+    ...defaultArgs,
+    imageUrl: testImageJpg,
+    imageAlt: "Inset placeholder image",
+    imageInset: "medium",
+  },
+};
+
+export const ImageInsetVariants = () =>
+  withVariants(Card, { ...defaultArgs, imageUrl: testImageJpg }, [
+    {
+      propName: "imageInset",
+      values: ["none", "xs", "small", "medium", "large", "xl"],
+    },
+  ]);
+
 export const WithIcon: Story = {
   args: {
     ...defaultArgs,

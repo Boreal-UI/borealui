@@ -1,4 +1,4 @@
-import { forwardRef, useMemo } from "react";
+import { forwardRef } from "react";
 import { SparklineBaseProps } from "./Sparkline.types";
 import {
   buildPoints,
@@ -35,11 +35,8 @@ const SparklineBase = forwardRef<HTMLDivElement, SparklineBaseProps>(
     },
     ref,
   ) => {
-    const normalizedData = useMemo(() => normalizeData(data), [data]);
-    const points = useMemo(
-      () => buildPoints(normalizedData, width, height, padding, false),
-      [height, normalizedData, padding, width],
-    );
+    const normalizedData = normalizeData(data);
+    const points = buildPoints(normalizedData, width, height, padding, false);
     const path = pointsToPath(points);
     const lastPoint = points.at(-1);
     const lastValue = normalizedData.at(-1)?.value;

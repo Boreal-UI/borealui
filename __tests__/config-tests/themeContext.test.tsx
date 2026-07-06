@@ -47,8 +47,17 @@ import { getDefaultColorSchemeName } from "../../src/config/boreal-style-config"
 import {
   buildThemeVariables,
   contrastRatio,
+  getThemeAttributes,
   getThemeInitializationScript,
+  getThemeStyle,
+  readSavedSchemeCookie,
+  resolveThemeScheme,
+  THEME_COOKIE_NAME,
 } from "../../src/context/themeRuntime";
+import {
+  getThemeAttributes as getServerThemeAttributes,
+  resolveThemeScheme as resolveServerThemeScheme,
+} from "../../src/next/server/ThemeProvider";
 import ThemeSelect from "../../src/components/Select/ThemeSelect/core/ThemeSelect";
 
 const mockedGetDefaultColorSchemeName = getDefaultColorSchemeName as jest.Mock;
@@ -67,9 +76,7 @@ const Consumer = () => {
   return (
     <div>
       <div data-testid="selected-scheme">{context.selectedScheme}</div>
-      <div data-testid="selected-scheme-name">
-        {context.selectedSchemeName}
-      </div>
+      <div data-testid="selected-scheme-name">{context.selectedSchemeName}</div>
       <div data-testid="scheme-count">{context.schemes.length}</div>
       <div data-testid="scheme-names">
         {context.schemes.map((scheme) => scheme.name).join(", ")}
@@ -90,6 +97,7 @@ describe("ThemeProvider", () => {
   beforeEach(() => {
     jest.clearAllMocks();
     localStorage.clear();
+    document.cookie = `${THEME_COOKIE_NAME}=; Max-Age=0; Path=/`;
     document.documentElement.removeAttribute("style");
 
     mockedGetDefaultColorSchemeName.mockReturnValue("Forest Dusk");
@@ -302,6 +310,11 @@ describe("ThemeProvider", () => {
         document.documentElement.style.getPropertyValue("--background-color"),
       ).toBe("#ffffff");
       expect(
+        document.documentElement.style.getPropertyValue(
+          "--background-color-surface",
+        ),
+      ).toBe(buildThemeVariables(baseSchemes[0])["--background-color-surface"]);
+      expect(
         document.documentElement.style.getPropertyValue("--border-color"),
       ).not.toBe("");
       expect(
@@ -347,6 +360,22 @@ describe("ThemeProvider", () => {
     ).toBeGreaterThanOrEqual(4.5);
   });
 
+  it("derives the surface background token from the active background color", () => {
+    const vars = buildThemeVariables({
+      name: "Deep Surface",
+      primaryColor: "#336699",
+      secondaryColor: "#993366",
+      tertiaryColor: "#669933",
+      quaternaryColor: "#cc9933",
+      backgroundColor: "#101820",
+    });
+
+    expect(vars["--background-color-surface"]).not.toBe("#384b4b");
+    expect(vars["--background-color-surface"]).toBe(
+      vars["--background-color-surface"],
+    );
+  });
+
   it("creates a bootstrap script that applies the saved scheme before React effects run", () => {
     localStorage.setItem(STORAGE_KEY, "Ocean Breeze");
 
@@ -358,6 +387,48 @@ describe("ThemeProvider", () => {
       document.documentElement.style.getPropertyValue("--primary-color"),
     ).toBe("#005577");
     expect(document.documentElement.dataset.borealTheme).toBe("Ocean Breeze");
+  });
+
+  it("creates a bootstrap script that falls back to the saved theme cookie", () => {
+    document.cookie = `${THEME_COOKIE_NAME}=Ocean%20Breeze; Path=/`;
+
+    const script = getThemeInitializationScript();
+
+    Function(script)();
+
+    expect(
+      document.documentElement.style.getPropertyValue("--primary-color"),
+    ).toBe("#005577");
+    expect(
+      document.documentElement.style.getPropertyValue(
+        "--background-color-surface",
+      ),
+    ).toBe(buildThemeVariables(baseSchemes[1])["--background-color-surface"]);
+    expect(document.documentElement.dataset.borealTheme).toBe("Ocean Breeze");
+  });
+
+  it("resolves server theme attributes from a cookie value", () => {
+    const scheme = resolveThemeScheme("Ocean Breeze");
+    const style = getThemeStyle(scheme);
+    const attributes = getThemeAttributes(scheme);
+
+    expect(scheme.name).toBe("Ocean Breeze");
+    expect(style["--primary-color"]).toBe("#005577");
+    expect(attributes["data-boreal-theme"]).toBe("Ocean Breeze");
+    expect(attributes.style["--background-color"]).toBe("#f4faff");
+    expect(attributes.style["--background-color-surface"]).toBe(
+      style["--background-color-surface"],
+    );
+    expect(resolveServerThemeScheme("Ocean Breeze").name).toBe("Ocean Breeze");
+    expect(getServerThemeAttributes(scheme)["data-boreal-theme"]).toBe(
+      "Ocean Breeze",
+    );
+  });
+
+  it("reads encoded saved theme cookies", () => {
+    expect(
+      readSavedSchemeCookie(`${THEME_COOKIE_NAME}=Ocean%20Breeze; other=value`),
+    ).toBe("Ocean Breeze");
   });
 
   it("can skip rendering the pre-hydration theme script", () => {
@@ -378,6 +449,23 @@ describe("ThemeProvider", () => {
     );
 
     expect(container.querySelector("script")).toBeNull();
+  });
+
+  it("syncs selected schemes into a cookie by default for the Next provider", async () => {
+    render(
+      <NextThemeProvider initialSchemeName="Forest Dusk">
+        <Consumer />
+      </NextThemeProvider>,
+    );
+
+    fireEvent.click(screen.getByTestId("set-scheme"));
+
+    await waitFor(() => {
+      expect(screen.getByTestId("selected-scheme-name")).toHaveTextContent(
+        "Ocean Breeze",
+      );
+      expect(readSavedSchemeCookie(document.cookie)).toBe("Ocean Breeze");
+    });
   });
 
   it("allows the Next provider to opt into the pre-hydration theme script", () => {
@@ -433,9 +521,7 @@ describe("ThemeProvider", () => {
       expect(footerSelect.value).toBe("Ocean Breeze");
       expect(pageSelect.value).toBe("Ocean Breeze");
       expect(localStorage.getItem(STORAGE_KEY)).toBe("Ocean Breeze");
-      expect(document.documentElement.dataset.borealTheme).toBe(
-        "Ocean Breeze",
-      );
+      expect(document.documentElement.dataset.borealTheme).toBe("Ocean Breeze");
     });
   });
 
@@ -456,9 +542,7 @@ describe("ThemeProvider", () => {
       expect(select.value).toBe("Ocean Breeze");
       expect(select.selectedOptions[0]).toHaveTextContent("Ocean Breeze");
       expect(localStorage.getItem(STORAGE_KEY)).toBe("Ocean Breeze");
-      expect(document.documentElement.dataset.borealTheme).toBe(
-        "Ocean Breeze",
-      );
+      expect(document.documentElement.dataset.borealTheme).toBe("Ocean Breeze");
     });
   });
 

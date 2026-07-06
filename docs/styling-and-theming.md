@@ -151,9 +151,47 @@ export function Providers({ children }: { children: React.ReactNode }) {
 }
 ```
 
-The Next provider defaults to a hydration-safe setup. Boreal applies the selected scheme during React insertion effects, which avoids mutating the root `<html>` element before hydration with a small chance of first-paint color flash.
+The Next provider synchronizes the selected scheme to localStorage and the
+`boreal-theme` cookie by default. For full SSR theming, read that cookie in the
+root layout and apply the server-generated theme attributes to `<html>`:
 
-To reduce first-paint color flashing outside that stricter hydration-safe setup, render Boreal's initialization script as early as possible in the document. In Next.js app router projects, this root-level script intentionally changes `<html>` before hydration, so the root element also needs React's `suppressHydrationWarning` prop:
+```tsx
+import { cookies } from "next/headers";
+import { ThemeProvider } from "@boreal-ui/next/ThemeProvider";
+import {
+  getThemeAttributes,
+  resolveThemeScheme,
+  THEME_COOKIE_NAME,
+} from "@boreal-ui/next/server/ThemeProvider";
+
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const cookieStore = await cookies();
+  const savedThemeName = cookieStore.get(THEME_COOKIE_NAME)?.value;
+  const scheme = resolveThemeScheme(savedThemeName);
+
+  return (
+    <html lang="en" {...getThemeAttributes(scheme)}>
+      <body>
+        <ThemeProvider initialSchemeName={scheme.name}>
+          {children}
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+This renders the selected CSS variables in the server response and keeps live
+theme switching available after hydration.
+
+When the server cannot read cookies, the initialization script remains
+available as a fallback. It checks localStorage, then the theme cookie, before
+hydration. Because the script changes `<html>` before hydration, the root
+element needs React's `suppressHydrationWarning` prop:
 
 ```tsx
 import { getThemeInitializationScript } from "@boreal-ui/next";
@@ -183,6 +221,8 @@ export default function RootLayout({
 | `children`             | Application or subtree to theme.                                                          |
 | `customSchemes`        | Registers additional color schemes.                                                       |
 | `initialSchemeName`    | Selects the starting scheme by name.                                                      |
+| `syncThemeCookie`      | Persists changes to the SSR theme cookie. Defaults to `true` for Next.                    |
+| `themeCookieName`      | Overrides the SSR theme cookie name. Defaults to `boreal-theme`.                          |
 | `useOnlyCustomSchemes` | Uses only custom schemes instead of built-in schemes.                                     |
 
 When `initialSchemeName` is provided, it is preferred over the saved theme name. Without it, the saved theme name is used when available, then the configured Boreal default, then the first available scheme.

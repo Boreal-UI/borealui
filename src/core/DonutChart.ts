@@ -1,2 +1,3 @@
+import "../components/DonutChart/core/DonutChart.scss";
 export { default } from "../components/DonutChart/core/DonutChart";
-export type { DonutChartProps } from "../components/DonutChart/DonutChart.types";
+export * from "../components/DonutChart/DonutChart.types";

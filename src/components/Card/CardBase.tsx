@@ -26,6 +26,7 @@ const CardBase: React.FC<CardBaseProps> = ({
   imageHeight,
   imageWidth,
   imageFill,
+  imageInset = "none",
   imageDecorative = false,
   className,
   contentClassName,
@@ -143,6 +144,13 @@ const CardBase: React.FC<CardBaseProps> = ({
   const imgAlt = imageDecorative ? "" : imageAlt || `${title || "Card"} image`;
 
   const ImageRenderer = ImageComponent || FallbackImage;
+  const isImageInset = imageInset !== "none";
+  const resolvedImageClassName = combineClassNames(
+    classMap.image,
+    imageInset && classMap[`inset${capitalize(imageInset)}`],
+    isImageInset && rounding && classMap[`imageRound${capitalize(rounding)}`],
+    imageClassName,
+  );
 
   const cardClassName = useMemo(
     () =>
@@ -224,7 +232,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                 <ImageRenderer
                   src={imgSrc}
                   alt={imgAlt}
-                  className={combineClassNames(classMap.image, imageClassName)}
+                  className={resolvedImageClassName}
                   fill
                 />
               </div>
@@ -232,7 +240,7 @@ const CardBase: React.FC<CardBaseProps> = ({
               <ImageRenderer
                 src={imgSrc}
                 alt={imgAlt}
-                className={combineClassNames(classMap.image, imageClassName)}
+                className={resolvedImageClassName}
                 width={resolvedWidth ?? 640}
                 height={resolvedHeight ?? 360}
               />
