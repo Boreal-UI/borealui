@@ -97,7 +97,6 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   const reactId = useId();
   const baseId = id || testId || `file-upload-${reactId.replace(/:/g, "")}`;
 
-  const [fileNames, setFileNames] = useState<string[]>([]);
   const [files, setFiles] = useState<File[]>([]);
   const [rejectedFiles, setRejectedFiles] = useState<
     { name: string; reason: string }[]
@@ -109,6 +108,8 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
 
   const fileInput = useRef<HTMLInputElement | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const truncate = (value: string) =>
+    value.length > 30 ? `${value.slice(0, 27)}...` : value;
 
   const descriptionId = `${baseId}-description`;
   const errorId = `${baseId}-error`;
@@ -122,6 +123,11 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     if (!allowedFileTypes || allowedFileTypes.length === 0) return undefined;
     return allowedFileTypes.join(",");
   }, [allowedFileTypes]);
+
+  const fileNames = useMemo(
+    () => files.map((file) => truncate(file.name)),
+    [files],
+  );
 
   const validateFiles = (newFiles: File[]) => {
     const valid: File[] = [];
@@ -151,8 +157,6 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
 
     return { valid, rejected };
   };
-
-  const truncate = (s: string) => (s.length > 30 ? s.slice(0, 27) + "..." : s);
 
   const announce = (message: string | null) => {
     setUploadMessage(message);
@@ -184,7 +188,6 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     const updatedFiles = multiple ? [...files, ...valid] : valid;
 
     setFiles(updatedFiles);
-    setFileNames(updatedFiles.map((f) => truncate(f.name)));
     setRejectedFiles(rejected);
     onFilesChange?.(updatedFiles);
 
@@ -203,7 +206,6 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     const removedFile = files[index];
     const updatedFiles = files.filter((_, i) => i !== index);
     setFiles(updatedFiles);
-    setFileNames(updatedFiles.map((f) => truncate(f.name)));
     onFilesChange?.(updatedFiles);
 
     if (removedFile) {

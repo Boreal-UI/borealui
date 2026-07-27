@@ -32,7 +32,7 @@ For TypeScript declarations, add the types package as a dev dependency:
 npm install -D @boreal-ui/types
 ```
 
-`@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js. `marked` and `uuid` are peer dependencies because some components and utilities rely on them.
+`@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js. `marked` is a peer dependency used by the Markdown renderer.
 
 ## CLI Setup
 
@@ -171,6 +171,10 @@ You can also import standalone components:
 import Button from "@boreal-ui/core/Button";
 import Card from "@boreal-ui/next/Card";
 ```
+
+Prefer standalone component paths in bundle-sensitive applications. They keep
+the component dependency graph and style sidecars narrower than the convenient
+root package barrels.
 
 ## Components
 

@@ -7,6 +7,7 @@ import {
   useCallback,
   useEffect,
   useImperativeHandle,
+  useId,
   useMemo,
   useRef,
   useState,
@@ -18,7 +19,6 @@ import type {
   InjectedDefaults,
 } from "./ChipGroup.types";
 import type { ChipProps } from "../Chip.types";
-import { v4 as uuidv4 } from "uuid";
 import { combineClassNames } from "@/utils/classNames";
 import { getDefaultSize } from "@/config/boreal-style-config";
 
@@ -44,18 +44,25 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
     ref,
   ) => {
     const isChildrenMode = children != null;
+    const generatedId = useId().replace(/:/g, "");
+    const normalizeChips = useCallback(
+      (nextChips: ChipProps[] = []) =>
+        nextChips.map((chip, index) => ({
+          ...chip,
+          id: chip.id || `${generatedId}-${index}`,
+        })),
+      [generatedId],
+    );
 
-    const [visibleChips, setVisibleChips] = useState<ChipProps[]>([]);
+    const [visibleChips, setVisibleChips] = useState<ChipProps[]>(() =>
+      isChildrenMode ? [] : normalizeChips(chips),
+    );
     const childCloseFnsRef = useRef<Array<(() => void) | null>>([]);
 
     useEffect(() => {
       if (isChildrenMode) return;
-      const safeChips = (chips ?? []).map((chip) => ({
-        ...chip,
-        id: chip.id || uuidv4(),
-      }));
-      setVisibleChips(safeChips);
-    }, [chips, isChildrenMode]);
+      setVisibleChips(normalizeChips(chips));
+    }, [chips, isChildrenMode, normalizeChips]);
 
     const handleClose = useCallback(
       (id: string) => {

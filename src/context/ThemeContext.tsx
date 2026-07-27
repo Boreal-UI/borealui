@@ -129,6 +129,39 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     [schemes],
   );
 
+  const contextValue = useMemo<ThemeContextType>(
+    () => ({
+      selectedScheme,
+      selectedSchemeName,
+      setSelectedScheme,
+      setSelectedSchemeName,
+      schemes,
+    }),
+    [
+      schemes,
+      selectedScheme,
+      selectedSchemeName,
+      setSelectedScheme,
+      setSelectedSchemeName,
+    ],
+  );
+
+  const themeInitializationScript = useMemo(
+    () =>
+      getThemeInitializationScript({
+        customSchemes: parsedCustomSchemes,
+        initialSchemeName,
+        themeCookieName,
+        useOnlyCustomSchemes,
+      }),
+    [
+      initialSchemeName,
+      parsedCustomSchemes,
+      themeCookieName,
+      useOnlyCustomSchemes,
+    ],
+  );
+
   useBrowserLayoutEffect(() => {
     const savedSchemeName =
       typeof window === "undefined"
@@ -223,23 +256,10 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   ]);
 
   return (
-    <ThemeContext.Provider
-      value={{
-        selectedScheme,
-        selectedSchemeName,
-        setSelectedScheme,
-        setSelectedSchemeName,
-        schemes,
-      }}
-    >
+    <ThemeContext.Provider value={contextValue}>
       {enableThemeScript ? (
         <script suppressHydrationWarning>
-          {getThemeInitializationScript({
-            customSchemes: parsedCustomSchemes,
-            initialSchemeName,
-            themeCookieName,
-            useOnlyCustomSchemes,
-          })}
+          {themeInitializationScript}
         </script>
       ) : null}
       {children}

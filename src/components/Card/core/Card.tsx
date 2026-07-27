@@ -1,5 +1,5 @@
 import { expandClassMap } from "@/utils/propAliases";
-import React from "react";
+import React, { useMemo } from "react";
 import CardBase from "../CardBase";
 import "./Card.scss";
 import Button from "../../Button/core/Button";
@@ -90,11 +90,15 @@ const classes = {
 };
 
 const Card: React.FC<CardProps> = (props) => {
-  const wrappedButtons = (props.actionButtons ?? []).map((b) => ({
-    ...b,
-    buttonComponent: Button,
-    iconButtonComponent: IconButton,
-  }));
+  const wrappedButtons = useMemo(
+    () =>
+      (props.actionButtons ?? []).map((button) => ({
+        ...button,
+        buttonComponent: Button,
+        iconButtonComponent: IconButton,
+      })),
+    [props.actionButtons],
+  );
 
   return (
     <CardBase

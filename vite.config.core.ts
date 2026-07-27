@@ -14,7 +14,6 @@ const externals = [
   "react/jsx-runtime",
   "react/jsx-dev-runtime",
   "marked",
-  "uuid",
 ];
 
 const coreEntries = getEntryMap("./src/core") as Record<string, string>;

@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useMemo } from "react";
 import { BarChartBaseProps } from "./BarChart.types";
 import {
   defaultChartColors,
@@ -34,18 +34,28 @@ const BarChartBase = forwardRef<HTMLDivElement, BarChartBaseProps>(
     },
     ref,
   ) => {
-    const { max } = getValueRange(
-      data.map((datum) => datum.value),
-      true,
-    );
-    const chartHeight = Math.max(height - padding * 2, 1);
-    const chartWidth = Math.max(width - padding * 2, 1);
-    const barWidth = Math.max(
-      (chartWidth - gap * (data.length - 1)) / data.length,
-      1,
-    );
-    const gridLines = [0, 0.25, 0.5, 0.75, 1].map(
-      (ratio) => padding + ratio * chartHeight,
+    const { max, chartHeight, barWidth, gridLines } = useMemo(
+      () => {
+        const valueRange = getValueRange(
+          data.map((datum) => datum.value),
+          true,
+        );
+        const nextChartHeight = Math.max(height - padding * 2, 1);
+        const nextChartWidth = Math.max(width - padding * 2, 1);
+
+        return {
+          max: valueRange.max,
+          chartHeight: nextChartHeight,
+          barWidth: Math.max(
+            (nextChartWidth - gap * (data.length - 1)) / data.length,
+            1,
+          ),
+          gridLines: [0, 0.25, 0.5, 0.75, 1].map(
+            (ratio) => padding + ratio * nextChartHeight,
+          ),
+        };
+      },
+      [data, gap, height, padding, width],
     );
 
     return (

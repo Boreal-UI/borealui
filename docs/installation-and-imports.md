@@ -23,7 +23,7 @@ npm install -D @boreal-ui/types
 Boreal UI expects these peer dependencies in the consuming app:
 
 ```bash
-npm install react react-dom marked uuid
+npm install react react-dom marked
 ```
 
 Next.js apps should also install `next`.
@@ -140,7 +140,9 @@ for the complete entry list, stripped behavior, and examples.
 
 ## Standalone Component Imports
 
-Standalone imports are available when you want a narrower import path.
+Standalone imports are available when you want a narrower import path. Prefer
+them in bundle-sensitive applications so the build only follows the selected
+component entry points and their style sidecars.
 
 ```tsx
 import Button from "@boreal-ui/core/Button";
