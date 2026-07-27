@@ -32,8 +32,17 @@ function assertBuildExists(packageName) {
 }
 
 function copyDirectory(from, to) {
-  fs.rmSync(to, { recursive: true, force: true });
+  removeDirectory(to);
   fs.cpSync(from, to, { recursive: true });
+}
+
+function removeDirectory(directoryPath) {
+  fs.rmSync(directoryPath, {
+    recursive: true,
+    force: true,
+    maxRetries: 5,
+    retryDelay: 100,
+  });
 }
 
 function copyFileIfExists(from, to) {
@@ -52,8 +61,57 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, "utf8"));
 }
 
+const transientWriteErrorCodes = new Set([
+  "EACCES",
+  "EBUSY",
+  "EPERM",
+  "UNKNOWN",
+]);
+const writeRetryDelays = [50, 100, 250, 500, 1000];
+
+function wait(milliseconds) {
+  Atomics.wait(
+    new Int32Array(new SharedArrayBuffer(Int32Array.BYTES_PER_ELEMENT)),
+    0,
+    0,
+    milliseconds,
+  );
+}
+
 function writeJson(filePath, value) {
-  fs.writeFileSync(filePath, JSON.stringify(value, null, 2) + "\n");
+  const nextSource = `${JSON.stringify(value, null, 2)}\n`;
+  const currentSource = fs.existsSync(filePath)
+    ? fs.readFileSync(filePath, "utf8")
+    : undefined;
+
+  if (currentSource === nextSource) return false;
+
+  for (let attempt = 0; ; attempt += 1) {
+    try {
+      fs.writeFileSync(filePath, nextSource);
+      return true;
+    } catch (error) {
+      const canRetry =
+        error &&
+        transientWriteErrorCodes.has(error.code) &&
+        attempt < writeRetryDelays.length;
+
+      if (!canRetry) {
+        const detail = error?.message ? ` ${error.message}` : "";
+        throw new Error(
+          `Could not update ${filePath}.${detail} Close editors or sync tools ` +
+            "using this file, then run the staging command again.",
+          { cause: error },
+        );
+      }
+
+      const delay = writeRetryDelays[attempt];
+      console.warn(
+        `Manifest is temporarily unavailable; retrying ${filePath} in ${delay}ms.`,
+      );
+      wait(delay);
+    }
+  }
 }
 
 function syncPackageVersion(packageDir) {
@@ -224,7 +282,9 @@ function syncCliVersion() {
     `export const VERSION = "${rootPackage.version}";`,
   );
 
-  fs.writeFileSync(constantsPath, nextSource);
+  if (nextSource !== source) {
+    fs.writeFileSync(constantsPath, nextSource);
+  }
 }
 
 function stageTypesPackage() {
@@ -235,7 +295,7 @@ function stageTypesPackage() {
 
   syncPackageVersion(packageDir);
 
-  fs.rmSync(packageDistDir, { recursive: true, force: true });
+  removeDirectory(packageDistDir);
   fs.mkdirSync(packageDistDir, { recursive: true });
 
   copyDirectory(path.join(rootDir, "dist", "types"), path.join(packageDistDir, "types"));
@@ -300,7 +360,7 @@ function stageRuntimePackage(flavor) {
 
   syncPackageVersion(packageDir);
 
-  fs.rmSync(packageDistDir, { recursive: true, force: true });
+  removeDirectory(packageDistDir);
   fs.mkdirSync(packageDistDir, { recursive: true });
 
   copyDirectory(

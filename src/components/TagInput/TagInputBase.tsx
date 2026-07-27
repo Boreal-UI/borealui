@@ -66,6 +66,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   const [activeIndex, setActiveIndex] = useState<number>(-1);
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const suggestionRequestRef = useRef(0);
 
   useEffect(() => {
     setInternalTags((prev) => {
@@ -86,6 +87,8 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
     tagList.some((t) => t.toLowerCase() === val.toLowerCase());
 
   useEffect(() => {
+    const requestId = ++suggestionRequestRef.current;
+
     if (!fetchSuggestions) {
       setSuggestions([]);
       setOpen(false);
@@ -107,10 +110,12 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
       void (async () => {
         try {
           const result = await fetchSuggestions(query);
+          if (suggestionRequestRef.current !== requestId) return;
           setSuggestions(result || []);
           setOpen((result?.length ?? 0) > 0);
           setActiveIndex((result?.length ?? 0) > 0 ? 0 : -1);
         } catch {
+          if (suggestionRequestRef.current !== requestId) return;
           setSuggestions([]);
           setOpen(false);
           setActiveIndex(-1);
@@ -119,6 +124,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
     }, debounceMs);
 
     return () => {
+      suggestionRequestRef.current += 1;
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
   }, [inputValue, fetchSuggestions, debounceMs]);

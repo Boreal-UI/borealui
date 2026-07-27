@@ -26,31 +26,29 @@ npm install @boreal-ui/core
 npm install @boreal-ui/next
 ```
 
-For TypeScript declarations, add the types package as a dev dependency:
+Component declarations work automatically through either runtime package. Install `@boreal-ui/types` directly only when application code or declaration tooling imports from `@boreal-ui/types` itself.
 
-```bash
-npm install -D @boreal-ui/types
-```
-
-`@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js. `marked` and `uuid` are peer dependencies because some components and utilities rely on them.
+`@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js. `marked` is a peer dependency used by the Markdown renderer.
 
 ## CLI Setup
 
-Use the CLI inside an existing React or Next.js project to add only the file changes Boreal UI needs: the package dependency, the global stylesheet import, `ThemeProvider`, and default style config.
+Use the CLI inside an existing React or Next.js project to detect the framework and package manager, install the runtime dependency, import the global stylesheet, and wire `ThemeProvider`.
 
 ```bash
-npx @boreal-ui/cli@latest init
+npx @boreal-ui/cli@latest init --yes
 ```
 
 You can preview changes or run non-interactively:
 
 ```bash
-npx @boreal-ui/cli init --dry-run
-npx @boreal-ui/cli init --framework next --yes
-npx @boreal-ui/cli init --framework next --recommended-globals
+npx @boreal-ui/cli@latest init --dry-run
+npx @boreal-ui/cli@latest init --framework next --yes
+npx @boreal-ui/cli@latest init --framework next --recommended-globals
 ```
 
 See [CLI guide](./docs/cli.md) for all commands, options, prompts, and generated file changes.
+
+For timer lifecycles, completion-based polling, repeated component instances, and rendering guidance, see [Performance and Async Behavior](./docs/performance-and-async-behavior.md).
 
 ## Setup
 
@@ -118,7 +116,7 @@ body {
 The CLI can create or repair that safer baseline for Next.js apps:
 
 ```bash
-npx @boreal-ui/cli init --framework next --recommended-globals
+npx @boreal-ui/cli@latest init --framework next --recommended-globals
 ```
 
 Interactive Next.js setup prompts for this by default. Use `--recommended-globals` to apply it without the prompt, or `--no-recommended-globals` to skip it.
@@ -172,6 +170,10 @@ import Button from "@boreal-ui/core/Button";
 import Card from "@boreal-ui/next/Card";
 ```
 
+Prefer standalone component paths in bundle-sensitive applications. They keep
+the component dependency graph and style sidecars narrower than the convenient
+root package barrels.
+
 ## Components
 
 For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs/README.md). They cover import paths, styling and theming, common component patterns, generated prop docs, public TypeScript types, and contributor workflow.
@@ -190,7 +192,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 - `CheckBox`, `RadioButton`, `RadioGroup`, `Toggle`, and `Slider` provide common controlled input patterns.
 - `ColorPicker` supports color selection flows.
 - `DatePicker`, `DateRangePicker`, `DateTimePicker`, and `TimePicker` handle date, date range, date-time, and time input.
-- `FileUpload` supports file selection UI.
+- `FileUpload` supports file selection UI, upload progress, completion announcements, and timer-safe cleanup when unmounted.
 - `TagInput` supports editable tag lists, async suggestions, debouncing, accessible listbox labeling, and remove-tag controls.
 - `FormField` and `FormGroup` help compose labels, helper text, and grouped form controls.
 
@@ -208,7 +210,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 - `Badge`, `Chip`, and `ChipGroup` cover labels, statuses, and compact selectable or grouped metadata.
 - `ProgressBar`, `CircularProgress`, `Spinner`, and `Skeleton` cover loading and progress states.
 - `Rating` provides star-style rating UI.
-- `Alert`, `Tooltip`, `MessagePopup`, `PopOver`, `Modal`, `ToastProvider`, `NotificationCenter`, and `EmptyState` cover alerts, contextual help, overlays, dialogs, toast notifications, notification lists, and no-data states.
+- `Alert`, `Tooltip`, `MessagePopup`, `PopOver`, `Modal`, `ToastProvider`, `NotificationCenter`, and `EmptyState` cover alerts, contextual help, overlays, dialogs, toast notifications, notification lists, and no-data states. Timed feedback and polling remain isolated across repeated component instances.
 
 ### Navigation and Layout
 
@@ -447,11 +449,12 @@ Useful scripts:
 | `npm run lint`            | Lint TypeScript and TSX files.                          |
 | `npm run lint:styles`     | Lint CSS and SCSS files.                                |
 | `npm run audit`           | Run type, lint, style, test, build, and package checks. |
+| `npm run refresh:packages` | Delete generated package output, rebuild, and restage all publishable packages. |
 | `npm run gen:docs`        | Regenerate component prop docs.                         |
 | `npm run gen:entrypoints` | Regenerate component entry points.                      |
 | `npm run gen:exports`     | Regenerate package exports.                             |
 
-Contributor documentation for component structure, generated docs, package output, and release checks lives in [Development Workflow](./docs/development-workflow.md).
+Contributor documentation for component structure, generated docs, package output, release checks, and npm publishing commands lives in [Development Workflow](./docs/development-workflow.md).
 
 ## Package Entry Points
 

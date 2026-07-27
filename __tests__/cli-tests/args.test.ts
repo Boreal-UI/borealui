@@ -40,6 +40,7 @@ describe("CLI parseArgs", () => {
       install: undefined,
       packageManager: undefined,
       recommendedGlobals: undefined,
+      addAgentsGuide: false,
       dryRun: false,
       yes: false,
     });
@@ -90,6 +91,7 @@ describe("CLI parseArgs", () => {
       install: true,
       packageManager: "pnpm",
       recommendedGlobals: true,
+      addAgentsGuide: false,
       dryRun: true,
       yes: true,
     });
@@ -101,6 +103,16 @@ describe("CLI parseArgs", () => {
     ).resolves.toMatchObject({
       install: false,
       recommendedGlobals: false,
+    });
+  });
+
+  it("parses the opt-in agents guide flags", async () => {
+    await expect(parseArgs(["--agents-guide"])).resolves.toMatchObject({
+      addAgentsGuide: true,
+    });
+
+    await expect(parseArgs(["--no-agents-guide"])).resolves.toMatchObject({
+      addAgentsGuide: false,
     });
   });
 
@@ -125,6 +137,17 @@ describe("CLI parseArgs", () => {
 
     expect(failSpy).toHaveBeenCalledWith("Unknown option: --bad-option");
   });
+
+  it.each(["--cwd", "--framework", "--package-manager"])(
+    "fails when %s has no value",
+    async (option) => {
+      await expect(parseArgs([option])).rejects.toThrow(
+        `${option} requires a value.`,
+      );
+
+      expect(failSpy).toHaveBeenCalledWith(`${option} requires a value.`);
+    },
+  );
 
   it("prints help and exits for --help", async () => {
     await expect(parseArgs(["--help"])).rejects.toThrow("process.exit");

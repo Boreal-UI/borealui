@@ -55,14 +55,28 @@ const BaseModal: React.FC<BaseModalProps> = ({
   const closeBtnRef = useRef<HTMLButtonElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   const focusablesRef = useRef<HTMLElement[]>([]);
+  const closeTimerRef = useRef<number | null>(null);
 
   const uid = useId();
   const fallbackLabelId = `${uid}-label`;
 
   const handleClose = useCallback(() => {
+    if (closeTimerRef.current !== null) return;
     setIsVisible(false);
-    window.setTimeout(() => onClose(), 200);
+    closeTimerRef.current = window.setTimeout(() => {
+      closeTimerRef.current = null;
+      onClose();
+    }, 200);
   }, [onClose]);
+
+  useEffect(
+    () => () => {
+      if (closeTimerRef.current !== null) {
+        window.clearTimeout(closeTimerRef.current);
+      }
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!isRendered) return;
@@ -106,7 +120,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
   useEffect(() => {
     if (!isRendered) return;
 
-    requestAnimationFrame(() => {
+    const frame = requestAnimationFrame(() => {
       setIsVisible(true);
 
       if (dialogRef.current) {
@@ -123,6 +137,8 @@ const BaseModal: React.FC<BaseModalProps> = ({
         dialogRef.current
       )?.focus?.();
     });
+
+    return () => cancelAnimationFrame(frame);
   }, [isRendered]);
 
   useEffect(() => {

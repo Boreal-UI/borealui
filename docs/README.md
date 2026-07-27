@@ -10,6 +10,7 @@ Start here:
 - [Public API Reference](./public-api-reference.md)
 - [Styling and Theming](./styling-and-theming.md)
 - [Component API Patterns](./component-api-patterns.md)
+- [Performance and Async Behavior](./performance-and-async-behavior.md)
 - [Accessibility](./accessibility.md)
 - [Generated Prop Docs and Types](./prop-docs-and-types.md)
 - [Development Workflow](./development-workflow.md)

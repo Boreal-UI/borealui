@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ChipBaseProps } from "./Chip.types";
 import { combineClassNames } from "../../utils/classNames";
@@ -49,6 +49,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   ...rest
 }) => {
   const [closing, setClosing] = useState(false);
+  const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const resolvedMessageId = useMemo(
     () => messageId ?? `${id || testId}-message`,
@@ -56,8 +57,12 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   );
 
   const handleClose = useCallback(() => {
+    if (closeTimerRef.current !== null) return;
     setClosing(true);
-    setTimeout(() => onClose?.(), 300);
+    closeTimerRef.current = setTimeout(() => {
+      closeTimerRef.current = null;
+      onClose?.();
+    }, 300);
   }, [onClose]);
 
   useEffect(() => {
@@ -68,8 +73,23 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   }, [autoClose, duration, visible, handleClose]);
 
   useEffect(() => {
-    if (visible) setClosing(false);
+    if (visible) {
+      setClosing(false);
+      return;
+    }
+
+    if (closeTimerRef.current !== null) {
+      clearTimeout(closeTimerRef.current);
+      closeTimerRef.current = null;
+    }
   }, [visible]);
+
+  useEffect(
+    () => () => {
+      if (closeTimerRef.current !== null) clearTimeout(closeTimerRef.current);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!visible) return;

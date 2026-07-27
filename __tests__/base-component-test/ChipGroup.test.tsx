@@ -2,10 +2,6 @@ import React, { forwardRef, useImperativeHandle } from "react";
 import { render, screen, fireEvent, act } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 
-jest.mock("uuid", () => ({
-  v4: () => "mock-uuid",
-}));
-
 import ChipGroupBase from "@/components/Chip/ChipGroup/ChipGroupBase";
 import type { ChipGroupRef } from "@/components/Chip/ChipGroup/ChipGroup.types";
 import type { ChipProps } from "@/components/Chip/Chip.types";
@@ -428,7 +424,7 @@ describe("ChipGroupBase", () => {
     expect(screen.getByTestId("generated-chip")).toHaveTextContent(
       "Generated id chip",
     );
-    expect(screen.getByTestId("close-button-mock-uuid")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Close" })).toBeInTheDocument();
   });
 
   it("has no accessibility violations in chips mode", async () => {

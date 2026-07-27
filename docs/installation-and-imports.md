@@ -14,7 +14,7 @@ npm install @boreal-ui/core
 npm install @boreal-ui/next
 ```
 
-For TypeScript projects, install declarations as a dev dependency:
+Component declarations work automatically through the selected runtime package. If application code imports shared declarations directly from `@boreal-ui/types`, declare it as a dev dependency so strict package managers can resolve that import:
 
 ```bash
 npm install -D @boreal-ui/types
@@ -23,7 +23,7 @@ npm install -D @boreal-ui/types
 Boreal UI expects these peer dependencies in the consuming app:
 
 ```bash
-npm install react react-dom marked uuid
+npm install react react-dom marked
 ```
 
 Next.js apps should also install `next`.
@@ -89,10 +89,12 @@ body {
 
 If your app needs additional layout resets, scope them to your own shell classes instead of applying them to every element globally.
 
+Boreal globals leave root scrolling at the browser default (`auto`) so Next.js can restore scroll position during route transitions without warnings. If your application deliberately sets `scroll-behavior: smooth` on `html`, add `data-scroll-behavior="smooth"` to the root `<html>` element as described by the [Next.js scroll behavior guidance](https://nextjs.org/docs/messages/missing-data-scroll-behavior).
+
 The CLI can create or repair that safer baseline for Next.js apps:
 
 ```bash
-npx @boreal-ui/cli init --framework next --recommended-globals
+npx @boreal-ui/cli@latest init --framework next --recommended-globals
 ```
 
 Interactive Next.js setup prompts for this by default. Use `--recommended-globals` to apply it without the prompt, or `--no-recommended-globals` to skip it.
@@ -140,7 +142,9 @@ for the complete entry list, stripped behavior, and examples.
 
 ## Standalone Component Imports
 
-Standalone imports are available when you want a narrower import path.
+Standalone imports are available when you want a narrower import path. Prefer
+them in bundle-sensitive applications so the build only follows the selected
+component entry points and their style sidecars.
 
 ```tsx
 import Button from "@boreal-ui/core/Button";

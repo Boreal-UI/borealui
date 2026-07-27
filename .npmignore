@@ -26,3 +26,6 @@ scripts/
 playground/
 docs/
 README.dev.md
+
+#Ignore local dev guide
+docs/development-workflow-local.md

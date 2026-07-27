@@ -2,7 +2,9 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { combineClassNames } from "../../utils/classNames";
@@ -44,9 +46,15 @@ export default function ToastProviderBase({
   classMap,
 }: ToastProviderBaseProps) {
   const [toasts, setToasts] = useState<Toast[]>([]);
+  const timersRef = useRef<Map<string, number>>(new Map());
   const resolvedTestId = testId ?? dataTestId ?? "toast-provider";
 
   const removeToast = useCallback((id: string) => {
+    const timer = timersRef.current.get(id);
+    if (timer !== undefined) {
+      window.clearTimeout(timer);
+      timersRef.current.delete(id);
+    }
     setToasts((items) => items.filter((toast) => toast.id !== id));
   }, []);
 
@@ -54,11 +62,20 @@ export default function ToastProviderBase({
     (toast: ToastInput) => {
       const id = toast.id ?? createToastId();
       const nextToast = { ...toast, id };
-      setToasts((items) => [...items, nextToast]);
+      const existingTimer = timersRef.current.get(id);
+      if (existingTimer !== undefined) {
+        window.clearTimeout(existingTimer);
+        timersRef.current.delete(id);
+      }
+      setToasts((items) => [
+        ...items.filter((item) => item.id !== id),
+        nextToast,
+      ]);
 
       const duration = toast.duration ?? defaultDuration;
       if (duration > 0) {
-        window.setTimeout(() => removeToast(id), duration);
+        const timer = window.setTimeout(() => removeToast(id), duration);
+        timersRef.current.set(id, timer);
       }
 
       return id;
@@ -66,7 +83,19 @@ export default function ToastProviderBase({
     [defaultDuration, removeToast],
   );
 
-  const clearToasts = useCallback(() => setToasts([]), []);
+  const clearToasts = useCallback(() => {
+    timersRef.current.forEach((timer) => window.clearTimeout(timer));
+    timersRef.current.clear();
+    setToasts([]);
+  }, []);
+
+  useEffect(
+    () => () => {
+      timersRef.current.forEach((timer) => window.clearTimeout(timer));
+      timersRef.current.clear();
+    },
+    [],
+  );
 
   const value = useMemo(
     () => ({ toasts, addToast, removeToast, clearToasts }),

@@ -285,6 +285,28 @@ describe("BaseModal", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
+  it("coalesces repeated close requests during the exit animation", async () => {
+    renderModal();
+
+    const closeButton = await screen.findByTestId("modal-close");
+    fireEvent.click(closeButton);
+    fireEvent.click(closeButton);
+    fireEvent.keyDown(document, { key: "Escape" });
+    act(() => jest.advanceTimersByTime(200));
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("cancels a pending close callback when unmounted", async () => {
+    const { unmount } = renderModal();
+
+    fireEvent.click(await screen.findByTestId("modal-close"));
+    unmount();
+    act(() => jest.advanceTimersByTime(200));
+
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
   it("calls onClose when pressing the overlay", async () => {
     renderModal();
 

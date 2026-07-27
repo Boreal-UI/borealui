@@ -23,9 +23,15 @@ import {
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-const ROOT_PANEL_PATH = "root";
-const VIEWPORT_MARGIN = 8;
+import {
+  getMenuItemPath as getItemPath,
+  getParentMenuPath as getParentPath,
+  isDisabledMenuElement as isDisabledElement,
+  isMenuPathOpen as isPathOpen,
+  MENU_VIEWPORT_MARGIN as VIEWPORT_MARGIN,
+  ROOT_MENU_PANEL_PATH as ROOT_PANEL_PATH,
+} from "../../utils/menuNavigation";
+import { useAnimationFrameCallback } from "../../hooks/useAnimationFrameCallback";
 
 type PanelPlacement = "left" | "right";
 type PanelStyle = React.CSSProperties & Record<string, string>;
@@ -36,32 +42,8 @@ type PanelLayout = {
   style: PanelStyle;
 };
 
-const getItemPath = (parentPath: string, index: number) =>
-  parentPath ? `${parentPath}.${index}` : `${index}`;
-
-const getParentPath = (path: string) => {
-  const segments = path.split(".");
-
-  if (segments.length <= 1) return null;
-
-  return segments.slice(0, -1).join(".");
-};
-
-const isPathOpen = (openSubmenuPath: string | null, path: string) => {
-  return (
-    openSubmenuPath === path || openSubmenuPath?.startsWith(`${path}.`) === true
-  );
-};
-
 const hasSubmenuItems = (item: DropdownItem) =>
   Array.isArray(item.items) && item.items.length > 0;
-
-const isDisabledElement = (element: HTMLElement) => {
-  return (
-    element.getAttribute("aria-disabled") === "true" ||
-    (element instanceof HTMLButtonElement && element.disabled)
-  );
-};
 
 const BaseDropdown: React.FC<BaseDropdownProps> = ({
   triggerIcon,
@@ -241,6 +223,9 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       return nextLayouts;
     });
   }, [open]);
+  const schedulePanelLayoutUpdate = useAnimationFrameCallback(
+    updatePanelLayouts,
+  );
 
   const toggleDropdown = () => {
     setOpen((prev) => {
@@ -315,7 +300,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
         return;
       }
 
-      updatePanelLayouts(true);
+      schedulePanelLayoutUpdate(true);
     };
 
     window.addEventListener("resize", handleViewportChange);
@@ -325,7 +310,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       window.removeEventListener("resize", handleViewportChange);
       window.removeEventListener("scroll", handleViewportChange, true);
     };
-  }, [open, updatePanelLayouts]);
+  }, [open, schedulePanelLayoutUpdate]);
 
   useEffect(() => {
     if (!open) return;

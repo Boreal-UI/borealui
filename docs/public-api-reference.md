@@ -12,7 +12,7 @@ This page lists the public API surfaces Boreal UI publishes for consumers and do
 | `@boreal-ui/next/server/Card`  | Standalone Next.js server component path.                     |
 | `@boreal-ui/core/globals.css`  | Core global stylesheet. Import once.                          |
 | `@boreal-ui/next/globals.css`  | Next global stylesheet. Import once.                          |
-| `@boreal-ui/types`             | Shared public type declarations. Install as a dev dependency. |
+| `@boreal-ui/types`             | Shared public declarations. Add directly when importing it.   |
 | `@boreal-ui/types/core/Button` | Core component prop declarations.                             |
 | `@boreal-ui/types/next/Button` | Next component prop declarations.                             |
 | `@boreal-ui/core/docs`         | Generated Core component prop metadata.                       |

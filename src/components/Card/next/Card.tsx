@@ -1,7 +1,7 @@
 "use client";
 
 import { expandClassMap } from "@/utils/propAliases";
-import React from "react";
+import React, { useMemo } from "react";
 import Image, { StaticImageData } from "next/image";
 import Button from "../../Button/next/Button";
 import IconButton from "../../IconButton/next/IconButton";
@@ -44,11 +44,15 @@ const NextImageWrapper: React.FC<CardImageComponentProps> = ({
 };
 
 const Card: React.FC<CardProps> = (props) => {
-  const wrappedButtons = (props.actionButtons ?? []).map((b) => ({
-    ...b,
-    buttonComponent: Button,
-    iconButtonComponent: IconButton,
-  }));
+  const wrappedButtons = useMemo(
+    () =>
+      (props.actionButtons ?? []).map((button) => ({
+        ...button,
+        buttonComponent: Button,
+        iconButtonComponent: IconButton,
+      })),
+    [props.actionButtons],
+  );
 
   return (
     <CardBase

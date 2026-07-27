@@ -79,26 +79,45 @@ npm run build
 
 The build also patches Next client directives and generated docs imports so package subpaths work after publishing.
 
-## Verification
+### Clean and refresh package folders
 
-Run the targeted check for the area you touched while developing, then run the full audit before beta or release work.
-
-```bash
-npm run audit:types
-npm run audit:lint
-npm run audit:styles
-npm run audit:test
-npm run audit:build
-npm run audit:package
-```
-
-The combined command is:
+Before packaging or publishing, remove all generated package output and stage a completely fresh build:
 
 ```bash
-npm run audit
+npm run refresh:packages
 ```
 
-Use `npm run check:sync` after adding, moving, or renaming components. It verifies that each component has the expected base, core, next, and style files.
+This command:
+
+1. Removes root `dist`.
+2. Removes the generated `dist` directories under `packages/core`, `packages/next`, and `packages/types`.
+3. Runs the complete production build.
+4. Restages all four publishable package folders from the new output.
+
+It deliberately preserves `packages/cli/src`, which is the CLI's publishable source rather than generated output. If cleaning or building fails, the command stops before staging so older package output cannot be mistaken for the current release.
+
+Package staging skips manifest writes when the generated JSON is unchanged. On Windows it also retries short-lived `EACCES`, `EBUSY`, `EPERM`, and `UNKNOWN` write failures. If all retries fail, close any editor, npm process, antivirus scan, or sync client holding the reported manifest and run `npm run stage:split-packages` again.
+
+Preview the exact cleanup targets without deleting anything:
+
+```bash
+npm run clean:package-builds:dry-run
+```
+
+To clean the generated directories without rebuilding:
+
+```bash
+npm run clean:package-builds
+```
+
+`npm run pack:split` uses this clean refresh automatically before creating the four npm tarballs.
+
+Boreal UI publishes four scoped packages from this repository:
+
+- `@boreal-ui/types`
+- `@boreal-ui/core`
+- `@boreal-ui/next`
+- `@boreal-ui/cli`
 
 ## Documentation Checklist
 
@@ -108,6 +127,7 @@ Before merging public API changes:
 - `npm run gen:docs` has been run.
 - `docs/public-api-reference.md` is updated when import paths, barrel exports, or standalone exports change.
 - `docs/installation-and-imports.md` is updated when setup or package entry points change.
+- `docs/performance-and-async-behavior.md` is updated when timer, polling, cleanup, selection-key, or rendering semantics change.
 - `docs/server-components.md` is updated when server entries or stripped behavior change.
 - `docs/styling-and-theming.md` is updated when style config, theme, color-scheme, or CSS variable APIs change.
 - `docs/accessibility.md` is updated when ARIA, keyboard, focus, or labeling behavior changes.

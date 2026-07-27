@@ -31,7 +31,7 @@ npm install -D @boreal-ui/types
 
 `@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js.
 
-Some components and utilities rely on `marked` and `uuid`, so make sure they are available if your package manager does not install peer dependencies automatically.
+The Markdown renderer relies on `marked`, so make sure it is available if your package manager does not install peer dependencies automatically.
 
 ## CLI Setup
 
@@ -181,6 +181,10 @@ You can import individual components directly:
 import Button from "@boreal-ui/core/Button";
 import Card from "@boreal-ui/next/Card";
 ```
+
+Prefer standalone component paths in bundle-sensitive applications. They keep
+the component dependency graph and style sidecars narrower than the convenient
+root package barrels.
 
 ## Package Entry Points
 
