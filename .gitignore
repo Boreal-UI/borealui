@@ -68,3 +68,6 @@ stylelint-report.json
 DESIGN.md
 debug-storybook.log
 cypress/screenshots/
+
+#Ignore local dev guide
+docs/development-workflow-local.md
