@@ -4,6 +4,7 @@ import React, {
   useRef,
   useState,
   useCallback,
+  useMemo,
   KeyboardEvent,
 } from "react";
 import ReactDOM from "react-dom";
@@ -74,21 +75,24 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   const [asyncResults, setAsyncResults] = useState<CommandItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const searchRequestRef = useRef(0);
   const prevFocusRef = useRef<HTMLElement | null>(null);
 
-  const filtered = asyncSearch
-    ? asyncResults
-    : commands.filter((cmd) => {
-        const q = query.toLowerCase();
-        if (!q) return true;
+  const filtered = useMemo(() => {
+    if (asyncSearch) return asyncResults;
 
-        const labelMatch = cmd.label.toLowerCase().includes(q);
-        const keywordMatch = cmd.keywords?.some((keyword) =>
-          keyword.toLowerCase().includes(q),
-        );
+    const q = query.toLowerCase();
+    if (!q) return commands;
 
-        return labelMatch || Boolean(keywordMatch);
-      });
+    return commands.filter((cmd) => {
+      const labelMatch = cmd.label.toLowerCase().includes(q);
+      const keywordMatch = cmd.keywords?.some((keyword) =>
+        keyword.toLowerCase().includes(q),
+      );
+
+      return labelMatch || Boolean(keywordMatch);
+    });
+  }, [asyncResults, asyncSearch, commands, query]);
 
   useEffect(() => {
     if (filtered.length === 0) {
@@ -106,6 +110,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   useEffect(() => {
     if (!asyncSearch) return;
 
+    const requestId = ++searchRequestRef.current;
+
     if (debounceRef.current) clearTimeout(debounceRef.current);
 
     const q = query.trim();
@@ -119,16 +125,19 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
     debounceRef.current = setTimeout(() => {
       asyncSearch(q)
         .then((results) => {
+          if (searchRequestRef.current !== requestId) return;
           setAsyncResults(results);
           setIsLoading(false);
         })
         .catch(() => {
+          if (searchRequestRef.current !== requestId) return;
           setAsyncResults([]);
           setIsLoading(false);
         });
     }, debounceMs);
 
     return () => {
+      searchRequestRef.current += 1;
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
   }, [query, asyncSearch, debounceMs]);

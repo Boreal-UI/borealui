@@ -13,10 +13,12 @@ Options:
   --cwd, --project, --dir <path>  Project directory to configure
   --framework <react|next>        Select React core or Next.js output
   --dry-run, --check              Show planned edits without writing files
-  --install                       Run dependency install after edits
-  --package-manager <name>        npm, pnpm, or yarn
+  --install                       Run dependency install after edits (default)
+  --package-manager <name>        npm, pnpm, yarn, or bun
   --recommended-globals           Add a Boreal-safe Next globals.css baseline without prompting
   --no-recommended-globals        Skip the recommended Next globals.css prompt/change
+  --agents-guide                  Add an optional Boreal UI AGENTS.md guide
+  --no-agents-guide               Do not add an AGENTS.md guide (default)
   --no-install                    Skip dependency installation
   --yes, -y                       Apply recommended edits without prompts
   --help, -h                      Show this help message
@@ -24,8 +26,8 @@ Options:
 
 The CLI configures an existing React or Next.js app. It adds the split Boreal UI
 dependency for the selected framework, imports the correct globals.css entry,
-wraps the app in ThemeProvider, and places the Boreal style config in the app
-entry/provider.
+and wraps the app in ThemeProvider. Components inherit Boreal's current defaults;
+custom defaults can be added later with borealConfig.
 `);
 }
 

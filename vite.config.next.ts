@@ -14,7 +14,6 @@ const externals = [
   "react/jsx-runtime",
   "react/jsx-dev-runtime",
   "marked",
-  "uuid",
 ];
 
 const isExternal = (id: string) =>

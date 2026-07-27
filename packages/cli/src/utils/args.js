@@ -9,6 +9,7 @@ export async function parseArgs(argv) {
     install: undefined,
     packageManager: undefined,
     recommendedGlobals: undefined,
+    addAgentsGuide: false,
     dryRun: false,
     yes: false,
   };
@@ -44,11 +45,11 @@ export async function parseArgs(argv) {
       case "--cwd":
       case "--project":
       case "--dir":
-        options.cwd = rest.shift();
+        options.cwd = readOptionValue(rest, arg);
         break;
 
       case "--framework":
-        options.framework = rest.shift();
+        options.framework = readOptionValue(rest, arg);
         break;
 
       case "--dry-run":
@@ -65,7 +66,7 @@ export async function parseArgs(argv) {
         break;
 
       case "--package-manager":
-        options.packageManager = rest.shift();
+        options.packageManager = readOptionValue(rest, arg);
         break;
 
       case "--recommended-globals":
@@ -74,6 +75,14 @@ export async function parseArgs(argv) {
 
       case "--no-recommended-globals":
         options.recommendedGlobals = false;
+        break;
+
+      case "--agents-guide":
+        options.addAgentsGuide = true;
+        break;
+
+      case "--no-agents-guide":
+        options.addAgentsGuide = false;
         break;
 
       default:
@@ -90,4 +99,14 @@ export async function parseArgs(argv) {
   }
 
   return options;
+}
+
+function readOptionValue(rest, option) {
+  const value = rest.shift();
+
+  if (!value || value.startsWith("--")) {
+    fail(`${option} requires a value.`);
+  }
+
+  return value;
 }

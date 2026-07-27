@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import type { CircularProgressBaseProps } from "./CircularProgress.types";
 import { combineClassNames } from "../../utils/classNames";
 import {
@@ -48,11 +48,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   const clamped = Math.min(max, Math.max(min, value));
   const percent = range === 0 ? 0 : ((clamped - min) / range) * 100;
 
-  const [displayPercent, setDisplayPercent] = useState(0);
-
-  useEffect(() => {
-    setDisplayPercent(Math.round(percent));
-  }, [percent]);
+  const displayPercent = Math.round(percent);
 
   const stateColorMap: Record<string, string> = {
     success: "var(--success-color)",

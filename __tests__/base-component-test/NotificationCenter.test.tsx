@@ -558,6 +558,57 @@ describe("BaseNotificationCenter", () => {
     expect(onRemove).toHaveBeenCalledWith("timed-1");
   });
 
+  it("keeps timers with the same notification id isolated by component instance", () => {
+    jest.useFakeTimers();
+    const firstOnRemove = jest.fn();
+    const secondOnRemove = jest.fn();
+
+    render(
+      <>
+        <BaseNotificationCenter
+          notifications={[
+            {
+              id: "shared-id",
+              message: "First center",
+              type: "info",
+              duration: 500,
+            },
+          ]}
+          onRemove={firstOnRemove}
+          Button={DummyButton}
+          IconButton={DummyIconButton}
+          classMap={classMap}
+          data-testid="first-center"
+        />
+        <BaseNotificationCenter
+          notifications={[
+            {
+              id: "shared-id",
+              message: "Second center",
+              type: "info",
+              duration: 1000,
+            },
+          ]}
+          onRemove={secondOnRemove}
+          Button={DummyButton}
+          IconButton={DummyIconButton}
+          classMap={classMap}
+          data-testid="second-center"
+        />
+      </>,
+    );
+
+    act(() => jest.advanceTimersByTime(500));
+    expect(firstOnRemove).toHaveBeenCalledTimes(1);
+    expect(firstOnRemove).toHaveBeenCalledWith("shared-id");
+    expect(secondOnRemove).not.toHaveBeenCalled();
+
+    act(() => jest.advanceTimersByTime(500));
+    expect(firstOnRemove).toHaveBeenCalledTimes(1);
+    expect(secondOnRemove).toHaveBeenCalledTimes(1);
+    expect(secondOnRemove).toHaveBeenCalledWith("shared-id");
+  });
+
   it("does not start duplicate timers for the same notification across rerenders", () => {
     jest.useFakeTimers();
 
@@ -599,6 +650,43 @@ describe("BaseNotificationCenter", () => {
 
     expect(onRemove).toHaveBeenCalledTimes(1);
     expect(onRemove).toHaveBeenCalledWith("timed-2");
+  });
+
+  it("preserves an expiry deadline across prop updates and uses the latest callback", () => {
+    jest.useFakeTimers();
+    const firstOnRemove = jest.fn();
+    const latestOnRemove = jest.fn();
+    const notification = {
+      id: "stable-timer",
+      message: "Keep the original deadline",
+      type: "info" as const,
+      duration: 1000,
+    };
+
+    const { rerender } = render(
+      <BaseNotificationCenter
+        notifications={[notification]}
+        onRemove={firstOnRemove}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classMap}
+      />,
+    );
+
+    act(() => jest.advanceTimersByTime(500));
+    rerender(
+      <BaseNotificationCenter
+        notifications={[{ ...notification }]}
+        onRemove={latestOnRemove}
+        Button={DummyButton}
+        IconButton={DummyIconButton}
+        classMap={classMap}
+      />,
+    );
+    act(() => jest.advanceTimersByTime(500));
+
+    expect(firstOnRemove).not.toHaveBeenCalled();
+    expect(latestOnRemove).toHaveBeenCalledWith("stable-timer");
   });
 
   it("clears overflow notifications from the front when maxNotifications is exceeded and clearOldOnOverflow is true", async () => {
@@ -663,7 +751,7 @@ describe("BaseNotificationCenter", () => {
     });
   });
 
-  it("calls fetchNotifications immediately and then polls at the given interval", () => {
+  it("calls fetchNotifications immediately and polls after each request completes", async () => {
     jest.useFakeTimers();
 
     const fetchNotifications = jest.fn().mockResolvedValue([]);
@@ -675,15 +763,43 @@ describe("BaseNotificationCenter", () => {
 
     expect(fetchNotifications).toHaveBeenCalledTimes(1);
 
-    act(() => {
+    await act(async () => Promise.resolve());
+
+    await act(async () => {
       jest.advanceTimersByTime(2000);
+      await Promise.resolve();
     });
     expect(fetchNotifications).toHaveBeenCalledTimes(2);
 
-    act(() => {
-      jest.advanceTimersByTime(4000);
+    await act(async () => {
+      jest.advanceTimersByTime(2000);
+      await Promise.resolve();
     });
-    expect(fetchNotifications).toHaveBeenCalledTimes(4);
+    expect(fetchNotifications).toHaveBeenCalledTimes(3);
+  });
+
+  it("does not overlap notification polling requests", async () => {
+    jest.useFakeTimers();
+    let resolveRequest: (() => void) | undefined;
+    const fetchNotifications = jest.fn(
+      () =>
+        new Promise<never[]>((resolve) => {
+          resolveRequest = () => resolve([]);
+        }),
+    );
+
+    renderNotificationCenter({ fetchNotifications, pollInterval: 1000 });
+    act(() => jest.advanceTimersByTime(5000));
+    expect(fetchNotifications).toHaveBeenCalledTimes(1);
+
+    await act(async () => {
+      resolveRequest?.();
+      await Promise.resolve();
+    });
+    await act(async () => {
+      jest.advanceTimersByTime(1000);
+    });
+    expect(fetchNotifications).toHaveBeenCalledTimes(2);
   });
 
   it("does not poll when fetchNotifications is not provided", () => {

@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/workspace",
-  "version": "0.1.41",
+  "version": "0.1.42",
   "readme": "README.md",
   "description": "Workspace for Boreal UI scoped packages",
   "author": "Davin Chiupka",
@@ -103,7 +103,6 @@
     "@types/jest-axe": "^3.5.9",
     "@types/react": "^19.1.1",
     "@types/react-dom": "^19.1.2",
-    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^8.40.0",
     "@typescript-eslint/parser": "^8.40.0",
     "@vitejs/plugin-react": "^4.3.4",
@@ -156,8 +155,5 @@
   "overrides": {
     "storybook": "$storybook"
   },
-  "private": true,
-  "dependencies": {
-    "uuid": "^14.0.0"
-  }
+  "private": true
 }

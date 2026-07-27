@@ -164,6 +164,8 @@ export function InvoiceTable() {
 
 `DataTable` also supports pagination with `Pager`, column visibility, column resize/reorder/pinning, row expansion panels, bulk actions, inline editing, server pagination contracts, and virtualization for larger datasets. Use the controlled callbacks when table state is owned by your app or server API.
 
+Provide `rowKey` for stable selection and expansion when rows can be sorted, paginated, virtualized, or replaced. The index fallback remains distinct across client-side pages, but record IDs are safer when data order can change.
+
 Use `serverSort` with `onSortChange` when sorting is handled by your API.
 
 ```tsx
@@ -181,6 +183,8 @@ Use `serverSort` with `onSortChange` when sorting is handled by your API.
 ## Overlays and Interactive Components
 
 Components such as `Modal`, `Dropdown`, `PopOver`, `Tooltip`, `Tabs`, `Accordion`, `CommandPalette`, and `NotificationCenter` include keyboard and ARIA behavior. Prefer their public props instead of rebuilding focus or disclosure state around their internals.
+
+Timed components keep their lifecycle state per mounted instance. `Chip` and `Modal` coalesce repeated close requests during their exit transitions, `ToastProvider` restarts expiry when a toast ID is replaced, and `NotificationCenter` schedules its next poll only after the previous request settles. See [Performance and Async Behavior](./performance-and-async-behavior.md) for exact timing and cleanup semantics.
 
 ```tsx
 import { Modal, Button } from "@boreal-ui/core";

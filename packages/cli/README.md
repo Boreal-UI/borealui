@@ -3,8 +3,7 @@
 Standalone CLI for configuring Boreal UI in existing React and Next.js apps.
 
 ```sh
-npm install --save-dev @boreal-ui/cli
-npx @boreal-ui/cli init --framework next
+npx @boreal-ui/cli@latest init --yes
 ```
 
-The CLI installs the framework-specific runtime package, `@boreal-ui/core` or `@boreal-ui/next`. When it detects TypeScript, it can also add `@boreal-ui/types` as a dev dependency, and it can create a consumer-focused `AGENTS.md` guide for using Boreal UI correctly in the app.
+The CLI detects React or Next.js and npm, pnpm, Yarn, or Bun. It installs the framework-specific runtime package, imports global styles once, and wires `ThemeProvider` without copying a brittle snapshot of Boreal's defaults into the app. Component declarations work through the runtime package. Use `--dry-run` to preview, `--no-install` to manage dependencies yourself, or `--agents-guide` to add optional AI-agent guidance.

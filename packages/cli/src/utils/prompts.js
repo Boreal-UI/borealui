@@ -9,16 +9,6 @@ export async function promptForOptions(options) {
   try {
     options.cwd = options.cwd || DEFAULT_OPTIONS.cwd;
 
-    if (!options.framework) {
-      const answer = options.yes
-        ? ""
-        : await rl.question(
-            "Framework? Leave blank to auto-detect, or choose react/next: ",
-          );
-
-      options.framework = answer || undefined;
-    }
-
     if (options.framework) {
       options.framework = normalizeFramework(options.framework);
 
@@ -34,7 +24,7 @@ export async function promptForOptions(options) {
       );
 
       if (!PACKAGE_MANAGERS.has(options.packageManager)) {
-        fail("Package manager must be npm, pnpm, or yarn.");
+        fail("Package manager must be npm, pnpm, yarn, or bun.");
       }
     }
 

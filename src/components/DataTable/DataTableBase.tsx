@@ -2,8 +2,10 @@ import {
   useEffect,
   useMemo,
   useCallback,
+  useRef,
   useState,
   KeyboardEvent,
+  UIEvent,
   CSSProperties,
   Fragment,
 } from "react";
@@ -146,6 +148,8 @@ function DataTableBase<T extends object>({
     columnKey: keyof T;
   } | null>(null);
   const [scrollTop, setScrollTop] = useState(0);
+  const scrollFrameRef = useRef<number | null>(null);
+  const pendingScrollTopRef = useRef(0);
 
   const captionId = `${testId}-caption`;
   const liveRegionId = `${testId}-live-region`;
@@ -167,23 +171,37 @@ function DataTableBase<T extends object>({
   const resolvedColumnWidths = columnWidths ?? internalColumnWidths;
   const resolvedPinnedColumnKeys = pinnedColumnKeys ?? internalPinnedColumnKeys;
   const resolvedExpandedRowKeys = expandedRowKeys ?? internalExpandedRowKeys;
+  const selectedKeySet = useMemo(() => new Set(selectedKeys), [selectedKeys]);
+  const pinnedColumnKeySet = useMemo(
+    () => new Set(resolvedPinnedColumnKeys),
+    [resolvedPinnedColumnKeys],
+  );
+  const expandedRowKeySet = useMemo(
+    () => new Set(resolvedExpandedRowKeys),
+    [resolvedExpandedRowKeys],
+  );
 
-  const getResolvedRowKey = (row: T, index: number): string | number =>
-    rowKey ? rowKey(row) : index;
+  const getResolvedRowKey = useCallback(
+    (row: T, index: number): string | number =>
+      rowKey ? rowKey(row) : index,
+    [rowKey],
+  );
 
   const orderedColumns = useMemo(() => {
     const byKey = new Map(columns.map((column) => [column.key, column]));
+    const orderedKeySet = new Set(resolvedColumnOrder);
+    const visibleKeySet = new Set(resolvedVisibleColumnKeys);
     const ordered = resolvedColumnOrder
       .map((key) => byKey.get(key))
       .filter((column): column is Column<T> => Boolean(column));
     const missing = columns.filter(
-      (column) => !resolvedColumnOrder.includes(column.key),
+      (column) => !orderedKeySet.has(column.key),
     );
     const nextColumns = [...ordered, ...missing];
 
     if (!columnVisibility) return nextColumns;
     return nextColumns.filter((column) =>
-      resolvedVisibleColumnKeys.includes(column.key),
+      visibleKeySet.has(column.key),
     );
   }, [
     columns,
@@ -192,15 +210,45 @@ function DataTableBase<T extends object>({
     resolvedVisibleColumnKeys,
   ]);
 
-  const pinnedColumns = orderedColumns.filter((column) =>
-    resolvedPinnedColumnKeys.includes(column.key),
-  );
-  const visibleColumns = [
-    ...pinnedColumns,
-    ...orderedColumns.filter(
-      (column) => !resolvedPinnedColumnKeys.includes(column.key),
-    ),
-  ];
+  const visibleColumns = useMemo(() => {
+    const pinnedColumns = orderedColumns.filter((column) =>
+      pinnedColumnKeySet.has(column.key),
+    );
+
+    return [
+      ...pinnedColumns,
+      ...orderedColumns.filter((column) => !pinnedColumnKeySet.has(column.key)),
+    ];
+  }, [orderedColumns, pinnedColumnKeySet]);
+
+  const columnStyles = useMemo<CSSProperties[]>(() => {
+    let pinnedOffset = selectableRows ? 48 : renderExpandedRow ? 48 : 0;
+
+    return visibleColumns.map((column) => {
+      const isPinned = pinnedColumnKeySet.has(column.key);
+      const style: CSSProperties = {
+        width: resolvedColumnWidths[column.key] ?? column.width,
+        minWidth: column.minWidth,
+        maxWidth: column.maxWidth,
+        left: isPinned ? pinnedOffset : undefined,
+      };
+
+      if (isPinned) {
+        pinnedOffset += parsePixelWidth(
+          resolvedColumnWidths[column.key] ?? column.width ?? column.minWidth,
+          160,
+        );
+      }
+
+      return style;
+    });
+  }, [
+    pinnedColumnKeySet,
+    renderExpandedRow,
+    resolvedColumnWidths,
+    selectableRows,
+    visibleColumns,
+  ]);
 
   const filteredData = useMemo(() => {
     if (!filterable || !filterQuery.trim()) return data;
@@ -273,8 +321,14 @@ function DataTableBase<T extends object>({
     ? Math.max(0, (paginatedData.length - virtualEndIndex) * virtualRowHeight)
     : 0;
 
-  const selectedRows = sortedData.filter((row, index) =>
-    selectedKeys.includes(getResolvedRowKey(row, index)),
+  const selectedRows = useMemo(
+    () =>
+      !bulkActions || selectedKeySet.size === 0
+        ? []
+        : sortedData.filter((row, index) =>
+            selectedKeySet.has(getResolvedRowKey(row, index)),
+          ),
+    [bulkActions, getResolvedRowKey, selectedKeySet, sortedData],
   );
 
   const updateSelection = (nextKeys: Array<string | number>) => {
@@ -282,8 +336,9 @@ function DataTableBase<T extends object>({
       setInternalSelectedKeys(nextKeys);
     }
 
+    const nextKeySet = new Set(nextKeys);
     const nextRows = sortedData.filter((row, index) =>
-      nextKeys.includes(getResolvedRowKey(row, index)),
+      nextKeySet.has(getResolvedRowKey(row, index)),
     );
     onSelectionChange?.(nextKeys, nextRows);
   };
@@ -311,17 +366,21 @@ function DataTableBase<T extends object>({
 
   const allVisibleKeys = selectableRows
     ? renderedData.map((row, index) =>
-        getResolvedRowKey(row, virtualStartIndex + index),
+        getResolvedRowKey(
+          row,
+          (serverPagination ? 0 : pageOffset) + virtualStartIndex + index,
+        ),
       )
     : [];
+  const allVisibleKeySet = new Set(allVisibleKeys);
   const allVisibleSelected =
     allVisibleKeys.length > 0 &&
-    allVisibleKeys.every((key) => selectedKeys.includes(key));
+    allVisibleKeys.every((key) => selectedKeySet.has(key));
 
   const toggleAllRows = () => {
     if (allVisibleSelected) {
       updateSelection(
-        selectedKeys.filter((key) => !allVisibleKeys.includes(key)),
+        selectedKeys.filter((key) => !allVisibleKeySet.has(key)),
       );
       return;
     }
@@ -332,7 +391,7 @@ function DataTableBase<T extends object>({
   const toggleRow = (row: T, index: number) => {
     const key = getResolvedRowKey(row, index);
     updateSelection(
-      selectedKeys.includes(key)
+      selectedKeySet.has(key)
         ? selectedKeys.filter((selectedKey) => selectedKey !== key)
         : [...selectedKeys, key],
     );
@@ -340,15 +399,16 @@ function DataTableBase<T extends object>({
 
   const toggleExpandedRow = (row: T, index: number) => {
     const key = getResolvedRowKey(row, index);
-    const nextKeys = resolvedExpandedRowKeys.includes(key)
+    const nextKeys = expandedRowKeySet.has(key)
       ? resolvedExpandedRowKeys.filter((expandedKey) => expandedKey !== key)
       : [...resolvedExpandedRowKeys, key];
+    const nextKeySet = new Set(nextKeys);
 
     if (!expandedRowKeys) setInternalExpandedRowKeys(nextKeys);
     onExpandedRowsChange?.(
       nextKeys,
       sortedData.filter((candidate, candidateIndex) =>
-        nextKeys.includes(getResolvedRowKey(candidate, candidateIndex)),
+        nextKeySet.has(getResolvedRowKey(candidate, candidateIndex)),
       ),
     );
   };
@@ -413,9 +473,10 @@ function DataTableBase<T extends object>({
       nextVisibleOrder[nextIndex],
       nextVisibleOrder[index],
     ];
+    const nextVisibleKeySet = new Set(nextVisibleOrder);
     const hiddenKeys = columns
       .map((column) => column.key)
-      .filter((key) => !nextVisibleOrder.includes(key));
+      .filter((key) => !nextVisibleKeySet.has(key));
 
     updateColumnOrder([...nextVisibleOrder, ...hiddenKeys]);
   };
@@ -448,30 +509,33 @@ function DataTableBase<T extends object>({
     onPinnedColumnKeysChange?.(nextKeys);
   };
 
-  const getColumnStyle = (column: Column<T>, index: number): CSSProperties => {
-    const isPinned = resolvedPinnedColumnKeys.includes(column.key);
-    const priorPinnedWidth = visibleColumns
-      .slice(0, index)
-      .filter((candidate) => resolvedPinnedColumnKeys.includes(candidate.key))
-      .reduce(
-        (width, candidate) =>
-          width +
-          parsePixelWidth(
-            resolvedColumnWidths[candidate.key] ??
-              candidate.width ??
-              candidate.minWidth,
-            160,
-          ),
-        selectableRows ? 48 : renderExpandedRow ? 48 : 0,
-      );
+  const handleVirtualScroll = useCallback(
+    (event: UIEvent<HTMLDivElement>) => {
+      pendingScrollTopRef.current = event.currentTarget.scrollTop;
 
-    return {
-      width: resolvedColumnWidths[column.key] ?? column.width,
-      minWidth: column.minWidth,
-      maxWidth: column.maxWidth,
-      left: isPinned ? priorPinnedWidth : undefined,
-    };
-  };
+      if (scrollFrameRef.current !== null) return;
+
+      if (typeof window === "undefined" || !window.requestAnimationFrame) {
+        setScrollTop(pendingScrollTopRef.current);
+        return;
+      }
+
+      scrollFrameRef.current = window.requestAnimationFrame(() => {
+        scrollFrameRef.current = null;
+        setScrollTop(pendingScrollTopRef.current);
+      });
+    },
+    [],
+  );
+
+  useEffect(
+    () => () => {
+      if (scrollFrameRef.current !== null && typeof window !== "undefined") {
+        window.cancelAnimationFrame(scrollFrameRef.current);
+      }
+    },
+    [],
+  );
 
   const getRowClassName = (row: T, index: number): string | undefined => {
     if (typeof rowClassName === "function") {
@@ -764,9 +828,7 @@ function DataTableBase<T extends object>({
               : undefined
           }
           onScroll={
-            virtualized
-              ? (event) => setScrollTop(event.currentTarget.scrollTop)
-              : undefined
+            virtualized ? handleVirtualScroll : undefined
           }
           data-testid={virtualized ? `${testId}-virtual-viewport` : undefined}
         >
@@ -811,16 +873,14 @@ function DataTableBase<T extends object>({
                 ) : null}
                 {visibleColumns.map((column, columnIndex) => {
                   const isActive = sortKey === column.key;
-                  const isPinned = resolvedPinnedColumnKeys.includes(
-                    column.key,
-                  );
+                  const isPinned = pinnedColumnKeySet.has(column.key);
 
                   return (
                     <th
                       key={String(column.key)}
                       id={getHeaderId(column)}
                       scope={getHeaderScope(column)}
-                      style={getColumnStyle(column, columnIndex)}
+                      style={columnStyles[columnIndex]}
                       aria-sort={
                         column.sortable
                           ? isActive
@@ -992,7 +1052,7 @@ function DataTableBase<T extends object>({
                       row,
                       absoluteIndex,
                     );
-                    const expanded = resolvedExpandedRowKeys.includes(key);
+                    const expanded = expandedRowKeySet.has(key);
 
                     return (
                       <Fragment key={key}>
@@ -1039,7 +1099,7 @@ function DataTableBase<T extends object>({
                                   getRowSelectAriaLabel?.(row, absoluteIndex) ??
                                   `Select row ${absoluteIndex + 1}`
                                 }
-                                checked={selectedKeys.includes(key)}
+                                checked={selectedKeySet.has(key)}
                                 onChange={(event) => {
                                   event.stopPropagation();
                                   toggleRow(row, absoluteIndex);
@@ -1055,9 +1115,7 @@ function DataTableBase<T extends object>({
                             const content = renderCellContent(row, column);
                             const headerId = getHeaderId(column);
                             const shouldWrap = column.wrap ?? wrapCells;
-                            const isPinned = resolvedPinnedColumnKeys.includes(
-                              column.key,
-                            );
+                            const isPinned = pinnedColumnKeySet.has(column.key);
                             const isEditing =
                               editingCell?.rowKey === key &&
                               editingCell.columnKey === column.key;
@@ -1157,7 +1215,7 @@ function DataTableBase<T extends object>({
                                   scope="row"
                                   headers={headerId}
                                   data-label={column.label}
-                                  style={getColumnStyle(column, columnIndex)}
+                                  style={columnStyles[columnIndex]}
                                   className={combineClassNames(
                                     resolvedCellClassName,
                                     column.rowHeaderClassName,
@@ -1173,7 +1231,7 @@ function DataTableBase<T extends object>({
                                 key={cellKey}
                                 headers={headerId}
                                 data-label={column.label}
-                                style={getColumnStyle(column, columnIndex)}
+                                style={columnStyles[columnIndex]}
                                 className={resolvedCellClassName}
                               >
                                 {cellContent}

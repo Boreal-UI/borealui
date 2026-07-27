@@ -22,6 +22,18 @@ import {
 } from "../../config/boreal-style-config";
 import { BaseSelectProps } from "./Select.types";
 
+const haveSameOptions = (
+  current: BaseSelectProps["options"],
+  next: BaseSelectProps["options"],
+) =>
+  current.length === next.length &&
+  current.every(
+    (option, index) =>
+      option.value === next[index]?.value &&
+      option.label === next[index]?.label &&
+      option.disabled === next[index]?.disabled,
+  );
+
 const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
   (
     {
@@ -120,33 +132,36 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       if (!asyncOptions) return;
 
       let isMounted = true;
+      let pollTimer: ReturnType<typeof setTimeout> | undefined;
+      let isInitialLoad = true;
 
       const load = async () => {
         try {
-          setLoading(true);
+          if (isInitialLoad) setLoading(true);
           const fetched = await asyncOptions("");
-          if (isMounted) setInternalOptions(fetched);
+          if (isMounted) {
+            setInternalOptions((current) =>
+              haveSameOptions(current, fetched) ? current : fetched,
+            );
+          }
         } catch (err) {
           console.error("Failed to load options:", err);
         } finally {
-          if (isMounted) setLoading(false);
+          if (isMounted) {
+            if (isInitialLoad) setLoading(false);
+            isInitialLoad = false;
+            if (pollInterval > 0) {
+              pollTimer = setTimeout(() => void load(), pollInterval);
+            }
+          }
         }
       };
 
       void load();
 
-      if (pollInterval > 0) {
-        const intervalId = setInterval(() => {
-          void load();
-        }, pollInterval);
-        return () => {
-          clearInterval(intervalId);
-          isMounted = false;
-        };
-      }
-
       return () => {
         isMounted = false;
+        if (pollTimer !== undefined) clearTimeout(pollTimer);
       };
     }, [asyncOptions, pollInterval]);
 

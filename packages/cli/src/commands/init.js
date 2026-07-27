@@ -16,19 +16,7 @@ import { fail } from "../utils/help.js";
 import { promptForOptions } from "../utils/prompts.js";
 
 const SOURCE_EXTENSIONS = ["tsx", "jsx", "ts", "js"];
-const TYPESCRIPT_EXTENSIONS = new Set(["tsx", "ts"]);
-const BOREAL_TYPES_PACKAGE = "@boreal-ui/types";
 const AGENTS_GUIDE_FILE = "AGENTS.md";
-const BOREAL_CONFIG_CALL = `setBorealStyleConfig({
-  defaultTheme: "primary",
-  defaultSize: "medium",
-  defaultRounding: "medium",
-  defaultShadow: "light",
-  defaultBorderWidth: "none",
-  defaultColorSchemeName: "Forest Dusk",
-});
-`;
-const NEXT_APP_THEME_PROVIDER_PROPS = 'initialSchemeName="Forest Dusk"';
 const NEXT_RECOMMENDED_GLOBALS = `html {
   box-sizing: border-box;
 }
@@ -69,12 +57,11 @@ export async function initCommand(rawOptions) {
   const framework = resolveFramework(root, packageJson, options.framework);
   const packageManager = resolvePackageManager(root, options.packageManager);
   options.recommendedGlobals = await resolveRecommendedGlobalsOption(options, framework);
-  options.installTypes = await resolveTypesPackageOption(options, root, packageJson);
-  options.addAgentsGuide = await resolveAgentsGuideOption(options, root);
   const plan = createSetupPlan(root, packageJsonPath, packageJson, framework, options);
 
   if (plan.length === 0) {
     console.log("Boreal UI already looks configured for this project.");
+    printUsageHint(framework);
     return;
   }
 
@@ -104,12 +91,17 @@ export async function initCommand(rawOptions) {
     rl.close();
   }
 
-  if (appliedCount > 0 && options.install) {
+  if (appliedCount === 0) {
+    console.log("No setup changes were applied.");
+    return;
+  }
+
+  if (options.install) {
     const installArgs = packageManager === "yarn" ? [] : ["install"];
     runCommand(packageManager, installArgs, root, "Installed dependencies.");
   }
 
-  printSuccess(root, framework, packageManager, options.install);
+  printSuccess(framework, packageManager, options.install);
 }
 
 function resolveProjectRoot(cwd) {
@@ -209,6 +201,10 @@ function resolvePackageManager(root, requestedPackageManager) {
   if (requestedPackageManager) return requestedPackageManager;
   if (projectFileExists(root, resolveProjectPath(root, "pnpm-lock.yaml"))) return "pnpm";
   if (projectFileExists(root, resolveProjectPath(root, "yarn.lock"))) return "yarn";
+  if (
+    projectFileExists(root, resolveProjectPath(root, "bun.lock")) ||
+    projectFileExists(root, resolveProjectPath(root, "bun.lockb"))
+  ) return "bun";
   return "npm";
 }
 
@@ -234,13 +230,7 @@ async function resolveRecommendedGlobalsOption(options, framework) {
 function createSetupPlan(root, packageJsonPath, packageJson, framework, options) {
   const changes = [];
 
-  addPackageJsonChange(
-    changes,
-    packageJsonPath,
-    packageJson,
-    framework,
-    options.installTypes,
-  );
+  addPackageJsonChange(changes, packageJsonPath, packageJson, framework);
   addAgentsGuideChange(changes, root, framework, options.addAgentsGuide);
 
   if (framework === "next") {
@@ -252,84 +242,23 @@ function createSetupPlan(root, packageJsonPath, packageJson, framework, options)
   return changes;
 }
 
-function addPackageJsonChange(
-  changes,
-  packageJsonPath,
-  packageJson,
-  framework,
-  installTypes,
-) {
+function addPackageJsonChange(changes, packageJsonPath, packageJson, framework) {
   const { packageName } = BOREAL_PACKAGES[framework];
   const hasBoreal = hasPackage(packageJson, packageName);
-  const hasTypes = hasPackage(packageJson, BOREAL_TYPES_PACKAGE);
 
-  if (hasBoreal && (!installTypes || hasTypes)) return;
+  if (hasBoreal) return;
 
   const nextPackageJson = { ...packageJson };
-  const summaries = [];
-
-  if (!hasBoreal) {
-    nextPackageJson.dependencies = {
-      ...nextPackageJson.dependencies,
-      [packageName]: `^${VERSION}`,
-    };
-    summaries.push(`"${packageName}" to dependencies`);
-  }
-
-  if (installTypes && !hasTypes) {
-    nextPackageJson.devDependencies = {
-      ...nextPackageJson.devDependencies,
-      [BOREAL_TYPES_PACKAGE]: `^${VERSION}`,
-    };
-    summaries.push(`"${BOREAL_TYPES_PACKAGE}" to devDependencies`);
-  }
+  nextPackageJson.dependencies = {
+    ...nextPackageJson.dependencies,
+    [packageName]: `^${VERSION}`,
+  };
 
   changes.push({
     path: packageJsonPath,
-    summary: `Add ${summaries.join(" and ")}.`,
+    summary: `Add "${packageName}" to dependencies.`,
     nextContents: `${JSON.stringify(nextPackageJson, null, 2)}\n`,
   });
-}
-
-async function resolveTypesPackageOption(
-  options,
-  root,
-  packageJson,
-  prompt = promptForTypesPackage,
-) {
-  if (!usesTypeScript(root, packageJson)) return false;
-  if (hasPackage(packageJson, BOREAL_TYPES_PACKAGE)) return false;
-  if (options.dryRun) return true;
-  if (options.yes) return true;
-
-  return await prompt();
-}
-
-async function promptForTypesPackage() {
-  const rl = createInterface({ input, output });
-
-  try {
-    return await promptBoolean(
-      rl,
-      "TypeScript detected. Install @boreal-ui/types as a dev dependency?",
-      true,
-    );
-  } finally {
-    rl.close();
-  }
-}
-
-function usesTypeScript(root, packageJson) {
-  if (hasPackage(packageJson, "typescript")) return true;
-  if (projectFileExists(root, resolveProjectPath(root, "tsconfig.json"))) return true;
-
-  const entryCandidates = [
-    ...reactEntryCandidates(),
-    ...nextLayoutCandidates(),
-    ...nextPagesAppCandidates(),
-  ].filter((candidate) => TYPESCRIPT_EXTENSIONS.has(extensionFor(candidate)));
-
-  return Boolean(findFirst(root, entryCandidates));
 }
 
 function hasPackage(packageJson, packageName) {
@@ -338,34 +267,6 @@ function hasPackage(packageJson, packageName) {
       packageJson.devDependencies?.[packageName] ||
       packageJson.peerDependencies?.[packageName],
   );
-}
-
-async function resolveAgentsGuideOption(
-  options,
-  root,
-  prompt = promptForAgentsGuide,
-) {
-  if (projectFileExists(root, resolveProjectPath(root, AGENTS_GUIDE_FILE))) {
-    return false;
-  }
-  if (options.dryRun) return true;
-  if (options.yes) return true;
-
-  return await prompt();
-}
-
-async function promptForAgentsGuide() {
-  const rl = createInterface({ input, output });
-
-  try {
-    return await promptBoolean(
-      rl,
-      "Add an AGENTS.md guide for using Boreal UI in this project?",
-      true,
-    );
-  } finally {
-    rl.close();
-  }
 }
 
 function addAgentsGuideChange(changes, root, framework, enabled) {
@@ -406,14 +307,14 @@ Guidance for AI agents working in this ${frameworkName} project with Boreal UI.
 
 - Import components from \`${importSpecifier}\`.
 - Import Boreal globals once from \`${globalsSpecifier}\`, usually in the app entry or root layout.
-- Use \`@boreal-ui/types\` for public type imports in TypeScript projects.
+- Component declarations work through the framework package; add \`@boreal-ui/types\` only for direct shared type imports.
 - Do not import from Boreal source files, package internals, or generated build paths.
 - Prefer Boreal components over hand-rolled equivalents when a matching component exists.
 
 ## Theming And Styling
 
 - Wrap the app in Boreal \`ThemeProvider\` when using themes or color schemes.
-- Set app-wide defaults with \`setBorealStyleConfig\` instead of repeating props everywhere.
+- Set app-wide defaults with \`borealConfig\` instead of repeating props everywhere.
 - Customize components with supported props, class names, CSS variables, and the Boreal theme system.
 - Keep Boreal global styles loaded once; avoid broad resets that remove component spacing.
 - Do not edit \`node_modules\` or Boreal package files to change component appearance.
@@ -445,16 +346,15 @@ function addReactChanges(changes, root) {
   nextSource = ensureNamedImport(
     nextSource,
     BOREAL_PACKAGES.react.importSpecifier,
-    ["ThemeProvider", "setBorealStyleConfig"],
+    ["ThemeProvider"],
   );
-  nextSource = ensureBorealConfig(nextSource);
   nextSource = ensureReactThemeProvider(nextSource);
 
   if (nextSource !== source) {
     changes.push({
       path: entryPath,
       summary:
-        "Import Boreal globals, configure Boreal defaults, and wrap the React app in ThemeProvider.",
+        "Import Boreal globals and wrap the React app in ThemeProvider.",
       nextContents: nextSource,
     });
   }
@@ -517,16 +417,15 @@ function addNextPagesRouterChange(changes, root, pagesAppPath, globalsPath) {
   nextSource = ensureNamedImport(
     nextSource,
     BOREAL_PACKAGES.next.importSpecifier,
-    ["ThemeProvider", "setBorealStyleConfig"],
+    ["ThemeProvider"],
   );
-  nextSource = ensureBorealConfig(nextSource);
   nextSource = ensureNextPagesThemeProvider(nextSource);
 
   if (nextSource !== source) {
     changes.push({
       path: pagesAppPath,
       summary:
-        "Import Boreal globals, configure Boreal defaults, and wrap the Next.js pages app in ThemeProvider.",
+        "Import Boreal globals and wrap the Next.js pages app in ThemeProvider.",
       nextContents: nextSource,
     });
   }
@@ -574,19 +473,16 @@ function addNextProviderChange(changes, root, providerPath) {
     nextSource = ensureNamedImport(
       nextSource,
       BOREAL_PACKAGES.next.importSpecifier,
-      ["ThemeProvider", "setBorealStyleConfig"],
+      ["ThemeProvider"],
     );
-    nextSource = ensureBorealConfig(nextSource);
     nextSource = ensureProviderComponent(nextSource);
   }
-
-  nextSource = ensureNextAppThemeProviderProps(nextSource);
 
   if (nextSource !== source) {
     changes.push({
       path: providerPath,
       summary: exists
-        ? "Add Boreal ThemeProvider and default style config to the existing provider file."
+        ? "Add Boreal ThemeProvider to the existing provider file."
         : "Create the small client provider required by the Next.js app router.",
       nextContents: nextSource,
     });
@@ -703,14 +599,6 @@ function getDefaultImportName(source, specifier) {
   return match?.[1];
 }
 
-function ensureBorealConfig(source) {
-  if (source.includes("setBorealStyleConfig(") || source.includes("borealConfig(")) {
-    return source;
-  }
-
-  return insertAfterImports(source, `\n${BOREAL_CONFIG_CALL}`);
-}
-
 function ensureReactThemeProvider(source) {
   if (/<ThemeProvider[\s>]/.test(source)) return source;
 
@@ -719,7 +607,7 @@ function ensureReactThemeProvider(source) {
     (_, props = "") => {
       const propText = props.trim();
 
-      return `<ThemeProvider initialSchemeName="Forest Dusk">\n      <App${propText ? ` ${propText}` : ""} />\n    </ThemeProvider>`;
+      return `<ThemeProvider>\n      <App${propText ? ` ${propText}` : ""} />\n    </ThemeProvider>`;
     },
   );
 
@@ -735,7 +623,7 @@ function ensureNextPagesThemeProvider(source) {
 
   const nextSource = source.replace(
     /<Component\s+\{\.\.\.pageProps\}\s*\/>/,
-    `<ThemeProvider initialSchemeName="Forest Dusk">\n      <Component {...pageProps} />\n    </ThemeProvider>`,
+    `<ThemeProvider>\n      <Component {...pageProps} />\n    </ThemeProvider>`,
   );
 
   if (nextSource === source) {
@@ -771,7 +659,7 @@ function ensureProviderComponent(source) {
 
   let nextSource = source.replace(
     /\{children\}/,
-    `<ThemeProvider ${NEXT_APP_THEME_PROVIDER_PROPS}>{children}</ThemeProvider>`,
+    `<ThemeProvider>{children}</ThemeProvider>`,
   );
 
   if (nextSource !== source) {
@@ -780,7 +668,7 @@ function ensureProviderComponent(source) {
 
   nextSource = source.replace(
     /return\s+children\s*;/,
-    `return <ThemeProvider ${NEXT_APP_THEME_PROVIDER_PROPS}>{children}</ThemeProvider>;`,
+    `return <ThemeProvider>{children}</ThemeProvider>;`,
   );
 
   if (nextSource === source) {
@@ -788,18 +676,6 @@ function ensureProviderComponent(source) {
   }
 
   return nextSource;
-}
-
-function ensureNextAppThemeProviderProps(source) {
-  return source.replace(/<ThemeProvider\b([^>]*)>/, (match, attrs = "") => {
-    let nextAttrs = attrs;
-
-    if (!/\binitialSchemeName(?:\s|=|$)/.test(nextAttrs)) {
-      nextAttrs += ' initialSchemeName="Forest Dusk"';
-    }
-
-    return nextAttrs === attrs ? match : `<ThemeProvider${nextAttrs}>`;
-  });
 }
 
 function ensureUseClient(source) {
@@ -879,18 +755,15 @@ function insertAfterImports(source, text) {
 
 function getNextProviderContents(extension) {
   const isTypeScript = extension === "tsx" || extension === "ts";
-  const props = isTypeScript ? "{ children }: { children: React.ReactNode }" : "{ children }";
+  const props = isTypeScript ? "{ children }: { children: ReactNode }" : "{ children }";
+  const reactTypeImport = isTypeScript ? 'import type { ReactNode } from "react";\n' : "";
 
   return `"use client";
 
-import React from "react";
-import { ThemeProvider, setBorealStyleConfig } from "@boreal-ui/next";
+${reactTypeImport}import { ThemeProvider } from "@boreal-ui/next";
 
-${BOREAL_CONFIG_CALL}
 export default function BorealProvider(${props}) {
-  return (
-    <ThemeProvider ${NEXT_APP_THEME_PROVIDER_PROPS}>{children}</ThemeProvider>
-  );
+  return <ThemeProvider>{children}</ThemeProvider>;
 }
 `;
 }
@@ -996,21 +869,27 @@ function printPlan(root, framework, plan, dryRun) {
   }
 }
 
-function printSuccess(root, framework, packageManager, installWasRun) {
+function printUsageHint(framework) {
+  const importSpecifier = BOREAL_PACKAGES[framework].importSpecifier;
+  const componentImport = `${importSpecifier}/Button`;
+
+  console.log(`\nTry a component:\n  import Button from "${componentImport}";`);
+  console.log("Customize project-wide defaults later with borealConfig({...}).");
+  console.log("Docs: https://www.borealui.ca");
+}
+
+function printSuccess(framework, packageManager, installWasRun) {
   const installCommand = packageManager === "npm" ? "npm install" : `${packageManager} install`;
+  const frameworkName = framework === "next" ? "Next.js" : "React";
 
   console.log(`
-Boreal UI setup complete.
+Boreal UI is ready for ${frameworkName}.
 
-${installWasRun ? "" : `Run ${installCommand} if dependencies have not been installed yet.\n`}
-Use components from ${BOREAL_PACKAGES[framework].importSpecifier}.
-`);
+${installWasRun ? "Dependencies installed.\n" : `Next step: run ${installCommand}.\n`}`);
+  printUsageHint(framework);
 }
 
 export const __testing = {
   createAgentsGuide,
-  resolveAgentsGuideOption,
   resolveProjectPath,
-  resolveTypesPackageOption,
-  usesTypeScript,
 };
