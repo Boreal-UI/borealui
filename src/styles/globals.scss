@@ -31,7 +31,7 @@
  *    - Applied via `.sr_only` and `:global(.sr_only)`
  *
  * Dependencies:
- * - Resets: `modern-css-reset`
+ * - Resets: Boreal's framework-safe reset
  * - SCSS Modules: `theme`, `animations`, `breakpoints`
  * - Sass Color Utilities: `sass:color`
  *
@@ -45,15 +45,11 @@
 @use "_animations" as animations;
 @use "_breakpoints" as breakpoints;
 @use "_mixins" as mixins;
+@use "_reset" as reset;
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
-@import "modern-css-reset/dist/reset.css" layer(boreal-ui.reset);
 
 @layer boreal-ui.reset {
-  // modern-css-reset enables smooth scrolling on the root element. Keep the
-  // browser default so Next.js can manage scroll restoration during routing.
-  html:focus-within {
-    scroll-behavior: auto;
-  }
+  @include reset.apply-reset;
 }
 
 @layer boreal-ui.base {

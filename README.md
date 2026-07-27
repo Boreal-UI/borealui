@@ -449,6 +449,7 @@ Useful scripts:
 | `npm run lint`            | Lint TypeScript and TSX files.                          |
 | `npm run lint:styles`     | Lint CSS and SCSS files.                                |
 | `npm run audit`           | Run type, lint, style, test, build, and package checks. |
+| `npm run refresh:packages` | Delete generated package output, rebuild, and restage all publishable packages. |
 | `npm run gen:docs`        | Regenerate component prop docs.                         |
 | `npm run gen:entrypoints` | Regenerate component entry points.                      |
 | `npm run gen:exports`     | Regenerate package exports.                             |

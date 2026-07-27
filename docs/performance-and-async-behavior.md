@@ -131,6 +131,6 @@ See [Styling and Theming](./styling-and-theming.md) for SSR setup and theme pers
 
 ## Next.js Scroll Restoration
 
-Boreal globals keep the root element's `scroll-behavior` set to `auto`. This allows Next.js to manage scroll position during route transitions and avoids requiring `data-scroll-behavior` on `<html>` merely because Boreal's global stylesheet is imported.
+Boreal globals do not set smooth scrolling on the root element, leaving `scroll-behavior` at the browser default (`auto`). This allows Next.js to manage scroll position during route transitions and avoids requiring `data-scroll-behavior` on `<html>` merely because Boreal's global stylesheet is imported.
 
 Applications can still opt into smooth root scrolling. When doing so in Next.js, add `data-scroll-behavior="smooth"` to the root `<html>` element so the framework can temporarily disable smooth scrolling during navigation.

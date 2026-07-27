@@ -79,6 +79,39 @@ npm run build
 
 The build also patches Next client directives and generated docs imports so package subpaths work after publishing.
 
+### Clean and refresh package folders
+
+Before packaging or publishing, remove all generated package output and stage a completely fresh build:
+
+```bash
+npm run refresh:packages
+```
+
+This command:
+
+1. Removes root `dist`.
+2. Removes the generated `dist` directories under `packages/core`, `packages/next`, and `packages/types`.
+3. Runs the complete production build.
+4. Restages all four publishable package folders from the new output.
+
+It deliberately preserves `packages/cli/src`, which is the CLI's publishable source rather than generated output. If cleaning or building fails, the command stops before staging so older package output cannot be mistaken for the current release.
+
+Package staging skips manifest writes when the generated JSON is unchanged. On Windows it also retries short-lived `EACCES`, `EBUSY`, `EPERM`, and `UNKNOWN` write failures. If all retries fail, close any editor, npm process, antivirus scan, or sync client holding the reported manifest and run `npm run stage:split-packages` again.
+
+Preview the exact cleanup targets without deleting anything:
+
+```bash
+npm run clean:package-builds:dry-run
+```
+
+To clean the generated directories without rebuilding:
+
+```bash
+npm run clean:package-builds
+```
+
+`npm run pack:split` uses this clean refresh automatically before creating the four npm tarballs.
+
 Boreal UI publishes four scoped packages from this repository:
 
 - `@boreal-ui/types`
