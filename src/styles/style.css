@@ -143,6 +143,27 @@
  *
  * 9. skeleton-loading
  *    - Creates a sweeping shimmer effect for skeleton loaders.
+ *
+ * 10. drawer-slide-in-right
+ *    - Slides a drawer in from the right side of the screen.
+ *
+ * 11. drawer-slide-in-left
+ *    - Slides a drawer in from the left side of the screen.
+ *
+ * 12. drawer-slide-in-top
+ *    - Slides a drawer in from the top side of the screen.
+ *
+ * 13. drawer-slide-in-bottom
+ *    - Slides a drawer in from the bottom side of the screen.
+ *
+ * 14. drawer-slide-in-fade-in
+ *    - Combines a fade-in with a slight upward motion (used for tooltips, popups) and a fade-in.
+ * 15. bar-chart-grow
+ *    - Expands the height of a bar chart from 0% to 100%.
+ * 16. donut-chart-draw
+ *    - Animates the drawing of a donut chart by rotating and scaling it.
+ * 17. line-chart-draw
+ *    - Animates the drawing of a line chart by expanding its stroke from 0% to 100%.
  */
 @keyframes fade-in {
   from {
@@ -220,10 +241,90 @@
 }
 @keyframes skeleton-loading {
   0% {
-    left: -100%;
+    transform: translateX(-100%);
   }
   100% {
-    left: 100%;
+    transform: translateX(150%);
+  }
+}
+@keyframes drawer-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes drawer-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes drawer-slide-in-top {
+  from {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes drawer-slide-in-bottom {
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes drawer-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes bar-chart-grow {
+  from {
+    opacity: 0;
+    transform: scaleY(0.2);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+@keyframes donut-chart-draw {
+  from {
+    opacity: 0;
+    transform: rotate(-8deg) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(0deg) scale(1);
+  }
+}
+@keyframes line-chart-draw {
+  from {
+    opacity: 0;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+  to {
+    opacity: 1;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
   }
 }
 /**
@@ -267,6 +368,11 @@
  *   - `sass:map` module to access map values safely
  */
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
+@layer boreal-ui.reset {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+}
 @layer boreal-ui.base {
   :root {
     /* ================================
@@ -307,8 +413,8 @@
     --warning-color: #f90;
     --warning-color-hover: rgb(204, 122.4, 0);
     --warning-text-color: var(--text-color);
-    --info-color: #0057b8;
-    --info-color-hover: rgb(0, 62.8858695652, 133);
+    --info-color: #1d5ea8;
+    --info-color-hover: rgb(21.4923857868, 69.6649746193, 124.5076142132);
     --info-text-color: var(--text-color);
     --error-color: #a6192e;
     --error-color-hover: rgb(121.6753926702, 18.3246073298, 33.7172774869);
@@ -339,8 +445,8 @@
     /* ===========================
        Glass / Frosted Surface
     =========================== */
-    --glass-background: rgba(255, 255, 255, 0.08);
-    --glass-background-subtle: rgba(255, 255, 255, 0.05);
+    --glass-background: rgba(255, 255, 255, 0.1);
+    --glass-background-subtle: rgba(27, 16, 16, 0.05);
     --glass-background-strong: rgba(255, 255, 255, 0.14);
     --glass-border-color: rgba(255, 255, 255, 0.18);
     --glass-border-color-strong: rgba(255, 255, 255, 0.28);
@@ -354,23 +460,23 @@
     /* ================================
        THEME GLASS COLORS
     ================================== */
-    --primary-glass-background: rgb(from var(--primary-color) r g b / 40%);
+    --primary-glass-background: rgb(from var(--primary-color) r g b / 10%);
     --primary-glass-background-hover: rgb(
       from var(--primary-color-hover) r g b / 38%
     );
     --primary-glass-border: rgb(from var(--primary-color) r g b / 48%);
-    --secondary-glass-background: rgb(from var(--secondary-color) r g b / 40%);
+    --secondary-glass-background: rgb(from var(--secondary-color) r g b / 10%);
     --secondary-glass-background-hover: rgb(
       from var(--secondary-color-hover) r g b / 38%
     );
     --secondary-glass-border: rgb(from var(--secondary-color) r g b / 48%);
-    --tertiary-glass-background: rgb(from var(--tertiary-color) r g b / 40%);
+    --tertiary-glass-background: rgb(from var(--tertiary-color) r g b / 10%);
     --tertiary-glass-background-hover: rgb(
       from var(--tertiary-color-hover) r g b / 38%
     );
     --tertiary-glass-border: rgb(from var(--tertiary-color) r g b / 48%);
     --quaternary-glass-background: rgb(
-      from var(--quaternary-color) r g b / 40%
+      from var(--quaternary-color) r g b / 10%
     );
     --quaternary-glass-background-hover: rgb(
       from var(--quaternary-color-hover) r g b / 38%

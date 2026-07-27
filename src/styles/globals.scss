@@ -48,6 +48,14 @@
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @import "modern-css-reset/dist/reset.css" layer(boreal-ui.reset);
 
+@layer boreal-ui.reset {
+  // modern-css-reset enables smooth scrolling on the root element. Keep the
+  // browser default so Next.js can manage scroll restoration during routing.
+  html:focus-within {
+    scroll-behavior: auto;
+  }
+}
+
 @layer boreal-ui.base {
   :root {
     /* ================================

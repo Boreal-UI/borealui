@@ -89,6 +89,8 @@ body {
 
 If your app needs additional layout resets, scope them to your own shell classes instead of applying them to every element globally.
 
+Boreal globals leave root scrolling at the browser default (`auto`) so Next.js can restore scroll position during route transitions without warnings. If your application deliberately sets `scroll-behavior: smooth` on `html`, add `data-scroll-behavior="smooth"` to the root `<html>` element as described by the [Next.js scroll behavior guidance](https://nextjs.org/docs/messages/missing-data-scroll-behavior).
+
 The CLI can create or repair that safer baseline for Next.js apps:
 
 ```bash
