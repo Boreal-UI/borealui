@@ -88,8 +88,8 @@ const renderFileUpload = (
 
 describe("BaseFileUpload", () => {
   afterEach(() => {
+    jest.restoreAllMocks();
     jest.useRealTimers();
-    jest.clearAllMocks();
   });
 
   it("renders with label and input", () => {
@@ -621,6 +621,32 @@ describe("BaseFileUpload", () => {
     });
 
     jest.useRealTimers();
+  });
+
+  it("clears the delayed upload reset when unmounted", async () => {
+    jest.useFakeTimers();
+    const clearTimeoutSpy = jest.spyOn(global, "clearTimeout");
+    const file = createFile("upload.txt", "text/plain", 1000);
+    const onSubmit = jest.fn().mockResolvedValue(undefined);
+    const { unmount } = renderFileUpload({ onSubmit });
+
+    fireEvent.change(screen.getByTestId("upload-input"), {
+      target: { files: [file] },
+    });
+    fireEvent.click(screen.getByTestId("upload-upload-button"));
+
+    await act(async () => {
+      await Promise.resolve();
+      await Promise.resolve();
+    });
+    expect(screen.getByTestId("upload-upload-message")).toHaveTextContent(
+      "Upload successful.",
+    );
+    expect(jest.getTimerCount()).toBeGreaterThan(0);
+
+    unmount();
+    expect(clearTimeoutSpy).toHaveBeenCalled();
+    clearTimeoutSpy.mockRestore();
   });
 
   it("announces selected files in the live region", () => {

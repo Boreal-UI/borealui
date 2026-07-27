@@ -53,6 +53,8 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
 }) => {
   const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
   const prevIds = useRef<Set<string>>(new Set());
+  const onRemoveRef = useRef(onRemove);
+  onRemoveRef.current = onRemove;
   const internalTitleId = `${testId}-title`;
   const resolvedLabelledBy = ariaLabelledBy || internalTitleId;
 
@@ -71,19 +73,25 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   useEffect(() => {
     if (!fetchNotifications) return;
     let alive = true;
+    let pollTimer: ReturnType<typeof setTimeout> | undefined;
 
-    const load = () => {
-      fetchNotifications().catch((err) => {
+    const load = async () => {
+      try {
+        await fetchNotifications();
+      } catch (err) {
         console.error("Failed to fetch notifications:", err);
-      });
+      } finally {
+        if (alive && pollInterval > 0) {
+          pollTimer = setTimeout(() => void load(), pollInterval);
+        }
+      }
     };
 
-    load();
-    const id = setInterval(() => alive && load(), pollInterval);
+    void load();
 
     return () => {
-      clearInterval(id);
       alive = false;
+      if (pollTimer !== undefined) clearTimeout(pollTimer);
     };
   }, [fetchNotifications, pollInterval]);
 
@@ -93,7 +101,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
     for (const n of notifications) {
       if (n.duration && !timers.current[n.id]) {
         timers.current[n.id] = setTimeout(() => {
-          onRemove(n.id);
+          onRemoveRef.current(n.id);
           delete timers.current[n.id];
         }, n.duration);
       }
@@ -108,13 +116,15 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
 
     prevIds.current = currentIds;
 
-    return () => {
-      if (prevIds.current === currentIds) {
-        Object.values(timers.current).forEach(clearTimeout);
-        timers.current = {};
-      }
-    };
-  }, [notifications, onRemove]);
+  }, [notifications]);
+
+  useEffect(
+    () => () => {
+      Object.values(timers.current).forEach(clearTimeout);
+      timers.current = {};
+    },
+    [],
+  );
 
   const notificationClass = useMemo(
     () =>

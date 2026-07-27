@@ -41,12 +41,14 @@ npx @boreal-ui/cli@latest init --yes
 You can preview changes or run non-interactively:
 
 ```bash
-npx @boreal-ui/cli init --dry-run
-npx @boreal-ui/cli init --framework next --yes
-npx @boreal-ui/cli init --framework next --recommended-globals
+npx @boreal-ui/cli@latest init --dry-run
+npx @boreal-ui/cli@latest init --framework next --yes
+npx @boreal-ui/cli@latest init --framework next --recommended-globals
 ```
 
 See [CLI guide](./docs/cli.md) for all commands, options, prompts, and generated file changes.
+
+For timer lifecycles, completion-based polling, repeated component instances, and rendering guidance, see [Performance and Async Behavior](./docs/performance-and-async-behavior.md).
 
 ## Setup
 
@@ -114,7 +116,7 @@ body {
 The CLI can create or repair that safer baseline for Next.js apps:
 
 ```bash
-npx @boreal-ui/cli init --framework next --recommended-globals
+npx @boreal-ui/cli@latest init --framework next --recommended-globals
 ```
 
 Interactive Next.js setup prompts for this by default. Use `--recommended-globals` to apply it without the prompt, or `--no-recommended-globals` to skip it.
@@ -190,7 +192,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 - `CheckBox`, `RadioButton`, `RadioGroup`, `Toggle`, and `Slider` provide common controlled input patterns.
 - `ColorPicker` supports color selection flows.
 - `DatePicker`, `DateRangePicker`, `DateTimePicker`, and `TimePicker` handle date, date range, date-time, and time input.
-- `FileUpload` supports file selection UI.
+- `FileUpload` supports file selection UI, upload progress, completion announcements, and timer-safe cleanup when unmounted.
 - `TagInput` supports editable tag lists, async suggestions, debouncing, accessible listbox labeling, and remove-tag controls.
 - `FormField` and `FormGroup` help compose labels, helper text, and grouped form controls.
 
@@ -208,7 +210,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 - `Badge`, `Chip`, and `ChipGroup` cover labels, statuses, and compact selectable or grouped metadata.
 - `ProgressBar`, `CircularProgress`, `Spinner`, and `Skeleton` cover loading and progress states.
 - `Rating` provides star-style rating UI.
-- `Alert`, `Tooltip`, `MessagePopup`, `PopOver`, `Modal`, `ToastProvider`, `NotificationCenter`, and `EmptyState` cover alerts, contextual help, overlays, dialogs, toast notifications, notification lists, and no-data states.
+- `Alert`, `Tooltip`, `MessagePopup`, `PopOver`, `Modal`, `ToastProvider`, `NotificationCenter`, and `EmptyState` cover alerts, contextual help, overlays, dialogs, toast notifications, notification lists, and no-data states. Timed feedback and polling remain isolated across repeated component instances.
 
 ### Navigation and Layout
 
@@ -451,7 +453,7 @@ Useful scripts:
 | `npm run gen:entrypoints` | Regenerate component entry points.                      |
 | `npm run gen:exports`     | Regenerate package exports.                             |
 
-Contributor documentation for component structure, generated docs, package output, and release checks lives in [Development Workflow](./docs/development-workflow.md).
+Contributor documentation for component structure, generated docs, package output, release checks, and npm publishing commands lives in [Development Workflow](./docs/development-workflow.md).
 
 ## Package Entry Points
 

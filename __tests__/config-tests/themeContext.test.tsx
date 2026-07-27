@@ -603,13 +603,12 @@ describe("ThemeProvider", () => {
     setItemSpy.mockRestore();
   });
 
-  it("logs an error if custom schemes cannot be parsed", async () => {
+  it("logs an error if custom schemes cannot be serialized", async () => {
     const stringifySpy = jest
       .spyOn(JSON, "stringify")
-      .mockReturnValueOnce("not-json");
-    const parseSpy = jest.spyOn(JSON, "parse").mockImplementationOnce(() => {
-      throw new Error("bad json");
-    });
+      .mockImplementationOnce(() => {
+        throw new Error("circular scheme");
+      });
 
     render(
       <ThemeProvider customSchemes={[baseSchemes[0]]}>
@@ -619,12 +618,11 @@ describe("ThemeProvider", () => {
 
     await waitFor(() => {
       expect(console.error).toHaveBeenCalledWith(
-        "Failed to parse custom schemes",
+        "Failed to serialize custom schemes",
       );
     });
 
     stringifySpy.mockRestore();
-    parseSpy.mockRestore();
   });
 
   it("does not overwrite a saved theme name before initial resolution completes", async () => {

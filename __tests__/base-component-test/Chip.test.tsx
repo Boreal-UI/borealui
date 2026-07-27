@@ -198,6 +198,20 @@ describe("ChipBase", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
+  it("coalesces repeated close requests during the exit animation", () => {
+    jest.useFakeTimers();
+    const onClose = jest.fn();
+    renderChip({ onClose });
+
+    const closeButton = screen.getByTestId("chip-chip-close");
+    fireEvent.click(closeButton);
+    fireEvent.click(closeButton);
+    fireEvent.keyDown(window, { key: "Escape" });
+    act(() => jest.advanceTimersByTime(300));
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
   it("adds fadeout class while closing", () => {
     jest.useFakeTimers();
     renderChip();
@@ -278,6 +292,47 @@ describe("ChipBase", () => {
     expect(onClose).toHaveBeenCalledTimes(1);
   });
 
+  it("keeps auto-close timers independent across multiple chip instances", () => {
+    jest.useFakeTimers();
+    const firstOnClose = jest.fn();
+    const secondOnClose = jest.fn();
+
+    render(
+      <>
+        <ChipBase
+          id="first-chip"
+          message="First"
+          visible
+          duration={500}
+          onClose={firstOnClose}
+          closeIcon={FaTimes}
+          IconButtonComponent={DummyIconButton}
+          classMap={classMap}
+          data-testid="first-chip"
+        />
+        <ChipBase
+          id="second-chip"
+          message="Second"
+          visible
+          duration={1000}
+          onClose={secondOnClose}
+          closeIcon={FaTimes}
+          IconButtonComponent={DummyIconButton}
+          classMap={classMap}
+          data-testid="second-chip"
+        />
+      </>,
+    );
+
+    act(() => jest.advanceTimersByTime(800));
+    expect(firstOnClose).toHaveBeenCalledTimes(1);
+    expect(secondOnClose).not.toHaveBeenCalled();
+
+    act(() => jest.advanceTimersByTime(500));
+    expect(firstOnClose).toHaveBeenCalledTimes(1);
+    expect(secondOnClose).toHaveBeenCalledTimes(1);
+  });
+
   it("does not auto-close when autoClose is false", () => {
     jest.useFakeTimers();
     const onClose = jest.fn();
@@ -289,6 +344,19 @@ describe("ChipBase", () => {
     });
 
     expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it("clears pending close work when unmounted", () => {
+    jest.useFakeTimers();
+    const onClose = jest.fn();
+    const { unmount } = renderChip({ onClose });
+
+    fireEvent.click(screen.getByTestId("chip-chip-close"));
+    unmount();
+    act(() => jest.advanceTimersByTime(300));
+
+    expect(onClose).not.toHaveBeenCalled();
+    expect(jest.getTimerCount()).toBe(0);
   });
 
   it("resets closing state when visible changes from false back to true", () => {

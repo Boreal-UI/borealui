@@ -51,7 +51,7 @@ Keep broader spacing rules scoped to your app shell, page layouts, or utility cl
 The CLI can create or repair that safer baseline for Next.js apps:
 
 ```bash
-npx @boreal-ui/cli init --framework next --recommended-globals
+npx @boreal-ui/cli@latest init --framework next --recommended-globals
 ```
 
 Interactive Next.js setup prompts for this by default. Use `--recommended-globals` to apply it without the prompt, or `--no-recommended-globals` to skip it.
@@ -220,12 +220,15 @@ export default function RootLayout({
 | ---------------------- | ----------------------------------------------------------------------------------------- |
 | `children`             | Application or subtree to theme.                                                          |
 | `customSchemes`        | Registers additional color schemes.                                                       |
+| `enableThemeScript`    | Controls pre-hydration script generation. Core defaults to `true`; Next defaults to `false`. |
 | `initialSchemeName`    | Selects the starting scheme by name.                                                      |
 | `syncThemeCookie`      | Persists changes to the SSR theme cookie. Defaults to `true` for Next.                    |
 | `themeCookieName`      | Overrides the SSR theme cookie name. Defaults to `boreal-theme`.                          |
 | `useOnlyCustomSchemes` | Uses only custom schemes instead of built-in schemes.                                     |
 
 When `initialSchemeName` is provided, it is preferred over the saved theme name. Without it, the saved theme name is used when available, then the configured Boreal default, then the first available scheme.
+
+Equivalent `customSchemes` arrays reuse the existing scheme snapshot. For a large custom collection, keep the array in a module-level constant or memoize it so ThemeProvider can also avoid repeated serialization work.
 
 ## Custom Color Schemes
 

@@ -62,7 +62,15 @@ export default function ToastProviderBase({
     (toast: ToastInput) => {
       const id = toast.id ?? createToastId();
       const nextToast = { ...toast, id };
-      setToasts((items) => [...items, nextToast]);
+      const existingTimer = timersRef.current.get(id);
+      if (existingTimer !== undefined) {
+        window.clearTimeout(existingTimer);
+        timersRef.current.delete(id);
+      }
+      setToasts((items) => [
+        ...items.filter((item) => item.id !== id),
+        nextToast,
+      ]);
 
       const duration = toast.duration ?? defaultDuration;
       if (duration > 0) {

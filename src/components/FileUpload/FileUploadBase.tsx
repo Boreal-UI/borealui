@@ -108,6 +108,10 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
 
   const fileInput = useRef<HTMLInputElement | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const isMountedRef = useRef(true);
+  const uploadResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
+    null,
+  );
   const truncate = (value: string) =>
     value.length > 30 ? `${value.slice(0, 27)}...` : value;
 
@@ -267,23 +271,39 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       }
 
       await Promise.resolve(onSubmit?.(files));
-      announce(successMessage);
+      if (isMountedRef.current) announce(successMessage);
     } catch {
-      announce(failureMessage);
+      if (isMountedRef.current) announce(failureMessage);
     } finally {
       if (intervalRef.current) {
-        if (uploadProgress === undefined) setInternalProgress(100);
         clearInterval(intervalRef.current);
         intervalRef.current = null;
+        if (isMountedRef.current && uploadProgress === undefined) {
+          setInternalProgress(100);
+        }
       }
 
-      setTimeout(() => setUploading(false), 300);
+      if (isMountedRef.current) {
+        if (uploadResetTimerRef.current !== null) {
+          clearTimeout(uploadResetTimerRef.current);
+        }
+        uploadResetTimerRef.current = setTimeout(() => {
+          uploadResetTimerRef.current = null;
+          setUploading(false);
+        }, 300);
+      }
     }
   };
 
   useEffect(() => {
+    isMountedRef.current = true;
+
     return () => {
+      isMountedRef.current = false;
       if (intervalRef.current) clearInterval(intervalRef.current);
+      if (uploadResetTimerRef.current !== null) {
+        clearTimeout(uploadResetTimerRef.current);
+      }
     };
   }, []);
 

@@ -7,6 +7,7 @@ import React, {
   useMemo,
   useCallback,
   useLayoutEffect,
+  useRef,
 } from "react";
 import { ThemeContextType, ThemeProviderProps } from "./ThemeContext.types";
 import {
@@ -31,6 +32,26 @@ export const ThemeContext = createContext<ThemeContextType | undefined>(
 const useBrowserLayoutEffect =
   typeof window === "undefined" ? useEffect : useLayoutEffect;
 
+const emptyCustomSchemes: NonNullable<ThemeProviderProps["customSchemes"]> = [];
+
+const useStableCustomSchemes = (
+  customSchemes: NonNullable<ThemeProviderProps["customSchemes"]>,
+) => {
+  const snapshotRef = useRef({ key: "[]", value: emptyCustomSchemes });
+
+  try {
+    const key = JSON.stringify(customSchemes);
+    if (snapshotRef.current.key !== key) {
+      snapshotRef.current = { key, value: customSchemes };
+    }
+  } catch {
+    console.error("Failed to serialize custom schemes");
+    return emptyCustomSchemes;
+  }
+
+  return snapshotRef.current.value;
+};
+
 const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   customSchemes = [],
@@ -40,34 +61,18 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   themeCookieName = THEME_COOKIE_NAME,
   useOnlyCustomSchemes = false,
 }) => {
-  const customSchemesKey = useMemo(
-    () => JSON.stringify(customSchemes ?? []),
-    [customSchemes],
-  );
-
   const [hasResolvedInitialScheme, setHasResolvedInitialScheme] =
     useState(false);
 
-  const parsedCustomSchemes = useMemo(() => {
-    try {
-      const parsed: unknown = JSON.parse(customSchemesKey);
-      if (Array.isArray(parsed)) {
-        return parsed as typeof customSchemes;
-      }
-    } catch {
-      console.error("Failed to parse custom schemes");
-    }
-
-    return [];
-  }, [customSchemesKey]);
+  const stableCustomSchemes = useStableCustomSchemes(customSchemes);
 
   const schemes = useMemo(
     () =>
       getAvailableSchemes({
-        customSchemes: parsedCustomSchemes,
+        customSchemes: stableCustomSchemes,
         useOnlyCustomSchemes,
       }),
-    [parsedCustomSchemes, useOnlyCustomSchemes],
+    [stableCustomSchemes, useOnlyCustomSchemes],
   );
 
   const resolveSelectedSchemeName = useCallback(
@@ -147,16 +152,20 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   );
 
   const themeInitializationScript = useMemo(
-    () =>
-      getThemeInitializationScript({
-        customSchemes: parsedCustomSchemes,
+    () => {
+      if (!enableThemeScript) return "";
+
+      return getThemeInitializationScript({
+        customSchemes: stableCustomSchemes,
         initialSchemeName,
         themeCookieName,
         useOnlyCustomSchemes,
-      }),
+      });
+    },
     [
+      enableThemeScript,
       initialSchemeName,
-      parsedCustomSchemes,
+      stableCustomSchemes,
       themeCookieName,
       useOnlyCustomSchemes,
     ],

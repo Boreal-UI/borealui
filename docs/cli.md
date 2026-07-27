@@ -24,6 +24,8 @@ npx @boreal-ui/cli@latest setup ./apps/web
 npx @boreal-ui/cli@latest init --cwd ./apps/web
 ```
 
+The setup edits are idempotent. Running the command again repairs missing setup without intentionally duplicating the package dependency, stylesheet import, provider wrapper, or generated provider file. Use `--dry-run` after upgrades to inspect what the current CLI would change.
+
 ## Options
 
 | Option | Description |

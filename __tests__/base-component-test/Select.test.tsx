@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { act, render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BaseSelect from "@/components/Select/SelectBase";
 
@@ -40,6 +40,10 @@ describe("BaseSelect", () => {
 
   beforeEach(() => {
     jest.clearAllMocks();
+  });
+
+  afterEach(() => {
+    jest.useRealTimers();
   });
 
   it("renders the select and allows selecting an option", () => {
@@ -504,6 +508,53 @@ describe("BaseSelect", () => {
     });
 
     expect(select).toHaveAttribute("aria-busy", "false");
+  });
+
+  it("polls after each async load completes without overlapping requests", async () => {
+    jest.useFakeTimers();
+    let resolveFirst: (
+      options: { value: string; label: string }[],
+    ) => void = () => {};
+    const asyncOptions = jest
+      .fn()
+      .mockImplementationOnce(
+        () =>
+          new Promise<{ value: string; label: string }[]>((resolve) => {
+            resolveFirst = resolve;
+          }),
+      )
+      .mockResolvedValue([{ value: "pear", label: "Pear" }]);
+
+    const { unmount } = render(
+      <BaseSelect
+        {...defaultProps}
+        asyncOptions={asyncOptions}
+        pollInterval={1000}
+        aria-label="Fruit select"
+      />,
+    );
+
+    act(() => jest.advanceTimersByTime(5000));
+    expect(asyncOptions).toHaveBeenCalledTimes(1);
+
+    await act(async () => {
+      resolveFirst([{ value: "pear", label: "Pear" }]);
+      await Promise.resolve();
+    });
+    expect(screen.getByRole("option", { name: "Pear" })).toBeInTheDocument();
+
+    act(() => jest.advanceTimersByTime(999));
+    expect(asyncOptions).toHaveBeenCalledTimes(1);
+
+    await act(async () => {
+      jest.advanceTimersByTime(1);
+      await Promise.resolve();
+    });
+    expect(asyncOptions).toHaveBeenCalledTimes(2);
+
+    unmount();
+    act(() => jest.advanceTimersByTime(5000));
+    expect(asyncOptions).toHaveBeenCalledTimes(2);
   });
 
   it("has no accessibility violations", async () => {

@@ -189,17 +189,19 @@ function DataTableBase<T extends object>({
 
   const orderedColumns = useMemo(() => {
     const byKey = new Map(columns.map((column) => [column.key, column]));
+    const orderedKeySet = new Set(resolvedColumnOrder);
+    const visibleKeySet = new Set(resolvedVisibleColumnKeys);
     const ordered = resolvedColumnOrder
       .map((key) => byKey.get(key))
       .filter((column): column is Column<T> => Boolean(column));
     const missing = columns.filter(
-      (column) => !resolvedColumnOrder.includes(column.key),
+      (column) => !orderedKeySet.has(column.key),
     );
     const nextColumns = [...ordered, ...missing];
 
     if (!columnVisibility) return nextColumns;
     return nextColumns.filter((column) =>
-      resolvedVisibleColumnKeys.includes(column.key),
+      visibleKeySet.has(column.key),
     );
   }, [
     columns,
@@ -334,8 +336,9 @@ function DataTableBase<T extends object>({
       setInternalSelectedKeys(nextKeys);
     }
 
+    const nextKeySet = new Set(nextKeys);
     const nextRows = sortedData.filter((row, index) =>
-      nextKeys.includes(getResolvedRowKey(row, index)),
+      nextKeySet.has(getResolvedRowKey(row, index)),
     );
     onSelectionChange?.(nextKeys, nextRows);
   };
@@ -363,9 +366,13 @@ function DataTableBase<T extends object>({
 
   const allVisibleKeys = selectableRows
     ? renderedData.map((row, index) =>
-        getResolvedRowKey(row, virtualStartIndex + index),
+        getResolvedRowKey(
+          row,
+          (serverPagination ? 0 : pageOffset) + virtualStartIndex + index,
+        ),
       )
     : [];
+  const allVisibleKeySet = new Set(allVisibleKeys);
   const allVisibleSelected =
     allVisibleKeys.length > 0 &&
     allVisibleKeys.every((key) => selectedKeySet.has(key));
@@ -373,7 +380,7 @@ function DataTableBase<T extends object>({
   const toggleAllRows = () => {
     if (allVisibleSelected) {
       updateSelection(
-        selectedKeys.filter((key) => !allVisibleKeys.includes(key)),
+        selectedKeys.filter((key) => !allVisibleKeySet.has(key)),
       );
       return;
     }
@@ -395,12 +402,13 @@ function DataTableBase<T extends object>({
     const nextKeys = expandedRowKeySet.has(key)
       ? resolvedExpandedRowKeys.filter((expandedKey) => expandedKey !== key)
       : [...resolvedExpandedRowKeys, key];
+    const nextKeySet = new Set(nextKeys);
 
     if (!expandedRowKeys) setInternalExpandedRowKeys(nextKeys);
     onExpandedRowsChange?.(
       nextKeys,
       sortedData.filter((candidate, candidateIndex) =>
-        nextKeys.includes(getResolvedRowKey(candidate, candidateIndex)),
+        nextKeySet.has(getResolvedRowKey(candidate, candidateIndex)),
       ),
     );
   };
@@ -465,9 +473,10 @@ function DataTableBase<T extends object>({
       nextVisibleOrder[nextIndex],
       nextVisibleOrder[index],
     ];
+    const nextVisibleKeySet = new Set(nextVisibleOrder);
     const hiddenKeys = columns
       .map((column) => column.key)
-      .filter((key) => !nextVisibleOrder.includes(key));
+      .filter((key) => !nextVisibleKeySet.has(key));
 
     updateColumnOrder([...nextVisibleOrder, ...hiddenKeys]);
   };

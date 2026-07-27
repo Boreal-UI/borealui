@@ -1088,6 +1088,25 @@ describe("DataTableBase", () => {
     expect(screen.getByText("Bob")).toBeInTheDocument();
   });
 
+  it("keeps index-based selection keys distinct across client pages", () => {
+    const onSelectionChange = jest.fn();
+    renderTable({
+      pagination: true,
+      itemsPerPage: 1,
+      selectableRows: true,
+      onSelectionChange,
+    });
+
+    fireEvent.click(screen.getByRole("checkbox", { name: "Select row 1" }));
+    fireEvent.click(screen.getByTestId("data-table-pagination-next"));
+    fireEvent.click(screen.getByRole("checkbox", { name: "Select row 2" }));
+
+    expect(onSelectionChange).toHaveBeenLastCalledWith(
+      [0, 1],
+      baseData,
+    );
+  });
+
   it("supports server pagination without slicing provided data", () => {
     const onPageChange = jest.fn();
 

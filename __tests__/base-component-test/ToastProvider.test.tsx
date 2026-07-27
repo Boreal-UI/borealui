@@ -202,6 +202,64 @@ describe("ToastProviderBase", () => {
     expect(screen.getByText("Something went wrong.")).toBeInTheDocument();
   });
 
+  it("replaces an existing toast when the same id is added again", () => {
+    renderToastProvider();
+
+    fireEvent.click(screen.getByText("Add success toast"));
+    fireEvent.click(screen.getByText("Add success toast"));
+
+    expect(screen.getByTestId("toast-count")).toHaveTextContent("1");
+    expect(
+      screen.getAllByTestId("toast-provider-toast-success-toast"),
+    ).toHaveLength(1);
+  });
+
+  it("restarts the expiry timer when replacing a toast with the same id", () => {
+    function ReplacementTimerTester() {
+      const { addToast } = useToast();
+
+      return (
+        <>
+          <button
+            type="button"
+            onClick={() =>
+              addToast({ id: "shared", message: "First", duration: 500 })
+            }
+          >
+            Add first
+          </button>
+          <button
+            type="button"
+            onClick={() =>
+              addToast({ id: "shared", message: "Replacement", duration: 1000 })
+            }
+          >
+            Add replacement
+          </button>
+        </>
+      );
+    }
+
+    render(
+      <ToastProviderBase classMap={classMap}>
+        <ReplacementTimerTester />
+      </ToastProviderBase>,
+    );
+
+    fireEvent.click(screen.getByText("Add first"));
+    act(() => jest.advanceTimersByTime(250));
+    fireEvent.click(screen.getByText("Add replacement"));
+
+    act(() => jest.advanceTimersByTime(250));
+    expect(screen.getByText("Replacement")).toBeInTheDocument();
+
+    act(() => jest.advanceTimersByTime(749));
+    expect(screen.getByText("Replacement")).toBeInTheDocument();
+
+    act(() => jest.advanceTimersByTime(1));
+    expect(screen.queryByText("Replacement")).not.toBeInTheDocument();
+  });
+
   it("dismisses a toast when the dismiss button is clicked", () => {
     renderToastProvider();
 
