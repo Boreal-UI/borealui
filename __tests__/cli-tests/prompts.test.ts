@@ -107,14 +107,14 @@ describe("promptForOptions", () => {
         cwd: ".",
         framework: "react",
         install: false,
-        packageManager: "bun",
+        packageManager: "composer",
         dryRun: false,
         yes: true,
       }),
-    ).rejects.toThrow("Package manager must be npm, pnpm, or yarn.");
+    ).rejects.toThrow("Package manager must be npm, pnpm, yarn, or bun.");
 
     expect(failSpy).toHaveBeenCalledWith(
-      "Package manager must be npm, pnpm, or yarn.",
+      "Package manager must be npm, pnpm, yarn, or bun.",
     );
   });
 
@@ -134,27 +134,7 @@ describe("promptForOptions", () => {
     );
   });
 
-  it("asks for framework when missing and yes is false", async () => {
-    questionMock.mockResolvedValueOnce("next");
-
-    const result = await promptForOptions({
-      cwd: ".",
-      framework: undefined,
-      install: false,
-      packageManager: "npm",
-      dryRun: false,
-      yes: false,
-    });
-
-    expect(result.framework).toBe("next");
-    expect(questionMock).toHaveBeenCalledWith(
-      "Framework? Leave blank to auto-detect, or choose react/next: ",
-    );
-  });
-
-  it("leaves framework undefined when framework prompt answer is blank", async () => {
-    questionMock.mockResolvedValueOnce("");
-
+  it("leaves framework detection to the project when framework is missing", async () => {
     const result = await promptForOptions({
       cwd: ".",
       framework: undefined,
@@ -165,6 +145,7 @@ describe("promptForOptions", () => {
     });
 
     expect(result.framework).toBeUndefined();
+    expect(questionMock).not.toHaveBeenCalled();
   });
 
   it("sets install to false during dry run", async () => {
@@ -193,7 +174,7 @@ describe("promptForOptions", () => {
       yes: true,
     });
 
-    expect(result.install).toBe(false);
+    expect(result.install).toBe(true);
   });
 
   it("prompts install and accepts yes answer", async () => {
@@ -210,7 +191,7 @@ describe("promptForOptions", () => {
 
     expect(result.install).toBe(true);
     expect(questionMock).toHaveBeenCalledWith(
-      "Run dependency install after applying changes? (y/N): ",
+      "Run dependency install after applying changes? (Y/n): ",
     );
   });
 

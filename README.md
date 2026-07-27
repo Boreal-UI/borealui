@@ -26,20 +26,16 @@ npm install @boreal-ui/core
 npm install @boreal-ui/next
 ```
 
-For TypeScript declarations, add the types package as a dev dependency:
-
-```bash
-npm install -D @boreal-ui/types
-```
+Component declarations work automatically through either runtime package. Install `@boreal-ui/types` directly only when application code or declaration tooling imports from `@boreal-ui/types` itself.
 
 `@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js. `marked` is a peer dependency used by the Markdown renderer.
 
 ## CLI Setup
 
-Use the CLI inside an existing React or Next.js project to add only the file changes Boreal UI needs: the package dependency, the global stylesheet import, `ThemeProvider`, and default style config.
+Use the CLI inside an existing React or Next.js project to detect the framework and package manager, install the runtime dependency, import the global stylesheet, and wire `ThemeProvider`.
 
 ```bash
-npx @boreal-ui/cli@latest init
+npx @boreal-ui/cli@latest init --yes
 ```
 
 You can preview changes or run non-interactively:

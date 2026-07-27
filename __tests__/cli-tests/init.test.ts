@@ -89,7 +89,7 @@ describe("Boreal UI CLI setup", () => {
     writeFileSync(join(root, "src", "main.tsx"), entrySource, "utf8");
   }
 
-  it("disables the pre-hydration theme script for Next app router setup", async () => {
+  it("creates a minimal client provider for Next app router setup", async () => {
     writeNextApp(`export default function RootLayout({
   children,
 }: {
@@ -125,11 +125,15 @@ describe("Boreal UI CLI setup", () => {
 
     expect(provider).toContain('"use client";');
     expect(provider).toContain(
-      'import { ThemeProvider, setBorealStyleConfig } from "@boreal-ui/next";',
+      'import type { ReactNode } from "react";',
     );
-    expect(provider).toContain("setBorealStyleConfig({");
-    expect(provider).toContain('defaultColorSchemeName: "Forest Dusk"');
-    expect(provider).toContain('<ThemeProvider initialSchemeName="Forest Dusk">');
+    expect(provider).toContain(
+      'import { ThemeProvider } from "@boreal-ui/next";',
+    );
+    expect(provider).toContain("{ children }: { children: ReactNode }");
+    expect(provider).toContain("<ThemeProvider>{children}</ThemeProvider>");
+    expect(provider).not.toContain("setBorealStyleConfig");
+    expect(provider).not.toContain("initialSchemeName");
   });
 
   it("repairs an existing Next app provider to avoid pre-hydration html mutation", async () => {
@@ -199,7 +203,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     expect(packageJson.dependencies["@boreal-ui/next"]).toBe(`^${VERSION}`);
   });
 
-  it("adds @boreal-ui/types as a dev dependency for TypeScript apps with --yes", async () => {
+  it("does not add a redundant separate types package for TypeScript apps", async () => {
     writeNextApp(`export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -220,12 +224,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
     const packageJson = JSON.parse(
       readFileSync(join(root, "package.json"), "utf8"),
     ) as {
-      devDependencies: Record<string, string>;
+      devDependencies?: Record<string, string>;
     };
 
-    expect(packageJson.devDependencies["@boreal-ui/types"]).toBe(
-      `^${VERSION}`,
-    );
+    expect(packageJson.devDependencies?.["@boreal-ui/types"]).toBeUndefined();
   });
 
   it("does not add @boreal-ui/types for JavaScript apps", async () => {
@@ -264,31 +266,7 @@ createRoot(document.getElementById("root")).render(<App />);
     expect(packageJson.devDependencies?.["@boreal-ui/types"]).toBeUndefined();
   });
 
-  it("prompts before adding @boreal-ui/types when TypeScript is detected", async () => {
-    writePackageJson({
-      react: "^19.0.0",
-      "react-dom": "^19.0.0",
-    });
-    writeFileSync(join(root, "tsconfig.json"), "{}", "utf8");
-
-    const prompt = jest.fn<Promise<boolean>, []>().mockResolvedValue(false);
-
-    await expect(
-      __testing.resolveTypesPackageOption(
-        {
-          dryRun: false,
-          yes: false,
-        },
-        root,
-        JSON.parse(readFileSync(join(root, "package.json"), "utf8")),
-        prompt,
-      ),
-    ).resolves.toBe(false);
-
-    expect(prompt).toHaveBeenCalledTimes(1);
-  });
-
-  it("adds an AGENTS.md guide for Boreal UI consumers with --yes", async () => {
+  it("adds an AGENTS.md guide only when explicitly requested", async () => {
     writeReactApp(`import React from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App";
@@ -300,6 +278,7 @@ createRoot(document.getElementById("root")!).render(<App />);
       cwd: root,
       framework: "react",
       install: false,
+      addAgentsGuide: true,
       yes: true,
     });
 
@@ -315,7 +294,7 @@ createRoot(document.getElementById("root")!).render(<App />);
       "Import Boreal globals once from `@boreal-ui/core/globals.css`",
     );
     expect(agentsGuide).toContain(
-      "Use `@boreal-ui/types` for public type imports in TypeScript projects.",
+      "Component declarations work through the framework package",
     );
   });
 
@@ -340,26 +319,21 @@ createRoot(document.getElementById("root")!).render(<App />);
     );
   });
 
-  it("prompts before adding an AGENTS.md guide when it is missing", async () => {
-    writePackageJson({
-      react: "^19.0.0",
-      "react-dom": "^19.0.0",
+  it("does not add an AGENTS.md guide during the default setup", async () => {
+    writeReactApp(`import App from "./App";
+import { createRoot } from "react-dom/client";
+
+createRoot(document.getElementById("root")!).render(<App />);
+`);
+
+    await initCommand({
+      cwd: root,
+      framework: "react",
+      install: false,
+      yes: true,
     });
 
-    const prompt = jest.fn<Promise<boolean>, []>().mockResolvedValue(false);
-
-    await expect(
-      __testing.resolveAgentsGuideOption(
-        {
-          dryRun: false,
-          yes: false,
-        },
-        root,
-        prompt,
-      ),
-    ).resolves.toBe(false);
-
-    expect(prompt).toHaveBeenCalledTimes(1);
+    expect(existsSync(join(root, "AGENTS.md"))).toBe(false);
   });
 
   it("does not duplicate @boreal-ui/next when it already exists", async () => {
@@ -559,10 +533,10 @@ export default function AppProviders({ children }: { children: React.ReactNode }
     expect(layout).toContain("<AppProviders>{children}</AppProviders>");
 
     expect(provider).toContain(
-      'import { ThemeProvider, setBorealStyleConfig } from "@boreal-ui/next";',
+      'import { ThemeProvider } from "@boreal-ui/next";',
     );
     expect(provider).toContain(
-      '<ThemeProvider initialSchemeName="Forest Dusk">{children}</ThemeProvider>',
+      '<ThemeProvider>{children}</ThemeProvider>',
     );
   });
 
@@ -584,10 +558,10 @@ export default function AppProviders({ children }: { children: React.ReactNode }
 
     expect(app).toContain('import "@boreal-ui/next/globals.css";');
     expect(app).toContain(
-      'import { ThemeProvider, setBorealStyleConfig } from "@boreal-ui/next";',
+      'import { ThemeProvider } from "@boreal-ui/next";',
     );
-    expect(app).toContain("setBorealStyleConfig({");
-    expect(app).toContain('<ThemeProvider initialSchemeName="Forest Dusk">');
+    expect(app).not.toContain("setBorealStyleConfig");
+    expect(app).toContain("<ThemeProvider>");
     expect(app).toContain("<Component {...pageProps} />");
     expect(app).toContain("</ThemeProvider>");
     expect(existsSync(join(root, "pages", "boreal-provider.tsx"))).toBe(false);
@@ -617,11 +591,11 @@ createRoot(document.getElementById("root")!).render(<App />);
 
     expect(entry).toContain('import "@boreal-ui/core/globals.css";');
     expect(entry).toContain(
-      'import { ThemeProvider, setBorealStyleConfig } from "@boreal-ui/core";',
+      'import { ThemeProvider } from "@boreal-ui/core";',
     );
     expect(packageJson.dependencies["@boreal-ui/core"]).toBe(`^${VERSION}`);
-    expect(entry).toContain("setBorealStyleConfig({");
-    expect(entry).toContain('<ThemeProvider initialSchemeName="Forest Dusk">');
+    expect(entry).not.toContain("setBorealStyleConfig");
+    expect(entry).toContain("<ThemeProvider>");
     expect(entry).toContain("<App />");
     expect(entry).toContain("</ThemeProvider>");
   });
@@ -672,8 +646,28 @@ createRoot(document.getElementById("root")!).render(<App />);
 
     expect(logSpy).toHaveBeenCalledWith(
       expect.stringContaining(
-        "Run pnpm install if dependencies have not been installed yet.",
+        "Next step: run pnpm install.",
       ),
+    );
+  });
+
+  it("detects Bun from its current text lockfile", async () => {
+    writeNextApp(`export default function RootLayout({ children }) {
+  return <html lang="en"><body>{children}</body></html>;
+}
+`);
+    writeFileSync(join(root, "bun.lock"), "", "utf8");
+
+    await initCommand({
+      cwd: root,
+      framework: "next",
+      install: false,
+      recommendedGlobals: false,
+      yes: true,
+    });
+
+    expect(logSpy).toHaveBeenCalledWith(
+      expect.stringContaining("Next step: run bun install."),
     );
   });
 

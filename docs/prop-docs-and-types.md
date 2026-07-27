@@ -4,7 +4,7 @@ Boreal UI publishes TypeScript types and generated prop metadata so consumers ca
 
 ## Public Types
 
-Shared public types are exported from `@boreal-ui/types`, which TypeScript consumers should install as a dev dependency.
+Component declarations work automatically through `@boreal-ui/core` and `@boreal-ui/next`. When application code imports shared declarations directly from `@boreal-ui/types`, declare that package as a dev dependency:
 
 ```bash
 npm install -D @boreal-ui/types

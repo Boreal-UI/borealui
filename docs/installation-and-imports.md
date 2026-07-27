@@ -14,7 +14,7 @@ npm install @boreal-ui/core
 npm install @boreal-ui/next
 ```
 
-For TypeScript projects, install declarations as a dev dependency:
+Component declarations work automatically through the selected runtime package. If application code imports shared declarations directly from `@boreal-ui/types`, declare it as a dev dependency so strict package managers can resolve that import:
 
 ```bash
 npm install -D @boreal-ui/types
