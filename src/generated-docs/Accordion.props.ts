@@ -234,8 +234,7 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "description": "Controls the shadow of the accordion.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "styling"
     },
     {
       "name": "size",

@@ -131,7 +131,7 @@ export const chipPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "role",
-      "type": "\"none\" | \"alert\" | \"log\" | \"presentation\" | \"status\"",
+      "type": "\"none\" | \"status\" | \"alert\" | \"log\" | \"presentation\"",
       "description": "ARIA role for the chip container. Defaults to \"alert\".",
       "required": false,
       "inherited": false,
@@ -153,8 +153,7 @@ export const chipPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the chip ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "styling"
     },
     {
       "name": "size",

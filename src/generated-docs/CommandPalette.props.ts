@@ -202,8 +202,7 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the palette ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "styling"
     },
     {
       "name": "state",

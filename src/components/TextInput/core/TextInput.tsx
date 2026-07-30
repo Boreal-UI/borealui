@@ -12,6 +12,7 @@ const classes = {
   labelBottom: "textInput_labelBottom",
   labelLeft: "textInput_labelLeft",
   labelRight: "textInput_labelRight",
+  fullWidth: "textInput_fullWidth",
 
   textInput: "textInput",
   iconContainer: "textInput_icon_container",

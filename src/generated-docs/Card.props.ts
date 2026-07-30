@@ -298,6 +298,15 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "imageInset",
+      "type": "\"none\" | SizeType",
+      "description": "Adds inset padding around the image instead of filling its entire block.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"none\""
+    },
+    {
       "name": "imageUrl",
       "type": "CardImageSource",
       "description": "Image URL or static asset used as the card's visual. Can be a string or an object with { src, width, height }.",
@@ -413,8 +422,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "description": "Optional shadow style for the card ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "styling"
     },
     {
       "name": "size",

@@ -140,8 +140,7 @@ export const togglePropDocs: GeneratedComponentDoc = {
       "description": "Shadow style applied to the toggle. \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "styling"
     },
     {
       "name": "size",

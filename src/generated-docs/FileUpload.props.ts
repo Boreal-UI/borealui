@@ -35,8 +35,7 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the control button ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "props"
     },
     {
       "name": "data-testid",
@@ -295,8 +294,7 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the wrapping element ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "props"
     },
     {
       "name": "rejectedFilesAriaLabel",

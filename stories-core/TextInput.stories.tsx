@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { FaInbox, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { TextInput } from "../src/index.core";
 import type { TextInputProps } from "../src/components/TextInput/TextInput.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import {
   roundingOptions,
   shadowOptions,
-  stateOptions,
-  themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import {
   renderThemeVariants,
@@ -66,6 +64,22 @@ export const WithIcon: Story = {
         {...args}
         icon={FaUser}
         placeholder="Username"
+        value={value}
+        onChange={(value) => setValue(value)}
+      />
+    );
+  },
+};
+
+export const FullWidth: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextInput
+        {...args}
+        icon={FaUser}
+        placeholder="Username"
+        fullWidth
         value={value}
         onChange={(value) => setValue(value)}
       />

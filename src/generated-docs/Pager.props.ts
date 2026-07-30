@@ -163,8 +163,7 @@ export const pagerPropDocs: GeneratedComponentDoc = {
       "description": "Shadow of the controls. One of: \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "styling"
     },
     {
       "name": "size",

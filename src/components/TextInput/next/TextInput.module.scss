@@ -11,6 +11,10 @@
     width: fit-content;
     align-items: center;
     justify-content: flex-start;
+
+    &.fullWidth {
+      width: 100%;
+    }
   }
 
   .label {
@@ -79,6 +83,10 @@
     border: none;
     background-color: transparent;
     color: inherit;
+
+    &.fullWidth {
+      width: 100%;
+    }
 
     &:focus-within {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));

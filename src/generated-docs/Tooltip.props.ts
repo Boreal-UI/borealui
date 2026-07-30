@@ -109,8 +109,7 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style of the tooltip. \"none\" | \"light\" | \"medium\" | \"strong\" | \"intense\"",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "styling"
     },
     {
       "name": "state",

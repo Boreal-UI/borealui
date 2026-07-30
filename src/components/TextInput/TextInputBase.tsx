@@ -32,6 +32,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       rounding = getDefaultRounding(),
       shadow,
       onChange,
+      fullWidth = false,
       state,
       disabled = false,
       autocomplete = false,
@@ -143,9 +144,10 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         combineClassNames(
           classMap.container,
           classMap[`label${capitalize(resolvedLabelPosition)}`],
+          fullWidth && classMap.fullWidth,
           containerClassName,
         ),
-      [classMap, resolvedLabelPosition, containerClassName],
+      [classMap, resolvedLabelPosition, fullWidth, containerClassName],
     );
 
     const wrapperClass = useMemo(
@@ -159,6 +161,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
           disabled && classMap.disabled,
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
+          fullWidth && classMap.fullWidth,
           className,
         ),
       [
@@ -170,6 +173,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         disabled,
         shadow,
         rounding,
+        fullWidth,
         className,
       ],
     );

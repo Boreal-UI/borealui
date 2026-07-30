@@ -13,20 +13,6 @@ import {
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
 
-const themeOptions: NonNullable<TextInputProps["theme"]>[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: NonNullable<TextInputProps["state"]>[] = [
-  "success",
-  "error",
-  "warning",
-];
-
 const roundingOptions: NonNullable<TextInputProps["rounding"]>[] = [
   "none",
   "small",
@@ -89,6 +75,22 @@ export const WithIcon: Story = {
         {...args}
         icon={FaUser}
         placeholder="Username"
+        value={value}
+        onChange={(value) => setValue(value)}
+      />
+    );
+  },
+};
+
+export const FullWidth: Story = {
+  render: (args) => {
+    const [value, setValue] = useState("");
+    return (
+      <TextInput
+        {...args}
+        icon={FaUser}
+        placeholder="Username"
+        fullWidth
         value={value}
         onChange={(value) => setValue(value)}
       />

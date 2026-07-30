@@ -185,8 +185,7 @@ export const pageHeaderPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the component.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "styling"
     },
     {
       "name": "srOnlyClassName",

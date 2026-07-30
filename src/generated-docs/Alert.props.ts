@@ -137,7 +137,7 @@ export const alertPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "role",
-      "type": "\"alert\" | \"note\" | \"status\"",
+      "type": "\"status\" | \"alert\" | \"note\"",
       "description": "Role.",
       "required": false,
       "inherited": false,
@@ -159,8 +159,7 @@ export const alertPropDocs: GeneratedComponentDoc = {
       "description": "Shadow.",
       "required": false,
       "inherited": false,
-      "category": "styling",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "styling"
     },
     {
       "name": "state",

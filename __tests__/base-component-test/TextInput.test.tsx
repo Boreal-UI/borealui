@@ -14,6 +14,7 @@ const mockStyles = {
   labelLeft: "labelLeft",
   labelRight: "labelRight",
   labelBottom: "labelBottom",
+  fullWidth: "fullWidth",
   textInput: "textInput",
   iconContainer: "iconContainer",
   togglePassword: "togglePassword",
@@ -440,6 +441,28 @@ describe("TextInputBase", () => {
     );
 
     expect(screen.getByTestId("text-input")).toHaveClass("labelLeft");
+  });
+
+  it("applies full-width styling to the container and wrapper when enabled", () => {
+    render(
+      <TextInputBase
+        classMap={mockStyles}
+        IconButton={IconButton}
+        fullWidth
+      />,
+    );
+
+    expect(screen.getByTestId("text-input")).toHaveClass("fullWidth");
+    expect(screen.getByTestId("text-input-wrapper")).toHaveClass("fullWidth");
+  });
+
+  it("does not apply full-width styling by default", () => {
+    render(<TextInputBase classMap={mockStyles} IconButton={IconButton} />);
+
+    expect(screen.getByTestId("text-input")).not.toHaveClass("fullWidth");
+    expect(screen.getByTestId("text-input-wrapper")).not.toHaveClass(
+      "fullWidth",
+    );
   });
 
   it("applies custom class names to text input sections", () => {

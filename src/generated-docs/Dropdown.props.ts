@@ -151,8 +151,7 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the dropdown menu ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "props"
     },
     {
       "name": "state",
@@ -212,8 +211,7 @@ export const dropdownPropDocs: GeneratedComponentDoc = {
       "description": "Shadow style for the toggle button ('none' | 'light' | 'medium' | 'strong' | 'intense').",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "configured default shadow (fallback: \"light\")"
+      "category": "props"
     },
     {
       "name": "triggerIcon",

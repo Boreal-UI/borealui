@@ -29,12 +29,20 @@
     background-color: transparent;
     color: inherit;
 
+    &_fullWidth {
+      width: 100%;
+    }
+
     &_container {
       display: flex;
       gap: var(--spacing-xs);
       width: fit-content;
       align-items: center;
       justify-content: flex-start;
+
+      &.textInput_fullWidth {
+        width: 100%;
+      }
     }
 
     &_label {

@@ -159,6 +159,13 @@ export interface TextInputProps extends NativeInputProps {
   maxLength?: number;
 
   /**
+   * If true, the input will take up the full width of its container.
+   *
+   * @default false
+   */
+  fullWidth?: boolean;
+
+  /**
    * Explicit accessible label for the outer field region if needed.
    */
   "aria-label"?: string;
@@ -237,7 +244,6 @@ export interface TextInputProps extends NativeInputProps {
    * Useful for dynamic status or extra context.
    */
   srOnlyText?: ReactNode;
-
 
   /**
    * Optional test ID for testing frameworks.

@@ -141,6 +141,15 @@ describe("Next server component entries", () => {
     expect(screen.getByLabelText("Dark")).toBeChecked();
   });
 
+  it("does not forward the TextInput fullWidth prop to the native input", () => {
+    render(<TextInput label="Name" fullWidth testId="server-text-input" />);
+
+    const input = screen.getByLabelText("Name");
+
+    expect(input).not.toHaveAttribute("fullWidth");
+    expect(input).not.toHaveAttribute("fullwidth");
+  });
+
   it("renders additional server page and status compositions", () => {
     render(
       <>
