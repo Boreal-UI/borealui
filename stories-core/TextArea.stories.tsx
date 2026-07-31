@@ -13,6 +13,7 @@ import {
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -34,6 +35,15 @@ const meta: Meta<TextAreaProps> = {
 
 export default meta;
 type Story = StoryObj<TextAreaProps>;
+
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: TextArea,
+      args: { label: "Notes" },
+      labelProp: "label",
+    }),
+};
 
 export const Default: Story = {
   render: (args) => {

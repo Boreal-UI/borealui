@@ -1,4 +1,10 @@
 import {
+  LabelPositionType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
+import {
   ButtonHTMLAttributes,
   ForwardRefExoticComponent,
   HTMLAttributes,
@@ -6,13 +12,6 @@ import {
   ReactNode,
   RefAttributes,
 } from "react";
-import {
-  LabelPositionType,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "@/types/types";
 
 type NativeDatePickerProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -95,12 +94,6 @@ export interface DatePickerProps extends NativeDatePickerProps {
    * @default "top"
    */
   labelPosition?: LabelPositionType;
-
-  /**
-   * Supporting description connected with aria-describedby.
-   */
-  description?: ReactNode;
-
   /**
    * Helper text connected with aria-describedby.
    */
@@ -109,7 +102,7 @@ export interface DatePickerProps extends NativeDatePickerProps {
   /**
    * Error text connected with aria-errormessage and announced as an alert.
    */
-  error?: ReactNode;
+  errorMessage?: ReactNode;
 
   /**
    * Whether the picker should stretch to the full available width.
@@ -129,27 +122,18 @@ export interface DatePickerProps extends NativeDatePickerProps {
    * Visual state for styling.
    */
   state?: StateType;
-
   /**
-   * Whether to render outlined styling.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Whether to render glass styling.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding style for the component.
    *
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Shadow style for the component.
@@ -217,7 +201,6 @@ export interface DatePickerProps extends NativeDatePickerProps {
   /**
    * Additional class name for description text.
    */
-  descriptionClassName?: string;
 
   /**
    * Additional class name for helper text.
@@ -280,6 +263,8 @@ export interface DatePickerProps extends NativeDatePickerProps {
    * Backward-compatible alias for test ID attributes.
    */
   "data-testid"?: string;
+  invalid?: boolean;
+  size?: import("@/types/types").SizeType;
 }
 
 export interface DatePickerBaseProps extends DatePickerProps {

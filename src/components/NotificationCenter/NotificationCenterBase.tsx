@@ -26,7 +26,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   "aria-label": ariaLabel = "Notification center",
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
-  "list-aria-label": listAriaLabel,
+  listAriaLabel: listAriaLabel,
   liveRegionPoliteness = "polite",
   liveRegionRelevant = "additions text",
   liveRegionAtomic = false,
@@ -115,7 +115,6 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
     }
 
     prevIds.current = currentIds;
-
   }, [notifications]);
 
   useEffect(
@@ -279,7 +278,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                     )}
                     state="error"
                     size="small"
-                    outline
+                    variant="outline"
                     icon={CloseIcon}
                     onClick={() => onRemove(note.id)}
                     aria-label={`${dismissButtonLabelPrefix} ${index + 1}`}

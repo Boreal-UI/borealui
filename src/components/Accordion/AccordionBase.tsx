@@ -3,8 +3,7 @@ import { AccordionProps } from "./Accordion.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -22,7 +21,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   children,
   lazyLoad = false,
   iconPosition = "right",
-  "no-collapse": preventCollapse = false,
+  disableCollapse: preventCollapse = false,
   asyncContent = false,
   rounding = getDefaultRounding(),
   shadow,
@@ -30,14 +29,13 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   size = getDefaultSize(),
   theme = getDefaultTheme(),
   state,
-  outline = getDefaultOutline(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   expanded,
   disabled = false,
   customCollapsedIcon,
   customExpandedIcon,
-  onToggle,
-  initiallyExpanded = false,
+  onExpandedChange,
+  defaultExpanded = false,
   className,
   getUniqueId,
   classMap,
@@ -55,7 +53,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   const isControlled = expanded !== undefined;
   const internalId = useMemo(() => getUniqueId(), [getUniqueId]);
 
-  const [internalExpanded, setInternalExpanded] = useState(initiallyExpanded);
+  const [internalExpanded, setInternalExpanded] = useState(defaultExpanded);
 
   const controlledOrInternalExpanded = isControlled
     ? Boolean(expanded)
@@ -97,7 +95,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       setInternalExpanded(nextExpanded);
     }
 
-    onToggle?.(nextExpanded);
+    onExpandedChange?.(nextExpanded);
   };
 
   const handleKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
@@ -140,7 +138,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         classMap.accordion,
         classMap[size],
         state && classMap[state],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
@@ -152,7 +150,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
       size,
       theme,
       state,
-      glass,
+      variant,
       shadow,
       rounding,
       disabled,
@@ -167,12 +165,13 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         classMap.header,
         classMap[theme],
         state && classMap[state],
-        outline && classMap.outline,
-        glass && classMap.glass,
+        (variant === "outline" || variant === "glassOutline") &&
+          classMap.outline,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         disabled && classMap.disabled,
         isExpanded && classMap.expanded,
       ),
-    [classMap, theme, state, outline, glass, disabled, isExpanded],
+    [classMap, theme, state, variant, disabled, isExpanded],
   );
 
   const contentClassName = useMemo(
@@ -181,10 +180,10 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         classMap.content,
         theme && classMap[theme],
         state && classMap[state],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         isExpanded && classMap.expanded,
       ),
-    [classMap, glass, theme, state, isExpanded],
+    [classMap, variant, theme, state, isExpanded],
   );
 
   const iconClassName = useMemo(

@@ -1,8 +1,11 @@
+@use "../../../styles/control-sizes" as control-sizes;
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 @layer boreal-ui.components {
+  @include control-sizes.variants(".date_range_picker", (".date_range_picker_input"));
+
   .date_range_picker {
     display: grid;
     gap: var(--spacing-xs);

@@ -40,8 +40,6 @@ const classes = {
   error: "breadCrumbPageHeader_error",
 
   clear: "breadCrumbPageHeader_clear",
-  outline: "breadCrumbPageHeader_outline",
-  glass: "breadCrumbPageHeader_glass",
   disabled: "breadCrumbPageHeader_disabled",
   loading: "breadCrumbPageHeader_loading",
 
@@ -56,6 +54,8 @@ const classes = {
   roundMedium: "breadCrumbPageHeader_round-Medium",
   roundLarge: "breadCrumbPageHeader_round-Large",
   roundFull: "breadCrumbPageHeader_round-Full",
+  glass: "breadCrumbPageHeader_glass",
+  outline: "breadCrumbPageHeader_outline",
 };
 
 const BreadCrumbPageHeader = forwardRef<HTMLElement, BreadCrumbPageHeaderProps>(

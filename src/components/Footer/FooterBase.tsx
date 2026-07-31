@@ -7,7 +7,7 @@ import {
 } from "./Footer.types";
 import { combineClassNames } from "../../utils/classNames";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 import { capitalize } from "@/utils/capitalize";
@@ -18,7 +18,7 @@ const slugify = (value: string) =>
 
 const FooterBase: React.FC<BaseFooterProps> = ({
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   attachment = "static",
   shadow = "none",
   rounding = "none",
@@ -92,7 +92,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   const footerClass = combineClassNames(
     classMap.footer,
     classMap[theme],
-    glass && classMap.glass,
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     layout !== "inline" && classMap[`layout${capitalize(layout)}`],
     shadow !== "none" && classMap[`shadow${capitalize(shadow)}`],
     rounding !== "none" && classMap[`round${capitalize(rounding)}`],
@@ -254,7 +254,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
             aria-label={social["aria-label"] ?? social.title}
             title={social.tooltip ?? social.title}
             theme="clear"
-            glass={glass}
+            variant={variant}
             disabled={social.disabled}
             rel={social.rel}
             target={social.target}

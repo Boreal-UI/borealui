@@ -3,8 +3,7 @@ import { PageHeaderBaseProps } from "./PageHeader.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -28,8 +27,7 @@ const PageHeaderBase = forwardRef<HTMLElement, PageHeaderBaseProps>(
       fullWidth = true,
       theme = getDefaultTheme(),
       state,
-      outline = getDefaultOutline(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
       disabled = false,
@@ -52,8 +50,8 @@ const PageHeaderBase = forwardRef<HTMLElement, PageHeaderBaseProps>(
       classMap.root,
       classMap[theme],
       state && classMap[state],
-      outline && classMap.outline,
-      glass && classMap.glass,
+      (variant === "outline" || variant === "glassOutline") && classMap.outline,
+      (variant === "glass" || variant === "glassOutline") && classMap.glass,
       disabled && classMap.disabled,
       loading && classMap.loading,
       compact && classMap.compact,

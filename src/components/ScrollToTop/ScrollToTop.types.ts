@@ -70,7 +70,6 @@ export interface ScrollToTopProps {
    */
   id?: string;
 
-
   /**
    * Optional test ID for testing frameworks.
    *

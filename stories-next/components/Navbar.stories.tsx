@@ -123,7 +123,7 @@ export const GlassThemeVariants: Story = {
           key={theme}
           {...args}
           theme={theme}
-          glass
+          variant="glass"
           rounding="large"
           shadow="light"
           className={`storybook-nav-${theme}`}

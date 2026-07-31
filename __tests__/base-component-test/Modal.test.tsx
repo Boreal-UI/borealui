@@ -263,10 +263,7 @@ describe("BaseModal", () => {
       "modalHeaderContent",
       "custom-header-content",
     );
-    expect(visibleTitle).toHaveClass(
-      "modalTitle",
-      "custom-title",
-    );
+    expect(visibleTitle).toHaveClass("modalTitle", "custom-title");
     expect(closeButton).toHaveClass("closeButton", "custom-close");
     expect(body).toHaveClass("modalBody", "custom-body");
     expect(footer).toHaveClass("modalFooter", "custom-footer");

@@ -99,9 +99,7 @@ export interface MenuItem {
   submenuId?: string;
 
   /** Selection handler receiving the original item click event. */
-  onSelect?: (
-    event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>,
-  ) => void;
+  onSelect?: (event: MouseEvent<HTMLButtonElement | HTMLAnchorElement>) => void;
 
   /** Convenience click handler called when a non-submenu item is selected. */
   onClick?: () => void;
@@ -136,8 +134,10 @@ export interface MenuItem {
 /**
  * Props for the Menu component.
  */
-export interface MenuProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, "children" | "onKeyDown"> {
+export interface MenuProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  "children" | "onKeyDown"
+> {
   /** Array of menu items, labels, separators, and submenu triggers to render. */
   items: MenuItem[];
 
@@ -195,14 +195,12 @@ export interface MenuProps
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Adds glass styling to the menu panel.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding style for the menu panel.
    *

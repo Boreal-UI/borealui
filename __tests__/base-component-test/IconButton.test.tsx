@@ -14,8 +14,6 @@ const classMap = {
   medium: "medium",
   small: "small",
   large: "large",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   buttonLabel: "button-label",
   loader: "loader",
@@ -30,6 +28,8 @@ const classMap = {
   roundMedium: "round-medium",
   roundLarge: "round-large",
   roundFull: "round-full",
+  glass: "glass",
+  outline: "outline",
 };
 
 describe("IconButtonBase", () => {
@@ -233,7 +233,7 @@ describe("IconButtonBase", () => {
         aria-label="Close"
         theme="primary"
         size="medium"
-        outline
+        variant="outline"
         rounding="large"
         shadow="medium"
         className="custom-class"

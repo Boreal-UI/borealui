@@ -5,6 +5,11 @@ import DatePickerBase from "../DatePickerBase";
 import { DatePickerProps } from "../DatePicker.types";
 
 const classes = {
+  xs: "datePicker_xs",
+  small: "datePicker_small",
+  medium: "datePicker_medium",
+  large: "datePicker_large",
+  xl: "datePicker_xl",
   container: "datePicker_container",
   label: "datePicker_label",
   labelTop: "datePicker_labelTop",
@@ -36,8 +41,6 @@ const classes = {
   error: "datePicker_error",
 
   clear: "datePicker_clear",
-  outline: "datePicker_outline",
-  glass: "datePicker_glass",
   disabled: "datePicker_disabled",
   loading: "datePicker_loading",
 
@@ -52,6 +55,8 @@ const classes = {
   roundMedium: "datePicker_round-Medium",
   roundLarge: "datePicker_round-Large",
   roundFull: "datePicker_round-Full",
+  glass: "datePicker_glass",
+  outline: "datePicker_outline",
 };
 
 const DatePicker = forwardRef<HTMLDivElement, DatePickerProps>((props, ref) => (

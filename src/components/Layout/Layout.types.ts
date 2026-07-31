@@ -4,8 +4,10 @@ export type LayoutGap = "none" | "xs" | "sm" | "md" | "lg" | "xl";
 export type LayoutAlign = "start" | "center" | "end" | "stretch";
 export type LayoutJustify = "start" | "center" | "end" | "between";
 
-export interface LayoutPrimitiveProps
-  extends Omit<HTMLAttributes<HTMLElement>, "as"> {
+export interface LayoutPrimitiveProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  "as"
+> {
   /**
    * As prop for LayoutPrimitive.
    */

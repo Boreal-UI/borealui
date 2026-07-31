@@ -48,9 +48,6 @@ const classes = {
   small: "textInput_small",
   medium: "textInput_medium",
   large: "textInput_large",
-
-  outline: "textInput_outline",
-  glass: "textInput_glass",
   disabled: "textInput_disabled",
 
   shadowNone: "textInput_shadow-None",
@@ -63,6 +60,8 @@ const classes = {
   roundSmall: "textInput_round-Small",
   roundMedium: "textInput_round-Medium",
   roundLarge: "textInput_round-Large",
+  glass: "textInput_glass",
+  outline: "textInput_outline",
 };
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {

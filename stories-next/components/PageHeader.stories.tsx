@@ -62,7 +62,7 @@ const ActionsExample = () => (
     <Button theme="secondary" type="button">
       Export Report
     </Button>
-    <Button theme="tertiary" outline type="button">
+    <Button theme="tertiary" type="button" variant="outline">
       Create New Task
     </Button>
   </>

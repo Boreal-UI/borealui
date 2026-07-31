@@ -24,9 +24,6 @@ const classMap = {
   medium: "sizeMedium",
   large: "sizeLarge",
 
-  outline: "outline",
-  glass: "glass",
-
   shadowNone: "shadowNone",
   shadowLight: "shadowLight",
   shadowMedium: "shadowMedium",
@@ -38,6 +35,8 @@ const classMap = {
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
   roundFull: "roundFull",
+  glass: "glass",
+  outline: "outline",
 };
 
 const renderEmptyState = (
@@ -99,9 +98,8 @@ describe("BaseEmptyState", () => {
       state: "warning",
       size: "large",
       shadow: "medium",
-      rounding: "full",
-      outline: true,
-      glass: true,
+      rounding: "large",
+      variant: "glassOutline",
       className: "customClass",
     });
 
@@ -112,7 +110,7 @@ describe("BaseEmptyState", () => {
     expect(section).toHaveClass("stateWarning");
     expect(section).toHaveClass("sizeLarge");
     expect(section).toHaveClass("shadowMedium");
-    expect(section).toHaveClass("roundFull");
+    expect(section).toHaveClass("roundLarge");
     expect(section).toHaveClass("outline");
     expect(section).toHaveClass("glass");
     expect(section).toHaveClass("customClass");
@@ -206,8 +204,7 @@ describe("BaseEmptyState", () => {
     renderEmptyState({
       actionLabel: "Retry",
       onActionClick: jest.fn(),
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
     });
 
     const button = screen.getByTestId("empty-state-action");

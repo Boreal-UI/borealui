@@ -232,7 +232,9 @@ const BaseModal: React.FC<BaseModalProps> = ({
               )}
             >
               {header ?? (
-                <div className={combineClassNames(classMap.title, titleClassName)}>
+                <div
+                  className={combineClassNames(classMap.title, titleClassName)}
+                >
                   {title}
                 </div>
               )}

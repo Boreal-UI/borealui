@@ -116,7 +116,7 @@ export const GlassThemeVariants: Story = {
               key={theme}
               {...args}
               theme={theme}
-              glass
+              variant="glass"
               activeStep={activeStep}
               onStepClick={setActiveStep}
             />
@@ -138,7 +138,7 @@ export const GlassStateVariants: Story = {
               key={state}
               {...args}
               state={state}
-              glass
+              variant="glass"
               activeStep={activeStep}
               onStepClick={setActiveStep}
             />

@@ -40,7 +40,7 @@ const meta: Meta<DropdownProps> = {
   tags: ["autodocs"],
   args: {
     theme: "primary",
-    align: "right",
+    align: "end",
   },
 };
 
@@ -146,7 +146,7 @@ export const SpaceAwareSubmenus: Story = {
       }}
     >
       <Dropdown
-        align="left"
+        align="start"
         triggerIcon={FaEllipsisV}
         aria-label="Left edge actions"
         items={[
@@ -161,7 +161,7 @@ export const SpaceAwareSubmenus: Story = {
         ]}
       />
       <Dropdown
-        align="right"
+        align="end"
         triggerIcon={FaEllipsisV}
         aria-label="Right edge actions"
         items={[
@@ -192,7 +192,7 @@ export const AlignmentVariants: Story = {
       <div style={{ textAlign: "center" }}>
         <p>Left Aligned</p>
         <Dropdown
-          align="left"
+          align="start"
           triggerIcon={FaEllipsisV}
           items={[{ label: "Left 1" }, { label: "Left 2" }]}
         />
@@ -200,7 +200,7 @@ export const AlignmentVariants: Story = {
       <div style={{ textAlign: "center" }}>
         <p>Right Aligned</p>
         <Dropdown
-          align="right"
+          align="end"
           triggerIcon={FaEllipsisV}
           items={[{ label: "Right 1" }, { label: "Right 2" }]}
         />

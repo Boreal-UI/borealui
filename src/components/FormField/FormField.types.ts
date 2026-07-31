@@ -1,5 +1,5 @@
-import { ReactElement, ReactNode } from "react";
 import { LabelPositionType, StateType } from "@/types/types";
+import { ReactElement, ReactNode } from "react";
 
 export interface FormFieldProps {
   /**
@@ -21,7 +21,7 @@ export interface FormFieldProps {
   /**
    * Error message or error state displayed with the component.
    */
-  error?: ReactNode;
+  errorMessage?: ReactNode;
   /**
    * Required.
    * @default false
@@ -69,6 +69,7 @@ export interface FormFieldProps {
    * Test id used to identify the component in tests.
    */
   "data-testid"?: string;
+  invalid?: boolean;
 }
 
 export interface FormFieldBaseProps extends FormFieldProps {

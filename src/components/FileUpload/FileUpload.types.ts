@@ -1,11 +1,11 @@
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import React, {
   AriaAttributes,
   HTMLAttributes,
   InputHTMLAttributes,
 } from "react";
-import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
-import { FormGroupProps } from "../FormGroup/FormGroup.types";
 import { ButtonProps } from "../Button/Button.types";
+import { FormGroupProps } from "../FormGroup/FormGroup.types";
 import { IconButtonProps } from "../IconButton/IconButton.types";
 import { ProgressBarProps } from "../ProgressBar/ProgressBar.types";
 
@@ -34,10 +34,10 @@ export interface FileUploadProps
   label?: string;
 
   /** Optional description text under the label. */
-  description?: string;
+  helperText?: string;
 
   /** Optional error message. */
-  error?: string;
+  errorMessage?: string;
 
   /**
    * Whether the file input is required.
@@ -53,14 +53,12 @@ export interface FileUploadProps
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Adds glass styling to the dropzone and nested controls.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * The state of the file upload
    * ('success' | 'error' | 'warning' | 'disabled' | '').
@@ -98,14 +96,6 @@ export interface FileUploadProps
    * @default configured default shadow (fallback: "light")
    */
   outlineShadow?: ShadowType;
-
-  /**
-   * Whether to display the control button as an outline.
-   *
-   * @default configured default outline setting (fallback: false)
-   */
-  outline?: boolean;
-
   /**
    * Allows multiple file selection if true.
    *
@@ -326,6 +316,7 @@ export interface FileUploadProps
     ProgressBarProps,
     "value" | "theme" | "indeterminate"
   >;
+  invalid?: boolean;
 }
 
 export interface BaseFileUploadProps extends FileUploadProps {

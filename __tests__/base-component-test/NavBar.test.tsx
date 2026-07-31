@@ -23,11 +23,11 @@ const classMap = {
   primary: "primaryTheme",
   secondary: "secondaryTheme",
   clear: "clearTheme",
-  glass: "glass",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
   shadowLight: "shadowLight",
   shadowMedium: "shadowMedium",
+  glass: "glass",
 };
 
 type MockLinkWrapperProps = {
@@ -225,7 +225,7 @@ describe("BaseNavBar", () => {
         classMap={classMap}
         LinkWrapper={LinkWrapper}
         data-testid={testId}
-        list-aria-label="Main sections"
+        listAriaLabel="Main sections"
       />,
     );
 
@@ -304,7 +304,7 @@ describe("BaseNavBar", () => {
         LinkWrapper={LinkWrapper}
         data-testid={testId}
         theme="primary"
-        glass
+        variant="glassOutline"
         rounding="medium"
         shadow="light"
         className="customNavClass"
@@ -487,7 +487,7 @@ describe("BaseNavBar", () => {
           isItemActive={(item) => item.path === "/home"}
           aria-labelledby="nav-heading"
           aria-describedby="nav-help"
-          list-aria-label="Dashboard links"
+          listAriaLabel="Dashboard links"
           getItemAriaLabel={(item) => `Navigate to ${item.label}`}
         />
       </>,

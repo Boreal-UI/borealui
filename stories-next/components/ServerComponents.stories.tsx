@@ -83,7 +83,7 @@ export const StaticPageComposition: Story = {
                 <Button href="/docs" icon={FaFileAlt} theme="secondary">
                   Read docs
                 </Button>
-                <Button href="/examples" theme="tertiary" outline>
+                <Button href="/examples" theme="tertiary" variant="outline">
                   View examples
                 </Button>
               </Inline>
@@ -120,7 +120,7 @@ export const StaticPageComposition: Story = {
                     href="https://example.com"
                     size="small"
                     theme="tertiary"
-                    outline
+                    variant="outline"
                   >
                     External profile
                   </Button>
@@ -158,7 +158,7 @@ export const NativeFormState: Story = {
     <Container size="md">
       <Stack gap="lg">
         <Stack gap="xs">
-          <Typography as="h2" variant="h3">
+          <Typography as="h2" textStyle="h3">
             Native form controls
           </Typography>
           <Typography as="p">
@@ -288,7 +288,12 @@ export const PageAndStatusCompositions: Story = {
           />
 
           <Grid minColumnWidth="14rem" gap="md">
-            <MetricBox title="Requests" value="12.4" units="k" subtext="Today" />
+            <MetricBox
+              title="Requests"
+              value="12.4"
+              units="k"
+              subtext="Today"
+            />
             <MetricBox
               title="Availability"
               value="99.99"
@@ -396,7 +401,7 @@ export const LayoutPrimitives: Story = {
           <Stack gap="lg">
             <Inline justify="between" align="center" wrap>
               <Stack gap="xs">
-                <Typography as="h2" variant="h3">
+                <Typography as="h2" textStyle="h3">
                   Server layout primitives
                 </Typography>
                 <Typography as="p">

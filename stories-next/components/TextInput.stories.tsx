@@ -7,6 +7,7 @@ import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -45,7 +46,7 @@ const meta: Meta<TextInputProps> = {
     disabled: false,
     readOnly: false,
     password: false,
-    autocomplete: false,
+    autoComplete: "off",
     labelPosition: "top",
   },
 };
@@ -53,6 +54,15 @@ const meta: Meta<TextInputProps> = {
 export default meta;
 
 type Story = StoryObj<TextInputProps>;
+
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: TextInput,
+      args: { label: "Name" },
+      labelProp: "label",
+    }),
+};
 
 export const Default: Story = {
   render: (args) => {

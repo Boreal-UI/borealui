@@ -25,7 +25,6 @@ const classes = {
   warning: "popover_warning",
 
   clear: "popover_clear",
-  glass: "popover_glass",
 
   shadowNone: "popover_shadow-None",
   shadowLight: "popover_shadow-Light",
@@ -37,6 +36,7 @@ const classes = {
   roundSmall: "popover_round-Small",
   roundMedium: "popover_round-Medium",
   roundLarge: "popover_round-Large",
+  glass: "popover_glass",
 };
 
 const PopOver: React.FC<PopOverProps> = (props) => {

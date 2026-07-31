@@ -1,7 +1,6 @@
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -16,9 +15,7 @@ export default function AlertBase({
   theme = getDefaultTheme(),
   state,
   variant = "solid",
-  glass = getDefaultGlass(),
   rounding = getDefaultRounding(),
-  outline = false,
   shadow,
   dismissible = false,
   onDismiss,
@@ -40,9 +37,9 @@ export default function AlertBase({
     classMap.alert,
     classMap[theme],
     state && classMap[state],
-    classMap[variant],
-    outline && classMap.outline,
-    glass && classMap.glass,
+    variant === "soft" && classMap.soft,
+    (variant === "outline" || variant === "glassOutline") && classMap.outline,
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     getShadowClassName(classMap, theme, shadow),
     rounding && classMap[`round${capitalize(rounding)}`],
     icon ? classMap.hasIcon : null,

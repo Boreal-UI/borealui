@@ -8,7 +8,7 @@ export default function FormFieldBase({
   id,
   label,
   helperText,
-  error,
+  errorMessage,
   required = false,
   optionalText = "Optional",
   labelPosition = "top",
@@ -25,10 +25,12 @@ export default function FormFieldBase({
   const generatedId = useId();
   const childProps = children.props;
   const resolvedId =
-    id ?? (typeof childProps.id === "string" ? childProps.id : undefined) ?? `${generatedId}-field`;
+    id ??
+    (typeof childProps.id === "string" ? childProps.id : undefined) ??
+    `${generatedId}-field`;
   const resolvedTestId = testId ?? dataTestId ?? "form-field";
   const helperId = helperText ? `${resolvedId}-helper` : undefined;
-  const errorId = error ? `${resolvedId}-error` : undefined;
+  const errorId = errorMessage ? `${resolvedId}-errorMessage` : undefined;
   const describedBy = [childProps["aria-describedby"], helperId, errorId]
     .filter(Boolean)
     .join(" ");
@@ -37,7 +39,8 @@ export default function FormFieldBase({
     id: resolvedId,
     required: childProps.required ?? required,
     "aria-required": childProps["aria-required"] ?? (required || undefined),
-    "aria-invalid": childProps["aria-invalid"] ?? (Boolean(error) || undefined),
+    "aria-invalid":
+      childProps["aria-invalid"] ?? (Boolean(errorMessage) || undefined),
     "aria-describedby": describedBy || undefined,
   });
 
@@ -71,20 +74,23 @@ export default function FormFieldBase({
       {helperText ? (
         <div
           id={helperId}
-          className={combineClassNames(classMap.helperText, helperTextClassName)}
+          className={combineClassNames(
+            classMap.helperText,
+            helperTextClassName,
+          )}
           data-testid={`${resolvedTestId}-helper`}
         >
           {helperText}
         </div>
       ) : null}
-      {error ? (
+      {errorMessage ? (
         <div
           id={errorId}
-          className={combineClassNames(classMap.errorText, errorClassName)}
+          className={combineClassNames(classMap.error, errorClassName)}
           role="alert"
-          data-testid={`${resolvedTestId}-error`}
+          data-testid={`${resolvedTestId}-errorMessage`}
         >
-          {error}
+          {errorMessage}
         </div>
       ) : null}
     </div>

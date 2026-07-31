@@ -18,7 +18,6 @@ const classes = {
   right: "drawer_right",
   top: "drawer_top",
   bottom: "drawer_bottom",
-  glass: "drawer_glass",
   primary: "drawer_primary",
   secondary: "drawer_secondary",
   tertiary: "drawer_tertiary",
@@ -38,6 +37,7 @@ const classes = {
   roundMedium: "drawer_round-Medium",
   roundLarge: "drawer_round-Large",
   roundFull: "drawer_round-Full",
+  glass: "drawer_glass",
 };
 
 export default function Drawer(props: DrawerProps) {

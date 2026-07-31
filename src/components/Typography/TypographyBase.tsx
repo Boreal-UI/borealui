@@ -1,5 +1,4 @@
 import { createElement, JSX } from "react";
-import { getDefaultGlass } from "../../config/boreal-style-config";
 import {
   TypographyAlign,
   TypographyBaseProps,
@@ -75,12 +74,12 @@ const themeClassMap: Record<TypographyTheme, string> = {
 
 function TypographyBase({
   children,
-  variant = "body",
+  textStyle = "body",
+  variant = "solid",
   as,
   align = "inherit",
   weight = "inherit",
   theme = "inherit",
-  glass = getDefaultGlass(),
   italic = false,
   underline = false,
   truncate = false,
@@ -103,15 +102,16 @@ function TypographyBase({
   classMap,
   combineClassNames,
 }: TypographyBaseProps): JSX.Element {
-  const Component = as ?? DEFAULT_TAG_BY_VARIANT[variant];
+  const Component = as ?? DEFAULT_TAG_BY_VARIANT[textStyle];
 
   const resolvedClassName = combineClassNames(
     classMap.typography,
-    classMap[variantClassMap[variant]],
+    classMap[variantClassMap[textStyle]],
+    (variant === "outline" || variant === "glassOutline") && classMap.outline,
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     classMap[alignClassMap[align]],
     classMap[weightClassMap[weight]],
     classMap[themeClassMap[theme]],
-    glass && classMap.glass,
     italic && classMap.italic,
     underline && classMap.underline,
     truncate && classMap.truncate,

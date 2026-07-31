@@ -19,12 +19,12 @@ const classMap = {
   loader: "loader",
   secondary: "secondary",
   success: "success",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   shadowStrong: "shadowStrong",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 describe("AppShellBase", () => {
@@ -61,8 +61,7 @@ describe("AppShellBase", () => {
         header="Header"
         theme="secondary"
         state="success"
-        outline
-        glass
+        variant="glassOutline"
         stickyHeader
         sidebarCollapsed
         rounding="large"

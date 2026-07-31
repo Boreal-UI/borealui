@@ -66,7 +66,7 @@ export const OutlineAndDisabledVariants: Story = {
           key={theme}
           {...args}
           theme={theme}
-          outline
+          variant="outline"
           aria-label={`Theme: ${theme}`}
         />
       ))}
@@ -75,11 +75,11 @@ export const OutlineAndDisabledVariants: Story = {
           key={state}
           {...args}
           state={state}
-          outline
+          variant="outline"
           aria-label={`State: ${state}`}
         />
       ))}
-      <IconButton {...args} outline disabled aria-label="Disabled" />
+      <IconButton {...args} disabled aria-label="Disabled" variant="outline" />
       <IconButton {...args} disabled aria-label="Disabled" />
     </div>
   ),

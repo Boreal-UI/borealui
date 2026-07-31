@@ -5,9 +5,9 @@ import { CalendarIcon } from "../../Icons";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
+  getDefaultSize,
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -29,16 +29,15 @@ const DateTimePickerBase = forwardRef<HTMLDivElement, DateTimePickerBaseProps>(
       title,
       label,
       labelPosition = "top",
-      description,
       helperText,
-      error,
+      errorMessage,
       fullWidth = false,
       theme = getDefaultTheme(),
       state,
-      outline = getDefaultOutline(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
+      size = getDefaultSize(),
       disabled = false,
       loading = false,
       pickerButtonAriaLabel = "Open date and time picker",
@@ -52,7 +51,6 @@ const DateTimePickerBase = forwardRef<HTMLDivElement, DateTimePickerBaseProps>(
       inputWrapperClassName,
       inputClassName,
       buttonClassName,
-      descriptionClassName,
       helperTextClassName,
       errorClassName,
       srOnlyText,
@@ -88,24 +86,24 @@ const DateTimePickerBase = forwardRef<HTMLDivElement, DateTimePickerBaseProps>(
     const rootId = idProp ?? `${testId}-${generatedId}`;
     const inputId = `${rootId}-input`;
     const labelId = labelIdProp ?? (label ? `${rootId}-label` : undefined);
-    const descriptionId =
-      descriptionIdProp ?? (description ? `${rootId}-description` : undefined);
-    const helperId = helperText && !error ? `${rootId}-helper` : undefined;
-    const errorId = errorIdProp ?? (error ? `${rootId}-error` : undefined);
-    const srDescriptionId = srOnlyText ? `${rootId}-sr-description` : undefined;
+    const helperId =
+      descriptionIdProp ?? (helperText ? `${rootId}-helperText` : undefined);
+    const errorId =
+      errorIdProp ?? (errorMessage ? `${rootId}-errorMessage` : undefined);
+    const srDescriptionId = srOnlyText ? `${rootId}-sr-helperText` : undefined;
     const describedBy =
-      [ariaDescribedBy, descriptionId, helperId, errorId, srDescriptionId]
+      [ariaDescribedBy, helperId, errorId, srDescriptionId]
         .filter(Boolean)
         .join(" ") || undefined;
     const invalidRange = min && max ? min > max : false;
     const outOfBounds = value
       ? (min ? value < min : false) || (max ? value > max : false)
       : false;
-    const invalid = Boolean(error || invalidRange || outOfBounds);
+    const invalid = Boolean(errorMessage || invalidRange || outOfBounds);
     const resolvedAriaInvalid = (ariaInvalid ?? invalid) || undefined;
     const resolvedAriaRequired = (ariaRequired ?? required) || undefined;
     const resolvedAriaErrorMessage =
-      ariaErrorMessage ?? (error ? errorId : undefined);
+      ariaErrorMessage ?? (errorMessage ? errorId : undefined);
     const computedAriaDisabled = ariaDisabled ?? (disabled || undefined);
 
     const containerClass = useMemo(
@@ -123,11 +121,13 @@ const DateTimePickerBase = forwardRef<HTMLDivElement, DateTimePickerBaseProps>(
       () =>
         combineClassNames(
           classMap.root,
+          classMap[size],
           classMap[theme],
           state && classMap[state],
           invalid && classMap.error,
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           readOnly && classMap.readOnly,
           loading && classMap.loading,
@@ -138,11 +138,11 @@ const DateTimePickerBase = forwardRef<HTMLDivElement, DateTimePickerBaseProps>(
         ),
       [
         classMap,
+        size,
         theme,
         state,
         invalid,
-        outline,
-        glass,
+        variant,
         disabled,
         readOnly,
         loading,
@@ -236,7 +236,9 @@ const DateTimePickerBase = forwardRef<HTMLDivElement, DateTimePickerBaseProps>(
               aria-labelledby={
                 inputProps?.["aria-labelledby"] ??
                 ariaLabelledBy ??
-                (!inputProps?.["aria-label"] && !ariaLabel ? labelId : undefined)
+                (!inputProps?.["aria-label"] && !ariaLabel
+                  ? labelId
+                  : undefined)
               }
               aria-describedby={describedBy}
               aria-invalid={resolvedAriaInvalid}
@@ -275,40 +277,27 @@ const DateTimePickerBase = forwardRef<HTMLDivElement, DateTimePickerBaseProps>(
           ) : null}
         </div>
 
-        {description ? (
-          <p
-            id={descriptionId}
-            className={combineClassNames(
-              classMap.description,
-              descriptionClassName,
-            )}
-            data-testid={`${testId}-description`}
-          >
-            {description}
-          </p>
-        ) : null}
-
-        {helperText && !error ? (
+        {helperText ? (
           <p
             id={helperId}
             className={combineClassNames(
               classMap.helperText,
               helperTextClassName,
             )}
-            data-testid={`${testId}-helper`}
+            data-testid={`${testId}-helperText`}
           >
             {helperText}
           </p>
         ) : null}
 
-        {error ? (
+        {errorMessage ? (
           <p
             id={errorId}
-            className={combineClassNames(classMap.errorText, errorClassName)}
+            className={combineClassNames(classMap.error, errorClassName)}
             role="alert"
-            data-testid={`${testId}-error`}
+            data-testid={`${testId}-errorMessage`}
           >
-            {error}
+            {errorMessage}
           </p>
         ) : null}
       </div>

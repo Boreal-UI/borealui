@@ -38,7 +38,7 @@ const createChip = (
   ...overrides,
 });
 
-const positions: ChipGroupProps["position"][] = [
+const positions: ChipGroupProps["placement"][] = [
   "topLeft",
   "topCenter",
   "topRight",
@@ -127,7 +127,7 @@ export const PositionVariants = () => (
     {positions.map((position) => (
       <ChipGroup
         key={position}
-        position={position}
+        placement={position}
         chips={[
           createChip(`Position: ${position}`, {
             theme: "primary",
@@ -144,7 +144,7 @@ export const WithClassName: Story = {
     return (
       <ChipGroup
         chips={[createChip("ClassName Chip", { theme: "secondary" })]}
-        position="topRight"
+        placement="topRight"
         className="storybook-chip-group-custom"
         onRemove={() => {}}
       />

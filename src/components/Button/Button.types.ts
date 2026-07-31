@@ -62,14 +62,12 @@ export interface ButtonProps extends Pick<
    * @default "left"
    */
   iconPosition?: "left" | "right";
-
   /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Theme style of the button
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').
@@ -200,14 +198,6 @@ export interface ButtonProps extends Pick<
    * @default false
    */
   isExternal?: boolean;
-
-  /**
-   * Whether to use outline styling.
-   *
-   * @default configured default outline setting (fallback: false)
-   */
-  outline?: boolean;
-
   /**
    * Rounding style for the button
    * ('none' | 'small' | 'medium' | 'large' | 'full').

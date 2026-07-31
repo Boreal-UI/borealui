@@ -446,12 +446,12 @@ describe("ChipBase", () => {
     expect(screen.getByTestId("chip")).not.toHaveStyle({ zIndex: "5000" });
   });
 
-  it("applies theme, state, size, position, shadow, rounding, fixed, and custom className", () => {
+  it("applies theme, state, size, placement, shadow, rounding, fixed, and custom className", () => {
     renderChip({
       theme: "primary",
       state: "success",
       size: "medium",
-      position: "topCenter",
+      placement: "topCenter",
       shadow: "light",
       rounding: "small",
       usePortal: true,
@@ -628,7 +628,7 @@ describe("ChipBase", () => {
       usePortal: false,
       theme: "primary",
       state: "success",
-      glass: true,
+      variant: "glassOutline",
     });
 
     const results = await axe(container);

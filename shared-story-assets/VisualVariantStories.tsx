@@ -1,17 +1,10 @@
 import React from "react";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
-import { stateOptions, themeOptions } from "./OptionTypes";
-
-type VariantCapableProps = {
-  theme?: string;
-  state?: string;
-  outline?: boolean;
-  glass?: boolean;
-};
+import { sizeOptions, stateOptions, themeOptions } from "./OptionTypes";
 
 type VariantStoryOptions = {
   component: React.ElementType;
-  args: VariantCapableProps;
+  args: object;
   labelProp?: string;
 };
 
@@ -52,6 +45,23 @@ export const renderStateVariants = ({
   </StoryGrid>
 );
 
+export const renderSizeVariants = ({
+  component: Component,
+  args,
+  labelProp,
+}: VariantStoryOptions) => (
+  <StoryGrid title="Size Variants">
+    {sizeOptions.map((size) => (
+      <Component
+        key={size}
+        {...args}
+        {...getLabelProps(labelProp, `${size} size`)}
+        size={size}
+      />
+    ))}
+  </StoryGrid>
+);
+
 export const renderOutlineVariants = ({
   component: Component,
   args,
@@ -64,7 +74,7 @@ export const renderOutlineVariants = ({
         {...args}
         {...getLabelProps(labelProp, `${theme} outline`)}
         theme={theme}
-        outline
+        variant="outline"
       />
     ))}
   </StoryGrid>
@@ -82,7 +92,7 @@ export const renderGlassVariants = ({
         {...args}
         {...getLabelProps(labelProp, `${theme} glass`)}
         theme={theme}
-        glass
+        variant="glass"
       />
     ))}
   </StoryGrid>
@@ -100,8 +110,7 @@ export const renderGlassOutlineVariants = ({
         {...args}
         {...getLabelProps(labelProp, `${theme} glass outline`)}
         theme={theme}
-        glass
-        outline
+        variant="glassOutline"
       />
     ))}
   </StoryGrid>
@@ -119,7 +128,7 @@ export const renderStateOutlineVariants = ({
         {...args}
         {...getLabelProps(labelProp, `${state} outline`)}
         state={state}
-        outline
+        variant="outline"
       />
     ))}
   </StoryGrid>

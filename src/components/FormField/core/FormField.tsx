@@ -9,7 +9,7 @@ const classes = {
   optional: "form_field_optional",
   control: "form_field_control",
   helperText: "form_field_helper_text",
-  errorText: "form_field_error_text",
+  errorMessage: "form_field_error_text",
   labelTop: "form_field_label_top",
   labelBottom: "form_field_label_bottom",
   labelLeft: "form_field_label_left",

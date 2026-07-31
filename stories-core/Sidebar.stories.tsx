@@ -38,7 +38,7 @@ const meta: Meta<SidebarProps> = {
   args: {
     links: mockLinks,
     theme: "primary",
-    outline: false,
+    variant: "solid",
     rounding: "medium",
     shadow: "light",
     showFooter: false,

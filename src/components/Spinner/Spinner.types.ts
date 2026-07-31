@@ -12,14 +12,12 @@ export interface SpinnerProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Applies a translucent frosted-glass surface behind the spinner.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * The state of the spinner.
    * One of: "success" | "error" | "warning" | "disabled" | ""
@@ -47,7 +45,6 @@ export interface SpinnerProps {
    *
    */
   className?: string;
-
 
   /**
    * Optional test ID for testing frameworks.

@@ -2,7 +2,7 @@ import { useEffect, useId, useMemo, useRef } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -21,7 +21,7 @@ export default function DrawerBase({
   closeOnEscape = true,
   theme = getDefaultTheme(),
   state,
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   rounding = getDefaultRounding(),
   shadow,
   className,
@@ -79,13 +79,13 @@ export default function DrawerBase({
       combineClassNames(
         classMap.panel,
         classMap[theme],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         state && classMap[state],
         panelClassName,
       ),
-    [classMap, theme, glass, shadow, rounding, panelClassName, state],
+    [classMap, theme, variant, shadow, rounding, panelClassName, state],
   );
 
   if (!open) return null;

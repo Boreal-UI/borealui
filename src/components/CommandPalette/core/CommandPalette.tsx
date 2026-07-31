@@ -14,7 +14,6 @@ const classes = {
   icon: "command_palette_icon",
   active: "command_palette_active",
   empty: "command_palette_empty",
-  glass: "command_palette_glass",
 
   primary: "command_palette_primary",
   secondary: "command_palette_secondary",
@@ -38,6 +37,7 @@ const classes = {
   roundSmall: "command_palette_round-Small",
   roundMedium: "command_palette_round-Medium",
   roundLarge: "command_palette_round-Large",
+  glass: "command_palette_glass",
 };
 
 const CommandPalette: React.FC<CommandPaletteProps> = (props) => (

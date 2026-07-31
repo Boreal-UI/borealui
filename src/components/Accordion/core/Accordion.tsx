@@ -37,14 +37,14 @@ const classes = {
   error: "accordion_error",
   warning: "accordion_warning",
   clear: "accordion_clear",
-  outline: "accordion_outline",
-  glass: "accordion_glass",
 
   xs: "accordion_xs",
   small: "accordion_small",
   medium: "accordion_medium",
   large: "accordion_large",
   xl: "accordion_xl",
+  glass: "accordion_glass",
+  outline: "accordion_outline",
 };
 
 const generateUniqueId = (() => {

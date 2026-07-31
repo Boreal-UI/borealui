@@ -40,7 +40,10 @@ export default function LayoutBase({
       className={layoutClassName}
       style={
         variant === "grid"
-          ? ({ ...style, "--layout-min-column-width": minColumnWidth } as React.CSSProperties)
+          ? ({
+              ...style,
+              "--layout-min-column-width": minColumnWidth,
+            } as React.CSSProperties)
           : style
       }
       data-testid={resolvedTestId}

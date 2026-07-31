@@ -24,7 +24,6 @@ const mockStyles = {
   horizontal: "horizontal",
   primary: "primary",
   secondary: "secondary",
-  glass: "glass",
   roundNone: "roundNone",
   roundSmall: "roundSmall",
   roundMedium: "roundMedium",
@@ -35,6 +34,7 @@ const mockStyles = {
   shadowMedium: "shadowMedium",
   shadowStrong: "shadowStrong",
   shadowIntense: "shadowIntense",
+  glass: "glass",
 };
 
 const items = [
@@ -147,7 +147,7 @@ describe("TimelineBase", () => {
         items={items}
         classMap={mockStyles}
         theme="secondary"
-        glass
+        variant="glassOutline"
         rounding="large"
         shadow="strong"
       />,
@@ -450,14 +450,15 @@ describe("TimelineBase", () => {
     expect(firstItem).toHaveAttribute("aria-label", "Timeline item 1 loading");
     expect(firstItem).not.toHaveAttribute("aria-labelledby");
     expect(firstItem).not.toHaveAttribute("aria-describedby");
-    expect(secondItem).toHaveAttribute(
-      "aria-label",
-      "Timeline item 2 loading",
-    );
+    expect(secondItem).toHaveAttribute("aria-label", "Timeline item 2 loading");
     expect(secondItem).not.toHaveAttribute("aria-labelledby");
     expect(secondItem).not.toHaveAttribute("aria-describedby");
-    expect(screen.queryByTestId("timeline-item-0-title")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("timeline-item-0-date")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("timeline-item-0-title"),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("timeline-item-0-date"),
+    ).not.toBeInTheDocument();
     expect(
       screen.queryByTestId("timeline-item-0-description"),
     ).not.toBeInTheDocument();

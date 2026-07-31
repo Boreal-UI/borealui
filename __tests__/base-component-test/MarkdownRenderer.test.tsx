@@ -361,7 +361,9 @@ describe("BaseMarkdownRenderer", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByRole("heading", { name: "Title" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Title" }),
+      ).toBeInTheDocument();
       expect(
         screen.getByRole("heading", { name: "Subtitle" }),
       ).toBeInTheDocument();

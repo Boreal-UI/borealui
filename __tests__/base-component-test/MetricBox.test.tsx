@@ -8,8 +8,6 @@ expect.extend(toHaveNoViolations);
 
 const classNames = {
   wrapper: "metricWrapper",
-  outline: "metricOutline",
-  glass: "metricGlass",
   loading: "metricLoading",
   primary: "themePrimary",
   secondary: "themeSecondary",
@@ -27,6 +25,8 @@ const classNames = {
   shadowMedium: "shadowMedium",
   roundSmall: "roundSmall",
   roundMedium: "roundMedium",
+  glass: "metricGlass",
+  outline: "metricOutline",
 };
 
 describe("BaseMetricBox", () => {
@@ -204,9 +204,8 @@ describe("BaseMetricBox", () => {
         theme="primary"
         state="success"
         size="large"
-        align="left"
-        outline={true}
-        glass={true}
+        align="start"
+        variant="glassOutline"
         shadow="medium"
         rounding="medium"
         className="customClass"

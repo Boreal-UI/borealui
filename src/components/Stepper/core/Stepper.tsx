@@ -13,7 +13,6 @@ const classes = {
   secondary: "stepper_secondary",
   tertiary: "stepper_tertiary",
   quaternary: "stepper_quaternary",
-  glass: "stepper_glass",
   success: "stepper_success",
   info: "stepper_info",
   warning: "stepper_warning",
@@ -32,10 +31,15 @@ const classes = {
   stepButton: "stepper_step_button",
   stepLabel: "stepper_step_label",
   connector: "stepper_connector",
+  glass: "stepper_glass",
 };
 
 const Stepper: React.FC<StepperProps> = (props) => (
-  <StepperBase {...props} classMap={expandClassMap(classes)} IconButtonComponent={IconButton} />
+  <StepperBase
+    {...props}
+    classMap={expandClassMap(classes)}
+    IconButtonComponent={IconButton}
+  />
 );
 Stepper.displayName = "Stepper";
 export default Stepper;

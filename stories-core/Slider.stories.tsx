@@ -165,7 +165,7 @@ export const GlassThemeVariants: Story = {
             key={`glass-${theme}`}
             {...args}
             theme={theme}
-            glass
+            variant="glass"
             label={`Glass theme: ${theme}`}
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}
@@ -208,7 +208,7 @@ export const GlassStateVariants: Story = {
             key={`glass-${state}`}
             {...args}
             state={state}
-            glass
+            variant="glass"
             label={`Glass state: ${state}`}
             value={value}
             onChange={(e) => setValue(Number(e.target.value))}

@@ -14,6 +14,7 @@ import { useState } from "react";
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -21,14 +22,14 @@ import {
 } from "../../shared-story-assets/VisualVariantStories";
 
 const options = [
-  { value: "react", label: "React", description: "UI library" },
-  { value: "next", label: "Next.js", description: "App framework" },
-  { value: "vite", label: "Vite", description: "Build tool" },
-  { value: "astro", label: "Astro", description: "Content-focused framework" },
+  { value: "react", label: "React", helperText: "UI library" },
+  { value: "next", label: "Next.js", helperText: "App framework" },
+  { value: "vite", label: "Vite", helperText: "Build tool" },
+  { value: "astro", label: "Astro", helperText: "Content-focused framework" },
   {
     value: "svelte",
     label: "Svelte",
-    description: "Compiler-based UI framework",
+    helperText: "Compiler-based UI framework",
   },
 ];
 
@@ -37,7 +38,7 @@ const optionsWithDisabled = [
   {
     value: "angular",
     label: "Angular",
-    description: "Enterprise framework",
+    helperText: "Enterprise framework",
     disabled: true,
   },
 ];
@@ -79,12 +80,6 @@ const meta: Meta<ComboBoxProps> = {
     inputValue: {
       control: "text",
     },
-    outline: {
-      control: "boolean",
-    },
-    glass: {
-      control: "boolean",
-    },
     loading: {
       control: "boolean",
     },
@@ -100,11 +95,24 @@ const meta: Meta<ComboBoxProps> = {
     onInputChange: {
       action: "input changed",
     },
+    variant: {
+      control: "select",
+      options: ["solid", "outline", "glass", "glassOutline"],
+    },
   },
 };
 
 export default meta;
 type Story = StoryObj<ComboBoxProps>;
+
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: ComboBox,
+      args: { options, label: "Framework" },
+      labelProp: "label",
+    }),
+};
 
 export const Default: Story = {};
 
@@ -234,7 +242,7 @@ export const CustomClassNames: Story = {
     listboxClassName: "storybook-combobox-listbox",
     optionClassName: "storybook-combobox-option",
     helperTextClassName: "storybook-combobox-helper",
-    errorClassName: "storybook-combobox-error",
+    errorClassName: "storybook-combobox-errorMessage",
     helperText: "Custom class names are applied for styling hooks.",
   },
 };

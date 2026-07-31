@@ -1,13 +1,12 @@
-import { IconType } from "react-icons";
 import type { AnchorHTMLAttributes, AriaRole, ReactNode } from "react";
+import { IconType } from "react-icons";
 import {
+  BorderType,
   OrientationType,
-  RoundingType,
   ShadowType,
   SizeType,
   StateType,
   ThemeType,
-  BorderType,
 } from "../../types/types";
 
 export interface StaticCardImage {
@@ -143,7 +142,7 @@ export interface ActionButton {
    * Rounding style for action button.
    * ('none' | 'small' | 'medium' | 'large' | 'full').
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Shadow style for the button.
@@ -206,7 +205,7 @@ export interface CardProps {
    *
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Optional shadow style for the card
@@ -330,21 +329,12 @@ export interface CardProps {
    * Custom class name for the footer section.
    */
   footerClassName?: string;
-
   /**
-   * Outlines card instead of solid fill.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Applies a translucent glass style to the card.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Card size
    * ('xs' | 'small' | 'medium' | 'large' | 'xl').
@@ -359,7 +349,7 @@ export interface CardProps {
    *
    * @default "center"
    */
-  align?: "left" | "right" | "center";
+  align?: import("@/types/types").AlignmentType;
 
   /** Custom render function for the header section. */
   renderHeader?: () => ReactNode;

@@ -12,7 +12,6 @@ const coreStyles = {
   metaValueOnly: "slider_meta_valueOnly",
   wrapper: "slider_wrapper",
   slider: "slider",
-  glass: "slider_glass",
   value: "slider_value",
 
   labelTop: "slider_label_top",
@@ -48,6 +47,7 @@ const coreStyles = {
   roundSmall: "slider_round-Small",
   roundMedium: "slider_round-Medium",
   roundLarge: "slider_round-Large",
+  glass: "slider_glass",
 };
 
 const Slider: React.FC<SliderProps> = (props) => {

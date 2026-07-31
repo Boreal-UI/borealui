@@ -15,7 +15,7 @@ import type {
 } from "./CommandPalette.types";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -24,7 +24,7 @@ import {
 const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   commands,
   placeholder = "Search...",
-  isOpen,
+  open,
   onClose,
   asyncSearch,
   debounceMs = 300,
@@ -32,7 +32,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   rounding = getDefaultRounding(),
   shadow,
   state,
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   classMap,
   TextInputComponent,
   inputAriaLabel,
@@ -143,7 +143,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   }, [query, asyncSearch, debounceMs]);
 
   useEffect(() => {
-    if (!isOpen) return;
+    if (!open) return;
 
     setMounted(true);
     prevFocusRef.current = document.activeElement as HTMLElement | null;
@@ -170,13 +170,13 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
         prevFocusRef.current?.focus?.();
       }
     };
-  }, [isOpen, restoreFocusOnClose]);
+  }, [open, restoreFocusOnClose]);
 
   useEffect(() => {
-    if (isOpen && mounted && portalElement && inputRef.current) {
+    if (open && mounted && portalElement && inputRef.current) {
       inputRef.current.focus();
     }
-  }, [isOpen, mounted, portalElement]);
+  }, [open, mounted, portalElement]);
 
   const getItemId = useCallback(
     (cmd: CommandItem, index: number) =>
@@ -293,7 +293,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
     [onClose, trapFocus],
   );
 
-  if (!isOpen || !mounted || !portalElement) return null;
+  if (!open || !mounted || !portalElement) return null;
 
   const activeItem =
     activeIndex >= 0 && filtered[activeIndex]
@@ -305,7 +305,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
     (activeItem ? getItemId(activeItem, activeIndex) : undefined);
 
   const computedAriaExpanded =
-    typeof ariaExpanded === "boolean" ? ariaExpanded : isOpen;
+    typeof ariaExpanded === "boolean" ? ariaExpanded : open;
 
   const dialogRole = modal ? "dialog" : "region";
 
@@ -333,7 +333,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           state && classMap[state],
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
-          glass && classMap.glass,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           className,
         )}
         onMouseDown={(e) => e.stopPropagation()}
@@ -377,7 +377,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           placeholder={placeholder}
           theme={theme}
           state={state}
-          glass={glass}
+          variant={variant}
           shadow={"none"}
           rounding={rounding}
           className={classMap.input}

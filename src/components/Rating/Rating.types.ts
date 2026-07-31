@@ -92,14 +92,12 @@ export interface RatingProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Adds a translucent glass surface behind the rating stars.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the rating.
    * One of: "success" | "error" | "warning" | "disabled" | ""
@@ -112,7 +110,6 @@ export interface RatingProps {
    *
    */
   className?: string;
-
 
   /**
    * Optional test ID for testing frameworks.

@@ -15,8 +15,6 @@ const classes = {
   warning: "avatar_warning",
   error: "avatar_error",
   clear: "avatar_clear",
-  outline: "avatar_outline",
-  glass: "avatar_glass",
 
   clickable: "avatar_clickable",
   disabled: "avatar_disabled",
@@ -52,10 +50,14 @@ const classes = {
   topLeft: "avatar_status_topLeft",
 
   dot: "avatar_dot",
+  glass: "avatar_glass",
+  outline: "avatar_outline",
 };
 
 const Avatar = forwardRef<HTMLButtonElement | HTMLAnchorElement, AvatarProps>(
-  (props, ref) => <AvatarBase {...props} classMap={expandClassMap(classes)} ref={ref} />
+  (props, ref) => (
+    <AvatarBase {...props} classMap={expandClassMap(classes)} ref={ref} />
+  ),
 );
 Avatar.displayName = "Avatar";
 export default Avatar;

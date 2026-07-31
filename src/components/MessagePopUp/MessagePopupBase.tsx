@@ -182,7 +182,10 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
 
             <IconButton
               ref={closeBtnRef}
-              className={combineClassNames(classMap.close, closeButtonClassName)}
+              className={combineClassNames(
+                classMap.close,
+                closeButtonClassName,
+              )}
               onClick={onClose}
               aria-label={ariaLabelCloseButton}
               icon={CloseIcon}

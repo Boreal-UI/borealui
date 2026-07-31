@@ -50,16 +50,6 @@ const meta: Meta<AlertProps> = {
       options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
       description: "Theme color applied to the alert.",
     },
-    variant: {
-      control: "select",
-      options: ["soft", "solid", "outline", "subtle"],
-      description: "Visual alert style.",
-    },
-    glass: {
-      control: "boolean",
-      description:
-        "Applies the glass styling layer when supported by the theme.",
-    },
     rounding: {
       control: "select",
       options: ["none", "small", "medium", "large", "full"],
@@ -126,6 +116,10 @@ const meta: Meta<AlertProps> = {
     testId: {
       control: "text",
       description: "Test id applied to the alert root.",
+    },
+    variant: {
+      control: "select",
+      options: ["solid", "soft", "outline", "glass", "glassOutline"],
     },
   },
   args: {
@@ -195,7 +189,7 @@ export const WithActions: Story = {
     actions: (
       <>
         <Button size="small">View build</Button>
-        <Button size="small" outline>
+        <Button size="small" variant="outline">
           Open dashboard
         </Button>
       </>

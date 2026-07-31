@@ -8,7 +8,11 @@ import ToolbarBase from "../ToolbarBase";
 import { ToolbarProps } from "../Toolbar.types";
 
 const Toolbar: React.FC<ToolbarProps> = (props) => (
-  <ToolbarBase {...props} AvatarComponent={Avatar} classMap={expandClassMap(styles)} />
+  <ToolbarBase
+    {...props}
+    AvatarComponent={Avatar}
+    classMap={expandClassMap(styles)}
+  />
 );
 Toolbar.displayName = "Toolbar";
 export default Toolbar;

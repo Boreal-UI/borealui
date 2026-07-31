@@ -4,7 +4,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -26,9 +26,9 @@ const getClass = (
 
 const TabsBase: React.FC<BaseTabsProps> = ({
   tabs,
-  defaultIndex = 0,
+  defaultValue = 0,
   value,
-  onChange,
+  onValueChange,
   "aria-label": ariaLabel = "Tabs",
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
@@ -38,7 +38,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   shadow,
   className,
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   state,
   size = getDefaultSize(),
   orientation = "horizontal",
@@ -58,13 +58,13 @@ const TabsBase: React.FC<BaseTabsProps> = ({
   const isControlled: boolean = typeof value === "number";
 
   const [uncontrolledIndex, setUncontrolledIndex] =
-    useState<number>(defaultIndex);
+    useState<number>(defaultValue);
 
   const activeIndex: number = isControlled
     ? (value as number)
     : uncontrolledIndex;
 
-  const [focusIndex, setFocusIndex] = useState<number>(defaultIndex);
+  const [focusIndex, setFocusIndex] = useState<number>(defaultValue);
 
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
@@ -96,10 +96,10 @@ const TabsBase: React.FC<BaseTabsProps> = ({
       themeClass,
       stateClass,
       sizeClass,
-      glass && classMap.glass,
+      (variant === "glass" || variant === "glassOutline") && classMap.glass,
       className,
     );
-  }, [classMap, theme, state, size, glass, className]);
+  }, [classMap, theme, state, size, variant, className]);
 
   const tabBaseClassNames = useMemo(() => {
     const tabClass = getClass(classMap, ["tab", "tabs_tab"]) ?? "";
@@ -146,7 +146,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
     if (isDisabled(index)) return;
 
     if (!isControlled) setUncontrolledIndex(index);
-    onChange?.(index);
+    onValueChange?.(index);
   };
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>): void => {

@@ -9,7 +9,6 @@ const classes = {
   horizontal: "divider_horizontal",
   vertical: "divider_vertical",
   dashed: "divider_dashed",
-  glass: "divider_glass",
   primary: "divider_primary",
   secondary: "divider_secondary",
   tertiary: "divider_tertiary",
@@ -19,6 +18,7 @@ const classes = {
   info: "divider_info",
   warning: "divider_warning",
   error: "divider_error",
+  glass: "divider_glass",
 };
 
 const Divider = forwardRef<HTMLDivElement, DividerProps>((props, ref) => (

@@ -13,7 +13,6 @@ expect.extend(toHaveNoViolations);
 
 const classNames = {
   footer: "footerRoot",
-  glass: "footerGlass",
 
   primary: "themePrimary",
   secondary: "themeSecondary",
@@ -63,6 +62,7 @@ const classNames = {
   bottom: "footerBottom",
   bottomCopyright: "footerBottomCopyright",
   bottomEnd: "footerBottomEnd",
+  glass: "footerGlass",
 };
 
 type DummyLinkWrapperProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
@@ -201,7 +201,7 @@ describe("FooterBase", () => {
     });
 
     it("applies footer, theme, and inline layout classes", () => {
-      renderFooter({ glass: true });
+      renderFooter({ variant: "glassOutline" });
 
       const footer = screen.getByTestId("footer");
 
@@ -382,7 +382,7 @@ describe("FooterBase", () => {
 
     it("passes social link accessibility props through to IconButton", () => {
       renderFooter({
-        glass: true,
+        variant: "glassOutline",
         socialLinks: [
           {
             icon: FaGithub,

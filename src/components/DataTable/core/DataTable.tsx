@@ -57,8 +57,6 @@ const classes = {
   warning: "data_table_warning",
 
   clear: "data_table_clear",
-  outline: "data_table_outline",
-  glass: "data_table_glass",
 
   shadowNone: "data_table_shadow-None",
   shadowLight: "data_table_shadow-Light",
@@ -70,6 +68,8 @@ const classes = {
   roundSmall: "data_table_round-Small",
   roundMedium: "data_table_round-Medium",
   roundLarge: "data_table_round-Large",
+  glass: "data_table_glass",
+  outline: "data_table_outline",
 };
 
 function DataTable<T extends object>(props: DataTableProps<T>) {

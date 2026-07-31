@@ -5,6 +5,11 @@ import "./DateTimePicker.scss";
 import type { DateTimePickerProps } from "../DateTimePicker.types";
 
 const classes = {
+  xs: "dateTimePicker_xs",
+  small: "dateTimePicker_small",
+  medium: "dateTimePicker_medium",
+  large: "dateTimePicker_large",
+  xl: "dateTimePicker_xl",
   container: "dateTimePicker_container",
   label: "dateTimePicker_label",
   labelTop: "dateTimePicker_labelTop",
@@ -36,8 +41,6 @@ const classes = {
   error: "dateTimePicker_error",
 
   clear: "dateTimePicker_clear",
-  outline: "dateTimePicker_outline",
-  glass: "dateTimePicker_glass",
   disabled: "dateTimePicker_disabled",
   loading: "dateTimePicker_loading",
 
@@ -52,6 +55,8 @@ const classes = {
   roundMedium: "dateTimePicker_round-Medium",
   roundLarge: "dateTimePicker_round-Large",
   roundFull: "dateTimePicker_round-Full",
+  glass: "dateTimePicker_glass",
+  outline: "dateTimePicker_outline",
 };
 
 const DateTimePicker = forwardRef<HTMLDivElement, DateTimePickerProps>(

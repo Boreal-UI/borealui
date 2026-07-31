@@ -132,7 +132,7 @@ export const GlassThemeVariants: Story = {
             key={`glass-${theme}`}
             {...args}
             theme={theme}
-            glass
+            variant="glass"
             title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
             left={leftIcon}
             right={rightIcon}

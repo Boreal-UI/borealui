@@ -3,8 +3,7 @@ import { CardBaseProps, CardImageSource, StaticCardImage } from "./Card.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -41,8 +40,7 @@ const CardBase: React.FC<CardBaseProps> = ({
   footerClassName,
   actionsClassName,
   actionButtonClassName,
-  outline = getDefaultOutline(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   size = getDefaultSize(),
   align = "center",
   renderHeader,
@@ -157,15 +155,19 @@ const CardBase: React.FC<CardBaseProps> = ({
       combineClassNames(
         classMap.card,
         classMap[layout],
-        align && classMap[align],
+        align &&
+          classMap[
+            align === "start" ? "left" : align === "end" ? "right" : align
+          ],
         classMap[theme],
         state && classMap[state],
         classMap[size],
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         border && classMap[`border${capitalize(border)}`],
-        outline && classMap.outline,
-        glass && classMap.glass,
+        (variant === "outline" || variant === "glassOutline") &&
+          classMap.outline,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         loading && classMap.loading,
         disabled && classMap.disabled,
         selected && classMap.selected,
@@ -182,8 +184,7 @@ const CardBase: React.FC<CardBaseProps> = ({
       shadow,
       rounding,
       border,
-      outline,
-      glass,
+      variant,
       loading,
       disabled,
       selected,

@@ -14,6 +14,7 @@ const options = [
 ];
 
 const classMap = {
+  large: "large",
   container: "container",
   label: "label",
   labelTop: "labelTop",
@@ -48,8 +49,6 @@ const classMap = {
   success: "success",
   error: "error",
   clear: "clear",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   open: "open",
@@ -57,6 +56,8 @@ const classMap = {
   shadowStrong: "shadowStrong",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 const renderMultiSelect = (
@@ -72,15 +73,21 @@ const renderMultiSelect = (
   );
 
 describe("MultiSelectBase", () => {
+  it("applies the selected size class", () => {
+    renderMultiSelect({ size: "large" });
+    expect(screen.getByTestId("multi-select-root")).toHaveClass("large");
+  });
+
   it("renders a labelled trigger with placeholder text", () => {
     renderMultiSelect();
 
     expect(screen.getByTestId("multi-select-label")).toHaveTextContent(
       "Components",
     );
-    expect(
-      screen.getByRole("button", { name: "Components" }),
-    ).toHaveAttribute("aria-expanded", "false");
+    expect(screen.getByRole("button", { name: "Components" })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    );
     expect(screen.getByTestId("multi-select-values")).toHaveTextContent(
       "Select options",
     );
@@ -135,7 +142,9 @@ describe("MultiSelectBase", () => {
         expect.objectContaining({ value: "button" }),
       ],
     );
-    expect(screen.queryByTestId("multi-select-chip-button")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("multi-select-chip-button"),
+    ).not.toBeInTheDocument();
   });
 
   it("filters options with the search input", () => {
@@ -147,7 +156,9 @@ describe("MultiSelectBase", () => {
     });
 
     expect(screen.getByTestId("multi-select-option-card")).toBeInTheDocument();
-    expect(screen.queryByTestId("multi-select-option-button")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("multi-select-option-button"),
+    ).not.toBeInTheDocument();
   });
 
   it("shows an empty message when filtering has no matches", () => {
@@ -170,7 +181,9 @@ describe("MultiSelectBase", () => {
     fireEvent.click(screen.getByTestId("multi-select-clear"));
 
     expect(onChange).toHaveBeenCalledWith([], []);
-    expect(screen.queryByTestId("multi-select-chip-button")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("multi-select-chip-button"),
+    ).not.toBeInTheDocument();
   });
 
   it("enforces max selected options", () => {
@@ -228,8 +241,7 @@ describe("MultiSelectBase", () => {
     renderMultiSelect({
       theme: "secondary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       rounding: "large",
       shadow: "strong",
     });

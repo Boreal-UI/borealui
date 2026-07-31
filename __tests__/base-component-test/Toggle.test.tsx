@@ -7,7 +7,6 @@ expect.extend(toHaveNoViolations);
 const mockStyles = {
   container: "container",
   toggle: "toggle",
-  glass: "glass",
   glassTrack: "glassTrack",
   active: "active",
   slider: "slider",
@@ -21,6 +20,7 @@ const mockStyles = {
   shadowMedium: "shadowMedium",
   roundSmall: "roundSmall",
   roundMedium: "roundMedium",
+  glass: "glass",
 };
 
 describe("ToggleBase", () => {
@@ -427,7 +427,7 @@ describe("ToggleBase", () => {
         onChange={() => {}}
         label="Styled toggle"
         theme="primary"
-        glass
+        variant="glassOutline"
         size="medium"
         rounding="medium"
         shadow="light"

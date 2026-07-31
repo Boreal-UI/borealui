@@ -73,7 +73,7 @@ export const Default: Story = {
       <div style={{ padding: "2rem" }}>
         <button onClick={() => setOpen(true)}>Open Command Palette</button>
         <CommandPalette
-          isOpen={open}
+          open={open}
           onClose={() => setOpen(false)}
           commands={sampleCommands}
           placeholder="Type a command..."
@@ -96,7 +96,7 @@ export const ThemeVariants = {
               Open {theme} Palette
             </button>
             <CommandPalette
-              isOpen={openPalette === theme}
+              open={openPalette === theme}
               onClose={() => setOpenPalette(null)}
               commands={sampleCommands}
               placeholder={`Theme: ${theme}`}
@@ -121,7 +121,7 @@ export const StateVariants = {
               Open {state} Palette
             </button>
             <CommandPalette
-              isOpen={openPalette === state}
+              open={openPalette === state}
               onClose={() => setOpenPalette(null)}
               commands={sampleCommands}
               placeholder={`state: ${state}`}
@@ -146,12 +146,12 @@ export const GlassThemeVariants = {
               Glass {theme} Palette
             </button>
             <CommandPalette
-              isOpen={openPalette === theme}
+              open={openPalette === theme}
               onClose={() => setOpenPalette(null)}
               commands={sampleCommands}
               placeholder={`Glass theme: ${theme}`}
               theme={theme}
-              glass
+              variant="glass"
             />
           </div>
         ))}
@@ -172,12 +172,12 @@ export const GlassStateVariants = {
               Glass {state} Palette
             </button>
             <CommandPalette
-              isOpen={openPalette === state}
+              open={openPalette === state}
               onClose={() => setOpenPalette(null)}
               commands={sampleCommands}
               placeholder={`Glass state: ${state}`}
               state={state}
-              glass
+              variant="glass"
             />
           </div>
         ))}
@@ -198,7 +198,7 @@ export const RoundingVariants = {
               Rounding {rounding}
             </button>
             <CommandPalette
-              isOpen={openPalette === rounding}
+              open={openPalette === rounding}
               onClose={() => setOpenPalette(null)}
               commands={sampleCommands}
               placeholder={`Rounding: ${rounding}`}
@@ -223,7 +223,7 @@ export const ShadowVariants = {
               Shadow {shadow} Palette
             </button>
             <CommandPalette
-              isOpen={openPalette === shadow}
+              open={openPalette === shadow}
               onClose={() => setOpenPalette(null)}
               commands={sampleCommands}
               placeholder={`Shadow: ${shadow}`}
@@ -257,7 +257,7 @@ export const AsyncSearch: Story = {
           Open Async Command Palette
         </button>
         <CommandPalette
-          isOpen={open}
+          open={open}
           onClose={() => setOpen(false)}
           commands={sampleCommands}
           asyncSearch={asyncSearch}
@@ -277,7 +277,7 @@ export const WithClassName: Story = {
       <div style={{ padding: "2rem" }}>
         <button onClick={() => setOpen(true)}>Open Custom Class Palette</button>
         <CommandPalette
-          isOpen={open}
+          open={open}
           onClose={() => setOpen(false)}
           commands={sampleCommands}
           placeholder="Palette with custom className"
@@ -296,7 +296,7 @@ export const WithDataTestid: Story = {
       <div style={{ padding: "2rem" }}>
         <button onClick={() => setOpen(true)}>Open DataTestid Palette</button>
         <CommandPalette
-          isOpen={open}
+          open={open}
           onClose={() => setOpen(false)}
           commands={sampleCommands}
           placeholder="Palette with data-testid"

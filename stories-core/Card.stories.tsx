@@ -24,7 +24,7 @@ import {
 } from "../shared-story-assets/VisualVariantStories";
 
 const layoutOptions = ["vertical", "horizontal"] as const;
-const alignments: CardProps["align"][] = ["left", "center", "right"];
+const alignments: CardProps["align"][] = ["start", "center", "end"];
 const titles = ["Left-Aligned", "Center-Aligned", "Right-Aligned"];
 const descriptions = [
   "This content is aligned to the left.",

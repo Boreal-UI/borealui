@@ -11,7 +11,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { TooltipProps, TriggerElementProps } from "./Tooltip.types";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -33,9 +33,9 @@ const TooltipBase = forwardRef<
 >(function TooltipBase(
   {
     content,
-    position = "top",
+    placement = "top",
     theme = getDefaultTheme(),
-    glass = getDefaultGlass(),
+    variant = getDefaultVariant(),
     rounding = getDefaultRounding(),
     shadow,
     state,
@@ -79,15 +79,15 @@ const TooltipBase = forwardRef<
     () =>
       combineClassNames(
         classMap.tooltip,
-        classMap[position],
+        classMap[placement],
         classMap[theme],
         state && classMap[state],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         visible && classMap.visible,
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
       ),
-    [classMap, position, theme, state, glass, visible, shadow, rounding],
+    [classMap, placement, theme, state, variant, visible, shadow, rounding],
   );
 
   let trigger: React.ReactNode;

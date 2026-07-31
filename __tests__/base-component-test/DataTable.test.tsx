@@ -63,13 +63,13 @@ const classMap = {
   editButton: "editButton",
   cellEditor: "cellEditor",
   selectionCell: "selectionCell",
-  outline: "outline",
-  glass: "glass",
   primary: "primary",
   success: "success",
   roundMedium: "roundMedium",
   shadowLight: "shadowLight",
   srOnly: "srOnly",
+  glass: "glass",
+  outline: "outline",
 };
 
 const renderTable = (
@@ -161,8 +161,7 @@ describe("DataTableBase", () => {
     renderTable({
       theme: "primary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
     });
 
     const table = screen.getByRole("table");
@@ -1101,10 +1100,7 @@ describe("DataTableBase", () => {
     fireEvent.click(screen.getByTestId("data-table-pagination-next"));
     fireEvent.click(screen.getByRole("checkbox", { name: "Select row 2" }));
 
-    expect(onSelectionChange).toHaveBeenLastCalledWith(
-      [0, 1],
-      baseData,
-    );
+    expect(onSelectionChange).toHaveBeenLastCalledWith([0, 1], baseData);
   });
 
   it("supports server pagination without slicing provided data", () => {

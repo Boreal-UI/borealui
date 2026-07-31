@@ -33,8 +33,6 @@ const classes = {
   error: "pageHeader_error",
 
   clear: "pageHeader_clear",
-  outline: "pageHeader_outline",
-  glass: "pageHeader_glass",
   disabled: "pageHeader_disabled",
   loading: "pageHeader_loading",
 
@@ -49,6 +47,8 @@ const classes = {
   roundMedium: "pageHeader_round-Medium",
   roundLarge: "pageHeader_round-Large",
   roundFull: "pageHeader_round-Full",
+  glass: "pageHeader_glass",
+  outline: "pageHeader_outline",
 };
 
 const PageHeader = forwardRef<HTMLElement, PageHeaderProps>((props, ref) => (

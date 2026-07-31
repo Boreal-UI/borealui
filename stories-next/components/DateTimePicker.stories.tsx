@@ -9,6 +9,7 @@ import {
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -31,6 +32,15 @@ export default meta;
 
 type Story = StoryObj<DateTimePickerProps>;
 
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: DateTimePicker,
+      args: { label: "Start date and time" },
+      labelProp: "label",
+    }),
+};
+
 export const Default: Story = {};
 
 export const WithConstraints: Story = {
@@ -39,7 +49,7 @@ export const WithConstraints: Story = {
     min: "2026-05-01T00:00",
     max: "2026-05-31T23:59",
     defaultValue: "2026-05-14T09:30",
-    description: "Only times in May 2026 are available.",
+    helperText: "Only times in May 2026 are available.",
   },
 };
 
@@ -48,7 +58,7 @@ export const ErrorState: Story = {
     label: "Deadline",
     value: "2026-04-30T16:00",
     min: "2026-05-01T00:00",
-    error: "Choose a date and time after May 1, 2026.",
+    errorMessage: "Choose a date and time after May 1, 2026.",
   },
 };
 
@@ -56,7 +66,7 @@ export const FullWidth: Story = {
   args: {
     fullWidth: true,
     label: "Launch date and time",
-    description: "The control stretches to the width of its parent.",
+    helperText: "The control stretches to the width of its parent.",
   },
 };
 

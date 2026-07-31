@@ -24,7 +24,7 @@ const meta: Meta<MetricBoxProps> = {
     title: "Users Online",
     value: "1,234",
     theme: "primary",
-    align: "left",
+    align: "start",
     size: "medium",
     icon: FaChartLine,
     subtext: "Up 12% since last week",
@@ -77,7 +77,7 @@ export const Loading: Story = {
 
 export const AlignmentVariants: Story = {
   render: () => {
-    const alignments = ["left", "center", "right"] as const;
+    const alignments = ["start", "center", "end"] as const;
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         {alignments.map((align) => (

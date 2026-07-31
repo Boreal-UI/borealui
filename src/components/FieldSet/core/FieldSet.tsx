@@ -50,8 +50,6 @@ const classes = {
   error: "fieldSet_error",
 
   clear: "fieldSet_clear",
-  outline: "fieldSet_outline",
-  glass: "fieldSet_glass",
   disabled: "fieldSet_disabled",
   loading: "fieldSet_loading",
 
@@ -66,6 +64,8 @@ const classes = {
   roundMedium: "fieldSet_round-Medium",
   roundLarge: "fieldSet_round-Large",
   roundFull: "fieldSet_round-Full",
+  glass: "fieldSet_glass",
+  outline: "fieldSet_outline",
 };
 
 const FieldSet = forwardRef<HTMLFieldSetElement, FieldSetProps>(

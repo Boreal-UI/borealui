@@ -3,7 +3,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { ToolbarBaseProps } from "./Toolbar.types";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -17,7 +17,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   right,
   avatar,
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   attachment = "static",
   shadow,
   rounding = getDefaultRounding(),
@@ -52,7 +52,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   const toolbarClass = combineClassNames(
     classMap.toolbar,
     classMap[theme],
-    glass && classMap.glass,
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     classMap[attachment],
     className,
     getShadowClassName(classMap, theme, shadow),
@@ -169,11 +169,10 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
               size={avatar.size || "medium"}
               shape={avatar.shape || "circle"}
               theme={avatar.theme}
-              outline={avatar.outline}
-              glass={avatar.glass ?? glass}
               onClick={avatar.onClick}
               aria-label={avatar["aria-label"]}
               aria-hidden={avatarAriaHidden}
+              variant={avatar.variant ?? variant}
             />
           </div>
         )}

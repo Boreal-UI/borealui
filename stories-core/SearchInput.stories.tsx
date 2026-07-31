@@ -13,6 +13,7 @@ import { FaTree } from "react-icons/fa";
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -36,6 +37,15 @@ const meta: Meta<SearchInputProps> = {
 export default meta;
 
 type Story = StoryObj<SearchInputProps>;
+
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: SearchInput,
+      args: { label: "Search docs" },
+      labelProp: "label",
+    }),
+};
 
 export const Default: Story = {};
 

@@ -291,7 +291,7 @@ export const GlassThemes: Story = {
           key={`glass-${theme}`}
           {...args}
           theme={theme}
-          glass
+          variant="glass"
           copyright={`Â© 2025 Your Company (${theme} glass)`}
           showThemeSelect
         />
@@ -311,7 +311,7 @@ export const GlassColumnThemes: Story = {
           key={`glass-column-${theme}`}
           {...args}
           theme={theme}
-          glass
+          variant="glass"
           copyright={`Â© 2026 Boreal UI (${theme} glass)`}
         />
       ))}

@@ -5,9 +5,9 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
+  getDefaultSize,
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -39,10 +39,10 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
       required = false,
       theme = getDefaultTheme(),
       state,
-      outline = getDefaultOutline(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
+      size = getDefaultSize(),
       disabled = false,
       loading = false,
       classMap,
@@ -255,10 +255,12 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
       () =>
         combineClassNames(
           classMap.root,
+          classMap[size],
           classMap[theme],
           state && classMap[state],
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           loading && classMap.loading,
           open && classMap.open,
@@ -268,10 +270,10 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
         ),
       [
         classMap,
+        size,
         theme,
         state,
-        outline,
-        glass,
+        variant,
         disabled,
         loading,
         open,

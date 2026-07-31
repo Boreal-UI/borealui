@@ -8,7 +8,6 @@ import "./Footer.scss";
 
 const classes = {
   footer: "footer",
-  glass: "footer_glass",
 
   primary: "footer_primary",
   secondary: "footer_secondary",
@@ -61,6 +60,7 @@ const classes = {
   bottom: "footer_bottom",
   bottomCopyright: "footer_bottom-copyright",
   bottomEnd: "footer_bottom-end",
+  glass: "footer_glass",
 };
 
 const Footer: React.FC<FooterProps> = (props) => {

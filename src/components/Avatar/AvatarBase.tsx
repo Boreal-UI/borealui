@@ -12,8 +12,7 @@ import { getInitials } from "../../utils/getInitials";
 import { combineClassNames } from "../../utils/classNames";
 import { FallbackUserIcon } from "../../Icons/index";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
@@ -42,8 +41,7 @@ export const AvatarBase = forwardRef<
     size = getDefaultSize(),
     shadow,
     shape = "circle",
-    outline = getDefaultOutline(),
-    glass = getDefaultGlass(),
+    variant = getDefaultVariant(),
     theme = getDefaultTheme(),
     state,
     className,
@@ -117,8 +115,9 @@ export const AvatarBase = forwardRef<
         classMap[size],
         getShadowClassName(classMap, theme, shadow),
         disabled && classMap.disabled,
-        outline && classMap.outline,
-        glass && classMap.glass,
+        (variant === "outline" || variant === "glassOutline") &&
+          classMap.outline,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         onClick && classMap.clickable,
         className,
       ),
@@ -129,8 +128,7 @@ export const AvatarBase = forwardRef<
       size,
       shadow,
       disabled,
-      outline,
-      glass,
+      variant,
       onClick,
       className,
       classMap,

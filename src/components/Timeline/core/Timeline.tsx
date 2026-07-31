@@ -29,7 +29,6 @@ const classes = {
   quaternary: "timeline_quaternary",
 
   clear: "timeline_clear",
-  glass: "timeline_glass",
 
   shadowNone: "timeline_shadow-None",
   shadowLight: "timeline_shadow-Light",
@@ -41,6 +40,7 @@ const classes = {
   roundSmall: "timeline_round-Small",
   roundMedium: "timeline_round-Medium",
   roundLarge: "timeline_round-Large",
+  glass: "timeline_glass",
 };
 
 const Timeline: React.FC<TimelineProps> = (props) => {

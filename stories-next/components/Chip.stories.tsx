@@ -134,7 +134,7 @@ export const Themes: Story = {
             id="theme-chip"
             message={`Theme: ${visibleTheme}`}
             theme={visibleTheme}
-            position="topRight"
+            placement="topRight"
             visible={true}
             onClose={() => setVisibleTheme(null)}
             autoClose={false}
@@ -169,8 +169,8 @@ export const GlassThemes: Story = {
             id="glass-theme-chip"
             message={`Glass Theme: ${visibleTheme}`}
             theme={visibleTheme}
-            glass={true}
-            position="topRight"
+            variant="glass"
+            placement="topRight"
             visible={true}
             onClose={() => setVisibleTheme(null)}
             autoClose={false}
@@ -205,7 +205,7 @@ export const States: Story = {
             id="state-chip"
             message={`State: ${visibleState}`}
             state={visibleState}
-            position="topRight"
+            placement="topRight"
             visible={true}
             onClose={() => setVisibleState(null)}
             autoClose={false}
@@ -240,8 +240,8 @@ export const GlassStates: Story = {
             id="glass-state-chip"
             message={`Glass State: ${visibleState}`}
             state={visibleState}
-            glass={true}
-            position="topRight"
+            variant="glass"
+            placement="topRight"
             visible={true}
             onClose={() => setVisibleState(null)}
             autoClose={false}
@@ -262,23 +262,23 @@ export const Positions: Story = {
     return (
       <>
         <div className="grid grid-cols-6 gap-2">
-          {positions.map((position) => (
+          {positions.map((placement) => (
             <button
-              key={position}
-              onClick={() => setVisiblePosition(position)}
+              key={placement}
+              onClick={() => setVisiblePosition(placement)}
               className="p-2 border rounded"
             >
-              {position}
+              {placement}
             </button>
           ))}
         </div>
 
         {visiblePosition && (
           <Chip
-            id="position-chip"
+            id="placement-chip"
             message={`Position: ${visiblePosition}`}
             theme="primary"
-            position={visiblePosition}
+            placement={visiblePosition}
             visible={true}
             onClose={() => setVisiblePosition(null)}
             autoClose={false}
@@ -316,7 +316,7 @@ export const RoundingVariants: Story = {
             message={`Rounding: ${visibleRounding}`}
             theme="primary"
             rounding={visibleRounding}
-            position="topRight"
+            placement="topRight"
             visible={true}
             onClose={() => setVisibleRounding(null)}
             autoClose={false}
@@ -352,7 +352,7 @@ export const ShadowVariants: Story = {
             message={`Shadow: ${visibleShadow}`}
             theme="primary"
             shadow={visibleShadow}
-            position="topRight"
+            placement="topRight"
             visible={true}
             onClose={() => setVisibleShadow(null)}
             autoClose={false}

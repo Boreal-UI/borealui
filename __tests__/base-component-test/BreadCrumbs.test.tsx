@@ -25,9 +25,6 @@ const classMap = {
   medium: "medium",
   large: "large",
   xl: "xl",
-
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
 
   shadowNone: "shadowNone",
@@ -53,6 +50,8 @@ const classMap = {
   current: "current-page",
   separator: "separator",
   separatorIcon: "separator-icon",
+  glass: "glass",
+  outline: "outline",
 };
 
 describe("BreadcrumbsBase", () => {
@@ -553,8 +552,7 @@ describe("BreadcrumbsBase", () => {
       size: "medium",
       shadow: "light",
       rounding: "small",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       disabled: true,
       className: "custom-breadcrumbs-class",
     });

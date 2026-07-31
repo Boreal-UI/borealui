@@ -13,7 +13,7 @@ import { BasePopOverProps, TriggerElementProps } from "./PopOver.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -25,7 +25,7 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
   asChild = false,
   placement = "bottom",
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   rounding = getDefaultRounding(),
   shadow,
   state,
@@ -184,7 +184,7 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
         classMap[dynamicPlacement],
         classMap[theme],
         state && classMap[state],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         contentClassName,
@@ -194,7 +194,7 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
       dynamicPlacement,
       theme,
       state,
-      glass,
+      variant,
       shadow,
       rounding,
       contentClassName,

@@ -28,7 +28,7 @@ const themeOptions = [
 const stateOptions = ["success", "error", "warning"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
 const layoutOptions = ["vertical", "horizontal"] as const;
-const alignments: CardProps["align"][] = ["left", "center", "right"];
+const alignments: CardProps["align"][] = ["start", "center", "end"];
 const titles = ["Left-Aligned", "Center-Aligned", "Right-Aligned"];
 const descriptions = [
   "This content is aligned to the left.",
@@ -297,7 +297,7 @@ export const ShadowVariants = () =>
   ]);
 
 export const GlassShadowVariants = () =>
-  withVariants(Card, { ...defaultArgs, glass: true }, [
+  withVariants(Card, { ...defaultArgs, variant: "glass" }, [
     { propName: "shadow", values: shadowOptions },
   ]);
 

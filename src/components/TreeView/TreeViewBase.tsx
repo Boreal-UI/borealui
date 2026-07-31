@@ -4,8 +4,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { ChevronDownIcon } from "../../Icons";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -39,8 +38,7 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
       loading = false,
       theme = getDefaultTheme(),
       state,
-      outline = getDefaultOutline(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
       classMap,
@@ -119,8 +117,8 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
       classMap.root,
       classMap[theme],
       state && classMap[state],
-      outline && classMap.outline,
-      glass && classMap.glass,
+      (variant === "outline" || variant === "glassOutline") && classMap.outline,
+      (variant === "glass" || variant === "glassOutline") && classMap.glass,
       disabled && classMap.disabled,
       loading && classMap.loading,
       getShadowClassName(classMap, theme, shadow),

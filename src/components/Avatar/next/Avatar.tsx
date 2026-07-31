@@ -18,7 +18,7 @@ const Avatar = forwardRef<HTMLAnchorElement | HTMLButtonElement, AvatarProps>(
       classMap={expandClassMap(styles)}
       ref={ref}
     />
-  )
+  ),
 );
 Avatar.displayName = "Avatar";
 export default Avatar;

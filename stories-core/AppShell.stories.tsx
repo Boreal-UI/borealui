@@ -331,7 +331,7 @@ const HeaderDemo = () => (
 const SidebarDemo = () => (
   <div className="sidebar">
     <Inline gap="xs" className="sidebar-header">
-      <Typography variant="h3" as="h2">
+      <Typography textStyle="h3" as="h2">
         Sidebar
       </Typography>
     </Inline>
@@ -361,11 +361,11 @@ const SidebarDemo = () => (
 const MainContentDemo = () => (
   <div className="main" id="dashboard">
     <section className="hero" aria-labelledby="overview">
-      <Typography as="h1" variant="h1" id="overview">
+      <Typography as="h1" textStyle="h1" id="overview">
         Main Content Area
       </Typography>
 
-      <Typography as="p" variant="body" className="muted">
+      <Typography as="p" textStyle="body" className="muted">
         Real-time performance telemetry for the example application shell.
       </Typography>
     </section>
@@ -406,7 +406,7 @@ const MainContentDemo = () => (
 
     <section className="panel" aria-labelledby="recent-activity">
       <div className="panel-header">
-        <Typography as="h2" variant="h3" id="recent-activity">
+        <Typography as="h2" textStyle="h3" id="recent-activity">
           Recent Activity
         </Typography>
 
@@ -448,7 +448,7 @@ const MainContentDemo = () => (
 
 const AsideDemo = () => (
   <div className="aside" aria-label="System summary">
-    <Typography as="h2" variant="h3">
+    <Typography as="h2" textStyle="h3">
       Aside Content
     </Typography>
 
@@ -538,11 +538,11 @@ export const MainOnly: Story = {
     children: (
       <div className="main">
         <section className="hero">
-          <Typography as="h1" variant="h1">
+          <Typography as="h1" textStyle="h1">
             Main-only layout
           </Typography>
 
-          <Typography as="p" variant="body" className="muted">
+          <Typography as="p" textStyle="body" className="muted">
             Shell can render a simple main-only application view.
           </Typography>
         </section>

@@ -24,11 +24,11 @@ const classMap = {
   alignRight: "alignRight",
   primary: "primary",
   success: "success",
-  glass: "glass",
   shadowLight: "shadowLight",
   shadowMedium: "shadowMedium",
   roundSmall: "roundSmall",
   roundMedium: "roundMedium",
+  glass: "glass",
 };
 
 const createItems = () => [
@@ -145,8 +145,8 @@ describe("BaseDropdown", () => {
     expect(menu).not.toHaveClass("alignLeft");
   });
 
-  it("applies left alignment class when align is left", () => {
-    renderDropdown({ align: "left" });
+  it("applies left alignment class when align is start", () => {
+    renderDropdown({ align: "start" });
 
     fireEvent.click(screen.getByTestId("dropdown-trigger"));
 
@@ -162,7 +162,7 @@ describe("BaseDropdown", () => {
       menuClassName: "customMenuClass",
       theme: "primary",
       state: "success",
-      glass: true,
+      variant: "glassOutline",
     });
 
     expect(screen.getByTestId("dropdown-trigger")).toHaveAttribute(
@@ -293,7 +293,7 @@ describe("BaseDropdown", () => {
     expect(menu).toHaveAttribute("aria-label", "Actions list");
   });
 
-  it("supports menuAriaLabelledby when open", () => {
+  it("supports menuAriaLabelledBy when open", () => {
     render(
       <>
         <span id="menu-label">Actions list</span>
@@ -304,7 +304,7 @@ describe("BaseDropdown", () => {
           classMap={classMap}
           data-testid="dropdown"
           aria-label="More options"
-          menuAriaLabelledby="menu-label"
+          menuAriaLabelledBy="menu-label"
         />
       </>,
     );
@@ -316,7 +316,7 @@ describe("BaseDropdown", () => {
     expect(menu).not.toHaveAttribute("aria-label");
   });
 
-  it("supports menuAriaDescribedby when open", () => {
+  it("supports menuAriaDescribedBy when open", () => {
     render(
       <>
         <span id="menu-description">Choose an action</span>
@@ -327,7 +327,7 @@ describe("BaseDropdown", () => {
           classMap={classMap}
           data-testid="dropdown"
           aria-label="More options"
-          menuAriaDescribedby="menu-description"
+          menuAriaDescribedBy="menu-description"
         />
       </>,
     );

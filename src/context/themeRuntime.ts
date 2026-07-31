@@ -87,7 +87,10 @@ export function resolveSchemeIndex(
 ): number {
   const initialIndex = getSchemeIndexByName(schemes, initialSchemeName);
   const savedIndex = getSchemeIndexByName(schemes, savedSchemeName);
-  const defaultIndex = getSchemeIndexByName(schemes, getDefaultColorSchemeName());
+  const defaultIndex = getSchemeIndexByName(
+    schemes,
+    getDefaultColorSchemeName(),
+  );
 
   if (initialIndex !== -1) return initialIndex;
   if (savedIndex !== -1) return savedIndex;
@@ -95,7 +98,9 @@ export function resolveSchemeIndex(
   return 0;
 }
 
-export function readSavedSchemeName(storage: Storage | undefined): string | null {
+export function readSavedSchemeName(
+  storage: Storage | undefined,
+): string | null {
   if (!storage) return null;
 
   try {
@@ -250,8 +255,7 @@ function hslToHex(h: number, s: number, l: number): string {
   const a = s * Math.min(l, 1 - l);
   const f = (n: number) =>
     Math.round(
-      255 *
-        (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))),
+      255 * (l - a * Math.max(-1, Math.min(k(n) - 3, Math.min(9 - k(n), 1)))),
     );
 
   return `#${[f(0), f(8), f(4)]
@@ -386,7 +390,6 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
   const secondaryTextColor = getReadableColor(secondaryColor);
   const tertiaryTextColor = getReadableColor(tertiaryColor);
   const quaternaryTextColor = getReadableColor(quaternaryColor);
-
 
   return {
     "--primary-color": primaryColor,

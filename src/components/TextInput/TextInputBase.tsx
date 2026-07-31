@@ -11,9 +11,9 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
+  getDefaultSize,
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -28,15 +28,18 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       password = false,
       readOnly = false,
       theme = getDefaultTheme(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
       onChange,
       fullWidth = false,
       state,
       disabled = false,
-      autocomplete = false,
-      outline = getDefaultOutline(),
+      autoComplete,
+      size = getDefaultSize(),
+      invalid = false,
+      helperText,
+      errorMessage,
       classMap,
       IconButton,
       className,
@@ -61,7 +64,6 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
     const {
       id: idProp,
       required,
-      autoComplete: autoCompleteProp,
       type: typeProp,
       role,
       "aria-label": ariaLabel,
@@ -107,10 +109,15 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
     const generatedDescriptionId = srOnlyText
       ? `${inputId}-sr-description`
       : undefined;
+    const helperTextId = helperText ? `${inputId}-helper-text` : undefined;
+    const errorMessageId = errorMessage
+      ? `${inputId}-error-message`
+      : undefined;
 
     const computedAriaDescribedBy =
-      [ariaDescribedBy, generatedDescriptionId].filter(Boolean).join(" ") ||
-      undefined;
+      [ariaDescribedBy, generatedDescriptionId, helperTextId, errorMessageId]
+        .filter(Boolean)
+        .join(" ") || undefined;
 
     const computedAriaLabel = hasLabel
       ? undefined
@@ -126,11 +133,10 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
 
     const isError = state === "error";
 
-    const computedAutoComplete =
-      autoCompleteProp ??
-      (autocomplete ? (password ? "current-password" : "on") : "off");
+    const computedAutoComplete = autoComplete;
 
-    const computedAriaInvalid = ariaInvalid ?? (isError || undefined);
+    const computedAriaInvalid =
+      ariaInvalid ?? (invalid || isError || undefined);
     const computedAriaRequired = ariaRequired ?? (required || undefined);
     const computedAriaReadOnly = ariaReadOnly ?? (readOnly || undefined);
     const computedAriaDisabled = ariaDisabled ?? (disabled || undefined);
@@ -155,9 +161,11 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         combineClassNames(
           classMap.textInput,
           classMap[theme],
+          size && classMap[size],
           state && classMap[state],
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
@@ -167,9 +175,9 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       [
         classMap,
         theme,
+        size,
         state,
-        outline,
-        glass,
+        variant,
         disabled,
         shadow,
         rounding,
@@ -179,8 +187,13 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
     );
 
     const inputClasses = useMemo(
-      () => combineClassNames(classMap.textInput, outline && classMap.outline),
-      [classMap, outline],
+      () =>
+        combineClassNames(
+          classMap.textInput,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+        ),
+      [classMap, variant],
     );
 
     const iconClasses = useMemo(
@@ -274,6 +287,25 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             </span>
           )}
         </div>
+        {helperText && (
+          <div
+            id={helperTextId}
+            className={classMap.helperText}
+            data-testid={`${testId}-helper-text`}
+          >
+            {helperText}
+          </div>
+        )}
+        {errorMessage && (
+          <div
+            id={errorMessageId}
+            className={classMap.errorMessage}
+            role={computedAriaInvalid ? "alert" : undefined}
+            data-testid={`${testId}-error-message`}
+          >
+            {errorMessage}
+          </div>
+        )}
       </div>
     );
   },

@@ -12,8 +12,7 @@ import { SplitPaneBaseProps } from "./SplitPane.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -38,8 +37,7 @@ const SplitPaneBase = forwardRef<HTMLDivElement, SplitPaneBaseProps>(
       separatorAriaLabel = "Resize panes",
       theme = getDefaultTheme(),
       state,
-      outline = getDefaultOutline(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
       disabled = false,
@@ -123,8 +121,9 @@ const SplitPaneBase = forwardRef<HTMLDivElement, SplitPaneBaseProps>(
           classMap[theme],
           state && classMap[state],
           classMap[orientation],
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           loading && classMap.loading,
           !isResizable && classMap.static,
@@ -137,8 +136,7 @@ const SplitPaneBase = forwardRef<HTMLDivElement, SplitPaneBaseProps>(
         theme,
         state,
         orientation,
-        outline,
-        glass,
+        variant,
         disabled,
         loading,
         isResizable,

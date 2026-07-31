@@ -1,9 +1,15 @@
+@use "../../../styles/control-sizes" as control-sizes;
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  @include control-sizes.variants(
+    ".combobox",
+    (".combobox_input", ".combobox_toggle", ".combobox_option")
+  );
+
   .combobox_layout {
     display: grid;
     gap: var(--spacing-xs);

@@ -11,9 +11,9 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
+  getDefaultSize,
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -38,14 +38,14 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
       loading = false,
       theme = getDefaultTheme(),
       state,
-      outline = getDefaultOutline(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
+      size = getDefaultSize(),
       disabled = false,
       readOnly = false,
       required = false,
-      autocomplete = false,
+      autoComplete,
       classMap,
       className,
       containerClassName,
@@ -122,8 +122,7 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
     const computedAriaRequired = ariaRequired ?? (required || undefined);
     const computedAriaReadOnly = ariaReadOnly ?? (readOnly || undefined);
     const computedAriaDisabled = ariaDisabled ?? (disabled || undefined);
-    const computedAutoComplete =
-      autoCompleteProp ?? (autocomplete ? "on" : "off");
+    const computedAutoComplete = autoCompleteProp ?? autoComplete;
     const canInteract = !disabled && !readOnly;
     const hasValue = currentValue.length > 0;
 
@@ -175,10 +174,12 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
       () =>
         combineClassNames(
           classMap.searchInput,
+          classMap[size],
           classMap[theme],
           state && classMap[state],
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           loading && classMap.loading,
           Icon && iconPosition === "left" && classMap.iconLeft,
@@ -189,10 +190,10 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
         ),
       [
         classMap,
+        size,
         theme,
         state,
-        outline,
-        glass,
+        variant,
         disabled,
         loading,
         Icon,

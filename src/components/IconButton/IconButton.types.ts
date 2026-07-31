@@ -1,12 +1,11 @@
-import React from "react";
 import {
   InteractiveProps,
-  RoundingType,
   ShadowType,
   SizeType,
   StateType,
   ThemeType,
 } from "@/types/types";
+import React from "react";
 
 /**
  * Props for the IconButton component.
@@ -56,7 +55,7 @@ export interface IconButtonProps extends InteractiveProps {
    *
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Shadow style of the button.
@@ -160,21 +159,12 @@ export interface IconButtonProps extends InteractiveProps {
    * @default false
    */
   loading?: boolean;
-
   /**
-   * Whether the button should use an outline style.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Size of the button.
    * One of: "xs" | "small" | "medium" | "large" | "xl"

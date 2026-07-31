@@ -23,7 +23,6 @@ const mockStyles = {
   suggestionList: "suggestionList",
   suggestionItem: "suggestionItem",
   active: "active",
-  glass: "glass",
   primary: "primary",
   secondary: "secondary",
   success: "success",
@@ -45,6 +44,7 @@ const mockStyles = {
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
   roundFull: "roundFull",
+  glass: "glass",
 };
 
 describe("TagInputBase", () => {
@@ -594,7 +594,7 @@ describe("TagInputBase", () => {
         theme="primary"
         state="error"
         size="medium"
-        glass
+        variant="glassOutline"
       />,
     );
 
@@ -617,7 +617,7 @@ describe("TagInputBase", () => {
         TextInput={DummyTextInput}
         IconButton={DummyIconButton}
         tags={["React"]}
-        glass
+        variant="glassOutline"
         rounding="medium"
         shadow="light"
       />,

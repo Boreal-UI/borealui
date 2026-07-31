@@ -30,7 +30,13 @@ const classes = {
 };
 
 const Modal: React.FC<ModalProps> = (props) => {
-  return <BaseModal {...props} IconButton={IconButton} classMap={expandClassMap(classes)} />;
+  return (
+    <BaseModal
+      {...props}
+      IconButton={IconButton}
+      classMap={expandClassMap(classes)}
+    />
+  );
 };
 Modal.displayName = "Modal";
 export default Modal;

@@ -52,14 +52,13 @@ const meta: Meta<ButtonProps> = {
     shadow: "medium" as ShadowType,
   },
   argTypes: {
-    glass: {
-      control: "boolean",
-      description:
-        "Applies a translucent frosted-glass treatment using the active theme or state palette.",
-    },
     iconPosition: {
       control: "select",
       options: ["left", "right"],
+    },
+    variant: {
+      control: "select",
+      options: ["solid", "outline", "glass", "glassOutline"],
     },
   },
 };
@@ -110,11 +109,11 @@ export const Disabled = () => (
       Icon Left
     </Button>
 
-    <Button icon={FaPlus} outline disabled>
+    <Button icon={FaPlus} disabled variant="outline">
       Icon Right
     </Button>
 
-    <Button icon={FaPlus} glass disabled>
+    <Button icon={FaPlus} disabled variant="glass">
       Icon Right
     </Button>
   </StoryGrid>

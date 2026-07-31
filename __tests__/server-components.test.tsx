@@ -102,7 +102,9 @@ describe("Next server component entries", () => {
     expect(screen.getByTestId("alert")).toHaveTextContent("Saved");
     expect(screen.getByTestId("avatar-main")).toHaveTextContent("AL");
     expect(screen.getByLabelText("Breadcrumbs")).toHaveTextContent("Current");
-    expect(screen.getByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Dashboard" }),
+    ).toBeInTheDocument();
     expect(screen.getByTestId("card")).toHaveTextContent("Static card");
   });
 
@@ -177,7 +179,10 @@ describe("Next server component entries", () => {
         <ValidationSummary
           items={[{ message: "Name is required", fieldId: "name" }]}
         />
-        <Footer copyright="Boreal UI" links={[{ label: "Docs", href: "/docs" }]} />
+        <Footer
+          copyright="Boreal UI"
+          links={[{ label: "Docs", href: "/docs" }]}
+        />
       </>,
     );
 
@@ -193,10 +198,9 @@ describe("Next server component entries", () => {
     expect(
       screen.getByRole("heading", { name: "Server toolbar" }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Name is required" })).toHaveAttribute(
-      "href",
-      "#name",
-    );
+    expect(
+      screen.getByRole("link", { name: "Name is required" }),
+    ).toHaveAttribute("href", "#name");
     expect(screen.getByRole("contentinfo")).toHaveTextContent("Boreal UI");
   });
 });

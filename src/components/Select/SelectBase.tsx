@@ -14,9 +14,9 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
+  getDefaultSize,
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -38,11 +38,11 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
   (
     {
       theme = getDefaultTheme(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       state,
-      outline = getDefaultOutline(),
       rounding = getDefaultRounding(),
       shadow,
+      size = getDefaultSize(),
       options,
       value,
       onChange,
@@ -180,24 +180,26 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       () =>
         combineClassNames(
           classMap.wrapper,
+          classMap[size],
           classMap[theme],
           state && classMap[state],
-          glass && classMap.glass,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           className,
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
-          outline && classMap.outline,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
           disabled && classMap.disabled,
         ),
       [
         classMap,
+        size,
         theme,
         state,
-        glass,
+        variant,
         className,
         shadow,
         rounding,
-        outline,
         disabled,
       ],
     );
@@ -206,10 +208,11 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       () =>
         combineClassNames(
           classMap.select,
-          outline && classMap.outline,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
           selectClassName,
         ),
-      [classMap, outline, selectClassName],
+      [classMap, variant, selectClassName],
     );
 
     const iconClasses = useMemo(

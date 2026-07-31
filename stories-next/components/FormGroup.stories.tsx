@@ -75,7 +75,7 @@ export const DescriptionVariants: Story = {
         <FormGroup
           label="With Description"
           id="desc-present"
-          description="Helpful context goes here."
+          helperText="Helpful context goes here."
         >
           <TextInput value={value} onChange={(value) => setValue(value)} />
         </FormGroup>
@@ -88,13 +88,13 @@ export const ErrorVariants: Story = {
   render: () => {
     return (
       <div style={{ display: "grid", gap: "1.5rem" }}>
-        <FormGroup label="No Error" id="error-none">
+        <FormGroup label="No Error" id="errorMessage-none">
           <TextInput value="" onChange={() => {}} />
         </FormGroup>
         <FormGroup
           label="With Error"
-          id="error-present"
-          error="This field is required"
+          id="errorMessage-present"
+          errorMessage="This field is required"
         >
           <TextInput value="" onChange={() => {}} />
         </FormGroup>
@@ -114,7 +114,7 @@ export const HideLabelVariants: Story = {
           label="Hidden Label"
           id="label-hidden"
           hideLabel
-          description="Label is hidden but still available to screen readers"
+          helperText="Label is hidden but still available to screen readers"
         >
           <TextInput value="" onChange={() => {}} />
         </FormGroup>

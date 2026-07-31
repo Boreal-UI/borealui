@@ -8,11 +8,7 @@ import { SearchInputProps } from "../SearchInput.types";
 
 const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   (props, ref) => (
-    <SearchInputBase
-      {...props}
-      ref={ref}
-      classMap={expandClassMap(styles)}
-    />
+    <SearchInputBase {...props} ref={ref} classMap={expandClassMap(styles)} />
   ),
 );
 

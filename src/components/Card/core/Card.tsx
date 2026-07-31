@@ -25,9 +25,6 @@ const classes = {
   error: "card_error",
 
   clear: "card_clear",
-  glass: "card_glass",
-
-  outline: "card_outline",
   loading: "card_loading",
 
   content: "card_content",
@@ -87,6 +84,8 @@ const classes = {
   footer: "card_footer",
   actions: "card_actions",
   action_button: "card_action_button",
+  glass: "card_glass",
+  outline: "card_outline",
 };
 
 const Card: React.FC<CardProps> = (props) => {

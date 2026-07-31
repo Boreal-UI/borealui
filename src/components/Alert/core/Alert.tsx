@@ -16,8 +16,6 @@ const classes = {
   dismissButton: "alert_dismiss_button",
   solid: "alert_solid",
   soft: "alert_soft",
-  outline: "alert_outline",
-  glass: "alert_glass",
   primary: "alert_primary",
   secondary: "alert_secondary",
   tertiary: "alert_tertiary",
@@ -38,6 +36,8 @@ const classes = {
   roundMedium: "alert_round-Medium",
   roundLarge: "alert_round-Large",
   roundFull: "alert_round-Full",
+  glass: "alert_glass",
+  outline: "alert_outline",
 };
 
 export default function Alert(props: AlertProps) {

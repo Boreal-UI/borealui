@@ -11,9 +11,6 @@ const classes = {
   message: "empty_state_message",
   icon: "empty_state_icon",
   actionBtn: "empty_state_action_btn",
-
-  outline: "empty_state_outline",
-  glass: "empty_state_glass",
   disabled: "empty_state_disabled",
 
   primary: "empty_state_primary",
@@ -44,6 +41,8 @@ const classes = {
   roundSmall: "empty_state_round-Small",
   roundMedium: "empty_state_round-Medium",
   roundLarge: "empty_state_round-Large",
+  glass: "empty_state_glass",
+  outline: "empty_state_outline",
 };
 
 const EmptyState: React.FC<EmptyStateProps> = (props) => {

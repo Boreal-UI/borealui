@@ -5,6 +5,11 @@ import TimePickerBase from "../TimePickerBase";
 import { TimePickerProps } from "../TimePicker.types";
 
 const classes = {
+  xs: "timePicker_xs",
+  small: "timePicker_small",
+  medium: "timePicker_medium",
+  large: "timePicker_large",
+  xl: "timePicker_xl",
   container: "timePicker_container",
   label: "timePicker_label",
   labelTop: "timePicker_labelTop",
@@ -36,8 +41,6 @@ const classes = {
   error: "timePicker_error",
 
   clear: "timePicker_clear",
-  outline: "timePicker_outline",
-  glass: "timePicker_glass",
   disabled: "timePicker_disabled",
   loading: "timePicker_loading",
 
@@ -52,6 +55,8 @@ const classes = {
   roundMedium: "timePicker_round-Medium",
   roundLarge: "timePicker_round-Large",
   roundFull: "timePicker_round-Full",
+  glass: "timePicker_glass",
+  outline: "timePicker_outline",
 };
 
 const TimePicker = forwardRef<HTMLDivElement, TimePickerProps>((props, ref) => (

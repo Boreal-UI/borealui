@@ -106,7 +106,7 @@ export const GlassThemeVariants: Story = {
             key={`glass-${theme}`}
             {...args}
             theme={theme}
-            glass
+            variant="glass"
             items={sampleEvents}
           />
         ))}

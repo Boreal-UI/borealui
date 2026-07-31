@@ -15,11 +15,11 @@ const classNames = {
   right: "placementRight",
   primary: "themePrimary",
   secondary: "themeSecondary",
-  glass: "glass",
   success: "stateSuccess",
   shadowMedium: "shadowMedium",
   roundMedium: "roundMedium",
   srOnly: "srOnly",
+  glass: "glass",
 };
 
 describe("BasePopOver", () => {
@@ -350,7 +350,7 @@ describe("BasePopOver", () => {
       rounding: "medium",
       shadow: "medium",
       state: "success",
-      glass: true,
+      variant: "glassOutline",
     });
 
     fireEvent.click(screen.getByTestId("popover-trigger"));

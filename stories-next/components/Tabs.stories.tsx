@@ -50,19 +50,19 @@ type TabsWithPanelProps = TabsProps & {
 function TabsWithPanel({
   panels,
   idBase = "storybook-tabs",
-  defaultIndex = 0,
+  defaultValue = 0,
   value,
-  onChange,
+  onValueChange,
   ...args
 }: TabsWithPanelProps): JSX.Element {
   const isControlled = typeof value === "number";
-  const [active, setActive] = useState<number>(defaultIndex);
+  const [active, setActive] = useState<number>(defaultValue);
 
   const currentIndex = isControlled ? (value as number) : active;
 
   const handleChange = (index: number): void => {
     if (!isControlled) setActive(index);
-    onChange?.(index);
+    onValueChange?.(index);
   };
 
   const panel = useMemo<React.ReactNode>(() => {
@@ -75,7 +75,7 @@ function TabsWithPanel({
         {...args}
         idBase={idBase}
         value={currentIndex}
-        onChange={handleChange}
+        onValueChange={handleChange}
       />
 
       <div
@@ -102,7 +102,7 @@ const meta: Meta<TabsProps> = {
   args: {
     theme: "primary",
     size: "medium",
-    defaultIndex: 0,
+    defaultValue: 0,
     tabs: tabsWithIcons,
   },
 };
@@ -184,7 +184,7 @@ export const GlassThemeVariants: Story = {
             {...args}
             idBase={`tabs-glass-theme-${theme}`}
             theme={theme}
-            glass
+            variant="glass"
             tabs={tabsWithIcons}
             panels={panelsWithIcons}
           />
@@ -204,7 +204,7 @@ export const GlassStateVariants: Story = {
             {...args}
             idBase={`tabs-glass-state-${state}`}
             state={state}
-            glass
+            variant="glass"
             tabs={tabsWithIcons}
             panels={panelsWithIcons}
           />
@@ -241,8 +241,8 @@ export const WithOnChange: Story = {
       idBase="tabs-onchange"
       tabs={tabsWithIcons}
       panels={panelsWithIcons}
-      onChange={(index) => {
-        args.onChange?.(index);
+      onValueChange={(index) => {
+        args.onValueChange?.(index);
       }}
     />
   ),

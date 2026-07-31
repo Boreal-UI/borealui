@@ -7,7 +7,7 @@ import {
   formatValueText,
 } from "../../utils/chartUtils";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getShadowClassName,
   getDefaultSize,
   getDefaultTheme,
@@ -31,7 +31,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
   size = getDefaultSize(),
   theme = getDefaultTheme(),
   state,
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   className,
   classMap,
   decorative = false,
@@ -70,11 +70,11 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
         classMap[theme],
         classMap[size],
         state && classMap[state],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         getShadowClassName(classMap, theme, shadow),
         className,
       ),
-    [classMap, theme, size, state, glass, shadow, className],
+    [classMap, theme, size, state, variant, shadow, className],
   );
 
   const clampedText = formatDefaultValue(clamped);
@@ -140,7 +140,8 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
         <div
           className={combineClassNames(
             classMap.inner_circle,
-            glass && classMap.glass,
+            (variant === "glass" || variant === "glassOutline") &&
+              classMap.glass,
           )}
         >
           <span
@@ -158,8 +159,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
               </>
             ) : (
               <>
-                <span className={classMap.valueNumber}>{displayPercent}</span>
-                %
+                <span className={classMap.valueNumber}>{displayPercent}</span>%
                 {units && <span className={classMap.valueUnits}>{units}</span>}
               </>
             )}

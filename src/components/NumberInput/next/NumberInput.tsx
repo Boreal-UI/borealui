@@ -8,11 +8,7 @@ import { NumberInputProps } from "../NumberInput.types";
 
 const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
   (props, ref) => (
-    <NumberInputBase
-      {...props}
-      ref={ref}
-      classMap={expandClassMap(styles)}
-    />
+    <NumberInputBase {...props} ref={ref} classMap={expandClassMap(styles)} />
   ),
 );
 

@@ -199,7 +199,7 @@ export const GlassThemeVariants: Story = {
           trigger={theme}
           activation="click"
           theme={theme}
-          glass
+          variant="glass"
           aria-label={`Glass ${theme} menu`}
           items={[{ label: `Glass ${theme}`, onClick: () => {} }]}
         />

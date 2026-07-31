@@ -60,12 +60,11 @@ export const DummyButton = React.forwardRef<
       disabled,
       href,
       theme,
-      outline,
+      variant,
       state,
       rounding,
       shadow,
       size,
-      glass,
       loading,
       loadingLabel,
       fullWidth,
@@ -97,8 +96,14 @@ export const DummyButton = React.forwardRef<
         <a
           ref={ref as React.Ref<HTMLAnchorElement>}
           data-theme={theme}
-          data-outline={outline ? "true" : "false"}
-          data-glass={glass ? "true" : "false"}
+          data-outline={
+            variant === "outline" || variant === "glassOutline"
+              ? "true"
+              : "false"
+          }
+          data-glass={
+            variant === "glass" || variant === "glassOutline" ? "true" : "false"
+          }
           href={href}
           aria-label={ariaLabel}
           onClick={(e) => {
@@ -119,8 +124,12 @@ export const DummyButton = React.forwardRef<
         ref={ref as React.Ref<HTMLButtonElement>}
         type="button"
         data-theme={theme}
-        data-outline={outline ? "true" : "false"}
-        data-glass={glass ? "true" : "false"}
+        data-outline={
+          variant === "outline" || variant === "glassOutline" ? "true" : "false"
+        }
+        data-glass={
+          variant === "glass" || variant === "glassOutline" ? "true" : "false"
+        }
         aria-label={ariaLabel}
         onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
         disabled={disabled}
@@ -154,8 +163,7 @@ export const DummyIconButton = React.forwardRef<
       icon: Icon,
       href,
       disabled,
-      outline,
-      glass,
+      variant,
       theme,
       state,
       rounding,
@@ -182,7 +190,9 @@ export const DummyIconButton = React.forwardRef<
           tabIndex={disabled ? -1 : props.tabIndex}
           aria-disabled={disabled || undefined}
           rel={rel}
-          data-glass={glass ? "true" : "false"}
+          data-glass={
+            variant === "glass" || variant === "glassOutline" ? "true" : "false"
+          }
           onClick={(e) => {
             e.preventDefault();
             onClick?.(e as React.MouseEvent<HTMLElement>);
@@ -202,7 +212,9 @@ export const DummyIconButton = React.forwardRef<
         ref={ref as React.Ref<HTMLButtonElement>}
         type="button"
         disabled={disabled}
-        data-glass={glass ? "true" : "false"}
+        data-glass={
+          variant === "glass" || variant === "glassOutline" ? "true" : "false"
+        }
         onClick={onClick as React.MouseEventHandler<HTMLButtonElement>}
         {...props}
       >
@@ -273,7 +285,7 @@ export const DummyChip: React.FC<ChipBaseProps> = ({
   onClose,
   className,
   size,
-  position,
+  placement,
   stackIndex,
   "data-testid": testId,
 }) => (
@@ -281,7 +293,7 @@ export const DummyChip: React.FC<ChipBaseProps> = ({
     role="status"
     className={className}
     data-size={size}
-    data-position={position}
+    data-placement={placement}
     data-stack-index={stackIndex}
     data-testid={testId}
   >
@@ -319,8 +331,8 @@ export const DummyTextInput = React.forwardRef<
     {
       "aria-label": ariaLabel,
       "aria-description": ariaDescription,
-      autocomplete,
-      glass,
+      autoComplete,
+      variant,
       icon,
       label,
       labelPosition,
@@ -328,7 +340,6 @@ export const DummyTextInput = React.forwardRef<
       state,
       rounding,
       shadow,
-      outline,
       containerClassName,
       labelClassName,
       iconClassName,
@@ -339,6 +350,10 @@ export const DummyTextInput = React.forwardRef<
       testId,
       onChange,
       id,
+      size,
+      invalid,
+      helperText,
+      errorMessage,
       ...props
     },
     ref,
@@ -357,15 +372,11 @@ export const DummyTextInput = React.forwardRef<
         aria-describedby={
           ariaDescription && id ? `${id}-description` : undefined
         }
-        autoComplete={
-          typeof autocomplete === "boolean"
-            ? autocomplete
-              ? "on"
-              : "off"
-            : props.autoComplete
-        }
+        autoComplete={autoComplete}
         onChange={handleChange}
-        data-glass={glass ? "true" : "false"}
+        data-glass={
+          variant === "glass" || variant === "glassOutline" ? "true" : "false"
+        }
         {...props}
       />
     );
@@ -381,8 +392,8 @@ DummyTextInput.displayName = "DummyTextInput";
 export const DummyFormGroup = ({
   children,
   label,
-  description,
-  error,
+  helperText,
+  errorMessage,
   required,
   className,
   labelClassName,
@@ -398,8 +409,10 @@ export const DummyFormGroup = ({
       </label>
     )}
 
-    {description && <div className={descriptionClassName}>{description}</div>}
-    {error && <div className={errorMessageClassName}>{error}</div>}
+    {helperText && <div className={descriptionClassName}>{helperText}</div>}
+    {errorMessage && (
+      <div className={errorMessageClassName}>{errorMessage}</div>
+    )}
     {children}
   </div>
 );
@@ -429,7 +442,7 @@ DummyProgressBar.displayName = "DummyProgressBar";
  */
 export const DummyThemeSelect: React.FC<ThemeSelectProps> = ({
   disabled,
-  glass,
+  variant,
   id,
   label,
   name,
@@ -472,13 +485,15 @@ export const DummyAvatar: React.FC<AvatarProps> = ({
   name,
   onClick,
   children,
-  glass,
+  variant,
   ...props
 }) => (
   <button
     type="button"
     onClick={onClick}
-    data-glass={glass ? "true" : "false"}
+    data-glass={
+      variant === "glass" || variant === "glassOutline" ? "true" : "false"
+    }
     {...props}
   >
     {children ?? name}

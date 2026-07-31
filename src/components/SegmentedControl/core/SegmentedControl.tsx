@@ -36,8 +36,6 @@ const classes = {
   error: "segmentedControl_error",
 
   clear: "segmentedControl_clear",
-  outline: "segmentedControl_outline",
-  glass: "segmentedControl_glass",
   disabled: "segmentedControl_disabled",
   loading: "segmentedControl_loading",
 
@@ -52,6 +50,8 @@ const classes = {
   roundMedium: "segmentedControl_round-Medium",
   roundLarge: "segmentedControl_round-Large",
   roundFull: "segmentedControl_round-Full",
+  glass: "segmentedControl_glass",
+  outline: "segmentedControl_outline",
 };
 
 const SegmentedControl = forwardRef<HTMLDivElement, SegmentedControlProps>(

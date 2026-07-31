@@ -32,7 +32,6 @@ const classMap = {
   xl: "xl",
 
   loading: "loading",
-  outline: "outline",
   disabled: "disabled",
   selected: "selected",
   selectable: "selectable",
@@ -90,6 +89,7 @@ const classMap = {
   borderLight: "borderLight",
   borderMedium: "borderMedium",
   borderStrong: "borderStrong",
+  outline: "outline",
 };
 
 describe("CardBase", () => {
@@ -252,9 +252,7 @@ describe("CardBase", () => {
       imageAlt: "Default inset image",
     });
 
-    expect(screen.getByTestId("card-image")).toHaveClass(
-      "card-img-inset-none",
-    );
+    expect(screen.getByTestId("card-image")).toHaveClass("card-img-inset-none");
     expect(screen.getByTestId("card-image")).not.toHaveClass(
       "card-img-round-medium",
     );
@@ -715,7 +713,7 @@ describe("CardBase", () => {
       shadow: "light",
       rounding: "small",
       border: "medium",
-      outline: true,
+      variant: "outline",
       className: "custom-card-class",
     });
 

@@ -118,14 +118,12 @@ export interface TagInputProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Adds translucent glass styling to the wrapper, tags, and nested controls.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the input (for feedback/validation).
    * One of: "success" | "error" | "warning" | "disabled" | ""
@@ -164,7 +162,6 @@ export interface TagInputProps {
    */
   idBase?: string;
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -174,6 +171,9 @@ export interface TagInputProps {
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+  invalid?: boolean;
+  helperText?: import("react").ReactNode;
+  errorMessage?: import("react").ReactNode;
 }
 
 export type TagInputBaseProps = TagInputProps & {

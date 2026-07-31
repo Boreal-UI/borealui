@@ -19,9 +19,6 @@ const classes = {
   error: "breadcrumbs_error",
 
   clear: "breadcrumbs_clear",
-
-  outline: "breadcrumbs_outline",
-  glass: "breadcrumbs_glass",
   disabled: "breadcrumbs_disabled",
 
   shadowNone: "breadcrumbs_shadow-None",
@@ -51,6 +48,8 @@ const classes = {
   current: "breadcrumbs_current",
   separator: "breadcrumbs_separator",
   separator_icon: "breadcrumbs_separator_icon",
+  glass: "breadcrumbs_glass",
+  outline: "breadcrumbs_outline",
 };
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = (props) => {

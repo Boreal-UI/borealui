@@ -119,11 +119,11 @@ export interface DropdownProps extends Omit<
 
   /**
    * Menu alignment relative to the trigger
-   * ('left' | 'right').
+   * ('start' | 'end').
    *
-   * @default "right"
+   * @default "end"
    */
-  align?: "left" | "right";
+  align?: "start" | "end";
 
   /**
    * Custom class name for the dropdown wrapper.
@@ -172,7 +172,6 @@ export interface DropdownProps extends Omit<
    *
    * @default false
    */
-  toggleOutline?: boolean;
 
   /**
    * Accessible label for the trigger button.
@@ -202,12 +201,12 @@ export interface DropdownProps extends Omit<
    * Accessible labelledby target for the menu.
    * Prefer this over `menuAriaLabel` when visible text labels the menu.
    */
-  menuAriaLabelledby?: string;
+  menuAriaLabelledBy?: string;
 
   /**
    * Accessible description id(s) for the menu.
    */
-  menuAriaDescribedby?: string;
+  menuAriaDescribedBy?: string;
 
   /**
    * Optional id for the menu element.
@@ -243,14 +242,12 @@ export interface DropdownProps extends Omit<
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Adds glass styling to the trigger IconButton and dropdown menu.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the dropdown
    * ('success' | 'error' | 'warning' | 'disabled' | '').

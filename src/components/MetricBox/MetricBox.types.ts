@@ -1,4 +1,3 @@
-import { IconType } from "react-icons";
 import {
   RoundingType,
   ShadowType,
@@ -6,6 +5,7 @@ import {
   StateType,
   ThemeType,
 } from "@/types/types";
+import { IconType } from "react-icons";
 import { SkeletonProps } from "../Skeleton/Skeleton.types";
 
 /**
@@ -33,14 +33,12 @@ export interface MetricBoxProps {
    * @default false
    */
   loading?: boolean;
-
   /**
-   * Optional outline style for the component (default: false).
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Theme to apply for styling.
    * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
@@ -48,14 +46,6 @@ export interface MetricBoxProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
-  /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
   /**
    * Rounding style for the component.
    * One of: "none" | "small" | "medium" | "large" | "full"
@@ -93,7 +83,7 @@ export interface MetricBoxProps {
    *
    * @default "center"
    */
-  align?: "left" | "center" | "right";
+  align?: import("@/types/types").AlignmentType;
 
   /**
    * Optional additional CSS class names for custom styling.

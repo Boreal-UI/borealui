@@ -1,16 +1,16 @@
 import {
-  InputHTMLAttributes,
-  ReactNode,
-  RefAttributes,
-  ForwardRefExoticComponent,
-} from "react";
-import {
   LabelPositionType,
   RoundingType,
   ShadowType,
   StateType,
   ThemeType,
 } from "@/types/types";
+import {
+  ForwardRefExoticComponent,
+  InputHTMLAttributes,
+  ReactNode,
+  RefAttributes,
+} from "react";
 
 type NativeNumberInputProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -121,21 +121,12 @@ export interface NumberInputProps extends NativeNumberInputProps {
    * Visual state for styling.
    */
   state?: StateType;
-
   /**
-   * Whether to render outlined styling.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Whether to render glass styling.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding style for the input.
    *
@@ -206,6 +197,10 @@ export interface NumberInputProps extends NativeNumberInputProps {
    * Backward-compatible alias for test ID attributes.
    */
   "data-testid"?: string;
+  invalid?: boolean;
+  helperText?: import("react").ReactNode;
+  errorMessage?: import("react").ReactNode;
+  size?: import("@/types/types").SizeType;
 }
 
 export interface NumberInputBaseProps extends NumberInputProps {

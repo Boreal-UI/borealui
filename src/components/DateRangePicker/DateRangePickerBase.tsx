@@ -2,9 +2,9 @@ import { useId, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
+  getDefaultSize,
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -28,13 +28,13 @@ export default function DateRangePickerBase({
   id,
   helperText,
   DatePickerComponent,
-  error,
+  errorMessage,
   theme = getDefaultTheme(),
   state,
-  outline = getDefaultOutline(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   rounding = getDefaultRounding(),
   shadow,
+  size = getDefaultSize(),
   className,
   labelClassName,
   groupClassName,
@@ -52,7 +52,7 @@ export default function DateRangePickerBase({
   const resolvedId = id ?? `${generatedId}-date-range`;
   const resolvedTestId = testId ?? dataTestId ?? "date-range-picker";
   const helperId = helperText ? `${resolvedId}-helper` : undefined;
-  const errorId = error ? `${resolvedId}-error` : undefined;
+  const errorId = errorMessage ? `${resolvedId}-errorMessage` : undefined;
   const describedBy = [ariaDescribedBy, helperId, errorId]
     .filter(Boolean)
     .join(" ");
@@ -67,10 +67,12 @@ export default function DateRangePickerBase({
     () =>
       combineClassNames(
         classMap.group,
+        classMap[size],
         classMap[theme],
         state && classMap[state],
-        outline && classMap.outline,
-        glass && classMap.glass,
+        (variant === "outline" || variant === "glassOutline") &&
+          classMap.outline,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
@@ -78,10 +80,10 @@ export default function DateRangePickerBase({
       ),
     [
       classMap,
+      size,
       theme,
       state,
-      outline,
-      glass,
+      variant,
       shadow,
       rounding,
       disabled,
@@ -127,12 +129,14 @@ export default function DateRangePickerBase({
             max={value.end || max}
             value={value.start}
             shadow="none"
-            glass={glass}
-            outline={outline}
+            size={size}
+            variant={variant}
             rounding={rounding}
             disabled={disabled}
             required={required}
-            aria-invalid={Boolean(error) || state === "error" || undefined}
+            aria-invalid={
+              Boolean(errorMessage) || state === "error" || undefined
+            }
             onChange={(next: DateInputChange) => {
               onChange?.({
                 ...value,
@@ -152,19 +156,21 @@ export default function DateRangePickerBase({
             theme={theme}
             state={state}
             fullWidth
-            glass={glass}
             id={`${resolvedId}-end`}
             name={name ? `${name}-end` : undefined}
             type="date"
             min={value.start || min}
             max={max}
-            outline={outline}
+            variant={variant}
             shadow="none"
+            size={size}
             rounding={rounding}
             value={value.end}
             disabled={disabled}
             required={required}
-            aria-invalid={Boolean(error) || state === "error" || undefined}
+            aria-invalid={
+              Boolean(errorMessage) || state === "error" || undefined
+            }
             onChange={(next: DateInputChange) => {
               onChange?.({
                 ...value,
@@ -187,13 +193,13 @@ export default function DateRangePickerBase({
           {helperText}
         </div>
       ) : null}
-      {error ? (
+      {errorMessage ? (
         <div
           id={errorId}
-          className={combineClassNames(classMap.errorText, errorClassName)}
+          className={combineClassNames(classMap.error, errorClassName)}
           role="alert"
         >
-          {error}
+          {errorMessage}
         </div>
       ) : null}
     </fieldset>

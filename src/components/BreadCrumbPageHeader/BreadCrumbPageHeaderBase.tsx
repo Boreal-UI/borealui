@@ -3,8 +3,7 @@ import { BreadCrumbPageHeaderBaseProps } from "./BreadCrumbPageHeader.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -23,8 +22,7 @@ const BreadCrumbPageHeaderBase = forwardRef<
       children,
       theme = getDefaultTheme(),
       state,
-      outline = getDefaultOutline(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       BreadCrumbsComponent,
       breadcrumbProps,
       rounding = getDefaultRounding(),
@@ -46,8 +44,8 @@ const BreadCrumbPageHeaderBase = forwardRef<
       classMap.root,
       classMap[theme],
       state && classMap[state],
-      outline && classMap.outline,
-      glass && classMap.glass,
+      (variant === "outline" || variant === "glassOutline") && classMap.outline,
+      (variant === "glass" || variant === "glassOutline") && classMap.glass,
       disabled && classMap.disabled,
       loading && classMap.loading,
       getShadowClassName(classMap, theme, shadow),

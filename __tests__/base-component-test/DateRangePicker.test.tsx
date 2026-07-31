@@ -6,6 +6,7 @@ import DateRangePickerBase from "../../src/components/DateRangePicker/DateRangeP
 expect.extend(toHaveNoViolations);
 
 const classMap = {
+  large: "large",
   dateRangePicker: "dateRangePicker",
   labelTop: "labelTop",
   labelBottom: "labelBottom",
@@ -20,7 +21,7 @@ const classMap = {
   input: "input",
   separator: "separator",
   helperText: "helperText",
-  errorText: "errorText",
+  errorText: "error",
 
   primary: "primary",
   secondary: "secondary",
@@ -31,9 +32,6 @@ const classMap = {
   success: "success",
   error: "error",
   warning: "warning",
-
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
 
   shadowNone: "shadowNone",
@@ -47,6 +45,8 @@ const classMap = {
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
   roundFull: "roundFull",
+  glass: "glass",
+  outline: "outline",
 };
 
 const defaultValue = {
@@ -62,6 +62,7 @@ type DummyDatePickerProps = React.InputHTMLAttributes<HTMLInputElement> & {
   glass?: boolean;
   outline?: boolean;
   rounding?: string;
+  size?: string;
 };
 
 const DummyDatePicker = React.forwardRef<
@@ -77,6 +78,7 @@ const DummyDatePicker = React.forwardRef<
       glass: _glass,
       outline: _outline,
       rounding: _rounding,
+      size: _size,
       ...inputProps
     },
     ref,
@@ -116,6 +118,11 @@ function renderDateRangePicker(
 }
 
 describe("DateRangePickerBase", () => {
+  it("applies the selected size class to the range group", () => {
+    const { fieldset } = renderDateRangePicker({ size: "large" });
+    expect(fieldset.querySelector(".group")).toHaveClass("large");
+  });
+
   it("renders the fieldset, legend, default field labels, and date inputs", () => {
     const { fieldset, startInput, endInput } = renderDateRangePicker();
 
@@ -184,12 +191,12 @@ describe("DateRangePickerBase", () => {
     expect(fieldset).toHaveAttribute("aria-labelledby", "external-label");
   });
 
-  it("connects helper text and error text through aria-describedby", () => {
+  it("connects helper text and errorMessage text through aria-describedby", () => {
     const { fieldset } = renderDateRangePicker({
       id: "booking-range",
       helperText: "Pick the dates for your booking.",
-      error: "End date must be after start date.",
-      "aria-describedby": "external-description",
+      errorMessage: "End date must be after start date.",
+      "aria-describedby": "external-helperText",
     });
 
     expect(
@@ -198,17 +205,17 @@ describe("DateRangePickerBase", () => {
 
     expect(
       screen.getByText("End date must be after start date."),
-    ).toHaveAttribute("id", "booking-range-error");
+    ).toHaveAttribute("id", "booking-range-errorMessage");
 
     expect(fieldset).toHaveAttribute(
       "aria-describedby",
-      "external-description booking-range-helper booking-range-error",
+      "external-helperText booking-range-helper booking-range-errorMessage",
     );
   });
 
-  it("renders error text as an alert", () => {
+  it("renders errorMessage text as an alert", () => {
     renderDateRangePicker({
-      error: "Date range is invalid.",
+      errorMessage: "Date range is invalid.",
     });
 
     expect(screen.getByRole("alert")).toHaveTextContent(
@@ -216,16 +223,16 @@ describe("DateRangePickerBase", () => {
     );
   });
 
-  it("marks both inputs as invalid when error is provided", () => {
+  it("marks both inputs as invalid when errorMessage is provided", () => {
     const { startInput, endInput } = renderDateRangePicker({
-      error: "Date range is invalid.",
+      errorMessage: "Date range is invalid.",
     });
 
     expect(startInput).toHaveAttribute("aria-invalid", "true");
     expect(endInput).toHaveAttribute("aria-invalid", "true");
   });
 
-  it("marks both inputs as invalid when state is error", () => {
+  it("marks both inputs as invalid when state is errorMessage", () => {
     const { startInput, endInput } = renderDateRangePicker({
       state: "error",
     });
@@ -234,7 +241,7 @@ describe("DateRangePickerBase", () => {
     expect(endInput).toHaveAttribute("aria-invalid", "true");
   });
 
-  it("does not set aria-invalid when there is no error state", () => {
+  it("does not set aria-invalid when there is no errorMessage state", () => {
     const { startInput, endInput } = renderDateRangePicker();
 
     expect(startInput).not.toHaveAttribute("aria-invalid");
@@ -353,8 +360,7 @@ describe("DateRangePickerBase", () => {
     renderDateRangePicker({
       theme: "secondary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       shadow: "strong",
       rounding: "large",
       groupClassName: "customGroup",
@@ -376,8 +382,7 @@ describe("DateRangePickerBase", () => {
 
   it("does not apply optional visual modifier classes when disabled through props", () => {
     renderDateRangePicker({
-      outline: false,
-      glass: false,
+      variant: "solid",
       shadow: "none",
       rounding: "none",
     });
@@ -397,7 +402,7 @@ describe("DateRangePickerBase", () => {
       inputClassName: "customInput",
       helperText: "Helpful text.",
       helperTextClassName: "customHelper",
-      error: "Error text.",
+      errorMessage: "Error text.",
       errorClassName: "customError",
     });
 

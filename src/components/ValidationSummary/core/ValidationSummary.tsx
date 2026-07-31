@@ -40,8 +40,6 @@ const classes = {
   error: "validationSummary_error",
 
   clear: "validationSummary_clear",
-  outline: "validationSummary_outline",
-  glass: "validationSummary_glass",
   disabled: "validationSummary_disabled",
   loading: "validationSummary_loading",
 
@@ -56,6 +54,8 @@ const classes = {
   roundMedium: "validationSummary_round-Medium",
   roundLarge: "validationSummary_round-Large",
   roundFull: "validationSummary_round-Full",
+  glass: "validationSummary_glass",
+  outline: "validationSummary_outline",
 };
 
 const ValidationSummary = forwardRef<HTMLDivElement, ValidationSummaryProps>(

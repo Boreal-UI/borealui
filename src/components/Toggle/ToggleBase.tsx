@@ -3,7 +3,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { ToggleBaseProps } from "./Toggle.types";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -25,7 +25,7 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
       "aria-disabled": ariaDisabled,
       tabIndex,
       theme = getDefaultTheme(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
       state,
@@ -85,23 +85,24 @@ const ToggleBase = forwardRef<HTMLButtonElement, ToggleBaseProps>(
           classMap[theme],
           state && classMap[state],
           classMap[size],
-          glass && classMap.glass,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           className,
         ),
-      [classMap, theme, state, size, glass, disabled, className],
+      [classMap, theme, state, size, variant, disabled, className],
     );
 
     const toggleClass = useMemo(
       () =>
         combineClassNames(
           classMap.toggle,
-          glass && classMap.glassTrack,
+          (variant === "glass" || variant === "glassOutline") &&
+            classMap.glassTrack,
           checked && classMap.active,
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
         ),
-      [classMap, theme, glass, checked, shadow, rounding],
+      [classMap, theme, variant, checked, shadow, rounding],
     );
 
     return (

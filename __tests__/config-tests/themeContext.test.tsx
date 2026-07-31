@@ -27,8 +27,7 @@ jest.mock("../../src/styles/Themes", () => ({
 
 jest.mock("../../src/config/boreal-style-config", () => ({
   getDefaultColorSchemeName: jest.fn(),
-  getDefaultGlass: jest.fn(() => false),
-  getDefaultOutline: jest.fn(() => false),
+  getDefaultVariant: jest.fn(() => "solid"),
   getDefaultRounding: jest.fn(() => "medium"),
   getDefaultShadow: jest.fn(() => "light"),
   getDefaultTheme: jest.fn(() => "primary"),

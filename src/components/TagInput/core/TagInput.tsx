@@ -30,7 +30,6 @@ const classes = {
   error: "tag_input_error",
 
   clear: "tag_input_clear",
-  glass: "tag_input_glass",
 
   xs: "tag_input_xs",
   small: "tag_input_small",
@@ -48,6 +47,7 @@ const classes = {
   roundSmall: "tag_round-Small",
   roundMedium: "tag_round-Medium",
   roundLarge: "tag_round-Large",
+  glass: "tag_input_glass",
 };
 
 const TagInput: React.FC<TagInputProps> = (props) => {

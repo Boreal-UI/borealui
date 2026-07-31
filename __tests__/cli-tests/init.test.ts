@@ -124,9 +124,7 @@ describe("Boreal UI CLI setup", () => {
     expect(layout).toContain("<BorealProvider>{children}</BorealProvider>");
 
     expect(provider).toContain('"use client";');
-    expect(provider).toContain(
-      'import type { ReactNode } from "react";',
-    );
+    expect(provider).toContain('import type { ReactNode } from "react";');
     expect(provider).toContain(
       'import { ThemeProvider } from "@boreal-ui/next";',
     );
@@ -287,9 +285,7 @@ createRoot(document.getElementById("root")!).render(<App />);
     expect(agentsGuide).toContain(
       "Guidance for AI agents working in this React project with Boreal UI.",
     );
-    expect(agentsGuide).toContain(
-      "Import components from `@boreal-ui/core`.",
-    );
+    expect(agentsGuide).toContain("Import components from `@boreal-ui/core`.");
     expect(agentsGuide).toContain(
       "Import Boreal globals once from `@boreal-ui/core/globals.css`",
     );
@@ -535,9 +531,7 @@ export default function AppProviders({ children }: { children: React.ReactNode }
     expect(provider).toContain(
       'import { ThemeProvider } from "@boreal-ui/next";',
     );
-    expect(provider).toContain(
-      '<ThemeProvider>{children}</ThemeProvider>',
-    );
+    expect(provider).toContain("<ThemeProvider>{children}</ThemeProvider>");
   });
 
   it("configures a Next pages router app", async () => {
@@ -557,9 +551,7 @@ export default function AppProviders({ children }: { children: React.ReactNode }
     const app = readFileSync(join(root, "pages", "_app.tsx"), "utf8");
 
     expect(app).toContain('import "@boreal-ui/next/globals.css";');
-    expect(app).toContain(
-      'import { ThemeProvider } from "@boreal-ui/next";',
-    );
+    expect(app).toContain('import { ThemeProvider } from "@boreal-ui/next";');
     expect(app).not.toContain("setBorealStyleConfig");
     expect(app).toContain("<ThemeProvider>");
     expect(app).toContain("<Component {...pageProps} />");
@@ -590,9 +582,7 @@ createRoot(document.getElementById("root")!).render(<App />);
     };
 
     expect(entry).toContain('import "@boreal-ui/core/globals.css";');
-    expect(entry).toContain(
-      'import { ThemeProvider } from "@boreal-ui/core";',
-    );
+    expect(entry).toContain('import { ThemeProvider } from "@boreal-ui/core";');
     expect(packageJson.dependencies["@boreal-ui/core"]).toBe(`^${VERSION}`);
     expect(entry).not.toContain("setBorealStyleConfig");
     expect(entry).toContain("<ThemeProvider>");
@@ -645,9 +635,7 @@ createRoot(document.getElementById("root")!).render(<App />);
     });
 
     expect(logSpy).toHaveBeenCalledWith(
-      expect.stringContaining(
-        "Next step: run pnpm install.",
-      ),
+      expect.stringContaining("Next step: run pnpm install."),
     );
   });
 
@@ -672,18 +660,18 @@ createRoot(document.getElementById("root")!).render(<App />);
   });
 
   it("rejects file candidates that resolve outside the project root", () => {
-    const exitSpy = jest
-      .spyOn(process, "exit")
-      .mockImplementation((() => {
-        throw new Error("process.exit");
-      }) as typeof process.exit);
+    const exitSpy = jest.spyOn(process, "exit").mockImplementation((() => {
+      throw new Error("process.exit");
+    }) as typeof process.exit);
 
     try {
       expect(() =>
         __testing.resolveProjectPath(root, "..", "outside-project.txt"),
       ).toThrow("process.exit");
       expect(errorSpy).toHaveBeenCalledWith(
-        expect.stringContaining("Refusing to access a path outside the project directory"),
+        expect.stringContaining(
+          "Refusing to access a path outside the project directory",
+        ),
       );
     } finally {
       exitSpy.mockRestore();

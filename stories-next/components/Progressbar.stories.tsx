@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import {
   ProgressBar,
-  RoundingType,
+  RoundableRoundingType,
   ShadowType,
   StateType,
   ThemeType,
@@ -19,7 +19,7 @@ const themeOptions: ThemeType[] = [
 
 const stateOptions: StateType[] = ["success", "error", "warning"];
 
-const roundingOptions: RoundingType[] = [
+const roundingOptions: RoundableRoundingType[] = [
   "none",
   "small",
   "medium",
@@ -178,7 +178,7 @@ export const GlassThemeVariants: Story = {
               {...args}
               value={20 + themeOptions.indexOf(theme) * 15}
               theme={theme}
-              glass
+              variant="glass"
               label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
             />
           </div>
@@ -198,7 +198,7 @@ export const GlassStateVariants: Story = {
               {...args}
               value={20 + stateOptions.indexOf(state) * 15}
               state={state}
-              glass
+              variant="glass"
               label={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
             />
           </div>
