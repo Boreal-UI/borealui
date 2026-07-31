@@ -132,10 +132,6 @@
     font-weight: var(--font-weight-body);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
-    transition:
-      background-color var(--transition-default),
-      transform var(--transition-default),
-      box-shadow var(--transition-default);
 
     @include bp.down(sm) {
       padding: var(--spacing-xs);
@@ -153,13 +149,6 @@
 
     &:hover {
       background-color: var(--background-color);
-      transform: translateY(-1px);
-      box-shadow: var(--box-shadow-light);
-
-      @include bp.down(sm) {
-        transform: none;
-        box-shadow: none;
-      }
     }
 
     &:focus-visible {

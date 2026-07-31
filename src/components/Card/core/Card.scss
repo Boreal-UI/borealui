@@ -46,7 +46,7 @@
     }
 
     &_fade-in {
-      animation: fade-in 0.8s ease-in-out;
+      animation: fade-in 240ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
     }
 
     &_media {

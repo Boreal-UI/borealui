@@ -20,7 +20,6 @@
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
     user-select: none;
-    transition: all var(--transition-default);
     position: relative;
 
     @include bp.down(xs) {
@@ -53,9 +52,6 @@
     animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     transition: transform var(--transition-default);
 
-    &:hover {
-      animation: pulse 1.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    }
 
     @include bp.down(xs) {
       width: 40px;
@@ -149,19 +145,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .spinner,
-    .spinner:hover {
+    .spinner {
       animation: none !important;
-    }
-
-    .wrapper {
-      transition: none !important;
-    }
-  }
-
-  @media (hover: none) {
-    .spinner:hover {
-      animation: inherit;
     }
   }
 

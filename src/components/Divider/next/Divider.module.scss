@@ -11,7 +11,9 @@
   display: block;
   margin: 0 auto;
   flex-shrink: 0;
-  transition: all theme.$transition-default;
+  transition:
+    background-color theme.$transition-default,
+    opacity theme.$transition-default;
   background-color: var(--text-color-primary);
   border: none;
 }

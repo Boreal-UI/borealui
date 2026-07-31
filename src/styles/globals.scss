@@ -244,6 +244,19 @@
      FOCUS & INTERACTION
   ================================== */
     --focus-outline-color: var(--text-color-primary);
+    --ease-out: #{theme.$ease-out};
+    --ease-in-out: #{theme.$ease-in-out};
+    --ease-drawer: #{theme.$ease-drawer};
+    --motion-press: 140ms var(--ease-out);
+    --motion-tooltip: 150ms var(--ease-out);
+    --motion-popover: 180ms var(--ease-out);
+    --motion-modal: 220ms var(--ease-out);
+    --motion-drawer: 260ms var(--ease-drawer);
+    --motion-exit: 160ms var(--ease-out);
+    --motion-color: 160ms ease;
+    --transition-fast: var(--motion-press);
+    --transition-default: var(--motion-popover);
+    --transition-slow: 240ms var(--ease-in-out);
 
     /* ===========================
      Spacing Scale

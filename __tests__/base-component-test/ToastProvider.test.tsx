@@ -15,6 +15,7 @@ const classMap = {
   bottomLeft: "toast_bottomLeft",
 
   toast: "toast",
+  exiting: "toast_exiting",
   content: "toast_content",
   title: "toast_title",
   message: "toast_message",
@@ -108,6 +109,10 @@ function renderToastProvider(
     </ToastProviderBase>,
   );
 }
+
+const finishToastExit = () => {
+  act(() => jest.advanceTimersByTime(160));
+};
 
 describe("ToastProviderBase", () => {
   beforeEach(() => {
@@ -257,6 +262,11 @@ describe("ToastProviderBase", () => {
     expect(screen.getByText("Replacement")).toBeInTheDocument();
 
     act(() => jest.advanceTimersByTime(1));
+    expect(screen.getByTestId("toast-provider-toast-shared")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
+    finishToastExit();
     expect(screen.queryByText("Replacement")).not.toBeInTheDocument();
   });
 
@@ -272,6 +282,11 @@ describe("ToastProviderBase", () => {
     fireEvent.click(
       screen.getByRole("button", { name: "Dismiss notification" }),
     );
+
+    expect(
+      screen.getByTestId("toast-provider-toast-success-toast"),
+    ).toHaveAttribute("aria-hidden", "true");
+    finishToastExit();
 
     expect(
       screen.queryByTestId("toast-provider-toast-success-toast"),
@@ -292,6 +307,11 @@ describe("ToastProviderBase", () => {
     fireEvent.click(screen.getByText("Remove success toast"));
 
     expect(
+      screen.getByTestId("toast-provider-toast-success-toast"),
+    ).toHaveAttribute("aria-hidden", "true");
+    finishToastExit();
+
+    expect(
       screen.queryByTestId("toast-provider-toast-success-toast"),
     ).not.toBeInTheDocument();
 
@@ -309,6 +329,7 @@ describe("ToastProviderBase", () => {
     fireEvent.click(screen.getByText("Clear toasts"));
 
     expect(screen.getByTestId("toast-count")).toHaveTextContent("0");
+    finishToastExit();
     expect(
       screen.queryByTestId("toast-provider-toast-success-toast"),
     ).not.toBeInTheDocument();
@@ -339,8 +360,58 @@ describe("ToastProviderBase", () => {
     });
 
     expect(
+      screen.getByTestId("toast-provider-toast-temporary-toast"),
+    ).toHaveAttribute("aria-hidden", "true");
+    finishToastExit();
+
+    expect(
       screen.queryByTestId("toast-provider-toast-temporary-toast"),
     ).not.toBeInTheDocument();
+  });
+
+  it("pauses auto-dismiss while a toast is hovered", () => {
+    renderToastProvider();
+    fireEvent.click(screen.getByText("Add temporary toast"));
+
+    const toast = screen.getByTestId(
+      "toast-provider-toast-temporary-toast",
+    );
+
+    act(() => jest.advanceTimersByTime(500));
+    fireEvent.mouseEnter(toast);
+    act(() => jest.advanceTimersByTime(1_000));
+    expect(toast).toBeInTheDocument();
+
+    fireEvent.mouseLeave(toast);
+    act(() => jest.advanceTimersByTime(499));
+    expect(toast).not.toHaveAttribute("aria-hidden");
+    act(() => jest.advanceTimersByTime(1));
+    expect(toast).toHaveClass("toast_exiting");
+  });
+
+  it("pauses auto-dismiss while the document is hidden", () => {
+    renderToastProvider();
+    fireEvent.click(screen.getByText("Add temporary toast"));
+
+    const toast = screen.getByTestId(
+      "toast-provider-toast-temporary-toast",
+    );
+
+    Object.defineProperty(document, "hidden", {
+      configurable: true,
+      value: true,
+    });
+    fireEvent(document, new Event("visibilitychange"));
+    act(() => jest.advanceTimersByTime(1_000));
+    expect(toast).not.toHaveAttribute("aria-hidden");
+
+    Object.defineProperty(document, "hidden", {
+      configurable: true,
+      value: false,
+    });
+    fireEvent(document, new Event("visibilitychange"));
+    act(() => jest.advanceTimersByTime(1_000));
+    expect(toast).toHaveClass("toast_exiting");
   });
 
   it("uses defaultDuration when a toast duration is not provided", () => {
@@ -389,6 +460,11 @@ describe("ToastProviderBase", () => {
     act(() => {
       jest.advanceTimersByTime(1);
     });
+
+    expect(
+      screen.getByTestId("duration-provider-toast-default-duration-toast"),
+    ).toHaveAttribute("aria-hidden", "true");
+    finishToastExit();
 
     expect(
       screen.queryByTestId("duration-provider-toast-default-duration-toast"),

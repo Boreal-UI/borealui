@@ -1036,7 +1036,8 @@ const behaviorCases: BehaviorCase[] = [
       cy.get('[data-testid="tooltip-trigger"]').focus();
       cy.get('[data-testid="tooltip"]')
         .should("have.attr", "aria-hidden", "false")
-        .and("contain.text", "Helpful tooltip");
+        .and("contain.text", "Helpful tooltip")
+        .and("have.css", "opacity", "1");
     },
   },
   {

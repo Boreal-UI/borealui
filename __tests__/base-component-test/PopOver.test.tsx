@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { act, render, screen, fireEvent } from "@testing-library/react";
 import BasePopOver from "@/components/PopOver/PopOverBase";
 import { axe, toHaveNoViolations } from "jest-axe";
 
@@ -56,6 +56,7 @@ describe("BasePopOver", () => {
   });
 
   it("toggles popover open and closed on click", () => {
+    jest.useFakeTimers();
     renderPopOver();
 
     const trigger = screen.getByTestId("popover-trigger");
@@ -67,8 +68,15 @@ describe("BasePopOver", () => {
     expect(trigger).toHaveAttribute("aria-expanded", "true");
 
     fireEvent.click(trigger);
-    expect(screen.queryByTestId("popover-content")).not.toBeInTheDocument();
+    expect(screen.getByTestId("popover-content")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
     expect(trigger).toHaveAttribute("aria-expanded", "false");
+
+    act(() => jest.advanceTimersByTime(160));
+    expect(screen.queryByTestId("popover-content")).not.toBeInTheDocument();
+    jest.useRealTimers();
   });
 
   it("closes on Escape key and returns focus to the trigger", () => {
@@ -81,7 +89,10 @@ describe("BasePopOver", () => {
 
     fireEvent.keyDown(document, { key: "Escape" });
 
-    expect(screen.queryByTestId("popover-content")).not.toBeInTheDocument();
+    expect(screen.getByTestId("popover-content")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
     expect(trigger).toHaveFocus();
   });
 
@@ -104,7 +115,10 @@ describe("BasePopOver", () => {
     expect(screen.getByTestId("popover-content")).toBeInTheDocument();
 
     fireEvent.mouseDown(screen.getByTestId("outside-button"));
-    expect(screen.queryByTestId("popover-content")).not.toBeInTheDocument();
+    expect(screen.getByTestId("popover-content")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
   });
 
   it("does not close when clicking inside the popover", () => {
@@ -375,7 +389,10 @@ describe("BasePopOver", () => {
     expect(screen.getByTestId("popover-content")).toBeInTheDocument();
 
     fireEvent.click(trigger);
-    expect(screen.queryByTestId("popover-content")).not.toBeInTheDocument();
+    expect(screen.getByTestId("popover-content")).toHaveAttribute(
+      "aria-hidden",
+      "true",
+    );
   });
 
   it("has no accessibility violations when open as a dialog", async () => {

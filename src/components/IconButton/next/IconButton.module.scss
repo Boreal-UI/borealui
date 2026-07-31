@@ -16,18 +16,22 @@
     text-decoration: none;
     color: inherit;
     font-family: var(--font-family-ui);
-    transition: var(--transition-default);
+    transition:
+      transform var(--motion-press, 140ms cubic-bezier(0.23, 1, 0.32, 1)),
+      background-color var(--motion-color, 160ms ease),
+      border-color var(--motion-color, 160ms ease),
+      color var(--motion-color, 160ms ease),
+      box-shadow var(--motion-color, 160ms ease);
     transform-origin: center;
     background: transparent;
 
     &:hover {
       text-decoration: none;
-      transform: scale(1.05);
       cursor: pointer;
+    }
 
-      @include bp.down(sm) {
-        transform: scale(1.03);
-      }
+    &:active {
+      transform: scale(0.97);
     }
 
     &:focus-visible {
@@ -48,6 +52,12 @@
         width: 22px;
         height: 22px;
       }
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .iconButton:hover {
+      transform: scale(1.03);
     }
   }
 

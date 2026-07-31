@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useRef } from "react";
+import { useEffect, useId, useMemo, useRef, useState } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -44,9 +44,22 @@ export default function DrawerBase({
   const generatedTitleId = useId();
   const titleId = ariaLabelledBy ?? (title ? generatedTitleId : undefined);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const [isRendered, setIsRendered] = useState(open);
 
   useEffect(() => {
-    if (!open) return;
+    if (open) {
+      setIsRendered(true);
+      return;
+    }
+
+    if (!isRendered) return;
+
+    const timer = window.setTimeout(() => setIsRendered(false), 160);
+    return () => window.clearTimeout(timer);
+  }, [open, isRendered]);
+
+  useEffect(() => {
+    if (!open || !isRendered) return;
     const previous = document.activeElement as HTMLElement | null;
     closeRef.current?.focus();
 
@@ -61,7 +74,7 @@ export default function DrawerBase({
       document.removeEventListener("keydown", onKeyDown);
       previous?.focus?.();
     };
-  }, [open, closeOnEscape, onClose]);
+  }, [open, isRendered, closeOnEscape, onClose]);
 
   const rootClassName = useMemo(
     () =>
@@ -88,7 +101,7 @@ export default function DrawerBase({
     [classMap, theme, variant, shadow, rounding, panelClassName, state],
   );
 
-  if (!open) return null;
+  if (!isRendered) return null;
 
   return (
     <div className={rootClassName} data-testid={resolvedTestId}>
@@ -103,6 +116,7 @@ export default function DrawerBase({
         className={panelClasses}
         role="dialog"
         aria-modal="true"
+        aria-hidden={!open}
         aria-label={ariaLabel}
         aria-labelledby={titleId}
         aria-describedby={ariaDescribedBy}

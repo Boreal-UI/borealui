@@ -8,6 +8,7 @@ const classes = {
   container: "popover_container",
   trigger: "popover_trigger",
   popover: "popover",
+  open: "popover_open",
 
   top: "popover_top",
   bottom: "popover_bottom",

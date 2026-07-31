@@ -67,6 +67,7 @@
     &:hover .tooltip {
       opacity: 1;
       visibility: visible;
+      scale: 1;
     }
   }
 
@@ -83,10 +84,11 @@
     white-space: nowrap;
     opacity: 0;
     visibility: hidden;
+    scale: 0.97;
     z-index: 100;
     transition:
-      opacity 0.3s ease-in-out,
-      transform 0.2s ease-in-out;
+      opacity var(--motion-tooltip, 150ms cubic-bezier(0.23, 1, 0.32, 1)),
+      scale var(--motion-tooltip, 150ms cubic-bezier(0.23, 1, 0.32, 1));
 
     @include bp.down(xs) {
       font-size: var(--font-size-caption);
@@ -108,6 +110,28 @@
       outline-offset: 2px;
       border-radius: var(--border-radius-sm);
     }
+  }
+
+  .visible {
+    opacity: 1;
+    visibility: visible;
+    scale: 1;
+  }
+
+  .top {
+    transform-origin: bottom center;
+  }
+
+  .bottom {
+    transform-origin: top center;
+  }
+
+  .left {
+    transform-origin: center right;
+  }
+
+  .right {
+    transform-origin: center left;
   }
 
   @each $position, $config in $positions {
@@ -262,6 +286,13 @@
     .container:hover .tooltip {
       opacity: 0;
       visibility: hidden;
+      scale: 0.97;
+    }
+
+    .container .visible {
+      opacity: 1;
+      visibility: visible;
+      scale: 1;
     }
   }
 

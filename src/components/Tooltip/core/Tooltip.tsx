@@ -8,6 +8,7 @@ const classes = {
   container: "tooltip_container",
   triggerWrapper: "tooltip_triggerWrapper",
   tooltip: "tooltip",
+  visible: "tooltip_visible",
 
   top: "tooltip_top",
   bottom: "tooltip_bottom",
