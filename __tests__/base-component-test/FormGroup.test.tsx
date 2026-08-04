@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import BaseFormGroup from "@/components/FormGroup/FormGroupBase";
 import { axe, toHaveNoViolations } from "jest-axe";
@@ -15,6 +14,7 @@ const classNames = {
   controller: "controller",
   helperText: "helperText",
   error: "error",
+  errorText: "errorText",
   vertical: "layoutVertical",
   horizontal: "layoutHorizontal",
   xs: "spacingXs",
@@ -324,7 +324,7 @@ describe("BaseFormGroup", () => {
     );
 
     expect(screen.getByTestId("form-group-errorMessage")).toHaveClass(
-      "error",
+      "errorText",
       "custom-errorMessage-message",
     );
   });
@@ -549,7 +549,9 @@ describe("BaseFormGroup", () => {
       </BaseFormGroup>,
     );
 
-    expect(screen.getByTestId("form-group-errorMessage")).toHaveClass("error");
+    expect(screen.getByTestId("form-group-errorMessage")).toHaveClass(
+      "errorText",
+    );
   });
 
   it("supports wrapper aria-label override", () => {

@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import "@testing-library/jest-dom";
@@ -21,6 +20,7 @@ const classMap = {
 
   success: "success",
   error: "error",
+  errorText: "errorText",
   warning: "warning",
 } satisfies Record<string, string>;
 
@@ -170,7 +170,7 @@ describe("FormFieldBase", () => {
 
     expect(errorMessage).toHaveAttribute("id", "email-errorMessage");
     expect(errorMessage).toHaveAttribute("role", "alert");
-    expect(errorMessage).toHaveClass("error");
+    expect(errorMessage).toHaveClass("errorText");
     expect(errorMessage).toHaveTextContent("Email is required.");
   });
 
@@ -265,7 +265,7 @@ describe("FormFieldBase", () => {
     );
 
     expect(screen.getByTestId("form-field-errorMessage")).toHaveClass(
-      "error",
+      "errorText",
       "customError",
     );
   });
