@@ -86,7 +86,7 @@ export default function FormFieldBase({
       {errorMessage ? (
         <div
           id={errorId}
-          className={combineClassNames(classMap.error, errorClassName)}
+          className={combineClassNames(classMap.errorText, errorClassName)}
           role="alert"
           data-testid={`${resolvedTestId}-errorMessage`}
         >

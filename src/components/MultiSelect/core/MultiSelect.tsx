@@ -30,6 +30,7 @@ const classes = {
   searchInput: "multiSelect_searchInput",
   listbox: "multiSelect_listbox",
   option: "multiSelect_option",
+  optionLabel: "multiSelect_optionLabel",
   optionText: "multiSelect_optionText",
   description: "multiSelect_description",
   checkbox: "multiSelect_checkbox",

@@ -11,6 +11,7 @@ const classes = {
   large: "date_range_picker_large",
   xl: "date_range_picker_xl",
   dateRangePicker: "date_range_picker",
+  layout: "date_range_picker_layout",
   legend: "date_range_picker_legend",
   label: "date_range_picker_label",
   group: "date_range_picker_group",
@@ -20,7 +21,7 @@ const classes = {
   separator: "date_range_picker_separator",
   helperText: "date_range_picker_helper_text",
 
-  errorMessage: "date_range_picker_error_text",
+  errorText: "date_range_picker_error_text",
   disabled: "date_range_picker_disabled",
 
   labelTop: "date_range_picker_label_top",

@@ -75,29 +75,21 @@
       }
     }
 
-    &_description,
-    &_error_message {
+    &_helper_text,
+    &_error_text {
       font-family: var(--font-family-body);
-      font-size: var(--font-size-body-sm);
+      font-size: var(--font-size-caption);
       font-weight: var(--font-weight-body);
-      line-height: var(--line-height-body);
+      line-height: var(--line-height-caption);
       letter-spacing: var(--letter-spacing-body);
       margin-top: 4px;
-
-      @include bp.down(xs) {
-        font-size: var(--font-size-caption);
-      }
-
-      @include bp.up(lg) {
-        font-size: var(--font-size-body);
-      }
     }
 
-    &_description {
+    &_helper_text {
       color: inherit;
     }
 
-    &_error_message {
+    &_error_text {
       color: var(--error-color);
     }
 
@@ -146,7 +138,7 @@
       }
 
       &_description,
-      &_error_message {
+      &_error_text {
         margin-left: 0;
         margin-bottom: 0;
         text-align: left;

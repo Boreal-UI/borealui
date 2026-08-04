@@ -6,7 +6,7 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  @include control-sizes.variants(".select", (".select"));
+  @include control-sizes.variants(".wrapper", (".select"), ".");
 
   .wrapper {
     position: relative;

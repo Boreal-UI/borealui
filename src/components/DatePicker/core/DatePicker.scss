@@ -7,12 +7,13 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  @include control-sizes.variants(".datePicker", (".datePicker_input", ".datePicker_button"));
+  @include control-sizes.variants(".datePicker", (".datePicker_input"));
 
   .datePicker_container {
     display: inline-flex;
     gap: var(--spacing-xs);
     align-items: flex-start;
+    min-width: 0;
     max-width: 100%;
     font-family: var(--font-family-body);
   }
@@ -54,6 +55,7 @@
     gap: var(--spacing-sm);
     min-width: 0;
     max-width: 100%;
+    width: min(100%, 18rem);
     height: fit-content;
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
@@ -116,8 +118,10 @@
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    min-width: 2.25rem;
+    width: var(--boreal-control-min-height, 2.25rem);
+    min-width: var(--boreal-control-min-height, 2.25rem);
+    min-height: var(--boreal-control-min-height, 2.25rem);
+    padding: 0;
     color: inherit;
     cursor: pointer;
     background: transparent;
@@ -126,9 +130,9 @@
     border-left: 1px solid var(--border-color);
   }
 
-  .datePicker_button svg {
-    width: 1rem;
-    height: 1rem;
+  .datePicker_calendarIcon {
+    width: 80%;
+    height: 80%;
   }
 
   .datePicker_button:focus-visible {
@@ -146,7 +150,7 @@
   .datePicker_errorText {
     max-width: 100%;
     margin: 0;
-    font-size: var(--font-size-body-sm);
+    font-size: var(--font-size-caption);
     line-height: 1.4;
     color: inherit;
     overflow-wrap: anywhere;

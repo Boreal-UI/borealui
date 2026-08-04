@@ -7,7 +7,7 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  @include control-sizes.variants(".dateTimePicker", (".dateTimePicker_input", ".dateTimePicker_button"));
+  @include control-sizes.variants(".dateTimePicker", (".dateTimePicker_input"));
 
   .dateTimePicker_container {
     display: inline-flex;
@@ -116,8 +116,10 @@
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    min-width: 2.25rem;
+    width: var(--boreal-control-min-height, 2.25rem);
+    min-width: var(--boreal-control-min-height, 2.25rem);
+    min-height: var(--boreal-control-min-height, 2.25rem);
+    padding: 0;
     color: inherit;
     cursor: pointer;
     background: transparent;
@@ -146,7 +148,7 @@
   .dateTimePicker_errorText {
     max-width: 100%;
     margin: 0;
-    font-size: var(--font-size-body-sm);
+    font-size: var(--font-size-caption);
     line-height: 1.4;
     color: inherit;
     overflow-wrap: anywhere;

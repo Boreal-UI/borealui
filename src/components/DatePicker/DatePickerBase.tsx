@@ -236,7 +236,11 @@ const DatePickerBase = forwardRef<HTMLDivElement, DatePickerBaseProps>(
               title={pickerButtonTitle ?? pickerButtonAriaLabel}
               data-testid={`${testId}-button`}
             >
-              <CalendarIcon aria-hidden="true" focusable={false} />
+              <CalendarIcon
+                className={classMap.calendarIcon}
+                aria-hidden="true"
+                focusable={false}
+              />
             </button>
           </div>
 
@@ -270,7 +274,7 @@ const DatePickerBase = forwardRef<HTMLDivElement, DatePickerBaseProps>(
         {errorMessage ? (
           <p
             id={errorId}
-            className={combineClassNames(classMap.error, errorClassName)}
+            className={combineClassNames(classMap.errorText, errorClassName)}
             role="alert"
             data-testid={`${testId}-errorMessage`}
           >

@@ -7,7 +7,14 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  @include control-sizes.variants(".searchInput", (".searchInput_input", ".searchInput_clearButton", ".searchInput_searchButton"));
+  @include control-sizes.variants(
+    ".searchInput",
+    (
+      ".searchInput_input",
+      ".searchInput_clearButton",
+      ".searchInput_searchButton"
+    )
+  );
 
   .searchInput_container {
     display: inline-flex;
@@ -141,10 +148,9 @@
 
   .searchInput_clearButton,
   .searchInput_searchButton {
-    display: inline-flex;
+    display: grid;
     align-items: center;
     justify-content: center;
-    flex: 0 0 auto;
     width: 2rem;
     min-height: 2rem;
     border: 0;

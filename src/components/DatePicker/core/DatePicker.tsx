@@ -22,6 +22,7 @@ const classes = {
   inputWrapper: "datePicker_inputWrapper",
   input: "datePicker_input",
   button: "datePicker_button",
+  calendarIcon: "datePicker_calendarIcon",
   description: "datePicker_description",
   helperText: "datePicker_helperText",
   errorText: "datePicker_errorText",

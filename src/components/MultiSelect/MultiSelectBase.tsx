@@ -459,7 +459,9 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
                           {selected ? "✓" : ""}
                         </span>
                         <span className={classMap.optionText}>
-                          <span>{option.label}</span>
+                          <span className={classMap.optionLabel}>
+                            {option.label}
+                          </span>
                           {option.description ? (
                             <small className={classMap.description}>
                               {option.description}

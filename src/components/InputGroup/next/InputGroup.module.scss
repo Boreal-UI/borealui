@@ -24,10 +24,11 @@
     align-items: baseline;
     max-width: 100%;
     font-family: var(--font-family-ui);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
     line-height: var(--line-height-label);
-    color: inherit;
+    letter-spacing: var(--letter-spacing-label);
+    white-space: nowrap;
     overflow-wrap: anywhere;
   }
 
@@ -209,8 +210,8 @@
   .errorText {
     max-width: 100%;
     margin: 0;
-    font-size: var(--font-size-body-sm);
-    line-height: var(--line-height-body);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
     overflow-wrap: anywhere;
   }
 

@@ -5,6 +5,7 @@ import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import {
   roundingOptions,
   shadowOptions,
+  sizeOptions,
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
@@ -27,6 +28,28 @@ const meta: Meta<DatePickerProps> = {
     defaultValue: "2026-05-14",
     helperText: "Choose a date for the work to begin.",
     theme: "primary",
+  },
+  argTypes: {
+    theme: {
+      control: "select",
+      options: themeOptions,
+    },
+    state: {
+      control: "select",
+      options: stateOptions,
+    },
+    rounding: {
+      control: "select",
+      options: roundingOptions,
+    },
+    shadow: {
+      control: "select",
+      options: shadowOptions,
+    },
+    size: {
+      control: "select",
+      options: sizeOptions,
+    },
   },
 };
 

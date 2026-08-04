@@ -8,6 +8,7 @@ expect.extend(toHaveNoViolations);
 const classMap = {
   large: "large",
   dateRangePicker: "dateRangePicker",
+  layout: "layout",
   labelTop: "labelTop",
   labelBottom: "labelBottom",
   labelLeft: "labelLeft",
@@ -121,6 +122,15 @@ describe("DateRangePickerBase", () => {
   it("applies the selected size class to the range group", () => {
     const { fieldset } = renderDateRangePicker({ size: "large" });
     expect(fieldset.querySelector(".group")).toHaveClass("large");
+  });
+
+  it("renders an internal layout wrapper for container-responsive styles", () => {
+    const { fieldset } = renderDateRangePicker();
+    const layout = fieldset.querySelector(".layout");
+
+    expect(layout).toBeInTheDocument();
+    expect(layout).toContainElement(screen.getByText("Start date"));
+    expect(layout).toContainElement(screen.getByText("End date"));
   });
 
   it("renders the fieldset, legend, default field labels, and date inputs", () => {

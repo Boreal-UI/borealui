@@ -395,6 +395,10 @@
 
   .bottomCopyright {
     margin: 0;
+
+    @include bp.down(sm) {
+      order: 2;
+    }
   }
 
   .bottomEnd {
@@ -405,6 +409,10 @@
     font-weight: var(--font-weight-bold, 800);
     letter-spacing: 0.04em;
     white-space: nowrap;
+
+    @include bp.down(sm) {
+      order: 1;
+    }
   }
 
   @each $key, $value in theme.$rounding {

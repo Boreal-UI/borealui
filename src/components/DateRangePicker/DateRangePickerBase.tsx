@@ -103,105 +103,104 @@ export default function DateRangePickerBase({
       aria-describedby={describedBy || undefined}
       data-testid={resolvedTestId}
     >
-      {label ? (
-        <>
-          <legend className={classMap.legend}>{label}</legend>
-
+      {label ? <legend className={classMap.legend}>{label}</legend> : null}
+      <div className={classMap.layout}>
+        {label ? (
           <span
             className={combineClassNames(classMap.label, labelClassName)}
             aria-hidden="true"
           >
             {label}
           </span>
-        </>
-      ) : null}
-      <div className={groupClass}>
-        <label className={classMap.field}>
-          <span className={classMap.fieldLabel}>{startLabel}</span>
-          <DatePickerComponent
-            theme={theme}
-            state={state}
-            fullWidth
-            id={`${resolvedId}-start`}
-            name={name ? `${name}-start` : undefined}
-            type="date"
-            min={min}
-            max={value.end || max}
-            value={value.start}
-            shadow="none"
-            size={size}
-            variant={variant}
-            rounding={rounding}
-            disabled={disabled}
-            required={required}
-            aria-invalid={
-              Boolean(errorMessage) || state === "error" || undefined
-            }
-            onChange={(next: DateInputChange) => {
-              onChange?.({
-                ...value,
-                start: getDateInputValue(next),
-              });
-            }}
-            className={combineClassNames(classMap.input, inputClassName)}
-            data-testid={`${resolvedTestId}-start`}
-          />
-        </label>
-        <span className={classMap.separator} aria-hidden="true">
-          –
-        </span>
-        <label className={classMap.field}>
-          <span className={classMap.fieldLabel}>{endLabel}</span>
-          <DatePickerComponent
-            theme={theme}
-            state={state}
-            fullWidth
-            id={`${resolvedId}-end`}
-            name={name ? `${name}-end` : undefined}
-            type="date"
-            min={value.start || min}
-            max={max}
-            variant={variant}
-            shadow="none"
-            size={size}
-            rounding={rounding}
-            value={value.end}
-            disabled={disabled}
-            required={required}
-            aria-invalid={
-              Boolean(errorMessage) || state === "error" || undefined
-            }
-            onChange={(next: DateInputChange) => {
-              onChange?.({
-                ...value,
-                end: getDateInputValue(next),
-              });
-            }}
-            className={combineClassNames(classMap.input, inputClassName)}
-            data-testid={`${resolvedTestId}-end`}
-          />
-        </label>
+        ) : null}
+        <div className={groupClass}>
+          <label className={classMap.field}>
+            <span className={classMap.fieldLabel}>{startLabel}</span>
+            <DatePickerComponent
+              theme={theme}
+              state={state}
+              fullWidth
+              id={`${resolvedId}-start`}
+              name={name ? `${name}-start` : undefined}
+              type="date"
+              min={min}
+              max={value.end || max}
+              value={value.start}
+              shadow="none"
+              size={size}
+              variant={variant}
+              rounding={rounding}
+              disabled={disabled}
+              required={required}
+              aria-invalid={
+                Boolean(errorMessage) || state === "error" || undefined
+              }
+              onChange={(next: DateInputChange) => {
+                onChange?.({
+                  ...value,
+                  start: getDateInputValue(next),
+                });
+              }}
+              className={combineClassNames(classMap.input, inputClassName)}
+              data-testid={`${resolvedTestId}-start`}
+            />
+          </label>
+          <span className={classMap.separator} aria-hidden="true">
+            –
+          </span>
+          <label className={classMap.field}>
+            <span className={classMap.fieldLabel}>{endLabel}</span>
+            <DatePickerComponent
+              theme={theme}
+              state={state}
+              fullWidth
+              id={`${resolvedId}-end`}
+              name={name ? `${name}-end` : undefined}
+              type="date"
+              min={value.start || min}
+              max={max}
+              variant={variant}
+              shadow="none"
+              size={size}
+              rounding={rounding}
+              value={value.end}
+              disabled={disabled}
+              required={required}
+              aria-invalid={
+                Boolean(errorMessage) || state === "error" || undefined
+              }
+              onChange={(next: DateInputChange) => {
+                onChange?.({
+                  ...value,
+                  end: getDateInputValue(next),
+                });
+              }}
+              className={combineClassNames(classMap.input, inputClassName)}
+              data-testid={`${resolvedTestId}-end`}
+            />
+          </label>
+        </div>
+        {helperText ? (
+          <div
+            id={helperId}
+            className={combineClassNames(
+              classMap.helperText,
+              helperTextClassName,
+            )}
+          >
+            {helperText}
+          </div>
+        ) : null}
+        {errorMessage ? (
+          <div
+            id={errorId}
+            className={combineClassNames(classMap.errorText, errorClassName)}
+            role="alert"
+          >
+            {errorMessage}
+          </div>
+        ) : null}
       </div>
-      {helperText ? (
-        <div
-          id={helperId}
-          className={combineClassNames(
-            classMap.helperText,
-            helperTextClassName,
-          )}
-        >
-          {helperText}
-        </div>
-      ) : null}
-      {errorMessage ? (
-        <div
-          id={errorId}
-          className={combineClassNames(classMap.error, errorClassName)}
-          role="alert"
-        >
-          {errorMessage}
-        </div>
-      ) : null}
     </fieldset>
   );
 }

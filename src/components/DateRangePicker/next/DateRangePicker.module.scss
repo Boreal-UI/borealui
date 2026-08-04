@@ -6,12 +6,12 @@
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 
 @layer boreal-ui.components {
-  @include control-sizes.variants(".date_range_picker", (".date_range_picker_input"));
+  @include control-sizes.variants(".group", (), ".");
 
   .dateRangePicker {
-    display: grid;
-    gap: var(--spacing-xs);
+    container: date-range-picker / inline-size;
     width: 100%;
+    max-width: 100%;
     min-width: 0;
     margin: 0;
     padding: 0;
@@ -20,7 +20,13 @@
     color: var(--text-color);
   }
 
-  .labelTop {
+  .layout {
+    display: grid;
+    gap: var(--spacing-xs);
+    min-width: 0;
+  }
+
+  .labelTop .layout {
     grid-template-areas:
       "label"
       "group"
@@ -28,7 +34,7 @@
       "error";
   }
 
-  .labelBottom {
+  .labelBottom .layout {
     grid-template-areas:
       "group"
       "label"
@@ -36,22 +42,22 @@
       "error";
   }
 
-  .labelLeft,
-  .labelRight {
+  .labelLeft .layout,
+  .labelRight .layout {
     grid-template-columns: max-content minmax(0, 1fr);
     align-items: center;
     column-gap: var(--spacing-sm);
     row-gap: var(--spacing-xs);
   }
 
-  .labelLeft {
+  .labelLeft .layout {
     grid-template-areas:
       "label group"
       ". helper"
       ". error";
   }
 
-  .labelRight {
+  .labelRight .layout {
     grid-template-areas:
       "group label"
       "helper ."
@@ -289,13 +295,13 @@
     }
   }
 
-  @media (max-width: 500px) {
-    .labelLeft,
-    .labelRight {
+  @container date-range-picker (max-width: 30rem) {
+    .labelLeft .layout,
+    .labelRight .layout {
       grid-template-columns: 1fr;
     }
 
-    .labelLeft {
+    .labelLeft .layout {
       grid-template-areas:
         "label"
         "group"
@@ -303,7 +309,7 @@
         "error";
     }
 
-    .labelRight {
+    .labelRight .layout {
       grid-template-areas:
         "group"
         "label"

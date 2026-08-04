@@ -7,7 +7,7 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  @include control-sizes.variants(".timePicker", (".timePicker_input", ".timePicker_button"));
+  @include control-sizes.variants(".root", (".input"), ".");
 
   .container {
     display: inline-flex;
@@ -114,8 +114,10 @@
     flex: 0 0 auto;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    min-width: 2.25rem;
+    width: var(--boreal-control-min-height, 2.25rem);
+    min-width: var(--boreal-control-min-height, 2.25rem);
+    min-height: var(--boreal-control-min-height, 2.25rem);
+    padding: 0;
     color: inherit;
     cursor: pointer;
     background: transparent;

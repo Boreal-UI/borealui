@@ -7,7 +7,7 @@
 @layer boreal-ui.components {
   @include control-sizes.variants(
     ".combobox",
-    (".combobox_input", ".combobox_toggle", ".combobox_option")
+    (".combobox_input", ".combobox_option")
   );
 
   .combobox_layout {
@@ -94,7 +94,9 @@
     grid-area: control;
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 2.5rem;
+    grid-template-columns:
+      minmax(0, 1fr)
+      var(--boreal-control-min-height, 2.5rem);
     width: 100%;
     min-width: 0;
     border: 1px solid var(--combobox-border);
@@ -128,6 +130,9 @@
   }
 
   .combobox_toggle {
+    min-width: 0;
+    min-height: var(--boreal-control-min-height, 2.5rem);
+    padding: 0;
     border: 0;
     border-left: 1px solid var(--combobox-border);
     background: transparent;

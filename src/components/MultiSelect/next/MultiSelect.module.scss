@@ -7,7 +7,11 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  @include control-sizes.variants(".multiSelect", (".multiSelect_trigger", ".multiSelect_searchInput", ".multiSelect_option"));
+  @include control-sizes.variants(
+    ".root",
+    (".trigger", ".searchInput", ".option"),
+    "."
+  );
 
   .container {
     display: inline-flex;

@@ -1,5 +1,13 @@
 "use client";
-export { Container, Grid, Inline, Section, Stack } from "./next/Layout";
+export {
+  BentoBox,
+  BentoBoxItem,
+  Container,
+  Grid,
+  Inline,
+  Section,
+  Stack,
+} from "./next/Layout";
 export { default as Accordion } from "./next/Accordion";
 export { default as Alert } from "./next/Alert";
 export { default as AppShell } from "./next/AppShell";

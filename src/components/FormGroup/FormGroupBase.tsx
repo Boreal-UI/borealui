@@ -202,7 +202,7 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
       {errorMessage && (
         <p
           id={errorId}
-          className={combineClassNames(classMap.error, errorMessageClassName)}
+          className={combineClassNames(classMap.errorText, errorMessageClassName)}
           role="alert"
           data-testid={`${testId}-errorMessage`}
           {...errorProps}

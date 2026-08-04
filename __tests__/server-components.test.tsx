@@ -4,6 +4,8 @@ import {
   Avatar,
   Badge,
   BarChart,
+  BentoBox,
+  BentoBoxItem,
   BreadCrumbPageHeader,
   Breadcrumbs,
   Button,
@@ -40,6 +42,9 @@ describe("Next server component entries", () => {
   it("renders static layout and data-display components", () => {
     render(
       <Container testId="server-layout">
+        <BentoBox testId="server-bento-box">
+          <BentoBoxItem testId="server-bento-item">Tile</BentoBoxItem>
+        </BentoBox>
         <Typography testId="server-typography">Server rendered</Typography>
         <Divider testId="server-divider" />
         <Legend
@@ -52,6 +57,9 @@ describe("Next server component entries", () => {
     );
 
     expect(screen.getByTestId("server-layout")).toBeInTheDocument();
+    expect(screen.getByTestId("server-bento-box-grid")).toContainElement(
+      screen.getByTestId("server-bento-item"),
+    );
     expect(screen.getByTestId("server-typography")).toHaveTextContent(
       "Server rendered",
     );

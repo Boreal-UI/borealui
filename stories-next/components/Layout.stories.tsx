@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import {
+  BentoBox,
+  BentoBoxItem,
   Card,
   Container,
   Grid,
@@ -18,7 +20,7 @@ const meta: Meta = {
     docs: {
       description: {
         component:
-          "Layout primitives for composing responsive page sections, containers, stacks, inline groups, and grids.",
+          "Layout primitives for composing responsive page sections, containers, stacks, inline groups, grids, and container-adaptive bento layouts.",
       },
     },
   },
@@ -231,6 +233,45 @@ export const NestedLayout: Story = {
               Compose layouts across different theme tones.
             </Card>
           </Grid>
+        </Stack>
+      </Container>
+    </Section>
+  ),
+};
+
+export const ResponsiveBentoBox: Story = {
+  render: () => (
+    <Section tone="muted" padded>
+      <Container size="xl">
+        <Stack gap="lg">
+          <strong>BentoBox layout subtype</strong>
+          <BentoBox aria-label="Dashboard overview">
+            <BentoBoxItem columnSpan={2} rowSpan={2}>
+              <Card title="Revenue" className={styles.bentoCard}>
+                A prominent metric or chart can occupy two columns and two rows.
+              </Card>
+            </BentoBoxItem>
+            <BentoBoxItem>
+              <Card title="Customers" className={styles.bentoCard}>
+                2,418 active
+              </Card>
+            </BentoBoxItem>
+            <BentoBoxItem>
+              <Card title="Conversion" className={styles.bentoCard}>
+                8.4 percent
+              </Card>
+            </BentoBoxItem>
+            <BentoBoxItem columnSpan={2}>
+              <Card title="Recent activity" className={styles.bentoCard}>
+                Wider supporting content adapts with its container.
+              </Card>
+            </BentoBoxItem>
+            <BentoBoxItem columnSpan="full">
+              <Card title="Summary" className={styles.bentoCard}>
+                Full-width items remain full width at every container size.
+              </Card>
+            </BentoBoxItem>
+          </BentoBox>
         </Stack>
       </Container>
     </Section>

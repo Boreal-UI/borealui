@@ -6,8 +6,6 @@ import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import {
   roundingOptions,
   shadowOptions,
-  stateOptions,
-  themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import { FaTree } from "react-icons/fa";
 import {
@@ -42,7 +40,11 @@ export const Sizes: Story = {
   render: () =>
     renderSizeVariants({
       component: SearchInput,
-      args: { label: "Search docs" },
+      args: {
+        label: "Search docs",
+        showSearchButton: true,
+        showClearButton: true,
+      },
       labelProp: "label",
     }),
 };

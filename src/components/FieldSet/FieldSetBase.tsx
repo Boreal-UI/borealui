@@ -243,7 +243,7 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
           {errorMessage ? (
             <p
               id={errorId}
-              className={combineClassNames(classMap.error, errorClassName)}
+              className={combineClassNames(classMap.errorText, errorClassName)}
               role="alert"
               data-testid={`${testId}-errorMessage`}
             >

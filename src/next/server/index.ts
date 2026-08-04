@@ -10,7 +10,15 @@ export { default as CheckBox } from "./CheckBox";
 export { default as Divider } from "./Divider";
 export { default as EmptyState } from "./EmptyState";
 export { default as Footer } from "./Footer";
-export { Container, Grid, Inline, Section, Stack } from "./Layout";
+export {
+  BentoBox,
+  BentoBoxItem,
+  Container,
+  Grid,
+  Inline,
+  Section,
+  Stack,
+} from "./Layout";
 export { default as Legend } from "./Legend";
 export { default as LineChart } from "./LineChart";
 export { default as MetricBox } from "./MetricBox";

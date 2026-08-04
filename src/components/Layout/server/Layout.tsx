@@ -1,6 +1,8 @@
 import { expandClassMap } from "@/utils/propAliases";
 import LayoutBase from "../LayoutBase";
 import {
+  BentoBoxItemProps,
+  BentoBoxProps,
   ContainerProps,
   GridProps,
   InlineProps,
@@ -25,6 +27,14 @@ export const Inline = (props: InlineProps) => (
 
 export const Grid = (props: GridProps) => (
   <LayoutBase {...props} variant="grid" classMap={classMap} />
+);
+
+export const BentoBox = (props: BentoBoxProps) => (
+  <LayoutBase {...props} variant="bentoBox" classMap={classMap} />
+);
+
+export const BentoBoxItem = (props: BentoBoxItemProps) => (
+  <LayoutBase {...props} variant="bentoBoxItem" classMap={classMap} />
 );
 
 export const Section = (props: SectionProps) => (

@@ -6,6 +6,7 @@ import {
   themeOptions,
   shadowOptions,
   roundingOptions,
+  sizeOptions,
 } from "../shared-story-assets/OptionTypes";
 import {
   ComboBoxOption,
@@ -70,6 +71,13 @@ const meta: Meta<ComboBoxProps> = {
       control: "select",
       options: shadowOptions,
     },
+    size: {
+      control: "select",
+      options: sizeOptions,
+    },
+    placeholder: {
+      control: "text",
+    },
     labelPosition: {
       control: "select",
       options: ["top", "bottom", "left", "right", "hidden"],
@@ -128,9 +136,9 @@ export const Controlled: Story = {
         inputValue={inputValue}
         onInputChange={setInputValue}
         onChange={(nextValue, option) => {
-          setValue(nextValue as string);
-          setInputValue(option.label as string);
-          args.onChange?.(nextValue as string, option as ComboBoxOption);
+          setValue(nextValue);
+          setInputValue(option.label);
+          args.onChange?.(nextValue, option);
         }}
       />
     );

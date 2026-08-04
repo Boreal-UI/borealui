@@ -38,9 +38,9 @@ $control-sizes: (
   ),
 );
 
-@mixin variants($root, $controls) {
+@mixin variants($root, $controls, $size-class-prefix: "#{$root}_") {
   @each $size, $values in $control-sizes {
-    #{$root}_#{$size} {
+    #{$size-class-prefix}#{$size} {
       --boreal-control-min-height: #{map.get($values, min-height)};
       --boreal-control-padding-block: #{map.get($values, padding-block)};
       --boreal-control-padding-inline: #{map.get($values, padding-inline)};
