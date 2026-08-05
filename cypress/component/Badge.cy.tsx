@@ -432,8 +432,7 @@ const runSharedBadgeTests = (
         size: "large",
         rounding: "large",
         shadow: "strong",
-        outline: true,
-        glass: true,
+        variant: "glassOutline",
         onClick,
       });
 
@@ -495,8 +494,7 @@ const runCoreOnlyBadgeTests = (Badge: BadgeComponent) => {
         size: "large",
         rounding: "large",
         shadow: "strong",
-        outline: true,
-        glass: true,
+        variant: "glassOutline",
         onClick: cy.stub(),
       });
 

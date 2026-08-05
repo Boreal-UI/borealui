@@ -45,19 +45,26 @@ implementations.forEach(({ name, DatePicker }) => {
             id="deadline"
             label="Deadline"
             helperText="Weekdays are preferred"
-            error="Choose a valid date"
+            errorMessage="Choose a valid date"
             data-testid="deadline-date"
           />
         </div>,
       );
 
-      cy.get('[data-testid="deadline-date-helper"]').should("not.exist");
-      cy.get('[data-testid="deadline-date-error"]')
+      cy.get('[data-testid="deadline-date-helperText"]')
+        .should("exist")
+        .and("contain.text", "Weekdays are preferred");
+      cy.get('[data-testid="deadline-date-errorMessage"]')
         .should("have.attr", "role", "alert")
         .and("contain.text", "Choose a valid date");
       cy.get('[data-testid="deadline-date-input"]')
         .should("have.attr", "aria-invalid", "true")
-        .and("have.attr", "aria-errormessage", "deadline-error");
+        .and("have.attr", "aria-errormessage", "deadline-errorMessage")
+        .and(
+          "have.attr",
+          "aria-describedby",
+          "deadline-helperText deadline-errorMessage",
+        );
     });
 
     it("disables the input and trigger during loading or disabled states", () => {

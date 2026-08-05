@@ -240,7 +240,7 @@ const runDropdownSubmenuTests = (
       mountDropdown(
         Dropdown,
         {
-          align: "right",
+          align: "end",
           focusFirstItemOnOpen: false,
           items: [
             {
@@ -316,7 +316,7 @@ const runDropdownSubmenuTests = (
       mountDropdown(
         Dropdown,
         {
-          align: "right",
+          align: "end",
           focusFirstItemOnOpen: false,
           items: [
             {
@@ -352,10 +352,13 @@ const runDropdownSubmenuTests = (
       );
 
       cy.get('[data-testid="dropdown-trigger"]').click();
-      cy.get('[data-testid="dropdown-menu"]').then(($menu) => {
-        const rect = $menu[0].getBoundingClientRect();
-        cy.wrap({ left: rect.left, top: rect.top }).as("rootMenuPosition");
-      });
+      cy.get('[data-testid="dropdown-menu"]')
+        .should("be.visible")
+        .and("have.css", "scale", "1")
+        .then(($menu) => {
+          const rect = $menu[0].getBoundingClientRect();
+          cy.wrap({ left: rect.left, top: rect.top }).as("rootMenuPosition");
+        });
 
       cy.get('[data-testid="dropdown-export"]')
         .trigger("mouseover")

@@ -47,19 +47,26 @@ implementations.forEach(({ name, TimePicker }) => {
             id="appointment"
             label="Appointment"
             helperText="Business hours only"
-            error="Choose a valid time"
+            errorMessage="Choose a valid time"
             data-testid="appointment-time"
           />
         </div>,
       );
 
-      cy.get('[data-testid="appointment-time-helper"]').should("not.exist");
-      cy.get('[data-testid="appointment-time-error"]')
+      cy.get('[data-testid="appointment-time-helperText"]')
+        .should("exist")
+        .and("contain.text", "Business hours only");
+      cy.get('[data-testid="appointment-time-errorMessage"]')
         .should("have.attr", "role", "alert")
         .and("contain.text", "Choose a valid time");
       cy.get('[data-testid="appointment-time-input"]')
         .should("have.attr", "aria-invalid", "true")
-        .and("have.attr", "aria-errormessage", "appointment-error");
+        .and("have.attr", "aria-errormessage", "appointment-errorMessage")
+        .and(
+          "have.attr",
+          "aria-describedby",
+          "appointment-helperText appointment-errorMessage",
+        );
     });
 
     it("disables the input and trigger during loading or disabled states", () => {

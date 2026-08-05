@@ -198,8 +198,8 @@ const behaviorCases: BehaviorCase[] = [
             { label: "Red", value: "#ff0000" },
             { label: "Blue", value: "#0000ff" },
           ]}
-          selected="#ff0000"
-          onChange={onChange}
+          value="#ff0000"
+          onValueChange={onChange}
           data-testid="color-picker"
         />,
       );
@@ -216,7 +216,7 @@ const behaviorCases: BehaviorCase[] = [
 
       mountInFrame(
         <CommandPalette
-          isOpen
+          open
           onClose={onClose}
           inputAriaLabel="Search commands"
           commands={[
@@ -354,7 +354,7 @@ const behaviorCases: BehaviorCase[] = [
     name: "FormGroup",
     run: ({ FormGroup, TextInput }) => {
       mountInFrame(
-        <FormGroup label="Profile" description="Public display name">
+        <FormGroup label="Profile" helperText="Public display name">
           <TextInput
             label="Name"
             value="Ada"
@@ -698,7 +698,7 @@ const behaviorCases: BehaviorCase[] = [
       mountInFrame(
         <RadioGroup
           name="group"
-          label="Choose"
+          legend="Choose"
           value="alpha"
           onChange={onChange}
           options={basicOptions}
@@ -875,7 +875,7 @@ const behaviorCases: BehaviorCase[] = [
       mountInFrame(
         <Tabs
           tabs={[{ label: "Overview" }, { label: "Usage" }]}
-          onChange={onChange}
+          onValueChange={onChange}
           data-testid="tabs"
         />,
       );
@@ -893,7 +893,6 @@ const behaviorCases: BehaviorCase[] = [
         <TagInput
           tags={["React"]}
           onChange={onChange}
-          suggestions={["Next"]}
           data-testid="tag-input"
         />,
       );

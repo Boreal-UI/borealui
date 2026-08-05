@@ -100,8 +100,7 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
       `${testId}-${generatedId}-control`;
     const rootId = `${controlId}-group`;
     const labelId = label ? `${controlId}-label` : undefined;
-    const descriptionId = helperText ? `${controlId}-helperText` : undefined;
-    const helperId = helperText ? `${controlId}-helper` : undefined;
+    const helperTextId = helperText ? `${controlId}-helperText` : undefined;
     const errorId = errorMessage ? `${controlId}-errorMessage` : undefined;
     const srDescriptionId = srOnlyText
       ? `${controlId}-sr-helperText`
@@ -111,7 +110,7 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
     const hasInlineAddons = Boolean(prefix || suffix);
 
     const computedAriaDescribedBy =
-      [ariaDescribedBy, descriptionId, helperId, errorId, srDescriptionId]
+      [ariaDescribedBy, helperTextId, errorId, srDescriptionId]
         .filter(Boolean)
         .join(" ") || undefined;
 
@@ -220,10 +219,11 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
 
         {helperText ? (
           <div
-            id={descriptionId}
+            id={helperTextId}
             className={combineClassNames(
               classMap.helperText,
               descriptionClassName,
+              helperTextClassName,
             )}
             data-testid={`${testId}-helperText`}
           >
@@ -327,19 +327,6 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
             </span>
           ) : null}
         </div>
-
-        {helperText ? (
-          <div
-            id={helperId}
-            className={combineClassNames(
-              classMap.helperText,
-              helperTextClassName,
-            )}
-            data-testid={`${testId}-helper`}
-          >
-            {helperText}
-          </div>
-        ) : null}
 
         {errorMessage ? (
           <div

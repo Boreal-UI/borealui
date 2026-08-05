@@ -75,12 +75,11 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
 
     const rootId = idProp ?? `${testId}-${generatedId}`;
     const legendId = resolvedLegend ? `${rootId}-legend` : undefined;
-    const descriptionId = helperText ? `${rootId}-helperText` : undefined;
-    const helperTextId = helperText ? `${rootId}-helper-text` : undefined;
+    const helperTextId = helperText ? `${rootId}-helperText` : undefined;
     const errorId = errorMessage ? `${rootId}-errorMessage` : undefined;
     const srDescriptionId = srOnlyText ? `${rootId}-sr-helperText` : undefined;
     const computedAriaDescribedBy =
-      [ariaDescribedBy, descriptionId, helperTextId, errorId, srDescriptionId]
+      [ariaDescribedBy, helperTextId, errorId, srDescriptionId]
         .filter(Boolean)
         .join(" ") || undefined;
     const computedAriaLabelledBy =
@@ -197,10 +196,11 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
 
           {helperText ? (
             <p
-              id={descriptionId}
+              id={helperTextId}
               className={combineClassNames(
                 classMap.helperText,
                 descriptionClassName,
+                helperTextClassName,
               )}
               data-testid={`${testId}-helperText`}
             >
@@ -226,19 +226,6 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
           <div className={contentClass} data-testid={`${testId}-content`}>
             {children}
           </div>
-
-          {helperText ? (
-            <p
-              id={helperTextId}
-              className={combineClassNames(
-                classMap.helperText,
-                helperTextClassName,
-              )}
-              data-testid={`${testId}-helper-text`}
-            >
-              {helperText}
-            </p>
-          ) : null}
 
           {errorMessage ? (
             <p

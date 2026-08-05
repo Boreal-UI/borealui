@@ -73,7 +73,7 @@ describe("InputGroupBase", () => {
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toHaveAttribute(
       "aria-describedby",
-      "amount-helperText amount-helper amount-errorMessage amount-sr-helperText",
+      "amount-helperText amount-errorMessage amount-sr-helperText",
     );
     expect(screen.getByRole("alert")).toHaveTextContent("Amount is required.");
   });
@@ -187,7 +187,7 @@ describe("InputGroupBase", () => {
     expect(screen.getByTestId("input-group-end-addon")).toHaveClass(
       "customEnd",
     );
-    expect(screen.getByTestId("input-group-helper")).toHaveClass(
+    expect(screen.getByTestId("input-group-helperText")).toHaveClass(
       "customHelper",
     );
     expect(screen.getByTestId("input-group-errorMessage")).toHaveClass(

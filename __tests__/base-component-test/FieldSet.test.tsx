@@ -87,7 +87,7 @@ describe("FieldSetBase", () => {
     ).toBeInTheDocument();
   });
 
-  it("connects helperText, helper text, errorMessage text, and sr-only text with aria-describedby", () => {
+  it("connects helper, error, and sr-only text with aria-describedby", () => {
     renderFieldSet({
       id: "contact-preferences",
       helperText: "You can change these settings later.",
@@ -101,7 +101,7 @@ describe("FieldSetBase", () => {
 
     expect(group).toHaveAttribute(
       "aria-describedby",
-      "contact-preferences-helperText contact-preferences-helper-text contact-preferences-errorMessage contact-preferences-sr-helperText",
+      "contact-preferences-helperText contact-preferences-errorMessage contact-preferences-sr-helperText",
     );
     expect(group).toHaveAttribute("aria-invalid", "true");
     expect(screen.getByRole("alert")).toHaveTextContent(
@@ -193,7 +193,7 @@ describe("FieldSetBase", () => {
     expect(screen.getByTestId("field-set-helperText")).toHaveClass(
       "customDescription",
     );
-    expect(screen.getByTestId("field-set-helper-text")).toHaveClass(
+    expect(screen.getByTestId("field-set-helperText")).toHaveClass(
       "customHelper",
     );
     expect(screen.getByTestId("field-set-errorMessage")).toHaveClass(
