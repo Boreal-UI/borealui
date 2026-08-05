@@ -83,7 +83,7 @@
         opacity: 0.5;
       }
 
-      .label {
+      .stepLabel {
         color: inherit;
         opacity: 0.5;
       }
@@ -92,8 +92,6 @@
     .step {
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: var(--spacing-sm);
       position: relative;
       cursor: default;
       transition: color var(--transition-default);
@@ -119,7 +117,7 @@
         transform 0.2s ease;
     }
 
-    .label {
+    .stepLabel {
       margin-left: var(--spacing-sm);
       font-family: var(--font-family-ui);
       font-size: var(--font-size-label);
@@ -151,7 +149,7 @@
         border: 2px solid var(--background-color-light);
       }
 
-      .label {
+      .stepLabel {
         color: var(--disabled-color);
       }
     }
