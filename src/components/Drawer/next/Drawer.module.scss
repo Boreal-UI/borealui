@@ -113,8 +113,16 @@ $drawer-placements: (
   opacity: 1;
   transform: translate(0);
   transition:
-    transform var(--drawer-animation-duration, var(--motion-drawer, 260ms cubic-bezier(0.32, 0.72, 0, 1))),
-    opacity var(--drawer-animation-duration, var(--motion-drawer, 260ms cubic-bezier(0.32, 0.72, 0, 1)));
+    transform
+      var(
+        --drawer-animation-duration,
+        var(--motion-drawer, 260ms cubic-bezier(0.32, 0.72, 0, 1))
+      ),
+    opacity
+      var(
+        --drawer-animation-duration,
+        var(--motion-drawer, 260ms cubic-bezier(0.32, 0.72, 0, 1))
+      );
 }
 
 .header,
@@ -131,7 +139,7 @@ $drawer-placements: (
   border-top: 1px solid var(--drawer-border-color, var(--border-color));
 }
 
-.header_content {
+.headerContent {
   min-width: 0;
   flex: 1;
 }
@@ -240,7 +248,7 @@ $drawer-placements: (
 }
 
 @each $key, $value in theme.$shadow {
-  .shaddow#{$key} {
+  .shadow#{$key} {
     box-shadow: $value;
   }
 }
