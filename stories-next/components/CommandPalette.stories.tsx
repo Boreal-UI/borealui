@@ -8,7 +8,7 @@ import {
   ThemeType,
 } from "../../src/index.next";
 import type { CommandPaletteProps } from "../../src/components/CommandPalette/CommandPalette.types";
-import { FaSearch, FaUser, FaCog } from "react-icons/fa";
+import { FaSearch, FaUser, FaCog } from "../../shared-story-assets/icons";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
 
 const themeOptions: ThemeType[] = [

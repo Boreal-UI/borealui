@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { FaUser } from "react-icons/fa";
+import { FaUser } from "../shared-story-assets/icons";
 import { TextInput } from "../src/index.core";
 import type { TextInputProps } from "../src/components/TextInput/TextInput.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";

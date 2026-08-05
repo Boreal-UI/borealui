@@ -6,7 +6,7 @@ import {
   StateType,
   ThemeType,
 } from "../../src/index.next";
-import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "../../shared-story-assets/icons";
 import type { DropdownProps } from "../../src/components/Dropdown/Dropdown.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
 import {

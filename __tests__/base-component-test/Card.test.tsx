@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import CardBase from "@/components/Card/CardBase";
-import { FaStar } from "react-icons/fa";
+import { FaStar } from "../../shared-story-assets/icons";
 import {
   DummyButton,
   DummyIconButton,

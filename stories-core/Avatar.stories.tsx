@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Avatar } from "../src/index.core";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
-import { FaStar } from "react-icons/fa";
+import { FaStar } from "../shared-story-assets/icons";
 import {
   SizeType,
   StateType,

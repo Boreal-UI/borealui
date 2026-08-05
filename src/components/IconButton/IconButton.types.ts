@@ -22,7 +22,7 @@ export interface IconButtonProps extends InteractiveProps {
 
   /**
    * Icon component to render inside the button.
-   * Should be a React component, e.g., from `react-icons`.
+   * Should be a React component that accepts SVG props.
    */
   icon?: React.ComponentType<{
     className?: string;

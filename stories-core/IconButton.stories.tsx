@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { IconButton } from "../src/index.core";
-import { FaPlus, FaExternalLinkAlt } from "react-icons/fa";
+import { FaPlus, FaExternalLinkAlt } from "../shared-story-assets/icons";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import {
   roundingOptions,

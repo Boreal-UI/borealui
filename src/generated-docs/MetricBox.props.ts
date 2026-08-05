@@ -95,8 +95,8 @@ export const metricBoxPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "icon",
-      "type": "IconType",
-      "description": "Optional icon to visually represent the metric (from react-icons, for example).",
+      "type": "IconComponent",
+      "description": "Optional SVG icon to visually represent the metric.",
       "required": false,
       "inherited": false,
       "category": "props"

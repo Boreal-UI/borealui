@@ -3,7 +3,7 @@ import { render, screen, within } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import "@testing-library/jest-dom";
 import FooterBase from "@/components/Footer/FooterBase";
-import { FaGithub, FaTwitter } from "react-icons/fa";
+import { FaGithub, FaTwitter } from "../../shared-story-assets/icons";
 import {
   DummyIconButton,
   DummyThemeSelect,

@@ -3,11 +3,11 @@
 import React from "react";
 import * as Core from "../../src/index.core";
 import * as Next from "../../src/index.next";
-import type { IconType } from "react-icons";
+import type { IconComponent } from "../../src/types/types";
 
 type BadgeComponent = React.ComponentType<any>;
 
-const TestIcon: IconType = ({ className, ...props }) => (
+const TestIcon: IconComponent = ({ className, ...props }) => (
   <svg
     className={className}
     viewBox="0 0 16 16"

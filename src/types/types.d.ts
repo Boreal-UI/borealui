@@ -1,3 +1,8 @@
+import type { ComponentType, SVGProps } from "react";
+
+/** A framework-neutral SVG icon component accepted by Boreal UI components. */
+export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
+
 /**
  * Represents a named color scheme used for theming components.
  */

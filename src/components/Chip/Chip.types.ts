@@ -27,7 +27,7 @@ export interface ChipBaseProps extends ChipProps {
 
   /**
    * Optional custom icon component for the close/remove button.
-   * Accepts a React component type (e.g., from react-icons).
+   * Accepts a React component type.
    */
   closeIcon?: ElementType;
 }

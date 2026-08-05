@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { FaCommentDots, FaInbox } from "react-icons/fa";
+import { FaCommentDots, FaInbox } from "../../shared-story-assets/icons";
 import { StateType, TextArea, ThemeType } from "../../src/index.next";
 import type { TextAreaProps } from "../../src/components/TextArea/TextArea.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";

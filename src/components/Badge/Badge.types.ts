@@ -5,8 +5,8 @@ import type {
   MouseEvent,
   ReactNode,
 } from "react";
-import type { IconType } from "react-icons";
 import type {
+  IconComponent,
   RoundingType,
   ShadowType,
   SizeType,
@@ -117,7 +117,7 @@ export interface BadgeProps extends BadgeAccessibilityProps {
   /**
    * Optional icon to render inside the badge.
    */
-  icon?: IconType;
+  icon?: IconComponent;
 
   /**
    * Additional custom class names.

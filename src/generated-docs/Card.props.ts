@@ -128,7 +128,7 @@ export const cardPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "cardIcon",
-      "type": "IconType",
+      "type": "IconComponent",
       "description": "Optional icon to display beside the title.",
       "required": false,
       "inherited": false,

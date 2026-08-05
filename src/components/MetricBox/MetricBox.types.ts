@@ -1,11 +1,11 @@
 import {
+  IconComponent,
   RoundingType,
   ShadowType,
   SizeType,
   StateType,
   ThemeType,
 } from "@/types/types";
-import { IconType } from "react-icons";
 import { SkeletonProps } from "../Skeleton/Skeleton.types";
 
 /**
@@ -21,8 +21,8 @@ export interface MetricBoxProps {
   /** Optional unit label shown beside the value. */
   units?: string;
 
-  /** Optional icon to visually represent the metric (from react-icons, for example). */
-  icon?: IconType;
+  /** Optional SVG icon to visually represent the metric. */
+  icon?: IconComponent;
 
   /** Optional subtext providing additional context for the metric. */
   subtext?: string;

@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Dropdown, StateType } from "../src/index.core";
-import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "react-icons/fa";
+import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "../shared-story-assets/icons";
 import type { DropdownProps } from "../src/components/Dropdown/Dropdown.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import {

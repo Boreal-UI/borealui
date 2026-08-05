@@ -7,7 +7,7 @@ import {
   roundingOptions,
   shadowOptions,
 } from "../../shared-story-assets/OptionTypes";
-import { FaTree } from "react-icons/fa";
+import { FaTree } from "../../shared-story-assets/icons";
 import {
   renderThemeVariants,
   renderStateVariants,

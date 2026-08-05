@@ -34,7 +34,7 @@ import {
   Typography,
   ValidationSummary,
 } from "../../src/next/server";
-import { FaChartLine, FaEnvelope, FaFileAlt, FaServer } from "react-icons/fa";
+import { FaChartLine, FaEnvelope, FaFileAlt, FaServer } from "../../shared-story-assets/icons";
 import testImageJpg from "../assets/test_pattern.jpg";
 
 const chartData = [

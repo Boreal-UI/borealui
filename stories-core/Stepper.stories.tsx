@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { FaCheckCircle, FaClipboardList, FaFileAlt } from "react-icons/fa";
+import { FaCheckCircle, FaClipboardList, FaFileAlt } from "../shared-story-assets/icons";
 import { Stepper } from "../src/index.core";
 import type { StepperProps } from "../src/components/Stepper/Stepper.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";

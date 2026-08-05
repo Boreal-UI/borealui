@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { FaInbox, FaUser } from "react-icons/fa";
+import { FaInbox, FaUser } from "../../shared-story-assets/icons";
 import { TextInput } from "../../src/index.next";
 import type { TextInputProps } from "../../src/components/TextInput/TextInput.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";

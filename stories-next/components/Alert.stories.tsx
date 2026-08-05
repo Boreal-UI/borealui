@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Alert, Button } from "../../src/index.next";
 import { AlertProps } from "../../src/components/Alert/Alert.types";
-import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from "react-icons/fa";
+import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from "../../shared-story-assets/icons";
 import { useState } from "react";
 import {
   renderThemeVariants,

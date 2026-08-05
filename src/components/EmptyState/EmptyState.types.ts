@@ -1,4 +1,5 @@
 import {
+  IconComponent,
   RoundingType,
   ShadowType,
   SizeType,
@@ -6,7 +7,6 @@ import {
   ThemeType,
 } from "@/types/types";
 import type { AriaRole, ComponentType, HTMLAttributes, ReactNode } from "react";
-import { IconType } from "react-icons";
 import { ButtonProps } from "../Button/Button.types";
 
 /**
@@ -21,8 +21,8 @@ export interface EmptyStateProps extends Omit<
    */
   className?: string;
 
-  /** Optional icon component (e.g., from react-icons). */
-  icon?: IconType;
+  /** Optional SVG icon component. */
+  icon?: IconComponent;
 
   /**
    * Title text displayed prominently.

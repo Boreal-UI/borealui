@@ -7,7 +7,7 @@ import {
   ThemeType,
   Toolbar,
 } from "../../src/index.next";
-import { FaBell, FaArrowLeft } from "react-icons/fa";
+import { FaBell, FaArrowLeft } from "../../shared-story-assets/icons";
 import type { ToolbarBaseProps } from "../../src/components/Toolbar/Toolbar.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
 

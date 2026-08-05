@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import BaseDropdown from "@/components/Dropdown/DropdownBase";
-import { FaEllipsisV, FaUser, FaSignOutAlt, FaCog } from "react-icons/fa";
+import { FaEllipsisV, FaUser, FaSignOutAlt, FaCog } from "../../shared-story-assets/icons";
 import { axe, toHaveNoViolations } from "jest-axe";
 import { DummyIconButton } from "../test-utils/dummyComponents";
 

@@ -131,7 +131,6 @@ function updatePackageExports(componentName, options) {
     [coreKey]: {
       types: `./dist/types/core/${componentName}.d.ts`,
       import: `./dist/core/${componentName}.js`,
-      require: `./dist/core/${componentName}.cjs.js`,
     },
     [nextKey]: {
       types: `./dist/types/next/${componentName}.d.ts`,

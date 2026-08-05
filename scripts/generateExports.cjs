@@ -46,10 +46,6 @@ function buildExportEntry(type, name) {
 
   exportEntry.import = `./dist/${type}/${name}.js`;
 
-  if (type === "core") {
-    exportEntry.require = `./dist/${type}/${name}.cjs.js`;
-  }
-
   return exportEntry;
 }
 
@@ -62,8 +58,7 @@ function addExports(type) {
       return (
         file.endsWith(".js") &&
         !file.startsWith("index") &&
-        !file.includes("-") &&
-        !file.endsWith(".cjs.js")
+        !file.includes("-")
       );
     })
     .forEach((file) => {

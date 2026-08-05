@@ -131,12 +131,11 @@ function syncPackageVersion(packageDir) {
   writeJson(packageJsonPath, packageJson);
 }
 
-function createExportTarget({ types, importPath, requirePath, defaultPath, style }) {
+function createExportTarget({ types, importPath, defaultPath, style }) {
   const target = {};
 
   if (types) target.types = types;
   if (importPath) target.import = importPath;
-  if (requirePath) target.require = requirePath;
   if (style) target.style = style;
   if (defaultPath) target.default = defaultPath;
 
@@ -203,14 +202,6 @@ function buildRuntimeExports(flavor) {
   }
 
   return exports;
-}
-
-function removeCommonJsArtifacts(packageRuntimeDir) {
-  for (const file of fs.readdirSync(packageRuntimeDir)) {
-    if (file.includes(".cjs")) {
-      fs.rmSync(path.join(packageRuntimeDir, file), { force: true });
-    }
-  }
 }
 
 function buildTypesExports() {
@@ -367,7 +358,6 @@ function stageRuntimePackage(flavor) {
     path.join(rootDir, "dist", flavor),
     path.join(packageDistDir, flavor),
   );
-  removeCommonJsArtifacts(path.join(packageDistDir, flavor));
   stageRuntimeTypes(packageDistDir, flavor);
   writeEmptyRuntimeStub(packageDistDir);
   copyFileIfExists(path.join(rootDir, "LICENSE"), path.join(packageDir, "LICENSE"));

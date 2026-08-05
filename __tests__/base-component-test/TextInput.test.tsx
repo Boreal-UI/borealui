@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { FaUser } from "react-icons/fa";
+import { FaUser } from "../../shared-story-assets/icons";
 import TextInputBase from "@/components/TextInput/TextInputBase";
 import IconButton from "@/components/IconButton/core/IconButton";
 

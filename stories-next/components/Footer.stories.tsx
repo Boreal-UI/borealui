@@ -13,7 +13,7 @@ import {
   FaNpm,
   FaTwitter,
   FaYoutube,
-} from "react-icons/fa";
+} from "../../shared-story-assets/icons";
 import ThemeProvider from "../../src/context/ThemeContext";
 import image from "../assets/tutorials.svg";
 

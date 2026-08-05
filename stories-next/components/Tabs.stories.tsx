@@ -1,6 +1,6 @@
 import React, { JSX, useMemo, useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { FaCode, FaImage, FaMusic } from "react-icons/fa";
+import { FaCode, FaImage, FaMusic } from "../../shared-story-assets/icons";
 import { Tabs } from "../../src/index.next";
 import type { TabsProps, Tab } from "../../src/components/Tabs/Tabs.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";

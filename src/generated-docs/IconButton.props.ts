@@ -167,7 +167,7 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
     {
       "name": "icon",
       "type": "ComponentType<{ className?: string; \"aria-hidden\"?: boolean; focusable?: boolean; testId?: string; \"data-testid\"?: string; }>",
-      "description": "Icon component to render inside the button. Should be a React component, e.g., from `react-icons`.",
+      "description": "Icon component to render inside the button. Should be a React component that accepts SVG props.",
       "required": false,
       "inherited": false,
       "category": "props"

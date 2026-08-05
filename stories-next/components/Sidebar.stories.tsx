@@ -8,7 +8,7 @@ import {
 } from "../../src/index.next";
 import { SidebarProps } from "../../src/components/Sidebar/Sidebar.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
-import { FaBook, FaCalendar, FaCogs, FaPaperclip } from "react-icons/fa";
+import { FaBook, FaCalendar, FaCogs, FaPaperclip } from "../../shared-story-assets/icons";
 import {
   renderThemeVariants,
   renderStateVariants,

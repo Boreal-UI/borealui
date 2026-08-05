@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BaseNavBar from "@/components/NavBar/NavBarBase";
-import { FaHome, FaUser } from "react-icons/fa";
+import { FaHome, FaUser } from "../../shared-story-assets/icons";
 
 expect.extend(toHaveNoViolations);
 

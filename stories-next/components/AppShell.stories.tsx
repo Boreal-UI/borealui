@@ -20,7 +20,7 @@ import {
   FaCircle,
   FaClock,
   FaQuestionCircle,
-} from "react-icons/fa";
+} from "../../shared-story-assets/icons";
 import {
   renderThemeVariants,
   renderStateVariants,

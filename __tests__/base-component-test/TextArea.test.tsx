@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { FaCommentDots } from "react-icons/fa";
+import { FaCommentDots } from "../../shared-story-assets/icons";
 import TextAreaBase from "@/components/TextArea/TextAreaBase";
 
 expect.extend(toHaveNoViolations);

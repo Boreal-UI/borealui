@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { FaRocket, FaCalendarAlt, FaCheckCircle } from "react-icons/fa";
+import { FaRocket, FaCalendarAlt, FaCheckCircle } from "../shared-story-assets/icons";
 import { Timeline } from "../src/index.core";
 import type { TimelineProps } from "../src/components/Timeline/Timeline.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";

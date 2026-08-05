@@ -6,7 +6,7 @@ import type {
   ChipGroupRef,
 } from "../../src/components/Chip/ChipGroup/ChipGroup.types";
 import { ChipProps } from "../../src/components/Chip/Chip.types";
-import { FaCheckCircle, FaExclamationTriangle } from "react-icons/fa";
+import { FaCheckCircle, FaExclamationTriangle } from "../../shared-story-assets/icons";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
 
 const meta: Meta<ChipGroupProps> = {

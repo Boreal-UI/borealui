@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BaseEmptyState from "@/components/EmptyState/EmptyStateBase";
-import { FaRegSmile } from "react-icons/fa";
+import { FaRegSmile } from "../../shared-story-assets/icons";
 import { DummyButton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);

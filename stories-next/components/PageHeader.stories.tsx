@@ -9,7 +9,7 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-import { FaTree } from "react-icons/fa";
+import { FaTree } from "../../shared-story-assets/icons";
 import { roundingOptions } from "../../shared-story-assets/OptionTypes";
 
 const BreadcrumbExample = () => (

@@ -5,9 +5,9 @@ import type {
   MouseEventHandler,
   ReactNode,
 } from "react";
-import { IconType } from "react-icons";
 import {
   BorderType,
+  IconComponent,
   OrientationType,
   ShadowType,
   SizeType,
@@ -112,7 +112,7 @@ export interface ActionButton {
   onClick: () => void;
 
   /** Optional icon for the button (used with `useIconButtons`). */
-  icon?: IconType;
+  icon?: IconComponent;
 
   /**
    * Optional theme override for the button.
@@ -389,7 +389,7 @@ export interface CardProps {
   layout?: OrientationType;
 
   /** Optional icon to display beside the title. */
-  cardIcon?: IconType;
+  cardIcon?: IconComponent;
 
   /** Optional custom children passed into the body. */
   children?: ReactNode;

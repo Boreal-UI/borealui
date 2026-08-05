@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { MetricBox } from "../src/index.core";
 import type { MetricBoxProps } from "../src/components/MetricBox/MetricBox.types";
-import { FaChartLine, FaCheckCircle } from "react-icons/fa";
+import { FaChartLine, FaCheckCircle } from "../shared-story-assets/icons";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import {
   roundingOptions,

@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { Sidebar } from "../src/index.core";
 import { SidebarProps } from "../src/components/Sidebar/Sidebar.types";
-import { FaBook, FaPaperclip, FaCogs, FaCalendar } from "react-icons/fa";
+import { FaBook, FaPaperclip, FaCogs, FaCalendar } from "../shared-story-assets/icons";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import {
   roundingOptions,

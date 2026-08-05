@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Breadcrumbs } from "../../src/index.next";
-import { FaArrowRight } from "react-icons/fa";
+import { FaArrowRight } from "../../shared-story-assets/icons";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import {
   RoundingType,

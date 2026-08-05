@@ -7,7 +7,7 @@ import {
   StateType,
   ThemeType,
 } from "../../src/index.next";
-import { FaPlus, FaExternalLinkAlt } from "react-icons/fa";
+import { FaPlus, FaExternalLinkAlt } from "../../shared-story-assets/icons";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import {
   renderThemeVariants,

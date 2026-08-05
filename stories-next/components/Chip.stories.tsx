@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Chip } from "../../src/index.next";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheckCircle } from "../../shared-story-assets/icons";
 import {
   PositionType,
   RoundingType,

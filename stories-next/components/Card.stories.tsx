@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { useState } from "react";
 import { Card } from "../../src/index.next";
-import { FaInfoCircle, FaEdit, FaTrash } from "react-icons/fa";
+import { FaInfoCircle, FaEdit, FaTrash } from "../../shared-story-assets/icons";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
 import testImageJpg from "../assets/test_pattern.jpg";

@@ -54,7 +54,7 @@ export const badgePropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "icon",
-      "type": "IconType",
+      "type": "IconComponent",
       "description": "Optional icon to render inside the badge.",
       "required": false,
       "inherited": false,

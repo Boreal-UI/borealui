@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus } from "../../shared-story-assets/icons";
 import { Button } from "../../src/index.next";
 import { ButtonProps } from "../../src/components/Button/Button.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";

@@ -15,7 +15,7 @@ Use it when you want production-ready UI primitives that can be themed globally,
 - **Accessible by default:** semantic markup, ARIA support, keyboard behavior, visible focus states, disabled states, live announcements where useful, and predictable test IDs.
 - **Styling flexibility:** theme, state, size, rounding, shadow, composable surface variants, custom class names, SCSS variables, and consumer CSS overrides.
 - **Typed public API:** TypeScript component props, shared type exports, and generated prop documentation objects for docs tooling.
-- **Package-friendly output:** tree-shakeable ESM, CommonJS support for core entry points, standalone component exports, and Next.js client-boundary handling.
+- **Package-friendly output:** tree-shakeable ESM, standalone component exports, and Next.js client-boundary handling.
 
 ## Installation
 

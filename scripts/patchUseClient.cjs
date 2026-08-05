@@ -16,7 +16,6 @@ function getFilesToPatch() {
   return fs
     .readdirSync(nextDistDir)
     .filter((file) => file.endsWith(".js"))
-    .filter((file) => !file.endsWith(".cjs.js"))
     .filter((file) => !file.includes("-"))
     .filter((file) => !nonClientEntries.has(file))
     .map((file) => path.join(nextDistDir, file));

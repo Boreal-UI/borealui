@@ -77,8 +77,8 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "icon",
-      "type": "IconType",
-      "description": "Optional icon component (e.g., from react-icons).",
+      "type": "IconComponent",
+      "description": "Optional SVG icon component.",
       "required": false,
       "inherited": false,
       "category": "props"

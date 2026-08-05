@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Chip } from "../src/index.core";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheckCircle } from "../shared-story-assets/icons";
 import {
   PositionType,
   RoundingType,

@@ -5,7 +5,7 @@ import {
   FaExclamationTriangle,
   FaInfoCircle,
   FaTimesCircle,
-} from "react-icons/fa";
+} from "../shared-story-assets/icons";
 
 import { Alert, Button } from "../src/index.core";
 import type { AlertProps } from "../src/components/Alert/Alert.types";

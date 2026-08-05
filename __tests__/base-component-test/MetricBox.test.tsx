@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BaseMetricBox from "@/components/MetricBox/MetricBoxBase";
-import { FaUsers } from "react-icons/fa";
+import { FaUsers } from "../../shared-story-assets/icons";
 import { DummySkeleton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
