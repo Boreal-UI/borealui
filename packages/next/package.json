@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/next",
-  "version": "0.1.43",
+  "version": "0.1.422",
   "readme": "README.md",
   "description": "Accessible, themeable Boreal UI components for Next.js app-router projects.",
   "keywords": [
@@ -49,7 +49,7 @@
     "react-dom": ">=18.2.0"
   },
   "dependencies": {
-    "@boreal-ui/types": "0.1.43"
+    "@boreal-ui/types": "0.1.422"
   },
   "exports": {
     ".": {
