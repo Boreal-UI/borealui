@@ -13,6 +13,9 @@ import "@boreal-ui/next/globals.css";
 
 Use this package when you want the Next.js wrappers and `next/link`, `next/image`, and app router compatibility.
 
+Generated prop metadata is available separately from the optional
+`@boreal-ui/docs` package.
+
 TypeScript consumers should also install the shared declarations:
 
 ```sh

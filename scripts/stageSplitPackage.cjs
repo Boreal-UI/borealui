@@ -5,12 +5,12 @@ const rootDir = path.resolve(__dirname, "..");
 const rootPackage = JSON.parse(
   fs.readFileSync(path.join(rootDir, "package.json"), "utf8"),
 );
-const packageNames = new Set(["core", "next", "types", "cli"]);
+const packageNames = new Set(["core", "next", "types", "docs", "cli"]);
 const requestedPackage = process.argv[2] ?? "all";
 
 if (requestedPackage !== "all" && !packageNames.has(requestedPackage)) {
   throw new Error(
-    "Usage: node scripts/stageSplitPackage.cjs [core|next|types|cli|all]",
+    "Usage: node scripts/stageSplitPackage.cjs [core|next|types|docs|cli|all]",
   );
 }
 
@@ -21,8 +21,9 @@ function assertBuildExists(packageName) {
   if (packageName === "cli") return;
 
   const typesDist = path.join(rootDir, "dist", "types");
-  const runtimeDist =
-    packageName === "types" ? typesDist : path.join(rootDir, "dist", packageName);
+  const runtimeDist = packageName === "types"
+    ? typesDist
+    : path.join(rootDir, "dist", packageName);
 
   if (!fs.existsSync(runtimeDist) || !fs.existsSync(typesDist)) {
     throw new Error(
@@ -290,11 +291,41 @@ function stageTypesPackage() {
   fs.mkdirSync(packageDistDir, { recursive: true });
 
   copyDirectory(path.join(rootDir, "dist", "types"), path.join(packageDistDir, "types"));
+  removeDirectory(path.join(packageDistDir, "types", "docs"));
+  removeDirectory(path.join(packageDistDir, "types", "generated-docs"));
   writeEmptyRuntimeStub(packageDistDir);
   copyFileIfExists(path.join(rootDir, "LICENSE"), path.join(packageDir, "LICENSE"));
   syncPackageExports(packageDir, buildTypesExports());
 
   console.log("Staged @boreal-ui/types package output.");
+}
+
+function stageDocsPackage() {
+  assertBuildExists("docs");
+
+  const packageDir = path.join(rootDir, "packages", "docs");
+  const packageDistDir = path.join(packageDir, "dist");
+
+  syncPackageVersion(packageDir);
+
+  removeDirectory(packageDistDir);
+  fs.mkdirSync(packageDistDir, { recursive: true });
+
+  copyDirectory(
+    path.join(rootDir, "dist", "docs"),
+    path.join(packageDistDir, "docs"),
+  );
+  copyDirectory(
+    path.join(rootDir, "dist", "types", "docs"),
+    path.join(packageDistDir, "types", "docs"),
+  );
+  copyDirectory(
+    path.join(rootDir, "dist", "types", "generated-docs"),
+    path.join(packageDistDir, "types", "generated-docs"),
+  );
+  copyFileIfExists(path.join(rootDir, "LICENSE"), path.join(packageDir, "LICENSE"));
+
+  console.log("Staged @boreal-ui/docs package output.");
 }
 
 function writeTypeProxy(filePath, packageSpecifier, originalTypesPath) {
@@ -378,6 +409,7 @@ function stageCliPackage() {
 
 for (const packageName of selectedPackages) {
   if (packageName === "types") stageTypesPackage();
+  else if (packageName === "docs") stageDocsPackage();
   else if (packageName === "cli") stageCliPackage();
   else stageRuntimePackage(packageName);
 }

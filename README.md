@@ -28,6 +28,13 @@ npm install @boreal-ui/next
 
 Component declarations work automatically through either runtime package. Install `@boreal-ui/types` directly only when application code or declaration tooling imports from `@boreal-ui/types` itself.
 
+Generated prop metadata is available separately for documentation sites and
+tooling:
+
+```bash
+npm install @boreal-ui/docs
+```
+
 `@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js. `marked` is a peer dependency used by the Markdown renderer.
 
 ## CLI Setup
@@ -351,16 +358,19 @@ console.log(defaultColorSchemes.map((scheme) => scheme.name));
 
 ## Generated Prop Docs
 
-Boreal UI exports generated prop metadata for documentation sites, playgrounds, or prop tables through dedicated docs entry points.
+Boreal UI exports generated prop metadata for documentation sites, playgrounds, or prop tables through the optional docs package.
 
 ```tsx
-import { buttonPropDocs, dataTablePropDocs } from "@boreal-ui/core/docs";
+import { buttonPropDocs, dataTablePropDocs } from "@boreal-ui/docs";
 
 console.log(buttonPropDocs.name);
 console.log(dataTablePropDocs.props);
 ```
 
 The docs export includes `GeneratedComponentDoc` and `GeneratedPropDoc` types, plus one prop-doc object per documented component. Prop docs include `defaultValue` when the component implementation sets a readable default.
+
+When migrating from an earlier release, replace `@boreal-ui/core/docs` or
+`@boreal-ui/next/docs` imports with `@boreal-ui/docs`.
 
 For the complete generated prop-doc export list, see [Public API Reference](./docs/public-api-reference.md).
 

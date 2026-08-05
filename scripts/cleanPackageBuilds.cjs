@@ -22,6 +22,10 @@ const generatedDirectories = [
     label: "staged types package output",
     directory: path.resolve(rootDir, "packages", "types", "dist"),
   },
+  {
+    label: "staged docs package output",
+    directory: path.resolve(rootDir, "packages", "docs", "dist"),
+  },
 ];
 
 const allowedDirectories = new Set(

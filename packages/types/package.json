@@ -148,10 +148,6 @@
       "types": "./dist/types/core/Divider.d.ts",
       "default": "./dist/empty.js"
     },
-    "./core/docs": {
-      "types": "./dist/types/core/docs.d.ts",
-      "default": "./dist/empty.js"
-    },
     "./core/DonutChart": {
       "types": "./dist/types/core/DonutChart.d.ts",
       "default": "./dist/empty.js"
@@ -482,10 +478,6 @@
     },
     "./next/Divider": {
       "types": "./dist/types/next/Divider.d.ts",
-      "default": "./dist/empty.js"
-    },
-    "./next/docs": {
-      "types": "./dist/types/next/docs.d.ts",
       "default": "./dist/empty.js"
     },
     "./next/DonutChart": {

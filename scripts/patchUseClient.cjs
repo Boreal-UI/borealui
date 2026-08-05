@@ -4,7 +4,6 @@ const path = require("path");
 const nextDistDir = path.resolve(__dirname, "../dist/next");
 const nonClientEntries = new Set([
   "colorSchemes.js",
-  "docs.js",
   "globals.js",
   "registerColorScheme.js",
   "registerColorSheme.js",

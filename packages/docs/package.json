@@ -1,0 +1,44 @@
+{
+  "name": "@boreal-ui/docs",
+  "version": "0.1.43",
+  "readme": "README.md",
+  "description": "Generated component documentation metadata for Boreal UI tooling and websites.",
+  "keywords": [
+    "boreal-ui",
+    "documentation",
+    "component-library",
+    "props",
+    "metadata",
+    "typescript"
+  ],
+  "homepage": "https://www.borealui.ca",
+  "bugs": {
+    "url": "https://github.com/DaveC6662/borealui/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DaveC6662/borealui.git",
+    "directory": "packages/docs"
+  },
+  "author": "Davin Chiupka",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "main": "./dist/docs/index.js",
+  "module": "./dist/docs/index.js",
+  "types": "./dist/types/docs/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/types/docs/index.d.ts",
+      "import": "./dist/docs/index.js"
+    }
+  }
+}

@@ -66,7 +66,7 @@ The package publishes:
 - `dist/core` for React consumers.
 - `dist/next` for Next.js consumers.
 - `dist/next/server` for Next.js React Server Component entries.
-- `dist/core/docs.js`, `dist/next/docs.js`, and `dist/generated-docs` for docs metadata.
+- `dist/docs` and `dist/types/generated-docs` for the standalone docs package.
 - `dist/types` for TypeScript declarations.
 - `docs` for markdown API guides.
 - `packages/cli/src` for the setup CLI.
@@ -77,7 +77,7 @@ Build output is produced by:
 npm run build
 ```
 
-The build also patches Next client directives and generated docs imports so package subpaths work after publishing.
+The build also patches Next client directives and produces the standalone documentation bundle.
 
 ### Clean and refresh package folders
 
@@ -90,9 +90,9 @@ npm run refresh:packages
 This command:
 
 1. Removes root `dist`.
-2. Removes the generated `dist` directories under `packages/core`, `packages/next`, and `packages/types`.
+2. Removes the generated `dist` directories under `packages/core`, `packages/next`, `packages/types`, and `packages/docs`.
 3. Runs the complete production build.
-4. Restages all four publishable package folders from the new output.
+4. Restages all five publishable package folders from the new output.
 
 It deliberately preserves `packages/cli/src`, which is the CLI's publishable source rather than generated output. If cleaning or building fails, the command stops before staging so older package output cannot be mistaken for the current release.
 
@@ -110,13 +110,14 @@ To clean the generated directories without rebuilding:
 npm run clean:package-builds
 ```
 
-`npm run pack:split` uses this clean refresh automatically before creating the four npm tarballs.
+`npm run pack:split` uses this clean refresh automatically before creating the five npm tarballs.
 
-Boreal UI publishes four scoped packages from this repository:
+Boreal UI publishes five scoped packages from this repository:
 
 - `@boreal-ui/types`
 - `@boreal-ui/core`
 - `@boreal-ui/next`
+- `@boreal-ui/docs`
 - `@boreal-ui/cli`
 
 ## Documentation Checklist

@@ -15,8 +15,7 @@ This page lists the public API surfaces Boreal UI publishes for consumers and do
 | `@boreal-ui/types`             | Shared public declarations. Add directly when importing it.  |
 | `@boreal-ui/types/core/Button` | Core component prop declarations.                            |
 | `@boreal-ui/types/next/Button` | Next component prop declarations.                            |
-| `@boreal-ui/core/docs`         | Generated Core component prop metadata.                      |
-| `@boreal-ui/next/docs`         | Generated Next component prop metadata.                      |
+| `@boreal-ui/docs`              | Optional generated component prop metadata.                  |
 
 Use the explicit `core` or `next` entry in application code.
 
@@ -185,7 +184,7 @@ Standalone component paths:
 
 ## Generated Prop Docs
 
-Generated prop metadata is available from dedicated docs entry points.
+Generated prop metadata is available from the optional docs package.
 
 ```ts
 import {
@@ -193,7 +192,7 @@ import {
   radioGroupPropDocs,
   themeSelectPropDocs,
   type GeneratedComponentDoc,
-} from "@boreal-ui/core/docs";
+} from "@boreal-ui/docs";
 ```
 
 Prop-doc exports:

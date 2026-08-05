@@ -1,9 +1,10 @@
 # Installation and Imports
 
-Boreal UI ships two consumer builds:
+Boreal UI ships two runtime packages and optional documentation metadata:
 
 - `@boreal-ui/core` for standard React apps.
 - `@boreal-ui/next` for Next.js apps, including app-router projects.
+- `@boreal-ui/docs` for documentation sites, prop tables, and developer tooling.
 
 ## Install
 
@@ -27,6 +28,12 @@ npm install react react-dom marked
 ```
 
 Next.js apps should also install `next`.
+
+Install generated prop metadata only when it is needed:
+
+```bash
+npm install @boreal-ui/docs
+```
 
 ## React Setup
 
@@ -173,8 +180,7 @@ import NextDataTable from "@boreal-ui/next/DataTable";
 | `@boreal-ui/types`                    | Shared public type declarations.                                        |
 | `@boreal-ui/types/core/Button`        | Core component prop declarations.                                       |
 | `@boreal-ui/types/next/Button`        | Next component prop declarations.                                       |
-| `@boreal-ui/core/docs`                | Generated component prop metadata for React docs tools and prop tables. |
-| `@boreal-ui/next/docs`                | Generated component prop metadata for Next docs tools and prop tables.  |
+| `@boreal-ui/docs`                     | Optional generated component prop metadata for docs tools and prop tables. |
 | `@boreal-ui/core/registerColorScheme` | Standalone color-scheme registration helper for React consumers.        |
 | `@boreal-ui/next/registerColorScheme` | Standalone color-scheme registration helper for Next consumers.         |
 

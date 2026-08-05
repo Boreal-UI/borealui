@@ -154,10 +154,6 @@
       "types": "./dist/types/core/Divider.d.ts",
       "import": "./dist/core/Divider.js"
     },
-    "./docs": {
-      "types": "./dist/types/core/docs.d.ts",
-      "import": "./dist/core/docs.js"
-    },
     "./DonutChart": {
       "types": "./dist/types/core/DonutChart.d.ts",
       "import": "./dist/core/DonutChart.js"

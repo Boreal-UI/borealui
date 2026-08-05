@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const rootDir = path.resolve(__dirname, "..");
-const runtimeFlavors = ["core", "next"];
+const runtimeFlavors = ["core", "next", "docs"];
 
 function listFiles(directoryPath) {
   if (!fs.existsSync(directoryPath)) return [];
@@ -59,7 +59,7 @@ if (errors.length > 0) {
   console.error(["ESM-only audit failed:", ...errors.map((error) => `- ${error}`)].join("\n"));
   process.exitCode = 1;
 } else {
-  console.log("Core and Next outputs are ESM-only with no require exports.");
+  console.log("Core, Next, and Docs outputs are ESM-only with no require exports.");
 }
 
 module.exports = {
