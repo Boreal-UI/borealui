@@ -56,10 +56,9 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
         classMap.wrapper,
         classMap[layout],
         classMap[spacing],
-        errorMessage && classMap.errorMessage,
         className,
       ),
-    [classMap, layout, spacing, errorMessage, className],
+    [classMap, layout, spacing, className],
   );
 
   return (
@@ -164,6 +163,7 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
               className={combineClassNames(
                 classMap.inputField,
                 inputFieldClassName,
+                errorMessage && classMap.formError,
               )}
               data-testid={`${testId}-input-field-${index}`}
             >
@@ -202,7 +202,10 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
       {errorMessage && (
         <p
           id={errorId}
-          className={combineClassNames(classMap.errorText, errorMessageClassName)}
+          className={combineClassNames(
+            classMap.errorText,
+            errorMessageClassName,
+          )}
           role="alert"
           data-testid={`${testId}-errorMessage`}
           {...errorProps}

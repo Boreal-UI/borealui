@@ -16,6 +16,7 @@ const classes = {
   footer: "modal_footer",
   content: "modal_content",
   closeButton: "modal_close_button",
+  closeButtonFloating: "modal_close_button_floating",
 
   shadowNone: "modal_shadow-None",
   shadowLight: "modal_shadow-Light",

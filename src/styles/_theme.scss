@@ -100,6 +100,7 @@ $text-color-light: color.adjust($text-color, $lightness: 20%);
 $text-color-lighter: color.adjust($text-color, $lightness: 40%);
 $text-color-primary: rgb(255 255 255) !default;
 $text-color-secondary: rgb(0 0 0) !default;
+$text-color-placeholder: rgba(255 255 255 / 60%) !default;
 $font-family-body:
   "Inter",
   system-ui,
@@ -123,7 +124,8 @@ $font-family-ui:
   roboto,
   arial,
   sans-serif !default;
-$font-family-mono: ui-monospace, sfmono-regular, menlo, consolas, "Liberation Mono", monospace !default;
+$font-family-mono:
+  ui-monospace, sfmono-regular, menlo, consolas, "Liberation Mono", monospace !default;
 $font-size-xxs: 10px !default;
 $font-size-xs: 12px !default;
 $font-size-sm: 14px !default;

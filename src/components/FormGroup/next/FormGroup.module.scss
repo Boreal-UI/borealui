@@ -57,6 +57,10 @@
     }
   }
 
+  .inputField.formError {
+    border: 1px solid var(--error-color);
+  }
+
   .controller {
     display: flex;
     justify-content: center;
@@ -119,10 +123,6 @@
     .inputField {
       width: fit-content;
       flex: 1;
-
-      &.formError {
-        border: 1px solid var(--error-color);
-      }
     }
 
     .controller {
@@ -180,7 +180,7 @@
       color: CanvasText;
     }
 
-    .horizontal .inputField.formError {
+    .inputField.formError {
       border-color: Highlight !important;
     }
   }

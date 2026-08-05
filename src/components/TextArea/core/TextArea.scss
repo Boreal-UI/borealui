@@ -92,11 +92,6 @@
       border-radius: var(--border-radius-xs);
       min-height: 2.5em;
 
-      &::placeholder {
-        color: inherit;
-        font: inherit;
-      }
-
       &:focus-visible {
         outline: 2px solid var(--focus-outline-color, var(--primary-color));
         outline-offset: 2px;
@@ -160,14 +155,6 @@
             map.has-key($props, hover),
             map.get($props, hover),
             map.get($props, bg)
-          );
-        }
-
-        .textArea_text_input::placeholder {
-          color: if(
-            map.has-key($props, placeholder),
-            map.get($props, placeholder),
-            inherit
           );
         }
 
@@ -247,6 +234,11 @@
         background-color: transparent;
       }
     }
+  }
+
+  input::placeholder {
+    color: var(--text-color-placeholder);
+    font: inherit;
   }
 
   @media (prefers-reduced-motion: reduce) {

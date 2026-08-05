@@ -20,7 +20,7 @@ const classNames = {
   xs: "spacingXs",
   medium: "spacingMedium",
   large: "spacingLarge",
-  errorMessage: "hasError",
+  formError: "inputFieldError",
 };
 
 describe("BaseFormGroup", () => {
@@ -234,7 +234,7 @@ describe("BaseFormGroup", () => {
     expect(group).toHaveClass("spacingLarge");
   });
 
-  it("applies errorMessage class to wrapper when errorMessage exists", () => {
+  it("applies the error class to each input field when errorMessage exists", () => {
     render(
       <BaseFormGroup
         id="profile"
@@ -243,10 +243,18 @@ describe("BaseFormGroup", () => {
         classMap={classNames}
       >
         <input type="text" title="test input" />
+        <input type="text" title="second test input" />
       </BaseFormGroup>,
     );
 
-    expect(screen.getByTestId("form-group")).toHaveClass("hasError");
+    expect(screen.getByTestId("form-group-input-field-0")).toHaveClass(
+      "inputField",
+      "inputFieldError",
+    );
+    expect(screen.getByTestId("form-group-input-field-1")).toHaveClass(
+      "inputField",
+      "inputFieldError",
+    );
   });
 
   it("merges custom className into wrapper classes", () => {

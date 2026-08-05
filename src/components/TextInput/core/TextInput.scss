@@ -146,11 +146,6 @@
       border-radius: var(--border-radius-md);
     }
 
-    &::placeholder {
-      color: inherit;
-      font: inherit;
-    }
-
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
@@ -229,6 +224,11 @@
       grid-area: error;
       color: var(--error-color, #b00020);
     }
+  }
+
+  input::placeholder {
+    color: var(--text-color-placeholder);
+    font: inherit;
   }
 
   .textInput_container[data-state="warning"] .textInput_helperText {

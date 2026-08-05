@@ -168,11 +168,6 @@
       }
     }
 
-    &::placeholder {
-      color: inherit;
-      font: inherit;
-    }
-
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
@@ -184,6 +179,11 @@
       font-size: var(--font-size-body-sm);
       margin: var(--spacing-xs);
     }
+  }
+
+  input::placeholder {
+    color: var(--text-color-placeholder);
+    font: inherit;
   }
 
   @each $themeName, $vals in theme.$themes {

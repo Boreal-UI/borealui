@@ -84,14 +84,6 @@
           );
         }
 
-        .textInput::placeholder {
-          color: if(
-            map.has-key($props, placeholder),
-            map.get($props, placeholder),
-            inherit
-          );
-        }
-
         .iconContainer svg {
           color: if(map.has-key($props, icon), map.get($props, icon), inherit);
         }
@@ -205,11 +197,6 @@
     border-radius: var(--border-radius-xs);
     min-height: 2.5em;
 
-    &::placeholder {
-      color: rgba(255, 255, 255, 0.514);
-      font: inherit;
-    }
-
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
@@ -252,6 +239,11 @@
         height: 1.1em;
       }
     }
+  }
+
+  input::placeholder {
+    color: var(--text-color-placeholder);
+    font: inherit;
   }
 
   @media (prefers-reduced-motion: reduce) {

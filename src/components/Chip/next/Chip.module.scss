@@ -200,7 +200,7 @@
     padding: 0;
   }
 
-  .icon_inner {
+  .inner_icon {
     height: 1em;
     width: 1em;
   }
@@ -247,7 +247,7 @@
         font-size: map.get($props, font);
       }
 
-      .icon_inner {
+      .inner_icon {
         height: map.get($props, icon);
         width: map.get($props, icon);
       }

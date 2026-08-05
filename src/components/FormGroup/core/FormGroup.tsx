@@ -11,6 +11,7 @@ const classes = {
   inputWrapper: "form_group_input_wrapper",
   inputField: "form_group_input_field",
   controller: "form_group_controller",
+  formError: "form_group_input_field_form_error",
   helperText: "form_group_helper_text",
   errorText: "form_group_error_text",
   vertical: "form_group_vertical",
