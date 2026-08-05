@@ -170,18 +170,6 @@
     overflow-wrap: anywhere;
   }
 
-  .item.disabled {
-    cursor: not-allowed;
-    opacity: 0.55;
-    color: var(--disabled-text-color, currentcolor);
-    background: transparent;
-    user-select: none;
-  }
-
-  .item.disabled:hover {
-    background: transparent;
-  }
-
   .icon {
     flex-shrink: 0;
   }
@@ -224,6 +212,15 @@
       }
     }
 
+    .glass {
+      @include mixins.glass-surface(
+        var(--command-palette-glass-bg, rgba(255, 255, 255, 0.16)),
+        var(--command-palette-glass-border, rgba(255, 255, 255, 0.28)),
+        18px
+      );
+      color: inherit;
+    }
+
     .item.#{$name}.active {
       background-color: map.get($values, bg);
       color: if(
@@ -251,6 +248,15 @@
       }
     }
 
+    .glass {
+      @include mixins.glass-surface(
+        var(--background-color, rgba(255, 255, 255, 0.16)),
+        var(--command-palette-glass-border, rgba(255, 255, 255, 0.28)),
+        18px
+      );
+      color: inherit;
+    }
+
     .item.#{$name}.active {
       background-color: map.get($values, bg);
       color: var(--text-color-primary);
@@ -261,15 +267,6 @@
     }
   }
 
-  .glass {
-    @include mixins.glass-surface(
-      var(--command-palette-glass-bg, rgba(255, 255, 255, 0.16)),
-      var(--command-palette-glass-border, rgba(255, 255, 255, 0.28)),
-      18px
-    );
-    color: inherit;
-  }
-
   .glass .item:hover,
   .glass .active {
     background-color: var(
@@ -277,6 +274,20 @@
       rgba(255, 255, 255, 0.22)
     );
     color: inherit;
+  }
+
+  .item.disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    color: var(--disabled-text-color, currentcolor);
+    background: var(--disabled-color);
+    border-color: var(--disabled-color);
+    user-select: none;
+  }
+
+  .item.disabled:hover,
+  .item:disabled:hover {
+    background: var(--disabled-color);
   }
 
   .clear {

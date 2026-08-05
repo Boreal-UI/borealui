@@ -188,6 +188,38 @@ export const WithAriaDescription: Story = {
   },
 };
 
+export const HelperAndErrorMessages: Story = {
+  render: (args) => (
+    <div style={{ display: "grid", gap: "1.5rem", maxWidth: "32rem" }}>
+      <TextInput
+        {...args}
+        label="Email address"
+        helperText="We will only use this address for account notifications."
+        placeholder="name@example.com"
+        type="email"
+        fullWidth
+      />
+      <TextInput
+        {...args}
+        label="Email address with an error"
+        helperText="Enter the address associated with your account."
+        errorMessage="Enter a valid email address."
+        defaultValue="not-an-email"
+        type="email"
+        fullWidth
+      />
+      <TextInput
+        {...args}
+        label="Username"
+        labelPosition="left"
+        helperText="Letters, numbers, and underscores are supported."
+        placeholder="username"
+        fullWidth
+      />
+    </div>
+  ),
+};
+
 export const RoundingVariants = (
   args: React.ComponentProps<typeof TextInput>,
 ) =>

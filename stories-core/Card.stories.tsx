@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { useState } from "react";
 import { Card } from "../src/index.core";
 import { FaInfoCircle, FaEdit, FaTrash } from "react-icons/fa";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
@@ -111,6 +112,51 @@ export const WithActions: Story = {
     ],
     useIconButtons: true,
   },
+};
+
+const CardInteractionStates = () => {
+  const [selected, setSelected] = useState(false);
+
+  return (
+    <StoryGrid title="Interaction states">
+      <Card
+        {...defaultArgs}
+        title={selected ? "Selected card" : "Selectable card"}
+        description="Click the card, or focus it and press Enter or Space, to toggle selection."
+        selectable
+        selected={selected}
+        onClick={() => setSelected((current) => !current)}
+      />
+      <Card
+        {...defaultArgs}
+        title="Selected"
+        description="A selected card has a persistent visual selection indicator."
+        selectable
+        selected
+        onClick={() => {}}
+      />
+      <Card
+        {...defaultArgs}
+        title="Disabled"
+        description="A disabled card does not expose pointer or keyboard interaction."
+        selectable
+        disabled
+        onClick={() => {}}
+        actionButtons={[
+          {
+            label: "Unavailable action",
+            icon: FaEdit,
+            disabled: true,
+            onClick: () => {},
+          },
+        ]}
+      />
+    </StoryGrid>
+  );
+};
+
+export const InteractionStates: Story = {
+  render: () => <CardInteractionStates />,
 };
 
 export const BorderVariants = () =>

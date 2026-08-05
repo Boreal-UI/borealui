@@ -104,8 +104,11 @@
   }
 
   .accordion_header {
+    --accordion-icon-track: 1.25em;
+
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 1.25em;
+    grid-template-columns: minmax(0, 1fr) var(--accordion-icon-track);
+    grid-template-areas: "title icon";
     align-items: center;
     column-gap: var(--spacing-xs);
 
@@ -137,7 +140,6 @@
     }
 
     @include bp.down(sm) {
-      grid-template-columns: minmax(0, 1fr) auto;
       column-gap: var(--spacing-xs);
       row-gap: var(--spacing-xs);
       padding: var(--spacing-xs) var(--spacing-sm);
@@ -150,6 +152,16 @@
     @include bp.up(lg) {
       padding: var(--spacing-sm) var(--spacing-lg);
     }
+  }
+
+  .accordion_header.accordion_iconLeft {
+    grid-template-columns: var(--accordion-icon-track) minmax(0, 1fr);
+    grid-template-areas: "icon title";
+  }
+
+  .accordion_header.accordion_iconRight {
+    grid-template-columns: minmax(0, 1fr) var(--accordion-icon-track);
+    grid-template-areas: "title icon";
   }
 
   @each $name, $values in theme.$themes {
@@ -329,6 +341,7 @@
     max-width: 100%;
     display: block;
     justify-self: start;
+    grid-area: title;
 
     font: inherit;
     line-height: var(--line-height-label);
@@ -349,8 +362,8 @@
   }
 
   .accordion_icon {
-    grid-column: 2;
     display: inline-grid;
+    grid-area: icon;
     place-items: center;
     justify-self: center;
     align-self: center;
@@ -407,7 +420,8 @@
 
   .accordion_xs .accordion_header,
   .accordion_small .accordion_header {
-    grid-template-columns: minmax(0, 1fr) 1em;
+    --accordion-icon-track: 1em;
+
     column-gap: 0.25rem;
     padding-inline: var(--spacing-sm);
   }
@@ -432,6 +446,12 @@
   .accordion_clear.accordion_header {
     box-shadow: none;
     color: inherit;
+  }
+
+  .accordion_disabled:hover,
+  .accordion:disabled:hover,
+  .accordion_disabled.accordion_header:hover {
+    background-color: var(--disabled-color);
   }
 
   .accordion_clear.accordion_glass.accordion_header:hover {

@@ -9,6 +9,8 @@ const styles = {
   header: "accordionHeader",
   content: "accordionContent",
   icon: "accordionIcon",
+  iconLeft: "iconLeft",
+  iconRight: "iconRight",
   accordionTitle: "accordionTitle",
   expanded: "expanded",
   primary: "primary",
@@ -394,6 +396,7 @@ describe("AccordionBase (Jest)", () => {
     const toggle = screen.getByTestId("test-accordion-toggle");
     const children = Array.from(toggle.children);
 
+    expect(toggle).toHaveClass("iconRight");
     expect(children[0]).toHaveAttribute("data-testid", "test-title");
     expect(children[1]).toHaveAttribute("data-testid", "test-icon");
   });
@@ -404,6 +407,7 @@ describe("AccordionBase (Jest)", () => {
     const toggle = screen.getByTestId("test-accordion-toggle");
     const children = Array.from(toggle.children);
 
+    expect(toggle).toHaveClass("iconLeft");
     expect(children[0]).toHaveAttribute("data-testid", "test-icon");
     expect(children[1]).toHaveAttribute("data-testid", "test-title");
   });

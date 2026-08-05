@@ -46,6 +46,19 @@ const sampleCommands = [
   },
 ];
 
+const commandsWithDisabledItem: CommandPaletteProps["commands"] = [
+  sampleCommands[0],
+  {
+    id: "admin-settings",
+    label: "Admin settings",
+    icon: <FaCog />,
+    action: () => {},
+    disabled: true,
+    "aria-description": "Unavailable for your current account",
+  },
+  sampleCommands[1],
+];
+
 export const Default: Story = {
   render: () => {
     const [open, setOpen] = useState(false);
@@ -58,6 +71,28 @@ export const Default: Story = {
           onClose={() => setOpen(false)}
           commands={sampleCommands}
           placeholder="Type a command..."
+          theme="primary"
+        />
+      </div>
+    );
+  },
+};
+
+export const DisabledCommand: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+
+    return (
+      <div style={{ padding: "2rem" }}>
+        <button onClick={() => setOpen(true)}>
+          Open palette with disabled command
+        </button>
+        <CommandPalette
+          open={open}
+          onClose={() => setOpen(false)}
+          commands={commandsWithDisabledItem}
+          inputLabel="Search available commands"
+          placeholder="Try selecting Admin settings..."
           theme="primary"
         />
       </div>

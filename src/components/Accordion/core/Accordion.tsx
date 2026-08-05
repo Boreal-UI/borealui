@@ -10,6 +10,8 @@ const classes = {
   content: "accordion_content",
   loading: "accordion_loading",
   icon: "accordion_icon",
+  iconLeft: "accordion_iconLeft",
+  iconRight: "accordion_iconRight",
   title: "accordion_title",
 
   shadowNone: "accordion_shadow-None",

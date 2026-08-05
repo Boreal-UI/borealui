@@ -163,6 +163,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
     () =>
       combineClassNames(
         classMap.header,
+        classMap[`icon${capitalize(iconPosition)}`],
         classMap[theme],
         state && classMap[state],
         (variant === "outline" || variant === "glassOutline") &&
@@ -171,7 +172,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         disabled && classMap.disabled,
         isExpanded && classMap.expanded,
       ),
-    [classMap, theme, state, variant, disabled, isExpanded],
+    [classMap, iconPosition, theme, state, variant, disabled, isExpanded],
   );
 
   const contentClassName = useMemo(
