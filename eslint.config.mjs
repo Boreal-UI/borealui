@@ -101,7 +101,6 @@ export default tseslint.config(
     files: [
       "*.config.{js,cjs,mjs,ts}",
       "vite.config*.ts",
-      "webpack.config.cjs",
       "eslint.config.js",
       "eslint.config.mjs",
       "scripts/**/*.{js,cjs,mjs}",
