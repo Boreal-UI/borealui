@@ -25,7 +25,7 @@ const classes = {
   title: "breadCrumbPageHeader_title",
   subtitle: "breadCrumbPageHeader_subtitle",
   actions: "breadCrumbPageHeader_actions",
-  content: "breadCrumbPageHeader_content",
+  bodyContent: "breadCrumbPageHeader_bodyContent",
   loader: "breadCrumbPageHeader_loader",
 
   primary: "breadCrumbPageHeader_primary",

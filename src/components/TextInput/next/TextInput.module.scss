@@ -6,7 +6,7 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  @include control-sizes.variants(".textInput", (".textInput"));
+  @include control-sizes.variants(".textInput", (".textInput"), ".");
 
   .container {
     display: flex;
