@@ -26,7 +26,6 @@ const classes = {
   helperText: "dateTimePicker_helperText",
   errorText: "dateTimePicker_errorText",
   loader: "dateTimePicker_loader",
-  srOnly: "sr_only",
   fullWidth: "dateTimePicker_fullWidth",
   readOnly: "dateTimePicker_readOnly",
 

@@ -802,7 +802,7 @@ function DataTableBase<T extends object>({
 
         <div
           id={liveRegionId}
-          className={classMap.srOnly ?? "sr_only"}
+          className="sr_only"
           aria-live="polite"
           aria-atomic="true"
         >
@@ -831,7 +831,7 @@ function DataTableBase<T extends object>({
               <caption
                 id={captionId}
                 className={
-                  hideCaption ? (classMap.srOnly ?? "sr_only") : undefined
+                  hideCaption ? "sr_only" : undefined
                 }
               >
                 {caption}
@@ -842,7 +842,7 @@ function DataTableBase<T extends object>({
               <tr>
                 {renderExpandedRow ? (
                   <th scope="col" className={classMap.selectionCell}>
-                    <span className={classMap.srOnly ?? "sr_only"}>
+                    <span className="sr_only">
                       Expand row
                     </span>
                   </th>

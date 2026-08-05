@@ -26,7 +26,6 @@ const classes = {
   helperText: "timePicker_helperText",
   errorText: "timePicker_errorText",
   loader: "timePicker_loader",
-  srOnly: "sr_only",
   fullWidth: "timePicker_fullWidth",
   readOnly: "timePicker_readOnly",
 

@@ -509,7 +509,7 @@ describe("TextInputBase", () => {
       "custom-toggle",
     );
     expect(screen.getByTestId("text-input-sr-only-text")).toHaveClass(
-      "srOnly",
+      "sr_only",
       "custom-sr-only",
     );
   });

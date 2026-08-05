@@ -163,7 +163,7 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
               className={combineClassNames(
                 classMap.legend,
                 classMap.label,
-                hideLegend && (classMap.legendHidden ?? classMap.srOnly),
+                hideLegend && "sr_only",
                 labelClassName,
                 legendClassName,
               )}
@@ -260,7 +260,7 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
             <span
               id={srDescriptionId}
               className={combineClassNames(
-                classMap.srOnly ?? "sr_only",
+                "sr_only",
                 srOnlyClassName,
               )}
               data-testid={`${testId}-sr-only-text`}

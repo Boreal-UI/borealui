@@ -154,7 +154,7 @@ describe("TypographyBase", () => {
       "underline",
       "truncate",
       "noWrap",
-      "srOnly",
+      "sr_only",
     );
   });
 
@@ -334,7 +334,7 @@ describe("TypographyBase", () => {
     const element = screen.getByTestId("typography");
     expect(element).toBeInTheDocument();
     expect(element).toHaveTextContent("Example text");
-    expect(element).toHaveClass("srOnly");
+    expect(element).toHaveClass("sr_only");
   });
 
   it("has no accessibility violations in a standard usage", async () => {

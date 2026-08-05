@@ -263,7 +263,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                     {note.ariaDescription && (
                       <span
                         id={descriptionId}
-                        className={classMap.srOnly}
+                        className="sr_only"
                         data-testid={`${noteTestId}-description`}
                       >
                         {note.ariaDescription}

@@ -116,7 +116,7 @@ function TypographyBase({
     underline && classMap.underline,
     truncate && classMap.truncate,
     noWrap && classMap.noWrap,
-    srOnly && classMap.srOnly,
+    srOnly && "sr_only",
     className,
   );
 

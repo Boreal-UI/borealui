@@ -504,7 +504,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
             <span
               id={srDescriptionId}
               className={combineClassNames(
-                classMap.srOnly ?? "sr_only",
+                "sr_only",
                 srOnlyClassName,
               )}
               data-testid={`${testId}-sr-only-text`}
@@ -514,7 +514,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
           ) : null}
 
           {selectableFilteredOptions.length === 0 ? null : (
-            <span className={classMap.srOnly ?? "sr_only"} aria-live="polite">
+            <span className="sr_only" aria-live="polite">
               {selectedValues.length} selected
             </span>
           )}

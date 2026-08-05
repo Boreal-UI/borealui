@@ -44,7 +44,6 @@ const classes = {
   editButton: "data_table_edit_button",
   cellEditor: "data_table_cell_editor",
   emptyCell: "data_table_empty_cell",
-  srOnly: "sr_only",
 
   primary: "data_table_primary",
   secondary: "data_table_secondary",

@@ -177,7 +177,7 @@ export const AvatarBase = forwardRef<
       {statusLabel ? (
         <span
           id={generatedStatusId}
-          className={classMap.srOnly}
+          className="sr_only"
           data-testid={testId ? `${testId}-status-label` : undefined}
         >
           {statusLabel}

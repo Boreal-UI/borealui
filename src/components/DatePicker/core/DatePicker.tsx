@@ -27,7 +27,6 @@ const classes = {
   helperText: "datePicker_helperText",
   errorText: "datePicker_errorText",
   loader: "datePicker_loader",
-  srOnly: "sr_only",
   fullWidth: "datePicker_fullWidth",
   readOnly: "datePicker_readOnly",
 

@@ -20,7 +20,6 @@ const classes = {
   optionIcon: "segmentedControl_optionIcon",
   optionLabel: "segmentedControl_optionLabel",
   loader: "segmentedControl_loader",
-  srOnly: "sr_only",
   vertical: "segmentedControl_vertical",
   fullWidth: "segmentedControl_fullWidth",
   equalWidth: "segmentedControl_equalWidth",

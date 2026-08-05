@@ -215,7 +215,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
         data-testid={`${testId}-content`}
       >
         {shouldRenderFallbackLabel && (
-          <h2 id={fallbackLabelId} className={classMap.srOnly ?? "sr_only"}>
+          <h2 id={fallbackLabelId} className="sr_only">
             {typeof title === "string" ? title : "Modal Dialog"}
           </h2>
         )}

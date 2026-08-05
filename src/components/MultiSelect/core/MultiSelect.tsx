@@ -40,7 +40,6 @@ const classes = {
   optionDisabled: "multiSelect_optionDisabled",
   loader: "multiSelect_loader",
   nativeRequired: "multiSelect_nativeRequired",
-  srOnly: "sr_only",
 
   primary: "multiSelect_primary",
   secondary: "multiSelect_secondary",

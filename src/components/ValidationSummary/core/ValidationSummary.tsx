@@ -27,7 +27,6 @@ const classes = {
   loadingRow: "validationSummary_loadingRow",
   loadingMessage: "validationSummary_loadingMessage",
   loader: "validationSummary_loader",
-  srOnly: "sr_only",
 
   primary: "validationSummary_primary",
   secondary: "validationSummary_secondary",

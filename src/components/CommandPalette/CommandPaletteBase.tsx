@@ -398,7 +398,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
 
         <div
           id={resolvedStatusId}
-          className={classMap.srOnly}
+          className="sr_only"
           aria-live="polite"
           aria-atomic="true"
           data-testid={`${testId}-live-region`}
@@ -478,7 +478,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
                   {cmd["aria-description"] && (
                     <span
                       id={descriptionId}
-                      className={classMap.srOnly}
+                      className="sr_only"
                       data-testid={`${testId}-option-description-${index}`}
                     >
                       {cmd["aria-description"]}

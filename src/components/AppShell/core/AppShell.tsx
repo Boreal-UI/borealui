@@ -15,7 +15,6 @@ const classes = {
   sidebarCollapsed: "appShell_sidebarCollapsed",
   stickyHeader: "appShell_stickyHeader",
   loader: "appShell_loader",
-  srOnly: "sr_only",
 
   primary: "appShell_primary",
   secondary: "appShell_secondary",

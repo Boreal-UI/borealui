@@ -27,7 +27,6 @@ const classes = {
   actions: "breadCrumbPageHeader_actions",
   content: "breadCrumbPageHeader_content",
   loader: "breadCrumbPageHeader_loader",
-  srOnly: "sr_only",
 
   primary: "breadCrumbPageHeader_primary",
   secondary: "breadCrumbPageHeader_secondary",

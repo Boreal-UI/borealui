@@ -15,7 +15,6 @@ const classes = {
   root: "fieldSet",
   legend: "fieldSet_legend",
   legendText: "fieldSet_legendText",
-  legendHidden: "fieldSet_legendHidden",
   required: "fieldSet_required",
   optional: "fieldSet_optional",
   description: "fieldSet_description",
@@ -27,7 +26,6 @@ const classes = {
   loadingRow: "fieldSet_loadingRow",
   loadingMessage: "fieldSet_loadingMessage",
   loader: "fieldSet_loader",
-  srOnly: "sr_only",
 
   layoutStack: "fieldSet_layoutStack",
   layoutGrid: "fieldSet_layoutGrid",

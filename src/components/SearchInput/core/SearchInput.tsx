@@ -26,7 +26,6 @@ const classes = {
   clearButton: "searchInput_clearButton",
   searchButton: "searchInput_searchButton",
   searchGlyph: "searchInput_searchGlyph",
-  srOnly: "sr_only",
 
   primary: "searchInput_primary",
   secondary: "searchInput_secondary",

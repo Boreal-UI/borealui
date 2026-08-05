@@ -312,7 +312,7 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
             <span
               id={srDescriptionId}
               className={combineClassNames(
-                classMap.srOnly ?? "sr_only",
+                "sr_only",
                 srOnlyClassName,
               )}
               data-testid={`${testId}-sr-only-text`}

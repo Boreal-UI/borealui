@@ -245,7 +245,7 @@ export default function ValidationSummary({
           <span
             id={srDescriptionId}
             className={combineClassNames(
-              classMap.srOnly ?? "sr_only",
+              "sr_only",
               srOnlyClassName,
             )}
           >

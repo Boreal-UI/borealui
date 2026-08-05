@@ -182,7 +182,7 @@ describe("FieldSetBase", () => {
 
     expect(screen.getByTestId("field-set")).toHaveClass("labelLeft");
     expect(screen.getByTestId("field-set")).toHaveClass("customContainer");
-    expect(screen.getByTestId("field-set-label")).toHaveClass("legendHidden");
+    expect(screen.getByTestId("field-set-label")).toHaveClass("sr_only");
     expect(screen.getByTestId("field-set-label")).toHaveClass("customLegend");
     expect(screen.getByTestId("field-set-content")).toHaveClass("layoutGrid");
     expect(screen.getByTestId("field-set-content")).toHaveClass("spacingLg");

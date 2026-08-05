@@ -278,7 +278,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             <span
               id={generatedDescriptionId}
               className={combineClassNames(
-                classMap.srOnly || "sr_only",
+                "sr_only",
                 srOnlyClassName,
               )}
               data-testid={`${testId}-sr-only-text`}

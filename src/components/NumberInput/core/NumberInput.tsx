@@ -21,7 +21,6 @@ const classes = {
   input: "numberInput_input",
   controls: "numberInput_controls",
   controlButton: "numberInput_controlButton",
-  srOnly: "sr_only",
 
   primary: "numberInput_primary",
   secondary: "numberInput_secondary",

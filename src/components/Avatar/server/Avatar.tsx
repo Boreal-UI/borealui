@@ -92,7 +92,7 @@ export default function Avatar({
             {statusIcon || <span className={classMap.dot} />}
           </span>
           {statusLabel ? (
-            <span className={classMap.srOnly}>{statusLabel}</span>
+            <span className="sr_only">{statusLabel}</span>
           ) : null}
         </>
       ) : null}

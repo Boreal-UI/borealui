@@ -454,7 +454,7 @@ describe("DataTableBase", () => {
 
     expect(caption).toBeInTheDocument();
     expect(caption).toHaveAttribute("id", "users-table-caption");
-    expect(caption).toHaveClass("srOnly");
+    expect(caption).toHaveClass("sr_only");
     expect(table).toHaveAttribute(
       "aria-describedby",
       expect.stringContaining("users-table-caption"),
@@ -469,7 +469,7 @@ describe("DataTableBase", () => {
 
     const caption = screen.getByText("Visible table caption");
     expect(caption).toBeInTheDocument();
-    expect(caption).not.toHaveClass("srOnly");
+    expect(caption).not.toHaveClass("sr_only");
   });
 
   it("merges custom aria-describedby with the generated caption and live region ids", () => {

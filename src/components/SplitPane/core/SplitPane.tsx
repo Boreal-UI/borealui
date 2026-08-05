@@ -13,7 +13,6 @@ const classes = {
   vertical: "splitPane_vertical",
   static: "splitPane_static",
   loader: "splitPane_loader",
-  srOnly: "sr_only",
 
   primary: "splitPane_primary",
   secondary: "splitPane_secondary",

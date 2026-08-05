@@ -27,7 +27,6 @@ const classes = {
   loadingContainer: "inputGroup_loadingContainer",
   loadingMessage: "inputGroup_loadingMessage",
   loader: "inputGroup_loader",
-  srOnly: "sr_only",
 
   fullWidth: "inputGroup_fullWidth",
   withAddons: "inputGroup_withAddons",

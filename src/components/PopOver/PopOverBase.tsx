@@ -309,7 +309,7 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
           tabIndex={popupRole === "tooltip" ? undefined : -1}
         >
           {!ariaLabel && !ariaLabelledBy && (
-            <span id={fallbackLabelId} className={classMap.srOnly ?? "sr_only"}>
+            <span id={fallbackLabelId} className="sr_only">
               PopOver Content
             </span>
           )}

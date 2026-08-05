@@ -20,7 +20,6 @@ const classes = {
   compact: "pageHeader_compact",
   fullWidth: "pageHeader_fullWidth",
   loader: "pageHeader_loader",
-  srOnly: "sr_only",
 
   primary: "pageHeader_primary",
   secondary: "pageHeader_secondary",

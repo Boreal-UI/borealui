@@ -16,7 +16,6 @@ const classes = {
   icon: "treeView_icon",
   content: "treeView_content",
   loader: "treeView_loader",
-  srOnly: "sr_only",
 
   primary: "treeView_primary",
   secondary: "treeView_secondary",
