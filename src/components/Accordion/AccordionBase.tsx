@@ -220,7 +220,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         )}
 
         <span
-          className={classMap.accordionTitle}
+          className={classMap.title}
           data-testid={testId ? `${testId}-title` : undefined}
         >
           {title}
