@@ -112,6 +112,16 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
 
     const resolvedAriaErrorMessage = ariaErrorMessage ?? errorId;
 
+    const renderedLabel = label ? (
+      <span
+        className={combineClassNames(classMap.label, labelClassName)}
+        id={labelId}
+        data-testid={testId ? `${testId}-label` : undefined}
+      >
+        {label}
+      </span>
+    ) : null;
+
     return (
       <div
         className={combinedClassName}
@@ -124,15 +134,7 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
             labelWrapperClassName,
           )}
         >
-          {label && resolvedLabelPosition === "left" && (
-            <span
-              className={combineClassNames(classMap.label, labelClassName)}
-              id={labelId}
-              data-testid={testId ? `${testId}-label` : undefined}
-            >
-              {label}
-            </span>
-          )}
+          {resolvedLabelPosition === "left" ? renderedLabel : null}
 
           <input
             id={checkboxId}
@@ -166,15 +168,7 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
             data-testid={testId ? `${testId}-box` : undefined}
           />
 
-          {label && resolvedLabelPosition === "right" && (
-            <span
-              className={combineClassNames(classMap.label, labelClassName)}
-              id={labelId}
-              data-testid={testId ? `${testId}-label` : undefined}
-            >
-              {label}
-            </span>
-          )}
+          {resolvedLabelPosition === "right" ? renderedLabel : null}
         </label>
 
         {helperText && (

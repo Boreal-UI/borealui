@@ -26,6 +26,9 @@ const classes = {
 
   clear: "card_clear",
   loading: "card_loading",
+  disabled: "card_disabled",
+  selected: "card_selected",
+  selectable: "card_selectable",
 
   content: "card_content",
 
@@ -58,6 +61,7 @@ const classes = {
   horizontal: "card_horizontal",
 
   image: "card_image",
+  media: "card_media",
   insetNone: "card_insetNone",
   insetXs: "card_insetXs",
   insetSmall: "card_insetSmall",

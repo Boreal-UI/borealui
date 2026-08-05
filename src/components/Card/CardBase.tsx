@@ -54,6 +54,8 @@ const CardBase: React.FC<CardBaseProps> = ({
   id,
   role,
   tabIndex,
+  onClick,
+  onKeyDown,
   selectable = false,
   selected = false,
   disabled = false,
@@ -79,12 +81,30 @@ const CardBase: React.FC<CardBaseProps> = ({
   const hasTitle = Boolean(title);
 
   const hasDescription = Boolean(description);
+  const isInteractive = selectable || Boolean(onClick);
 
   const derivedAriaLabel = ariaLabel || title || description || "Content card";
 
   const resolvedRole =
     role ||
-    (selectable ? "button" : hasTitle || ariaLabel ? "region" : undefined);
+    (isInteractive ? "button" : hasTitle || ariaLabel ? "region" : undefined);
+
+  const handleKeyDown: React.KeyboardEventHandler<HTMLDivElement> = (event) => {
+    onKeyDown?.(event);
+    if (
+      event.defaultPrevented ||
+      event.target !== event.currentTarget ||
+      disabled ||
+      !isInteractive
+    ) {
+      return;
+    }
+
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      event.currentTarget.click();
+    }
+  };
 
   const FallbackImage = (props: React.ImgHTMLAttributes<HTMLImageElement>) => (
     <img alt="" {...props} />
@@ -194,12 +214,16 @@ const CardBase: React.FC<CardBaseProps> = ({
   );
 
   return (
+    // The card may contain nested actions, so it cannot always be a native button.
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       id={id}
       data-testid={testId}
       className={cardClassName}
       role={resolvedRole}
-      tabIndex={disabled ? -1 : tabIndex}
+      tabIndex={disabled ? -1 : isInteractive ? (tabIndex ?? 0) : tabIndex}
+      onClick={disabled ? undefined : onClick}
+      onKeyDown={handleKeyDown}
       aria-labelledby={
         hasTitle && !ariaLabel ? resolvedHeaderId : ariaLabelledBy
       }
@@ -321,18 +345,42 @@ const CardBase: React.FC<CardBaseProps> = ({
                       actionsClassName,
                     )}
                   >
-                    {actionButtons.map((button, index) =>
-                      useIconButtons && button.icon ? (
-                        <button.iconButtonComponent
-                          key={index}
-                          icon={button.icon}
-                          onClick={button.onClick}
+                    {actionButtons.map((button, index) => {
+                      const isIconButton = Boolean(
+                        useIconButtons && button.icon,
+                      );
+                      const ActionComponent = isIconButton
+                        ? button.iconButtonComponent
+                        : button.buttonComponent;
+
+                      return (
+                        <ActionComponent
+                          key={`${button.label}-${index}`}
+                          {...(isIconButton ? { icon: button.icon } : {})}
+                          onClick={
+                            disabled || button.disabled
+                              ? undefined
+                              : (event: React.MouseEvent<HTMLElement>) => {
+                                  event.stopPropagation();
+                                  button.onClick();
+                                }
+                          }
                           className={combineClassNames(
                             classMap.action_button,
                             actionButtonClassName,
                           )}
-                          theme={button.theme || "clear"}
+                          theme={
+                            button.theme ||
+                            (isIconButton ? "clear" : "secondary")
+                          }
                           state={button.state || ""}
+                          href={button.href}
+                          target={button.target}
+                          rel={button.rel}
+                          loading={button.loading}
+                          size={button.size || size}
+                          rounding={button.rounding}
+                          shadow={button.shadow}
                           aria-label={button["aria-label"] || button.label}
                           aria-describedby={button["aria-describedby"]}
                           aria-labelledby={button["aria-labelledby"]}
@@ -342,43 +390,12 @@ const CardBase: React.FC<CardBaseProps> = ({
                           aria-current={button["aria-current"]}
                           role={button.role}
                           title={button.title}
-                          size={button.size || size}
-                          href={button.href}
-                          target={button.target}
-                          rel={button.rel}
-                          loading={button.loading}
-                          disabled={button.disabled}
-                        />
-                      ) : (
-                        <button.buttonComponent
-                          key={index}
-                          onClick={button.onClick}
-                          className={combineClassNames(
-                            classMap.action_button,
-                            actionButtonClassName,
-                          )}
-                          theme={button.theme || "secondary"}
-                          state={button.state || ""}
-                          href={button.href}
-                          target={button.target}
-                          rel={button.rel}
-                          loading={button.loading}
-                          size={button.size || size}
-                          aria-label={button["aria-label"] || button.label}
-                          aria-describedby={button["aria-describedby"]}
-                          aria-labelledby={button["aria-labelledby"]}
-                          aria-pressed={button["aria-pressed"]}
-                          aria-expanded={button["aria-expanded"]}
-                          aria-controls={button["aria-controls"]}
-                          aria-current={button["aria-current"]}
-                          role={button.role}
-                          title={button.title}
-                          disabled={button.disabled}
+                          disabled={disabled || button.disabled}
                         >
-                          {button.label}
-                        </button.buttonComponent>
-                      ),
-                    )}
+                          {isIconButton ? undefined : button.label}
+                        </ActionComponent>
+                      );
+                    })}
                   </div>
                 )}
                 {renderFooter && renderFooter()}

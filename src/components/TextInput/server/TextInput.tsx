@@ -32,6 +32,8 @@ export default function TextInput({
   labelClassName,
   iconClassName,
   inputClassName,
+  helperTextClassName,
+  errorMessageClassName,
   testId,
   "data-testid": dataTestId,
   id,
@@ -40,6 +42,7 @@ export default function TextInput({
   invalid,
   helperText,
   errorMessage,
+  "aria-describedby": ariaDescribedBy,
   ...rest
 }: ServerTextInputProps) {
   const classMap = expandClassMap(styles);
@@ -48,7 +51,9 @@ export default function TextInput({
   const helperTextId = helperText ? `${inputId}-helper-text` : undefined;
   const errorMessageId = errorMessage ? `${inputId}-error-message` : undefined;
   const describedBy =
-    [helperTextId, errorMessageId].filter(Boolean).join(" ") || undefined;
+    [ariaDescribedBy, helperTextId, errorMessageId]
+      .filter(Boolean)
+      .join(" ") || undefined;
   const position = resolvePropAlias(labelPosition);
   return (
     <div
@@ -58,6 +63,8 @@ export default function TextInput({
         fullWidth && classMap.fullWidth,
         containerClassName,
       )}
+      data-state={errorMessage ? "error" : state || undefined}
+      data-disabled={disabled || undefined}
       data-testid={resolvedTestId}
     >
       {label ? (
@@ -103,19 +110,34 @@ export default function TextInput({
           placeholder={label ? " " : placeholder}
           readOnly={readOnly}
           disabled={disabled}
-          aria-invalid={invalid || state === "error" || undefined}
+          aria-invalid={
+            invalid || state === "error" || Boolean(errorMessage) || undefined
+          }
           aria-describedby={describedBy}
-          className={combineClassNames(classMap.textInput, inputClassName)}
+          className={combineClassNames(classMap.input, inputClassName)}
           data-testid={`${resolvedTestId}-input`}
         />
       </div>
       {helperText ? (
-        <div id={helperTextId} className={classMap.helperText}>
+        <div
+          id={helperTextId}
+          className={combineClassNames(
+            classMap.helperText,
+            helperTextClassName,
+          )}
+        >
           {helperText}
         </div>
       ) : null}
       {errorMessage ? (
-        <div id={errorMessageId} className={classMap.errorMessage} role="alert">
+        <div
+          id={errorMessageId}
+          className={combineClassNames(
+            classMap.errorMessage,
+            errorMessageClassName,
+          )}
+          role="alert"
+        >
           {errorMessage}
         </div>
       ) : null}

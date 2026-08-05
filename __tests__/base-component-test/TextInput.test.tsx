@@ -17,8 +17,11 @@ const mockStyles = {
   labelBottom: "labelBottom",
   fullWidth: "fullWidth",
   textInput: "textInput",
+  input: "input",
   iconContainer: "iconContainer",
   togglePassword: "togglePassword",
+  helperText: "helperText",
+  errorMessage: "errorMessage",
   srOnly: "srOnly",
   primary: "primary",
   secondary: "secondary",
@@ -501,7 +504,7 @@ describe("TextInputBase", () => {
       "custom-icon",
     );
     expect(screen.getByTestId("text-input-input")).toHaveClass(
-      "textInput",
+      "input",
       "custom-input",
     );
     expect(screen.getByTestId("text-input-password-toggle")).toHaveClass(
@@ -511,6 +514,32 @@ describe("TextInputBase", () => {
     expect(screen.getByTestId("text-input-sr-only-text")).toHaveClass(
       "sr_only",
       "custom-sr-only",
+    );
+  });
+
+  it("renders FormField-style helper and error content with custom classes", () => {
+    render(
+      <TextInputBase
+        classMap={mockStyles}
+        IconButton={IconButton}
+        helperText="Use your work email"
+        errorMessage="Email is required"
+        helperTextClassName="custom-helper"
+        errorMessageClassName="custom-error"
+      />,
+    );
+
+    const input = screen.getByTestId("text-input-input");
+    const helper = screen.getByTestId("text-input-helper-text");
+    const error = screen.getByTestId("text-input-error-message");
+
+    expect(helper).toHaveClass("helperText", "custom-helper");
+    expect(error).toHaveClass("errorMessage", "custom-error");
+    expect(error).toHaveAttribute("role", "alert");
+    expect(input).toHaveAttribute("aria-invalid", "true");
+    expect(input).toHaveAttribute(
+      "aria-describedby",
+      `${helper.id} ${error.id}`,
     );
   });
 

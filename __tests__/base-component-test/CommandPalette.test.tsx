@@ -350,6 +350,7 @@ describe("CommandPaletteBase", () => {
 
     const options = screen.getAllByRole("option");
     expect(options[0]).toHaveAttribute("aria-selected", "false");
+    expect(options[0]).toHaveClass("disabled");
     expect(options[1]).toHaveAttribute("aria-selected", "true");
   });
 

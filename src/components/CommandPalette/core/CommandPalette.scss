@@ -157,6 +157,31 @@
     }
   }
 
+  .command_palette_label {
+    align-self: stretch;
+    color: inherit;
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+  }
+
+  .command_palette_item_label {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .command_palette_item.command_palette_disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    color: var(--disabled-text-color, currentcolor);
+    background: transparent;
+    user-select: none;
+  }
+
+  .command_palette_item.command_palette_disabled:hover {
+    background: transparent;
+  }
+
   .command_palette_icon {
     flex-shrink: 0;
   }

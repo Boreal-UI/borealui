@@ -63,6 +63,12 @@ export interface TextInputProps extends NativeInputProps {
   /** Additional class names for the password toggle button. */
   togglePasswordClassName?: string;
 
+  /** Additional class names for the helper text. */
+  helperTextClassName?: string;
+
+  /** Additional class names for the validation error message. */
+  errorMessageClassName?: string;
+
   /** Additional class names for the screen-reader-only text. */
   srOnlyClassName?: string;
 
@@ -237,8 +243,11 @@ export interface TextInputProps extends NativeInputProps {
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
   invalid?: boolean;
-  helperText?: import("react").ReactNode;
-  errorMessage?: import("react").ReactNode;
+  /** Supporting text associated with the input through aria-describedby. */
+  helperText?: ReactNode;
+
+  /** Validation message associated with the input and announced as an alert. */
+  errorMessage?: ReactNode;
   size?: import("@/types/types").SizeType;
   autoComplete?: string;
 }

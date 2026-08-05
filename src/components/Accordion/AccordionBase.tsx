@@ -191,6 +191,16 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
     [classMap, isExpanded],
   );
 
+  const icon = (
+    <span
+      className={iconClassName}
+      aria-hidden="true"
+      data-testid={testId ? `${testId}-icon` : undefined}
+    >
+      {renderedIcon}
+    </span>
+  );
+
   return (
     <div {...rest} className={wrapperClassName}>
       <button
@@ -209,15 +219,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         disabled={disabled}
         data-testid={testId ? `${testId}-accordion-toggle` : undefined}
       >
-        {iconPosition === "left" && (
-          <span
-            className={iconClassName}
-            aria-hidden="true"
-            data-testid={testId ? `${testId}-icon` : undefined}
-          >
-            {renderedIcon}
-          </span>
-        )}
+        {iconPosition === "left" ? icon : null}
 
         <span
           className={classMap.title}
@@ -226,15 +228,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
           {title}
         </span>
 
-        {iconPosition === "right" && (
-          <span
-            className={iconClassName}
-            aria-hidden="true"
-            data-testid={testId ? `${testId}-icon` : undefined}
-          >
-            {renderedIcon}
-          </span>
-        )}
+        {iconPosition === "right" ? icon : null}
       </button>
 
       {description && (

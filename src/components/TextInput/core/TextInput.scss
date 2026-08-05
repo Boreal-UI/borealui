@@ -6,9 +6,10 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  @include control-sizes.variants(".textInput", (".textInput"));
+  @include control-sizes.variants(".textInput", (".textInput_input"));
 
   .textInput {
+    grid-area: control;
     box-sizing: border-box;
     display: inline-flex;
     justify-content: space-between;
@@ -37,11 +38,16 @@
     }
 
     &_container {
-      display: flex;
+      display: grid;
       gap: var(--spacing-xs);
       width: fit-content;
-      align-items: center;
-      justify-content: flex-start;
+      min-width: 0;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        "label"
+        "control"
+        "helper"
+        "error";
 
       &.textInput_fullWidth {
         width: 100%;
@@ -49,6 +55,7 @@
     }
 
     &_label {
+      grid-area: label;
       font-family: var(--font-family-ui);
       font-size: var(--font-size-label);
       font-weight: var(--font-weight-label);
@@ -58,26 +65,42 @@
     }
 
     &_labelTop {
-      flex-direction: column;
-      align-items: flex-start;
+      grid-template-areas:
+        "label"
+        "control"
+        "helper"
+        "error";
     }
 
     &_labelBottom {
-      flex-direction: column-reverse;
-      align-items: flex-start;
+      grid-template-areas:
+        "control"
+        "label"
+        "helper"
+        "error";
     }
 
-    &_labelLeft {
-      flex-direction: row;
-      align-items: center;
+    &_labelLeft,
+    &_labelRight {
+      grid-template-columns: max-content minmax(0, 1fr);
+      grid-template-areas:
+        "label control"
+        ". helper"
+        ". error";
+      align-items: start;
+      column-gap: var(--spacing-sm);
+      row-gap: var(--spacing-xs);
     }
 
     &_labelRight {
-      flex-direction: row-reverse;
-      align-items: center;
+      grid-template-columns: minmax(0, 1fr) fit-content;
+      grid-template-areas:
+        "control label"
+        "helper ."
+        "error .";
     }
 
-    input {
+    &_input {
       width: 100%;
       padding: var(--spacing-sm);
       border: none;
@@ -189,6 +212,39 @@
         border: none;
       }
     }
+
+    &_helperText,
+    &_errorMessage {
+      min-width: 0;
+      font-size: var(--font-size-caption);
+      line-height: var(--line-height-caption);
+      overflow-wrap: anywhere;
+    }
+
+    &_helperText {
+      grid-area: helper;
+    }
+
+    &_errorMessage {
+      grid-area: error;
+      color: var(--error-color, #b00020);
+    }
+  }
+
+  .textInput_container[data-state="warning"] .textInput_helperText {
+    color: var(--warning-color, #8a5a00);
+  }
+
+  .textInput_container[data-state="info"] .textInput_helperText {
+    color: var(--info-color, #0057b8);
+  }
+
+  .textInput_container[data-state="success"] .textInput_helperText {
+    color: var(--success-color, #0a6b35);
+  }
+
+  .textInput_container[data-disabled="true"] {
+    opacity: 0.6;
   }
 
   @each $themeName, $vals in theme.$themes {
@@ -268,10 +324,9 @@
 
   .textInput_disabled {
     cursor: not-allowed;
-    opacity: 0.6;
     background-color: var(--disabled-color);
 
-    input {
+    .textInput_input {
       cursor: not-allowed;
     }
 
@@ -284,7 +339,7 @@
     .textInput_round-#{$key} {
       border-radius: $value;
 
-      input {
+      .textInput_input {
         border-radius: $value;
       }
     }

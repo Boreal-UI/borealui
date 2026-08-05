@@ -22,6 +22,8 @@ export type ServerCardProps = Omit<
   | "selectable"
   | "selected"
   | "useIconButtons"
+  | "onClick"
+  | "onKeyDown"
 > & {
   footer?: React.ReactNode;
 };

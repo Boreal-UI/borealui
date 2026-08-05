@@ -48,6 +48,8 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       iconClassName,
       inputClassName,
       togglePasswordClassName,
+      helperTextClassName,
+      errorMessageClassName,
       srOnlyClassName,
       srOnlyText,
       "data-testid": dataTestId,
@@ -131,7 +133,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         : "password"
       : typeProp || "text";
 
-    const isError = state === "error";
+    const isError = state === "error" || Boolean(errorMessage);
 
     const computedAutoComplete = autoComplete;
 
@@ -186,15 +188,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       ],
     );
 
-    const inputClasses = useMemo(
-      () =>
-        combineClassNames(
-          classMap.textInput,
-          (variant === "outline" || variant === "glassOutline") &&
-            classMap.outline,
-        ),
-      [classMap, variant],
-    );
+    const inputClasses = classMap.input;
 
     const iconClasses = useMemo(
       () =>
@@ -208,7 +202,12 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
     );
 
     return (
-      <div className={containerClass} data-testid={testId}>
+      <div
+        className={containerClass}
+        data-state={isError ? "error" : state || undefined}
+        data-disabled={disabled || undefined}
+        data-testid={testId}
+      >
         {label && (
           <label
             htmlFor={inputId}
@@ -290,7 +289,10 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         {helperText && (
           <div
             id={helperTextId}
-            className={classMap.helperText}
+            className={combineClassNames(
+              classMap.helperText,
+              helperTextClassName,
+            )}
             data-testid={`${testId}-helper-text`}
           >
             {helperText}
@@ -299,8 +301,11 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         {errorMessage && (
           <div
             id={errorMessageId}
-            className={classMap.errorMessage}
-            role={computedAriaInvalid ? "alert" : undefined}
+            className={combineClassNames(
+              classMap.errorMessage,
+              errorMessageClassName,
+            )}
+            role="alert"
             data-testid={`${testId}-error-message`}
           >
             {errorMessage}

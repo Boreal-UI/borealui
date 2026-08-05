@@ -9,10 +9,13 @@ const classes = {
   overlay: "command_palette_overlay",
   command_palette: "command_palette",
   input: "command_palette_input",
+  label: "command_palette_label",
   list: "command_palette_list",
   item: "command_palette_item",
+  itemLabel: "command_palette_item_label",
   icon: "command_palette_icon",
   active: "command_palette_active",
+  disabled: "command_palette_disabled",
   empty: "command_palette_empty",
 
   primary: "command_palette_primary",

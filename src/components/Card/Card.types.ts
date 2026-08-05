@@ -1,4 +1,10 @@
-import type { AnchorHTMLAttributes, AriaRole, ReactNode } from "react";
+import type {
+  AnchorHTMLAttributes,
+  AriaRole,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  ReactNode,
+} from "react";
 import { IconType } from "react-icons";
 import {
   BorderType,
@@ -413,6 +419,12 @@ export interface CardProps {
 
   /** Optional tabindex for keyboard navigation scenarios. */
   tabIndex?: number;
+
+  /** Handles pointer activation when the card is interactive. */
+  onClick?: MouseEventHandler<HTMLDivElement>;
+
+  /** Handles keyboard input before the card's default activation behavior. */
+  onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
 
   /** Optional ARIA label reference ID for accessibility. */
   "aria-labelledby"?: string;

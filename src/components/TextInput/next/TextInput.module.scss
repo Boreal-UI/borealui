@@ -6,14 +6,19 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  @include control-sizes.variants(".textInput", (".textInput"), ".");
+  @include control-sizes.variants(".textInput", (".input"), ".");
 
   .container {
-    display: flex;
+    display: grid;
     gap: var(--spacing-xs);
     width: fit-content;
-    align-items: center;
-    justify-content: flex-start;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "label"
+      "control"
+      "helper"
+      "error";
 
     &.fullWidth {
       width: 100%;
@@ -21,6 +26,7 @@
   }
 
   .label {
+    grid-area: label;
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-label);
@@ -30,30 +36,46 @@
   }
 
   .labelTop {
-    flex-direction: column;
-    align-items: flex-start;
+    grid-template-areas:
+      "label"
+      "control"
+      "helper"
+      "error";
   }
 
   .labelBottom {
-    flex-direction: column-reverse;
-    align-items: flex-start;
+    grid-template-areas:
+      "control"
+      "label"
+      "helper"
+      "error";
   }
 
-  .labelLeft {
-    flex-direction: row;
-    align-items: center;
+  .labelLeft,
+  .labelRight {
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-areas:
+      "label control"
+      ". helper"
+      ". error";
+    align-items: start;
+    column-gap: var(--spacing-sm);
+    row-gap: var(--spacing-xs);
   }
 
   .labelRight {
-    flex-direction: row-reverse;
-    align-items: center;
+    grid-template-columns: minmax(0, 1fr) fit-content;
+    grid-template-areas:
+      "control label"
+      "helper ."
+      "error .";
   }
 
   @each $k, $v in theme.$rounding {
     .round#{$k} {
       border-radius: $v;
 
-      input {
+      .input {
         border-radius: $v;
       }
     }
@@ -66,6 +88,7 @@
   }
 
   .textInput {
+    grid-area: control;
     display: inline-flex;
     justify-content: space-between;
     align-items: center;
@@ -105,7 +128,7 @@
       max-width: none;
     }
 
-    input {
+    .input {
       width: 100%;
       padding: var(--spacing-sm);
       border: none;
@@ -282,10 +305,9 @@
 
   .disabled {
     cursor: not-allowed;
-    opacity: 0.6;
     background-color: var(--disabled-color);
 
-    input {
+    .input {
       cursor: not-allowed;
     }
 
@@ -296,6 +318,39 @@
     .textInput {
       background-color: transparent;
     }
+  }
+
+  .helperText,
+  .errorMessage {
+    min-width: 0;
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+    overflow-wrap: anywhere;
+  }
+
+  .helperText {
+    grid-area: helper;
+  }
+
+  .errorMessage {
+    grid-area: error;
+    color: var(--error-color, #b00020);
+  }
+
+  .container[data-state="warning"] .helperText {
+    color: var(--warning-color, #8a5a00);
+  }
+
+  .container[data-state="info"] .helperText {
+    color: var(--info-color, #0057b8);
+  }
+
+  .container[data-state="success"] .helperText {
+    color: var(--success-color, #0a6b35);
+  }
+
+  .container[data-disabled="true"] {
+    opacity: 0.6;
   }
 
   @media (prefers-reduced-motion: reduce) {
