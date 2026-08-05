@@ -42,7 +42,7 @@ export default function ValidationSummary({
   emptyMessage,
   listLabel = "Validation issues",
   theme = getDefaultTheme(),
-  state = "error",
+  state,
   variant = getDefaultVariant(),
   rounding = getDefaultRounding(),
   shadow,
@@ -244,10 +244,7 @@ export default function ValidationSummary({
         {srOnlyText ? (
           <span
             id={srDescriptionId}
-            className={combineClassNames(
-              "sr_only",
-              srOnlyClassName,
-            )}
+            className={combineClassNames("sr_only", srOnlyClassName)}
           >
             {srOnlyText}
           </span>
