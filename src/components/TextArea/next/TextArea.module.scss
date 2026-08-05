@@ -6,7 +6,7 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  @include control-sizes.variants(".textArea", (".textArea_text_input"));
+  @include control-sizes.variants(".textArea", (".textInput"), ".");
 
   .container {
     display: flex;
@@ -273,8 +273,8 @@
       background: Canvas !important;
       color: CanvasText !important;
       border-color: ButtonText !important;
-      backdrop-filter: none;
       -webkit-backdrop-filter: none;
+      backdrop-filter: none;
     }
 
     .textArea {
