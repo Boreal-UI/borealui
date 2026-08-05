@@ -145,6 +145,19 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   );
   const resolvedDialogRole =
     dialogRole === "alertdialog" ? "alertdialog" : "dialog";
+  const closeButton = (
+    <IconButton
+      ref={closeBtnRef}
+      className={combineClassNames(classMap.close, closeButtonClassName)}
+      onClick={onClose}
+      aria-label={ariaLabelCloseButton}
+      icon={CloseIcon}
+      state="error"
+      size="small"
+      type="button"
+      data-testid={`${testId}-close`}
+    />
+  );
 
   return ReactDOM.createPortal(
     <div
@@ -167,7 +180,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
         onKeyDown={handleKeyDown}
         data-testid={`${testId}-dialog`}
       >
-        {title && (
+        {title ? (
           <div
             className={combineClassNames(classMap.header, headerClassName)}
             data-testid={`${testId}-header`}
@@ -180,35 +193,10 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
               {title}
             </h2>
 
-            <IconButton
-              ref={closeBtnRef}
-              className={combineClassNames(
-                classMap.close,
-                closeButtonClassName,
-              )}
-              onClick={onClose}
-              aria-label={ariaLabelCloseButton}
-              icon={CloseIcon}
-              state="error"
-              size="small"
-              type="button"
-              data-testid={`${testId}-close`}
-            />
+            {closeButton}
           </div>
-        )}
-
-        {!title && (
-          <IconButton
-            ref={closeBtnRef}
-            className={combineClassNames(classMap.close, closeButtonClassName)}
-            onClick={onClose}
-            aria-label={ariaLabelCloseButton}
-            icon={CloseIcon}
-            state="error"
-            size="small"
-            type="button"
-            data-testid={`${testId}-close`}
-          />
+        ) : (
+          closeButton
         )}
 
         <div

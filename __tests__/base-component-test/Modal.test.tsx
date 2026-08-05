@@ -134,6 +134,18 @@ describe("BaseModal", () => {
     expect(srHeading).toHaveClass("sr_only");
   });
 
+  it("renders one floating close button when the header is omitted", async () => {
+    renderModal({ title: null, "aria-label": "Untitled modal" });
+
+    await screen.findByRole("dialog", { name: "Untitled modal" });
+
+    expect(screen.queryByTestId("modal-header")).not.toBeInTheDocument();
+    expect(screen.getAllByTestId("modal-close")).toHaveLength(1);
+    expect(screen.getByTestId("modal-close")).toHaveClass(
+      "closeButtonFloating",
+    );
+  });
+
   it("uses ariaLabel when provided and does not require fallback heading labelling", async () => {
     renderModal({
       "aria-label": "Custom Modal Label",

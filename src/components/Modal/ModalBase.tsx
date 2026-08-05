@@ -187,6 +187,28 @@ const BaseModal: React.FC<BaseModalProps> = ({
     ariaLabelledBy ?? (!ariaLabel && hasHeader ? fallbackLabelId : undefined);
 
   const shouldRenderFallbackLabel = resolvedAriaLabelledBy === fallbackLabelId;
+  const closeButton = (
+    <IconButton
+      ref={closeBtnRef}
+      className={combineClassNames(
+        hasHeader
+          ? classMap.closeButton
+          : (classMap.closeButtonFloating ?? classMap.closeButton),
+        closeButtonClassName,
+      )}
+      state="error"
+      size="small"
+      icon={CloseIcon}
+      aria-label={closeButtonAriaLabel}
+      onClick={(e: React.MouseEvent) => {
+        e.stopPropagation();
+        handleClose();
+      }}
+      title="Close"
+      data-testid={`${testId}-close`}
+      type="button"
+    />
+  );
 
   return ReactDOM.createPortal(
     <div
@@ -220,7 +242,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
           </h2>
         )}
 
-        {hasHeader && (
+        {hasHeader ? (
           <div
             className={combineClassNames(classMap.header, headerClassName)}
             data-testid={`${testId}-header`}
@@ -240,46 +262,10 @@ const BaseModal: React.FC<BaseModalProps> = ({
               )}
             </div>
 
-            <IconButton
-              ref={closeBtnRef}
-              className={combineClassNames(
-                classMap.closeButton,
-                closeButtonClassName,
-              )}
-              state="error"
-              size="small"
-              icon={CloseIcon}
-              aria-label={closeButtonAriaLabel}
-              onClick={(e: React.MouseEvent) => {
-                e.stopPropagation();
-                handleClose();
-              }}
-              title="Close"
-              data-testid={`${testId}-close`}
-              type="button"
-            />
+            {closeButton}
           </div>
-        )}
-
-        {!hasHeader && (
-          <IconButton
-            ref={closeBtnRef}
-            className={combineClassNames(
-              classMap.closeButtonFloating ?? classMap.closeButton,
-              closeButtonClassName,
-            )}
-            state="error"
-            size="small"
-            icon={CloseIcon}
-            aria-label={closeButtonAriaLabel}
-            onClick={(e: React.MouseEvent) => {
-              e.stopPropagation();
-              handleClose();
-            }}
-            title="Close"
-            data-testid={`${testId}-close`}
-            type="button"
-          />
+        ) : (
+          closeButton
         )}
 
         <div
