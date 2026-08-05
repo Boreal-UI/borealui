@@ -146,8 +146,8 @@
   .content > input::placeholder,
   .content > select::placeholder,
   .content > textarea::placeholder {
-    color: currentcolor;
-    opacity: 0.78;
+    color: var(--text-color-placeholder);
+    opacity: 1;
   }
 
   .prefix,

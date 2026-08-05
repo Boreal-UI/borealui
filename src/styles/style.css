@@ -481,6 +481,7 @@
     --text-color: rgb(255, 255, 255);
     --text-color-light: hsl(0, 0%, 120%);
     --text-color-lighter: hsl(0, 0%, 140%);
+    --text-color-placeholder: var(--text-color);
     /* ================================
        LINK COLORS
     ================================== */
@@ -778,6 +779,11 @@
     font-weight: var(--font-weight-label);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
+  }
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-color-placeholder);
+    opacity: 1;
   }
   small {
     font-size: var(--font-size-caption);

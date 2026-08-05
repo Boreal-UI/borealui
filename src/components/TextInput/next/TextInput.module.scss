@@ -184,6 +184,7 @@
   input::placeholder {
     color: var(--text-color-placeholder);
     font: inherit;
+    opacity: 1;
   }
 
   @each $themeName, $vals in theme.$themes {

@@ -386,6 +386,7 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     forceTextColor,
   } = scheme;
   const pageTextColor = getReadableColor(backgroundColor, forceTextColor);
+  const mutedTextColor = getReadableMutedColor(backgroundColor, pageTextColor);
   const primaryTextColor = getReadableColor(primaryColor, forceTextColor);
   const secondaryTextColor = getReadableColor(secondaryColor);
   const tertiaryTextColor = getReadableColor(tertiaryColor);
@@ -402,11 +403,9 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     "--text-color-primary": primaryTextColor,
     "--text-color-primary-contrast": pageTextColor,
     "--text-color": pageTextColor,
-    "--text-color-light": getReadableMutedColor(backgroundColor, pageTextColor),
-    "--text-color-lighter": getReadableMutedColor(
-      backgroundColor,
-      pageTextColor,
-    ),
+    "--text-color-light": mutedTextColor,
+    "--text-color-lighter": mutedTextColor,
+    "--text-color-placeholder": mutedTextColor,
     "--secondary-color": secondaryColor,
     "--secondary-color-light": adjustLightness(secondaryColor, 10),
     "--secondary-color-hover": getAccessibleInteractiveColor(

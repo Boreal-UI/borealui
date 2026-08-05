@@ -146,8 +146,8 @@
   .inputGroup_content > input::placeholder,
   .inputGroup_content > select::placeholder,
   .inputGroup_content > textarea::placeholder {
-    color: currentcolor;
-    opacity: 0.78;
+    color: var(--text-color-placeholder);
+    opacity: 1;
   }
 
   .inputGroup_prefix,

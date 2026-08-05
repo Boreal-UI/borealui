@@ -341,6 +341,12 @@ describe("ThemeProvider", () => {
       contrastRatio(vars["--background-color"], vars["--text-color"]),
     ).toBeGreaterThanOrEqual(4.5);
     expect(
+      contrastRatio(
+        vars["--background-color"],
+        vars["--text-color-placeholder"],
+      ),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
       contrastRatio(vars["--primary-color"], vars["--text-color-primary"]),
     ).toBeGreaterThanOrEqual(4.5);
     expect(
@@ -357,6 +363,40 @@ describe("ThemeProvider", () => {
     ).toBeGreaterThanOrEqual(4.5);
     expect(
       contrastRatio(vars["--background-color"], vars["--link-hover-color"]),
+    ).toBeGreaterThanOrEqual(4.5);
+  });
+
+  it("adapts placeholder text to light and dark theme backgrounds", () => {
+    const baseScheme = {
+      name: "Placeholder contrast",
+      primaryColor: "#336699",
+      secondaryColor: "#993366",
+      tertiaryColor: "#669933",
+      quaternaryColor: "#cc9933",
+    };
+    const lightVars = buildThemeVariables({
+      ...baseScheme,
+      backgroundColor: "#ffffff",
+    });
+    const darkVars = buildThemeVariables({
+      ...baseScheme,
+      backgroundColor: "#101820",
+    });
+
+    expect(lightVars["--text-color-placeholder"]).not.toBe(
+      darkVars["--text-color-placeholder"],
+    );
+    expect(
+      contrastRatio(
+        lightVars["--background-color"],
+        lightVars["--text-color-placeholder"],
+      ),
+    ).toBeGreaterThanOrEqual(4.5);
+    expect(
+      contrastRatio(
+        darkVars["--background-color"],
+        darkVars["--text-color-placeholder"],
+      ),
     ).toBeGreaterThanOrEqual(4.5);
   });
 

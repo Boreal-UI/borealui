@@ -115,8 +115,8 @@
   }
 
   .combobox_input::placeholder {
-    color: inherit;
-    opacity: 0.6;
+    color: var(--text-color-placeholder);
+    opacity: 1;
   }
 
   .combobox_input:focus {

@@ -236,9 +236,10 @@
     }
   }
 
-  input::placeholder {
+  textarea::placeholder {
     color: var(--text-color-placeholder);
     font: inherit;
+    opacity: 1;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -229,6 +229,7 @@
   input::placeholder {
     color: var(--text-color-placeholder);
     font: inherit;
+    opacity: 1;
   }
 
   .textInput_container[data-state="warning"] .textInput_helperText {

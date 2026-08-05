@@ -500,6 +500,12 @@
     letter-spacing: var(--letter-spacing-label);
   }
 
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-color-placeholder);
+    opacity: 1;
+  }
+
   small {
     font-size: var(--font-size-caption);
     line-height: var(--line-height-caption);
