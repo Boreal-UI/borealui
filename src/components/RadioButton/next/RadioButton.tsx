@@ -7,7 +7,9 @@ import styles from "./RadioButton.module.scss";
 import { RadioButtonProps } from "../RadioButton.types";
 
 const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
-  (props, ref) => <BaseRadioButton {...props} ref={ref} classMap={expandClassMap(styles)} />
+  (props, ref) => (
+    <BaseRadioButton {...props} ref={ref} classMap={expandClassMap(styles)} />
+  ),
 );
 
 RadioButton.displayName = "RadioButton";

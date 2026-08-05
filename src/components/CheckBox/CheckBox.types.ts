@@ -1,10 +1,4 @@
-import {
-  RoundingType,
-  ShadowType,
-  SizeType,
-  StateType,
-  ThemeType,
-} from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import { InputHTMLAttributes, ReactNode } from "react";
 
 /**
@@ -53,15 +47,6 @@ export interface CheckBoxProps extends Omit<
    * @default configured default rounding (fallback: "medium")
    */
   rounding?: RoundingType;
-
-  /**
-   * Size of the checkbox
-   * ('xs' | 'small' | 'medium' | 'large' | 'xl').
-   *
-   * @default configured default size (fallback: "medium")
-   */
-  size?: SizeType;
-
   /**
    * Controls the shadow of the checkbox
    * ('none' | 'light' | 'medium' | 'strong' | 'intense').
@@ -69,14 +54,12 @@ export interface CheckBoxProps extends Omit<
    * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
-
   /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Whether the checkbox is disabled.
    *
@@ -98,13 +81,6 @@ export interface CheckBoxProps extends Omit<
    * @default false
    */
   invalid?: boolean;
-
-  /**
-   * Visible helper text rendered below or beside the checkbox.
-   * Should provide extra guidance for the user.
-   */
-  description?: ReactNode;
-
   /**
    * Visible error message rendered for invalid state.
    * This can also be referenced by assistive technologies.
@@ -178,6 +154,8 @@ export interface CheckBoxProps extends Omit<
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+  helperText?: import("react").ReactNode;
+  size?: import("@/types/types").SizeType;
 }
 
 export interface CheckBoxBaseProps extends CheckBoxProps {

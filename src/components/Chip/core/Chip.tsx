@@ -34,7 +34,6 @@ const classes = {
   warning: "chip_warning",
 
   clear: "chip_clear",
-  glass: "chip_glass",
 
   xs: "chip_xs",
   small: "chip_small",
@@ -52,6 +51,7 @@ const classes = {
   roundSmall: "chip_round-Small",
   roundMedium: "chip_round-Medium",
   roundLarge: "chip_round-Large",
+  glass: "chip_glass",
 };
 
 const Chip: React.FC<ChipProps> = (props) => (

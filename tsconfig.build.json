@@ -26,6 +26,7 @@
     "src/utils",
     "src/styles",
     "src/types",
+    "src/docs",
     "src/generated-docs"
   ],
   "exclude": [

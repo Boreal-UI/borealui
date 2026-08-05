@@ -31,7 +31,7 @@
  *    - Applied via `.sr_only` and `:global(.sr_only)`
  *
  * Dependencies:
- * - Resets: `modern-css-reset`
+ * - Resets: Boreal's framework-safe reset
  * - SCSS Modules: `theme`, `animations`, `breakpoints`
  * - Sass Color Utilities: `sass:color`
  *
@@ -45,8 +45,12 @@
 @use "_animations" as animations;
 @use "_breakpoints" as breakpoints;
 @use "_mixins" as mixins;
+@use "_reset" as reset;
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
-@import "modern-css-reset/dist/reset.css" layer(boreal-ui.reset);
+
+@layer boreal-ui.reset {
+  @include reset.apply-reset;
+}
 
 @layer boreal-ui.base {
   :root {
@@ -158,6 +162,7 @@
     --text-color: #{theme.$text-color};
     --text-color-light: #{theme.$text-color-light};
     --text-color-lighter: #{theme.$text-color-lighter};
+    --text-color-placeholder: #{theme.$text-color-placeholder};
 
     /* ================================
      LINK COLORS
@@ -240,6 +245,19 @@
      FOCUS & INTERACTION
   ================================== */
     --focus-outline-color: var(--text-color-primary);
+    --ease-out: #{theme.$ease-out};
+    --ease-in-out: #{theme.$ease-in-out};
+    --ease-drawer: #{theme.$ease-drawer};
+    --motion-press: 140ms var(--ease-out);
+    --motion-tooltip: 150ms var(--ease-out);
+    --motion-popover: 180ms var(--ease-out);
+    --motion-modal: 220ms var(--ease-out);
+    --motion-drawer: 260ms var(--ease-drawer);
+    --motion-exit: 160ms var(--ease-out);
+    --motion-color: 160ms ease;
+    --transition-fast: var(--motion-press);
+    --transition-default: var(--motion-popover);
+    --transition-slow: 240ms var(--ease-in-out);
 
     /* ===========================
      Spacing Scale
@@ -480,6 +498,12 @@
     font-weight: var(--font-weight-label);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--text-color-placeholder);
+    opacity: 1;
   }
 
   small {

@@ -128,3 +128,9 @@ import DataTable from "@boreal-ui/next/DataTable";
 Set `enableThemeScript={false}` when the app already applies server-generated theme attributes. With the option disabled, ThemeProvider does not generate or render the pre-hydration script. The Next provider defaults this option to `false`; the core provider defaults it to `true`.
 
 See [Styling and Theming](./styling-and-theming.md) for SSR setup and theme persistence options.
+
+## Next.js Scroll Restoration
+
+Boreal globals do not set smooth scrolling on the root element, leaving `scroll-behavior` at the browser default (`auto`). This allows Next.js to manage scroll position during route transitions and avoids requiring `data-scroll-behavior` on `<html>` merely because Boreal's global stylesheet is imported.
+
+Applications can still opt into smooth root scrolling. When doing so in Next.js, add `data-scroll-behavior="smooth"` to the root `<html>` element so the framework can temporarily disable smooth scrolling during navigation.

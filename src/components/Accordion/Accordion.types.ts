@@ -12,7 +12,7 @@ import {
  */
 export interface AccordionProps extends Omit<
   HTMLAttributes<HTMLDivElement>,
-  "title" | "children" | "onToggle"
+  "title" | "children" | "onExpandedChange"
 > {
   /**
    * The title text displayed in the accordion header.
@@ -69,22 +69,13 @@ export interface AccordionProps extends Omit<
    *
    * @default false
    */
-  initiallyExpanded?: boolean;
-
+  defaultExpanded?: boolean;
   /**
-   * If true, applies an outline style to the accordion.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * If true, disables user interaction and styles the accordion as disabled.
    */
@@ -105,7 +96,7 @@ export interface AccordionProps extends Omit<
    * Callback triggered when the accordion header is toggled.
    * Receives the new expanded state.
    */
-  onToggle?: (expanded: boolean) => void;
+  onExpandedChange?: (expanded: boolean) => void;
 
   /**
    * If true, the accordion content is loaded asynchronously.
@@ -119,7 +110,7 @@ export interface AccordionProps extends Omit<
    *
    * @default false
    */
-  "no-collapse"?: boolean;
+  disableCollapse?: boolean;
 
   /**
    * Custom icon to display when the accordion is expanded.
@@ -196,7 +187,6 @@ export interface AccordionProps extends Omit<
    * Leave undefined in most cases.
    */
   role?: HTMLAttributes<HTMLDivElement>["role"];
-
 
   /**
    * Optional test ID for testing frameworks.

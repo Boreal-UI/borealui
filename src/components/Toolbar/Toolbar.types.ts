@@ -11,8 +11,8 @@ import { AvatarProps } from "../Avatar/Avatar.types";
 /**
  * Props for the ToolbarBase component (unstyled, internal implementation).
  * Extends ToolbarProps with internal utility/customization props.
-   * @default configured default theme (fallback: "primary")
-   */
+ * @default configured default theme (fallback: "primary")
+ */
 export interface ToolbarBaseProps extends ToolbarProps {
   /**
    * The Avatar component to use for rendering the toolbar avatar.
@@ -98,18 +98,6 @@ export interface ToolbarProps {
      * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
      */
     theme?: ThemeType;
-
-    /**
-     * Whether the avatar has an outline.
-     */
-    outline?: boolean;
-
-    /**
-     * Whether the avatar should use its own glass styling.
-     * Defaults to the toolbar glass setting when omitted.
-     */
-    glass?: boolean;
-
     /**
      * Optional click handler for the avatar.
      */
@@ -120,6 +108,8 @@ export interface ToolbarProps {
      * or when its visual meaning is not otherwise conveyed.
      */
     "aria-label"?: string;
+    /** Avatar surface treatment; glassOutline combines glass and outline. */
+    variant?: import("@/types/types").VariantType;
   };
 
   /**
@@ -194,14 +184,12 @@ export interface ToolbarProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * How the toolbar attaches to the viewport or page layout.
    * "static" | "fixed" | "sticky"
@@ -271,7 +259,6 @@ export interface ToolbarProps {
    * @default "Toolbar right section"
    */
   rightAriaLabel?: string;
-
 
   /**
    * Optional test ID for testing frameworks.

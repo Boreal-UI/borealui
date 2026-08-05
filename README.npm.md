@@ -9,9 +9,9 @@ Use it when you want production-ready UI primitives that can be themed globally,
 - **Split React and Next.js packages:** install `@boreal-ui/core` for React apps or `@boreal-ui/next` for Next.js apps when you want only that build's runtime code.
 - **Deep component set:** buttons, forms, navigation, data display, feedback, overlays, layout primitives, and utility components.
 - **Theme system:** curated color schemes, custom schemes, runtime theme selection, CSS variables, and `ThemeSelect`.
-- **Global defaults:** configure default theme, size, rounding, shadow, border width, glass, outline, and color scheme once with `borealConfig`.
+- **Global defaults:** configure default theme, size, rounding, shadow, border width, surface variant, and color scheme once with `borealConfig`.
 - **Accessible by default:** semantic markup, ARIA support, keyboard behavior, visible focus states, disabled states, live announcements where useful, and predictable test IDs.
-- **Styling flexibility:** theme, state, size, rounding, shadow, outline, glass, custom class names, SCSS variables, and consumer CSS overrides.
+- **Styling flexibility:** theme, state, size, rounding, shadow, composable surface variants, custom class names, SCSS variables, and consumer CSS overrides.
 - **Typed public API:** TypeScript component props, shared type exports, and generated prop documentation objects for docs tooling.
 
 ## Installation
@@ -106,7 +106,13 @@ Static components can stay outside the client bundle by using the dedicated
 server entries:
 
 ```tsx
-import { Button, Container, ProgressBar, TextInput, Typography } from "@boreal-ui/next/server";
+import {
+  Button,
+  Container,
+  ProgressBar,
+  TextInput,
+  Typography,
+} from "@boreal-ui/next/server";
 import BarChart from "@boreal-ui/next/server/BarChart";
 ```
 
@@ -302,16 +308,15 @@ Use the scoped package that matches your framework; pre-alpha builds do not publ
 
 Many components share the same styling vocabulary:
 
-| Prop          | Values                                                    |
+| Prop          | Canonical values                                          |
 | ------------- | --------------------------------------------------------- |
 | `theme`       | `primary`, `secondary`, `tertiary`, `quaternary`, `clear` |
 | `state`       | `success`, `error`, `warning`, `disabled`, empty string   |
 | `size`        | `xs`, `small`, `medium`, `large`, `xl`                    |
-| `rounding`    | `none`, `small`, `medium`, `large`, `full`                |
+| `rounding`    | `none`, `small`, `medium`, `large`                        |
 | `shadow`      | `none`, `light`, `medium`, `strong`, `intense`            |
 | `borderWidth` | `none`, `xs`, `small`, `medium`, `large`, `xl`            |
-| `outline`     | outline treatment where supported                         |
-| `glass`       | translucent theme-aware surface where supported           |
+| `variant`     | `solid`, `outline`, `glass`, `glassOutline`               |
 | `className`   | consumer styling hook                                     |
 | `data-testid` | stable test selector                                      |
 
@@ -330,8 +335,7 @@ borealConfig({
   defaultRounding: "medium",
   defaultShadow: "light",
   defaultBorderWidth: "none",
-  defaultGlass: false,
-  defaultOutline: false,
+  defaultVariant: "solid",
   defaultColorSchemeName: "Forest Dusk",
 });
 ```
@@ -343,6 +347,8 @@ import { borealConfig } from "@boreal-ui/next";
 ```
 
 Component props still win over global defaults:
+
+Use `variant="glassOutline"` when both glass and outline treatments are wanted. `rounding="full"` is intentionally limited to components that support pill or circular rendering, and ColorPicker's `shape="pill"` remains component-specific. Short aliases such as `sm`, `md`, and `lg` are still supported for faster authoring.
 
 ```tsx
 <Button theme="primary" size="large" shadow="strong">

@@ -34,14 +34,14 @@ const classMap = {
   warning: "warning",
   error: "error",
   clear: "clear",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   shadowLight: "shadowLight",
   shadowStrong: "shadowStrong",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 const issues = [
@@ -146,8 +146,7 @@ describe("ValidationSummaryBase", () => {
     renderValidationSummary({
       theme: "secondary",
       state: "warning",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       rounding: "large",
       shadow: "strong",
     });

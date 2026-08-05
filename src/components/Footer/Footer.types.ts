@@ -1,10 +1,10 @@
-import React from "react";
 import {
   AttachmentType,
   RoundingType,
   ShadowType,
   ThemeType,
 } from "@/types/types";
+import React from "react";
 import { IconButtonProps } from "../IconButton/IconButton.types";
 import { ThemeSelectProps } from "../Select/Select.types";
 
@@ -190,14 +190,12 @@ export interface FooterProps extends Omit<
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Optional class name for custom styles.
    */

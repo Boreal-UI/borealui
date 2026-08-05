@@ -11,7 +11,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -29,12 +29,12 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
       size = getDefaultSize(),
       shadow,
       state,
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       disabled = false,
       required = false,
       invalid = false,
       label,
-      description,
+      helperText,
       errorMessage,
       labelPosition = "right",
       className,
@@ -61,8 +61,8 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
     const checkboxId = id || internalId;
 
     const labelId = label ? `${checkboxId}-label` : undefined;
-    const descriptionId = description ? `${checkboxId}-description` : undefined;
-    const errorId = errorMessage ? `${checkboxId}-error` : undefined;
+    const descriptionId = helperText ? `${checkboxId}-helperText` : undefined;
+    const errorId = errorMessage ? `${checkboxId}-errorMessage` : undefined;
 
     const inputRef = useRef<HTMLInputElement>(null);
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement);
@@ -85,7 +85,7 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
           rounding && classMap[`round${capitalize(rounding)}`],
           disabled && classMap.disabled,
           invalid && classMap.invalid,
-          glass && classMap.glass,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           className,
         ),
       [
@@ -98,7 +98,7 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
         rounding,
         disabled,
         invalid,
-        glass,
+        variant,
         className,
       ],
     );
@@ -112,6 +112,16 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
 
     const resolvedAriaErrorMessage = ariaErrorMessage ?? errorId;
 
+    const renderedLabel = label ? (
+      <span
+        className={combineClassNames(classMap.label, labelClassName)}
+        id={labelId}
+        data-testid={testId ? `${testId}-label` : undefined}
+      >
+        {label}
+      </span>
+    ) : null;
+
     return (
       <div
         className={combinedClassName}
@@ -124,15 +134,7 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
             labelWrapperClassName,
           )}
         >
-          {label && resolvedLabelPosition === "left" && (
-            <span
-              className={combineClassNames(classMap.label, labelClassName)}
-              id={labelId}
-              data-testid={testId ? `${testId}-label` : undefined}
-            >
-              {label}
-            </span>
-          )}
+          {resolvedLabelPosition === "left" ? renderedLabel : null}
 
           <input
             id={checkboxId}
@@ -166,27 +168,19 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
             data-testid={testId ? `${testId}-box` : undefined}
           />
 
-          {label && resolvedLabelPosition === "right" && (
-            <span
-              className={combineClassNames(classMap.label, labelClassName)}
-              id={labelId}
-              data-testid={testId ? `${testId}-label` : undefined}
-            >
-              {label}
-            </span>
-          )}
+          {resolvedLabelPosition === "right" ? renderedLabel : null}
         </label>
 
-        {description && (
+        {helperText && (
           <div
             id={descriptionId}
             className={combineClassNames(
               classMap.description,
               descriptionClassName,
             )}
-            data-testid={testId ? `${testId}-description` : undefined}
+            data-testid={testId ? `${testId}-helperText` : undefined}
           >
-            {description}
+            {helperText}
           </div>
         )}
 
@@ -197,7 +191,7 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
               classMap.errorMessage,
               errorMessageClassName,
             )}
-            data-testid={testId ? `${testId}-error` : undefined}
+            data-testid={testId ? `${testId}-errorMessage` : undefined}
           >
             {errorMessage}
           </div>

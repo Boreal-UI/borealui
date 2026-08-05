@@ -132,10 +132,6 @@
     font-weight: var(--font-weight-body);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
-    transition:
-      background-color var(--transition-default),
-      transform var(--transition-default),
-      box-shadow var(--transition-default);
 
     @include bp.down(sm) {
       padding: var(--spacing-xs);
@@ -153,19 +149,25 @@
 
     &:hover {
       background-color: var(--background-color);
-      transform: translateY(-1px);
-      box-shadow: var(--box-shadow-light);
-
-      @include bp.down(sm) {
-        transform: none;
-        box-shadow: none;
-      }
     }
 
     &:focus-visible {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 3px;
     }
+  }
+
+  .label {
+    align-self: stretch;
+    color: inherit;
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+  }
+
+  .itemLabel {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .icon {
@@ -210,6 +212,15 @@
       }
     }
 
+    .glass {
+      @include mixins.glass-surface(
+        var(--command-palette-glass-bg, rgba(255, 255, 255, 0.16)),
+        var(--command-palette-glass-border, rgba(255, 255, 255, 0.28)),
+        18px
+      );
+      color: inherit;
+    }
+
     .item.#{$name}.active {
       background-color: map.get($values, bg);
       color: if(
@@ -237,6 +248,15 @@
       }
     }
 
+    .glass {
+      @include mixins.glass-surface(
+        var(--background-color, rgba(255, 255, 255, 0.16)),
+        var(--command-palette-glass-border, rgba(255, 255, 255, 0.28)),
+        18px
+      );
+      color: inherit;
+    }
+
     .item.#{$name}.active {
       background-color: map.get($values, bg);
       color: var(--text-color-primary);
@@ -247,15 +267,6 @@
     }
   }
 
-  .glass {
-    @include mixins.glass-surface(
-      var(--command-palette-glass-bg, rgba(255, 255, 255, 0.16)),
-      var(--command-palette-glass-border, rgba(255, 255, 255, 0.28)),
-      18px
-    );
-    color: inherit;
-  }
-
   .glass .item:hover,
   .glass .active {
     background-color: var(
@@ -263,6 +274,20 @@
       rgba(255, 255, 255, 0.22)
     );
     color: inherit;
+  }
+
+  .item.disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    color: var(--disabled-text-color, currentcolor);
+    background: var(--disabled-color);
+    border-color: var(--disabled-color);
+    user-select: none;
+  }
+
+  .item.disabled:hover,
+  .item:disabled:hover {
+    background: var(--disabled-color);
   }
 
   .clear {

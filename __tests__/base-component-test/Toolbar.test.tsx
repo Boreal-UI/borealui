@@ -1,14 +1,12 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import ToolbarBase from "@/components/Toolbar/ToolbarBase";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { jest } from "@jest/globals";
 import { DummyAvatar } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 
 const mockStyles = {
   toolbar: "toolbar",
-  glass: "glass",
   section: "section",
   leftSection: "leftSection",
   centerSection: "centerSection",
@@ -36,6 +34,7 @@ const mockStyles = {
   roundLarge: "roundLarge",
   shadowLight: "shadowLight",
   shadowStrong: "shadowStrong",
+  glass: "glass",
 };
 
 describe("ToolbarBase", () => {
@@ -306,7 +305,7 @@ describe("ToolbarBase", () => {
       <ToolbarBase
         title="Styled"
         theme="secondary"
-        glass
+        variant="glassOutline"
         attachment="sticky"
         rounding="large"
         shadow="strong"
@@ -400,7 +399,7 @@ describe("ToolbarBase", () => {
   it("passes glass to the nested avatar by default and allows avatar override", () => {
     const { rerender } = render(
       <ToolbarBase
-        glass
+        variant="glassOutline"
         avatar={{ name: "JD" }}
         AvatarComponent={DummyAvatar}
         classMap={mockStyles}
@@ -414,8 +413,8 @@ describe("ToolbarBase", () => {
 
     rerender(
       <ToolbarBase
-        glass
-        avatar={{ name: "JD", glass: false }}
+        variant="glassOutline"
+        avatar={{ name: "JD", variant: "solid" }}
         AvatarComponent={DummyAvatar}
         classMap={mockStyles}
       />,

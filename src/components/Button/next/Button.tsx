@@ -8,7 +8,12 @@ import ButtonBase from "../ButtonBase";
 import { ButtonProps } from "../Button.types";
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
-  <ButtonBase {...props} classMap={expandClassMap(styles)} LinkComponent={Link} ref={ref} />
+  <ButtonBase
+    {...props}
+    classMap={expandClassMap(styles)}
+    LinkComponent={Link}
+    ref={ref}
+  />
 ));
 Button.displayName = "Button";
 export default Button;

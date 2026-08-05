@@ -9,7 +9,7 @@ import {
   StatusType,
   ThemeType,
 } from "../../src/types/types";
-import { FaStar } from "react-icons/fa";
+import { FaStar } from "../../shared-story-assets/icons";
 import {
   renderThemeVariants,
   renderStateVariants,

@@ -13,8 +13,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { DataTableBaseProps, Column } from "./DataTable.types";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -55,8 +54,7 @@ function DataTableBase<T extends object>({
   rounding = getDefaultRounding(),
   shadow,
   state,
-  outline = getDefaultOutline(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   className,
   tableClassName,
   theadClassName,
@@ -182,8 +180,7 @@ function DataTableBase<T extends object>({
   );
 
   const getResolvedRowKey = useCallback(
-    (row: T, index: number): string | number =>
-      rowKey ? rowKey(row) : index,
+    (row: T, index: number): string | number => (rowKey ? rowKey(row) : index),
     [rowKey],
   );
 
@@ -194,15 +191,11 @@ function DataTableBase<T extends object>({
     const ordered = resolvedColumnOrder
       .map((key) => byKey.get(key))
       .filter((column): column is Column<T> => Boolean(column));
-    const missing = columns.filter(
-      (column) => !orderedKeySet.has(column.key),
-    );
+    const missing = columns.filter((column) => !orderedKeySet.has(column.key));
     const nextColumns = [...ordered, ...missing];
 
     if (!columnVisibility) return nextColumns;
-    return nextColumns.filter((column) =>
-      visibleKeySet.has(column.key),
-    );
+    return nextColumns.filter((column) => visibleKeySet.has(column.key));
   }, [
     columns,
     columnVisibility,
@@ -379,9 +372,7 @@ function DataTableBase<T extends object>({
 
   const toggleAllRows = () => {
     if (allVisibleSelected) {
-      updateSelection(
-        selectedKeys.filter((key) => !allVisibleKeySet.has(key)),
-      );
+      updateSelection(selectedKeys.filter((key) => !allVisibleKeySet.has(key)));
       return;
     }
 
@@ -509,24 +500,21 @@ function DataTableBase<T extends object>({
     onPinnedColumnKeysChange?.(nextKeys);
   };
 
-  const handleVirtualScroll = useCallback(
-    (event: UIEvent<HTMLDivElement>) => {
-      pendingScrollTopRef.current = event.currentTarget.scrollTop;
+  const handleVirtualScroll = useCallback((event: UIEvent<HTMLDivElement>) => {
+    pendingScrollTopRef.current = event.currentTarget.scrollTop;
 
-      if (scrollFrameRef.current !== null) return;
+    if (scrollFrameRef.current !== null) return;
 
-      if (typeof window === "undefined" || !window.requestAnimationFrame) {
-        setScrollTop(pendingScrollTopRef.current);
-        return;
-      }
+    if (typeof window === "undefined" || !window.requestAnimationFrame) {
+      setScrollTop(pendingScrollTopRef.current);
+      return;
+    }
 
-      scrollFrameRef.current = window.requestAnimationFrame(() => {
-        scrollFrameRef.current = null;
-        setScrollTop(pendingScrollTopRef.current);
-      });
-    },
-    [],
-  );
+    scrollFrameRef.current = window.requestAnimationFrame(() => {
+      scrollFrameRef.current = null;
+      setScrollTop(pendingScrollTopRef.current);
+    });
+  }, []);
 
   useEffect(
     () => () => {
@@ -634,11 +622,12 @@ function DataTableBase<T extends object>({
         classMap.table,
         classMap[theme],
         state && classMap[state],
-        outline && classMap.outline,
-        glass && classMap.glass,
+        (variant === "outline" || variant === "glassOutline") &&
+          classMap.outline,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         tableClassName,
       ),
-    [classMap, theme, state, outline, glass, tableClassName],
+    [classMap, theme, state, variant, tableClassName],
   );
 
   const wrapperClass = useMemo(
@@ -647,7 +636,7 @@ function DataTableBase<T extends object>({
         classMap.wrapper,
         classMap[theme],
         state && classMap[state],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         striped && classMap.striped,
@@ -658,7 +647,7 @@ function DataTableBase<T extends object>({
       classMap,
       theme,
       state,
-      glass,
+      variant,
       shadow,
       rounding,
       striped,
@@ -813,7 +802,7 @@ function DataTableBase<T extends object>({
 
         <div
           id={liveRegionId}
-          className={classMap.srOnly ?? "sr_only"}
+          className="sr_only"
           aria-live="polite"
           aria-atomic="true"
         >
@@ -827,9 +816,7 @@ function DataTableBase<T extends object>({
               ? { maxHeight: virtualViewportHeight, overflowY: "auto" }
               : undefined
           }
-          onScroll={
-            virtualized ? handleVirtualScroll : undefined
-          }
+          onScroll={virtualized ? handleVirtualScroll : undefined}
           data-testid={virtualized ? `${testId}-virtual-viewport` : undefined}
         >
           <table
@@ -844,7 +831,7 @@ function DataTableBase<T extends object>({
               <caption
                 id={captionId}
                 className={
-                  hideCaption ? (classMap.srOnly ?? "sr_only") : undefined
+                  hideCaption ? "sr_only" : undefined
                 }
               >
                 {caption}
@@ -855,7 +842,7 @@ function DataTableBase<T extends object>({
               <tr>
                 {renderExpandedRow ? (
                   <th scope="col" className={classMap.selectionCell}>
-                    <span className={classMap.srOnly ?? "sr_only"}>
+                    <span className="sr_only">
                       Expand row
                     </span>
                   </th>

@@ -3,7 +3,7 @@ import { TimelineBaseProps } from "./Timeline.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -33,7 +33,7 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
   "aria-describedby": ariaDescribedBy,
   role = "list",
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   rounding = getDefaultRounding(),
   shadow,
   classMap,
@@ -47,7 +47,7 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
     classMap.timeline,
     classMap[orientation],
     classMap[theme],
-    glass && classMap.glass,
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     loading && classMap.loading,
     className,
   );
@@ -56,7 +56,7 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
     classMap.item,
     classMap[orientation],
     classMap[theme],
-    glass && classMap.glass,
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     loading && classMap.loadingItem,
   );
 
@@ -64,7 +64,7 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
     classMap.marker,
     classMap[theme],
     classMap[orientation],
-    glass && classMap.glass,
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     getShadowClassName(classMap, theme, shadow),
   );
 
@@ -72,7 +72,7 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
     classMap.content,
     classMap[orientation],
     classMap[theme],
-    glass && classMap.glass,
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     loading && classMap.loadingContent,
     getShadowClassName(classMap, theme, shadow),
     rounding && classMap[`round${capitalize(rounding)}`],

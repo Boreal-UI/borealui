@@ -1,5 +1,5 @@
-import React from "react";
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
+import React from "react";
 
 /**
  * Column definition for the DataTable.
@@ -258,15 +258,12 @@ export interface DataTableProps<T> {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * If true, applies a translucent glass surface using the selected theme/state.
-   * Defaults to `false`.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the table
    * ('success' | 'error' | 'warning' | 'disabled' | '').
@@ -288,14 +285,6 @@ export interface DataTableProps<T> {
    * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
-
-  /**
-   * Whether to use outline styling.
-   *
-   * @default configured default outline setting (fallback: false)
-   */
-  outline?: boolean;
-
   /**
    * Whether to use striped row styling.
    *
@@ -548,16 +537,10 @@ export interface DataTableProps<T> {
   defaultExpandedRowKeys?: Array<string | number>;
 
   /** Callback fired when expanded rows change. */
-  onExpandedRowsChange?: (
-    keys: Array<string | number>,
-    rows: T[],
-  ) => void;
+  onExpandedRowsChange?: (keys: Array<string | number>, rows: T[]) => void;
 
   /** Callback fired when an editable cell commits a value. */
-  onCellEdit?: (
-    value: unknown,
-    meta: DataTableCellEditMeta<T>,
-  ) => void;
+  onCellEdit?: (value: unknown, meta: DataTableCellEditMeta<T>) => void;
 
   /**
    * Enables row virtualization for large client-side data sets.

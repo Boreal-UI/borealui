@@ -10,7 +10,6 @@ const mockClassNames = {
   labelWrapper: "radioLabelWrapper",
   input: "radioInput",
   circle: "radioCircle",
-  glass: "radioGlass",
   glassCircle: "radioGlassCircle",
   label: "radioLabel",
 
@@ -30,6 +29,7 @@ const mockClassNames = {
   roundSmall: "roundSmall",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "radioGlass",
 };
 
 describe("BaseRadioButton", () => {
@@ -129,7 +129,7 @@ describe("BaseRadioButton", () => {
         {...defaultProps}
         theme="secondary"
         state="error"
-        glass
+        variant="glassOutline"
         disabled={true}
         className="customClass"
       />,
@@ -157,7 +157,7 @@ describe("BaseRadioButton", () => {
     render(
       <BaseRadioButton
         {...defaultProps}
-        glass
+        variant="glassOutline"
         shadow="medium"
         rounding="large"
       />,
@@ -224,17 +224,17 @@ describe("BaseRadioButton", () => {
   it("applies aria-describedby when provided", () => {
     render(
       <>
-        <p id="radio-description">Helpful description</p>
+        <p id="radio-helperText">Helpful helperText</p>
         <BaseRadioButton
           {...defaultProps}
-          aria-describedby="radio-description"
+          aria-describedby="radio-helperText"
         />
       </>,
     );
 
     expect(screen.getByTestId("radio")).toHaveAttribute(
       "aria-describedby",
-      "radio-description",
+      "radio-helperText",
     );
   });
 

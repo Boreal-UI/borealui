@@ -1,13 +1,18 @@
-import { IconType } from "react-icons";
-import type { AnchorHTMLAttributes, AriaRole, ReactNode } from "react";
+import type {
+  AnchorHTMLAttributes,
+  AriaRole,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  ReactNode,
+} from "react";
 import {
+  BorderType,
+  IconComponent,
   OrientationType,
-  RoundingType,
   ShadowType,
   SizeType,
   StateType,
   ThemeType,
-  BorderType,
 } from "../../types/types";
 
 export interface StaticCardImage {
@@ -107,7 +112,7 @@ export interface ActionButton {
   onClick: () => void;
 
   /** Optional icon for the button (used with `useIconButtons`). */
-  icon?: IconType;
+  icon?: IconComponent;
 
   /**
    * Optional theme override for the button.
@@ -143,7 +148,7 @@ export interface ActionButton {
    * Rounding style for action button.
    * ('none' | 'small' | 'medium' | 'large' | 'full').
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Shadow style for the button.
@@ -206,7 +211,7 @@ export interface CardProps {
    *
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Optional shadow style for the card
@@ -330,21 +335,12 @@ export interface CardProps {
    * Custom class name for the footer section.
    */
   footerClassName?: string;
-
   /**
-   * Outlines card instead of solid fill.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Applies a translucent glass style to the card.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Card size
    * ('xs' | 'small' | 'medium' | 'large' | 'xl').
@@ -359,7 +355,7 @@ export interface CardProps {
    *
    * @default "center"
    */
-  align?: "left" | "right" | "center";
+  align?: import("@/types/types").AlignmentType;
 
   /** Custom render function for the header section. */
   renderHeader?: () => ReactNode;
@@ -393,7 +389,7 @@ export interface CardProps {
   layout?: OrientationType;
 
   /** Optional icon to display beside the title. */
-  cardIcon?: IconType;
+  cardIcon?: IconComponent;
 
   /** Optional custom children passed into the body. */
   children?: ReactNode;
@@ -423,6 +419,12 @@ export interface CardProps {
 
   /** Optional tabindex for keyboard navigation scenarios. */
   tabIndex?: number;
+
+  /** Handles pointer activation when the card is interactive. */
+  onClick?: MouseEventHandler<HTMLDivElement>;
+
+  /** Handles keyboard input before the card's default activation behavior. */
+  onKeyDown?: KeyboardEventHandler<HTMLDivElement>;
 
   /** Optional ARIA label reference ID for accessibility. */
   "aria-labelledby"?: string;

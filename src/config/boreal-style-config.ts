@@ -24,8 +24,7 @@
  *   defaultShadow: "strong",
  *   defaultBorderWidth: "sm",
  *   defaultSize: "large",
- *   defaultGlass: true,
- *   defaultOutline: true,
+ *   defaultVariant: "glassOutline",
  *   defaultColorSchemeName: "Ocean Breeze",
  * });
  * ```
@@ -39,6 +38,7 @@ import {
   ShadowType,
   SizeType,
   ThemeType,
+  VariantType,
 } from "../types/types";
 import { capitalize } from "../utils/capitalize";
 import { resolveThemeAlias } from "../utils/propAliases";
@@ -52,8 +52,7 @@ export type BorealStyleConfig = {
   defaultShadow: ShadowType;
   defaultSize: SizeType;
   defaultBorderWidth: BorderType;
-  defaultGlass: boolean;
-  defaultOutline: boolean;
+  defaultVariant: VariantType;
   defaultColorSchemeName: string;
 };
 
@@ -63,8 +62,7 @@ const fallback: BorealStyleConfig = {
   defaultShadow: "light",
   defaultSize: "medium",
   defaultBorderWidth: "none",
-  defaultGlass: false,
-  defaultOutline: false,
+  defaultVariant: "solid",
   defaultColorSchemeName: "Forest Dusk",
 };
 
@@ -144,14 +142,8 @@ export const getDefaultSize = (): SizeType =>
 /**
  * Gets whether glass styling should be enabled by default.
  */
-export const getDefaultGlass = (): boolean =>
-  userConfig.defaultGlass ?? fallback.defaultGlass;
-
-/**
- * Gets whether outline styling should be enabled by default.
- */
-export const getDefaultOutline = (): boolean =>
-  userConfig.defaultOutline ?? fallback.defaultOutline;
+export const getDefaultVariant = (): VariantType =>
+  userConfig.defaultVariant ?? fallback.defaultVariant;
 
 /**
  * Gets the default color scheme name (e.g., "Forest Dusk").

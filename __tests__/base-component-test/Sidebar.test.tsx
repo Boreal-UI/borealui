@@ -39,12 +39,12 @@ const classMap = {
   footerLink: "footerLink",
   footerVersion: "footerVersion",
   icon: "icon",
-  outline: "outline",
-  glass: "glass",
   primary: "primary",
   success: "success",
   shadowMedium: "shadowMedium",
   roundMedium: "roundMedium",
+  glass: "glass",
+  outline: "outline",
 };
 
 const TestLink = React.forwardRef<
@@ -518,8 +518,7 @@ describe("SidebarBase", () => {
         links={mockLinks}
         theme="primary"
         state="success"
-        outline
-        glass
+        variant="glassOutline"
         rounding="medium"
         shadow="medium"
         className="customSidebar"

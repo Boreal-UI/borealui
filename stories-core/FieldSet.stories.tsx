@@ -58,7 +58,6 @@ const meta: Meta<FieldSetProps> = {
   tags: ["autodocs"],
   args: {
     legend: "Contact preferences",
-    description: "Choose how account updates should reach you.",
     helperText: "You can change these preferences at any time.",
     theme: "primary",
     children: <ContactOptions />,
@@ -135,7 +134,7 @@ export const Validation: Story = {
   args: {
     required: true,
     state: "error",
-    error: "Select at least one contact method.",
+    errorMessage: "Select at least one contact method.",
   },
 };
 

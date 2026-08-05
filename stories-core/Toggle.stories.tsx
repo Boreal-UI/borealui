@@ -85,7 +85,7 @@ export const GlassThemeVariants: Story = {
               key={`glass-${theme}`}
               {...args}
               theme={theme}
-              glass
+              variant="glass"
               label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
               checked={checked}
               onChange={setChecked}
@@ -130,7 +130,7 @@ export const GlassStateVariants: Story = {
               key={`glass-${state}`}
               {...args}
               state={state}
-              glass
+              variant="glass"
               label={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
               checked={checked}
               onChange={setChecked}

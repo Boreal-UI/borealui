@@ -22,7 +22,6 @@ const classes = {
   warning: "rating_warning",
 
   clear: "rating_clear",
-  glass: "rating_glass",
 
   xs: "rating_xs",
   small: "rating_small",
@@ -42,6 +41,7 @@ const classes = {
   roundLarge: "rating_round-Large",
 
   interactive: "rating_interactive",
+  glass: "rating_glass",
 };
 
 const Rating: React.FC<RatingProps> = (props) => {

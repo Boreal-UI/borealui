@@ -1,4 +1,12 @@
-export { Container, Grid, Inline, Section, Stack } from "./core/Layout";
+export {
+  BentoBox,
+  BentoBoxItem,
+  Container,
+  Grid,
+  Inline,
+  Section,
+  Stack,
+} from "./core/Layout";
 export { default as Accordion } from "./core/Accordion";
 export { default as Alert } from "./core/Alert";
 export { default as AppShell } from "./core/AppShell";

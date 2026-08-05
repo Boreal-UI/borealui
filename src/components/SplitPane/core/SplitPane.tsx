@@ -13,7 +13,6 @@ const classes = {
   vertical: "splitPane_vertical",
   static: "splitPane_static",
   loader: "splitPane_loader",
-  srOnly: "sr_only",
 
   primary: "splitPane_primary",
   secondary: "splitPane_secondary",
@@ -26,8 +25,6 @@ const classes = {
   error: "splitPane_error",
 
   clear: "splitPane_clear",
-  outline: "splitPane_outline",
-  glass: "splitPane_glass",
   disabled: "splitPane_disabled",
   loading: "splitPane_loading",
 
@@ -42,6 +39,8 @@ const classes = {
   roundMedium: "splitPane_round-Medium",
   roundLarge: "splitPane_round-Large",
   roundFull: "splitPane_round-Full",
+  glass: "splitPane_glass",
+  outline: "splitPane_outline",
 };
 
 const SplitPane = forwardRef<HTMLDivElement, SplitPaneProps>((props, ref) => (

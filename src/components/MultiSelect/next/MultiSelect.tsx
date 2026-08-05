@@ -8,11 +8,7 @@ import { MultiSelectProps } from "../MultiSelect.types";
 
 const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
   (props, ref) => (
-    <MultiSelectBase
-      {...props}
-      ref={ref}
-      classMap={expandClassMap(styles)}
-    />
+    <MultiSelectBase {...props} ref={ref} classMap={expandClassMap(styles)} />
   ),
 );
 

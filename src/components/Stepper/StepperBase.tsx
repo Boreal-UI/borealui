@@ -1,7 +1,7 @@
 import React from "react";
 import { combineClassNames } from "../../utils/classNames";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getDefaultSize,
   getDefaultTheme,
@@ -15,7 +15,7 @@ const StepperBase: React.FC<StepperBaseProps> = ({
   disableBackNavigation = false,
   orientation = "horizontal",
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   state,
   size = getDefaultSize(),
   shadow,
@@ -48,7 +48,7 @@ const StepperBase: React.FC<StepperBaseProps> = ({
         classMap[theme],
         state && classMap[state],
         classMap[size],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         className,
       )}
       role="list"
@@ -95,7 +95,6 @@ const StepperBase: React.FC<StepperBaseProps> = ({
             <IconButtonComponent
               icon={Icon}
               theme={theme}
-              glass={glass}
               state={state}
               className={combineClassNames(
                 classMap.stepButton,
@@ -106,7 +105,6 @@ const StepperBase: React.FC<StepperBaseProps> = ({
               shadow={shadow}
               rounding={rounding}
               disabled={isDisabled}
-              outline={!isActive}
               aria-label={stepAriaLabel}
               aria-current={isActive ? "step" : undefined}
               aria-disabled={isDisabled ? true : undefined}
@@ -123,6 +121,7 @@ const StepperBase: React.FC<StepperBaseProps> = ({
                   onStepClick?.(index);
                 }
               }}
+              variant={variant}
             />
 
             <span

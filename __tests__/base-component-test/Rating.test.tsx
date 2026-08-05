@@ -15,11 +15,11 @@ const mockClassNames = {
   success: "success",
   warning: "warning",
   disabled: "disabled",
-  glass: "glass",
   medium: "medium",
   large: "large",
   interactive: "interactive",
   label: "label",
+  glass: "glass",
 };
 
 describe("BaseRating", () => {
@@ -91,7 +91,7 @@ describe("BaseRating", () => {
         theme="secondary"
         size="large"
         state="warning"
-        glass
+        variant="glassOutline"
         className="customClass"
       />,
     );

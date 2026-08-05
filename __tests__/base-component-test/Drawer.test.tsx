@@ -27,8 +27,6 @@ const classMap = {
   quaternary: "quaternary",
   clear: "clear",
 
-  glass: "glass",
-
   shadowNone: "shadowNone",
   shadowLight: "shadowLight",
   shadowMedium: "shadowMedium",
@@ -40,6 +38,7 @@ const classMap = {
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
   roundFull: "roundFull",
+  glass: "glass",
 };
 
 const renderDrawer = (
@@ -304,7 +303,7 @@ describe("DrawerBase", () => {
     renderDrawer({
       placement: "left",
       theme: "secondary",
-      glass: true,
+      variant: "glassOutline",
       shadow: "strong",
       rounding: "large",
       className: "custom-root",
@@ -363,7 +362,7 @@ describe("DrawerBase", () => {
 
   it("does not apply glass, shadow, or rounding modifier classes when disabled", () => {
     renderDrawer({
-      glass: false,
+      variant: "solid",
       shadow: "none",
       rounding: "none",
     });

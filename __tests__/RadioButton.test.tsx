@@ -77,7 +77,9 @@ describe("RadioGroup", () => {
       </>,
     );
 
-    await user.click(screen.getByRole("checkbox", { name: "Subscribe to updates" }));
+    await user.click(
+      screen.getByRole("checkbox", { name: "Subscribe to updates" }),
+    );
 
     expect(handleCheckBoxChange).toHaveBeenCalledWith(true);
     expect(handleRadioChange).not.toHaveBeenCalled();
@@ -91,7 +93,7 @@ describe("RadioGroup", () => {
         options={options}
         value="email"
         onChange={jest.fn()}
-        description="Choose one contact method."
+        helperText="Choose one contact method."
       />,
     );
 

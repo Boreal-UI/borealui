@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { MetricBox } from "../../src/index.next";
 import type { MetricBoxProps } from "../../src/components/MetricBox/MetricBox.types";
-import { FaChartLine, FaCheckCircle } from "react-icons/fa";
+import { FaChartLine, FaCheckCircle } from "../../shared-story-assets/icons";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import {
   renderThemeVariants,
@@ -24,7 +24,7 @@ const meta: Meta<MetricBoxProps> = {
     title: "Users Online",
     value: "1,234",
     theme: "primary",
-    align: "left",
+    align: "start",
     size: "medium",
     icon: FaChartLine,
     subtext: "Up 12% since last week",
@@ -77,7 +77,7 @@ export const Loading: Story = {
 
 export const AlignmentVariants: Story = {
   render: () => {
-    const alignments = ["left", "center", "right"] as const;
+    const alignments = ["start", "center", "end"] as const;
     return (
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         {alignments.map((align) => (

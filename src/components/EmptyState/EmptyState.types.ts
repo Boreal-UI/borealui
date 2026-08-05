@@ -1,12 +1,12 @@
-import type { AriaRole, HTMLAttributes, ReactNode, ComponentType } from "react";
-import { IconType } from "react-icons";
 import {
-  ThemeType,
-  SizeType,
-  StateType,
+  IconComponent,
   RoundingType,
   ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
 } from "@/types/types";
+import type { AriaRole, ComponentType, HTMLAttributes, ReactNode } from "react";
 import { ButtonProps } from "../Button/Button.types";
 
 /**
@@ -21,8 +21,8 @@ export interface EmptyStateProps extends Omit<
    */
   className?: string;
 
-  /** Optional icon component (e.g., from react-icons). */
-  icon?: IconType;
+  /** Optional SVG icon component. */
+  icon?: IconComponent;
 
   /**
    * Title text displayed prominently.
@@ -45,14 +45,12 @@ export interface EmptyStateProps extends Omit<
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * The EmptyState state
    * ('success' | 'error' | 'warning' | 'disabled' | '').
@@ -82,14 +80,6 @@ export interface EmptyStateProps extends Omit<
    * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
-
-  /**
-   * Whether the component uses outline styles.
-   *
-   * @default configured default outline setting (fallback: false)
-   */
-  outline?: boolean;
-
   /** Optional label for an action button. */
   actionLabel?: ReactNode;
 
@@ -156,7 +146,6 @@ export interface EmptyStateProps extends Omit<
    * Useful for external aria-labelledby / aria-describedby wiring.
    */
   id?: string;
-
 
   /**
    * Optional test ID for testing frameworks.

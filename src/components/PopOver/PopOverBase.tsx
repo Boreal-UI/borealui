@@ -13,7 +13,7 @@ import { BasePopOverProps, TriggerElementProps } from "./PopOver.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -25,7 +25,7 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
   asChild = false,
   placement = "bottom",
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   rounding = getDefaultRounding(),
   shadow,
   state,
@@ -45,6 +45,7 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
   classMap,
 }): JSX.Element => {
   const [open, setOpen] = useState(false);
+  const [rendered, setRendered] = useState(false);
   const [dynamicPlacement, setDynamicPlacement] = useState(placement);
   const popoverRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement>(null);
@@ -181,20 +182,22 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
     () =>
       combineClassNames(
         classMap.popover,
+        open && classMap.open,
         classMap[dynamicPlacement],
         classMap[theme],
         state && classMap[state],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         contentClassName,
       ),
     [
       classMap,
+      open,
       dynamicPlacement,
       theme,
       state,
-      glass,
+      variant,
       shadow,
       rounding,
       contentClassName,
@@ -202,7 +205,19 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
   );
 
   useEffect(() => {
-    if (!open || popupRole === "tooltip") return;
+    if (open) {
+      setRendered(true);
+      return;
+    }
+
+    if (!rendered) return;
+
+    const timer = window.setTimeout(() => setRendered(false), 160);
+    return () => window.clearTimeout(timer);
+  }, [open, rendered]);
+
+  useEffect(() => {
+    if (!open || !rendered || popupRole === "tooltip") return;
 
     const el = popoverRef.current;
     if (!el) return;
@@ -212,7 +227,7 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
     );
 
     (focusable ?? el).focus();
-  }, [open, popupRole]);
+  }, [open, rendered, popupRole]);
 
   const computedAriaLabelledBy =
     ariaLabelledBy ?? (!ariaLabel ? fallbackLabelId : undefined);
@@ -279,7 +294,7 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
     >
       {renderedTrigger}
 
-      {open && (
+      {rendered && (
         <div
           ref={popoverRef}
           id={contentId}
@@ -288,12 +303,13 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
           aria-labelledby={computedAriaLabelledBy}
           aria-describedby={ariaDescribedBy}
           aria-modal={popupRole === "dialog" ? ariaModal : undefined}
+          aria-hidden={!open}
           className={popoverContentClass}
           data-testid={`${testId}-content`}
           tabIndex={popupRole === "tooltip" ? undefined : -1}
         >
           {!ariaLabel && !ariaLabelledBy && (
-            <span id={fallbackLabelId} className={classMap.srOnly ?? "sr_only"}>
+            <span id={fallbackLabelId} className="sr_only">
               PopOver Content
             </span>
           )}

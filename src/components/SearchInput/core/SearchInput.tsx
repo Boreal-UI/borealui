@@ -5,6 +5,11 @@ import SearchInputBase from "../SearchInputBase";
 import { SearchInputProps } from "../SearchInput.types";
 
 const classes = {
+  xs: "searchInput_xs",
+  small: "searchInput_small",
+  medium: "searchInput_medium",
+  large: "searchInput_large",
+  xl: "searchInput_xl",
   container: "searchInput_container",
   label: "searchInput_label",
   labelTop: "searchInput_labelTop",
@@ -21,7 +26,6 @@ const classes = {
   clearButton: "searchInput_clearButton",
   searchButton: "searchInput_searchButton",
   searchGlyph: "searchInput_searchGlyph",
-  srOnly: "sr_only",
 
   primary: "searchInput_primary",
   secondary: "searchInput_secondary",
@@ -34,8 +38,6 @@ const classes = {
   error: "searchInput_error",
 
   clear: "searchInput_clear",
-  outline: "searchInput_outline",
-  glass: "searchInput_glass",
   disabled: "searchInput_disabled",
   loading: "searchInput_loading",
 
@@ -50,6 +52,8 @@ const classes = {
   roundMedium: "searchInput_round-Medium",
   roundLarge: "searchInput_round-Large",
   roundFull: "searchInput_round-Full",
+  glass: "searchInput_glass",
+  outline: "searchInput_outline",
 };
 
 const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(

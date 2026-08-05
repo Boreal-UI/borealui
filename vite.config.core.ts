@@ -38,9 +38,8 @@ export default defineConfig({
 
     lib: {
       entry: coreEntries,
-      formats: ["es", "cjs"],
-      fileName: (format, entryName) =>
-        `${entryName}${format === "es" ? ".js" : ".cjs.js"}`,
+      formats: ["es"],
+      fileName: (_format, entryName) => `${entryName}.js`,
     },
 
     rollupOptions: {

@@ -1,11 +1,12 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { FaCommentDots } from "react-icons/fa";
+import { FaCommentDots } from "../../shared-story-assets/icons";
 import TextAreaBase from "@/components/TextArea/TextAreaBase";
 
 expect.extend(toHaveNoViolations);
 
 const mockStyles = {
+  large: "large",
   container: "container",
   labelTop: "labelTop",
   labelLeft: "labelLeft",
@@ -18,8 +19,6 @@ const mockStyles = {
   customResizeHandle: "customResizeHandle",
   helperText: "helperText",
   errorMessage: "errorMessage",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   primary: "primary",
   secondary: "secondary",
@@ -32,9 +31,16 @@ const mockStyles = {
   roundSmall: "roundSmall",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 describe("TextAreaBase", () => {
+  it("applies the selected size class", () => {
+    render(<TextAreaBase classMap={mockStyles} size="large" />);
+    expect(screen.getByTestId("text-area-wrapper")).toHaveClass("large");
+  });
+
   it("renders a basic textarea", () => {
     render(
       <TextAreaBase
@@ -362,22 +368,25 @@ describe("TextAreaBase", () => {
     expect(input).toHaveAttribute("aria-required", "true");
   });
 
-  it("applies autoComplete off by default and on when enabled", () => {
+  it("leaves autocomplete unset by default and accepts native values", () => {
     const { rerender } = render(
       <TextAreaBase classMap={mockStyles} placeholder="Message" />,
     );
 
-    expect(screen.getByTestId("text-area-input")).toHaveAttribute(
+    expect(screen.getByTestId("text-area-input")).not.toHaveAttribute(
       "autocomplete",
-      "off",
     );
 
     rerender(
-      <TextAreaBase classMap={mockStyles} placeholder="Message" autocomplete />,
+      <TextAreaBase
+        classMap={mockStyles}
+        placeholder="Message"
+        autoComplete="on"
+      />,
     );
 
     expect(screen.getByTestId("text-area-input")).toHaveAttribute(
-      "autocomplete",
+      "autoComplete",
       "on",
     );
   });
@@ -427,8 +436,7 @@ describe("TextAreaBase", () => {
         placeholder="Styled message"
         theme="primary"
         state="error"
-        outline
-        glass
+        variant="glassOutline"
         rounding="medium"
         shadow="light"
         className="customClass"

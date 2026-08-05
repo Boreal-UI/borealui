@@ -3,7 +3,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -14,7 +14,7 @@ import { BaseProgressBarProps } from "./ProgressBar.types";
 const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   value = 0,
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   state,
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
@@ -70,9 +70,11 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   const wrapperClass = combineClassNames(
     classMap.container,
     classMap[size],
-    glass && classMap[theme],
-    glass && state && classMap[state],
-    glass && classMap.glass,
+    (variant === "glass" || variant === "glassOutline") && classMap[theme],
+    (variant === "glass" || variant === "glassOutline") &&
+      state &&
+      classMap[state],
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     getShadowClassName(classMap, theme, shadow),
     rounding && classMap[`round${capitalize(rounding)}`],
     className,
@@ -82,7 +84,7 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
     classMap.bar,
     classMap[theme],
     state && classMap[state],
-    glass && classMap.glassBar,
+    (variant === "glass" || variant === "glassOutline") && classMap.glassBar,
     animated && classMap.animated,
     rounding && classMap[`round${capitalize(rounding)}`],
     indeterminate && classMap.indeterminate,
@@ -98,12 +100,13 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
     </div>
   ) : null;
 
-  const valueNode = showValue && !indeterminate ? (
-    <div className={classMap.value} data-testid={`${testId}-value`}>
-      {progressValue}
-      {units}
-    </div>
-  ) : null;
+  const valueNode =
+    showValue && !indeterminate ? (
+      <div className={classMap.value} data-testid={`${testId}-value`}>
+        {progressValue}
+        {units}
+      </div>
+    ) : null;
 
   const metaNode = showMetaRow ? (
     <div

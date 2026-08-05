@@ -8,7 +8,11 @@ import { StepperProps } from "../Stepper.types";
 import IconButton from "../../IconButton/next/IconButton";
 
 const Stepper: React.FC<StepperProps> = (props) => (
-  <StepperBase {...props} classMap={expandClassMap(styles)} IconButtonComponent={IconButton} />
+  <StepperBase
+    {...props}
+    classMap={expandClassMap(styles)}
+    IconButtonComponent={IconButton}
+  />
 );
 Stepper.displayName = "Stepper";
 export default Stepper;

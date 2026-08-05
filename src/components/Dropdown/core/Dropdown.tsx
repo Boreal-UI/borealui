@@ -31,7 +31,6 @@ const classes = {
   error: "dropdown_error",
   warning: "dropdown_warning",
   disabled: "dropdown_disabled",
-  glass: "dropdown_glass",
 
   shadowNone: "menu_shadow-None",
   shadowLight: "menu_shadow-Light",
@@ -43,10 +42,17 @@ const classes = {
   roundSmall: "menu_round-Small",
   roundMedium: "menu_round-Medium",
   roundLarge: "menu_round-Large",
+  glass: "dropdown_glass",
 };
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
-  return <BaseDropdown {...props} IconButton={IconButton} classMap={expandClassMap(classes)} />;
+  return (
+    <BaseDropdown
+      {...props}
+      IconButton={IconButton}
+      classMap={expandClassMap(classes)}
+    />
+  );
 };
 Dropdown.displayName = "Dropdown";
 export default Dropdown;

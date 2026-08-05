@@ -1,5 +1,7 @@
 import "../../components/Layout/next/Layout.module.scss";
 export {
+  BentoBox,
+  BentoBoxItem,
   Container,
   Grid,
   Inline,

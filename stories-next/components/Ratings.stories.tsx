@@ -113,7 +113,7 @@ export const GlassThemeVariants: Story = {
           <Rating
             key={theme}
             theme={theme}
-            glass
+            variant="glass"
             value={value}
             onChange={setValue}
             label={`Glass theme: ${theme}`}
@@ -134,7 +134,7 @@ export const GlassStateVariants: Story = {
           <Rating
             key={state}
             state={state}
-            glass
+            variant="glass"
             value={value}
             onChange={setValue}
             label={`Glass state: ${state}`}

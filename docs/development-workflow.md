@@ -66,7 +66,7 @@ The package publishes:
 - `dist/core` for React consumers.
 - `dist/next` for Next.js consumers.
 - `dist/next/server` for Next.js React Server Component entries.
-- `dist/core/docs.js`, `dist/next/docs.js`, and `dist/generated-docs` for docs metadata.
+- `dist/docs` and `dist/types/generated-docs` for the standalone docs package.
 - `dist/types` for TypeScript declarations.
 - `docs` for markdown API guides.
 - `packages/cli/src` for the setup CLI.
@@ -77,142 +77,48 @@ Build output is produced by:
 npm run build
 ```
 
-The build also patches Next client directives and generated docs imports so package subpaths work after publishing.
+The build also patches Next client directives and produces the standalone documentation bundle.
 
-## Publishing a New npm Version
+### Clean and refresh package folders
 
-Boreal UI publishes four scoped packages from this repository:
+Before packaging or publishing, remove all generated package output and stage a completely fresh build:
+
+```bash
+npm run refresh:packages
+```
+
+This command:
+
+1. Removes root `dist`.
+2. Removes the generated `dist` directories under `packages/core`, `packages/next`, `packages/types`, and `packages/docs`.
+3. Runs the complete production build.
+4. Restages all five publishable package folders from the new output.
+
+It deliberately preserves `packages/cli/src`, which is the CLI's publishable source rather than generated output. If cleaning or building fails, the command stops before staging so older package output cannot be mistaken for the current release.
+
+Package staging skips manifest writes when the generated JSON is unchanged. On Windows it also retries short-lived `EACCES`, `EBUSY`, `EPERM`, and `UNKNOWN` write failures. If all retries fail, close any editor, npm process, antivirus scan, or sync client holding the reported manifest and run `npm run stage:split-packages` again.
+
+Preview the exact cleanup targets without deleting anything:
+
+```bash
+npm run clean:package-builds:dry-run
+```
+
+To clean the generated directories without rebuilding:
+
+```bash
+npm run clean:package-builds
+```
+
+`npm run pack:split` uses this clean refresh automatically before creating the five npm tarballs.
+
+Boreal UI publishes five scoped packages from this repository:
 
 - `@boreal-ui/types`
 - `@boreal-ui/core`
 - `@boreal-ui/next`
+- `@boreal-ui/docs`
 - `@boreal-ui/cli`
-
-All four packages should use the same version. Do not run `npm version` separately inside the package directories. The repository helper also synchronizes internal `@boreal-ui/types` dependencies, the root lockfile version, and the CLI version constant.
-
-### 1. Choose and apply the version
-
-Replace `0.1.43` with the new SemVer version:
-
-```bash
-npm run version:packages -- 0.1.43
-```
-
-Prerelease versions are supported:
-
-```bash
-npm run version:packages -- 0.2.0-beta.1
-```
-
-Review the version changes before building:
-
-```bash
-git diff -- package.json package-lock.json packages/core/package.json packages/next/package.json packages/types/package.json packages/cli/package.json packages/cli/src/utils/constants.js
-```
-
-### 2. Run the release audit
-
-```bash
-npm run audit
-npm run cypress:run
-```
-
-The audit runs type checking, linting, style checks, Jest, production builds, package dry runs, Publint, and Are the Types Wrong checks. Cypress runs the browser component suite separately. Do not publish if any check fails.
-
-### 3. Build inspectable tarballs
-
-```bash
-npm run pack:split
-```
-
-This rebuilds and stages all package folders, then creates tarballs for `types`, `core`, `next`, and `cli`. Inspect the reported file lists and package sizes before publishing. The package-specific dry-run commands are also available when only one output needs checking:
-
-```bash
-npm run audit:package:types
-npm run audit:package:core
-npm run audit:package:next
-npm run audit:package:cli
-```
-
-### 4. Confirm npm authentication
-
-```bash
-npm whoami
-```
-
-If this fails, authenticate with `npm login` before continuing. The account must have publish access to the `@boreal-ui` scope and satisfy any npm two-factor authentication requirements.
-
-### 5. Publish the stable release
-
-Publish `types` first because the runtime packages depend on that exact version. The `latest` tag is explicit here so stable releases become the default version installed by consumers:
-
-```bash
-npm publish ./packages/types --access public --tag latest
-npm publish ./packages/core --access public --tag latest
-npm publish ./packages/next --access public --tag latest
-npm publish ./packages/cli --access public --tag latest
-```
-
-Publishing is irreversible for a given package version. Confirm the version and tarball contents before running these commands, and publish only from the reviewed release commit.
-
-For a prerelease, use a prerelease tag instead of `latest` for every package:
-
-```bash
-npm publish ./packages/types --access public --tag beta
-npm publish ./packages/core --access public --tag beta
-npm publish ./packages/next --access public --tag beta
-npm publish ./packages/cli --access public --tag beta
-```
-
-### 6. Verify the registry
-
-```bash
-npm view @boreal-ui/types version
-npm view @boreal-ui/core version
-npm view @boreal-ui/next version
-npm view @boreal-ui/cli version
-npx @boreal-ui/cli@latest --version
-```
-
-For a prerelease, inspect the dist-tags as well:
-
-```bash
-npm dist-tag ls @boreal-ui/types
-npm dist-tag ls @boreal-ui/core
-npm dist-tag ls @boreal-ui/next
-npm dist-tag ls @boreal-ui/cli
-```
-
-After registry verification, create and push the matching Git tag from the release commit according to the project's release process.
-
-## Verification
-
-Run the targeted check for the area you touched while developing, then run the full audit before beta or release work.
-
-```bash
-npm run audit:types
-npm run audit:lint
-npm run audit:styles
-npm run audit:test
-npm run audit:build
-npm run audit:package
-```
-
-The combined command is:
-
-```bash
-npm run audit
-```
-
-Use `npm run check:sync` after adding, moving, or renaming components. It verifies that each component has the expected base, core, next, and style files.
-
-For timer, polling, or teardown changes, use Jest fake timers for exact deadlines and Cypress component tests for real browser lifecycle behavior. The shared multi-instance regression suite can be run with:
-
-```bash
-npx cypress run --component --spec cypress/component/TimerIsolation.cy.tsx
-```
-
-Include at least one repeated-instance or unmount case so cleanup in one component cannot silently cancel work owned by another.
 
 ## Documentation Checklist
 

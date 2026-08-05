@@ -36,7 +36,6 @@ const classes = {
   error: "menu_error",
   warning: "menu_warning",
   disabled: "menu_disabled",
-  glass: "menu_glass",
 
   shadowNone: "menu_shadow-None",
   shadowLight: "menu_shadow-Light",
@@ -48,6 +47,7 @@ const classes = {
   roundSmall: "menu_round-Small",
   roundMedium: "menu_round-Medium",
   roundLarge: "menu_round-Large",
+  glass: "menu_glass",
 };
 
 const Menu: React.FC<MenuProps> = (props) => {

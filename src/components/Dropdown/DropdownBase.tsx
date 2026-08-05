@@ -18,7 +18,7 @@ import { combineClassNames } from "../../utils/classNames";
 import MenuIcon from "../../Icons/MenuIcon";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -48,26 +48,25 @@ const hasSubmenuItems = (item: DropdownItem) =>
 const BaseDropdown: React.FC<BaseDropdownProps> = ({
   triggerIcon,
   items,
-  align = "right",
+  align = "end",
   className,
   menuClassName,
   "aria-label": ariaLabel = "Dropdown menu",
   "aria-labelledby": ariaLabelledBy,
   "aria-describedby": ariaDescribedBy,
   menuAriaLabel,
-  menuAriaLabelledby,
-  menuAriaDescribedby,
+  menuAriaLabelledBy,
+  menuAriaDescribedBy,
   menuId: menuIdProp,
   triggerId,
   focusFirstItemOnOpen = true,
   closeOnSelect = true,
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   toggleRounding = getDefaultRounding(),
   menuRounding = getDefaultRounding(),
   toggleShadow,
   menuShadow,
-  toggleOutline = false,
   state,
   title,
   triggerProps,
@@ -80,9 +79,9 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
 }: BaseDropdownProps): JSX.Element => {
   const [open, setOpen] = useState(false);
   const [openSubmenuPath, setOpenSubmenuPath] = useState<string | null>(null);
-  const [panelLayouts, setPanelLayouts] = useState<
-    Record<string, PanelLayout>
-  >({});
+  const [panelLayouts, setPanelLayouts] = useState<Record<string, PanelLayout>>(
+    {},
+  );
 
   const dropdownRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -142,90 +141,96 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     [focusFirstItemInPanel],
   );
 
-  const updatePanelLayouts = useCallback((includeRootPanel = true) => {
-    if (!open || !menuRef.current) {
-      setPanelLayouts({});
-      return;
-    }
+  const updatePanelLayouts = useCallback(
+    (includeRootPanel = true) => {
+      if (!open || !menuRef.current) {
+        setPanelLayouts({});
+        return;
+      }
 
-    const viewportWidth =
-      window.innerWidth || document.documentElement.clientWidth || 0;
-    const viewportHeight =
-      window.innerHeight || document.documentElement.clientHeight || 0;
-    const maxHeight = `${Math.max(120, viewportHeight - VIEWPORT_MARGIN * 2)}px`;
-    const maxWidth = `${Math.max(160, viewportWidth - VIEWPORT_MARGIN * 2)}px`;
-    const panels = [
-      menuRef.current,
-      ...Array.from(
-        menuRef.current.querySelectorAll<HTMLElement>("[data-dropdown-panel]"),
-      ),
-    ];
-    setPanelLayouts((previousLayouts) => {
-      const nextLayouts: Record<string, PanelLayout> = includeRootPanel
-        ? {}
-        : {
-            [ROOT_PANEL_PATH]: previousLayouts[ROOT_PANEL_PATH],
+      const viewportWidth =
+        window.innerWidth || document.documentElement.clientWidth || 0;
+      const viewportHeight =
+        window.innerHeight || document.documentElement.clientHeight || 0;
+      const maxHeight = `${Math.max(120, viewportHeight - VIEWPORT_MARGIN * 2)}px`;
+      const maxWidth = `${Math.max(160, viewportWidth - VIEWPORT_MARGIN * 2)}px`;
+      const panels = [
+        menuRef.current,
+        ...Array.from(
+          menuRef.current.querySelectorAll<HTMLElement>(
+            "[data-dropdown-panel]",
+          ),
+        ),
+      ];
+      setPanelLayouts((previousLayouts) => {
+        const nextLayouts: Record<string, PanelLayout> = includeRootPanel
+          ? {}
+          : {
+              [ROOT_PANEL_PATH]: previousLayouts[ROOT_PANEL_PATH],
+            };
+
+        panels.forEach((panel) => {
+          const path = panel.dataset.dropdownPanelPath ?? ROOT_PANEL_PATH;
+
+          if (path === ROOT_PANEL_PATH && !includeRootPanel) {
+            return;
+          }
+
+          const rect = panel.getBoundingClientRect();
+          const style: PanelStyle = {
+            "--dropdown-panel-max-height": maxHeight,
+            "--dropdown-panel-max-width": maxWidth,
           };
 
-      panels.forEach((panel) => {
-        const path = panel.dataset.dropdownPanelPath ?? ROOT_PANEL_PATH;
+          if (path === ROOT_PANEL_PATH) {
+            nextLayouts[path] = {
+              overflowLeft: rect.left < VIEWPORT_MARGIN,
+              overflowRight: rect.right > viewportWidth - VIEWPORT_MARGIN,
+              style,
+            };
+            return;
+          }
 
-        if (path === ROOT_PANEL_PATH && !includeRootPanel) {
-          return;
-        }
+          const wrapper = panel.closest<HTMLElement>(
+            '[data-dropdown-item-wrapper="true"]',
+          );
+          const wrapperRect = wrapper?.getBoundingClientRect();
+          const panelWidth = Math.max(rect.width, panel.offsetWidth, 160);
+          const rightSpace = wrapperRect
+            ? viewportWidth - wrapperRect.right - VIEWPORT_MARGIN
+            : viewportWidth - rect.right - VIEWPORT_MARGIN;
+          const leftSpace = wrapperRect
+            ? wrapperRect.left - VIEWPORT_MARGIN
+            : rect.left - VIEWPORT_MARGIN;
+          const placement: PanelPlacement =
+            rightSpace >= panelWidth || rightSpace >= leftSpace
+              ? "right"
+              : "left";
+          let offsetY = 0;
 
-        const rect = panel.getBoundingClientRect();
-        const style: PanelStyle = {
-          "--dropdown-panel-max-height": maxHeight,
-          "--dropdown-panel-max-width": maxWidth,
-        };
+          if (rect.bottom > viewportHeight - VIEWPORT_MARGIN) {
+            offsetY -= rect.bottom - (viewportHeight - VIEWPORT_MARGIN);
+          }
 
-        if (path === ROOT_PANEL_PATH) {
+          if (rect.top + offsetY < VIEWPORT_MARGIN) {
+            offsetY += VIEWPORT_MARGIN - (rect.top + offsetY);
+          }
+
+          style["--dropdown-panel-offset-y"] = `${Math.round(offsetY)}px`;
+
           nextLayouts[path] = {
-            overflowLeft: rect.left < VIEWPORT_MARGIN,
-            overflowRight: rect.right > viewportWidth - VIEWPORT_MARGIN,
+            placement,
             style,
           };
-          return;
-        }
+        });
 
-        const wrapper = panel.closest<HTMLElement>(
-          '[data-dropdown-item-wrapper="true"]',
-        );
-        const wrapperRect = wrapper?.getBoundingClientRect();
-        const panelWidth = Math.max(rect.width, panel.offsetWidth, 160);
-        const rightSpace = wrapperRect
-          ? viewportWidth - wrapperRect.right - VIEWPORT_MARGIN
-          : viewportWidth - rect.right - VIEWPORT_MARGIN;
-        const leftSpace = wrapperRect
-          ? wrapperRect.left - VIEWPORT_MARGIN
-          : rect.left - VIEWPORT_MARGIN;
-        const placement: PanelPlacement =
-          rightSpace >= panelWidth || rightSpace >= leftSpace ? "right" : "left";
-        let offsetY = 0;
-
-        if (rect.bottom > viewportHeight - VIEWPORT_MARGIN) {
-          offsetY -= rect.bottom - (viewportHeight - VIEWPORT_MARGIN);
-        }
-
-        if (rect.top + offsetY < VIEWPORT_MARGIN) {
-          offsetY += VIEWPORT_MARGIN - (rect.top + offsetY);
-        }
-
-        style["--dropdown-panel-offset-y"] = `${Math.round(offsetY)}px`;
-
-        nextLayouts[path] = {
-          placement,
-          style,
-        };
+        return nextLayouts;
       });
-
-      return nextLayouts;
-    });
-  }, [open]);
-  const schedulePanelLayoutUpdate = useAnimationFrameCallback(
-    updatePanelLayouts,
+    },
+    [open],
   );
+  const schedulePanelLayoutUpdate =
+    useAnimationFrameCallback(updatePanelLayouts);
 
   const toggleDropdown = () => {
     setOpen((prev) => {
@@ -344,8 +349,9 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
           ? document.activeElement
           : null;
       const currentPanel =
-        (activeElement?.closest("[data-dropdown-panel]") as HTMLElement | null) ??
-        menuRef.current;
+        (activeElement?.closest(
+          "[data-dropdown-panel]",
+        ) as HTMLElement | null) ?? menuRef.current;
 
       if (e.key === "Escape") {
         e.preventDefault();
@@ -460,10 +466,10 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     () =>
       combineClassNames(
         classMap.menu,
-        align === "right" ? classMap.alignRight : classMap.alignLeft,
+        align === "end" ? classMap.alignRight : classMap.alignLeft,
         classMap[theme],
         state && classMap[state],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         getShadowClassName(classMap, theme, menuShadow),
         menuRounding && classMap[`round${capitalize(menuRounding)}`],
         menuClassName,
@@ -474,7 +480,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       align,
       theme,
       state,
-      glass,
+      variant,
       menuShadow,
       menuRounding,
       menuClassName,
@@ -500,7 +506,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       isOpen && classMap.submenuOpen,
       classMap[theme],
       state && classMap[state],
-      glass && classMap.glass,
+      (variant === "glass" || variant === "glassOutline") && classMap.glass,
       getShadowClassName(classMap, theme, menuShadow),
       menuRounding && classMap[`round${capitalize(menuRounding)}`],
     );
@@ -564,7 +570,9 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
         closeChildSubmenus();
       };
       const handleSubmenuWrapperOver = (
-        event: React.MouseEvent<HTMLDivElement> | React.PointerEvent<HTMLDivElement>,
+        event:
+          | React.MouseEvent<HTMLDivElement>
+          | React.PointerEvent<HTMLDivElement>,
       ) => {
         const target = event.target as HTMLElement;
         const currentPanel = event.currentTarget.closest(
@@ -688,7 +696,9 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
               data-dropdown-panel="true"
               data-dropdown-panel-path={itemPath}
               data-testid={
-                itemTestId ? `${itemTestId}-submenu` : `${testId}-${itemPath}-submenu`
+                itemTestId
+                  ? `${itemTestId}-submenu`
+                  : `${testId}-${itemPath}-submenu`
               }
               {...getPanelAttributes(itemPath)}
             >
@@ -722,8 +732,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
         aria-controls={resolvedMenuId}
         rounding={toggleRounding}
         shadow={toggleShadow}
-        outline={toggleOutline}
-        glass={glass}
+        variant={variant}
         theme={theme}
         state={state}
         onClick={toggleDropdown}
@@ -738,10 +747,10 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
           id={resolvedMenuId}
           ref={menuRef}
           aria-label={
-            menuAriaLabelledby ? undefined : (menuAriaLabel ?? ariaLabel)
+            menuAriaLabelledBy ? undefined : (menuAriaLabel ?? ariaLabel)
           }
-          aria-labelledby={menuAriaLabelledby}
-          aria-describedby={menuAriaDescribedby}
+          aria-labelledby={menuAriaLabelledBy}
+          aria-describedby={menuAriaDescribedBy}
           className={menuClassNames}
           data-dropdown-panel="true"
           data-dropdown-panel-path={ROOT_PANEL_PATH}

@@ -46,7 +46,7 @@
     }
 
     &_fade-in {
-      animation: fade-in 0.8s ease-in-out;
+      animation: fade-in 240ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
     }
 
     &_media {
@@ -155,7 +155,34 @@
       color: var(--text-color-primary);
       cursor: not-allowed;
       pointer-events: none;
+      user-select: none;
       opacity: 0.6;
+      box-shadow: none;
+    }
+
+    &_selectable:not(.card_disabled) {
+      cursor: pointer;
+    }
+
+    &_selectable:not(.card_disabled):hover {
+      border-color: var(--focus-outline-color, currentcolor);
+      box-shadow: var(--box-shadow-md);
+    }
+
+    &_selectable:not(.card_disabled):focus-visible {
+      outline: 2px solid var(--focus-outline-color, currentcolor);
+      outline-offset: 3px;
+    }
+
+    &_selected {
+      border-color: var(--focus-outline-color, currentcolor);
+      box-shadow:
+        0 0 0 2px var(--background-color),
+        0 0 0 4px var(--focus-outline-color, currentcolor);
+    }
+
+    &_disabled.card_selected {
+      border-color: var(--disabled-color);
       box-shadow: none;
     }
 
@@ -202,7 +229,7 @@
         color: inherit;
       }
 
-      &_#{$name}.card_glass.card_clickable:hover {
+      &_#{$name}.card_glass.card_selectable:hover {
         background: var(--card-glass-hover-bg);
         border-color: var(--card-glass-border);
       }
@@ -255,7 +282,7 @@
         color: inherit;
       }
 
-      &_#{$name}.card_glass.card_clickable:hover {
+      &_#{$name}.card_glass.card_selectable:hover {
         background: var(--card-glass-hover-bg);
         border-color: var(--card-glass-border);
       }
@@ -657,7 +684,7 @@
     }
   }
 
-  .card_clickable {
+  .card_selectable {
     cursor: pointer;
     transition:
       transform var(--transition-default),
@@ -689,14 +716,14 @@
       transition: none !important;
     }
 
-    .card_clickable:hover {
+    .card_selectable:hover {
       transform: none !important;
       box-shadow: none !important;
     }
   }
 
   @media (hover: none) {
-    .card_clickable:hover {
+    .card_selectable:hover {
       transform: none;
       box-shadow: none;
     }
@@ -723,7 +750,7 @@
       border: 1px solid ButtonText;
     }
 
-    .card_clickable:focus-visible {
+    .card_selectable:focus-visible {
       outline: 2px solid Highlight;
       outline-offset: 3px;
     }

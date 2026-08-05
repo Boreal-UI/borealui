@@ -13,9 +13,9 @@ export type ClosableChildProps = {
   size?: unknown;
 
   /**
-   * Optional position prop.
+   * Optional placement prop.
    */
-  position?: unknown;
+  placement?: unknown;
 
   /**
    * Optional close handler.
@@ -39,9 +39,9 @@ export type InjectedDefaults = {
   size?: unknown;
 
   /**
-   * Default position injected into the child chip if not already defined.
+   * Default placement injected into the child chip if not already defined.
    */
-  position?: unknown;
+  placement?: unknown;
 };
 
 /**
@@ -54,11 +54,11 @@ export interface ChipGroupCommon {
   /** Optional callback when a chip is removed. */
   onRemove?: (id: string) => void;
   /**
-   * Default position for chips in the group.
+   * Default placement for chips in the group.
    *
    * @default "topCenter"
    */
-  position?: PositionType;
+  placement?: PositionType;
   /**
    * Default size for chips if not individually specified.
    *

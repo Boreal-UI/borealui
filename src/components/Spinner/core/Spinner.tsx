@@ -7,7 +7,6 @@ import { SpinnerProps } from "../Spinner.types";
 const classes = {
   wrapper: "spinner_wrapper",
   spinner: "spinner",
-  glass: "spinner_glass",
   label: "spinner_label",
 
   primary: "spinner_primary",
@@ -29,11 +28,16 @@ const classes = {
   shadowMedium: "spinner_shadow-Medium",
   shadowStrong: "spinner_shadow-Strong",
   shadowIntense: "spinner_shadow-Intense",
+  glass: "spinner_glass",
 };
 
 const Spinner: React.FC<SpinnerProps> = (props) => {
   return (
-    <SpinnerBase {...props} className={props.className} classMap={expandClassMap(classes)} />
+    <SpinnerBase
+      {...props}
+      className={props.className}
+      classMap={expandClassMap(classes)}
+    />
   );
 };
 Spinner.displayName = "Spinner";

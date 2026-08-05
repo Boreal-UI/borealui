@@ -10,9 +10,9 @@ const styles = {
   horizontal: "horizontal",
   vertical: "vertical",
   dashed: "dashed",
-  glass: "glass",
   primary: "themePrimary",
   success: "stateSuccess",
+  glass: "glass",
 };
 
 describe("DividerBase", () => {
@@ -180,7 +180,7 @@ describe("DividerBase", () => {
   });
 
   it("applies the glass class when requested", () => {
-    renderDivider({ glass: true, theme: "primary" });
+    renderDivider({ variant: "glassOutline", theme: "primary" });
 
     const divider = screen.getByTestId("divider");
 

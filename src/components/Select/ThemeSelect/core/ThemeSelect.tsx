@@ -12,7 +12,7 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
   (
     {
       theme = getDefaultTheme(),
-      glass,
+      variant,
       shadow = getDefaultShadow(),
       rounding = getDefaultRounding(),
       "data-testid": dataTestId,
@@ -61,7 +61,7 @@ const UserThemeSettings = forwardRef<HTMLSelectElement, ThemeSelectProps>(
         <Select
           ref={ref}
           theme={theme}
-          glass={glass}
+          variant={variant}
           state={state}
           className={className}
           shadow={shadow}

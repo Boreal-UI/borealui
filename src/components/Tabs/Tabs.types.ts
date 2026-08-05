@@ -1,4 +1,3 @@
-import React from "react";
 import {
   RoundingType,
   ShadowType,
@@ -6,11 +5,12 @@ import {
   StateType,
   ThemeType,
 } from "@/types/types";
+import React from "react";
 
 /**
  * Represents a single tab with a label, optional icon, and content.
-   * @default "Tabs"
-   */
+ * @default "Tabs"
+ */
 export interface Tab {
   /** The label of the tab. */
   label: string;
@@ -49,7 +49,7 @@ export interface TabsProps {
    *
    * @default 0
    */
-  defaultIndex?: number;
+  defaultValue?: number;
 
   /**
    * Accessible name for the tablist.
@@ -68,7 +68,7 @@ export interface TabsProps {
   tabListId?: string;
 
   /** Callback when the active tab changes. */
-  onChange?: (index: number) => void;
+  onValueChange?: (index: number) => void;
 
   /**
    * Theme for styling the tabs.
@@ -77,14 +77,12 @@ export interface TabsProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Adds translucent glass styling to the tab controls.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the tabs.
    * "success" | "error" | "warning" | "disabled" | ""

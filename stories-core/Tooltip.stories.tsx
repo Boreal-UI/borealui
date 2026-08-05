@@ -14,7 +14,7 @@ const meta: Meta<TooltipProps> = {
   tags: ["autodocs"],
   args: {
     content: "Tooltip message",
-    position: "top",
+    placement: "top",
     theme: "primary",
   },
   parameters: {
@@ -57,16 +57,16 @@ export const Positions: Story = {
         height: "300px",
       }}
     >
-      <Tooltip {...args} position="top" content="Top tooltip">
+      <Tooltip {...args} placement="top" content="Top tooltip">
         <Button>Top</Button>
       </Tooltip>
-      <Tooltip {...args} position="bottom" content="Bottom tooltip">
+      <Tooltip {...args} placement="bottom" content="Bottom tooltip">
         <Button>Bottom</Button>
       </Tooltip>
-      <Tooltip {...args} position="left" content="Left tooltip">
+      <Tooltip {...args} placement="left" content="Left tooltip">
         <Button>Left</Button>
       </Tooltip>
-      <Tooltip {...args} position="right" content="Right tooltip">
+      <Tooltip {...args} placement="right" content="Right tooltip">
         <Button>Right</Button>
       </Tooltip>
     </div>
@@ -118,7 +118,7 @@ export const GlassThemes: Story = {
           key={`glass-${theme}`}
           {...args}
           theme={theme}
-          glass
+          variant="glass"
           title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} glass`}
         >
           <Button>{theme.charAt(0).toUpperCase() + theme.slice(1)}</Button>
@@ -137,7 +137,7 @@ export const GlassStates: Story = {
           key={`glass-${state}`}
           {...args}
           state={state}
-          glass
+          variant="glass"
           title={`${state.charAt(0).toUpperCase() + state.slice(1)} glass`}
         >
           <Button>{state.charAt(0).toUpperCase() + state.slice(1)}</Button>

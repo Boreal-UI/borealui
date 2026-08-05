@@ -47,27 +47,27 @@ const defaultArgs: ColorPickerProps = {
     { label: "Yellow", value: "#f4a261" },
   ],
   size: "medium",
-  selected: "#e63946",
+  value: "#e63946",
   shadow: "none",
-  onChange: () => {},
+  onValueChange: () => {},
 };
 
 export const Default: Story = {
   render: (args) => {
-    const [selected, setSelected] = useState("#2a9d8f");
-    return <ColorPicker {...args} selected={selected} onChange={setSelected} />;
+    const [value, setSelected] = useState("#2a9d8f");
+    return <ColorPicker {...args} value={value} onValueChange={setSelected} />;
   },
 };
 
 export const WithCustomColorInput: Story = {
   render: (args) => {
-    const [selected, setSelected] = useState("#e63946");
+    const [value, setSelected] = useState("#e63946");
     return (
       <ColorPicker
         {...args}
         allowCustom
-        selected={selected}
-        onChange={setSelected}
+        value={value}
+        onValueChange={setSelected}
       />
     );
   },
@@ -103,13 +103,13 @@ export const ShadowVariants = () => (
 
 export const Disabled: Story = {
   render: (args) => {
-    const [selected, setSelected] = useState("#2a9d8f");
+    const [value, setSelected] = useState("#2a9d8f");
     return (
       <ColorPicker
         {...args}
         disabled
-        selected={selected}
-        onChange={setSelected}
+        value={value}
+        onValueChange={setSelected}
       />
     );
   },
@@ -117,12 +117,12 @@ export const Disabled: Story = {
 
 export const WithClassName: Story = {
   render: (args) => {
-    const [selected, setSelected] = useState("#457b9d");
+    const [value, setSelected] = useState("#457b9d");
     return (
       <ColorPicker
         {...args}
-        selected={selected}
-        onChange={setSelected}
+        value={value}
+        onValueChange={setSelected}
         className="storybook-colorpicker-custom"
       />
     );
@@ -131,12 +131,12 @@ export const WithClassName: Story = {
 
 export const WithDataTestid: Story = {
   render: (args) => {
-    const [selected, setSelected] = useState("#f4a261");
+    const [value, setSelected] = useState("#f4a261");
     return (
       <ColorPicker
         {...args}
-        selected={selected}
-        onChange={setSelected}
+        value={value}
+        onValueChange={setSelected}
         data-testid="colorpicker-storybook"
       />
     );

@@ -76,7 +76,9 @@
     letter-spacing: var(--letter-spacing-label);
     user-select: none;
     position: relative;
-    transition: all var(--transition-default);
+    transition:
+      background-color var(--motion-color, 160ms ease),
+      color var(--motion-color, 160ms ease);
     background-color: transparent;
 
     @include bp.down(sm) {

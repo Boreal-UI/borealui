@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/core",
-  "version": "0.1.42",
+  "version": "0.1.422",
   "readme": "README.md",
   "description": "Accessible, themeable React components for Boreal UI core consumers.",
   "keywords": [
@@ -47,7 +47,7 @@
     "react-dom": ">=18.2.0"
   },
   "dependencies": {
-    "@boreal-ui/types": "0.1.42"
+    "@boreal-ui/types": "0.1.422"
   },
   "exports": {
     ".": {
@@ -153,10 +153,6 @@
     "./Divider": {
       "types": "./dist/types/core/Divider.d.ts",
       "import": "./dist/core/Divider.js"
-    },
-    "./docs": {
-      "types": "./dist/types/core/docs.d.ts",
-      "import": "./dist/core/docs.js"
     },
     "./DonutChart": {
       "types": "./dist/types/core/DonutChart.d.ts",

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { CommandPalette } from "../src/index.core";
 import type { CommandPaletteProps } from "../src/components/CommandPalette/CommandPalette.types";
-import { FaSearch, FaUser, FaCog } from "react-icons/fa";
+import { FaSearch, FaUser, FaCog } from "../shared-story-assets/icons";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import {
   roundingOptions,
@@ -46,6 +46,19 @@ const sampleCommands = [
   },
 ];
 
+const commandsWithDisabledItem: CommandPaletteProps["commands"] = [
+  sampleCommands[0],
+  {
+    id: "admin-settings",
+    label: "Admin settings",
+    icon: <FaCog />,
+    action: () => {},
+    disabled: true,
+    "aria-description": "Unavailable for your current account",
+  },
+  sampleCommands[1],
+];
+
 export const Default: Story = {
   render: () => {
     const [open, setOpen] = useState(false);
@@ -54,10 +67,32 @@ export const Default: Story = {
       <div style={{ padding: "2rem" }}>
         <button onClick={() => setOpen(true)}>Open Command Palette</button>
         <CommandPalette
-          isOpen={open}
+          open={open}
           onClose={() => setOpen(false)}
           commands={sampleCommands}
           placeholder="Type a command..."
+          theme="primary"
+        />
+      </div>
+    );
+  },
+};
+
+export const DisabledCommand: Story = {
+  render: () => {
+    const [open, setOpen] = useState(false);
+
+    return (
+      <div style={{ padding: "2rem" }}>
+        <button onClick={() => setOpen(true)}>
+          Open palette with disabled command
+        </button>
+        <CommandPalette
+          open={open}
+          onClose={() => setOpen(false)}
+          commands={commandsWithDisabledItem}
+          inputLabel="Search available commands"
+          placeholder="Try selecting Admin settings..."
           theme="primary"
         />
       </div>
@@ -77,7 +112,7 @@ export const ThemeVariants = {
               Open {theme} Palette
             </button>
             <CommandPalette
-              isOpen={openPalette === theme}
+              open={openPalette === theme}
               onClose={() => setOpenPalette(null)}
               commands={sampleCommands}
               placeholder={`Theme: ${theme}`}
@@ -102,7 +137,7 @@ export const StateVariants = {
               Open {state} Palette
             </button>
             <CommandPalette
-              isOpen={openPalette === state}
+              open={openPalette === state}
               onClose={() => setOpenPalette(null)}
               commands={sampleCommands}
               placeholder={`state: ${state}`}
@@ -127,12 +162,12 @@ export const GlassThemeVariants = {
               Glass {theme} Palette
             </button>
             <CommandPalette
-              isOpen={openPalette === theme}
+              open={openPalette === theme}
               onClose={() => setOpenPalette(null)}
               commands={sampleCommands}
               placeholder={`Glass theme: ${theme}`}
               theme={theme}
-              glass
+              variant="glass"
             />
           </div>
         ))}
@@ -153,12 +188,12 @@ export const GlassStateVariants = {
               Glass {state} Palette
             </button>
             <CommandPalette
-              isOpen={openPalette === state}
+              open={openPalette === state}
               onClose={() => setOpenPalette(null)}
               commands={sampleCommands}
               placeholder={`Glass state: ${state}`}
               state={state}
-              glass
+              variant="glass"
             />
           </div>
         ))}
@@ -179,7 +214,7 @@ export const RoundingVariants = {
               Rounding {rounding}
             </button>
             <CommandPalette
-              isOpen={openPalette === rounding}
+              open={openPalette === rounding}
               onClose={() => setOpenPalette(null)}
               commands={sampleCommands}
               placeholder={`Rounding: ${rounding}`}
@@ -204,7 +239,7 @@ export const ShadowVariants = {
               Shadow {shadow} Palette
             </button>
             <CommandPalette
-              isOpen={openPalette === shadow}
+              open={openPalette === shadow}
               onClose={() => setOpenPalette(null)}
               commands={sampleCommands}
               placeholder={`Shadow: ${shadow}`}
@@ -238,7 +273,7 @@ export const AsyncSearch: Story = {
           Open Async Command Palette
         </button>
         <CommandPalette
-          isOpen={open}
+          open={open}
           onClose={() => setOpen(false)}
           commands={sampleCommands}
           asyncSearch={asyncSearch}
@@ -258,7 +293,7 @@ export const WithClassName: Story = {
       <div style={{ padding: "2rem" }}>
         <button onClick={() => setOpen(true)}>Open Custom Class Palette</button>
         <CommandPalette
-          isOpen={open}
+          open={open}
           onClose={() => setOpen(false)}
           commands={sampleCommands}
           placeholder="Palette with custom className"
@@ -277,7 +312,7 @@ export const WithDataTestid: Story = {
       <div style={{ padding: "2rem" }}>
         <button onClick={() => setOpen(true)}>Open DataTestid Palette</button>
         <CommandPalette
-          isOpen={open}
+          open={open}
           onClose={() => setOpen(false)}
           commands={sampleCommands}
           placeholder="Palette with data-testid"

@@ -1,8 +1,7 @@
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -24,8 +23,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
   showFooter = false,
   footerLinks,
   footerVersion,
-  outline = getDefaultOutline(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   className,
 
   navClassName,
@@ -118,10 +116,11 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
         state && classMap[state],
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
-        outline && classMap.outline,
-        glass && classMap.glass,
+        (variant === "outline" || variant === "glassOutline") &&
+          classMap.outline,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
       ),
-    [classMap, className, theme, state, outline, glass, rounding, shadow],
+    [classMap, className, theme, state, variant, rounding, shadow],
   );
 
   const renderLinks = (items: SidebarLink[], isChild = false) => (

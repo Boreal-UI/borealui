@@ -11,11 +11,11 @@ Use it when you want production-ready UI primitives that can be themed globally,
 - **Split React and Next.js packages:** install `@boreal-ui/core` for React apps or `@boreal-ui/next` for Next.js apps when you want only that build's runtime code.
 - **Deep component set:** buttons, forms, navigation, data display, feedback, overlays, layout primitives, and utility components.
 - **Theme system:** curated color schemes, custom schemes, runtime theme selection, CSS variables, and `ThemeSelect`.
-- **Global defaults:** configure default theme, size, rounding, shadow, border width, glass, outline, and color scheme once with `borealConfig` or `setBorealStyleConfig`.
+- **Global defaults:** configure default theme, size, rounding, shadow, border width, surface variant, and color scheme once with `borealConfig` or `setBorealStyleConfig`.
 - **Accessible by default:** semantic markup, ARIA support, keyboard behavior, visible focus states, disabled states, live announcements where useful, and predictable test IDs.
-- **Styling flexibility:** theme, state, size, rounding, shadow, outline, glass, custom class names, SCSS variables, and consumer CSS overrides.
+- **Styling flexibility:** theme, state, size, rounding, shadow, composable surface variants, custom class names, SCSS variables, and consumer CSS overrides.
 - **Typed public API:** TypeScript component props, shared type exports, and generated prop documentation objects for docs tooling.
-- **Package-friendly output:** tree-shakeable ESM, CommonJS support for core entry points, standalone component exports, and Next.js client-boundary handling.
+- **Package-friendly output:** tree-shakeable ESM, standalone component exports, and Next.js client-boundary handling.
 
 ## Installation
 
@@ -27,6 +27,13 @@ npm install @boreal-ui/next
 ```
 
 Component declarations work automatically through either runtime package. Install `@boreal-ui/types` directly only when application code or declaration tooling imports from `@boreal-ui/types` itself.
+
+Generated prop metadata is available separately for documentation sites and
+tooling:
+
+```bash
+npm install @boreal-ui/docs
+```
 
 `@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js. `marked` is a peer dependency used by the Markdown renderer.
 
@@ -180,7 +187,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 
 ### Actions
 
-- `Button` supports native buttons, links via `href`, custom elements via `as`, icons, loading states, full-width layout, external links, outline, glass, theme, state, size, rounding, shadow, and ARIA attributes.
+- `Button` supports native buttons, links via `href`, custom elements via `as`, icons, loading states, full-width layout, external links, surface variants, theme, state, size, rounding, shadow, and ARIA attributes.
 - `IconButton` provides compact icon-only actions with accessible labels.
 - `ScrollToTop` adds a reusable page action for returning to the top of the viewport.
 
@@ -198,7 +205,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 
 ### Data and Content
 
-- `DataTable` supports generic row data, typed columns, sorting, server-side sorting hooks, interactive rows, captions, loading and empty states, row/cell class customization, wrapping cells, striped rows, theme, outline, glass, rounding, shadow, and accessible sort announcements.
+- `DataTable` supports generic row data, typed columns, sorting, server-side sorting hooks, interactive rows, captions, loading and empty states, row/cell class customization, wrapping cells, striped rows, theme, surface variants, rounding, shadow, and accessible sort announcements.
 - `DataTable` also covers admin/SaaS workflows with pagination, column visibility, column resize/reorder/pinning, row expansion, bulk actions, inline editing, server pagination contracts, and virtualization.
 - `Sparkline`, `BarChart`, `LineChart`, `DonutChart`, and `Legend` provide dashboard charting and data summaries.
 - `MarkdownRenderer` renders markdown content.
@@ -216,23 +223,22 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 
 - `AppShell`, `PageHeader`, `BreadCrumbPageHeader`, `NavBar`, `Sidebar`, `Footer`, `Breadcrumbs`, `TreeView`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Toolbar`, `Dropdown`, `Menu`, `Drawer`, `Portal`, `SplitPane`, and `Divider` cover application shells, headers, navigation, page structure, disclosure, pagination, tool rows, menus, overlays, portals, split layouts, and visual separation.
 - `Container`, `Grid`, `Inline`, `Section`, and `Stack` provide layout primitives through the `Layout` entry point and the main barrels.
-- `Card` supports title, description, icon, header/content/footer customization, loading content, outline, glass, shadow, rounding, theme, and section-level class names.
+- `Card` supports title, description, icon, header/content/footer customization, loading content, surface variants, shadow, rounding, theme, and section-level class names.
 - `Avatar` supports image, initials, fallback icon, shape, status, status position, size, theme, and custom styling.
 
 ## Common Styling Props
 
 Many components share the same styling vocabulary:
 
-| Prop                                 | Values                                                    |
+| Prop                                 | Canonical values                                          |
 | ------------------------------------ | --------------------------------------------------------- |
 | `theme`                              | `primary`, `secondary`, `tertiary`, `quaternary`, `clear` |
 | `state`                              | `success`, `error`, `warning`, `disabled`, empty string   |
 | `size`                               | `xs`, `small`, `medium`, `large`, `xl`                    |
-| `rounding`                           | `none`, `small`, `medium`, `large`, `full`                |
+| `rounding`                           | `none`, `small`, `medium`, `large`                        |
 | `shadow`                             | `none`, `light`, `medium`, `strong`, `intense`            |
 | `borderWidth` / `defaultBorderWidth` | `none`, `xs`, `small`, `medium`, `large`, `xl`            |
-| `outline`                            | outline treatment where supported                         |
-| `glass`                              | translucent theme-aware surface where supported           |
+| `variant` / `defaultVariant`         | `solid`, `outline`, `glass`, `glassOutline`               |
 | `className` and section class props  | consumer styling hooks where supported                    |
 | `data-testid`                        | stable test selectors                                     |
 
@@ -251,8 +257,7 @@ borealConfig({
   defaultRounding: "medium",
   defaultShadow: "light",
   defaultBorderWidth: "none",
-  defaultGlass: false,
-  defaultOutline: false,
+  defaultVariant: "solid",
   defaultColorSchemeName: "Forest Dusk",
 });
 ```
@@ -264,6 +269,8 @@ import { borealConfig } from "@boreal-ui/next";
 ```
 
 Component props still win over global defaults:
+
+Use `variant="glassOutline"` when both glass and outline treatments are wanted. `rounding="full"` is intentionally limited to components that support pill or circular rendering, and ColorPicker's `shape="pill"` remains component-specific. Short aliases such as `sm`, `md`, and `lg` are still supported for faster authoring.
 
 ```tsx
 <Button theme="primary" size="large" shadow="strong">
@@ -351,16 +358,19 @@ console.log(defaultColorSchemes.map((scheme) => scheme.name));
 
 ## Generated Prop Docs
 
-Boreal UI exports generated prop metadata for documentation sites, playgrounds, or prop tables through dedicated docs entry points.
+Boreal UI exports generated prop metadata for documentation sites, playgrounds, or prop tables through the optional docs package.
 
 ```tsx
-import { buttonPropDocs, dataTablePropDocs } from "@boreal-ui/core/docs";
+import { buttonPropDocs, dataTablePropDocs } from "@boreal-ui/docs";
 
 console.log(buttonPropDocs.name);
 console.log(dataTablePropDocs.props);
 ```
 
 The docs export includes `GeneratedComponentDoc` and `GeneratedPropDoc` types, plus one prop-doc object per documented component. Prop docs include `defaultValue` when the component implementation sets a readable default.
+
+When migrating from an earlier release, replace `@boreal-ui/core/docs` or
+`@boreal-ui/next/docs` imports with `@boreal-ui/docs`.
 
 For the complete generated prop-doc export list, see [Public API Reference](./docs/public-api-reference.md).
 
@@ -441,17 +451,18 @@ npm run build
 
 Useful scripts:
 
-| Script                    | Purpose                                                 |
-| ------------------------- | ------------------------------------------------------- |
-| `npm run build`           | Build core, Next, docs, and public types.               |
-| `npm run test`            | Run Jest tests.                                         |
-| `npm run test:coverage`   | Run Jest with coverage.                                 |
-| `npm run lint`            | Lint TypeScript and TSX files.                          |
-| `npm run lint:styles`     | Lint CSS and SCSS files.                                |
-| `npm run audit`           | Run type, lint, style, test, build, and package checks. |
-| `npm run gen:docs`        | Regenerate component prop docs.                         |
-| `npm run gen:entrypoints` | Regenerate component entry points.                      |
-| `npm run gen:exports`     | Regenerate package exports.                             |
+| Script                     | Purpose                                                                         |
+| -------------------------- | ------------------------------------------------------------------------------- |
+| `npm run build`            | Build core, Next, docs, and public types.                                       |
+| `npm run test`             | Run Jest tests.                                                                 |
+| `npm run test:coverage`    | Run Jest with coverage.                                                         |
+| `npm run lint`             | Lint TypeScript and TSX files.                                                  |
+| `npm run lint:styles`      | Lint CSS and SCSS files.                                                        |
+| `npm run audit`            | Run type, lint, style, test, build, and package checks.                         |
+| `npm run refresh:packages` | Delete generated package output, rebuild, and restage all publishable packages. |
+| `npm run gen:docs`         | Regenerate component prop docs.                                                 |
+| `npm run gen:entrypoints`  | Regenerate component entry points.                                              |
+| `npm run gen:exports`      | Regenerate package exports.                                                     |
 
 Contributor documentation for component structure, generated docs, package output, release checks, and npm publishing commands lives in [Development Workflow](./docs/development-workflow.md).
 

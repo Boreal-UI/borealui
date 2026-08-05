@@ -1,15 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BaseMetricBox from "@/components/MetricBox/MetricBoxBase";
-import { FaUsers } from "react-icons/fa";
+import { FaUsers } from "../../shared-story-assets/icons";
 import { DummySkeleton } from "../test-utils/dummyComponents";
 
 expect.extend(toHaveNoViolations);
 
 const classNames = {
   wrapper: "metricWrapper",
-  outline: "metricOutline",
-  glass: "metricGlass",
   loading: "metricLoading",
   primary: "themePrimary",
   secondary: "themeSecondary",
@@ -27,6 +25,8 @@ const classNames = {
   shadowMedium: "shadowMedium",
   roundSmall: "roundSmall",
   roundMedium: "roundMedium",
+  glass: "metricGlass",
+  outline: "metricOutline",
 };
 
 describe("BaseMetricBox", () => {
@@ -204,9 +204,8 @@ describe("BaseMetricBox", () => {
         theme="primary"
         state="success"
         size="large"
-        align="left"
-        outline={true}
-        glass={true}
+        align="start"
+        variant="glassOutline"
         shadow="medium"
         rounding="medium"
         className="customClass"

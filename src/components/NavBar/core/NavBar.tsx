@@ -20,7 +20,6 @@ const classes = {
   tertiary: "nav_tertiary",
   quaternary: "nav_quaternary",
   clear: "nav_clear",
-  glass: "nav_glass",
 
   shadowNone: "nav_shadow-None",
   shadowLight: "nav_shadow-Light",
@@ -33,6 +32,7 @@ const classes = {
   roundMedium: "nav_round-Medium",
   roundLarge: "nav_round-Large",
   roundFull: "nav_round-Full",
+  glass: "nav_glass",
 };
 
 const NavBar: React.FC<NavBarProps> = ({

@@ -25,10 +25,10 @@ const classMap = {
   swatch: "colorSwatch",
   preview: "colorPreview",
   radio_input: "radioInput",
-  selected: "selected",
+  value: "value",
   custom_input: "customColorInput",
   helper_text: "helperText",
-  error_text: "errorText",
+  error_text: "error",
   invalid: "invalid",
   disabled: "disabled",
   sr_only: "srOnly",
@@ -47,8 +47,8 @@ const renderColorPicker = (props = {}) =>
   render(
     <ColorPickerBase
       colors={colors}
-      selected="#ff0000"
-      onChange={jest.fn()}
+      value="#ff0000"
+      onValueChange={jest.fn()}
       label="Pick a color"
       classMap={classMap}
       data-testid="color-picker"
@@ -105,8 +105,8 @@ describe("ColorPickerBase", () => {
     });
   });
 
-  it("checks the selected radio button", () => {
-    renderColorPicker({ selected: "#00ff00" });
+  it("checks the value radio button", () => {
+    renderColorPicker({ value: "#00ff00" });
 
     const greenInput = screen.getByRole("radio", { name: "Green" });
     const redInput = screen.getByRole("radio", { name: "Red" });
@@ -117,8 +117,8 @@ describe("ColorPickerBase", () => {
     expect(blueInput).not.toBeChecked();
   });
 
-  it("does not check any radio when selected value does not match provided colors", () => {
-    renderColorPicker({ selected: "#123456" });
+  it("does not check any radio when value value does not match provided colors", () => {
+    renderColorPicker({ value: "#123456" });
 
     const radios = screen.getAllByRole("radio");
     radios.forEach((radio) => {
@@ -126,12 +126,12 @@ describe("ColorPickerBase", () => {
     });
   });
 
-  it("calls onChange with the selected preset color when a radio is clicked", () => {
+  it("calls onValueChange with the value preset color when a radio is clicked", () => {
     const handleChange = jest.fn();
 
     renderColorPicker({
-      selected: "#ff0000",
-      onChange: handleChange,
+      value: "#ff0000",
+      onValueChange: handleChange,
     });
 
     const blueInput = screen.getByRole("radio", { name: "Blue" });
@@ -141,12 +141,12 @@ describe("ColorPickerBase", () => {
     expect(handleChange).toHaveBeenCalledWith("#0000ff");
   });
 
-  it("calls onChange for multiple different radio selections", () => {
+  it("calls onValueChange for multiple different radio selections", () => {
     const handleChange = jest.fn();
 
     renderColorPicker({
-      selected: "#ff0000",
-      onChange: handleChange,
+      value: "#ff0000",
+      onValueChange: handleChange,
     });
 
     const greenInput = screen.getByRole("radio", { name: "Green" });
@@ -218,8 +218,8 @@ describe("ColorPickerBase", () => {
     });
   });
 
-  it("applies the selected class only to the selected preview", () => {
-    renderColorPicker({ selected: "#00ff00" });
+  it("applies the value class only to the value preview", () => {
+    renderColorPicker({ value: "#00ff00" });
 
     const greenPreview = screen
       .getByTestId("color-picker-option-#00ff00")
@@ -233,14 +233,14 @@ describe("ColorPickerBase", () => {
       .getByTestId("color-picker-option-#0000ff")
       .querySelector("span[aria-hidden='true']") as HTMLElement;
 
-    expect(greenPreview).toHaveClass("selected");
-    expect(redPreview).not.toHaveClass("selected");
-    expect(bluePreview).not.toHaveClass("selected");
+    expect(greenPreview).toHaveClass("value");
+    expect(redPreview).not.toHaveClass("value");
+    expect(bluePreview).not.toHaveClass("value");
   });
 
   it("applies preview shape and shadow classes", () => {
     renderColorPicker({
-      selected: "#ff0000",
+      value: "#ff0000",
       shape: "round",
       shadow: "light",
     });
@@ -252,14 +252,14 @@ describe("ColorPickerBase", () => {
     expect(preview).toHaveClass(
       "colorPreview",
       "round",
-      "selected",
+      "value",
       "shadowLight",
     );
   });
 
   it("applies a different shadow class when shadow prop changes", () => {
     renderColorPicker({
-      selected: "#ff0000",
+      value: "#ff0000",
       shadow: "medium",
     });
 
@@ -340,23 +340,23 @@ describe("ColorPickerBase", () => {
     expect(customInput).toHaveClass("customColorInput");
   });
 
-  it("uses the selected value as the custom input value", () => {
+  it("uses the value value as the custom input value", () => {
     renderColorPicker({
       allowCustom: true,
-      selected: "#00ff00",
+      value: "#00ff00",
     });
 
     const customInput = screen.getByLabelText("Custom color picker");
     expect(customInput).toHaveValue("#00ff00");
   });
 
-  it("calls onChange when custom color input changes", () => {
+  it("calls onValueChange when custom color input changes", () => {
     const handleChange = jest.fn();
 
     renderColorPicker({
       allowCustom: true,
-      selected: "#ff0000",
-      onChange: handleChange,
+      value: "#ff0000",
+      onValueChange: handleChange,
     });
 
     const customInput = screen.getByLabelText("Custom color picker");
@@ -382,8 +382,8 @@ describe("ColorPickerBase", () => {
     render(
       <ColorPickerBase
         colors={colors}
-        selected="#ff0000"
-        onChange={jest.fn()}
+        value="#ff0000"
+        onValueChange={jest.fn()}
         label="Choose accent"
         classMap={classMap}
         data-testid="accent-picker"
@@ -467,8 +467,8 @@ describe("ColorPickerBase", () => {
         <span id="external-color-label">External color label</span>
         <ColorPickerBase
           colors={colors}
-          selected="#ff0000"
-          onChange={jest.fn()}
+          value="#ff0000"
+          onValueChange={jest.fn()}
           label="Pick a color"
           classMap={classMap}
           data-testid="color-picker"
@@ -511,23 +511,26 @@ describe("ColorPickerBase", () => {
     });
   });
 
-  it("renders error text when invalid and connects it with aria-describedby", () => {
+  it("renders errorMessage text when invalid and connects it with aria-describedby", () => {
     renderColorPicker({
       invalid: true,
-      errorText: "Please choose a color.",
+      errorMessage: "Please choose a color.",
     });
 
     const fieldset = screen.getByTestId("color-picker");
-    const error = screen.getByTestId("color-picker-error-text");
+    const errorMessage = screen.getByTestId("color-picker-errorMessage-text");
 
-    expect(error).toBeInTheDocument();
-    expect(error).toHaveTextContent("Please choose a color.");
-    expect(error).toHaveAttribute("id", "color-picker-error-text");
-    expect(error).toHaveAttribute("aria-live", "polite");
+    expect(errorMessage).toBeInTheDocument();
+    expect(errorMessage).toHaveTextContent("Please choose a color.");
+    expect(errorMessage).toHaveAttribute(
+      "id",
+      "color-picker-errorMessage-text",
+    );
+    expect(errorMessage).toHaveAttribute("aria-live", "polite");
     expect(fieldset).toHaveAttribute("aria-invalid", "true");
     expect(fieldset).toHaveAttribute(
       "aria-describedby",
-      "color-picker-error-text",
+      "color-picker-errorMessage-text",
     );
 
     const radios = screen.getAllByRole("radio");
@@ -535,26 +538,26 @@ describe("ColorPickerBase", () => {
       expect(radio).not.toHaveAttribute("aria-invalid");
       expect(radio).toHaveAttribute(
         "aria-describedby",
-        "color-picker-error-text",
+        "color-picker-errorMessage-text",
       );
     });
   });
 
-  it("merges external aria-describedby with helper and error text ids", () => {
+  it("merges external aria-describedby with helper and errorMessage text ids", () => {
     render(
       <>
-        <div id="external-description">External description</div>
+        <div id="external-helperText">External helperText</div>
         <ColorPickerBase
           colors={colors}
-          selected="#ff0000"
-          onChange={jest.fn()}
+          value="#ff0000"
+          onValueChange={jest.fn()}
           label="Pick a color"
           classMap={classMap}
           data-testid="color-picker"
-          aria-describedby="external-description"
+          aria-describedby="external-helperText"
           helperText="Helpful guidance"
           invalid
-          errorText="Selection required"
+          errorMessage="Selection required"
         />
       </>,
     );
@@ -562,13 +565,13 @@ describe("ColorPickerBase", () => {
     const fieldset = screen.getByTestId("color-picker");
     expect(fieldset).toHaveAttribute(
       "aria-describedby",
-      "external-description color-picker-helper-text color-picker-error-text",
+      "external-helperText color-picker-helper-text color-picker-errorMessage-text",
     );
 
     const redRadio = screen.getByRole("radio", { name: "Red" });
     expect(redRadio).toHaveAttribute(
       "aria-describedby",
-      "external-description color-picker-helper-text color-picker-error-text",
+      "external-helperText color-picker-helper-text color-picker-errorMessage-text",
     );
   });
 
@@ -585,30 +588,32 @@ describe("ColorPickerBase", () => {
     });
   });
 
-  it("does not render error text when invalid is false", () => {
+  it("does not render errorMessage text when invalid is false", () => {
     renderColorPicker({
       invalid: false,
-      errorText: "Please choose a color.",
+      errorMessage: "Please choose a color.",
     });
 
     expect(
-      screen.queryByTestId("color-picker-error-text"),
+      screen.queryByTestId("color-picker-errorMessage-text"),
     ).not.toBeInTheDocument();
   });
 
-  it("renders helper and error text together when invalid", () => {
+  it("renders helper and errorMessage text together when invalid", () => {
     renderColorPicker({
       helperText: "Choose any available swatch.",
       invalid: true,
-      errorText: "A selection is required.",
+      errorMessage: "A selection is required.",
     });
 
     const fieldset = screen.getByTestId("color-picker");
     expect(screen.getByTestId("color-picker-helper-text")).toBeInTheDocument();
-    expect(screen.getByTestId("color-picker-error-text")).toBeInTheDocument();
+    expect(
+      screen.getByTestId("color-picker-errorMessage-text"),
+    ).toBeInTheDocument();
     expect(fieldset).toHaveAttribute(
       "aria-describedby",
-      "color-picker-helper-text color-picker-error-text",
+      "color-picker-helper-text color-picker-errorMessage-text",
     );
   });
 
@@ -637,8 +642,8 @@ describe("ColorPickerBase", () => {
     render(
       <ColorPickerBase
         colors={colorsWithDisabled}
-        selected="#ff0000"
-        onChange={jest.fn()}
+        value="#ff0000"
+        onValueChange={jest.fn()}
         label="Pick a color"
         classMap={classMap}
         data-testid="color-picker"
@@ -652,15 +657,15 @@ describe("ColorPickerBase", () => {
     expect(greenOption).toHaveClass("disabled");
   });
 
-  it("does not call onChange for a disabled option", async () => {
+  it("does not call onValueChange for a disabled option", async () => {
     const handleChange = jest.fn();
     const user = userEvent.setup();
 
     render(
       <ColorPickerBase
         colors={colorsWithDisabled}
-        selected="#ff0000"
-        onChange={handleChange}
+        value="#ff0000"
+        onValueChange={handleChange}
         label="Pick a color"
         classMap={classMap}
         data-testid="color-picker"
@@ -715,7 +720,7 @@ describe("ColorPickerBase", () => {
     renderColorPicker({
       allowCustom: true,
       invalid: true,
-      errorText: "Please choose a color.",
+      errorMessage: "Please choose a color.",
     });
 
     const customInput = screen.getByLabelText("Custom color picker");
@@ -742,7 +747,7 @@ describe("ColorPickerBase", () => {
   it("has no accessibility violations with custom input enabled", async () => {
     const { container } = renderColorPicker({
       allowCustom: true,
-      selected: "#00ff00",
+      value: "#00ff00",
       label: "Choose a color",
     });
 
@@ -750,12 +755,12 @@ describe("ColorPickerBase", () => {
     expect(results).toHaveNoViolations();
   });
 
-  it("has no accessibility violations when helper and error text are present", async () => {
+  it("has no accessibility violations when helper and errorMessage text are present", async () => {
     const { container } = renderColorPicker({
       allowCustom: true,
       helperText: "Pick a preset swatch or choose a custom color.",
       invalid: true,
-      errorText: "A color must be selected.",
+      errorMessage: "A color must be value.",
       required: true,
     });
 

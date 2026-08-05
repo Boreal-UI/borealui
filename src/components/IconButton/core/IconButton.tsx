@@ -10,8 +10,6 @@ const classes = {
   loader: "icon_button_loader",
 
   disabled: "icon_button_disabled",
-  outline: "icon_button_outline",
-  glass: "icon_button_glass",
 
   primary: "icon_button_primary",
   secondary: "icon_button_secondary",
@@ -42,11 +40,15 @@ const classes = {
   roundMedium: "icon_button_round-Medium",
   roundLarge: "icon_button_round-Large",
   roundFull: "icon_button_round-Full",
+  glass: "icon_button_glass",
+  outline: "icon_button_outline",
 };
 
 const IconButton = forwardRef<
   HTMLButtonElement | HTMLAnchorElement,
   IconButtonProps
->((props, ref) => <IconButtonBase ref={ref} {...props} classMap={expandClassMap(classes)} />);
+>((props, ref) => (
+  <IconButtonBase ref={ref} {...props} classMap={expandClassMap(classes)} />
+));
 IconButton.displayName = "IconButton";
 export default IconButton;

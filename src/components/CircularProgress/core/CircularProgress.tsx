@@ -23,7 +23,6 @@ const classes = {
   warning: "circular_progress_warning",
 
   clear: "circular_progress_clear",
-  glass: "circular_progress_glass",
 
   xs: "circular_progress_xs",
   small: "circular_progress_small",
@@ -36,6 +35,7 @@ const classes = {
   shadowMedium: "circular_progress_shadow-Medium",
   shadowStrong: "circular_progress_shadow-Strong",
   shadowIntense: "circular_progress_shadow-Intense",
+  glass: "circular_progress_glass",
 };
 
 const CircularProgress: React.FC<CircularProgressProps> = (props) => (

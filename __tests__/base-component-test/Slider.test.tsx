@@ -12,7 +12,6 @@ const mockStyles = {
   meta: "sliderMeta",
   metaValueOnly: "sliderMetaValueOnly",
   slider: "slider",
-  glass: "glass",
   value: "sliderValue",
   labelTop: "labelTop",
   labelBottom: "labelBottom",
@@ -31,6 +30,7 @@ const mockStyles = {
   roundSmall: "roundSmall",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "glass",
 };
 
 describe("SliderBase", () => {
@@ -151,9 +151,7 @@ describe("SliderBase", () => {
   });
 
   it("renders label and value above the slider when labelPosition is top", () => {
-    render(
-      <SliderBase {...defaultProps} label="Volume" labelPosition="top" />,
-    );
+    render(<SliderBase {...defaultProps} label="Volume" labelPosition="top" />);
 
     const meta = screen.getByTestId("slider-meta");
     const label = screen.getByTestId("slider-label");
@@ -537,7 +535,7 @@ describe("SliderBase", () => {
       <SliderBase
         {...defaultProps}
         aria-label="Styled slider"
-        glass
+        variant="glassOutline"
         className="custom-class"
       />,
     );

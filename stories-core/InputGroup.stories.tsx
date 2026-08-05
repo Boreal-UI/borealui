@@ -28,7 +28,6 @@ const meta: Meta<InputGroupProps> = {
   args: {
     id: "invoice-amount",
     label: "Invoice amount",
-    description: "Enter the amount before taxes.",
     helperText: "Amounts are stored in USD.",
     prefix: "$",
     suffix: "USD",
@@ -59,7 +58,7 @@ export const Validation: Story = {
   args: {
     required: true,
     state: "error",
-    error: "Invoice amount is required.",
+    errorMessage: "Invoice amount is required.",
   },
 };
 

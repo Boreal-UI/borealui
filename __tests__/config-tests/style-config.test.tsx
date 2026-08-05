@@ -3,8 +3,7 @@ import {
   getBorealStyleConfig,
   getDefaultBorder,
   getDefaultColorSchemeName,
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getDefaultShadow,
   getDefaultSize,
@@ -27,8 +26,7 @@ describe("boreal-style-config", () => {
     expect(getDefaultShadow()).toBe("light");
     expect(getDefaultSize()).toBe("medium");
     expect(getDefaultBorder()).toBe("none");
-    expect(getDefaultGlass()).toBe(false);
-    expect(getDefaultOutline()).toBe(false);
+    expect(getDefaultVariant()).toBe("solid");
     expect(getDefaultColorSchemeName()).toBe("Forest Dusk");
   });
 
@@ -39,8 +37,7 @@ describe("boreal-style-config", () => {
       defaultShadow: "strong",
       defaultSize: "large",
       defaultBorderWidth: "small",
-      defaultGlass: true,
-      defaultOutline: true,
+      defaultVariant: "outline",
       defaultColorSchemeName: "Ocean Breeze",
     });
 
@@ -49,8 +46,7 @@ describe("boreal-style-config", () => {
     expect(getDefaultShadow()).toBe("strong");
     expect(getDefaultSize()).toBe("large");
     expect(getDefaultBorder()).toBe("small");
-    expect(getDefaultGlass()).toBe(true);
-    expect(getDefaultOutline()).toBe(true);
+    expect(getDefaultVariant()).toBe("outline");
     expect(getDefaultColorSchemeName()).toBe("Ocean Breeze");
   });
 
@@ -66,8 +62,7 @@ describe("boreal-style-config", () => {
     expect(getDefaultRounding()).toBe("medium");
     expect(getDefaultShadow()).toBe("light");
     expect(getDefaultBorder()).toBe("none");
-    expect(getDefaultGlass()).toBe(false);
-    expect(getDefaultOutline()).toBe(false);
+    expect(getDefaultVariant()).toBe("solid");
     expect(getDefaultColorSchemeName()).toBe("Forest Dusk");
   });
 
@@ -83,17 +78,16 @@ describe("boreal-style-config", () => {
     expect(getDefaultBorder()).toBe("large");
 
     setBorealStyleConfig({
-      defaultRounding: "full",
+      defaultRounding: "lg",
     });
 
-    expect(getDefaultRounding()).toBe("full");
+    expect(getDefaultRounding()).toBe("lg");
 
     // Previous values should no longer persist because config is replaced
     expect(getDefaultTheme()).toBe("primary");
     expect(getDefaultShadow()).toBe("light");
     expect(getDefaultBorder()).toBe("none");
-    expect(getDefaultGlass()).toBe(false);
-    expect(getDefaultOutline()).toBe(false);
+    expect(getDefaultVariant()).toBe("solid");
   });
 
   it("resets back to fallback defaults when an empty config is set", () => {
@@ -103,8 +97,7 @@ describe("boreal-style-config", () => {
       defaultShadow: "medium",
       defaultSize: "xl",
       defaultBorderWidth: "medium",
-      defaultGlass: true,
-      defaultOutline: true,
+      defaultVariant: "outline",
       defaultColorSchemeName: "Sunny Day",
     });
 
@@ -115,8 +108,7 @@ describe("boreal-style-config", () => {
     expect(getDefaultShadow()).toBe("light");
     expect(getDefaultSize()).toBe("medium");
     expect(getDefaultBorder()).toBe("none");
-    expect(getDefaultGlass()).toBe(false);
-    expect(getDefaultOutline()).toBe(false);
+    expect(getDefaultVariant()).toBe("solid");
     expect(getDefaultColorSchemeName()).toBe("Forest Dusk");
   });
 
@@ -127,8 +119,7 @@ describe("boreal-style-config", () => {
       defaultShadow: "xl",
       defaultSize: "sm",
       defaultBorderWidth: "md",
-      defaultGlass: true,
-      defaultOutline: true,
+      defaultVariant: "outline",
       defaultColorSchemeName: "Custom Scheme",
     });
 
@@ -138,8 +129,7 @@ describe("boreal-style-config", () => {
       defaultShadow: "xl",
       defaultSize: "sm",
       defaultBorderWidth: "md",
-      defaultGlass: true,
-      defaultOutline: true,
+      defaultVariant: "outline",
       defaultColorSchemeName: "Custom Scheme",
     });
   });

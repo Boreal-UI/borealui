@@ -1,16 +1,15 @@
 import {
-  InputHTMLAttributes,
-  ReactNode,
-  RefAttributes,
-  ForwardRefExoticComponent,
-} from "react";
-import {
   LabelPositionType,
-  RoundingType,
   ShadowType,
   StateType,
   ThemeType,
 } from "@/types/types";
+import {
+  ForwardRefExoticComponent,
+  InputHTMLAttributes,
+  ReactNode,
+  RefAttributes,
+} from "react";
 
 type NativeSearchInputProps = Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -114,15 +113,6 @@ export interface SearchInputProps extends NativeSearchInputProps {
    * @default false
    */
   loading?: boolean;
-
-  /**
-   * Controls whether autocomplete is enabled.
-   * Pass true for "on" or false for "off".
-   *
-   * @default false
-   */
-  autocomplete?: boolean;
-
   /**
    * Theme used for styling.
    *
@@ -134,27 +124,18 @@ export interface SearchInputProps extends NativeSearchInputProps {
    * Visual state for styling.
    */
   state?: StateType;
-
   /**
-   * Whether to render outlined styling.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Whether to render glass styling.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding style for the search input.
    *
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Shadow style for the search input.
@@ -239,6 +220,11 @@ export interface SearchInputProps extends NativeSearchInputProps {
    * Backward-compatible alias for test ID attributes.
    */
   "data-testid"?: string;
+  invalid?: boolean;
+  helperText?: import("react").ReactNode;
+  errorMessage?: import("react").ReactNode;
+  size?: import("@/types/types").SizeType;
+  autoComplete?: string;
 }
 
 export interface SearchInputBaseProps extends SearchInputProps {

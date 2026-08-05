@@ -7,6 +7,7 @@ import TimePickerBase from "@/components/TimePicker/TimePickerBase";
 expect.extend(toHaveNoViolations);
 
 const classMap = {
+  large: "large",
   container: "container",
   label: "label",
   labelTop: "labelTop",
@@ -17,9 +18,9 @@ const classMap = {
   inputWrapper: "inputWrapper",
   input: "input",
   button: "button",
-  description: "description",
+  description: "helperText",
   helperText: "helperText",
-  errorText: "errorText",
+  errorText: "error",
   loader: "loader",
   srOnly: "srOnly",
   fullWidth: "fullWidth",
@@ -29,14 +30,14 @@ const classMap = {
   success: "success",
   error: "error",
   clear: "clear",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   shadowLight: "shadowLight",
   shadowStrong: "shadowStrong",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 const renderTimePicker = (
@@ -45,6 +46,11 @@ const renderTimePicker = (
   render(<TimePickerBase label="Start time" classMap={classMap} {...props} />);
 
 describe("TimePickerBase", () => {
+  it("applies the selected size class", () => {
+    renderTimePicker({ size: "large" });
+    expect(screen.getByTestId("time-picker-root")).toHaveClass("large");
+  });
+
   beforeEach(() => {
     jest.restoreAllMocks();
   });
@@ -95,10 +101,9 @@ describe("TimePickerBase", () => {
     );
   });
 
-  it("connects description, helper text, error text, and screen-reader text", () => {
+  it("connects helper and screen-reader text", () => {
     renderTimePicker({
       id: "appointment",
-      description: "Choose the appointment time",
       helperText: "Business hours only",
       srOnlyText: "Native time picker",
     });
@@ -106,12 +111,9 @@ describe("TimePickerBase", () => {
     const input = screen.getByTestId("time-picker-input");
     expect(input).toHaveAttribute(
       "aria-describedby",
-      "appointment-description appointment-helper appointment-sr-description",
+      "appointment-helperText appointment-sr-helperText",
     );
-    expect(screen.getByTestId("time-picker-description")).toHaveTextContent(
-      "Choose the appointment time",
-    );
-    expect(screen.getByTestId("time-picker-helper")).toHaveTextContent(
+    expect(screen.getByTestId("time-picker-helperText")).toHaveTextContent(
       "Business hours only",
     );
     expect(screen.getByTestId("time-picker-sr-only-text")).toHaveTextContent(
@@ -123,17 +125,25 @@ describe("TimePickerBase", () => {
     renderTimePicker({
       id: "appointment",
       helperText: "Business hours only",
-      error: "Choose a valid time",
+      errorMessage: "Choose a valid time",
     });
 
     const input = screen.getByTestId("time-picker-input");
-    const error = screen.getByRole("alert");
+    const errorMessage = screen.getByRole("alert");
 
-    expect(screen.queryByTestId("time-picker-helper")).not.toBeInTheDocument();
-    expect(error).toHaveTextContent("Choose a valid time");
+    expect(screen.getByTestId("time-picker-helperText")).toHaveTextContent(
+      "Business hours only",
+    );
+    expect(errorMessage).toHaveTextContent("Choose a valid time");
     expect(input).toHaveAttribute("aria-invalid", "true");
-    expect(input).toHaveAttribute("aria-errormessage", "appointment-error");
-    expect(input).toHaveAttribute("aria-describedby", "appointment-error");
+    expect(input).toHaveAttribute(
+      "aria-errormessage",
+      "appointment-errorMessage",
+    );
+    expect(input).toHaveAttribute(
+      "aria-describedby",
+      "appointment-helperText appointment-errorMessage",
+    );
   });
 
   it("marks values outside min and max as invalid", () => {
@@ -153,8 +163,7 @@ describe("TimePickerBase", () => {
     renderTimePicker({
       theme: "secondary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       rounding: "large",
       shadow: "strong",
       fullWidth: true,
@@ -242,7 +251,6 @@ describe("TimePickerBase", () => {
 
   it("has no accessibility violations", async () => {
     const { container } = renderTimePicker({
-      description: "Choose a start time",
       helperText: "Use 24-hour time",
     });
 

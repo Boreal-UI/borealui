@@ -4,19 +4,18 @@ This page lists the public API surfaces Boreal UI publishes for consumers and do
 
 ## Primary Entry Points
 
-| Entry point                    | Use                                                           |
-| ------------------------------ | ------------------------------------------------------------- |
-| `@boreal-ui/core`              | Standard React component barrel.                              |
-| `@boreal-ui/next`              | Next.js component barrel with client-boundary-safe wrappers.  |
-| `@boreal-ui/next/server`       | Static React Server Component barrel for Next.js.             |
-| `@boreal-ui/next/server/Card`  | Standalone Next.js server component path.                     |
-| `@boreal-ui/core/globals.css`  | Core global stylesheet. Import once.                          |
-| `@boreal-ui/next/globals.css`  | Next global stylesheet. Import once.                          |
-| `@boreal-ui/types`             | Shared public declarations. Add directly when importing it.   |
-| `@boreal-ui/types/core/Button` | Core component prop declarations.                             |
-| `@boreal-ui/types/next/Button` | Next component prop declarations.                             |
-| `@boreal-ui/core/docs`         | Generated Core component prop metadata.                       |
-| `@boreal-ui/next/docs`         | Generated Next component prop metadata.                       |
+| Entry point                    | Use                                                          |
+| ------------------------------ | ------------------------------------------------------------ |
+| `@boreal-ui/core`              | Standard React component barrel.                             |
+| `@boreal-ui/next`              | Next.js component barrel with client-boundary-safe wrappers. |
+| `@boreal-ui/next/server`       | Static React Server Component barrel for Next.js.            |
+| `@boreal-ui/next/server/Card`  | Standalone Next.js server component path.                    |
+| `@boreal-ui/core/globals.css`  | Core global stylesheet. Import once.                         |
+| `@boreal-ui/next/globals.css`  | Next global stylesheet. Import once.                         |
+| `@boreal-ui/types`             | Shared public declarations. Add directly when importing it.  |
+| `@boreal-ui/types/core/Button` | Core component prop declarations.                            |
+| `@boreal-ui/types/next/Button` | Next component prop declarations.                            |
+| `@boreal-ui/docs`              | Optional generated component prop metadata.                  |
 
 Use the explicit `core` or `next` entry in application code.
 
@@ -185,7 +184,7 @@ Standalone component paths:
 
 ## Generated Prop Docs
 
-Generated prop metadata is available from dedicated docs entry points.
+Generated prop metadata is available from the optional docs package.
 
 ```ts
 import {
@@ -193,7 +192,7 @@ import {
   radioGroupPropDocs,
   themeSelectPropDocs,
   type GeneratedComponentDoc,
-} from "@boreal-ui/core/docs";
+} from "@boreal-ui/docs";
 ```
 
 Prop-doc exports:

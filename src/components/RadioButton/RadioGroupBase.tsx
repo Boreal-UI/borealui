@@ -11,14 +11,14 @@ const BaseRadioGroup = ({
   onChange,
   orientation = "vertical",
   theme,
-  glass,
+  variant,
   state,
   rounding,
   shadow,
   disabled = false,
   required = false,
   invalid = false,
-  description,
+  helperText,
   errorMessage,
   className,
   optionsClassName,
@@ -31,8 +31,8 @@ const BaseRadioGroup = ({
 }: BaseRadioGroupProps) => {
   const uid = useId();
   const groupId = id ?? `${testId}-${uid}`;
-  const descriptionId = description ? `${groupId}-description` : undefined;
-  const errorId = errorMessage ? `${groupId}-error` : undefined;
+  const descriptionId = helperText ? `${groupId}-helperText` : undefined;
+  const errorId = errorMessage ? `${groupId}-errorMessage` : undefined;
 
   const resolvedAriaDescribedBy =
     [ariaDescribedBy, descriptionId, errorId].filter(Boolean).join(" ") ||
@@ -97,7 +97,7 @@ const BaseRadioGroup = ({
               disabled={disabled || option.disabled}
               required={required}
               theme={theme}
-              glass={glass}
+              variant={variant}
               state={state}
               rounding={rounding}
               shadow={shadow}
@@ -109,20 +109,20 @@ const BaseRadioGroup = ({
           );
         })}
       </div>
-      {description && (
+      {helperText && (
         <div
           id={descriptionId}
-          className={classMap.description}
-          data-testid={testId ? `${testId}-description` : undefined}
+          className={classMap.helperText}
+          data-testid={testId ? `${testId}-helperText` : undefined}
         >
-          {description}
+          {helperText}
         </div>
       )}
       {errorMessage && (
         <div
           id={errorId}
-          className={classMap.errorMessage}
-          data-testid={testId ? `${testId}-error` : undefined}
+          className={classMap.error}
+          data-testid={testId ? `${testId}-errorMessage` : undefined}
         >
           {errorMessage}
         </div>

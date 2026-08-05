@@ -1,5 +1,5 @@
+import { ShadowType, StateType, ThemeType } from "@/types/types";
 import { ReactNode } from "react";
-import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 
 export type DrawerPlacement = "left" | "right" | "top" | "bottom";
 
@@ -54,15 +54,16 @@ export interface DrawerProps {
    */
   state?: StateType;
   /**
-   * Glass.
-   * @default configured default glass setting (fallback: false)
+   * Surface treatment; glassOutline combines glass and outline.
+   *
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding.
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
   /**
    * Shadow.
    * @default configured default shadow (fallback: "light")

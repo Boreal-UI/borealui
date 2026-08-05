@@ -40,7 +40,7 @@
   }
 
   .form_field_label_right {
-    grid-template-columns: minmax(0, 1fr) max-content;
+    grid-template-columns: minmax(0, 1fr) fit-content;
     grid-template-areas:
       "control label"
       "helper ."

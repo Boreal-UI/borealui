@@ -3,8 +3,7 @@ import { Breadcrumb, BreadcrumbsBaseProps } from "./Breadcrumbs.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -26,8 +25,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   classMap,
   disabled = false,
   size = getDefaultSize(),
-  outline = getDefaultOutline(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   className,
   maxVisible,
   LinkComponent = "a",
@@ -61,8 +59,9 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
-        outline && classMap.outline,
-        glass && classMap.glass,
+        (variant === "outline" || variant === "glassOutline") &&
+          classMap.outline,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         className,
       ),
     [
@@ -72,8 +71,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
       shadow,
       rounding,
       disabled,
-      outline,
-      glass,
+      variant,
       className,
       classMap,
     ],

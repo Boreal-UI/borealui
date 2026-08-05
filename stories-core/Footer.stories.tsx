@@ -8,7 +8,7 @@ import {
   FaNpm,
   FaTwitter,
   FaYoutube,
-} from "react-icons/fa";
+} from "../shared-story-assets/icons";
 import ThemeProvider from "../src/context/ThemeContext";
 import image from "./assets/tutorials.svg";
 import {
@@ -273,7 +273,7 @@ export const GlassThemes: Story = {
           key={`glass-${theme}`}
           {...args}
           theme={theme}
-          glass
+          variant="glass"
           copyright={`Â© 2025 Your Company (${theme} glass)`}
           showThemeSelect
         />
@@ -293,7 +293,7 @@ export const GlassColumnThemes: Story = {
           key={`glass-column-${theme}`}
           {...args}
           theme={theme}
-          glass
+          variant="glass"
           copyright={`Â© 2026 Boreal UI (${theme} glass)`}
         />
       ))}

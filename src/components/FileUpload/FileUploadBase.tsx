@@ -4,8 +4,7 @@ import { FileIcon, TrashIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -13,14 +12,13 @@ import {
 
 const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   label = "Upload File",
-  description,
-  error,
+  helperText,
+  errorMessage,
   required = false,
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   controlRounding = getDefaultRounding(),
   controlShadow,
-  outline = getDefaultOutline(),
   outlineRounding = getDefaultRounding(),
   outlineShadow,
   state,
@@ -115,9 +113,9 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   const truncate = (value: string) =>
     value.length > 30 ? `${value.slice(0, 27)}...` : value;
 
-  const descriptionId = `${baseId}-description`;
-  const errorId = `${baseId}-error`;
-  const dropzoneDescriptionId = `${baseId}-dropzone-description`;
+  const descriptionId = `${baseId}-helperText`;
+  const errorId = `${baseId}-errorMessage`;
+  const dropzoneDescriptionId = `${baseId}-dropzone-helperText`;
   const liveRegionId = `${baseId}-live-region`;
   const fileListId = `${baseId}-file-list`;
   const rejectedListId = `${baseId}-rejected-list`;
@@ -313,10 +311,10 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
         classMap.fileUpload,
         state && classMap[state],
         classMap[theme],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         getShadowClassName(classMap, theme, outlineShadow),
         outlineRounding && classMap[`round${capitalize(outlineRounding)}`],
-        error && classMap.error,
+        errorMessage && classMap.error,
         isDragging && classMap.dragging,
         disabled && classMap.disabled,
         dropzoneClassName,
@@ -326,10 +324,10 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       classMap,
       theme,
       state,
-      glass,
+      variant,
       outlineShadow,
       outlineRounding,
-      error,
+      errorMessage,
       isDragging,
       disabled,
       dropzoneClassName,
@@ -339,8 +337,8 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
 
   const describedBy =
     [
-      description ? descriptionId : undefined,
-      error ? errorId : undefined,
+      helperText ? descriptionId : undefined,
+      errorMessage ? errorId : undefined,
       dropzoneDescription ? dropzoneDescriptionId : undefined,
       ariaDescribedBy,
     ]
@@ -348,7 +346,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       .join(" ") || undefined;
 
   const computedAriaInvalid =
-    ariaInvalid !== undefined ? ariaInvalid : error ? true : undefined;
+    ariaInvalid !== undefined ? ariaInvalid : errorMessage ? true : undefined;
 
   const computedAriaRequired =
     ariaRequired !== undefined ? ariaRequired : required ? true : undefined;
@@ -356,8 +354,8 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   return (
     <FormGroup
       label={label}
-      description={description}
-      error={error}
+      helperText={helperText}
+      errorMessage={errorMessage}
       required={required}
       className={formGroupClassName}
       labelClassName={labelClassName}
@@ -376,7 +374,9 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
         aria-describedby={describedBy}
-        aria-errormessage={error ? ariaErrorMessage || errorId : undefined}
+        aria-errormessage={
+          errorMessage ? ariaErrorMessage || errorId : undefined
+        }
         aria-invalid={computedAriaInvalid}
         aria-required={computedAriaRequired}
         aria-busy={ariaBusy !== undefined ? ariaBusy : uploading || undefined}
@@ -405,7 +405,9 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
           disabled={disabled}
           aria-label={inputAriaLabel || label || "Choose file"}
           aria-describedby={describedBy}
-          aria-errormessage={error ? ariaErrorMessage || errorId : undefined}
+          aria-errormessage={
+            errorMessage ? ariaErrorMessage || errorId : undefined
+          }
           aria-invalid={computedAriaInvalid}
           aria-required={computedAriaRequired}
           data-testid={`${testId}-input`}
@@ -422,15 +424,14 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             icon={FileIcon}
             size={selectButtonProps?.size ?? "small"}
             theme={theme}
-            glass={glass}
-            state={error ? "error" : state}
+            state={errorMessage ? "error" : state}
             className={combineClassNames(
               classMap.fileInput,
               selectButtonClassName,
               selectButtonProps?.className,
             )}
             disabled={uploading || disabled}
-            outline={outline}
+            variant={variant}
             rounding={controlRounding}
             shadow={controlShadow}
             onClick={() => {
@@ -507,7 +508,10 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
           >
             <ul
               id={fileListId}
-              className={combineClassNames(classMap.fileList, fileListClassName)}
+              className={combineClassNames(
+                classMap.fileList,
+                fileListClassName,
+              )}
               aria-label={fileListAriaLabel || "Selected files"}
             >
               {fileNames.map((name, index) => (
@@ -522,11 +526,10 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
                   <IconButton
                     {...removeButtonProps}
                     icon={TrashIcon}
-                    glass={glass}
                     state="error"
                     size={removeButtonProps?.size ?? "small"}
                     type="button"
-                    outline
+                    variant="outline"
                     aria-label={
                       removeFileAriaLabel?.(name, index) || `Remove ${name}`
                     }
@@ -546,7 +549,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
               <ProgressBar
                 {...progressBarProps}
                 theme={theme}
-                glass={glass}
+                variant={variant}
                 className={combineClassNames(
                   classMap.uploadProgress,
                   uploadProgressClassName,
@@ -564,8 +567,8 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
               <Button
                 {...uploadButtonProps}
                 theme={theme}
-                glass={glass}
-                state={error ? "error" : state}
+                variant={variant}
+                state={errorMessage ? "error" : state}
                 disabled={disabled || files.length === 0}
                 onClick={() => {
                   void handleUpload();

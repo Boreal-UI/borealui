@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { FaCheckCircle, FaClipboardList, FaFileAlt } from "react-icons/fa";
+import { FaCheckCircle, FaClipboardList, FaFileAlt } from "../../shared-story-assets/icons";
 import { StateType, Stepper, ThemeType } from "../../src/index.next";
 import type { StepperProps } from "../../src/components/Stepper/Stepper.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
@@ -116,7 +116,7 @@ export const GlassThemeVariants: Story = {
               key={theme}
               {...args}
               theme={theme}
-              glass
+              variant="glass"
               activeStep={activeStep}
               onStepClick={setActiveStep}
             />
@@ -138,7 +138,7 @@ export const GlassStateVariants: Story = {
               key={state}
               {...args}
               state={state}
-              glass
+              variant="glass"
               activeStep={activeStep}
               onStepClick={setActiveStep}
             />

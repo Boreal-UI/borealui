@@ -12,43 +12,42 @@ const meta: Meta<FormFieldProps> = {
   argTypes: {
     id: {
       control: "text",
-      description: "Optional ID passed to the child control and label.",
+      helperText: "Optional ID passed to the child control and label.",
     },
     label: {
       control: "text",
-      description:
+      helperText:
         "Label content rendered above, below, left, or right of the control.",
     },
     helperText: {
       control: "text",
-      description:
+      helperText:
         "Supporting helper text connected to the control with aria-describedby.",
     },
-    error: {
+    errorMessage: {
       control: "text",
-      description:
+      helperText:
         "Error message connected to the control and rendered with role='alert'.",
     },
     required: {
       control: "boolean",
-      description:
+      helperText:
         "Marks the child control as required and hides optional text.",
     },
     optionalText: {
       control: "text",
-      description:
-        "Text shown beside the label when the field is not required.",
+      helperText: "Text shown beside the label when the field is not required.",
     },
     labelPosition: {
       control: "select",
       options: labelPositionOptions,
-      description:
+      helperText:
         "Controls where the label is positioned relative to the control.",
     },
     state: {
       control: "select",
       options: ["", ...stateOptions],
-      description: "Visual state class applied to the form field wrapper.",
+      helperText: "Visual state class applied to the form field wrapper.",
     },
     className: {
       control: "text",
@@ -70,7 +69,7 @@ const meta: Meta<FormFieldProps> = {
     },
     children: {
       control: false,
-      description: "A single form control element cloned by FormFieldBase.",
+      helperText: "A single form control element cloned by FormFieldBase.",
     },
   },
   args: {
@@ -105,7 +104,7 @@ export const Required: Story = {
 export const Error: Story = {
   args: {
     required: true,
-    error: "Email is required.",
+    errorMessage: "Email is required.",
     helperText: "Use your work email.",
     children: (
       <input title="email" type="email" placeholder="name@example.com" />
@@ -245,13 +244,13 @@ export const WithExistingChildDescription: Story = {
   args: {
     id: "username-field",
     label: "Username",
-    helperText: "This helper text is appended to the existing description.",
+    helperText: "This helper text is appended to the existing helperText.",
     children: (
       <>
-        {/* Storybook note: FormField expects a single child control, so keep the description outside in real usage. */}
+        {/* Storybook note: FormField expects a single child control, so keep the helperText outside in real usage. */}
         <input
           title="username"
-          aria-describedby="external-username-description"
+          aria-describedby="external-username-helperText"
           placeholder="davin"
         />
       </>
@@ -259,7 +258,7 @@ export const WithExistingChildDescription: Story = {
   },
   render: (args) => (
     <div>
-      <p id="external-username-description">Existing external description.</p>
+      <p id="external-username-helperText">Existing external helperText.</p>
       <FormField {...args} />
     </div>
   ),
@@ -270,7 +269,7 @@ export const Playground: Story = {
     id: "playground-field",
     label: "Playground field",
     helperText: "Use the controls panel to test different props.",
-    error: "",
+    errorMessage: "",
     required: false,
     optionalText: "Optional",
     labelPosition: "top",

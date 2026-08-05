@@ -63,7 +63,7 @@ export const Controlled: Story = {
       <Accordion
         {...args}
         expanded={open}
-        onToggle={(nextExpanded) => setOpen(nextExpanded)}
+        onExpandedChange={(nextExpanded) => setOpen(nextExpanded)}
         customCollapsedIcon="⏵"
         customExpandedIcon="⏷"
       />
@@ -91,7 +91,7 @@ export const LazyAndAsync: Story = {
     lazyLoad: true,
     asyncContent: true,
     loadingAriaLabel: "Loading accordion content",
-    initiallyExpanded: false,
+    defaultExpanded: false,
     children: (
       <div>
         <p>
@@ -111,7 +111,7 @@ export const LotsOfContent: Story = {
   args: {
     ...defaultArgs,
     title: "Accordion With Lots of Content",
-    initiallyExpanded: false,
+    defaultExpanded: false,
     children: (
       <div>
         <p>
@@ -141,7 +141,7 @@ export const LazyLoadContent: Story = {
     ...defaultArgs,
     title: "Lazy Loaded Accordion",
     lazyLoad: true,
-    initiallyExpanded: false,
+    defaultExpanded: false,
     children: (
       <div>
         <p>
@@ -158,7 +158,7 @@ export const IconOnLeft: Story = {
     ...defaultArgs,
     title: "Icon on the Left",
     iconPosition: "left",
-    initiallyExpanded: true,
+    defaultExpanded: true,
     customCollapsedIcon: "▶",
     customExpandedIcon: "▼",
     children: (
@@ -174,8 +174,8 @@ export const NonToggleableAccordion: Story = {
   args: {
     ...defaultArgs,
     title: "Non-Toggleable Accordion",
-    initiallyExpanded: true,
-    "no-collapse": true,
+    defaultExpanded: true,
+    disableCollapse: true,
     children: (
       <p>
         Once opened, this accordion cannot be closed. This is useful for locked
@@ -190,7 +190,7 @@ export const WithDescription: Story = {
     ...defaultArgs,
     title: "Accordion with Screen Reader Description",
     description: "This section contains tips for screen reader users.",
-    initiallyExpanded: false,
+    defaultExpanded: false,
     children: (
       <p>
         The description prop is visually hidden but announced to assistive

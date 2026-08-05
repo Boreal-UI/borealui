@@ -59,8 +59,8 @@ function SetBorealStyleConfigDemo({
       }}
     >
       <div>
-        <Typography variant="h3">setBorealStyleConfig Demo</Typography>
-        <Typography variant="body">
+        <Typography textStyle="h3">setBorealStyleConfig Demo</Typography>
+        <Typography textStyle="body">
           This story updates the Boreal UI global style defaults so you can
           preview how shared defaults affect components.
         </Typography>
@@ -71,16 +71,16 @@ function SetBorealStyleConfigDemo({
         description="These values were applied through setBorealStyleConfig."
       >
         <div style={{ display: "grid", gap: "0.5rem" }}>
-          <Typography variant="body">
+          <Typography textStyle="body">
             <strong>Theme:</strong> {config.theme}
           </Typography>
-          <Typography variant="body">
+          <Typography textStyle="body">
             <strong>Size:</strong> {config.size}
           </Typography>
-          <Typography variant="body">
+          <Typography textStyle="body">
             <strong>Rounding:</strong> {config.rounding}
           </Typography>
-          <Typography variant="body">
+          <Typography textStyle="body">
             <strong>Shadow:</strong> {config.shadow}
           </Typography>
         </div>
@@ -89,14 +89,14 @@ function SetBorealStyleConfigDemo({
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         <Button>Default Button</Button>
         <Button theme="secondary">Secondary Button</Button>
-        <Button outline>Outline Button</Button>
+        <Button variant="outline">Outline Button</Button>
       </div>
 
       <Card
         title="Preview Card"
         description="Use the controls in Storybook to test different default styling combinations."
       >
-        <Typography variant="body">
+        <Typography textStyle="body">
           This card helps confirm that your global Boreal style config is being
           applied.
         </Typography>

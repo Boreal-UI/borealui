@@ -1,3 +1,4 @@
+import { SizeType } from "@/types/types";
 import type {
   AriaRole,
   HTMLAttributes,
@@ -6,7 +7,6 @@ import type {
   ReactElement,
   ReactNode,
 } from "react";
-import { SizeType } from "@/types/types";
 
 /**
  * Props that will be merged into the rendered form control child.
@@ -52,10 +52,10 @@ export interface FormGroupProps extends Omit<
   label?: string;
 
   /** Optional helper text displayed below the input. */
-  description?: string;
+  helperText?: string;
 
   /** Optional error message shown below the input. */
-  error?: string;
+  errorMessage?: string;
 
   /** The form element or component (input, textarea, etc.). */
   children: ReactElement | ReactElement[];
@@ -159,6 +159,7 @@ export interface FormGroupProps extends Omit<
 
   /** Optional props merged into each child control. */
   controlProps?: FormGroupControlProps;
+  invalid?: boolean;
 }
 
 export interface BaseFormGroupProps extends FormGroupProps {

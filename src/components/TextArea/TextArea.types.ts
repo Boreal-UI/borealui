@@ -6,10 +6,10 @@ import {
   ThemeType,
 } from "@/types/types";
 import {
-  TextareaHTMLAttributes,
+  ChangeEvent,
   ComponentType,
   ReactNode,
-  ChangeEvent,
+  TextareaHTMLAttributes,
 } from "react";
 
 /**
@@ -85,14 +85,6 @@ export interface TextAreaProps extends Omit<
    * @default false
    */
   readOnly?: boolean;
-
-  /**
-   * Enables or disables autocomplete.
-   *
-   * @default false
-   */
-  autocomplete?: boolean;
-
   /**
    * Legacy accessible label prop.
    * Prefer using `aria-label`.
@@ -127,14 +119,12 @@ export interface TextAreaProps extends Omit<
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Adds translucent glass styling to the textarea wrapper.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the text area.
    *
@@ -154,14 +144,6 @@ export interface TextAreaProps extends Omit<
    * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
-
-  /**
-   * If true, the textarea is styled with an outline.
-   *
-   * @default configured default outline setting (fallback: false)
-   */
-  outline?: boolean;
-
   /**
    * If true, the textarea is disabled.
    *
@@ -181,7 +163,6 @@ export interface TextAreaProps extends Omit<
    */
   height?: string | number;
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -191,4 +172,7 @@ export interface TextAreaProps extends Omit<
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+  invalid?: boolean;
+  size?: import("@/types/types").SizeType;
+  autoComplete?: string;
 }

@@ -71,8 +71,8 @@
     border: none;
     cursor: pointer;
     transition:
-      transform var(--transition-default),
-      box-shadow var(--transition-default);
+      transform var(--motion-press, 140ms cubic-bezier(0.23, 1, 0.32, 1)),
+      box-shadow var(--motion-color, 160ms ease);
     font-family: var(--font-family-ui);
     font-size: var(--font-size-label);
     font-weight: var(--font-weight-label);
@@ -82,8 +82,11 @@
     text-decoration: none;
 
     &:hover {
-      transform: scale(1.05);
       text-decoration: none;
+    }
+
+    &:active {
+      transform: scale(0.97);
     }
 
     &:focus {
@@ -373,6 +376,12 @@
           height: calc(#{map.get($values, icon)} * 1.05);
         }
       }
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .button:hover {
+      transform: scale(1.03);
     }
   }
 }

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { FaCopy, FaEdit, FaFolderOpen, FaTrash } from "react-icons/fa";
+import { FaCopy, FaEdit, FaFolderOpen, FaTrash } from "../../shared-story-assets/icons";
 import { Button, Menu } from "../../src/index.next";
 import type { MenuProps } from "../../src/components/Menu/Menu.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
@@ -197,7 +197,7 @@ export const GlassThemeVariants: Story = {
           trigger={theme}
           activation="click"
           theme={theme}
-          glass
+          variant="glass"
           aria-label={`Glass ${theme} menu`}
           items={listItems}
         />

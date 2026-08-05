@@ -16,8 +16,6 @@ const classes = {
 
   fullWidth: "button_full_width",
   disabled: "button_disabled",
-  outline: "button_outline",
-  glass: "button_glass",
 
   primary: "button_primary",
   secondary: "button_secondary",
@@ -46,6 +44,8 @@ const classes = {
   roundSmall: "button_round-Small",
   roundMedium: "button_round-Medium",
   roundLarge: "button_round-Large",
+  glass: "button_glass",
+  outline: "button_outline",
 };
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (

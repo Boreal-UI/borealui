@@ -98,9 +98,9 @@ export const GlassThemeVariants: Story = {
           <PopOver
             key={theme}
             theme={theme}
-            glass
+            variant="glass"
             trigger={
-              <Button theme={theme} glass>
+              <Button theme={theme} variant="glass">
                 {theme}
               </Button>
             }
@@ -122,9 +122,9 @@ export const GlassStateVariants: Story = {
           <PopOver
             key={state}
             state={state}
-            glass
+            variant="glass"
             trigger={
-              <Button state={state} glass>
+              <Button state={state} variant="glass">
                 {state}
               </Button>
             }

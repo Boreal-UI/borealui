@@ -46,12 +46,6 @@
       outline-offset: 3px;
     }
 
-    &.file_upload_dragover,
-    &[data-drag-active="true"] {
-      background-color: var(--background-color-lighter);
-      border-color: var(--focus-outline-color, var(--primary-color));
-    }
-
     @each $key, $value in theme.$rounding {
       &_round-#{$key} {
         border-radius: $value;
@@ -100,9 +94,7 @@
       color: inherit;
     }
 
-    &_glass:hover,
-    &_glass.file_upload_dragover,
-    &_glass[data-drag-active="true"] {
+    &_glass:hover {
       background: var(--file-upload-glass-hover-bg, rgba(255, 255, 255, 0.24));
     }
 

@@ -1,3 +1,9 @@
+import type {
+  AnchorHTMLAttributes,
+  AriaRole,
+  ButtonHTMLAttributes,
+  ElementType,
+} from "react";
 import { MouseEvent, ReactNode } from "react";
 import {
   ShadowType,
@@ -8,12 +14,6 @@ import {
   StatusType,
   ThemeType,
 } from "../../types/types";
-import type {
-  AnchorHTMLAttributes,
-  ButtonHTMLAttributes,
-  ElementType,
-  AriaRole,
-} from "react";
 
 export type AnchorInteractiveProps = Omit<
   AnchorHTMLAttributes<HTMLAnchorElement>,
@@ -176,21 +176,12 @@ export interface AvatarProps {
    * Custom child elements (replaces avatar content entirely).
    */
   children?: ReactNode;
-
   /**
-   * Whether to apply an outline style.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * If provided, avatar becomes a link (internal or external).
    */

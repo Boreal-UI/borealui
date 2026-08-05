@@ -1,10 +1,17 @@
-import { act, render, screen, fireEvent, waitFor } from "@testing-library/react";
+import {
+  act,
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+} from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BaseSelect from "@/components/Select/SelectBase";
 
 expect.extend(toHaveNoViolations);
 
 const classMap = {
+  large: "large",
   layout: "layout",
   wrapper: "wrapper",
   select: "select",
@@ -16,14 +23,14 @@ const classMap = {
   labelLeft: "labelLeft",
   labelRight: "labelRight",
   loading: "loading",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   primary: "themePrimary",
   secondary: "themeSecondary",
   error: "stateError",
   shadowMedium: "shadowMedium",
   roundMedium: "roundMedium",
+  glass: "glass",
+  outline: "outline",
 };
 
 describe("BaseSelect", () => {
@@ -37,6 +44,11 @@ describe("BaseSelect", () => {
     classMap,
     "data-testid": "select",
   };
+
+  it("applies the selected size class", () => {
+    render(<BaseSelect {...defaultProps} size="large" />);
+    expect(screen.getByTestId("select")).toHaveClass("large");
+  });
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -318,8 +330,7 @@ describe("BaseSelect", () => {
         aria-label="Fruit select"
         theme="primary"
         state="error"
-        outline
-        glass
+        variant="glassOutline"
         rounding="medium"
         shadow="medium"
       />,

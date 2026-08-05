@@ -1,11 +1,10 @@
-import { ReactNode } from "react";
 import {
   LabelPositionType,
-  RoundingType,
   ShadowType,
   StateType,
   ThemeType,
 } from "@/types/types";
+import { ReactNode } from "react";
 
 export type DateInputChange =
   | string
@@ -91,7 +90,7 @@ export interface DateRangePickerProps {
   /**
    * Error message or error state displayed with the component.
    */
-  error?: ReactNode;
+  errorMessage?: ReactNode;
   /**
    * Theme.
    * @default configured default theme (fallback: "primary")
@@ -102,20 +101,16 @@ export interface DateRangePickerProps {
    */
   state?: StateType;
   /**
-   * Outline.
-   * @default configured default outline setting (fallback: false)
+   * Surface treatment; glassOutline combines glass and outline.
+   *
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-  /**
-   * Glass.
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding.
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
   /**
    * Shadow.
    * @default configured default shadow (fallback: "light")
@@ -165,6 +160,8 @@ export interface DateRangePickerProps {
    * Test id used to identify the component in tests.
    */
   "data-testid"?: string;
+  invalid?: boolean;
+  size?: import("@/types/types").SizeType;
 }
 
 export interface DateRangePickerBaseProps extends DateRangePickerProps {

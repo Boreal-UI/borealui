@@ -390,7 +390,7 @@ describe("CheckBoxBase", () => {
       rounding: "small",
       disabled: true,
       invalid: true,
-      glass: true,
+      variant: "glassOutline",
       className: "custom-checkbox-class",
     });
 
@@ -428,15 +428,15 @@ describe("CheckBoxBase", () => {
   it("applies custom class names to checkbox sections", () => {
     renderCheckBox({
       label: "Custom parts",
-      description: "Helpful detail",
+      helperText: "Helpful detail",
       errorMessage: "Needs attention",
       invalid: true,
       labelWrapperClassName: "custom-label-wrapper",
       inputClassName: "custom-input",
       boxClassName: "custom-box",
       labelClassName: "custom-label",
-      descriptionClassName: "custom-description",
-      errorMessageClassName: "custom-error",
+      descriptionClassName: "custom-helperText",
+      errorMessageClassName: "custom-errorMessage",
     });
 
     const input = screen.getByLabelText("Custom parts");
@@ -450,13 +450,13 @@ describe("CheckBoxBase", () => {
       "custom-box",
     );
     expect(label).toHaveClass("checkboxLabel", "custom-label");
-    expect(screen.getByTestId("checkbox-description")).toHaveClass(
+    expect(screen.getByTestId("checkbox-helperText")).toHaveClass(
       "checkboxDescription",
-      "custom-description",
+      "custom-helperText",
     );
-    expect(screen.getByTestId("checkbox-error")).toHaveClass(
+    expect(screen.getByTestId("checkbox-errorMessage")).toHaveClass(
       "checkboxErrorMessage",
-      "custom-error",
+      "custom-errorMessage",
     );
   });
 
@@ -475,25 +475,25 @@ describe("CheckBoxBase", () => {
     expect(screen.getByTestId("checkbox-box")).toBeInTheDocument();
   });
 
-  it("renders description and connects it with aria-describedby", () => {
+  it("renders helperText and connects it with aria-describedby", () => {
     renderCheckBox({
       label: "Email updates",
-      description: "Receive occasional product news.",
+      helperText: "Receive occasional product news.",
     });
 
     const input = screen.getByLabelText("Email updates");
-    const description = screen.getByTestId("checkbox-description");
+    const helperText = screen.getByTestId("checkbox-helperText");
 
-    expect(description).toBeInTheDocument();
-    expect(description).toHaveTextContent("Receive occasional product news.");
-    expect(description).toHaveClass("checkboxDescription");
+    expect(helperText).toBeInTheDocument();
+    expect(helperText).toHaveTextContent("Receive occasional product news.");
+    expect(helperText).toHaveClass("checkboxDescription");
     expect(input).toHaveAttribute(
       "aria-describedby",
-      description.getAttribute("id"),
+      helperText.getAttribute("id"),
     );
   });
 
-  it("renders error message and connects it with aria-describedby and aria-errormessage when invalid", () => {
+  it("renders errorMessage message and connects it with aria-describedby and aria-errormessage when invalid", () => {
     renderCheckBox({
       label: "Terms agreement",
       invalid: true,
@@ -501,23 +501,23 @@ describe("CheckBoxBase", () => {
     });
 
     const input = screen.getByLabelText("Terms agreement");
-    const error = screen.getByTestId("checkbox-error");
+    const errorMessage = screen.getByTestId("checkbox-errorMessage");
 
-    expect(error).toBeInTheDocument();
-    expect(error).toHaveTextContent("You must accept the terms.");
-    expect(error).toHaveClass("checkboxErrorMessage");
+    expect(errorMessage).toBeInTheDocument();
+    expect(errorMessage).toHaveTextContent("You must accept the terms.");
+    expect(errorMessage).toHaveClass("checkboxErrorMessage");
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toHaveAttribute(
       "aria-errormessage",
-      error.getAttribute("id"),
+      errorMessage.getAttribute("id"),
     );
     expect(input).toHaveAttribute(
       "aria-describedby",
-      expect.stringContaining(error.getAttribute("id") as string),
+      expect.stringContaining(errorMessage.getAttribute("id") as string),
     );
   });
 
-  it("sets aria-invalid and aria-errormessage when state is error", () => {
+  it("sets aria-invalid and aria-errormessage when state is errorMessage", () => {
     renderCheckBox({
       label: "Error state checkbox",
       state: "error",
@@ -525,27 +525,27 @@ describe("CheckBoxBase", () => {
     });
 
     const input = screen.getByLabelText("Error state checkbox");
-    const error = screen.getByTestId("checkbox-error");
+    const errorMessage = screen.getByTestId("checkbox-errorMessage");
 
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toHaveAttribute(
       "aria-errormessage",
-      error.getAttribute("id"),
+      errorMessage.getAttribute("id"),
     );
   });
 
-  it("combines external aria-describedby with generated description and error ids", () => {
+  it("combines external aria-describedby with generated helperText and errorMessage ids", () => {
     renderCheckBox({
       label: "Combined descriptions",
-      description: "Helper text",
+      helperText: "Helper text",
       errorMessage: "Error text",
       invalid: true,
       "aria-describedby": "external-help",
     });
 
     const input = screen.getByLabelText("Combined descriptions");
-    const description = screen.getByTestId("checkbox-description");
-    const error = screen.getByTestId("checkbox-error");
+    const helperText = screen.getByTestId("checkbox-helperText");
+    const errorMessage = screen.getByTestId("checkbox-errorMessage");
 
     expect(input).toHaveAttribute(
       "aria-describedby",
@@ -553,11 +553,11 @@ describe("CheckBoxBase", () => {
     );
     expect(input).toHaveAttribute(
       "aria-describedby",
-      expect.stringContaining(description.getAttribute("id") as string),
+      expect.stringContaining(helperText.getAttribute("id") as string),
     );
     expect(input).toHaveAttribute(
       "aria-describedby",
-      expect.stringContaining(error.getAttribute("id") as string),
+      expect.stringContaining(errorMessage.getAttribute("id") as string),
     );
   });
 
@@ -678,14 +678,14 @@ describe("CheckBoxBase", () => {
     expect(results).toHaveNoViolations();
   });
 
-  it("has no accessibility violations with description and error content", async () => {
+  it("has no accessibility violations with helperText and errorMessage content", async () => {
     const { container } = render(
       <CheckBoxBase
         checked={false}
         onChange={jest.fn()}
         label="Accessible checkbox with help"
-        description="Extra guidance text"
-        errorMessage="An error occurred"
+        helperText="Extra guidance text"
+        errorMessage="An errorMessage occurred"
         invalid
         classMap={classMap}
         data-testid="checkbox"

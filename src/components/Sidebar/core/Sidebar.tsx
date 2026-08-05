@@ -30,9 +30,6 @@ const classes = {
   submenu: "sidebar_submenu",
   submenuOpen: "sidebar_submenu_open",
 
-  outline: "sidebar_outline",
-  glass: "sidebar_glass",
-
   primary: "sidebar_primary",
   secondary: "sidebar_secondary",
   tertiary: "sidebar_tertiary",
@@ -55,6 +52,8 @@ const classes = {
   roundSmall: "sidebar_round-Small",
   roundMedium: "sidebar_round-Medium",
   roundLarge: "sidebar_round-Large",
+  glass: "sidebar_glass",
+  outline: "sidebar_outline",
 };
 
 const getInitialPath = () =>

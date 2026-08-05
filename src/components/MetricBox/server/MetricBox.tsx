@@ -2,8 +2,7 @@ import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
 import { expandClassMap } from "@/utils/propAliases";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getDefaultSize,
   getDefaultTheme,
@@ -23,11 +22,10 @@ export default function MetricBox({
   subtext,
   loading = false,
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   shadow,
   rounding = getDefaultRounding(),
   state,
-  outline = getDefaultOutline(),
   align = "center",
   size = getDefaultSize(),
   className,
@@ -53,12 +51,12 @@ export default function MetricBox({
   const displayValue = units ? `${value} ${units}` : String(value ?? "");
   const classes = combineClassNames(
     classMap.wrapper,
-    outline && classMap.outline,
+    (variant === "outline" || variant === "glassOutline") && classMap.outline,
     classMap[theme],
     state && classMap[state],
     classMap[size],
     classMap[align],
-    glass && classMap.glass,
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     loading && classMap.loading,
     getShadowClassName(classMap, theme, shadow),
     rounding && classMap[`round${capitalize(rounding)}`],
@@ -70,7 +68,11 @@ export default function MetricBox({
       className={classes}
       role={role ?? "region"}
       aria-label={ariaLabel ?? (loading ? title : undefined)}
-      aria-labelledby={ariaLabel ? undefined : ariaLabelledBy ?? (!loading ? titleId : undefined)}
+      aria-labelledby={
+        ariaLabel
+          ? undefined
+          : (ariaLabelledBy ?? (!loading ? titleId : undefined))
+      }
       aria-describedby={ariaDescribedBy ?? (!loading ? subtextId : undefined)}
       aria-live={ariaLive}
       aria-atomic={ariaAtomic}
@@ -100,7 +102,9 @@ export default function MetricBox({
               />
             </div>
           ) : null}
-          <div className={combineClassNames(classMap.content, contentClassName)}>
+          <div
+            className={combineClassNames(classMap.content, contentClassName)}
+          >
             <h3
               id={titleId}
               className={combineClassNames(classMap.title, titleClassName)}
@@ -118,7 +122,10 @@ export default function MetricBox({
             {subtext ? (
               <div
                 id={subtextId}
-                className={combineClassNames(classMap.subtext, subtextClassName)}
+                className={combineClassNames(
+                  classMap.subtext,
+                  subtextClassName,
+                )}
                 data-testid={`${testId}-subtext`}
               >
                 {subtext}

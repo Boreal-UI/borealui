@@ -109,8 +109,11 @@
   }
 
   .header {
+    --accordion-icon-track: 1.25em;
+
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 1.25em;
+    grid-template-columns: minmax(0, 1fr) var(--accordion-icon-track);
+    grid-template-areas: "title icon";
     align-items: center;
     column-gap: var(--spacing-xs);
 
@@ -142,7 +145,6 @@
     }
 
     @include bp.down(sm) {
-      grid-template-columns: minmax(0, 1fr) 1.25em;
       column-gap: var(--spacing-xs);
       row-gap: var(--spacing-xs);
       padding: var(--spacing-xs) var(--spacing-sm);
@@ -155,6 +157,16 @@
     @include bp.up(lg) {
       padding: var(--spacing-sm) var(--spacing-lg);
     }
+  }
+
+  .header.iconLeft {
+    grid-template-columns: var(--accordion-icon-track) minmax(0, 1fr);
+    grid-template-areas: "icon title";
+  }
+
+  .header.iconRight {
+    grid-template-columns: minmax(0, 1fr) var(--accordion-icon-track);
+    grid-template-areas: "title icon";
   }
 
   @each $name, $values in theme.$themes {
@@ -289,11 +301,6 @@
     }
   }
 
-  .content_inner {
-    min-height: 0;
-    overflow: hidden;
-  }
-
   .expanded .content {
     grid-template-rows: 1fr;
     opacity: 1;
@@ -319,20 +326,12 @@
     opacity: 0.5;
   }
 
-  .content_clear {
-    background-color: transparent;
-    border: 1px solid inherit;
-
-    @include bp.down(sm) {
-      border-width: 1px;
-    }
-  }
-
   .title {
     min-width: 0;
     max-width: 100%;
     display: block;
     justify-self: start;
+    grid-area: title;
 
     font: inherit;
     line-height: var(--line-height-label);
@@ -353,8 +352,8 @@
   }
 
   .icon {
-    grid-column: 2;
     display: inline-grid;
+    grid-area: icon;
     place-items: center;
     justify-self: center;
     align-self: center;
@@ -417,7 +416,8 @@
 
   .xs .header,
   .small .header {
-    grid-template-columns: minmax(0, 1fr) 1em;
+    --accordion-icon-track: 1em;
+
     column-gap: 0.25rem;
     padding-inline: var(--spacing-sm);
   }
@@ -440,6 +440,12 @@
 
   .clear.glass.header:hover {
     background: var(--disabled-color);
+  }
+
+  .disabled:hover,
+  .accordion:disabled:hover,
+  .disabled.header:hover {
+    background-color: var(--disabled-color);
   }
 
   @media (prefers-reduced-motion: reduce) {

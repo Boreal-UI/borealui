@@ -1,4 +1,3 @@
-import type { AriaRole, ReactNode } from "react";
 import {
   LabelPositionType,
   RoundingType,
@@ -6,6 +5,7 @@ import {
   StateType,
   ThemeType,
 } from "@/types/types";
+import type { AriaRole, ReactNode } from "react";
 
 /**
  * Represents a single option in the Select component.
@@ -33,28 +33,18 @@ export interface SelectProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Adds translucent glass styling to the select wrapper.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State variant for styling.
    * "success" | "error" | "warning" | "disabled" | ""
    *
    */
   state?: StateType;
-
-  /**
-   * If true, the select element is styled as outlined.
-   *
-   * @default configured default outline setting (fallback: false)
-   */
-  outline?: boolean;
-
   /**
    * An array of options that will be rendered as dropdown choices.
    */
@@ -238,6 +228,10 @@ export interface SelectProps {
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+  invalid?: boolean;
+  helperText?: import("react").ReactNode;
+  errorMessage?: import("react").ReactNode;
+  size?: import("@/types/types").SizeType;
 }
 
 export interface BaseSelectProps extends SelectProps {
@@ -245,6 +239,7 @@ export interface BaseSelectProps extends SelectProps {
    * Framework-specific class name map supplied by the core or Next wrapper.
    */
   classMap: Record<string, string>;
+  invalid?: boolean;
 }
 
 export interface ThemeSelectProps {
@@ -253,9 +248,11 @@ export interface ThemeSelectProps {
    */
   theme?: ThemeType;
   /**
-   * Whether to apply the glass visual treatment.
+   * Surface treatment; glassOutline combines glass and outline.
+   *
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
+  variant?: import("@/types/types").VariantType;
   /**
    * Shadow style applied to the component.
    */
@@ -327,4 +324,5 @@ export interface ThemeSelectProps {
 
   /* Optional class name for custom styling. */
   className?: string;
+  invalid?: boolean;
 }

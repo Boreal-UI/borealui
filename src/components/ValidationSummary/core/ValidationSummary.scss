@@ -186,7 +186,7 @@
 
       background: var(--validationSummary-soft-bg);
       border-left-color: var(--validationSummary-border-color);
-      color: var(--validationSummary-border-color);
+      color: inherit;
 
       &:hover {
         background: color-mix(

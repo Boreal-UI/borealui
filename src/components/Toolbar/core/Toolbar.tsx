@@ -7,7 +7,6 @@ import { ToolbarProps } from "../Toolbar.types";
 
 const classes = {
   toolbar: "toolbar",
-  glass: "toolbar_glass",
 
   fixed: "toolbar_fixed",
   sticky: "toolbar_sticky",
@@ -41,10 +40,15 @@ const classes = {
   roundSmall: "toolbar_round-Small",
   roundMedium: "toolbar_round-Medium",
   roundLarge: "toolbar_round-Large",
+  glass: "toolbar_glass",
 };
 
 const Toolbar: React.FC<ToolbarProps> = (props) => (
-  <ToolbarBase {...props} AvatarComponent={Avatar} classMap={expandClassMap(classes)} />
+  <ToolbarBase
+    {...props}
+    AvatarComponent={Avatar}
+    classMap={expandClassMap(classes)}
+  />
 );
 Toolbar.displayName = "Toolbar";
 export default Toolbar;

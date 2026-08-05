@@ -159,16 +159,8 @@
     }
   }
 
-  .color_picker_circle {
-    border-radius: 50%;
-  }
-
   .color_picker_square {
     border-radius: 6px;
-  }
-
-  .color_picker_rounded {
-    border-radius: 9999px;
   }
 
   @each $key, $value in theme.$shadow {

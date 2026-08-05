@@ -34,29 +34,26 @@ const BarChartBase = forwardRef<HTMLDivElement, BarChartBaseProps>(
     },
     ref,
   ) => {
-    const { max, chartHeight, barWidth, gridLines } = useMemo(
-      () => {
-        const valueRange = getValueRange(
-          data.map((datum) => datum.value),
-          true,
-        );
-        const nextChartHeight = Math.max(height - padding * 2, 1);
-        const nextChartWidth = Math.max(width - padding * 2, 1);
+    const { max, chartHeight, barWidth, gridLines } = useMemo(() => {
+      const valueRange = getValueRange(
+        data.map((datum) => datum.value),
+        true,
+      );
+      const nextChartHeight = Math.max(height - padding * 2, 1);
+      const nextChartWidth = Math.max(width - padding * 2, 1);
 
-        return {
-          max: valueRange.max,
-          chartHeight: nextChartHeight,
-          barWidth: Math.max(
-            (nextChartWidth - gap * (data.length - 1)) / data.length,
-            1,
-          ),
-          gridLines: [0, 0.25, 0.5, 0.75, 1].map(
-            (ratio) => padding + ratio * nextChartHeight,
-          ),
-        };
-      },
-      [data, gap, height, padding, width],
-    );
+      return {
+        max: valueRange.max,
+        chartHeight: nextChartHeight,
+        barWidth: Math.max(
+          (nextChartWidth - gap * (data.length - 1)) / data.length,
+          1,
+        ),
+        gridLines: [0, 0.25, 0.5, 0.75, 1].map(
+          (ratio) => padding + ratio * nextChartHeight,
+        ),
+      };
+    }, [data, gap, height, padding, width]);
 
     return (
       <div

@@ -12,6 +12,7 @@ import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -69,6 +70,15 @@ const defaultArgs = {
 export default meta;
 
 type Story = StoryObj<SelectProps>;
+
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: Select,
+      args: defaultArgs,
+      labelProp: "label",
+    }),
+};
 
 export const Default: Story = {
   render: (args) => {

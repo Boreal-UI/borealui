@@ -18,7 +18,6 @@ const classes = {
   warning: "checkbox_warning",
 
   clear: "checkbox_clear",
-  glass: "checkbox_glass",
 
   disabled: "checkbox_disabled",
   indeterminate: "checkbox_indeterminate",
@@ -50,6 +49,7 @@ const classes = {
   invalid: "checkbox_invalid",
   description: "checkbox_description",
   errorMessage: "checkbox_errorMessage",
+  glass: "checkbox_glass",
 };
 
 const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>((props, ref) => (
