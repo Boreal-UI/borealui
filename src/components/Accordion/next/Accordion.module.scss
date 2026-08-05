@@ -301,11 +301,6 @@
     }
   }
 
-  .content_inner {
-    min-height: 0;
-    overflow: hidden;
-  }
-
   .expanded .content {
     grid-template-rows: 1fr;
     opacity: 1;
@@ -329,15 +324,6 @@
 
   .content.loading {
     opacity: 0.5;
-  }
-
-  .content_clear {
-    background-color: transparent;
-    border: 1px solid inherit;
-
-    @include bp.down(sm) {
-      border-width: 1px;
-    }
   }
 
   .title {

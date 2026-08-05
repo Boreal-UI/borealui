@@ -159,16 +159,8 @@
     }
   }
 
-  .circle {
-    border-radius: 50%;
-  }
-
   .square {
     border-radius: 6px;
-  }
-
-  .rounded {
-    border-radius: 9999px;
   }
 
   @each $key, $value in theme.$shadow {

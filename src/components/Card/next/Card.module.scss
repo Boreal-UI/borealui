@@ -29,7 +29,7 @@
       border: 1px solid ButtonText;
     }
 
-    .clickable:focus-visible {
+    .selectable:focus-visible {
       outline: 2px solid Highlight;
       outline-offset: 3px;
     }
@@ -188,7 +188,9 @@
 
   .imageRoundFull {
     border-radius: var(--border-radius-full);
-    clip-path: inset(var(--card-image-inset, 0) round var(--border-radius-full));
+    clip-path: inset(
+      var(--card-image-inset, 0) round var(--border-radius-full)
+    );
   }
 
   .vertical {
@@ -367,7 +369,7 @@
         color: inherit;
       }
 
-      &.glass.clickable:hover {
+      &.glass.selectable:hover {
         background: var(--card-glass-hover-bg);
         border-color: var(--card-glass-border);
         box-shadow:
@@ -427,7 +429,7 @@
         color: inherit;
       }
 
-      &.glass.clickable:hover {
+      &.glass.selectable:hover {
         background: var(--card-glass-hover-bg);
         border-color: var(--card-glass-border);
       }
@@ -755,7 +757,7 @@
     }
   }
 
-  .clickable {
+  .selectable {
     cursor: pointer;
     transition:
       transform var(--transition-default),
@@ -787,14 +789,14 @@
       transition: none !important;
     }
 
-    .clickable:hover {
+    .selectable:hover {
       transform: none !important;
       box-shadow: none !important;
     }
   }
 
   @media (hover: none) {
-    .clickable:hover {
+    .selectable:hover {
       transform: none;
       box-shadow: none;
     }

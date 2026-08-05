@@ -229,7 +229,7 @@
         color: inherit;
       }
 
-      &_#{$name}.card_glass.card_clickable:hover {
+      &_#{$name}.card_glass.card_selectable:hover {
         background: var(--card-glass-hover-bg);
         border-color: var(--card-glass-border);
       }
@@ -282,7 +282,7 @@
         color: inherit;
       }
 
-      &_#{$name}.card_glass.card_clickable:hover {
+      &_#{$name}.card_glass.card_selectable:hover {
         background: var(--card-glass-hover-bg);
         border-color: var(--card-glass-border);
       }
@@ -684,7 +684,7 @@
     }
   }
 
-  .card_clickable {
+  .card_selectable {
     cursor: pointer;
     transition:
       transform var(--transition-default),
@@ -716,14 +716,14 @@
       transition: none !important;
     }
 
-    .card_clickable:hover {
+    .card_selectable:hover {
       transform: none !important;
       box-shadow: none !important;
     }
   }
 
   @media (hover: none) {
-    .card_clickable:hover {
+    .card_selectable:hover {
       transform: none;
       box-shadow: none;
     }
@@ -750,7 +750,7 @@
       border: 1px solid ButtonText;
     }
 
-    .card_clickable:focus-visible {
+    .card_selectable:focus-visible {
       outline: 2px solid Highlight;
       outline-offset: 3px;
     }

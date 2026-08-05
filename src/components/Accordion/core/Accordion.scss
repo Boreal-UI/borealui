@@ -297,11 +297,6 @@
     }
   }
 
-  .accordion_content_inner {
-    min-height: 0;
-    overflow: hidden;
-  }
-
   .accordion_expanded .accordion_content {
     grid-template-rows: 1fr;
     opacity: 1;
@@ -325,15 +320,6 @@
 
   .accordion_content.loading {
     opacity: 0.5;
-  }
-
-  .accordion_content_clear {
-    background-color: transparent;
-    border: 1px solid inherit;
-
-    @include bp.down(sm) {
-      border-width: 1px;
-    }
   }
 
   .accordion_title {

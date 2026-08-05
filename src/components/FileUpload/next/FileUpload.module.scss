@@ -46,12 +46,6 @@
       outline-offset: 3px;
     }
 
-    &.dragOver,
-    &[data-drag-active="true"] {
-      background-color: var(--background-color-lighter);
-      border-color: var(--focus-outline-color, var(--primary-color));
-    }
-
     &.disabled,
     &[aria-disabled="true"] {
       background-color: var(--background-color-light);
@@ -230,9 +224,7 @@
     color: inherit;
   }
 
-  .glass:hover,
-  .glass.dragOver,
-  .glass[data-drag-active="true"] {
+  .glass:hover {
     background: var(--file-upload-glass-hover-bg, rgba(255, 255, 255, 0.24));
   }
 
