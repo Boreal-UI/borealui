@@ -73,7 +73,7 @@ export interface RadioButtonProps extends Omit<
   variant?: import("@/types/types").VariantType;
   /**
    * State of the radio button.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

@@ -37,8 +37,8 @@ import "@boreal-ui/next/globals.css";
 `RadioGroup`, `Select`, `Skeleton`, `Sparkline`, `TextArea`, `TextInput`,
 `ThemeProvider`, `Timeline`, `Toolbar`, `Typography`, and `ValidationSummary`.
 
-The `Layout` entry exports `Container`, `Grid`, `Inline`, `Section`, and
-`Stack`.
+The `Layout` entry exports `Container`, `Grid`, `Inline`, `Section`, `Stack`,
+`BentoBox`, and `BentoBoxItem`.
 
 The `ThemeProvider` server entry exports server-safe theme helpers rather than
 a React provider component.

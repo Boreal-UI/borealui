@@ -131,7 +131,7 @@ export const stepperPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of the stepper. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
+      "description": "State of the stepper. \"success\" | \"error\" | \"warning\" | \"info\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
       "category": "styling"

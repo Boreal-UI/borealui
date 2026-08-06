@@ -111,7 +111,7 @@ export interface PopOverProps {
   variant?: import("@/types/types").VariantType;
   /**
    * State of the popover, for feedback styling.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

@@ -80,7 +80,7 @@ export interface ToggleProps {
   variant?: import("@/types/types").VariantType;
   /**
    * State of the toggle.
-   * "" | "success" | "error" | "warning" | "disabled"
+   * "" | "success" | "error" | "warning" | "info" | "disabled"
    *
    */
   state?: StateType;

@@ -105,7 +105,7 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of the tooltip for visual feedback. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
+      "description": "State of the tooltip for visual feedback. \"success\" | \"error\" | \"warning\" | \"info\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
       "category": "styling"

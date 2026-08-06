@@ -126,7 +126,7 @@ export interface TagInputProps {
   variant?: import("@/types/types").VariantType;
   /**
    * State of the input (for feedback/validation).
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

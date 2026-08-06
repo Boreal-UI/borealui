@@ -23,7 +23,7 @@ npm install @boreal-ui/core
 npm install @boreal-ui/next
 ```
 
-For TypeScript declarations, add the types package as a dev dependency:
+Component declarations are included through the runtime packages. Add the types package directly only when application code imports from `@boreal-ui/types`:
 
 ```bash
 npm install -D @boreal-ui/types
@@ -303,6 +303,8 @@ Use the scoped package that matches your framework; pre-alpha builds do not publ
 - `Inline`
 - `Section`
 - `Stack`
+- `BentoBox`
+- `BentoBoxItem`
 
 ## Common Styling Props
 
@@ -311,7 +313,7 @@ Many components share the same styling vocabulary:
 | Prop          | Canonical values                                          |
 | ------------- | --------------------------------------------------------- |
 | `theme`       | `primary`, `secondary`, `tertiary`, `quaternary`, `clear` |
-| `state`       | `success`, `error`, `warning`, `disabled`, empty string   |
+| `state`       | `success`, `error`, `warning`, `info`, `disabled`, empty string |
 | `size`        | `xs`, `small`, `medium`, `large`, `xl`                    |
 | `rounding`    | `none`, `small`, `medium`, `large`                        |
 | `shadow`      | `none`, `light`, `medium`, `strong`, `intense`            |
@@ -393,9 +395,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
 | Prop                   | Description                                                                              |
 | ---------------------- | ---------------------------------------------------------------------------------------- |
+| `children`             | Application or subtree to theme.                                                         |
 | `customSchemes`        | Register additional color schemes at runtime.                                            |
 | `initialSchemeName`    | Select an initial scheme by name.                                                        |
 | `enableThemeScript`    | Render the pre-hydration theme script. Defaults to `true` for core and `false` for Next. |
+| `syncThemeCookie`      | Persist changes to the SSR theme cookie. Defaults to `false` for core and `true` for Next. |
+| `themeCookieName`      | Override the SSR theme cookie name. Defaults to `boreal-theme`.                          |
 | `useOnlyCustomSchemes` | Use only custom schemes instead of the built-in list.                                    |
 
 ### Color Scheme Shape
@@ -457,10 +462,10 @@ import type { SizeType, ThemeType } from "@boreal-ui/types";
 
 ## Generated Prop Docs
 
-Boreal UI exports generated prop metadata for documentation sites, playgrounds, and prop tables through dedicated docs entry points.
+Boreal UI exports generated prop metadata for documentation sites, playgrounds, and prop tables through the optional docs package.
 
 ```tsx
-import { buttonPropDocs, dataTablePropDocs } from "@boreal-ui/core/docs";
+import { buttonPropDocs, dataTablePropDocs } from "@boreal-ui/docs";
 
 console.log(buttonPropDocs.name);
 console.log(dataTablePropDocs.props);

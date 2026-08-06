@@ -110,7 +110,7 @@ export interface CircularProgressProps extends Omit<
 
   /**
    * State of progress
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
   /**

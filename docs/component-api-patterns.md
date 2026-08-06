@@ -270,6 +270,24 @@ export function ProjectWorkspace() {
 
 `Portal` is a structural utility for rendering content into another DOM container. It keeps a deliberately small API: target container, inline fallback behavior, custom class name, screen-reader-only context, and test IDs.
 
+`BentoBox` renders an outer layout element plus an internal responsive grid. `columns` accepts `1` through `6`, `minRowHeight` defaults to `"8rem"`, and each `BentoBoxItem` accepts `columnSpan` (`1` through `6` or `"full"`) and `rowSpan` (`1` through `6`).
+
+```tsx
+import { BentoBox, BentoBoxItem } from "@boreal-ui/core";
+
+export function DashboardGrid() {
+  return (
+    <BentoBox columns={4} gap="lg" minRowHeight="10rem">
+      <BentoBoxItem columnSpan={2} rowSpan={2}>Revenue</BentoBoxItem>
+      <BentoBoxItem>Alerts</BentoBoxItem>
+      <BentoBoxItem columnSpan="full">Recent activity</BentoBoxItem>
+    </BentoBox>
+  );
+}
+```
+
+`dense` backfills open grid cells. Leave it off when reading or keyboard focus order must match visual order.
+
 ## Charts and Metrics
 
 Use chart components for compact dashboard visuals and status summaries.

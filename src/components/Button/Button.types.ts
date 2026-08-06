@@ -78,7 +78,7 @@ export interface ButtonProps extends Pick<
 
   /**
    * State of the button
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    *
    */
   state?: StateType;

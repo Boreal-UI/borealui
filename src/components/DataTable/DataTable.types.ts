@@ -266,7 +266,7 @@ export interface DataTableProps<T> {
   variant?: import("@/types/types").VariantType;
   /**
    * State of the table
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
 

@@ -57,7 +57,7 @@ export interface DividerProps extends Omit<
   variant?: import("@/types/types").VariantType;
   /**
    * State of the divider
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
 

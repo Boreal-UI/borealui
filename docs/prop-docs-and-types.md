@@ -15,6 +15,7 @@ import type {
   BorderType,
   ColorScheme,
   RoundingType,
+  RoundableRoundingType,
   ShadowType,
   SizeType,
   StateType,
@@ -30,15 +31,16 @@ import type { SizeType, ThemeType } from "@boreal-ui/types";
 
 Common shared types:
 
-| Type           | Values                                                          |
-| -------------- | --------------------------------------------------------------- |
-| `ThemeType`    | `primary`, `secondary`, `tertiary`, `quaternary`, `clear`       |
-| `StateType`    | `success`, `error`, `warning`, `info`, `disabled`, empty string |
-| `SizeType`     | `xs`, `small`, `medium`, `large`, `xl`                          |
-| `RoundingType` | `none`, `small`, `medium`, `large`, `full`                      |
-| `ShadowType`   | `none`, `light`, `medium`, `strong`, `intense`                  |
-| `BorderType`   | `none`, `xs`, `small`, `medium`, `large`, `xl`                  |
-| `ColorScheme`  | Named color scheme object used by theming APIs.                 |
+| Type                    | Canonical values                                                | Accepted aliases                    |
+| ----------------------- | --------------------------------------------------------------- | ----------------------------------- |
+| `ThemeType`             | `primary`, `secondary`, `tertiary`, `quaternary`, `clear`       | `p`, `s`, `t`, `q`, `c`             |
+| `StateType`             | `success`, `error`, `warning`, `info`, `disabled`, empty string | None                                |
+| `SizeType`              | `xs`, `small`, `medium`, `large`, `xl`                          | `sm`, `md`, `lg`                    |
+| `RoundingType`          | `none`, `small`, `medium`, `large`                              | `sm`, `md`, `lg`                    |
+| `RoundableRoundingType` | `RoundingType` plus `full`                                      | The aliases accepted by `RoundingType` |
+| `ShadowType`            | `none`, `light`, `medium`, `strong`, `intense`                  | `lt`, `sm`, `md`, `str`, `lg`, `xl` |
+| `BorderType`            | `none`, `xs`, `small`, `medium`, `large`, `xl`                  | `sm`, `md`, `lg`                    |
+| `ColorScheme`           | Named color scheme object used by theming APIs.                 | Not applicable                      |
 
 ## Component Types
 
@@ -120,6 +122,8 @@ type GeneratedPropDoc = {
 
 `defaultValue` is included when the generator can read a default from the component implementation. Configurable Boreal style defaults, such as theme or size, include their built-in fallback value.
 
+The metadata lists Boreal's component-specific public props and inherited Boreal prop groups. It intentionally does not expand React's complete native HTML attribute interfaces or internal renderer/prop-bag injection points. The declarations shipped by `@boreal-ui/core`, `@boreal-ui/next`, and `@boreal-ui/types` remain the exhaustive type source.
+
 ## Rendering a Prop Table
 
 ```tsx
@@ -165,6 +169,11 @@ import {
   buttonPropDocs,
   cardPropDocs,
   dataTablePropDocs,
+  numberInputPropDocs,
+  radioGroupPropDocs,
+  sparklinePropDocs,
+  themeSelectPropDocs,
+  validationSummaryPropDocs,
   type GeneratedComponentDoc,
 } from "@boreal-ui/docs";
 
@@ -182,7 +191,7 @@ const docs: GeneratedComponentDoc[] = [
 export const componentNames = docs.map((doc) => doc.name);
 ```
 
-The docs package currently exports metadata for every documented public component, including public components that share a type file such as `RadioButton`/`RadioGroup` and `Select`/`ThemeSelect`, plus newer workflow and chart components such as `InputGroup`, `ValidationSummary`, `AppShell`, `TreeView`, `Sparkline`, `BarChart`, `LineChart`, `DonutChart`, and `Legend`.
+The docs package exports metadata for every component represented by the generated component-type catalog, including components that share a type file such as `RadioButton`/`RadioGroup`, `Select`/`ThemeSelect`, and the seven `Layout` exports (`Container`, `Stack`, `Inline`, `Grid`, `Section`, `BentoBox`, and `BentoBoxItem`). Theme-provider APIs are documented separately in [Styling and Theming](./styling-and-theming.md).
 
 ## Keeping Docs Current
 

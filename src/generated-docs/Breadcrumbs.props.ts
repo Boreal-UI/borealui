@@ -114,7 +114,7 @@ export const breadcrumbsPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of the breadcrumbs ('success' | 'error' | 'warning' | 'disabled' | ''). Used for visual feedback.",
+      "description": "State of the breadcrumbs ('success' | 'error' | 'warning' | 'info' | 'disabled' | ''). Used for visual feedback.",
       "required": false,
       "inherited": false,
       "category": "styling"

@@ -169,7 +169,7 @@ export const togglePropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of the toggle. \"\" | \"success\" | \"error\" | \"warning\" | \"disabled\"",
+      "description": "State of the toggle. \"\" | \"success\" | \"error\" | \"warning\" | \"info\" | \"disabled\"",
       "required": false,
       "inherited": false,
       "category": "styling"

@@ -64,7 +64,7 @@ export interface MetricBoxProps {
 
   /**
    * State of the metric.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

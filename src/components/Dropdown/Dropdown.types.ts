@@ -250,7 +250,7 @@ export interface DropdownProps extends Omit<
   variant?: import("@/types/types").VariantType;
   /**
    * State of the dropdown
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
 

@@ -39,7 +39,7 @@ export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
   variant?: import("@/types/types").VariantType;
   /**
    * State of the tooltip for visual feedback.
-   * "success" | "error" | "warning" | "disabled" | ""
+   * "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

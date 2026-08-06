@@ -222,7 +222,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 ### Navigation and Layout
 
 - `AppShell`, `PageHeader`, `BreadCrumbPageHeader`, `NavBar`, `Sidebar`, `Footer`, `Breadcrumbs`, `TreeView`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Toolbar`, `Dropdown`, `Menu`, `Drawer`, `Portal`, `SplitPane`, and `Divider` cover application shells, headers, navigation, page structure, disclosure, pagination, tool rows, menus, overlays, portals, split layouts, and visual separation.
-- `Container`, `Grid`, `Inline`, `Section`, and `Stack` provide layout primitives through the `Layout` entry point and the main barrels.
+- `Container`, `Grid`, `Inline`, `Section`, `Stack`, `BentoBox`, and `BentoBoxItem` provide layout primitives through the `Layout` entry point and the main barrels. `BentoBox` owns an internal responsive grid; use `dense` only when visual backfilling may safely differ from reading and focus order.
 - `Card` supports title, description, icon, header/content/footer customization, loading content, surface variants, shadow, rounding, theme, and section-level class names.
 - `Avatar` supports image, initials, fallback icon, shape, status, status position, size, theme, and custom styling.
 
@@ -233,7 +233,7 @@ Many components share the same styling vocabulary:
 | Prop                                 | Canonical values                                          |
 | ------------------------------------ | --------------------------------------------------------- |
 | `theme`                              | `primary`, `secondary`, `tertiary`, `quaternary`, `clear` |
-| `state`                              | `success`, `error`, `warning`, `disabled`, empty string   |
+| `state`                              | `success`, `error`, `warning`, `info`, `disabled`, empty string |
 | `size`                               | `xs`, `small`, `medium`, `large`, `xl`                    |
 | `rounding`                           | `none`, `small`, `medium`, `large`                        |
 | `shadow`                             | `none`, `light`, `medium`, `strong`, `intense`            |
@@ -315,9 +315,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
 | Prop                   | Description                                                                              |
 | ---------------------- | ---------------------------------------------------------------------------------------- |
+| `children`             | Application or subtree to theme.                                                         |
 | `customSchemes`        | Register additional color schemes at runtime.                                            |
 | `enableThemeScript`    | Render the pre-hydration theme script. Defaults to `true` for core and `false` for Next. |
 | `initialSchemeName`    | Select an initial scheme by name.                                                        |
+| `syncThemeCookie`      | Persist changes to the SSR theme cookie. Defaults to `false` for core and `true` for Next. |
+| `themeCookieName`      | Override the SSR theme cookie name. Defaults to `boreal-theme`.                          |
 | `useOnlyCustomSchemes` | Use only custom schemes instead of the built-in list.                                    |
 
 Color scheme shape:

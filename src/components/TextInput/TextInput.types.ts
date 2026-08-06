@@ -121,7 +121,7 @@ export interface TextInputProps extends NativeInputProps {
   variant?: import("@/types/types").VariantType;
   /**
    * State of the input.
-   * "success" | "error" | "warning" | "disabled" | ""
+   * "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

@@ -114,7 +114,7 @@ export const tabsPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of the tabs. \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
+      "description": "State of the tabs. \"success\" | \"error\" | \"warning\" | \"info\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
       "category": "styling"

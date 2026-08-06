@@ -130,7 +130,7 @@ export interface SidebarProps {
   /**
    * State variant for styling.
    * Typically used to apply semantic states to the component.
-   * - "success" | "error" | "warning" | "disabled" | ""
+   * - "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

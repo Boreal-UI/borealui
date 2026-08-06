@@ -121,7 +121,7 @@ export interface BreadcrumbsProps extends Omit<
 
   /**
    * State of the breadcrumbs
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    * Used for visual feedback.
    */
   state?: StateType;

@@ -41,7 +41,7 @@ export interface SelectProps {
   variant?: import("@/types/types").VariantType;
   /**
    * State variant for styling.
-   * "success" | "error" | "warning" | "disabled" | ""
+   * "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;
