@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { FaCommentDots, FaInbox } from "../shared-story-assets/icons";
+import { FaCommentDots } from "../shared-story-assets/icons";
 import { TextArea } from "../src/index.core";
 import type { TextAreaProps } from "../src/components/TextArea/TextArea.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
