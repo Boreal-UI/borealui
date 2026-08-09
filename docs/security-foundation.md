@@ -2,6 +2,8 @@
 
 This repository uses layered controls for source, dependencies, builds, and npm releases.
 
+Development review, threat modeling, vulnerability handling, release approvals, and least-privilege roles are defined in the [Secure Development Lifecycle](./secure-development-lifecycle.md), and [Threat Model](./threat-model.md).
+
 ## Automated controls
 
 - `CI` runs linting, style linting, TypeScript checks, Jest unit tests, focused jest-axe accessibility tests, production builds, and package-quality verification.
@@ -30,6 +32,7 @@ Repository administrators must configure these controls after the workflows land
 5. Create an `npm` environment. Restrict deployments to protected tags matching `v*`, add required reviewers if a second maintainer is available, and prevent environment-admin bypass where practical.
 6. For each `@boreal-ui/*` package on npm, configure the trusted publisher as repository `DaveC6662/borealui`, workflow `release.yml`, environment `npm`. After a successful OIDC release, revoke legacy automation tokens.
 7. Require signed annotated release tags. Create them with `git tag -s vX.Y.Z -m "Boreal UI vX.Y.Z"`, push the tag, then publish the matching GitHub release. Enable immutable releases in GitHub if available for the repository.
+8. Apply the organization ownership, two-administrator, secure MFA, team-role, and audit-review controls in the [Access Control Standard](./access-control.md).
 
 The release workflow deliberately fails before publishing if any package version differs from the release tag or already exists on npm. Packages publish in dependency order: types, core, next, docs, then CLI.
 
