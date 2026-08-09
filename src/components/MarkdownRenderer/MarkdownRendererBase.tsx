@@ -9,17 +9,29 @@ import {
 } from "../../config/boreal-style-config";
 
 function safeSanitize(html: string): string {
-  const stripUnsafeAttributes = (value: string) =>
-    value
-      .replace(/\s+on[\w:-]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?/gi, "")
-      .replace(
-        /\s+(?:style|srcdoc)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+)/gi,
-        "",
-      )
-      .replace(
-        /\s+(href|src|xlink:href|formaction)\s*=\s*(["']?)\s*(?:javascript|vbscript|data(?!:image\/(?:png|gif|jpeg|jpg|webp|avif))):[^"'\s>]*/gi,
-        "",
-      );
+  const stripUnsafeAttributes = (value: string) => {
+    let sanitized = value;
+    let previous: string;
+
+    do {
+      previous = sanitized;
+      sanitized = sanitized
+        .replace(
+          /\s+on[\w:-]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?/gi,
+          "",
+        )
+        .replace(
+          /\s+(?:style|srcdoc)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+)/gi,
+          "",
+        )
+        .replace(
+          /\s+(href|src|xlink:href|formaction)\s*=\s*(["']?)\s*(?:javascript|vbscript|data(?!:image\/(?:png|gif|jpeg|jpg|webp|avif))):[^"'\s>]*/gi,
+          "",
+        );
+    } while (sanitized !== previous);
+
+    return sanitized;
+  };
 
   try {
     if (
