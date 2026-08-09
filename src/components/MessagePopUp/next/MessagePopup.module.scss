@@ -1,188 +1,102 @@
-@use "../../../styles/theme" as theme;
-@use "../../../styles/_breakpoints" as bp;
+.wrapper {
+  position: fixed;
+  inset: 0;
+  background-color: rgb(0 0 0 / 50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
+    env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
+}
 
-@layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
-@layer boreal-ui.components {
-  .wrapper {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgb(0 0 0 / 50%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    transition: opacity var(--transition-default);
-    padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
-      env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
-  }
+.content {
+  background: var(--background-color-light);
+  color: inherit;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 92%;
+  max-width: 480px;
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body);
+}
 
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.75rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid var(--border-color, rgb(0 0 0 / 10%));
-  }
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-bottom: 1px solid var(--border-color);
+}
 
-  .title {
-    margin: 0;
-    font-family: var(--font-family-heading);
-    font-size: var(--font-size-h5);
-    font-weight: var(--font-weight-h4);
-    line-height: var(--line-height-heading);
-    letter-spacing: var(--letter-spacing-heading);
+.title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
 
-    @include bp.down(sm) {
-      font-size: var(--font-size-h6);
-    }
+.body {
+  padding: var(--spacing-md);
+}
 
-    @include bp.up(lg) {
-      font-size: var(--font-size-h4);
-    }
-  }
+.message {
+  margin: 0;
+}
 
-  .body {
-    padding-top: 0.75rem;
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-  }
+.actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  justify-content: flex-end;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-top: 1px solid var(--border-color);
+}
 
-  .content {
-    background: var(--background-color-light);
-    color: inherit;
-    position: relative;
-    text-align: center;
-    width: 92%;
-    max-width: 400px;
-    padding: var(--spacing-lg) var(--spacing-lg);
-    padding-top: 50px;
-    max-height: 80vh;
-    overflow: auto;
-    font-family: var(--font-family-body);
+.close {
+  flex-shrink: 0;
+}
 
-    @include bp.down(sm) {
-      width: 94%;
-      max-width: 360px;
-      padding: var(--spacing-md);
-      padding-top: calc(var(--spacing-lg) * 1.2);
-    }
+.confirm {
+}
 
-    @include bp.up(lg) {
-      max-width: 520px;
-      padding: var(--spacing-lg);
-      padding-top: calc(var(--spacing-lg) * 1.1);
-    }
+.cancel {
+}
 
-    &:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 4px;
-      border-radius: 8px;
-    }
-  }
+/* Shadow variants */
+.shadowLight {
+  box-shadow: var(--box-shadow-light);
+}
 
-  .close {
-    position: absolute;
-    top: var(--spacing-xs);
-    right: var(--spacing-xs);
-    cursor: pointer;
-    border: none;
-    line-height: 1;
-    transition:
-      color var(--transition-default),
-      transform var(--transition-default);
+.shadowMedium {
+  box-shadow: var(--box-shadow-md);
+}
 
-    &:hover {
-      transform: translateY(-1px);
-    }
+.shadowStrong {
+  box-shadow: var(--box-shadow-strong);
+}
 
-    &:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 2px;
-      border-radius: 4px;
-    }
-  }
+.shadowIntense {
+  box-shadow: var(--box-shadow-intense);
+}
 
-  .message {
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body);
-    font-weight: var(--font-weight-semibold);
-    line-height: var(--line-height-body);
-    letter-spacing: var(--letter-spacing-body);
-    color: inherit;
-    margin-bottom: var(--spacing-sm);
+/* Rounding variants */
+.roundSmall {
+  border-radius: var(--border-radius-sm);
+}
 
-    @include bp.down(sm) {
-      font-size: var(--font-size-body-sm);
-    }
+.roundMedium {
+  border-radius: var(--border-radius-md);
+}
 
-    @include bp.up(lg) {
-      font-size: var(--font-size-h6);
-    }
-  }
+.roundLarge {
+  border-radius: var(--border-radius-lg);
+}
 
-  .actions {
-    display: flex;
-    justify-content: center;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-sm);
+.roundFull {
+  border-radius: var(--border-radius-full);
+}
 
-    @include bp.down(sm) {
-      gap: var(--spacing-sm);
-    }
-
-    @include bp.up(lg) {
-      gap: var(--spacing-md);
-    }
-  }
-
-  @each $k, $v in theme.$rounding {
-    .round#{$k} .content {
-      border-radius: $v;
-    }
-  }
-
-  @each $k, $v in theme.$shadow {
-    .shadow#{$k} .content {
-      box-shadow: $v;
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .wrapper,
-    .wrapper * {
-      transition: none !important;
-      animation: none !important;
-    }
-  }
-
-  @media (hover: none) {
-    .close:hover {
-      transform: none;
-    }
-  }
-
-  @media (forced-colors: active) {
-    .wrapper {
-      background: transparent;
-    }
-
-    .content {
-      background: Canvas;
-      color: CanvasText;
-      border: 1px solid ButtonText;
-      outline-color: Highlight;
-    }
-
-    .close {
-      color: ButtonText;
-      border: 1px solid ButtonText;
-      border-radius: 4px;
-    }
-  }
+.roundNone {
+  border-radius: 0;
 }

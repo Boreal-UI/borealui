@@ -1,33 +1,33 @@
-import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
 import BaseMessagePopup from "../MessagePopupBase";
+import "./MessagePopup.scss";
 import Button from "../../Button/core/Button";
 import IconButton from "../../IconButton/core/IconButton";
-import "./MessagePopup.scss";
 import { MessagePopupProps } from "../MessagePopup.types";
 
 const classes = {
-  wrapper: "messagePopup",
-  content: "messagePopup_popup_content",
-  close: "messagePopup_close_button",
-  message: "messagePopup_popupMessage",
-  header: "messagePopup_header",
-  title: "messagePopup_title",
-  body: "messagePopup_body",
-  actions: "messagePopup_popupActions",
-  confirm: "messagePopup_confirmBtn",
-  cancel: "messagePopup_cancelBtn",
+  wrapper: "message_popup_wrapper",
+  content: "message_popup_content",
+  header: "message_popup_header",
+  title: "message_popup_title",
+  body: "message_popup_body",
+  close: "message_popup_close",
+  message: "message_popup_message",
+  actions: "message_popup_actions",
+  confirm: "message_popup_confirm",
+  cancel: "message_popup_cancel",
 
-  shadowNone: "messagePopup_shadow-None",
-  shadowLight: "messagePopup_shadow-Light",
-  shadowMedium: "messagePopup_shadow-Medium",
-  shadowStrong: "messagePopup_shadow-Strong",
-  shadowIntense: "messagePopup_shadow-Intense",
+  shadowNone: "message_popup_shadow-None",
+  shadowLight: "message_popup_shadow-Light",
+  shadowMedium: "message_popup_shadow-Medium",
+  shadowStrong: "message_popup_shadow-Strong",
+  shadowIntense: "message_popup_shadow-Intense",
 
-  roundNone: "messagePopup_round-None",
-  roundSmall: "messagePopup_round-Small",
-  roundMedium: "messagePopup_round-Medium",
-  roundLarge: "messagePopup_round-Large",
+  roundNone: "message_popup_round-None",
+  roundSmall: "message_popup_round-Small",
+  roundMedium: "message_popup_round-Medium",
+  roundLarge: "message_popup_round-Large",
+  roundFull: "message_popup_round-Full",
 };
 
 const MessagePopup: React.FC<MessagePopupProps> = (props) => {
@@ -36,9 +36,10 @@ const MessagePopup: React.FC<MessagePopupProps> = (props) => {
       {...props}
       Button={Button}
       IconButton={IconButton}
-      classMap={expandClassMap(classes)}
+      classMap={classes}
     />
   );
 };
+
 MessagePopup.displayName = "MessagePopup";
 export default MessagePopup;

@@ -3,6 +3,7 @@ import React, {
   useRef,
   useState,
   useId,
+  useCallback,
   KeyboardEvent,
 } from "react";
 import ReactDOM from "react-dom";
@@ -21,17 +22,8 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   onClose,
   onConfirm,
   onCancel,
-  controlsRounding = getDefaultRounding(),
-  rounding = getDefaultRounding(),
-  shadow = getDefaultShadow(),
   confirmText = "Confirm",
   cancelText = "Cancel",
-  dialogRole = "dialog",
-  "aria-label": ariaLabel,
-  "aria-labelledby": ariaLabelledBy,
-  "aria-describedby": ariaDescribedBy,
-  "aria-label-close-button": ariaLabelCloseButton = "Close popup",
-  "aria-live": ariaLive,
   className,
   contentClassName,
   headerClassName,
@@ -42,62 +34,75 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   actionsClassName,
   confirmButtonClassName,
   cancelButtonClassName,
+  rounding = getDefaultRounding(),
+  shadow = getDefaultShadow(),
+  dialogRole = "dialog",
+  "aria-label": ariaLabel,
+  "aria-labelledby": ariaLabelledBy,
+  "aria-describedby": ariaDescribedBy,
+  "aria-live": ariaLive,
+  "aria-label-close-button": ariaLabelCloseButton = "Close",
   "data-testid": dataTestId,
   testId = dataTestId ?? "message-popup",
   Button,
   IconButton,
   classMap,
 }) => {
-  const [isMounted, setIsMounted] = useState(false);
-  const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
+  const uid = useId();
+  const titleId = `${uid}-title`;
+  const messageId = `${uid}-message`;
+
   const dialogRef = useRef<HTMLDivElement>(null);
-  const firstButtonRef = useRef<HTMLButtonElement>(null);
-  const cancelButtonRef = useRef<HTMLButtonElement>(null);
-  const closeBtnRef = useRef<HTMLButtonElement>(null);
+  const closeBtnRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
+  const confirmBtnRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
+  const cancelBtnRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   const focusablesRef = useRef<HTMLElement[]>([]);
-  const messageId = useId();
-  const titleId = useId();
 
-  const internalLabelledById = title ? titleId : messageId;
-  const resolvedAriaLabelledBy =
-    ariaLabelledBy ?? (!ariaLabel ? internalLabelledById : undefined);
-  const resolvedAriaDescribedBy = ariaDescribedBy ?? messageId;
+  const hasConfirm = typeof onConfirm === "function";
+  const hasCancel = typeof onCancel === "function";
+
+  const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
+
+  const handleClose = useCallback(() => {
+    onClose();
+  }, [onClose]);
 
   useEffect(() => {
-    setIsMounted(true);
     openerRef.current = (document.activeElement as HTMLElement) ?? null;
 
-    let portal = document.getElementById("popup-portal");
+    const portalId = "popup-portal";
+    let portal = document.getElementById(portalId);
     if (!portal) {
       portal = document.createElement("div");
-      portal.id = "popup-portal";
+      portal.id = portalId;
       document.body.appendChild(portal);
     }
     setPortalElement(portal);
+
     document.body.classList.add("no-scroll");
 
-    const roots = Array.from(document.body.children);
-    const restored: Array<HTMLElement> = [];
-    roots.forEach((el) => {
+    const siblings = Array.from(document.body.children) as HTMLElement[];
+    const hidden: HTMLElement[] = [];
+    siblings.forEach((el) => {
       if (el !== portal && !el.hasAttribute("aria-hidden")) {
         el.setAttribute("aria-hidden", "true");
-        restored.push(el as HTMLElement);
+        hidden.push(el);
       }
     });
 
-    const handleEscape = (e: globalThis.KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+    const handleEsc = (e: globalThis.KeyboardEvent) => {
+      if (e.key === "Escape") handleClose();
     };
-    document.addEventListener("keydown", handleEscape);
+    document.addEventListener("keydown", handleEsc);
 
     return () => {
       document.body.classList.remove("no-scroll");
-      document.removeEventListener("keydown", handleEscape);
-      restored.forEach((el) => el.removeAttribute("aria-hidden"));
+      document.removeEventListener("keydown", handleEsc);
+      hidden.forEach((el) => el.removeAttribute("aria-hidden"));
       openerRef.current?.focus?.();
     };
-  }, [onClose]);
+  }, [handleClose]);
 
   useEffect(() => {
     if (!dialogRef.current) return;
@@ -108,14 +113,14 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
       ),
     ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
 
-    const target =
-      firstButtonRef.current ||
-      cancelButtonRef.current ||
-      (closeBtnRef.current as HTMLElement | null) ||
-      focusablesRef.current[0];
-
-    target?.focus?.();
-  }, [isMounted]);
+    if (hasConfirm && confirmBtnRef.current) {
+      (confirmBtnRef.current as HTMLElement).focus();
+    } else if (hasCancel && cancelBtnRef.current) {
+      (cancelBtnRef.current as HTMLElement).focus();
+    } else if (closeBtnRef.current) {
+      (closeBtnRef.current as HTMLElement).focus();
+    }
+  }, [hasConfirm, hasCancel, portalElement]);
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key !== "Tab") return;
@@ -135,48 +140,55 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
     }
   };
 
-  if (!isMounted || !portalElement) return null;
+  const resolvedAriaLabelledBy = ariaLabel
+    ? undefined
+    : (ariaLabelledBy ?? (title ? titleId : messageId));
 
-  const wrapperClass = combineClassNames(
-    classMap.wrapper,
+  const resolvedAriaDescribedBy = ariaDescribedBy ?? messageId;
+
+  const wrapperClassName = combineClassNames(classMap.wrapper, className);
+
+  const dialogClassName = combineClassNames(
+    classMap.content,
     shadow && classMap[`shadow${capitalize(shadow)}`],
     rounding && classMap[`round${capitalize(rounding)}`],
-    className,
+    contentClassName,
   );
-  const resolvedDialogRole =
-    dialogRole === "alertdialog" ? "alertdialog" : "dialog";
+
+  if (!portalElement) return null;
+
   const closeButton = (
     <IconButton
       ref={closeBtnRef}
       className={combineClassNames(classMap.close, closeButtonClassName)}
-      onClick={onClose}
-      aria-label={ariaLabelCloseButton}
       icon={CloseIcon}
-      state="error"
-      size="small"
-      type="button"
+      aria-label={ariaLabelCloseButton}
+      onClick={(e: React.MouseEvent) => {
+        e.stopPropagation();
+        handleClose();
+      }}
       data-testid={`${testId}-close`}
+      type="button"
     />
   );
 
   return ReactDOM.createPortal(
     <div
-      className={wrapperClass}
-      onMouseDown={onClose}
-      role="presentation"
+      className={wrapperClassName}
+      onMouseDown={handleClose}
       data-testid={testId}
     >
-      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
       <div
-        className={combineClassNames(classMap.content, contentClassName)}
+        ref={dialogRef}
+        className={dialogClassName}
         onMouseDown={(e) => e.stopPropagation()}
-        role={resolvedDialogRole}
-        aria-modal={true}
+        role={dialogRole}
+        aria-modal="true"
         aria-label={ariaLabel}
         aria-labelledby={resolvedAriaLabelledBy}
         aria-describedby={resolvedAriaDescribedBy}
         tabIndex={-1}
-        ref={dialogRef}
         onKeyDown={handleKeyDown}
         data-testid={`${testId}-dialog`}
       >
@@ -192,7 +204,6 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
             >
               {title}
             </h2>
-
             {closeButton}
           </div>
         ) : (
@@ -211,45 +222,43 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
           >
             {message}
           </p>
+        </div>
 
+        {(hasConfirm || hasCancel) && (
           <div
             className={combineClassNames(classMap.actions, actionsClassName)}
             data-testid={`${testId}-actions`}
           >
-            {onConfirm && (
+            {hasConfirm && (
               <Button
+                ref={confirmBtnRef}
                 className={combineClassNames(
                   classMap.confirm,
                   confirmButtonClassName,
                 )}
-                state="success"
-                onClick={onConfirm}
-                ref={firstButtonRef}
-                rounding={controlsRounding}
-                type="button"
+                onClick={() => onConfirm?.()}
                 data-testid={`${testId}-confirm`}
+                type="button"
               >
                 {confirmText}
               </Button>
             )}
-
-            {onCancel && (
+            {hasCancel && (
               <Button
-                ref={cancelButtonRef}
+                ref={cancelBtnRef}
                 className={combineClassNames(
                   classMap.cancel,
                   cancelButtonClassName,
                 )}
-                state="warning"
-                onClick={onCancel}
-                type="button"
+                onClick={() => onCancel?.()}
                 data-testid={`${testId}-cancel`}
+                type="button"
               >
                 {cancelText}
               </Button>
             )}
           </div>
-        </div>
+        )}
       </div>
     </div>,
     portalElement,

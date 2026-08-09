@@ -1,22 +1,22 @@
 "use client";
 
-import { expandClassMap } from "@/utils/propAliases";
 import React from "react";
-import BaseMessagePopUp from "../MessagePopupBase";
+import BaseMessagePopup from "../MessagePopupBase";
+import styles from "./MessagePopup.module.scss";
 import Button from "../../Button/next/Button";
 import IconButton from "../../IconButton/next/IconButton";
-import styles from "./MessagePopup.module.scss";
 import { MessagePopupProps } from "../MessagePopup.types";
 
 const MessagePopup: React.FC<MessagePopupProps> = (props) => {
   return (
-    <BaseMessagePopUp
+    <BaseMessagePopup
       {...props}
       Button={Button}
       IconButton={IconButton}
-      classMap={expandClassMap(styles)}
+      classMap={styles}
     />
   );
 };
+
 MessagePopup.displayName = "MessagePopup";
 export default MessagePopup;

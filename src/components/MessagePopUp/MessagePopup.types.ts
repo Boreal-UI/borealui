@@ -1,180 +1,120 @@
 import { RoundingType, ShadowType } from "@/types/types";
 import { ButtonProps } from "../Button/Button.types";
 import { IconButtonProps } from "../IconButton/IconButton.types";
+import React from "react";
 
-/**
- * Props for the MessagePopup component.
- */
-export interface MessagePopupProps {
-  /**
-   * Message text to be displayed within the popup dialog.
-   */
-  message: string;
-
-  /**
-   * Optional title shown in a top bar.
-   * If provided, a header section is rendered above the message.
-   */
-  title?: React.ReactNode;
-
-  /**
-   * Callback function to execute when the popup is closed.
-   */
-  onClose: () => void;
-
-  /**
-   * Optional callback when the user confirms the message.
-   */
-  onConfirm?: () => void;
-
-  /**
-   * Optional callback when the user cancels the action.
-   */
-  onCancel?: () => void;
-
-  /**
-   * Optional rounding for controls in the message popup.
-   * One of: "none" | "small" | "medium" | "large" | "full"
-   *
-   * @default configured default rounding (fallback: "medium")
-   */
-  controlsRounding?: RoundingType;
-
-  /**
-   * Optional rounding for the message popup.
-   * One of: "none" | "small" | "medium" | "large" | "full"
-   *
-   * @default configured default rounding (fallback: "medium")
-   */
-  rounding?: RoundingType;
-
-  /**
-   * Optional shadow for the message popup.
-   * One of: "none" | "light" | "medium" | "strong" | "intense"
-   *
-   * @default configured default shadow (fallback: "light")
-   */
-  shadow?: ShadowType;
-
-  /**
-   * Optional text for the confirm button (default: "Confirm").
-   *
-   * @default "Confirm"
-   */
-  confirmText?: string;
-
-  /**
-   * Optional text for the cancel button (default: "Cancel").
-   *
-   * @default "Cancel"
-   */
-  cancelText?: string;
-
-  /**
-   * Accessible label for the dialog when no visible title is available.
-   * Prefer this when the popup does not render a heading.
-   */
-  "aria-label"?: string;
-
-  /**
-   * Optional ID of an external element that labels the dialog.
-   * Overrides the internally generated label association when provided.
-   */
-  "aria-labelledby"?: string;
-
-  /**
-   * Optional ID of an external element that describes the dialog.
-   * Useful when the popup description should point to custom content.
-   */
-  "aria-describedby"?: string;
-
-  /**
-   * Accessible label for the close button.
-   * Defaults to "Close popup".
-   *
-   * @default "Close popup"
-   */
-  "aria-label-close-button"?: string;
-
-  /**
-   * Optional aria-live politeness setting for announcing popup content.
-   * Only use when the popup message should be announced dynamically.
-   */
-  "aria-live"?: "off" | "polite" | "assertive";
-
-  /**
-   * Optional role for the popup container.
-   * Defaults to "dialog". Use "alertdialog" for urgent confirmations.
-   *
-   * @default "dialog"
-   */
-  dialogRole?: "dialog" | "alertdialog";
-
-  /**
-   * Optional additional class names for custom styling.
-   */
-  className?: string;
-
-  /** Additional class names for the dialog content panel. */
-  contentClassName?: string;
-
-  /** Additional class names for the header section. */
-  headerClassName?: string;
-
-  /** Additional class names for the title element. */
-  titleClassName?: string;
-
-  /** Additional class names for the close button. */
-  closeButtonClassName?: string;
-
-  /** Additional class names for the body section. */
-  bodyClassName?: string;
-
-  /** Additional class names for the message text. */
-  messageClassName?: string;
-
-  /** Additional class names for the actions wrapper. */
-  actionsClassName?: string;
-
-  /** Additional class names for the confirm button. */
-  confirmButtonClassName?: string;
-
-  /** Additional class names for the cancel button. */
-  cancelButtonClassName?: string;
-
-  /**
-   * Optional test ID for testing frameworks.
-   *
-   * @default dataTestId ?? "message-popup"
-   */
-  testId?: string;
-
-  /** Backward-compatible alias for test ID attributes. */
-  "data-testid"?: string;
-}
-
-export type ButtonRef = HTMLButtonElement;
-export type IconButtonRef = HTMLButtonElement | HTMLAnchorElement;
+type ButtonRef = HTMLButtonElement | HTMLAnchorElement;
 
 export type ButtonComponent = React.ForwardRefExoticComponent<
-  ButtonProps & React.RefAttributes<ButtonRef>
+  ButtonProps & { "data-testid"?: string } & React.RefAttributes<ButtonRef>
 >;
+
+export type IconButtonRef = HTMLButtonElement | HTMLAnchorElement;
 
 export type IconButtonComponent = React.ForwardRefExoticComponent<
   IconButtonProps & React.RefAttributes<IconButtonRef>
 >;
 
+/**
+ * Props for the MessagePopup component.
+ */
+export interface MessagePopupProps {
+  /** The message to display inside the popup. */
+  message: string;
+
+  /** Optional title shown in the popup header. */
+  title?: string;
+
+  /** Callback fired when the popup is closed. */
+  onClose: () => void;
+
+  /** Callback fired when the confirm button is clicked. */
+  onConfirm?: () => void;
+
+  /** Callback fired when the cancel button is clicked. */
+  onCancel?: () => void;
+
+  /** Text for the confirm button. @default "Confirm" */
+  confirmText?: string;
+
+  /** Text for the cancel button. @default "Cancel" */
+  cancelText?: string;
+
+  /** Additional class name applied to the wrapper element. */
+  className?: string;
+
+  /** Additional class name applied to the dialog content element. */
+  contentClassName?: string;
+
+  /** Additional class name applied to the header element. */
+  headerClassName?: string;
+
+  /** Additional class name applied to the title element. */
+  titleClassName?: string;
+
+  /** Additional class name applied to the close button. */
+  closeButtonClassName?: string;
+
+  /** Additional class name applied to the body element. */
+  bodyClassName?: string;
+
+  /** Additional class name applied to the message element. */
+  messageClassName?: string;
+
+  /** Additional class name applied to the actions element. */
+  actionsClassName?: string;
+
+  /** Additional class name applied to the confirm button. */
+  confirmButtonClassName?: string;
+
+  /** Additional class name applied to the cancel button. */
+  cancelButtonClassName?: string;
+
+  /**
+   * Rounding of the popup corners.
+   * @default "medium"
+   */
+  rounding?: RoundingType;
+
+  /**
+   * Shadow of the popup.
+   * @default "medium"
+   */
+  shadow?: ShadowType;
+
+  /**
+   * The ARIA role for the dialog element.
+   * @default "dialog"
+   */
+  dialogRole?: "dialog" | "alertdialog";
+
+  /** Accessible label for the dialog. */
+  "aria-label"?: string;
+
+  /** ID of an element that labels the dialog. */
+  "aria-labelledby"?: string;
+
+  /** ID of an element that describes the dialog. */
+  "aria-describedby"?: string;
+
+  /** aria-live value applied to the message element. */
+  "aria-live"?: React.AriaAttributes["aria-live"];
+
+  /** Accessible label for the close button. @default "Close" */
+  "aria-label-close-button"?: string;
+
+  /** Test ID for the root element. @default "message-popup" */
+  testId?: string;
+
+  /** Backward-compatible alias for testId. */
+  "data-testid"?: string;
+}
+
 export interface BaseMessagePopupProps extends MessagePopupProps {
-  /**
-   * Button component dependency injected by the wrapper.
-   */
+  /** Button component injected by the core or next wrapper. */
   Button: ButtonComponent;
-  /**
-   * Icon Button component dependency injected by the wrapper.
-   */
+  /** IconButton component injected by the core or next wrapper. */
   IconButton: IconButtonComponent;
-  /**
-   * Framework-specific class name map supplied by the core or Next wrapper.
-   */
+  /** Framework-specific class name map. */
   classMap: Record<string, string>;
 }
