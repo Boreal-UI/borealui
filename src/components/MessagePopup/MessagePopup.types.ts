@@ -3,7 +3,7 @@ import { ButtonProps } from "../Button/Button.types";
 import { IconButtonProps } from "../IconButton/IconButton.types";
 import React from "react";
 
-type ButtonRef = HTMLButtonElement | HTMLAnchorElement;
+type ButtonRef = HTMLButtonElement;
 
 export type ButtonComponent = React.ForwardRefExoticComponent<
   ButtonProps & { "data-testid"?: string } & React.RefAttributes<ButtonRef>

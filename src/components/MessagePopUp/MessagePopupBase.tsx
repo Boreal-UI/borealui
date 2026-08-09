@@ -54,8 +54,8 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
 
   const dialogRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
-  const confirmBtnRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
-  const cancelBtnRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
+  const confirmBtnRef = useRef<HTMLButtonElement>(null);
+  const cancelBtnRef = useRef<HTMLButtonElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
   const focusablesRef = useRef<HTMLElement[]>([]);
 
@@ -146,14 +146,14 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
 
   const resolvedAriaDescribedBy = ariaDescribedBy ?? messageId;
 
-  const wrapperClassName = combineClassNames(classMap.wrapper, className);
-
-  const dialogClassName = combineClassNames(
-    classMap.content,
+  const wrapperClassName = combineClassNames(
+    classMap.wrapper,
     shadow && classMap[`shadow${capitalize(shadow)}`],
     rounding && classMap[`round${capitalize(rounding)}`],
-    contentClassName,
+    className,
   );
+
+  const dialogClassName = combineClassNames(classMap.content, contentClassName);
 
   if (!portalElement) return null;
 
@@ -173,12 +173,15 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   );
 
   return ReactDOM.createPortal(
+    // The non-interactive overlay only observes pointer events to dismiss the dialog.
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
       className={wrapperClassName}
       onMouseDown={handleClose}
       data-testid={testId}
     >
-      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions */}
+      {/* The dialog stops overlay dismissal; keyboard behavior is handled below. */}
+      {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
       <div
         ref={dialogRef}
         className={dialogClassName}

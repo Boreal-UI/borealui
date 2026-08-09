@@ -69,40 +69,40 @@
   }
 
   /* Shadow variants */
-  .message_popup_shadow-Light {
+  .message_popup_shadow-Light .message_popup_content {
     box-shadow: var(--box-shadow-light);
   }
 
-  .message_popup_shadow-Medium {
+  .message_popup_shadow-Medium .message_popup_content {
     box-shadow: var(--box-shadow-md);
   }
 
-  .message_popup_shadow-Strong {
+  .message_popup_shadow-Strong .message_popup_content {
     box-shadow: var(--box-shadow-strong);
   }
 
-  .message_popup_shadow-Intense {
+  .message_popup_shadow-Intense .message_popup_content {
     box-shadow: var(--box-shadow-intense);
   }
 
   /* Rounding variants */
-  .message_popup_round-Small {
+  .message_popup_round-Small .message_popup_content {
     border-radius: var(--border-radius-sm);
   }
 
-  .message_popup_round-Medium {
+  .message_popup_round-Medium .message_popup_content {
     border-radius: var(--border-radius-md);
   }
 
-  .message_popup_round-Large {
+  .message_popup_round-Large .message_popup_content {
     border-radius: var(--border-radius-lg);
   }
 
-  .message_popup_round-Full {
+  .message_popup_round-Full .message_popup_content {
     border-radius: var(--border-radius-full);
   }
 
-  .message_popup_round-None {
+  .message_popup_round-None .message_popup_content {
     border-radius: 0;
   }
 }

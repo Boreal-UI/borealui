@@ -64,39 +64,39 @@
 }
 
 /* Shadow variants */
-.shadowLight {
+.shadowLight .content {
   box-shadow: var(--box-shadow-light);
 }
 
-.shadowMedium {
+.shadowMedium .content {
   box-shadow: var(--box-shadow-md);
 }
 
-.shadowStrong {
+.shadowStrong .content {
   box-shadow: var(--box-shadow-strong);
 }
 
-.shadowIntense {
+.shadowIntense .content {
   box-shadow: var(--box-shadow-intense);
 }
 
 /* Rounding variants */
-.roundSmall {
+.roundSmall .content {
   border-radius: var(--border-radius-sm);
 }
 
-.roundMedium {
+.roundMedium .content {
   border-radius: var(--border-radius-md);
 }
 
-.roundLarge {
+.roundLarge .content {
   border-radius: var(--border-radius-lg);
 }
 
-.roundFull {
+.roundFull .content {
   border-radius: var(--border-radius-full);
 }
 
-.roundNone {
+.roundNone .content {
   border-radius: 0;
 }
