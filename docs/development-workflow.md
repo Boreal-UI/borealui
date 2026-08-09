@@ -120,6 +120,8 @@ Boreal UI publishes five scoped packages from this repository:
 - `@boreal-ui/docs`
 - `@boreal-ui/cli`
 
+Security checks, SBOM generation, signed release tags, npm provenance, and the one-time repository settings are documented in [Security Foundation](./security-foundation.md).
+
 ## Documentation Checklist
 
 Before merging public API changes:

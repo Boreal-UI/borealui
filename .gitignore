@@ -52,7 +52,7 @@ yalc.lock
 .yalc/
 
 # Optional: Pkg manager files
-package-lock.json
+!package-lock.json
 pnpm-lock.yaml
 yarn.lock
 
@@ -68,6 +68,7 @@ stylelint-report.json
 DESIGN.md
 debug-storybook.log
 cypress/screenshots/
+bom.cdx.json
 
 #Ignore local dev guide
 docs/development-workflow-local.md

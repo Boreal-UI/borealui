@@ -28,6 +28,8 @@
     "audit:publint": "npm run stage:split-packages && publint packages/core --strict --pack false && publint packages/next --strict --pack false && publint packages/types --strict --pack false && publint packages/docs --strict --pack false && publint packages/cli --strict --pack false",
     "audit:attw": "npm run stage:split-packages && node scripts/auditAttw.cjs",
     "audit:package-quality": "npm run audit:package && npm run audit:docs-separation && npm run audit:publint && npm run audit:attw",
+    "audit:dependencies": "npm audit --audit-level=high",
+    "audit:security": "npm run audit:dependencies && npm run sbom",
     "audit": "npm run audit:docs && npm run audit:types && npm run audit:lint && npm run audit:styles && npm run audit:test && npm run audit:build && npm run audit:package-quality",
     "cli:check": "node --check packages/cli/src/index.js",
     "dev": "vite",
@@ -69,6 +71,7 @@
     "patch:style-sidecars": "node scripts/patchStyleSidecars.cjs",
     "patch:root-entrypoints": "node scripts/patchRootEntrypoints.cjs",
     "test": "jest",
+    "test:a11y": "jest --runInBand --testNamePattern=\"(accessibility|axe) violations\"",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "cypress:open": "cypress open --component",
@@ -81,7 +84,8 @@
     "storybook:build:next": "storybook build  --output-dir ./storybook-next-json -c .storybook-next",
     "build-storybook": "storybook build",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" \"cypress/**/*.{ts,tsx}\" \"*.config.ts\" --max-warnings=0"
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"cypress/**/*.{ts,tsx}\" \"*.config.ts\" --max-warnings=0",
+    "sbom": "cyclonedx-npm --output-format JSON --output-file bom.cdx.json --validate --mc-type library"
   },
   "keywords": [
     "react",
@@ -99,6 +103,7 @@
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.3",
     "@chromatic-com/storybook": "^5.2.1",
+    "@cyclonedx/cyclonedx-npm": "4.2.1",
     "@eslint/js": "^9.34.0",
     "@storybook/addon-docs": "10.4.2",
     "@storybook/nextjs-vite": "10.4.2",
