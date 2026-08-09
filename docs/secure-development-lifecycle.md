@@ -85,7 +85,7 @@ Dependabot checks npm and GitHub Actions weekly. Security updates are handled ah
 5. Merge through a reviewed pull request after required security and dependency checks pass.
 6. For a high or critical reachable vulnerability, prepare a patched release promptly and use the vulnerability-response process below.
 
-Routine updates may be grouped when risk is low. Major versions, runtime dependencies, build tools with install scripts, and GitHub Actions are reviewed separately. Automated dependency pull requests never bypass review.
+Routine updates may be grouped when risk is low. Coupled toolchain versions, such as Vite and `@vitejs/plugin-react`, are grouped and moved together in a deliberate migration pull request. Other major versions, runtime dependencies, build tools with install scripts, and GitHub Actions are reviewed separately. Automated dependency pull requests never bypass review, and an incompatible automated update is corrected at the dependency level rather than installed with `--force` or `--legacy-peer-deps`.
 
 ## Vulnerability response
 
