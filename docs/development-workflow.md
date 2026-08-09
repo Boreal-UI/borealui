@@ -2,6 +2,8 @@
 
 This guide is for contributors maintaining Boreal UI source, docs, generated prop metadata, and package output.
 
+All contributors must also follow [CONTRIBUTING.md](../CONTRIBUTING.md), the [Secure Development Lifecycle](./secure-development-lifecycle.md), and the [Threat Model](./threat-model.md).
+
 ## Architecture
 
 Public components follow the base/core/next pattern:

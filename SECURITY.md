@@ -12,6 +12,8 @@ Use GitHub's private vulnerability reporting flow on the [Boreal UI security adv
 
 You should receive an acknowledgement within 3 business days and an initial assessment within 7 business days. We will coordinate disclosure and credit with you after a fix is available. Please allow a reasonable remediation period before public disclosure.
 
+Maintainers handle reports using the private triage, remediation, release, and retrospective process in the [Secure Development Lifecycle](./docs/secure-development-lifecycle.md#vulnerability-response).
+
 ## Scope
 
 Reports are especially helpful when they involve:

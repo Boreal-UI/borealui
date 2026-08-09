@@ -230,17 +230,17 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 
 Many components share the same styling vocabulary:
 
-| Prop                                 | Canonical values                                          |
-| ------------------------------------ | --------------------------------------------------------- |
-| `theme`                              | `primary`, `secondary`, `tertiary`, `quaternary`, `clear` |
+| Prop                                 | Canonical values                                                |
+| ------------------------------------ | --------------------------------------------------------------- |
+| `theme`                              | `primary`, `secondary`, `tertiary`, `quaternary`, `clear`       |
 | `state`                              | `success`, `error`, `warning`, `info`, `disabled`, empty string |
-| `size`                               | `xs`, `small`, `medium`, `large`, `xl`                    |
-| `rounding`                           | `none`, `small`, `medium`, `large`                        |
-| `shadow`                             | `none`, `light`, `medium`, `strong`, `intense`            |
-| `borderWidth` / `defaultBorderWidth` | `none`, `xs`, `small`, `medium`, `large`, `xl`            |
-| `variant` / `defaultVariant`         | `solid`, `outline`, `glass`, `glassOutline`               |
-| `className` and section class props  | consumer styling hooks where supported                    |
-| `data-testid`                        | stable test selectors                                     |
+| `size`                               | `xs`, `small`, `medium`, `large`, `xl`                          |
+| `rounding`                           | `none`, `small`, `medium`, `large`                              |
+| `shadow`                             | `none`, `light`, `medium`, `strong`, `intense`                  |
+| `borderWidth` / `defaultBorderWidth` | `none`, `xs`, `small`, `medium`, `large`, `xl`                  |
+| `variant` / `defaultVariant`         | `solid`, `outline`, `glass`, `glassOutline`                     |
+| `className` and section class props  | consumer styling hooks where supported                          |
+| `data-testid`                        | stable test selectors                                           |
 
 Exact props vary by component. TypeScript and the generated prop docs are the source of truth for each component.
 
@@ -313,15 +313,15 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
 `ThemeProvider` props:
 
-| Prop                   | Description                                                                              |
-| ---------------------- | ---------------------------------------------------------------------------------------- |
-| `children`             | Application or subtree to theme.                                                         |
-| `customSchemes`        | Register additional color schemes at runtime.                                            |
-| `enableThemeScript`    | Render the pre-hydration theme script. Defaults to `true` for core and `false` for Next. |
-| `initialSchemeName`    | Select an initial scheme by name.                                                        |
+| Prop                   | Description                                                                                |
+| ---------------------- | ------------------------------------------------------------------------------------------ |
+| `children`             | Application or subtree to theme.                                                           |
+| `customSchemes`        | Register additional color schemes at runtime.                                              |
+| `enableThemeScript`    | Render the pre-hydration theme script. Defaults to `true` for core and `false` for Next.   |
+| `initialSchemeName`    | Select an initial scheme by name.                                                          |
 | `syncThemeCookie`      | Persist changes to the SSR theme cookie. Defaults to `false` for core and `true` for Next. |
-| `themeCookieName`      | Override the SSR theme cookie name. Defaults to `boreal-theme`.                          |
-| `useOnlyCustomSchemes` | Use only custom schemes instead of the built-in list.                                    |
+| `themeCookieName`      | Override the SSR theme cookie name. Defaults to `boreal-theme`.                            |
+| `useOnlyCustomSchemes` | Use only custom schemes instead of the built-in list.                                      |
 
 Color scheme shape:
 
@@ -467,7 +467,7 @@ Useful scripts:
 | `npm run gen:entrypoints`  | Regenerate component entry points.                                              |
 | `npm run gen:exports`      | Regenerate package exports.                                                     |
 
-Contributor documentation for component structure, generated docs, package output, release checks, and npm publishing commands lives in [Development Workflow](./docs/development-workflow.md).
+Contributor documentation starts with [CONTRIBUTING.md](./CONTRIBUTING.md). Component structure, generated docs, and package output live in [Development Workflow](./docs/development-workflow.md); security review lives in the [Secure Development Lifecycle](./docs/secure-development-lifecycle.md).
 
 ## Package Entry Points
 
@@ -485,11 +485,13 @@ Use the scoped package that matches your framework; pre-alpha builds do not publ
 
 ## Contributing
 
+Read [CONTRIBUTING.md](./CONTRIBUTING.md) before opening a pull request. Every change must use the pull request template, pass the required quality/security/accessibility checks, and receive independent review.
+
 1. Fork this repo.
 2. Create a feature branch: `git checkout -b feat/my-component`.
-3. Add or update component logic, types, SCSS, tests, stories, and docs metadata as needed.
+3. Add or update component logic, types, SCSS, tests, stories, threat model, and docs metadata as needed.
 4. Run the relevant checks.
-5. Open a pull request.
+5. Open a pull request and complete its security and accessibility checklist.
 
 When adding or changing a public component, keep the base/core/next architecture aligned: shared behavior in the base component, global SCSS for core, SCSS Modules for Next, and tests that cover accessibility and customization.
 
