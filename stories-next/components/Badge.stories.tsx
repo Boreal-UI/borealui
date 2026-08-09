@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Badge } from "../../src/index.next";
-import { FaCheck, FaExclamation, FaInfoCircle } from "react-icons/fa";
+import { FaCheck, FaExclamation, FaInfoCircle } from "../../shared-story-assets/icons";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import type {
   RoundingType,

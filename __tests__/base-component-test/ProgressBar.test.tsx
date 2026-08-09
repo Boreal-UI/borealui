@@ -9,7 +9,6 @@ const classNames = {
   layout: "progressLayout",
   container: "progressContainer",
   bar: "progressBar",
-  glass: "glass",
   glassBar: "glassBar",
   label: "progressLabel",
   meta: "progressMeta",
@@ -45,6 +44,7 @@ const classNames = {
   labelBottom: "labelBottom",
   labelLeft: "labelLeft",
   labelRight: "labelRight",
+  glass: "glass",
 };
 
 describe("BaseProgressBar", () => {
@@ -483,7 +483,7 @@ describe("BaseProgressBar", () => {
         size="large"
         rounding="full"
         shadow="strong"
-        glass
+        variant="glassOutline"
         className="custom-progress"
         classMap={classNames}
         data-testid="progressbar"

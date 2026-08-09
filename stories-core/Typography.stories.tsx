@@ -31,7 +31,7 @@ type Story = StoryObj<typeof Typography>;
 
 const defaultArgs = {
   children: "The quick brown fox jumps over the lazy dog.",
-  variant: "body",
+  textStyle: "body",
   align: "inherit",
   weight: "inherit",
   theme: "inherit",
@@ -52,7 +52,7 @@ export const Heading: Story = {
   args: {
     ...defaultArgs,
     children: "Typography Heading Example",
-    variant: "h2",
+    textStyle: "h2",
   },
 };
 
@@ -61,7 +61,7 @@ export const BodyLarge: Story = {
     ...defaultArgs,
     children:
       "This is a larger body style useful for intro copy, hero supporting text, or emphasized paragraphs.",
-    variant: "body-lg",
+    textStyle: "body-lg",
   },
 };
 
@@ -69,7 +69,7 @@ export const Caption: Story = {
   args: {
     ...defaultArgs,
     children: "Last updated 5 minutes ago",
-    variant: "caption",
+    textStyle: "caption",
   },
 };
 
@@ -77,7 +77,7 @@ export const Overline: Story = {
   args: {
     ...defaultArgs,
     children: "Featured Component",
-    variant: "overline",
+    textStyle: "overline",
   },
 };
 
@@ -85,7 +85,7 @@ export const CodeText: Story = {
   args: {
     ...defaultArgs,
     children: "npm install boreal-ui",
-    variant: "code",
+    textStyle: "code",
     as: "code",
   },
 };
@@ -118,7 +118,7 @@ export const Themed: Story = {
   ),
   args: {
     ...defaultArgs,
-    variant: "body",
+    textStyle: "body",
   },
 };
 
@@ -144,7 +144,7 @@ export const Weights: Story = {
   ),
   args: {
     ...defaultArgs,
-    variant: "body",
+    textStyle: "body",
   },
 };
 
@@ -171,7 +171,7 @@ export const Alignment: Story = {
   ),
   args: {
     ...defaultArgs,
-    variant: "body",
+    textStyle: "body",
   },
 };
 
@@ -191,7 +191,7 @@ export const ItalicAndUnderline: Story = {
   ),
   args: {
     ...defaultArgs,
-    variant: "body",
+    textStyle: "body",
   },
 };
 
@@ -221,7 +221,7 @@ export const SemanticOverride: Story = {
   args: {
     ...defaultArgs,
     children: "This looks like a heading but renders as a div.",
-    variant: "h3",
+    textStyle: "h3",
     as: "div",
   },
 };
@@ -237,7 +237,7 @@ export const ScreenReaderOnly: Story = {
 export const VariantScale = () => (
   <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
     {variantOptions.map((variant) => (
-      <Typography key={variant} variant={variant as never}>
+      <Typography key={variant} textStyle={variant as never}>
         {variant}
       </Typography>
     ))}

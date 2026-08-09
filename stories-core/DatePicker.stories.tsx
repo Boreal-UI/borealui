@@ -5,12 +5,14 @@ import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import {
   roundingOptions,
   shadowOptions,
+  sizeOptions,
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -27,11 +29,42 @@ const meta: Meta<DatePickerProps> = {
     helperText: "Choose a date for the work to begin.",
     theme: "primary",
   },
+  argTypes: {
+    theme: {
+      control: "select",
+      options: themeOptions,
+    },
+    state: {
+      control: "select",
+      options: stateOptions,
+    },
+    rounding: {
+      control: "select",
+      options: roundingOptions,
+    },
+    shadow: {
+      control: "select",
+      options: shadowOptions,
+    },
+    size: {
+      control: "select",
+      options: sizeOptions,
+    },
+  },
 };
 
 export default meta;
 
 type Story = StoryObj<DatePickerProps>;
+
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: DatePicker,
+      args: { label: "Start date" },
+      labelProp: "label",
+    }),
+};
 
 export const Default: Story = {};
 
@@ -41,7 +74,7 @@ export const WithConstraints: Story = {
     min: "2026-05-01",
     max: "2026-05-31",
     defaultValue: "2026-05-14",
-    description: "Only dates in May 2026 are available.",
+    helperText: "Only dates in May 2026 are available.",
   },
 };
 
@@ -50,7 +83,7 @@ export const ErrorState: Story = {
     label: "Deadline",
     value: "2026-04-30",
     min: "2026-05-01",
-    error: "Choose a date after May 1, 2026.",
+    errorMessage: "Choose a date after May 1, 2026.",
   },
 };
 
@@ -58,7 +91,7 @@ export const FullWidth: Story = {
   args: {
     fullWidth: true,
     label: "Launch date",
-    description: "The control stretches to the width of its parent.",
+    helperText: "The control stretches to the width of its parent.",
   },
 };
 

@@ -1,7 +1,7 @@
+import { ShadowType, StateType, ThemeType } from "@/types/types";
 import { ReactNode } from "react";
-import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 
-export type AlertVariant = "solid" | "soft";
+export type AlertVariant = import("@/types/types").VariantType | "soft";
 
 export interface AlertProps {
   /**
@@ -35,20 +35,10 @@ export interface AlertProps {
    */
   variant?: AlertVariant;
   /**
-   * Glass.
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-  /**
-   * Outline.
-   * @default false
-   */
-  outline?: boolean;
-  /**
    * Rounding.
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
   /**
    * Shadow.
    * @default configured default shadow (fallback: "light")

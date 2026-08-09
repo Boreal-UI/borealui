@@ -3,7 +3,7 @@ import { DividerBaseProps } from "./Divider.types";
 import { combineClassNames } from "../../utils/classNames";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
@@ -16,7 +16,7 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
       className,
       dashed = false,
       theme = getDefaultTheme(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       state,
       as = "div",
       decorative = true,
@@ -75,7 +75,7 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
           theme && classMap[theme],
           state && classMap[state],
           dashed && classMap.dashed,
-          glass && classMap.glass,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           className,
         )}
         role={computedRole}

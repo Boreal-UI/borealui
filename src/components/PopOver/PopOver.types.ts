@@ -1,10 +1,10 @@
-import React from "react";
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
+import React from "react";
 
 /**
  * Props that can be injected into a trigger element when using `asChild`.
-   * @default dataTestId ?? "popover"
-   */
+ * @default dataTestId ?? "popover"
+ */
 export type TriggerElementProps = {
   /**
    * Callback fired when click occurs.
@@ -103,17 +103,15 @@ export interface PopOverProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Adds translucent glass styling to the floating popover content.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the popover, for feedback styling.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;
@@ -145,7 +143,6 @@ export interface PopOverProps {
    *
    */
   contentClassName?: string;
-
 
   /**
    * Optional test ID for testing frameworks.

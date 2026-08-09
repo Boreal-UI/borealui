@@ -1,10 +1,4 @@
-import {
-  RoundingType,
-  ShadowType,
-  SizeType,
-  StateType,
-  ThemeType,
-} from "@/types/types";
+import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 
 /**
  * Props for the Toggle component.
@@ -78,17 +72,15 @@ export interface ToggleProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Applies a translucent frosted-glass treatment to the toggle track.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the toggle.
-   * "" | "success" | "error" | "warning" | "disabled"
+   * "" | "success" | "error" | "warning" | "info" | "disabled"
    *
    */
   state?: StateType;
@@ -108,15 +100,6 @@ export interface ToggleProps {
    * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
-
-  /**
-   * Size variant for the toggle.
-   * "xs" | "small" | "medium" | "large" | "xl"
-   *
-   * @default configured default size (fallback: "medium")
-   */
-  size?: SizeType;
-
   /**
    * If true, disables user interaction with the toggle.
    *
@@ -129,7 +112,6 @@ export interface ToggleProps {
    */
   className?: string;
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -139,6 +121,10 @@ export interface ToggleProps {
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+  invalid?: boolean;
+  helperText?: import("react").ReactNode;
+  errorMessage?: import("react").ReactNode;
+  size?: import("@/types/types").SizeType;
 }
 
 export interface ToggleBaseProps extends ToggleProps {

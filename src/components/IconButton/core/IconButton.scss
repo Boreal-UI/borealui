@@ -14,7 +14,12 @@
     justify-content: center;
     line-height: 1;
     border: none;
-    transition: var(--transition-default);
+    transition:
+      transform var(--motion-press, 140ms cubic-bezier(0.23, 1, 0.32, 1)),
+      background-color var(--motion-color, 160ms ease),
+      border-color var(--motion-color, 160ms ease),
+      color var(--motion-color, 160ms ease),
+      box-shadow var(--motion-color, 160ms ease);
     text-decoration: none;
     color: inherit;
     font-family: var(--font-family-ui);
@@ -22,12 +27,11 @@
 
     &:hover {
       text-decoration: none;
-      transform: scale(1.05);
       cursor: pointer;
+    }
 
-      @include bp.down(sm) {
-        transform: scale(1.03);
-      }
+    &:active {
+      transform: scale(0.97);
     }
 
     &:focus-visible {
@@ -249,6 +253,12 @@
       border-top-color: inherit;
       border-radius: 50%;
       animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .icon_button:hover {
+      transform: scale(1.03);
     }
   }
 

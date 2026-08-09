@@ -151,25 +151,22 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     ],
   );
 
-  const themeInitializationScript = useMemo(
-    () => {
-      if (!enableThemeScript) return "";
+  const themeInitializationScript = useMemo(() => {
+    if (!enableThemeScript) return "";
 
-      return getThemeInitializationScript({
-        customSchemes: stableCustomSchemes,
-        initialSchemeName,
-        themeCookieName,
-        useOnlyCustomSchemes,
-      });
-    },
-    [
-      enableThemeScript,
+    return getThemeInitializationScript({
+      customSchemes: stableCustomSchemes,
       initialSchemeName,
-      stableCustomSchemes,
       themeCookieName,
       useOnlyCustomSchemes,
-    ],
-  );
+    });
+  }, [
+    enableThemeScript,
+    initialSchemeName,
+    stableCustomSchemes,
+    themeCookieName,
+    useOnlyCustomSchemes,
+  ]);
 
   useBrowserLayoutEffect(() => {
     const savedSchemeName =
@@ -267,9 +264,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   return (
     <ThemeContext.Provider value={contextValue}>
       {enableThemeScript ? (
-        <script suppressHydrationWarning>
-          {themeInitializationScript}
-        </script>
+        <script suppressHydrationWarning>{themeInitializationScript}</script>
       ) : null}
       {children}
     </ThemeContext.Provider>

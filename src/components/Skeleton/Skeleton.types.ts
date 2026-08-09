@@ -41,7 +41,6 @@ export interface SkeletonProps {
    */
   className?: string;
 
-
   /**
    * Optional test ID for testing frameworks.
    *

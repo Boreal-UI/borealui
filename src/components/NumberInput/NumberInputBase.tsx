@@ -10,9 +10,9 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
+  getDefaultSize,
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -63,10 +63,10 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
       incrementAriaLabel = "Increase value",
       theme = getDefaultTheme(),
       state,
-      outline = getDefaultOutline(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
+      size = getDefaultSize(),
       disabled = false,
       readOnly = false,
       required = false,
@@ -121,10 +121,11 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
     };
 
     const inputId = idProp ?? `${testId}-input-${generatedId}`;
-    const srDescriptionId = srOnlyText ? `${inputId}-sr-description` : undefined;
+    const srDescriptionId = srOnlyText
+      ? `${inputId}-sr-description`
+      : undefined;
     const computedAriaDescribedBy =
-      [ariaDescribedBy, srDescriptionId].filter(Boolean).join(" ") ||
-      undefined;
+      [ariaDescribedBy, srDescriptionId].filter(Boolean).join(" ") || undefined;
     const computedAriaLabel = label ? undefined : ariaLabel || placeholder;
     const computedAriaInvalid = ariaInvalid ?? (state === "error" || undefined);
     const computedAriaRequired = ariaRequired ?? (required || undefined);
@@ -141,7 +142,10 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
     };
 
     const updateFromNumber = (nextValue: number) => {
-      const normalized = normalizeValue(clampValue(nextValue, min, max), safeStep);
+      const normalized = normalizeValue(
+        clampValue(nextValue, min, max),
+        safeStep,
+      );
       if (!isControlled) setInternalValue(normalized);
       onValueChange?.(normalized);
     };
@@ -165,7 +169,10 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
       const parsed = parseInputValue(event.currentTarget.value);
 
       if (clampOnBlur && typeof parsed === "number") {
-        const nextValue = normalizeValue(clampValue(parsed, min, max), safeStep);
+        const nextValue = normalizeValue(
+          clampValue(parsed, min, max),
+          safeStep,
+        );
         if (!isControlled) setInternalValue(nextValue);
         if (nextValue !== parsed) {
           onValueChange?.(nextValue);
@@ -189,10 +196,12 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
       () =>
         combineClassNames(
           classMap.numberInput,
+          classMap[size],
           classMap[theme],
           state && classMap[state],
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
@@ -200,10 +209,10 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
         ),
       [
         classMap,
+        size,
         theme,
         state,
-        outline,
-        glass,
+        variant,
         disabled,
         shadow,
         rounding,
@@ -306,7 +315,7 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
             <span
               id={srDescriptionId}
               className={combineClassNames(
-                classMap.srOnly ?? "sr_only",
+                "sr_only",
                 srOnlyClassName,
               )}
               data-testid={`${testId}-sr-only-text`}

@@ -7,8 +7,6 @@ import { MetricBoxProps } from "../MetricBox.types";
 
 const classes = {
   wrapper: "metricBox",
-  outline: "metricBox_outline",
-  glass: "metricBox_glass",
   loading: "metricBox_loading",
   loadingSkeleton: "metricBox_loading_skeleton",
 
@@ -50,6 +48,8 @@ const classes = {
   title: "metricBox_title",
   value: "metricBox_value",
   subtext: "metricBox_subtext",
+  glass: "metricBox_glass",
+  outline: "metricBox_outline",
 };
 
 const MetricBox: React.FC<MetricBoxProps> = (props) => {

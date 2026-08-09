@@ -122,15 +122,18 @@
 
     &_icon {
       margin-right: var(--spacing-sm);
-      font-size: 1.2rem;
+      width: 1.2rem;
+      height: 1.2rem;
 
       @include bp.down(sm) {
         margin-right: var(--spacing-xs);
-        font-size: 1rem;
+        width: 1rem;
+        height: 1rem;
       }
 
       @include bp.up(lg) {
-        font-size: 1.3rem;
+        width: 1.3rem;
+        height: 1.3rem;
       }
     }
 

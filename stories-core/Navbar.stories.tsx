@@ -8,7 +8,7 @@ import {
   FaCode,
   FaCommentAlt,
   FaPaintBrush,
-} from "react-icons/fa";
+} from "../shared-story-assets/icons";
 import type { NavBarProps } from "../src/components/NavBar/NavBar.types";
 import {
   roundingOptions,
@@ -117,7 +117,7 @@ export const GlassThemeVariants: Story = {
           key={theme}
           {...args}
           theme={theme}
-          glass
+          variant="glass"
           rounding="large"
           shadow="light"
           className={`storybook-nav-${theme}`}

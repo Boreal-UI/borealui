@@ -4,7 +4,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -20,7 +20,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
       onChange,
       name,
       theme = getDefaultTheme(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
       state,
@@ -58,22 +58,23 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
           classMap.wrapper,
           classMap[theme],
           state && classMap[state],
-          glass && classMap.glass,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           className,
         ),
-      [classMap, theme, state, glass, disabled, className],
+      [classMap, theme, state, variant, disabled, className],
     );
 
     const radioClasses = useMemo(
       () =>
         combineClassNames(
           classMap.circle,
-          glass && classMap.glassCircle,
+          (variant === "glass" || variant === "glassOutline") &&
+            classMap.glassCircle,
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
         ),
-      [classMap, theme, glass, rounding, shadow],
+      [classMap, theme, variant, rounding, shadow],
     );
 
     const resolvedAriaLabelledBy =

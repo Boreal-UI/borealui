@@ -1,10 +1,10 @@
+import { StateType, ThemeType } from "@/types/types";
 import {
   ForwardRefExoticComponent,
   HTMLAttributes,
   ReactNode,
   RefAttributes,
 } from "react";
-import { StateType, ThemeType } from "@/types/types";
 
 type NativeLegendProps = Omit<HTMLAttributes<HTMLDivElement>, "children">;
 

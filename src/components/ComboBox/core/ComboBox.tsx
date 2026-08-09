@@ -4,6 +4,11 @@ import { ComboBoxProps } from "../ComboBox.types";
 import "./ComboBox.scss";
 
 const classes = {
+  xs: "combobox_xs",
+  small: "combobox_small",
+  medium: "combobox_medium",
+  large: "combobox_large",
+  xl: "combobox_xl",
   layout: "combobox_layout",
   comboBox: "combobox",
   label: "combobox_label",
@@ -16,10 +21,8 @@ const classes = {
   description: "combobox_description",
   status: "combobox_status",
   helperText: "combobox_helper_text",
-  errorText: "combobox_error_text",
+  errorMessage: "combobox_error_text",
   disabled: "combobox_disabled",
-  outline: "combobox_outline",
-  glass: "combobox_glass",
   labelTop: "combobox_label_top",
   labelBottom: "combobox_label_bottom",
   labelLeft: "combobox_label_left",
@@ -43,6 +46,8 @@ const classes = {
   roundMedium: "combobox_round-Medium",
   roundLarge: "combobox_round-Large",
   roundFull: "combobox_round-Full",
+  glass: "combobox_glass",
+  outline: "combobox_outline",
 };
 
 export default function ComboBox(props: ComboBoxProps) {

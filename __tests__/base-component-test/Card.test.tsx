@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import CardBase from "@/components/Card/CardBase";
-import { FaStar } from "react-icons/fa";
+import { FaStar } from "../../shared-story-assets/icons";
 import {
   DummyButton,
   DummyIconButton,
@@ -32,7 +32,6 @@ const classMap = {
   xl: "xl",
 
   loading: "loading",
-  outline: "outline",
   disabled: "disabled",
   selected: "selected",
   selectable: "selectable",
@@ -90,6 +89,7 @@ const classMap = {
   borderLight: "borderLight",
   borderMedium: "borderMedium",
   borderStrong: "borderStrong",
+  outline: "outline",
 };
 
 describe("CardBase", () => {
@@ -252,9 +252,7 @@ describe("CardBase", () => {
       imageAlt: "Default inset image",
     });
 
-    expect(screen.getByTestId("card-image")).toHaveClass(
-      "card-img-inset-none",
-    );
+    expect(screen.getByTestId("card-image")).toHaveClass("card-img-inset-none");
     expect(screen.getByTestId("card-image")).not.toHaveClass(
       "card-img-round-medium",
     );
@@ -715,7 +713,7 @@ describe("CardBase", () => {
       shadow: "light",
       rounding: "small",
       border: "medium",
-      outline: true,
+      variant: "outline",
       className: "custom-card-class",
     });
 
@@ -910,6 +908,57 @@ describe("CardBase", () => {
     const card = screen.getByRole("button", { name: "Selectable Card" });
     expect(card).toBeInTheDocument();
     expect(card).toHaveAttribute("aria-pressed", "false");
+    expect(card).toHaveAttribute("tabindex", "0");
+  });
+
+  it("supports pointer and keyboard activation when interactive", () => {
+    const onClick = jest.fn();
+
+    renderCard({
+      title: "Interactive Card",
+      selectable: true,
+      onClick,
+    });
+
+    const card = screen.getByRole("button", { name: "Interactive Card" });
+    fireEvent.click(card);
+    fireEvent.keyDown(card, { key: "Enter" });
+    fireEvent.keyDown(card, { key: " " });
+
+    expect(onClick).toHaveBeenCalledTimes(3);
+  });
+
+  it("prevents card and action activation when the card is disabled", () => {
+    const onCardClick = jest.fn();
+    const onActionClick = jest.fn();
+
+    renderCard({
+      title: "Disabled Interactive Card",
+      selectable: true,
+      disabled: true,
+      onClick: onCardClick,
+      actionButtons: [
+        {
+          label: "Disabled action",
+          onClick: onActionClick,
+          buttonComponent: DummyButton,
+          iconButtonComponent: DummyIconButton,
+        },
+      ],
+    });
+
+    const card = screen.getByRole("button", {
+      name: "Disabled Interactive Card",
+    });
+    const action = screen.getByRole("button", { name: "Disabled action" });
+
+    expect(card).toHaveAttribute("aria-disabled", "true");
+    expect(action).toBeDisabled();
+    fireEvent.click(card);
+    fireEvent.keyDown(card, { key: "Enter" });
+
+    expect(onCardClick).not.toHaveBeenCalled();
+    expect(onActionClick).not.toHaveBeenCalled();
   });
 
   it("sets aria-pressed when selectable and selected are true", () => {

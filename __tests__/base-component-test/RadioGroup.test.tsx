@@ -11,7 +11,7 @@ const classMap = {
   options: "radio_options",
   vertical: "radio_vertical",
   horizontal: "radio_horizontal",
-  description: "radio_description",
+  helperText: "radio_description",
   errorMessage: "radio_errorMessage",
   invalid: "radio_invalid",
 
@@ -30,8 +30,6 @@ const classMap = {
   success: "radio_success",
   error: "radio_error",
   warning: "radio_warning",
-
-  glass: "radio_glass",
   glassCircle: "radio_glassCircle",
   disabled: "radio_disabled",
 
@@ -46,6 +44,7 @@ const classMap = {
   shadowMedium: "radio_shadow-medium",
   shadowStrong: "radio_shadow-strong",
   shadowIntense: "radio_shadow-intense",
+  glass: "radio_glass",
 };
 
 const options = [
@@ -253,16 +252,16 @@ describe("BaseRadioGroup", () => {
   it("renders description when provided", () => {
     renderRadioGroup({
       id: "preferences",
-      description: "Pick the option that best fits your preference.",
+      helperText: "Pick the option that best fits your preference.",
     });
 
-    expect(screen.getByTestId("radio-group-description")).toHaveTextContent(
+    expect(screen.getByTestId("radio-group-helperText")).toHaveTextContent(
       "Pick the option that best fits your preference.",
     );
 
-    expect(screen.getByTestId("radio-group-description")).toHaveAttribute(
+    expect(screen.getByTestId("radio-group-helperText")).toHaveAttribute(
       "id",
-      "preferences-description",
+      "preferences-helperText",
     );
   });
 
@@ -272,13 +271,13 @@ describe("BaseRadioGroup", () => {
       errorMessage: "Please choose an option.",
     });
 
-    expect(screen.getByTestId("radio-group-error")).toHaveTextContent(
+    expect(screen.getByTestId("radio-group-errorMessage")).toHaveTextContent(
       "Please choose an option.",
     );
 
-    expect(screen.getByTestId("radio-group-error")).toHaveAttribute(
+    expect(screen.getByTestId("radio-group-errorMessage")).toHaveAttribute(
       "id",
-      "preferences-error",
+      "preferences-errorMessage",
     );
   });
 
@@ -286,25 +285,25 @@ describe("BaseRadioGroup", () => {
     renderRadioGroup({
       id: "preferences",
       "aria-describedby": "external-help",
-      description: "Helpful description.",
+      helperText: "Helpful description.",
       errorMessage: "Error message.",
     });
 
     expect(screen.getByTestId("radio-group")).toHaveAttribute(
       "aria-describedby",
-      "external-help preferences-description preferences-error",
+      "external-help preferences-helperText preferences-errorMessage",
     );
   });
 
   it("sets aria-describedby to only the description id when only description is provided", () => {
     renderRadioGroup({
       id: "preferences",
-      description: "Helpful description.",
+      helperText: "Helpful description.",
     });
 
     expect(screen.getByTestId("radio-group")).toHaveAttribute(
       "aria-describedby",
-      "preferences-description",
+      "preferences-helperText",
     );
   });
 
@@ -316,11 +315,11 @@ describe("BaseRadioGroup", () => {
 
     expect(screen.getByTestId("radio-group")).toHaveAttribute(
       "aria-describedby",
-      "preferences-error",
+      "preferences-errorMessage",
     );
   });
 
-  it("does not set aria-describedby when no description, error, or aria-describedby is provided", () => {
+  it("does not set aria-describedby when no helperText, error, or aria-describedby is provided", () => {
     renderRadioGroup();
 
     expect(screen.getByTestId("radio-group")).not.toHaveAttribute(
@@ -351,7 +350,7 @@ describe("BaseRadioGroup", () => {
     renderRadioGroup({
       theme: "secondary",
       state: "success",
-      glass: true,
+      variant: "glassOutline",
       rounding: "large",
       shadow: "medium",
     });
@@ -451,7 +450,7 @@ describe("BaseRadioGroup", () => {
         onChange={jest.fn()}
         classMap={classMap}
         data-testid="radio-group"
-        description="Choose one available option."
+        helperText="Choose one available option."
       />,
     );
 

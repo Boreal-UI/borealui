@@ -11,6 +11,7 @@ import {
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -33,6 +34,15 @@ export default meta;
 
 type Story = StoryObj<TimePickerProps>;
 
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: TimePicker,
+      args: { label: "Start time" },
+      labelProp: "label",
+    }),
+};
+
 export const Default: Story = {};
 
 export const WithConstraints: Story = {
@@ -42,7 +52,7 @@ export const WithConstraints: Story = {
     max: "17:00",
     step: 900,
     defaultValue: "09:30",
-    description: "Appointments are available in 15 minute increments.",
+    helperText: "Appointments are available in 15 minute increments.",
   },
 };
 
@@ -51,7 +61,7 @@ export const ErrorState: Story = {
     label: "Cutoff time",
     value: "07:30",
     min: "08:00",
-    error: "Choose a time after 8:00 AM.",
+    errorMessage: "Choose a time after 8:00 AM.",
   },
 };
 
@@ -59,7 +69,7 @@ export const FullWidth: Story = {
   args: {
     fullWidth: true,
     label: "Launch window",
-    description: "The control stretches to the width of its parent.",
+    helperText: "The control stretches to the width of its parent.",
   },
 };
 

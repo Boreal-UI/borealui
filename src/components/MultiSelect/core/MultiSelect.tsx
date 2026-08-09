@@ -5,6 +5,11 @@ import MultiSelectBase from "../MultiSelectBase";
 import { MultiSelectProps } from "../MultiSelect.types";
 
 const classes = {
+  xs: "multiSelect_xs",
+  small: "multiSelect_small",
+  medium: "multiSelect_medium",
+  large: "multiSelect_large",
+  xl: "multiSelect_xl",
   container: "multiSelect_container",
   label: "multiSelect_label",
   labelTop: "multiSelect_labelTop",
@@ -25,6 +30,7 @@ const classes = {
   searchInput: "multiSelect_searchInput",
   listbox: "multiSelect_listbox",
   option: "multiSelect_option",
+  optionLabel: "multiSelect_optionLabel",
   optionText: "multiSelect_optionText",
   description: "multiSelect_description",
   checkbox: "multiSelect_checkbox",
@@ -34,7 +40,6 @@ const classes = {
   optionDisabled: "multiSelect_optionDisabled",
   loader: "multiSelect_loader",
   nativeRequired: "multiSelect_nativeRequired",
-  srOnly: "sr_only",
 
   primary: "multiSelect_primary",
   secondary: "multiSelect_secondary",
@@ -47,8 +52,6 @@ const classes = {
   error: "multiSelect_error",
 
   clear: "multiSelect_clear",
-  outline: "multiSelect_outline",
-  glass: "multiSelect_glass",
   disabled: "multiSelect_disabled",
   loading: "multiSelect_loading",
   open: "multiSelect_open",
@@ -64,15 +67,13 @@ const classes = {
   roundMedium: "multiSelect_round-Medium",
   roundLarge: "multiSelect_round-Large",
   roundFull: "multiSelect_round-Full",
+  glass: "multiSelect_glass",
+  outline: "multiSelect_outline",
 };
 
 const MultiSelect = forwardRef<HTMLDivElement, MultiSelectProps>(
   (props, ref) => (
-    <MultiSelectBase
-      {...props}
-      ref={ref}
-      classMap={expandClassMap(classes)}
-    />
+    <MultiSelectBase {...props} ref={ref} classMap={expandClassMap(classes)} />
   ),
 );
 

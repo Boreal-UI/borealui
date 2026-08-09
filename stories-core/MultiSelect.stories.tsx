@@ -15,6 +15,7 @@ import {
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -49,6 +50,15 @@ const meta: Meta<MultiSelectProps> = {
 export default meta;
 
 type Story = StoryObj<MultiSelectProps>;
+
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: MultiSelect,
+      args: { options: componentOptions, label: "Components" },
+      labelProp: "label",
+    }),
+};
 
 export const Default: Story = {};
 

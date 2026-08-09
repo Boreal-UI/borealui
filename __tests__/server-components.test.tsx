@@ -4,6 +4,8 @@ import {
   Avatar,
   Badge,
   BarChart,
+  BentoBox,
+  BentoBoxItem,
   BreadCrumbPageHeader,
   Breadcrumbs,
   Button,
@@ -40,6 +42,9 @@ describe("Next server component entries", () => {
   it("renders static layout and data-display components", () => {
     render(
       <Container testId="server-layout">
+        <BentoBox testId="server-bento-box">
+          <BentoBoxItem testId="server-bento-item">Tile</BentoBoxItem>
+        </BentoBox>
         <Typography testId="server-typography">Server rendered</Typography>
         <Divider testId="server-divider" />
         <Legend
@@ -52,6 +57,9 @@ describe("Next server component entries", () => {
     );
 
     expect(screen.getByTestId("server-layout")).toBeInTheDocument();
+    expect(screen.getByTestId("server-bento-box-grid")).toContainElement(
+      screen.getByTestId("server-bento-item"),
+    );
     expect(screen.getByTestId("server-typography")).toHaveTextContent(
       "Server rendered",
     );
@@ -102,7 +110,9 @@ describe("Next server component entries", () => {
     expect(screen.getByTestId("alert")).toHaveTextContent("Saved");
     expect(screen.getByTestId("avatar-main")).toHaveTextContent("AL");
     expect(screen.getByLabelText("Breadcrumbs")).toHaveTextContent("Current");
-    expect(screen.getByRole("heading", { name: "Dashboard" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("heading", { name: "Dashboard" }),
+    ).toBeInTheDocument();
     expect(screen.getByTestId("card")).toHaveTextContent("Static card");
   });
 
@@ -141,6 +151,15 @@ describe("Next server component entries", () => {
     expect(screen.getByLabelText("Dark")).toBeChecked();
   });
 
+  it("does not forward the TextInput fullWidth prop to the native input", () => {
+    render(<TextInput label="Name" fullWidth testId="server-text-input" />);
+
+    const input = screen.getByLabelText("Name");
+
+    expect(input).not.toHaveAttribute("fullWidth");
+    expect(input).not.toHaveAttribute("fullwidth");
+  });
+
   it("renders additional server page and status compositions", () => {
     render(
       <>
@@ -168,7 +187,10 @@ describe("Next server component entries", () => {
         <ValidationSummary
           items={[{ message: "Name is required", fieldId: "name" }]}
         />
-        <Footer copyright="Boreal UI" links={[{ label: "Docs", href: "/docs" }]} />
+        <Footer
+          copyright="Boreal UI"
+          links={[{ label: "Docs", href: "/docs" }]}
+        />
       </>,
     );
 
@@ -184,10 +206,9 @@ describe("Next server component entries", () => {
     expect(
       screen.getByRole("heading", { name: "Server toolbar" }),
     ).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Name is required" })).toHaveAttribute(
-      "href",
-      "#name",
-    );
+    expect(
+      screen.getByRole("link", { name: "Name is required" }),
+    ).toHaveAttribute("href", "#name");
     expect(screen.getByRole("contentinfo")).toHaveTextContent("Boreal UI");
   });
 });

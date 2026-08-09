@@ -1,8 +1,8 @@
-import { ShadowType, SizeType } from "@/types/types";
+import { ShadowType } from "@/types/types";
 
 /**
  * Represents a color option available for selection.
-   */
+ */
 export interface ColorOption {
   /** Label to display as a tooltip or for screen readers. */
   label: string;
@@ -36,11 +36,11 @@ export interface ColorPickerProps {
   /** Array of color options to choose from. */
   colors: ColorOption[];
 
-  /** Currently selected color value. */
-  selected: string;
+  /** Currently value color value. */
+  value: string;
 
-  /** Callback triggered when a color is selected. */
-  onChange: (color: string) => void;
+  /** Callback triggered when a color is value. */
+  onValueChange: (color: string) => void;
 
   /**
    * Optional name attribute for the radio group.
@@ -55,15 +55,6 @@ export interface ColorPickerProps {
    * @default false
    */
   disabled?: boolean;
-
-  /**
-   * Size of the swatches
-   * ('xs' | 'small' | 'medium' | 'large' | 'xl').
-   *
-   * @default configured default size (fallback: "medium")
-   */
-  size?: SizeType;
-
   /**
    * Shape of the swatches
    * ('square' | 'round' | 'pill').
@@ -105,7 +96,7 @@ export interface ColorPickerProps {
   helperText?: string;
 
   /** Optional error message shown when invalid. */
-  errorText?: string;
+  errorMessage?: string;
 
   /**
    * Accessible name for the group when no visible label should be used
@@ -144,7 +135,6 @@ export interface ColorPickerProps {
    */
   className?: string;
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -154,6 +144,7 @@ export interface ColorPickerProps {
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+  size?: import("@/types/types").SizeType;
 }
 
 export interface ColorPickerBaseProps extends ColorPickerProps {

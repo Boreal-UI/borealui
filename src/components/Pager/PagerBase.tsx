@@ -1,7 +1,7 @@
 import React from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "../../Icons";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -20,16 +20,16 @@ const BasePager: React.FC<BasePagerProps> = ({
   className,
   size = getDefaultSize(),
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   rounding = getDefaultRounding(),
   shadow,
   state,
   "aria-label": ariaLabel = "Pagination",
   "aria-describedby": ariaDescribedBy,
   "aria-labelledby": ariaLabelledBy,
-  "page-list-aria-label": pageListAriaLabel = "Page list",
-  "previous-button-aria-label": previousButtonAriaLabel = "Go to previous page",
-  "next-button-aria-label": nextButtonAriaLabel = "Go to next page",
+  pageListAriaLabel: pageListAriaLabel = "Page list",
+  previousButtonAriaLabel = "Go to previous page",
+  nextButtonAriaLabel = "Go to next page",
   getPageAriaLabel = (pageNumber, isActive) =>
     isActive ? `Current page, page ${pageNumber}` : `Go to page ${pageNumber}`,
   getLiveRegionMessage = (activePage, totalPages) =>
@@ -65,7 +65,7 @@ const BasePager: React.FC<BasePagerProps> = ({
     classMap.button,
     getShadowClassName(classMap, theme, shadow),
     rounding && classMap[`round${capitalize(rounding)}`],
-    size && classMap[`size${capitalize(size)}`],
+    size && classMap[size],
   );
 
   const liveRegionId = `${testId}-status`;
@@ -93,7 +93,7 @@ const BasePager: React.FC<BasePagerProps> = ({
           icon={ArrowLeftIcon}
           theme={theme}
           state={state}
-          glass={glass}
+          variant={variant}
           size={size}
           shadow={shadow}
           rounding={rounding}
@@ -122,7 +122,7 @@ const BasePager: React.FC<BasePagerProps> = ({
             <Button
               theme={theme}
               state={state}
-              glass={glass}
+              variant={variant}
               size={size}
               rounding={rounding}
               shadow={shadow}
@@ -151,7 +151,7 @@ const BasePager: React.FC<BasePagerProps> = ({
                 <Button
                   theme={theme}
                   state={state}
-                  glass={glass}
+                  variant={variant}
                   size={size}
                   rounding={rounding}
                   shadow={shadow}
@@ -180,7 +180,7 @@ const BasePager: React.FC<BasePagerProps> = ({
           icon={ArrowRightIcon}
           theme={theme}
           state={state}
-          glass={glass}
+          variant={variant}
           rounding={rounding}
           shadow={shadow}
           size={size}

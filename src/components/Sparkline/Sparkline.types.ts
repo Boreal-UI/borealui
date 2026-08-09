@@ -1,3 +1,4 @@
+import { StateType, ThemeType } from "@/types/types";
 import {
   ForwardRefExoticComponent,
   HTMLAttributes,
@@ -5,7 +6,6 @@ import {
   RefAttributes,
 } from "react";
 import { ChartDatum, ChartValueFormatter } from "../../utils/chartUtils";
-import { StateType, ThemeType } from "@/types/types";
 
 type NativeSparklineProps = Omit<HTMLAttributes<HTMLDivElement>, "children">;
 

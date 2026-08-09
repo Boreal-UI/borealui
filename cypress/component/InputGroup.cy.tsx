@@ -35,7 +35,7 @@ implementations.forEach(({ name, InputGroup }) => {
       cy.get(`#${name}-amount`).should(
         "have.attr",
         "aria-describedby",
-        `${name}-amount-helper`,
+        `${name}-amount-helperText`,
       );
       cy.get('[data-testid="amount-group-prefix"]').should("contain", "$");
       cy.get('[data-testid="amount-group-suffix"]').should("contain", "USD");
@@ -50,7 +50,7 @@ implementations.forEach(({ name, InputGroup }) => {
             startAddon="https://"
             endAddon=".com"
             disabled
-            error="Domain is required."
+            errorMessage="Domain is required."
             data-testid="domain-group"
           >
             <input title="text" type="text" />

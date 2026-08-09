@@ -11,7 +11,11 @@ const Accordion: React.FC<AccordionProps> = (props) => {
   const getUniqueId = () => `accordion-${id}`;
 
   return (
-    <AccordionBase {...props} getUniqueId={getUniqueId} classMap={expandClassMap(styles)} />
+    <AccordionBase
+      {...props}
+      getUniqueId={getUniqueId}
+      classMap={expandClassMap(styles)}
+    />
   );
 };
 Accordion.displayName = "Accordion";

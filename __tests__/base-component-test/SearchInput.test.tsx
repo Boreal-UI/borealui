@@ -7,6 +7,7 @@ import SearchInputBase from "@/components/SearchInput/SearchInputBase";
 expect.extend(toHaveNoViolations);
 
 const classMap = {
+  large: "large",
   container: "container",
   label: "label",
   labelTop: "labelTop",
@@ -26,28 +27,29 @@ const classMap = {
   success: "success",
   error: "error",
   clear: "clear",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   shadowLight: "shadowLight",
   shadowStrong: "shadowStrong",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 const renderSearchInput = (
   props: Partial<React.ComponentProps<typeof SearchInputBase>> = {},
 ) =>
   render(
-    <SearchInputBase
-      label="Search docs"
-      classMap={classMap}
-      {...props}
-    />,
+    <SearchInputBase label="Search docs" classMap={classMap} {...props} />,
   );
 
 describe("SearchInputBase", () => {
+  it("applies the selected size class", () => {
+    renderSearchInput({ size: "large" });
+    expect(screen.getByTestId("search-input-wrapper")).toHaveClass("large");
+  });
+
   it("renders a labelled native search input", () => {
     renderSearchInput({ value: "tokens" });
 
@@ -163,8 +165,7 @@ describe("SearchInputBase", () => {
     renderSearchInput({
       theme: "secondary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       rounding: "large",
       shadow: "strong",
     });

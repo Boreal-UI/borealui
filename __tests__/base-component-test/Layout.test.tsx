@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import LayoutBase from "../../src/components/Layout/LayoutBase";
@@ -12,7 +11,31 @@ const classMap = {
   stack: "layout_stack",
   inline: "layout_inline",
   grid: "layout_grid",
+  bentoBox: "layout_bento_box",
+  bentoGrid: "layout_bento_grid",
+  bentoBoxItem: "layout_bento_item",
+  dense: "layout_bento_dense",
   cluster: "layout_cluster",
+
+  columns1: "layout_bento_columns1",
+  columns2: "layout_bento_columns2",
+  columns3: "layout_bento_columns3",
+  columns4: "layout_bento_columns4",
+  columns5: "layout_bento_columns5",
+  columns6: "layout_bento_columns6",
+  columnSpan1: "layout_bento_item_columnSpan1",
+  columnSpan2: "layout_bento_item_columnSpan2",
+  columnSpan3: "layout_bento_item_columnSpan3",
+  columnSpan4: "layout_bento_item_columnSpan4",
+  columnSpan5: "layout_bento_item_columnSpan5",
+  columnSpan6: "layout_bento_item_columnSpan6",
+  columnSpanFull: "layout_bento_item_columnSpanFull",
+  rowSpan1: "layout_bento_item_rowSpan1",
+  rowSpan2: "layout_bento_item_rowSpan2",
+  rowSpan3: "layout_bento_item_rowSpan3",
+  rowSpan4: "layout_bento_item_rowSpan4",
+  rowSpan5: "layout_bento_item_rowSpan5",
+  rowSpan6: "layout_bento_item_rowSpan6",
 
   gapNone: "layout_gap_none",
   gapXs: "layout_gap_xs",
@@ -273,6 +296,64 @@ describe("LayoutBase", () => {
     expect(screen.getByTestId("grid")).toHaveStyle({
       "--layout-min-column-width": "16rem",
     });
+  });
+
+  it("renders BentoBox as a container-responsive Layout subtype", () => {
+    renderLayout({ variant: "bentoBox" });
+
+    expect(screen.getByTestId("bento-box")).toHaveClass("layout_bento_box");
+    expect(screen.getByTestId("bento-box")).toHaveStyle({
+      "--layout-bento-min-row-height": "8rem",
+    });
+    expect(screen.getByTestId("bento-box-grid")).toHaveClass(
+      "layout_bento_grid",
+      "layout_bento_columns4",
+      "layout_gap_md",
+    );
+  });
+
+  it("applies BentoBox grid configuration to its internal grid", () => {
+    renderLayout({
+      variant: "bentoBox",
+      columns: 6,
+      gap: "xl",
+      align: "stretch",
+      justify: "between",
+      dense: true,
+      gridClassName: "custom-bento-grid",
+      minRowHeight: "10rem",
+    });
+
+    expect(screen.getByTestId("bento-box")).toHaveStyle({
+      "--layout-bento-min-row-height": "10rem",
+    });
+    expect(screen.getByTestId("bento-box-grid")).toHaveClass(
+      "layout_bento_columns6",
+      "layout_gap_xl",
+      "layout_align_stretch",
+      "layout_justify_between",
+      "layout_bento_dense",
+      "custom-bento-grid",
+    );
+  });
+
+  it("applies BentoBoxItem span classes and data attributes", () => {
+    renderLayout({
+      variant: "bentoBoxItem",
+      columnSpan: "full",
+      rowSpan: 3,
+    });
+
+    const item = screen.getByTestId("bento-box-item");
+
+    expect(item).toHaveClass(
+      "layout_bento_item",
+      "layout_bento_item_columnSpanFull",
+      "layout_bento_item_rowSpan3",
+    );
+    expect(item).toHaveAttribute("data-column-span", "full");
+    expect(item).toHaveAttribute("data-row-span", "3");
+    expect(item).not.toHaveClass("layout_gap_md", "layout_wrap");
   });
 
   it("has no accessibility violations", async () => {

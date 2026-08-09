@@ -8,7 +8,6 @@ import { PagerProps } from "../Pager.types";
 
 const classes = {
   wrapper: "pagination",
-  glass: "pagination_glass",
   controls: "pagination_controls",
   controlButton: "pagination_control_button",
   buttonWrapper: "pagination_button_wrapper",
@@ -28,6 +27,7 @@ const classes = {
   medium: "pagination_medium",
   large: "pagination_large",
   xl: "pagination_xl",
+  glass: "pagination_glass",
 };
 
 const Pager: React.FC<PagerProps> = (props) => {

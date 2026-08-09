@@ -53,7 +53,9 @@ const serverEntries = [
 ];
 
 function writeFileIfChanged(filePath, content) {
-  const existing = fs.existsSync(filePath) ? fs.readFileSync(filePath, "utf8") : "";
+  const existing = fs.existsSync(filePath)
+    ? fs.readFileSync(filePath, "utf8")
+    : "";
   const normalize = (value) => value.replace(/\r\n/g, "\n");
 
   if (normalize(existing) !== normalize(content)) {
@@ -97,6 +99,8 @@ function writeEntrypoint({
       ? `
 ${styleImport}
 export {
+  BentoBox,
+  BentoBoxItem,
   Container,
   Grid,
   Inline,
@@ -158,7 +162,13 @@ generateEntrypoints("next");
 generateServerEntrypoints();
 console.log("Generated entrypoint files!");
 
-function writeServerEntrypoint({ outDir, name, componentPath, typesPath, styleName }) {
+function writeServerEntrypoint({
+  outDir,
+  name,
+  componentPath,
+  typesPath,
+  styleName,
+}) {
   const componentsDir = path.resolve(__dirname, "../src/components");
   const resolvedStyleName = styleName ?? name;
   const stylePath = path.resolve(
@@ -176,6 +186,8 @@ function writeServerEntrypoint({ outDir, name, componentPath, typesPath, styleNa
       ? `
 ${styleImport}
 export {
+  BentoBox,
+  BentoBoxItem,
   Container,
   Grid,
   Inline,
@@ -216,7 +228,7 @@ function generateServerEntrypoints() {
   const indexExports = serverEntries
     .map((name) =>
       name === "Layout"
-        ? 'export { Container, Grid, Inline, Section, Stack } from "./Layout";'
+        ? 'export { BentoBox, BentoBoxItem, Container, Grid, Inline, Section, Stack } from "./Layout";'
         : `export { default as ${name} } from "./${name}";`,
     )
     .join("\n");

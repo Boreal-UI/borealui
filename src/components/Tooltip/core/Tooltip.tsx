@@ -8,7 +8,7 @@ const classes = {
   container: "tooltip_container",
   triggerWrapper: "tooltip_triggerWrapper",
   tooltip: "tooltip",
-  glass: "tooltip_glass",
+  visible: "tooltip_visible",
 
   top: "tooltip_top",
   bottom: "tooltip_bottom",
@@ -37,6 +37,7 @@ const classes = {
   roundSmall: "tooltip_round-Small",
   roundMedium: "tooltip_round-Medium",
   roundLarge: "tooltip_round-Large",
+  glass: "tooltip_glass",
 };
 
 const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props, ref) => (

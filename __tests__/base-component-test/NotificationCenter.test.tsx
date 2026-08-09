@@ -216,10 +216,9 @@ describe("BaseNotificationCenter", () => {
     expect(screen.getByRole("list")).toHaveClass("list", "custom-list");
     expect(item).toHaveClass("notification", "custom-notification");
     expect(item.querySelector("svg")).toHaveClass("icon", "custom-icon");
-    expect(screen.getByTestId(`${testId}-item-1-message`).parentElement).toHaveClass(
-      "content",
-      "custom-content",
-    );
+    expect(
+      screen.getByTestId(`${testId}-item-1-message`).parentElement,
+    ).toHaveClass("content", "custom-content");
     expect(screen.getByTestId(`${testId}-item-1-message`)).toHaveClass(
       "message",
       "custom-message",
@@ -365,9 +364,9 @@ describe("BaseNotificationCenter", () => {
     expect(screen.queryByText("Notifications")).not.toBeInTheDocument();
   });
 
-  it("uses list-aria-label when provided instead of aria-labelledby on the list", () => {
+  it("uses listAriaLabel when provided instead of aria-labelledby on the list", () => {
     renderNotificationCenter({
-      "list-aria-label": "Recent alerts list",
+      listAriaLabel: "Recent alerts list",
     });
 
     const list = screen.getByRole("list");

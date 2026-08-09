@@ -62,6 +62,10 @@
       @include bp.down(sm) {
         width: 100%;
       }
+
+      &_form_error {
+        border: 1px solid var(--error-color);
+      }
     }
 
     &_controller {
@@ -75,29 +79,21 @@
       }
     }
 
-    &_description,
-    &_error_message {
+    &_helper_text,
+    &_error_text {
       font-family: var(--font-family-body);
-      font-size: var(--font-size-body-sm);
+      font-size: var(--font-size-caption);
       font-weight: var(--font-weight-body);
-      line-height: var(--line-height-body);
+      line-height: var(--line-height-caption);
       letter-spacing: var(--letter-spacing-body);
       margin-top: 4px;
-
-      @include bp.down(xs) {
-        font-size: var(--font-size-caption);
-      }
-
-      @include bp.up(lg) {
-        font-size: var(--font-size-body);
-      }
     }
 
-    &_description {
+    &_helper_text {
       color: inherit;
     }
 
-    &_error_message {
+    &_error_text {
       color: var(--error-color);
     }
 
@@ -134,10 +130,6 @@
       &_input_field {
         width: fit-content;
         flex: 1;
-
-        &_form-error {
-          border: 1px solid var(--error-color);
-        }
       }
 
       &_controller {
@@ -146,7 +138,7 @@
       }
 
       &_description,
-      &_error_message {
+      &_error_text {
         margin-left: 0;
         margin-bottom: 0;
         text-align: left;
@@ -188,7 +180,7 @@
       color: CanvasText;
     }
 
-    .form_group_horizontal_input_field_form-error {
+    .form_group_input_field_form_error {
       border-color: Highlight !important;
     }
   }

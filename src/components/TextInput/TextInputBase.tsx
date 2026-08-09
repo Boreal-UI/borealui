@@ -11,9 +11,9 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
+  getDefaultSize,
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -28,14 +28,18 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       password = false,
       readOnly = false,
       theme = getDefaultTheme(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
       onChange,
+      fullWidth = false,
       state,
       disabled = false,
-      autocomplete = false,
-      outline = getDefaultOutline(),
+      autoComplete,
+      size = getDefaultSize(),
+      invalid = false,
+      helperText,
+      errorMessage,
       classMap,
       IconButton,
       className,
@@ -44,6 +48,8 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       iconClassName,
       inputClassName,
       togglePasswordClassName,
+      helperTextClassName,
+      errorMessageClassName,
       srOnlyClassName,
       srOnlyText,
       "data-testid": dataTestId,
@@ -60,7 +66,6 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
     const {
       id: idProp,
       required,
-      autoComplete: autoCompleteProp,
       type: typeProp,
       role,
       "aria-label": ariaLabel,
@@ -106,10 +111,15 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
     const generatedDescriptionId = srOnlyText
       ? `${inputId}-sr-description`
       : undefined;
+    const helperTextId = helperText ? `${inputId}-helper-text` : undefined;
+    const errorMessageId = errorMessage
+      ? `${inputId}-error-message`
+      : undefined;
 
     const computedAriaDescribedBy =
-      [ariaDescribedBy, generatedDescriptionId].filter(Boolean).join(" ") ||
-      undefined;
+      [ariaDescribedBy, generatedDescriptionId, helperTextId, errorMessageId]
+        .filter(Boolean)
+        .join(" ") || undefined;
 
     const computedAriaLabel = hasLabel
       ? undefined
@@ -123,13 +133,12 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         : "password"
       : typeProp || "text";
 
-    const isError = state === "error";
+    const isError = state === "error" || Boolean(errorMessage);
 
-    const computedAutoComplete =
-      autoCompleteProp ??
-      (autocomplete ? (password ? "current-password" : "on") : "off");
+    const computedAutoComplete = autoComplete;
 
-    const computedAriaInvalid = ariaInvalid ?? (isError || undefined);
+    const computedAriaInvalid =
+      ariaInvalid ?? (invalid || isError || undefined);
     const computedAriaRequired = ariaRequired ?? (required || undefined);
     const computedAriaReadOnly = ariaReadOnly ?? (readOnly || undefined);
     const computedAriaDisabled = ariaDisabled ?? (disabled || undefined);
@@ -143,9 +152,10 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         combineClassNames(
           classMap.container,
           classMap[`label${capitalize(resolvedLabelPosition)}`],
+          fullWidth && classMap.fullWidth,
           containerClassName,
         ),
-      [classMap, resolvedLabelPosition, containerClassName],
+      [classMap, resolvedLabelPosition, fullWidth, containerClassName],
     );
 
     const wrapperClass = useMemo(
@@ -153,31 +163,32 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         combineClassNames(
           classMap.textInput,
           classMap[theme],
+          size && classMap[size],
           state && classMap[state],
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
+          fullWidth && classMap.fullWidth,
           className,
         ),
       [
         classMap,
         theme,
+        size,
         state,
-        outline,
-        glass,
+        variant,
         disabled,
         shadow,
         rounding,
+        fullWidth,
         className,
       ],
     );
 
-    const inputClasses = useMemo(
-      () => combineClassNames(classMap.textInput, outline && classMap.outline),
-      [classMap, outline],
-    );
+    const inputClasses = classMap.input;
 
     const iconClasses = useMemo(
       () =>
@@ -191,7 +202,12 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
     );
 
     return (
-      <div className={containerClass} data-testid={testId}>
+      <div
+        className={containerClass}
+        data-state={isError ? "error" : state || undefined}
+        data-disabled={disabled || undefined}
+        data-testid={testId}
+      >
         {label && (
           <label
             htmlFor={inputId}
@@ -261,7 +277,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             <span
               id={generatedDescriptionId}
               className={combineClassNames(
-                classMap.srOnly || "sr_only",
+                "sr_only",
                 srOnlyClassName,
               )}
               data-testid={`${testId}-sr-only-text`}
@@ -270,6 +286,31 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             </span>
           )}
         </div>
+        {helperText && (
+          <div
+            id={helperTextId}
+            className={combineClassNames(
+              classMap.helperText,
+              helperTextClassName,
+            )}
+            data-testid={`${testId}-helper-text`}
+          >
+            {helperText}
+          </div>
+        )}
+        {errorMessage && (
+          <div
+            id={errorMessageId}
+            className={combineClassNames(
+              classMap.errorMessage,
+              errorMessageClassName,
+            )}
+            role="alert"
+            data-testid={`${testId}-error-message`}
+          >
+            {errorMessage}
+          </div>
+        )}
       </div>
     );
   },

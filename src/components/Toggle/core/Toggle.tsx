@@ -7,7 +7,6 @@ import { ToggleProps } from "../Toggle.types";
 const classes = {
   container: "container",
   toggle: "toggle",
-  glass: "toggle_glass",
   glassTrack: "toggle_glassTrack",
   active: "toggle_active",
   slider: "toggle_slider",
@@ -43,6 +42,7 @@ const classes = {
   roundSmall: "toggle_round-Small",
   roundMedium: "toggle_round-Medium",
   roundLarge: "toggle_round-Large",
+  glass: "toggle_glass",
 };
 
 const Toggle = forwardRef<HTMLButtonElement, ToggleProps>((props, ref) => {

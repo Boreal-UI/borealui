@@ -18,7 +18,7 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
+const stateOptions = ["success", "errorMessage", "warning"];
 const roundingOptions = ["none", "small", "medium", "large"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];
@@ -128,7 +128,7 @@ export const GlassThemeVariants = () =>
       checked: true,
       onChange: () => {},
       theme: "primary",
-      glass: true,
+      variant: "glass",
     },
     [
       {
@@ -165,7 +165,7 @@ export const GlassStateVariants = () =>
       onChange: () => {},
       theme: "primary",
       state: "success",
-      glass: true,
+      variant: "glass",
     },
     [
       {

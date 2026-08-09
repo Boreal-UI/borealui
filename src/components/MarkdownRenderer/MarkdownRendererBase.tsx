@@ -9,20 +9,29 @@ import {
 } from "../../config/boreal-style-config";
 
 function safeSanitize(html: string): string {
-  const stripUnsafeAttributes = (value: string) =>
-    value
-      .replace(
-        /\s+on[\w:-]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?/gi,
-        "",
-      )
-      .replace(
-        /\s+(?:style|srcdoc)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+)/gi,
-        "",
-      )
-      .replace(
-        /\s+(href|src|xlink:href|formaction)\s*=\s*(["']?)\s*(?:javascript|vbscript|data(?!:image\/(?:png|gif|jpeg|jpg|webp|avif))):[^"'\s>]*/gi,
-        "",
-      );
+  const stripUnsafeAttributes = (value: string) => {
+    let sanitized = value;
+    let previous: string;
+
+    do {
+      previous = sanitized;
+      sanitized = sanitized
+        .replace(
+          /\s+on[\w:-]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?/gi,
+          "",
+        )
+        .replace(
+          /\s+(?:style|srcdoc)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+)/gi,
+          "",
+        )
+        .replace(
+          /\s+(href|src|xlink:href|formaction)\s*=\s*(["']?)\s*(?:javascript|vbscript|data(?!:image\/(?:png|gif|jpeg|jpg|webp|avif))):[^"'\s>]*/gi,
+          "",
+        );
+    } while (sanitized !== previous);
+
+    return sanitized;
+  };
 
   try {
     if (
@@ -83,8 +92,7 @@ const escapeHtml = (s: string) =>
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 
-const safeUrlPattern =
-  /^(?:(?:https?|mailto|tel):|\/(?!\/)|#|\?|\.{0,2}\/)/i;
+const safeUrlPattern = /^(?:(?:https?|mailto|tel):|\/(?!\/)|#|\?|\.{0,2}\/)/i;
 
 const safeImageUrlPattern =
   /^(?:(?:https?):|\/(?!\/)|\.{0,2}\/|data:image\/(?:png|gif|jpeg|jpg|webp|avif);base64,)/i;
@@ -200,10 +208,7 @@ const htmlToReactNodes = (
   html: string,
   keyPrefix: string,
 ): React.ReactNode[] => {
-  if (
-    typeof window === "undefined" ||
-    typeof window.DOMParser !== "function"
-  ) {
+  if (typeof window === "undefined" || typeof window.DOMParser !== "function") {
     return [html];
   }
 
@@ -264,11 +269,7 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
       r.html = (html: string) => escapeHtml(html);
     }
 
-    r.link = (
-      href: string,
-      title: string | null | undefined,
-      text: string,
-    ) => {
+    r.link = (href: string, title: string | null | undefined, text: string) => {
       const url = href ?? "#";
       const isExternal = /^https?:\/\//i.test(url);
       const t = title ? ` title="${escapeHtml(title)}"` : "";

@@ -20,12 +20,12 @@ const classMap = {
   compact: "compact",
   secondary: "secondary",
   success: "success",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   shadowStrong: "shadowStrong",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 describe("PageHeaderBase", () => {
@@ -62,8 +62,7 @@ describe("PageHeaderBase", () => {
         title="Projects"
         theme="secondary"
         state="success"
-        outline
-        glass
+        variant="glassOutline"
         compact
         rounding="large"
         shadow="strong"

@@ -141,7 +141,7 @@ export const GlassThemeVariants: Story = {
               key={`glass-${theme}`}
               {...args}
               theme={theme}
-              glass
+              variant="glass"
               currentPage={page}
               onPageChange={setPage}
             />
@@ -184,7 +184,7 @@ export const GlassStateVariants: Story = {
               key={`glass-${state}`}
               {...args}
               state={state}
-              glass
+              variant="glass"
               currentPage={page}
               onPageChange={setPage}
             />

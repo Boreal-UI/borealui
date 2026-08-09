@@ -40,9 +40,6 @@ const classMap = {
   shadowMedium: "shadow_medium",
   shadowStrong: "shadow_strong",
   shadowIntense: "shadow_intense",
-
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
 
   primary: "primary",
@@ -54,6 +51,8 @@ const classMap = {
   warning: "warning",
   error: "error",
   clear: "clear",
+  glass: "glass",
+  outline: "outline",
 };
 
 describe("AvatarBase (Jest)", () => {
@@ -512,8 +511,7 @@ describe("AvatarBase (Jest)", () => {
       shape: "circle",
       size: "medium",
       shadow: "light",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       className: "custom-avatar-class",
     });
 

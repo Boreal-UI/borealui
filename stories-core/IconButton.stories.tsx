@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { IconButton } from "../src/index.core";
-import { FaPlus, FaExternalLinkAlt } from "react-icons/fa";
+import { FaPlus, FaExternalLinkAlt } from "../shared-story-assets/icons";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import {
   roundingOptions,
@@ -45,7 +45,7 @@ export const OutlineAndDisabledVariants: Story = {
           key={theme}
           {...args}
           theme={theme}
-          outline
+          variant="outline"
           aria-label={`Theme: ${theme}`}
         />
       ))}
@@ -54,11 +54,11 @@ export const OutlineAndDisabledVariants: Story = {
           key={state}
           {...args}
           state={state}
-          outline
+          variant="outline"
           aria-label={`State: ${state}`}
         />
       ))}
-      <IconButton {...args} disabled outline aria-label="Disabled" />
+      <IconButton {...args} disabled aria-label="Disabled" variant="outline" />
       <IconButton {...args} disabled aria-label="Disabled" />
     </div>
   ),

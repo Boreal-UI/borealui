@@ -7,7 +7,6 @@ expect.extend(toHaveNoViolations);
 const mockStyles = {
   wrapper: "spinner-wrapper",
   spinner: "spinner-base",
-  glass: "spinner-glass",
   glassRing: "spinner-glass-ring",
   shadowElement: "spinner-shadow",
   label: "spinner-label",
@@ -21,6 +20,7 @@ const mockStyles = {
   shadowMedium: "shadow-medium",
   shadowStrong: "shadow-strong",
   shadowIntense: "shadow-intense",
+  glass: "spinner-glass",
 };
 
 describe("SpinnerBase", () => {
@@ -70,7 +70,7 @@ describe("SpinnerBase", () => {
       <SpinnerBase
         theme="secondary"
         state="success"
-        glass
+        variant="glassOutline"
         classMap={mockStyles}
       />,
     );

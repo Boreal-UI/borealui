@@ -1,10 +1,10 @@
+import { ShadowType, StateType, ThemeType } from "@/types/types";
 import {
   ForwardRefExoticComponent,
   HTMLAttributes,
   ReactNode,
   RefAttributes,
 } from "react";
-import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 
 type NativeAppShellProps = Omit<HTMLAttributes<HTMLDivElement>, "children">;
 
@@ -79,21 +79,16 @@ export interface AppShellProps extends NativeAppShellProps {
    * Visual state for styling.
    */
   state?: StateType;
-
   /**
-   * Whether to render outlined styling.
+   * Surface treatment; glassOutline combines glass and outline.
+   *
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Whether to render glass styling.
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding style for the component.
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Shadow style for the component.

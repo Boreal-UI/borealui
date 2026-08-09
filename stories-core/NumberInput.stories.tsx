@@ -10,6 +10,7 @@ import {
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -33,6 +34,15 @@ const meta: Meta<NumberInputProps> = {
 export default meta;
 
 type Story = StoryObj<NumberInputProps>;
+
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: NumberInput,
+      args: { label: "Quantity" },
+      labelProp: "label",
+    }),
+};
 
 export const Default: Story = {};
 

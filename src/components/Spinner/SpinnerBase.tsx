@@ -2,7 +2,7 @@ import React, { useMemo, useId } from "react";
 import { SpinnerProps } from "./Spinner.types";
 import { combineClassNames } from "../../utils/classNames";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -11,7 +11,7 @@ const SpinnerBase: React.FC<
   SpinnerProps & { classMap: Record<string, string> }
 > = ({
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   state,
   size = 50,
   shadow,
@@ -44,9 +44,9 @@ const SpinnerBase: React.FC<
         classMap.spinner,
         classMap[theme],
         state && classMap[state],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
       ),
-    [classMap, theme, state, glass],
+    [classMap, theme, state, variant],
   );
 
   const shadowClass = useMemo(

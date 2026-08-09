@@ -9,7 +9,6 @@ const mockStyles = {
   container: "tooltipContainer",
   triggerWrapper: "triggerWrapper",
   tooltip: "tooltip",
-  glass: "glass",
 
   top: "top",
   bottom: "bottom",
@@ -36,6 +35,7 @@ const mockStyles = {
   shadowLight: "shadowLight",
   shadowMedium: "shadowMedium",
   shadowStrong: "shadowStrong",
+  glass: "glass",
 };
 
 describe("TooltipBase", () => {
@@ -146,14 +146,14 @@ describe("TooltipBase", () => {
     expect(tooltip).not.toHaveClass("visible");
   });
 
-  it("applies custom position, theme, state, glass, rounding, and shadow classes", () => {
+  it("applies custom placement, theme, state, glass, rounding, and shadow classes", () => {
     render(
       <TooltipBase
         content="Styled tooltip"
-        position="bottom"
+        placement="bottom"
         theme="secondary"
         state="error"
-        glass
+        variant="glassOutline"
         rounding="large"
         shadow="strong"
         classMap={mockStyles}

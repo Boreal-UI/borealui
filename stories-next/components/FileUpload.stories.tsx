@@ -147,7 +147,7 @@ export const ExternalProgress: Story = {
 
 export const ErrorState: Story = {
   args: {
-    error: "File is required.",
+    errorMessage: "File is required.",
     required: true,
   },
   render: (args) => <FileUpload {...args} onSubmit={() => {}} />,
@@ -155,7 +155,7 @@ export const ErrorState: Story = {
 
 export const WithDescription: Story = {
   args: {
-    description: "Supported formats: .pdf, .docx, .jpg",
+    helperText: "Supported formats: .pdf, .docx, .jpg",
   },
   render: (args) => <FileUpload {...args} onSubmit={() => {}} />,
 };

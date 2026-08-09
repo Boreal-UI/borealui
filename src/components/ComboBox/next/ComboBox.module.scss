@@ -1,9 +1,16 @@
+@use "../../../styles/control-sizes" as control-sizes;
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  @include control-sizes.variants(
+    ".comboBox",
+    (".input", ".option"),
+    "."
+  );
+
   .layout {
     display: grid;
     gap: var(--spacing-xs);
@@ -92,7 +99,9 @@
     grid-area: control;
     position: relative;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 2.5rem;
+    grid-template-columns:
+      minmax(0, 1fr)
+      var(--boreal-control-min-height, 2.5rem);
     width: 100%;
     min-width: 0;
     border: 1px solid var(--combobox-border);
@@ -111,8 +120,8 @@
   }
 
   .input::placeholder {
-    color: inherit;
-    opacity: 0.6;
+    color: var(--text-color-placeholder);
+    opacity: 1;
   }
 
   .input:focus {
@@ -126,6 +135,9 @@
   }
 
   .toggle {
+    min-width: 0;
+    min-height: var(--boreal-control-min-height, 2.5rem);
+    padding: 0;
     border: 0;
     border-left: 1px solid var(--combobox-border);
     background: transparent;

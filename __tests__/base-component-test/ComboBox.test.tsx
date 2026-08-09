@@ -30,6 +30,7 @@ const options: ComboBoxOption[] = [
 ];
 
 const classMap = {
+  large: "large",
   layout: "layout",
   labelTop: "labelTop",
   labelBottom: "labelBottom",
@@ -46,10 +47,10 @@ const classMap = {
   selected: "selected",
   disabled: "disabled",
   status: "status",
-  description: "description",
+  description: "helperText",
   label: "label",
   helperText: "helperText",
-  errorText: "errorText",
+  errorText: "error",
 
   primary: "primary",
   secondary: "secondary",
@@ -60,9 +61,6 @@ const classMap = {
   success: "success",
   warning: "warning",
   error: "error",
-
-  outline: "outline",
-  glass: "glass",
 
   shadowNone: "shadowNone",
   shadowLight: "shadowLight",
@@ -75,6 +73,8 @@ const classMap = {
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
   roundFull: "roundFull",
+  glass: "glass",
+  outline: "outline",
 };
 
 function renderComboBox(
@@ -93,6 +93,13 @@ function renderComboBox(
 }
 
 describe("ComboBoxBase", () => {
+  it("applies the selected size class", () => {
+    renderComboBox({ size: "large" });
+    expect(screen.getByTestId("combo-input").parentElement).toHaveClass(
+      "large",
+    );
+  });
+
   it("renders an accessible combobox with a label and default closed state", async () => {
     const { container } = renderComboBox();
 
@@ -391,10 +398,10 @@ describe("ComboBoxBase", () => {
     expect(input).toHaveValue("Ja");
   });
 
-  it("renders helper text and error text, links them with aria-describedby, and marks the input invalid", async () => {
+  it("renders helper text and errorMessage text, links them with aria-describedby, and marks the input invalid", async () => {
     const { container } = renderComboBox({
       helperText: "Start typing to search.",
-      error: "Selection is required.",
+      errorMessage: "Selection is required.",
       state: "error",
     });
 
@@ -409,11 +416,14 @@ describe("ComboBoxBase", () => {
     expect(screen.getByRole("alert")).toHaveTextContent(
       "Selection is required.",
     );
-    expect(screen.getByRole("alert")).toHaveAttribute("id", "technology-error");
+    expect(screen.getByRole("alert")).toHaveAttribute(
+      "id",
+      "technology-errorMessage",
+    );
 
     expect(input).toHaveAttribute(
       "aria-describedby",
-      "technology-helper technology-error",
+      "technology-helper technology-errorMessage",
     );
     expect(input).toHaveAttribute("aria-invalid", "true");
 
@@ -421,18 +431,18 @@ describe("ComboBoxBase", () => {
     expect(results).toHaveNoViolations();
   });
 
-  it("combines custom aria-describedby with helper and error ids", () => {
+  it("combines custom aria-describedby with helper and errorMessage ids", () => {
     render(
       <>
-        <p id="external-description">External description</p>
+        <p id="external-helperText">External helperText</p>
         <ComboBoxBase
           options={options}
           id="technology"
           testId="combo"
           label="Choose technology"
           helperText="Helpful text"
-          error="Error text"
-          aria-describedby="external-description"
+          errorMessage="Error text"
+          aria-describedby="external-helperText"
           classMap={classMap}
         />
       </>,
@@ -444,7 +454,7 @@ describe("ComboBoxBase", () => {
       }),
     ).toHaveAttribute(
       "aria-describedby",
-      "external-description technology-helper technology-error",
+      "external-helperText technology-helper technology-errorMessage",
     );
   });
 
@@ -538,8 +548,7 @@ describe("ComboBoxBase", () => {
     renderComboBox({
       theme: "secondary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       shadow: "strong",
       rounding: "large",
       labelPosition: "left",
@@ -549,8 +558,8 @@ describe("ComboBoxBase", () => {
       inputClassName: "custom-input",
       helperText: "Helpful",
       helperTextClassName: "custom-helper",
-      error: "Error",
-      errorClassName: "custom-error",
+      errorMessage: "Error",
+      errorClassName: "custom-errorMessage",
     });
 
     expect(screen.getByTestId("combo")).toHaveClass(
@@ -585,7 +594,10 @@ describe("ComboBoxBase", () => {
       "helperText",
       "custom-helper",
     );
-    expect(screen.getByRole("alert")).toHaveClass("errorText", "custom-error");
+    expect(screen.getByRole("alert")).toHaveClass(
+      "error",
+      "custom-errorMessage",
+    );
   });
 
   it("applies custom listbox and option class names", async () => {

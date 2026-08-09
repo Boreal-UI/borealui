@@ -27,10 +27,7 @@ const classMap = {
 
   soft: "alert--soft",
   solid: "alert--solid",
-  outline: "alert--outline",
   subtle: "alert--subtle",
-
-  glass: "alert--glass",
 
   shadowNone: "alert--shadow-none",
   shadowLight: "alert--shadow-light",
@@ -43,6 +40,8 @@ const classMap = {
   roundMedium: "alert--round-medium",
   roundLarge: "alert--round-large",
   roundFull: "alert--round-full",
+  glass: "alert--glass",
+  outline: "alert--outline",
 } as const;
 
 describe("AlertBase", () => {
@@ -228,8 +227,7 @@ describe("AlertBase", () => {
         testId="styled-alert"
         theme="secondary"
         state="warning"
-        outline
-        glass
+        variant="glassOutline"
         shadow="strong"
         rounding="large"
         className="custom-alert"
@@ -258,7 +256,6 @@ describe("AlertBase", () => {
         theme="primary"
         state=""
         variant="soft"
-        glass={false}
         shadow="none"
         rounding="none"
       >

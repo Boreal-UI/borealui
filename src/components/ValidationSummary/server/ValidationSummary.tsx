@@ -3,8 +3,7 @@ import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
 import { expandClassMap, resolvePropAlias } from "@/utils/propAliases";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getDefaultTheme,
   getShadowClassName,
@@ -43,9 +42,8 @@ export default function ValidationSummary({
   emptyMessage,
   listLabel = "Validation issues",
   theme = getDefaultTheme(),
-  state = "error",
-  outline = getDefaultOutline(),
-  glass = getDefaultGlass(),
+  state,
+  variant = getDefaultVariant(),
   rounding = getDefaultRounding(),
   shadow,
   disabled = false,
@@ -70,7 +68,8 @@ export default function ValidationSummary({
   const classMap = expandClassMap(styles);
   const normalizedItems = items.map(normalizeItem);
   const hasItems = normalizedItems.length > 0;
-  const hasVisibleContent = hasItems || Boolean(children || emptyMessage || loading);
+  const hasVisibleContent =
+    hasItems || Boolean(children || emptyMessage || loading);
   if (hideWhenEmpty && !hasVisibleContent) return null;
 
   const {
@@ -86,10 +85,12 @@ export default function ValidationSummary({
   const descriptionId = description ? `${rootId}-description` : undefined;
   const listId = hasItems ? `${rootId}-list` : undefined;
   const srDescriptionId = srOnlyText ? `${rootId}-sr-description` : undefined;
-  const describedBy = [ariaDescribedBy, descriptionId, listId, srDescriptionId]
-    .filter(Boolean)
-    .join(" ") || undefined;
-  const labelledBy = [ariaLabelledBy, titleId].filter(Boolean).join(" ") || undefined;
+  const describedBy =
+    [ariaDescribedBy, descriptionId, listId, srDescriptionId]
+      .filter(Boolean)
+      .join(" ") || undefined;
+  const labelledBy =
+    [ariaLabelledBy, titleId].filter(Boolean).join(" ") || undefined;
   const position = resolvePropAlias(labelPosition);
   const containerClass = combineClassNames(
     classMap.container,
@@ -100,8 +101,8 @@ export default function ValidationSummary({
     classMap.root,
     classMap[theme],
     state && classMap[state],
-    outline && classMap.outline,
-    glass && classMap.glass,
+    (variant === "outline" || variant === "glassOutline") && classMap.outline,
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     disabled && classMap.disabled,
     loading && classMap.loading,
     !hasItems && classMap.empty,
@@ -122,17 +123,28 @@ export default function ValidationSummary({
         aria-disabled={disabled || undefined}
         aria-describedby={describedBy}
         aria-labelledby={labelledBy}
-        tabIndex={focusable ? tabIndexProp ?? -1 : tabIndexProp}
+        tabIndex={focusable ? (tabIndexProp ?? -1) : tabIndexProp}
         data-testid={`${testId}-root`}
       >
         {loading ? (
-          <div className={classMap.loadingRow} role="status" data-testid={`${testId}-loading`}>
-            <span className={classMap.loader} aria-hidden data-testid={`${testId}-loader`} />
+          <div
+            className={classMap.loadingRow}
+            role="status"
+            data-testid={`${testId}-loading`}
+          >
+            <span
+              className={classMap.loader}
+              aria-hidden
+              data-testid={`${testId}-loader`}
+            />
             <span className={classMap.loadingMessage}>{loadingMessage}</span>
           </div>
         ) : null}
         {resolvedTitle || icon ? (
-          <div className={combineClassNames(classMap.header, headerClassName)} data-testid={`${testId}-header`}>
+          <div
+            className={combineClassNames(classMap.header, headerClassName)}
+            data-testid={`${testId}-header`}
+          >
             {icon ? (
               <span
                 className={combineClassNames(classMap.icon, iconClassName)}
@@ -147,7 +159,12 @@ export default function ValidationSummary({
             {resolvedTitle ? (
               <TitleTag
                 id={titleId}
-                className={combineClassNames(classMap.title, classMap.label, labelClassName, titleClassName)}
+                className={combineClassNames(
+                  classMap.title,
+                  classMap.label,
+                  labelClassName,
+                  titleClassName,
+                )}
                 data-testid={`${testId}-label`}
               >
                 {resolvedTitle}
@@ -156,34 +173,82 @@ export default function ValidationSummary({
           </div>
         ) : null}
         {description ? (
-          <p id={descriptionId} className={combineClassNames(classMap.description, descriptionClassName)} data-testid={`${testId}-description`}>
+          <p
+            id={descriptionId}
+            className={combineClassNames(
+              classMap.description,
+              descriptionClassName,
+            )}
+            data-testid={`${testId}-description`}
+          >
             {description}
           </p>
         ) : null}
         {hasItems ? (
-          <ul id={listId} className={combineClassNames(classMap.list, listClassName)} aria-label={listLabel} data-testid={`${testId}-list`}>
+          <ul
+            id={listId}
+            className={combineClassNames(classMap.list, listClassName)}
+            aria-label={listLabel}
+            data-testid={`${testId}-list`}
+          >
             {normalizedItems.map((item, index) => {
-              const href = item.href ?? (item.fieldId ? `#${item.fieldId}` : undefined);
+              const href =
+                item.href ?? (item.fieldId ? `#${item.fieldId}` : undefined);
               return (
-                <li key={item.id ?? item.fieldId ?? String(index)} className={combineClassNames(classMap.item, itemClassName)} data-testid={`${testId}-item-${index}`}>
+                <li
+                  key={item.id ?? item.fieldId ?? String(index)}
+                  className={combineClassNames(classMap.item, itemClassName)}
+                  data-testid={`${testId}-item-${index}`}
+                >
                   {href ? (
-                    <a className={combineClassNames(classMap.link, linkClassName)} href={href} data-testid={`${testId}-item-${index}-link`}>
+                    <a
+                      className={combineClassNames(
+                        classMap.link,
+                        linkClassName,
+                      )}
+                      href={href}
+                      data-testid={`${testId}-item-${index}-link`}
+                    >
                       {item.message}
                     </a>
                   ) : (
-                    <span className={combineClassNames(classMap.link, linkClassName)}>{item.message}</span>
+                    <span
+                      className={combineClassNames(
+                        classMap.link,
+                        linkClassName,
+                      )}
+                    >
+                      {item.message}
+                    </span>
                   )}
                 </li>
               );
             })}
           </ul>
         ) : emptyMessage ? (
-          <p className={combineClassNames(classMap.emptyMessage, emptyClassName)} data-testid={`${testId}-empty`}>
+          <p
+            className={combineClassNames(classMap.emptyMessage, emptyClassName)}
+            data-testid={`${testId}-empty`}
+          >
             {emptyMessage}
           </p>
         ) : null}
-        {children ? <div className={combineClassNames(classMap.content, contentClassName)} data-testid={`${testId}-content`}>{children}</div> : null}
-        {srOnlyText ? <span id={srDescriptionId} className={combineClassNames(classMap.srOnly ?? "sr_only", srOnlyClassName)}>{srOnlyText}</span> : null}
+        {children ? (
+          <div
+            className={combineClassNames(classMap.content, contentClassName)}
+            data-testid={`${testId}-content`}
+          >
+            {children}
+          </div>
+        ) : null}
+        {srOnlyText ? (
+          <span
+            id={srDescriptionId}
+            className={combineClassNames("sr_only", srOnlyClassName)}
+          >
+            {srOnlyText}
+          </span>
+        ) : null}
       </div>
     </div>
   );

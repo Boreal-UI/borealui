@@ -16,9 +16,9 @@ const classMap = {
   root: "root",
   frame: "frame",
   content: "content",
-  description: "description",
+  description: "helperText",
   helperText: "helperText",
-  errorText: "errorText",
+  errorText: "error",
   optional: "optional",
   prefix: "prefix",
   suffix: "suffix",
@@ -37,14 +37,14 @@ const classMap = {
   warning: "warning",
   error: "error",
   clear: "clear",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   shadowLight: "shadowLight",
   shadowStrong: "shadowStrong",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 const renderInputGroup = (
@@ -57,12 +57,11 @@ const renderInputGroup = (
   );
 
 describe("InputGroupBase", () => {
-  it("renders a labelled primary control with helper and error descriptions", () => {
+  it("renders a labelled primary control with helper and errorMessage descriptions", () => {
     renderInputGroup({
       id: "amount",
-      description: "Enter the charge amount.",
       helperText: "Use whole dollars.",
-      error: "Amount is required.",
+      errorMessage: "Amount is required.",
       required: true,
       srOnlyText: "Billing amount field.",
     });
@@ -74,7 +73,7 @@ describe("InputGroupBase", () => {
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toHaveAttribute(
       "aria-describedby",
-      "amount-description amount-helper amount-error amount-sr-description",
+      "amount-helperText amount-errorMessage amount-sr-helperText",
     );
     expect(screen.getByRole("alert")).toHaveTextContent("Amount is required.");
   });
@@ -127,8 +126,7 @@ describe("InputGroupBase", () => {
     renderInputGroup({
       theme: "secondary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       rounding: "large",
       shadow: "strong",
     });
@@ -149,7 +147,6 @@ describe("InputGroupBase", () => {
       fullWidth: false,
       containerClassName: "customContainer",
       labelClassName: "customLabel",
-      description: "Description",
       descriptionClassName: "customDescription",
       frameClassName: "customFrame",
       contentClassName: "customContent",
@@ -163,7 +160,7 @@ describe("InputGroupBase", () => {
       endAddonClassName: "customEnd",
       helperText: "Helper",
       helperTextClassName: "customHelper",
-      error: "Error",
+      errorMessage: "Error",
       errorClassName: "customError",
     });
 
@@ -171,7 +168,7 @@ describe("InputGroupBase", () => {
     expect(screen.getByTestId("input-group")).toHaveClass("customContainer");
     expect(screen.getByTestId("input-group")).not.toHaveClass("fullWidth");
     expect(screen.getByTestId("input-group-label")).toHaveClass("customLabel");
-    expect(screen.getByTestId("input-group-description")).toHaveClass(
+    expect(screen.getByTestId("input-group-helperText")).toHaveClass(
       "customDescription",
     );
     expect(screen.getByTestId("input-group-frame")).toHaveClass("customFrame");
@@ -190,10 +187,12 @@ describe("InputGroupBase", () => {
     expect(screen.getByTestId("input-group-end-addon")).toHaveClass(
       "customEnd",
     );
-    expect(screen.getByTestId("input-group-helper")).toHaveClass(
+    expect(screen.getByTestId("input-group-helperText")).toHaveClass(
       "customHelper",
     );
-    expect(screen.getByTestId("input-group-error")).toHaveClass("customError");
+    expect(screen.getByTestId("input-group-errorMessage")).toHaveClass(
+      "customError",
+    );
   });
 
   it("forwards refs to the root", () => {

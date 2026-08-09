@@ -3,8 +3,7 @@ import { IconButtonBaseProps } from "./IconButton.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -48,8 +47,7 @@ const IconButtonBase = forwardRef<
     "aria-atomic": ariaAtomic,
     role,
     title,
-    outline = getDefaultOutline(),
-    glass = getDefaultGlass(),
+    variant = getDefaultVariant(),
     rounding = getDefaultRounding(),
     shadow,
     size = getDefaultSize(),
@@ -87,23 +85,13 @@ const IconButtonBase = forwardRef<
         size && classMap[size],
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
-        outline && classMap.outline,
-        glass && classMap.glass,
+        (variant === "outline" || variant === "glassOutline") &&
+          classMap.outline,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         inert && classMap.disabled,
         className,
       ),
-    [
-      classMap,
-      theme,
-      state,
-      size,
-      shadow,
-      rounding,
-      outline,
-      glass,
-      inert,
-      className,
-    ],
+    [classMap, theme, state, size, shadow, rounding, variant, inert, className],
   );
 
   const sharedAccessibilityProps = {
@@ -175,10 +163,7 @@ const IconButtonBase = forwardRef<
 
     if (isExternal) {
       return (
-        <a
-          {...linkProps}
-          href={inert ? undefined : href}
-        >
+        <a {...linkProps} href={inert ? undefined : href}>
           {iconContent}
         </a>
       );

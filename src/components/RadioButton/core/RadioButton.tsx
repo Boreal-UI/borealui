@@ -14,7 +14,6 @@ export const classes = {
   options: "radio_options",
   vertical: "radio_vertical",
   horizontal: "radio_horizontal",
-  glass: "radio_glass",
   glassCircle: "radio_glassCircle",
   label: "radio_label",
   description: "radio_description",
@@ -45,10 +44,13 @@ export const classes = {
   roundMedium: "radio_round-Medium",
   roundLarge: "radio_round-Large",
   roundFull: "radio_round-Full",
+  glass: "radio_glass",
 };
 
 const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
-  (props, ref) => <BaseRadioButton {...props} ref={ref} classMap={expandClassMap(classes)} />,
+  (props, ref) => (
+    <BaseRadioButton {...props} ref={ref} classMap={expandClassMap(classes)} />
+  ),
 );
 
 RadioButton.displayName = "RadioButton";

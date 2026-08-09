@@ -11,7 +11,7 @@ import { CloseIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -37,7 +37,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   debounceMs = 300,
   placeholder = "Add a tag...",
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   state,
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
@@ -211,9 +211,9 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
         classMap[theme],
         state && classMap[state],
         classMap[size],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
       ),
-    [classMap, theme, state, size, glass],
+    [classMap, theme, state, size, variant],
   );
 
   const tagClass = useMemo(
@@ -283,7 +283,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
               rounding="full"
               size="xs"
               state="error"
-              glass={glass}
+              variant={variant}
               shadow="none"
               iconClassName={classMap.removeButtonIcon}
               disabled={false}
@@ -297,7 +297,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
           id={inputId}
           type="text"
           theme={theme}
-          glass={glass}
+          variant={variant}
           state={state}
           rounding={rounding}
           shadow={shadow}

@@ -1,3 +1,4 @@
+@use "../../../styles/control-sizes" as control-sizes;
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
@@ -6,6 +7,11 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  @include control-sizes.variants(
+    ".multiSelect",
+    (".multiSelect_trigger", ".multiSelect_searchInput", ".multiSelect_option")
+  );
+
   .multiSelect_container {
     display: inline-flex;
     gap: var(--spacing-xs);
@@ -116,7 +122,7 @@
   }
 
   .multiSelect_placeholder {
-    opacity: 0.72;
+    color: var(--text-color-placeholder);
   }
 
   .multiSelect_summary {

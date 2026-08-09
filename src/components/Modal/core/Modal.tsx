@@ -16,6 +16,7 @@ const classes = {
   footer: "modal_footer",
   content: "modal_content",
   closeButton: "modal_close_button",
+  closeButtonFloating: "modal_close_button_floating",
 
   shadowNone: "modal_shadow-None",
   shadowLight: "modal_shadow-Light",
@@ -30,7 +31,13 @@ const classes = {
 };
 
 const Modal: React.FC<ModalProps> = (props) => {
-  return <BaseModal {...props} IconButton={IconButton} classMap={expandClassMap(classes)} />;
+  return (
+    <BaseModal
+      {...props}
+      IconButton={IconButton}
+      classMap={expandClassMap(classes)}
+    />
+  );
 };
 Modal.displayName = "Modal";
 export default Modal;

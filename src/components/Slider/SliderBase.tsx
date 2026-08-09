@@ -4,7 +4,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -28,7 +28,7 @@ const SliderBase: React.FC<
   rounding = getDefaultRounding(),
   shadow,
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   state,
   showValue = true,
   units,
@@ -72,7 +72,7 @@ const SliderBase: React.FC<
         classMap[size],
         classMap[theme],
         state && classMap[state],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         className,
@@ -83,7 +83,7 @@ const SliderBase: React.FC<
       size,
       theme,
       state,
-      glass,
+      variant,
       className,
       shadow,
       rounding,

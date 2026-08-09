@@ -14,5 +14,8 @@ Start here:
 - [Accessibility](./accessibility.md)
 - [Generated Prop Docs and Types](./prop-docs-and-types.md)
 - [Development Workflow](./development-workflow.md)
+- [Security Foundation](./security-foundation.md)
+- [Secure Development Lifecycle](./secure-development-lifecycle.md)
+- [Threat Model](./threat-model.md)
 
 The generated TypeScript types remain the source of truth for every component prop. These guides explain how the API is intended to be used in real applications.

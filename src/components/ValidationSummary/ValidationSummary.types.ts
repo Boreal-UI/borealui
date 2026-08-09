@@ -1,17 +1,16 @@
 import {
+  LabelPositionType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
+import {
   ForwardRefExoticComponent,
   HTMLAttributes,
   ReactElement,
   ReactNode,
   RefAttributes,
 } from "react";
-import {
-  LabelPositionType,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "@/types/types";
 
 type NativeValidationSummaryProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -168,27 +167,18 @@ export interface ValidationSummaryProps extends NativeValidationSummaryProps {
    * @default "error"
    */
   state?: StateType;
-
   /**
-   * Whether to render outlined styling.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Whether to render glass styling.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding style for the component.
    *
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Shadow style for the component.

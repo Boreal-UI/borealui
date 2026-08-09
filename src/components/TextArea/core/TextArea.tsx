@@ -5,6 +5,11 @@ import type { TextAreaProps } from "../TextArea.types";
 import "./TextArea.scss";
 
 const classes = {
+  xs: "textArea_xs",
+  small: "textArea_small",
+  medium: "textArea_medium",
+  large: "textArea_large",
+  xl: "textArea_xl",
   container: "container",
   textArea: "textArea",
   textInput: "textArea_text_input",
@@ -28,9 +33,6 @@ const classes = {
 
   clear: "textArea_clear",
 
-  outline: "textArea_outline",
-  glass: "textArea_glass",
-
   disabled: "textArea_disabled",
 
   errorMessage: "textArea_errorMessage",
@@ -47,11 +49,15 @@ const classes = {
   roundSmall: "textArea_round-Small",
   roundMedium: "textArea_round-Medium",
   roundLarge: "textArea_round-Large",
+  glass: "textArea_glass",
+  outline: "textArea_outline",
 };
 
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
   (props, ref) => {
-    return <TextAreaBase {...props} ref={ref} classMap={expandClassMap(classes)} />;
+    return (
+      <TextAreaBase {...props} ref={ref} classMap={expandClassMap(classes)} />
+    );
   },
 );
 

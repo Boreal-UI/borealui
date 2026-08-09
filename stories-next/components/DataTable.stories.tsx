@@ -300,7 +300,7 @@ export const GlassThemeVariantsWithToolbarSelectionAndFilter = () => {
           <DataTable
             toolbarTitle={theme}
             filterable={true}
-            glass
+            variant="glass"
             selectableRows={true}
             rowKey={(row) => String(row.name)}
             toolbarActions={<button type="button">Export</button>}
@@ -317,7 +317,7 @@ export const GlassThemeVariantsWithToolbarSelectionAndFilter = () => {
           <DataTable
             toolbarTitle={state}
             filterable={true}
-            glass
+            variant="glass"
             selectableRows={true}
             rowKey={(row) => String(row.name)}
             toolbarActions={<button type="button">Export</button>}

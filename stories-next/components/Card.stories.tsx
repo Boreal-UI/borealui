@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { useState } from "react";
 import { Card } from "../../src/index.next";
-import { FaInfoCircle, FaEdit, FaTrash } from "react-icons/fa";
+import { FaInfoCircle, FaEdit, FaTrash } from "../../shared-story-assets/icons";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
 import testImageJpg from "../assets/test_pattern.jpg";
@@ -28,7 +29,7 @@ const themeOptions = [
 const stateOptions = ["success", "error", "warning"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
 const layoutOptions = ["vertical", "horizontal"] as const;
-const alignments: CardProps["align"][] = ["left", "center", "right"];
+const alignments: CardProps["align"][] = ["start", "center", "end"];
 const titles = ["Left-Aligned", "Center-Aligned", "Right-Aligned"];
 const descriptions = [
   "This content is aligned to the left.",
@@ -122,6 +123,51 @@ export const WithActions: Story = {
     ],
     useIconButtons: true,
   },
+};
+
+const CardInteractionStates = () => {
+  const [selected, setSelected] = useState(false);
+
+  return (
+    <StoryGrid title="Interaction states">
+      <Card
+        {...defaultArgs}
+        title={selected ? "Selected card" : "Selectable card"}
+        description="Click the card, or focus it and press Enter or Space, to toggle selection."
+        selectable
+        selected={selected}
+        onClick={() => setSelected((current) => !current)}
+      />
+      <Card
+        {...defaultArgs}
+        title="Selected"
+        description="A selected card has a persistent visual selection indicator."
+        selectable
+        selected
+        onClick={() => {}}
+      />
+      <Card
+        {...defaultArgs}
+        title="Disabled"
+        description="A disabled card does not expose pointer or keyboard interaction."
+        selectable
+        disabled
+        onClick={() => {}}
+        actionButtons={[
+          {
+            label: "Unavailable action",
+            icon: FaEdit,
+            disabled: true,
+            onClick: () => {},
+          },
+        ]}
+      />
+    </StoryGrid>
+  );
+};
+
+export const InteractionStates: Story = {
+  render: () => <CardInteractionStates />,
 };
 
 export const BorderVariants = () =>
@@ -297,7 +343,7 @@ export const ShadowVariants = () =>
   ]);
 
 export const GlassShadowVariants = () =>
-  withVariants(Card, { ...defaultArgs, glass: true }, [
+  withVariants(Card, { ...defaultArgs, variant: "glass" }, [
     { propName: "shadow", values: shadowOptions },
   ]);
 

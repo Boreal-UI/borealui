@@ -12,23 +12,14 @@ const classes = {
   labelBottom: "textInput_labelBottom",
   labelLeft: "textInput_labelLeft",
   labelRight: "textInput_labelRight",
+  fullWidth: "textInput_fullWidth",
 
   textInput: "textInput",
+  input: "textInput_input",
   iconContainer: "textInput_icon_container",
   togglePassword: "textInput_togglePassword",
-  inputRow: "textInput_inputRow",
-  inputWrapper: "textInput_inputWrapper",
-
-  hasTitle: "textInput_hasTitle",
-  title: "textInput_title",
-  titleInline: "textInput_titleInline",
-  titleOverlay: "textInput_titleOverlay",
-
-  titlePosTop: "textInput_titlePosTop",
-  titlePosBottom: "textInput_titlePosBottom",
-  titlePosLeft: "textInput_titlePosLeft",
-  titlePosRight: "textInput_titlePosRight",
-  titlePosOverlay: "textInput_titlePosOverlay",
+  helperText: "textInput_helperText",
+  errorMessage: "textInput_errorMessage",
 
   primary: "textInput_primary",
   secondary: "textInput_secondary",
@@ -47,9 +38,6 @@ const classes = {
   small: "textInput_small",
   medium: "textInput_medium",
   large: "textInput_large",
-
-  outline: "textInput_outline",
-  glass: "textInput_glass",
   disabled: "textInput_disabled",
 
   shadowNone: "textInput_shadow-None",
@@ -62,6 +50,8 @@ const classes = {
   roundSmall: "textInput_round-Small",
   roundMedium: "textInput_round-Medium",
   roundLarge: "textInput_round-Large",
+  glass: "textInput_glass",
+  outline: "textInput_outline",
 };
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>((props, ref) => {

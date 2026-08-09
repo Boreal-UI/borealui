@@ -1,5 +1,5 @@
 import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
-import { ReactNode, HTMLAttributes } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 
 /**
  * Props for the Tooltip component.
@@ -17,12 +17,12 @@ export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
   content: string;
 
   /**
-   * The position of the tooltip relative to the target element.
+   * The placement of the tooltip relative to the target element.
    * "top" | "bottom" | "left" | "right"
    *
    * @default "top"
    */
-  position?: "top" | "bottom" | "left" | "right";
+  placement?: "top" | "bottom" | "left" | "right";
 
   /**
    * Theme style of the tooltip.
@@ -31,17 +31,15 @@ export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the tooltip for visual feedback.
-   * "success" | "error" | "warning" | "disabled" | ""
+   * "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;
@@ -113,7 +111,6 @@ export interface TooltipProps extends HTMLAttributes<HTMLDivElement> {
    * @default true
    */
   keepMountedWhenHidden?: boolean;
-
 
   /**
    * Optional test ID for testing frameworks.

@@ -7,6 +7,7 @@ import DatePickerBase from "@/components/DatePicker/DatePickerBase";
 expect.extend(toHaveNoViolations);
 
 const classMap = {
+  large: "large",
   container: "container",
   label: "label",
   labelTop: "labelTop",
@@ -17,9 +18,9 @@ const classMap = {
   inputWrapper: "inputWrapper",
   input: "input",
   button: "button",
-  description: "description",
+  description: "helperText",
   helperText: "helperText",
-  errorText: "errorText",
+  errorText: "error",
   loader: "loader",
   srOnly: "srOnly",
   fullWidth: "fullWidth",
@@ -29,14 +30,14 @@ const classMap = {
   success: "success",
   error: "error",
   clear: "clear",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   shadowLight: "shadowLight",
   shadowStrong: "shadowStrong",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 const renderDatePicker = (
@@ -45,6 +46,11 @@ const renderDatePicker = (
   render(<DatePickerBase label="Start date" classMap={classMap} {...props} />);
 
 describe("DatePickerBase", () => {
+  it("applies the selected size class", () => {
+    renderDatePicker({ size: "large" });
+    expect(screen.getByTestId("date-picker-root")).toHaveClass("large");
+  });
+
   beforeEach(() => {
     jest.restoreAllMocks();
   });
@@ -82,10 +88,9 @@ describe("DatePickerBase", () => {
     expect(onChange).toHaveBeenCalledWith("2026-06-01");
   });
 
-  it("connects description, helper text, error text, and screen-reader text", () => {
+  it("connects helper and screen-reader text", () => {
     renderDatePicker({
       id: "deadline",
-      description: "Choose the delivery date",
       helperText: "Weekdays are preferred",
       srOnlyText: "Native date picker",
     });
@@ -93,12 +98,9 @@ describe("DatePickerBase", () => {
     const input = screen.getByTestId("date-picker-input");
     expect(input).toHaveAttribute(
       "aria-describedby",
-      "deadline-description deadline-helper deadline-sr-description",
+      "deadline-helperText deadline-sr-helperText",
     );
-    expect(screen.getByTestId("date-picker-description")).toHaveTextContent(
-      "Choose the delivery date",
-    );
-    expect(screen.getByTestId("date-picker-helper")).toHaveTextContent(
+    expect(screen.getByTestId("date-picker-helperText")).toHaveTextContent(
       "Weekdays are preferred",
     );
     expect(screen.getByTestId("date-picker-sr-only-text")).toHaveTextContent(
@@ -110,17 +112,22 @@ describe("DatePickerBase", () => {
     renderDatePicker({
       id: "deadline",
       helperText: "Weekdays are preferred",
-      error: "Choose a valid date",
+      errorMessage: "Choose a valid date",
     });
 
     const input = screen.getByTestId("date-picker-input");
-    const error = screen.getByRole("alert");
+    const errorMessage = screen.getByRole("alert");
 
-    expect(screen.queryByTestId("date-picker-helper")).not.toBeInTheDocument();
-    expect(error).toHaveTextContent("Choose a valid date");
+    expect(screen.getByTestId("date-picker-helperText")).toHaveTextContent(
+      "Weekdays are preferred",
+    );
+    expect(errorMessage).toHaveTextContent("Choose a valid date");
     expect(input).toHaveAttribute("aria-invalid", "true");
-    expect(input).toHaveAttribute("aria-errormessage", "deadline-error");
-    expect(input).toHaveAttribute("aria-describedby", "deadline-error");
+    expect(input).toHaveAttribute("aria-errormessage", "deadline-errorMessage");
+    expect(input).toHaveAttribute(
+      "aria-describedby",
+      "deadline-helperText deadline-errorMessage",
+    );
   });
 
   it("marks values outside min and max as invalid", () => {
@@ -140,8 +147,7 @@ describe("DatePickerBase", () => {
     renderDatePicker({
       theme: "secondary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       rounding: "large",
       shadow: "strong",
       fullWidth: true,
@@ -229,7 +235,6 @@ describe("DatePickerBase", () => {
 
   it("has no accessibility violations", async () => {
     const { container } = renderDatePicker({
-      description: "Choose a start date",
       helperText: "Use the native date format",
     });
 

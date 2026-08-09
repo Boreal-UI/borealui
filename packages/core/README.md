@@ -13,7 +13,10 @@ import "@boreal-ui/core/globals.css";
 
 Use this package when you do not need Next.js-specific components or `next` peer dependencies.
 
-TypeScript consumers should also install the shared declarations:
+Generated prop metadata is available separately from the optional
+`@boreal-ui/docs` package.
+
+Component declarations are included through this package. Install the shared declarations directly only when application code imports from `@boreal-ui/types`:
 
 ```sh
 npm install -D @boreal-ui/types

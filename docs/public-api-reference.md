@@ -4,19 +4,18 @@ This page lists the public API surfaces Boreal UI publishes for consumers and do
 
 ## Primary Entry Points
 
-| Entry point                    | Use                                                           |
-| ------------------------------ | ------------------------------------------------------------- |
-| `@boreal-ui/core`              | Standard React component barrel.                              |
-| `@boreal-ui/next`              | Next.js component barrel with client-boundary-safe wrappers.  |
-| `@boreal-ui/next/server`       | Static React Server Component barrel for Next.js.             |
-| `@boreal-ui/next/server/Card`  | Standalone Next.js server component path.                     |
-| `@boreal-ui/core/globals.css`  | Core global stylesheet. Import once.                          |
-| `@boreal-ui/next/globals.css`  | Next global stylesheet. Import once.                          |
-| `@boreal-ui/types`             | Shared public declarations. Add directly when importing it.   |
-| `@boreal-ui/types/core/Button` | Core component prop declarations.                             |
-| `@boreal-ui/types/next/Button` | Next component prop declarations.                             |
-| `@boreal-ui/core/docs`         | Generated Core component prop metadata.                       |
-| `@boreal-ui/next/docs`         | Generated Next component prop metadata.                       |
+| Entry point                    | Use                                                          |
+| ------------------------------ | ------------------------------------------------------------ |
+| `@boreal-ui/core`              | Standard React component barrel.                             |
+| `@boreal-ui/next`              | Next.js component barrel with client-boundary-safe wrappers. |
+| `@boreal-ui/next/server`       | Static React Server Component barrel for Next.js.            |
+| `@boreal-ui/next/server/Card`  | Standalone Next.js server component path.                    |
+| `@boreal-ui/core/globals.css`  | Core global stylesheet. Import once.                         |
+| `@boreal-ui/next/globals.css`  | Next global stylesheet. Import once.                         |
+| `@boreal-ui/types`             | Shared public declarations. Add directly when importing it.  |
+| `@boreal-ui/types/core/Button` | Core component prop declarations.                            |
+| `@boreal-ui/types/next/Button` | Next component prop declarations.                            |
+| `@boreal-ui/docs`              | Optional generated component prop metadata.                  |
 
 Use the explicit `core` or `next` entry in application code.
 
@@ -55,8 +54,8 @@ Available server entries:
 `RadioGroup`, `Select`, `Skeleton`, `Sparkline`, `TextArea`, `TextInput`,
 `ThemeProvider`, `Timeline`, `Toolbar`, `Typography`, and `ValidationSummary`.
 
-The `Layout` server entry exports `Container`, `Grid`, `Inline`, `Section`, and
-`Stack`. Normally interactive entries expose stripped static APIs without
+The `Layout` server entry exports `Container`, `Grid`, `Inline`, `Section`,
+`Stack`, `BentoBox`, and `BentoBoxItem`. Normally interactive entries expose stripped static APIs without
 callbacks. See [Next.js Server Components](./server-components.md) for behavior
 and examples.
 
@@ -71,7 +70,7 @@ The `core` and `next` barrels export the same component names:
 | Forms and inputs                 | `TextInput`, `TextArea`, `SearchInput`, `NumberInput`, `Select`, `MultiSelect`, `ThemeSelect`, `ComboBox`, `FileUpload`, `TagInput`, `InputGroup`, `FieldSet`, `ValidationSummary`, `RadioButton`, `RadioGroup`, `Slider`, `CheckBox`, `Toggle`, `SegmentedControl`, `ColorPicker`, `FormField`, `FormGroup`, `DatePicker`, `DateRangePicker`, `DateTimePicker`, `TimePicker` |
 | Data, charts, and content        | `DataTable`, `Sparkline`, `BarChart`, `LineChart`, `DonutChart`, `Legend`, `MarkdownRenderer`, `MetricBox`, `Card`, `Avatar`                                                                                                                                                                                                                                                  |
 | Feedback and status              | `Alert`, `Chip`, `ChipGroup`, `Badge`, `ProgressBar`, `CircularProgress`, `Rating`, `Skeleton`, `Spinner`, `Tooltip`, `MessagePopup`, `PopOver`, `EmptyState`, `NotificationCenter`, `ToastProvider`, `useToast`                                                                                                                                                              |
-| Navigation, overlays, and layout | `AppShell`, `PageHeader`, `BreadCrumbPageHeader`, `NavBar`, `Sidebar`, `Footer`, `Breadcrumbs`, `TreeView`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Modal`, `Drawer`, `Portal`, `SplitPane`, `Toolbar`, `Dropdown`, `Menu`, `Divider`, `CommandPalette`, `Container`, `Grid`, `Inline`, `Section`, `Stack`                                                      |
+| Navigation, overlays, and layout | `AppShell`, `PageHeader`, `BreadCrumbPageHeader`, `NavBar`, `Sidebar`, `Footer`, `Breadcrumbs`, `TreeView`, `Tabs`, `Stepper`, `Timeline`, `Accordion`, `Pager`, `Modal`, `Drawer`, `Portal`, `SplitPane`, `Toolbar`, `Dropdown`, `Menu`, `Divider`, `CommandPalette`, `Container`, `Grid`, `Inline`, `Section`, `Stack`, `BentoBox`, `BentoBoxItem`                                  |
 
 Standalone paths use the same camel-case component names as the barrels.
 
@@ -168,7 +167,7 @@ Standalone component paths:
 | `Typography`           | `@boreal-ui/core/Typography`           | `@boreal-ui/next/Typography`           |
 | `ValidationSummary`    | `@boreal-ui/core/ValidationSummary`    | `@boreal-ui/next/ValidationSummary`    |
 
-`Layout` standalone paths export the layout primitives: `Container`, `Grid`, `Inline`, `Section`, and `Stack`.
+`Layout` standalone paths export the layout primitives: `Container`, `Grid`, `Inline`, `Section`, `Stack`, `BentoBox`, and `BentoBoxItem`.
 
 ## Theme and Configuration APIs
 
@@ -185,7 +184,7 @@ Standalone component paths:
 
 ## Generated Prop Docs
 
-Generated prop metadata is available from dedicated docs entry points.
+Generated prop metadata is available from the optional docs package.
 
 ```ts
 import {
@@ -193,11 +192,11 @@ import {
   radioGroupPropDocs,
   themeSelectPropDocs,
   type GeneratedComponentDoc,
-} from "@boreal-ui/core/docs";
+} from "@boreal-ui/docs";
 ```
 
 Prop-doc exports:
 
-`accordionPropDocs`, `alertPropDocs`, `appShellPropDocs`, `avatarPropDocs`, `badgePropDocs`, `barChartPropDocs`, `breadCrumbPageHeaderPropDocs`, `breadcrumbsPropDocs`, `buttonPropDocs`, `cardPropDocs`, `checkBoxPropDocs`, `chipGroupPropDocs`, `chipPropDocs`, `circularProgressPropDocs`, `colorPickerPropDocs`, `comboBoxPropDocs`, `commandPalettePropDocs`, `dataTablePropDocs`, `datePickerPropDocs`, `dateRangePickerPropDocs`, `dateTimePickerPropDocs`, `dividerPropDocs`, `donutChartPropDocs`, `drawerPropDocs`, `dropdownPropDocs`, `emptyStatePropDocs`, `fieldSetPropDocs`, `fileUploadPropDocs`, `footerPropDocs`, `formFieldPropDocs`, `formGroupPropDocs`, `iconButtonPropDocs`, `inputGroupPropDocs`, `layoutPrimitivePropDocs`, `legendPropDocs`, `lineChartPropDocs`, `markdownRendererPropDocs`, `menuPropDocs`, `messagePopupPropDocs`, `metricBoxPropDocs`, `modalPropDocs`, `multiSelectPropDocs`, `navBarPropDocs`, `notificationCenterPropDocs`, `numberInputPropDocs`, `pageHeaderPropDocs`, `pagerPropDocs`, `popOverPropDocs`, `portalPropDocs`, `progressBarPropDocs`, `radioButtonPropDocs`, `radioGroupPropDocs`, `ratingPropDocs`, `scrollToTopPropDocs`, `searchInputPropDocs`, `segmentedControlPropDocs`, `selectPropDocs`, `sidebarPropDocs`, `skeletonPropDocs`, `sliderPropDocs`, `sparklinePropDocs`, `spinnerPropDocs`, `splitPanePropDocs`, `stepperPropDocs`, `tabsPropDocs`, `tagInputPropDocs`, `textAreaPropDocs`, `textInputPropDocs`, `themeSelectPropDocs`, `timePickerPropDocs`, `timelinePropDocs`, `toastProviderPropDocs`, `togglePropDocs`, `toolbarPropDocs`, `tooltipPropDocs`, `treeViewPropDocs`, `typographyPropDocs`, and `validationSummaryPropDocs`.
+`accordionPropDocs`, `alertPropDocs`, `appShellPropDocs`, `avatarPropDocs`, `badgePropDocs`, `barChartPropDocs`, `bentoBoxPropDocs`, `bentoBoxItemPropDocs`, `breadCrumbPageHeaderPropDocs`, `breadcrumbsPropDocs`, `buttonPropDocs`, `cardPropDocs`, `checkBoxPropDocs`, `chipGroupPropDocs`, `chipPropDocs`, `circularProgressPropDocs`, `colorPickerPropDocs`, `comboBoxPropDocs`, `commandPalettePropDocs`, `containerPropDocs`, `dataTablePropDocs`, `datePickerPropDocs`, `dateRangePickerPropDocs`, `dateTimePickerPropDocs`, `dividerPropDocs`, `donutChartPropDocs`, `drawerPropDocs`, `dropdownPropDocs`, `emptyStatePropDocs`, `fieldSetPropDocs`, `fileUploadPropDocs`, `footerPropDocs`, `formFieldPropDocs`, `formGroupPropDocs`, `gridPropDocs`, `iconButtonPropDocs`, `inlinePropDocs`, `inputGroupPropDocs`, `legendPropDocs`, `lineChartPropDocs`, `markdownRendererPropDocs`, `menuPropDocs`, `messagePopupPropDocs`, `metricBoxPropDocs`, `modalPropDocs`, `multiSelectPropDocs`, `navBarPropDocs`, `notificationCenterPropDocs`, `numberInputPropDocs`, `pageHeaderPropDocs`, `pagerPropDocs`, `popOverPropDocs`, `portalPropDocs`, `progressBarPropDocs`, `radioButtonPropDocs`, `radioGroupPropDocs`, `ratingPropDocs`, `scrollToTopPropDocs`, `searchInputPropDocs`, `sectionPropDocs`, `segmentedControlPropDocs`, `selectPropDocs`, `sidebarPropDocs`, `skeletonPropDocs`, `sliderPropDocs`, `sparklinePropDocs`, `spinnerPropDocs`, `splitPanePropDocs`, `stackPropDocs`, `stepperPropDocs`, `tabsPropDocs`, `tagInputPropDocs`, `textAreaPropDocs`, `textInputPropDocs`, `themeSelectPropDocs`, `timePickerPropDocs`, `timelinePropDocs`, `toastProviderPropDocs`, `togglePropDocs`, `toolbarPropDocs`, `tooltipPropDocs`, `treeViewPropDocs`, `typographyPropDocs`, and `validationSummaryPropDocs`.
 
-Use the generated prop docs for exhaustive prop tables. Use this markdown guide for import paths and usage-level orientation.
+Use the generated prop docs for component-specific prop tables. Native HTML passthrough attributes remain documented by the published TypeScript declarations rather than being expanded into the metadata. Use this markdown guide for import paths and usage-level orientation.

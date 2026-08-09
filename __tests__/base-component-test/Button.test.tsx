@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import ButtonBase from "../../src/components/Button/ButtonBase";
-import { FaStar } from "react-icons/fa";
+import { FaStar } from "../../shared-story-assets/icons";
 import { setBorealStyleConfig } from "../../src/config/boreal-style-config";
 
 expect.extend(toHaveNoViolations);
@@ -25,9 +25,6 @@ const classMap = {
   medium: "btn-md",
   large: "btn-lg",
   xl: "btn-xl",
-
-  outline: "btn-outline",
-  glass: "btn-glass",
   disabled: "btn-disabled",
   fullWidth: "btn-full",
   link: "btn-link",
@@ -51,6 +48,8 @@ const classMap = {
   roundMedium: "btn-round-medium",
   roundLarge: "btn-round-large",
   roundFull: "btn-round-full",
+  glass: "btn-glass",
+  outline: "btn-outline",
 };
 
 describe("ButtonBase", () => {
@@ -202,7 +201,7 @@ describe("ButtonBase", () => {
   it("applies the glass class when glass is true", () => {
     renderButton(
       {
-        glass: true,
+        variant: "glassOutline",
       },
       "Glass Button",
     );
@@ -213,17 +212,15 @@ describe("ButtonBase", () => {
     expect(button).toHaveClass("btn-glass");
   });
 
-  it("uses configured glass and outline defaults when props are omitted", () => {
+  it("uses the configured variant when the prop is omitted", () => {
     setBorealStyleConfig({
-      defaultGlass: true,
-      defaultOutline: true,
+      defaultVariant: "outline",
     });
 
     renderButton({}, "Configured Button");
 
     const button = screen.getByTestId("button-test");
 
-    expect(button).toHaveClass("btn-glass");
     expect(button).toHaveClass("btn-outline");
   });
 
@@ -231,7 +228,7 @@ describe("ButtonBase", () => {
     renderButton(
       {
         theme: "primary",
-        glass: true,
+        variant: "glassOutline",
       },
       "Primary Glass",
     );
@@ -247,7 +244,7 @@ describe("ButtonBase", () => {
     renderButton(
       {
         state: "success",
-        glass: true,
+        variant: "glassOutline",
       },
       "Success Glass",
     );
@@ -259,12 +256,11 @@ describe("ButtonBase", () => {
     expect(button).toHaveClass("btn-glass");
   });
 
-  it("applies glass with outline styling", () => {
+  it("combines glass and outline treatments", () => {
     renderButton(
       {
         theme: "secondary",
-        outline: true,
-        glass: true,
+        variant: "glassOutline",
       },
       "Outlined Glass",
     );
@@ -273,15 +269,15 @@ describe("ButtonBase", () => {
 
     expect(button).toHaveClass("btn");
     expect(button).toHaveClass("btn-secondary");
-    expect(button).toHaveClass("btn-outline");
     expect(button).toHaveClass("btn-glass");
+    expect(button).toHaveClass("btn-outline");
   });
 
   it("applies glass to link buttons", () => {
     renderButton(
       {
         href: "/docs",
-        glass: true,
+        variant: "glassOutline",
       },
       "Glass Link",
     );
@@ -300,8 +296,7 @@ describe("ButtonBase", () => {
         theme: "primary",
         state: "success",
         size: "medium",
-        outline: true,
-        glass: true,
+        variant: "glassOutline",
         shadow: "light",
         rounding: "small",
         fullWidth: true,
@@ -675,7 +670,7 @@ describe("ButtonBase", () => {
         theme: "primary",
         state: "success",
         size: "medium",
-        outline: true,
+        variant: "outline",
         shadow: "light",
         rounding: "small",
         fullWidth: true,

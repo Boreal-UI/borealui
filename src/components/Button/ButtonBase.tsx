@@ -3,8 +3,7 @@ import { ButtonBaseProps } from "./Button.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -21,7 +20,7 @@ const ButtonBase = forwardRef<
       iconPosition = "left",
 
       theme = getDefaultTheme(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
 
       state,
       onClick,
@@ -54,7 +53,6 @@ const ButtonBase = forwardRef<
       rel: relProp,
       as,
       isExternal = false,
-      outline = getDefaultOutline(),
       size = getDefaultSize(),
       loading = false,
       loadingLabel = "Loading",
@@ -93,8 +91,9 @@ const ButtonBase = forwardRef<
           classMap[theme],
           state && classMap[state],
           classMap[size],
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           fullWidth && classMap.fullWidth,
@@ -105,8 +104,7 @@ const ButtonBase = forwardRef<
       [
         theme,
         state,
-        outline,
-        glass,
+        variant,
         size,
         shadow,
         rounding,

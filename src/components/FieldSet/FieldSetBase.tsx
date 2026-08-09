@@ -4,8 +4,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -18,9 +17,8 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
       legend,
       label,
       labelPosition = "top",
-      description,
       helperText,
-      error,
+      errorMessage,
       required = false,
       requiredIndicator = "*",
       optionalText,
@@ -29,8 +27,7 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
       spacing = "md",
       theme = getDefaultTheme(),
       state,
-      outline = getDefaultOutline(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
       disabled = false,
@@ -63,7 +60,7 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
     const resolvedLayout = resolvePropAlias(layout);
     const resolvedSpacing = resolvePropAlias(spacing);
     const resolvedLegend = legend ?? label;
-    const hasError = Boolean(error) || state === "error";
+    const hasError = Boolean(errorMessage) || state === "error";
     const resolvedState = hasError ? "error" : state;
 
     const {
@@ -78,12 +75,11 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
 
     const rootId = idProp ?? `${testId}-${generatedId}`;
     const legendId = resolvedLegend ? `${rootId}-legend` : undefined;
-    const descriptionId = description ? `${rootId}-description` : undefined;
-    const helperTextId = helperText ? `${rootId}-helper-text` : undefined;
-    const errorId = error ? `${rootId}-error` : undefined;
-    const srDescriptionId = srOnlyText ? `${rootId}-sr-description` : undefined;
+    const helperTextId = helperText ? `${rootId}-helperText` : undefined;
+    const errorId = errorMessage ? `${rootId}-errorMessage` : undefined;
+    const srDescriptionId = srOnlyText ? `${rootId}-sr-helperText` : undefined;
     const computedAriaDescribedBy =
-      [ariaDescribedBy, descriptionId, helperTextId, errorId, srDescriptionId]
+      [ariaDescribedBy, helperTextId, errorId, srDescriptionId]
         .filter(Boolean)
         .join(" ") || undefined;
     const computedAriaLabelledBy =
@@ -98,8 +94,9 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
           classMap[theme],
           resolvedState && classMap[resolvedState],
           classMap[`label${capitalize(resolvedLabelPosition)}`],
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
@@ -110,8 +107,7 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
         theme,
         resolvedState,
         resolvedLabelPosition,
-        outline,
-        glass,
+        variant,
         disabled,
         shadow,
         rounding,
@@ -167,7 +163,7 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
               className={combineClassNames(
                 classMap.legend,
                 classMap.label,
-                hideLegend && (classMap.legendHidden ?? classMap.srOnly),
+                hideLegend && "sr_only",
                 labelClassName,
                 legendClassName,
               )}
@@ -198,16 +194,17 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
             </legend>
           ) : null}
 
-          {description ? (
+          {helperText ? (
             <p
-              id={descriptionId}
+              id={helperTextId}
               className={combineClassNames(
-                classMap.description,
+                classMap.helperText,
                 descriptionClassName,
+                helperTextClassName,
               )}
-              data-testid={`${testId}-description`}
+              data-testid={`${testId}-helperText`}
             >
-              {description}
+              {helperText}
             </p>
           ) : null}
 
@@ -230,27 +227,14 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
             {children}
           </div>
 
-          {helperText ? (
-            <p
-              id={helperTextId}
-              className={combineClassNames(
-                classMap.helperText,
-                helperTextClassName,
-              )}
-              data-testid={`${testId}-helper-text`}
-            >
-              {helperText}
-            </p>
-          ) : null}
-
-          {error ? (
+          {errorMessage ? (
             <p
               id={errorId}
               className={combineClassNames(classMap.errorText, errorClassName)}
               role="alert"
-              data-testid={`${testId}-error`}
+              data-testid={`${testId}-errorMessage`}
             >
-              {error}
+              {errorMessage}
             </p>
           ) : null}
 
@@ -276,7 +260,7 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
             <span
               id={srDescriptionId}
               className={combineClassNames(
-                classMap.srOnly ?? "sr_only",
+                "sr_only",
                 srOnlyClassName,
               )}
               data-testid={`${testId}-sr-only-text`}

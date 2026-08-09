@@ -465,7 +465,7 @@ describe("CircularProgressBase", () => {
       <CircularProgressBase
         value={85}
         state="success"
-        glass
+        variant="glassOutline"
         label="State Progress Tracker"
         classMap={classMap}
         data-testid="circular-progress"

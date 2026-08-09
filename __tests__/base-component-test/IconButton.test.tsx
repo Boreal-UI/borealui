@@ -1,7 +1,7 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import IconButtonBase from "../../src/components/IconButton/IconButtonBase";
-import { FaTimes } from "react-icons/fa";
+import { FaTimes } from "../../shared-story-assets/icons";
 import { axe, toHaveNoViolations } from "jest-axe";
 
 expect.extend(toHaveNoViolations);
@@ -14,8 +14,6 @@ const classMap = {
   medium: "medium",
   small: "small",
   large: "large",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   buttonLabel: "button-label",
   loader: "loader",
@@ -30,6 +28,8 @@ const classMap = {
   roundMedium: "round-medium",
   roundLarge: "round-large",
   roundFull: "round-full",
+  glass: "glass",
+  outline: "outline",
 };
 
 describe("IconButtonBase", () => {
@@ -233,7 +233,7 @@ describe("IconButtonBase", () => {
         aria-label="Close"
         theme="primary"
         size="medium"
-        outline
+        variant="outline"
         rounding="large"
         shadow="medium"
         className="custom-class"

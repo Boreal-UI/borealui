@@ -1,12 +1,11 @@
-import React from "react";
 import {
   LabelPositionType,
   RoundingType,
   ShadowType,
-  SizeType,
   StateType,
   ThemeType,
 } from "@/types/types";
+import React from "react";
 
 /**
  * Props for the Slider component.
@@ -72,15 +71,6 @@ export interface SliderProps {
 
   /** Unit text rendered after the displayed slider value. */
   units?: React.ReactNode;
-
-  /**
-   * Size variant for the slider.
-   * One of: "xs" | "small" | "medium" | "large" | "xl"
-   *
-   * @default configured default size (fallback: "medium")
-   */
-  size?: SizeType;
-
   /**
    * Theme variant for styling.
    * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
@@ -88,17 +78,15 @@ export interface SliderProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Applies a translucent frosted-glass treatment to the slider track.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the slider.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;
@@ -173,7 +161,6 @@ export interface SliderProps {
    */
   "aria-orientation"?: "horizontal" | "vertical";
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -183,4 +170,8 @@ export interface SliderProps {
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+  invalid?: boolean;
+  helperText?: import("react").ReactNode;
+  errorMessage?: import("react").ReactNode;
+  size?: import("@/types/types").SizeType;
 }

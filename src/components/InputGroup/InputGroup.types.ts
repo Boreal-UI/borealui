@@ -1,16 +1,15 @@
 import {
+  LabelPositionType,
+  ShadowType,
+  StateType,
+  ThemeType,
+} from "@/types/types";
+import {
   ForwardRefExoticComponent,
   HTMLAttributes,
   ReactNode,
   RefAttributes,
 } from "react";
-import {
-  LabelPositionType,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "@/types/types";
 
 type NativeInputGroupProps = Omit<
   HTMLAttributes<HTMLDivElement>,
@@ -30,12 +29,6 @@ export interface InputGroupProps extends NativeInputGroupProps {
    * Optional visible label for the grouped control.
    */
   label?: ReactNode;
-
-  /**
-   * Supporting description rendered before the control and connected with aria-describedby.
-   */
-  description?: ReactNode;
-
   /**
    * Helper text rendered after the control and connected with aria-describedby.
    */
@@ -44,7 +37,7 @@ export interface InputGroupProps extends NativeInputGroupProps {
   /**
    * Error message rendered after the control and announced to assistive technologies.
    */
-  error?: ReactNode;
+  errorMessage?: ReactNode;
 
   /**
    * Whether the grouped control is required.
@@ -105,27 +98,18 @@ export interface InputGroupProps extends NativeInputGroupProps {
    * Visual state for styling.
    */
   state?: StateType;
-
   /**
-   * Whether to render outlined styling.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Whether to render glass styling.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding style for the component.
    *
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Shadow style for the component.
@@ -236,6 +220,7 @@ export interface InputGroupProps extends NativeInputGroupProps {
    * Backward-compatible alias for test ID attributes.
    */
   "data-testid"?: string;
+  invalid?: boolean;
 }
 
 export interface InputGroupBaseProps extends InputGroupProps {

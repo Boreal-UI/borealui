@@ -1,5 +1,7 @@
 import "../components/Layout/core/Layout.scss";
 export {
+  BentoBox,
+  BentoBoxItem,
   Container,
   Grid,
   Inline,

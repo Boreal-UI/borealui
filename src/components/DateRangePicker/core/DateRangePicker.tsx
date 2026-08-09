@@ -5,7 +5,13 @@ import "./DateRangePicker.scss";
 import DatePicker from "@/components/DatePicker/core/DatePicker";
 
 const classes = {
+  xs: "date_range_picker_xs",
+  small: "date_range_picker_small",
+  medium: "date_range_picker_medium",
+  large: "date_range_picker_large",
+  xl: "date_range_picker_xl",
   dateRangePicker: "date_range_picker",
+  layout: "date_range_picker_layout",
   legend: "date_range_picker_legend",
   label: "date_range_picker_label",
   group: "date_range_picker_group",
@@ -17,8 +23,6 @@ const classes = {
 
   errorText: "date_range_picker_error_text",
   disabled: "date_range_picker_disabled",
-  outline: "date_range_picker_outline",
-  glass: "date_range_picker_glass",
 
   labelTop: "date_range_picker_label_top",
   labelBottom: "date_range_picker_label_bottom",
@@ -47,6 +51,8 @@ const classes = {
   roundMedium: "date_range_picker_round-Medium",
   roundLarge: "date_range_picker_round-Large",
   roundFull: "date_range_picker_round-Full",
+  glass: "date_range_picker_glass",
+  outline: "date_range_picker_outline",
 };
 
 export default function DateRangePicker(props: DateRangePickerProps) {

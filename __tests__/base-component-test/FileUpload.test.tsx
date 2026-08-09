@@ -37,10 +37,10 @@ const classMap = {
   error: "error",
   disabled: "disabled",
   dragging: "dragging",
-  glass: "glass",
   roundMedium: "roundMedium",
   shadowLight: "shadowLight",
   primary: "primary",
+  glass: "glass",
 };
 
 const createFile = (
@@ -102,7 +102,9 @@ describe("BaseFileUpload", () => {
   });
 
   it("applies default structural classes", () => {
-    const { wrapper, input, fileButton } = renderFileUpload({ glass: true });
+    const { wrapper, input, fileButton } = renderFileUpload({
+      variant: "glassOutline",
+    });
 
     expect(wrapper).toHaveClass("fileUpload");
     expect(wrapper).toHaveClass("primary");
@@ -117,26 +119,26 @@ describe("BaseFileUpload", () => {
 
   it("sets accessible wrapper and input attributes including describedby", () => {
     const { wrapper, input } = renderFileUpload({
-      description: "Only PNG files",
-      error: "A file is required",
+      helperText: "Only PNG files",
+      errorMessage: "A file is required",
     });
 
     expect(wrapper).toHaveAttribute(
       "aria-describedby",
-      "upload-description upload-error",
+      "upload-helperText upload-errorMessage",
     );
-    expect(wrapper).toHaveAttribute("aria-errormessage", "upload-error");
+    expect(wrapper).toHaveAttribute("aria-errormessage", "upload-errorMessage");
     expect(wrapper).toHaveAttribute("aria-invalid", "true");
 
     expect(input).toHaveAttribute(
       "aria-describedby",
-      "upload-description upload-error",
+      "upload-helperText upload-errorMessage",
     );
-    expect(input).toHaveAttribute("aria-errormessage", "upload-error");
+    expect(input).toHaveAttribute("aria-errormessage", "upload-errorMessage");
     expect(input).toHaveAttribute("aria-invalid", "true");
   });
 
-  it("does not set aria-describedby when description and error are absent", () => {
+  it("does not set aria-describedby when helperText and errorMessage are absent", () => {
     const { wrapper, input } = renderFileUpload();
 
     expect(wrapper).not.toHaveAttribute("aria-describedby");
@@ -509,9 +511,9 @@ describe("BaseFileUpload", () => {
     expect(screen.getByTestId("upload-upload-button")).toBeDisabled();
   });
 
-  it("applies error class when error is provided", () => {
+  it("applies errorMessage class when errorMessage is provided", () => {
     const { wrapper } = renderFileUpload({
-      error: "Something went wrong",
+      errorMessage: "Something went wrong",
     });
 
     expect(wrapper).toHaveClass("error");
@@ -871,7 +873,7 @@ describe("BaseFileUpload", () => {
     ).toBeInTheDocument();
   });
 
-  it("supports dropzone description and role", () => {
+  it("supports dropzone helperText and role", () => {
     const { wrapper } = renderFileUpload({
       dropzoneDescription: "Drop files here or use the select button.",
       dropzoneRole: "region",
@@ -880,7 +882,7 @@ describe("BaseFileUpload", () => {
     expect(wrapper).toHaveAttribute("role", "region");
     expect(wrapper).toHaveAttribute(
       "aria-describedby",
-      "upload-dropzone-description",
+      "upload-dropzone-helperText",
     );
     expect(
       screen.getByText("Drop files here or use the select button."),
@@ -891,14 +893,14 @@ describe("BaseFileUpload", () => {
     const { wrapper } = renderFileUpload({
       "aria-label": "File uploader region",
       "aria-labelledby": "external-label",
-      "aria-describedby": "external-description",
+      "aria-describedby": "external-helperText",
       "aria-busy": true,
       className: "customWrapper",
     });
 
     expect(wrapper).toHaveAttribute("aria-label", "File uploader region");
     expect(wrapper).toHaveAttribute("aria-labelledby", "external-label");
-    expect(wrapper).toHaveAttribute("aria-describedby", "external-description");
+    expect(wrapper).toHaveAttribute("aria-describedby", "external-helperText");
     expect(wrapper).toHaveAttribute("aria-busy", "true");
     expect(wrapper).toHaveClass("customWrapper");
   });
@@ -912,8 +914,8 @@ describe("BaseFileUpload", () => {
       allowedFileTypes: ["text/plain"],
       formGroupClassName: "custom-form-group",
       labelClassName: "custom-label",
-      description: "Upload text files only",
-      descriptionClassName: "custom-description",
+      helperText: "Upload text files only",
+      descriptionClassName: "custom-helperText",
       dropzoneClassName: "custom-dropzone",
       inputClassName: "custom-input",
       uploadActionsClassName: "custom-upload-actions",
@@ -937,7 +939,7 @@ describe("BaseFileUpload", () => {
     expect(screen.getByTestId("upload")).toHaveClass("custom-form-group");
     expect(screen.getByText("Upload a file")).toHaveClass("custom-label");
     expect(screen.getByText("Upload text files only")).toHaveClass(
-      "custom-description",
+      "custom-helperText",
     );
     expect(screen.getByTestId("upload-wrapper")).toHaveClass(
       "fileUpload",
@@ -975,10 +977,7 @@ describe("BaseFileUpload", () => {
       within(screen.getByTestId("upload-rejected-files")).getByText(
         /Invalid type/,
       ),
-    ).toHaveClass(
-      "rejectedReason",
-      "custom-rejected-reason",
-    );
+    ).toHaveClass("rejectedReason", "custom-rejected-reason");
     expect(screen.getByTestId("upload-controls")).toHaveClass(
       "uploadControls",
       "custom-upload-controls",
@@ -1033,18 +1032,18 @@ describe("BaseFileUpload", () => {
 
   it("applies custom class names to file upload form errors", () => {
     renderFileUpload({
-      error: "A file is required",
-      errorMessageClassName: "custom-error-message",
+      errorMessage: "A file is required",
+      errorMessageClassName: "custom-errorMessage-message",
     });
 
     expect(screen.getByText("A file is required")).toHaveClass(
-      "custom-error-message",
+      "custom-errorMessage-message",
     );
   });
 
   it("has no accessibility violations", async () => {
     const { container } = renderFileUpload({
-      description: "Drag and drop your file",
+      helperText: "Drag and drop your file",
       dropzoneDescription: "You can also browse to select a file.",
     });
 

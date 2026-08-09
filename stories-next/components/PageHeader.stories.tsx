@@ -9,7 +9,7 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-import { FaTree } from "react-icons/fa";
+import { FaTree } from "../../shared-story-assets/icons";
 import { roundingOptions } from "../../shared-story-assets/OptionTypes";
 
 const BreadcrumbExample = () => (
@@ -62,7 +62,7 @@ const ActionsExample = () => (
     <Button theme="secondary" type="button">
       Export Report
     </Button>
-    <Button theme="tertiary" outline type="button">
+    <Button theme="tertiary" type="button" variant="outline">
       Create New Task
     </Button>
   </>

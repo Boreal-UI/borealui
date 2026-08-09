@@ -15,7 +15,6 @@ const classes = {
   sidebarCollapsed: "appShell_sidebarCollapsed",
   stickyHeader: "appShell_stickyHeader",
   loader: "appShell_loader",
-  srOnly: "sr_only",
 
   primary: "appShell_primary",
   secondary: "appShell_secondary",
@@ -28,8 +27,6 @@ const classes = {
   error: "appShell_error",
 
   clear: "appShell_clear",
-  outline: "appShell_outline",
-  glass: "appShell_glass",
   disabled: "appShell_disabled",
   loading: "appShell_loading",
 
@@ -44,6 +41,8 @@ const classes = {
   roundMedium: "appShell_round-Medium",
   roundLarge: "appShell_round-Large",
   roundFull: "appShell_round-Full",
+  glass: "appShell_glass",
+  outline: "appShell_outline",
 };
 
 const AppShell = forwardRef<HTMLDivElement, AppShellProps>((props, ref) => (

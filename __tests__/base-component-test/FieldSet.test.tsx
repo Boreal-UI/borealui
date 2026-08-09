@@ -19,10 +19,10 @@ const classMap = {
   legendHidden: "legendHidden",
   required: "required",
   optional: "optional",
-  description: "description",
+  description: "helperText",
   content: "content",
   helperText: "helperText",
-  errorText: "errorText",
+  errorText: "error",
   actions: "actions",
   footer: "footer",
   loadingRow: "loadingRow",
@@ -42,14 +42,14 @@ const classMap = {
   success: "success",
   error: "error",
   clear: "clear",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   shadowLight: "shadowLight",
   shadowStrong: "shadowStrong",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 const renderFieldSet = (
@@ -87,12 +87,11 @@ describe("FieldSetBase", () => {
     ).toBeInTheDocument();
   });
 
-  it("connects description, helper text, error text, and sr-only text with aria-describedby", () => {
+  it("connects helper, error, and sr-only text with aria-describedby", () => {
     renderFieldSet({
       id: "contact-preferences",
-      description: "Choose how we should reach you.",
       helperText: "You can change these settings later.",
-      error: "Select at least one option.",
+      errorMessage: "Select at least one option.",
       srOnlyText: "Required group.",
     });
 
@@ -102,7 +101,7 @@ describe("FieldSetBase", () => {
 
     expect(group).toHaveAttribute(
       "aria-describedby",
-      "contact-preferences-description contact-preferences-helper-text contact-preferences-error contact-preferences-sr-description",
+      "contact-preferences-helperText contact-preferences-errorMessage contact-preferences-sr-helperText",
     );
     expect(group).toHaveAttribute("aria-invalid", "true");
     expect(screen.getByRole("alert")).toHaveTextContent(
@@ -141,8 +140,7 @@ describe("FieldSetBase", () => {
     renderFieldSet({
       theme: "secondary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       rounding: "large",
       shadow: "strong",
     });
@@ -171,11 +169,10 @@ describe("FieldSetBase", () => {
       legendClassName: "customLegend",
       bodyClassName: "customBody",
       contentClassName: "customContent",
-      description: "Description",
       descriptionClassName: "customDescription",
       helperText: "Helper",
       helperTextClassName: "customHelper",
-      error: "Error",
+      errorMessage: "Error",
       errorClassName: "customError",
       actions: "Actions",
       actionsClassName: "customActions",
@@ -185,7 +182,7 @@ describe("FieldSetBase", () => {
 
     expect(screen.getByTestId("field-set")).toHaveClass("labelLeft");
     expect(screen.getByTestId("field-set")).toHaveClass("customContainer");
-    expect(screen.getByTestId("field-set-label")).toHaveClass("legendHidden");
+    expect(screen.getByTestId("field-set-label")).toHaveClass("sr_only");
     expect(screen.getByTestId("field-set-label")).toHaveClass("customLegend");
     expect(screen.getByTestId("field-set-content")).toHaveClass("layoutGrid");
     expect(screen.getByTestId("field-set-content")).toHaveClass("spacingLg");
@@ -193,13 +190,15 @@ describe("FieldSetBase", () => {
     expect(screen.getByTestId("field-set-content")).toHaveClass(
       "customContent",
     );
-    expect(screen.getByTestId("field-set-description")).toHaveClass(
+    expect(screen.getByTestId("field-set-helperText")).toHaveClass(
       "customDescription",
     );
-    expect(screen.getByTestId("field-set-helper-text")).toHaveClass(
+    expect(screen.getByTestId("field-set-helperText")).toHaveClass(
       "customHelper",
     );
-    expect(screen.getByTestId("field-set-error")).toHaveClass("customError");
+    expect(screen.getByTestId("field-set-errorMessage")).toHaveClass(
+      "customError",
+    );
     expect(screen.getByTestId("field-set-actions")).toHaveClass(
       "customActions",
     );
@@ -233,7 +232,6 @@ describe("FieldSetBase", () => {
 
   it("has no accessibility violations", async () => {
     const { container } = renderFieldSet({
-      description: "Choose how we should reach you.",
       helperText: "You can change these settings later.",
     });
 

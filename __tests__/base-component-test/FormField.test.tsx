@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import "@testing-library/jest-dom";
@@ -13,7 +12,6 @@ const classMap = {
   optional: "optional",
   control: "control",
   helperText: "helperText",
-  errorText: "errorText",
 
   labelTop: "labelTop",
   labelBottom: "labelBottom",
@@ -22,6 +20,7 @@ const classMap = {
 
   success: "success",
   error: "error",
+  errorText: "errorText",
   warning: "warning",
 } satisfies Record<string, string>;
 
@@ -142,13 +141,13 @@ describe("FormFieldBase", () => {
     expect(screen.queryByText("Optional")).not.toBeInTheDocument();
   });
 
-  it("renders error text, marks the control invalid, and connects aria-describedby", () => {
+  it("renders errorMessage text, marks the control invalid, and connects aria-describedby", () => {
     const { container } = render(
       <FormFieldBase
         id="email"
         label="Email"
         helperText="Use a valid email."
-        error="Email is required."
+        errorMessage="Email is required."
         classMap={classMap}
       >
         <input title="email" />
@@ -157,37 +156,37 @@ describe("FormFieldBase", () => {
 
     const input = container.querySelector("input") as HTMLInputElement;
     const helper = screen.getByTestId("form-field-helper");
-    const error = screen.getByTestId("form-field-error");
+    const errorMessage = screen.getByTestId("form-field-errorMessage");
 
     expect(input).toHaveAttribute("id", "email");
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toHaveAttribute(
       "aria-describedby",
-      "email-helper email-error",
+      "email-helper email-errorMessage",
     );
 
     expect(helper).toHaveAttribute("id", "email-helper");
     expect(helper).toHaveTextContent("Use a valid email.");
 
-    expect(error).toHaveAttribute("id", "email-error");
-    expect(error).toHaveAttribute("role", "alert");
-    expect(error).toHaveClass("errorText");
-    expect(error).toHaveTextContent("Email is required.");
+    expect(errorMessage).toHaveAttribute("id", "email-errorMessage");
+    expect(errorMessage).toHaveAttribute("role", "alert");
+    expect(errorMessage).toHaveClass("errorText");
+    expect(errorMessage).toHaveTextContent("Email is required.");
   });
 
   it("preserves an existing aria-describedby value from the child", () => {
     const { container } = render(
       <>
-        <p id="existing-description">Existing description</p>
+        <p id="existing-helperText">Existing helperText</p>
 
         <FormFieldBase
           id="email"
           label="Email"
           helperText="Helper text"
-          error="Error text"
+          errorMessage="Error text"
           classMap={classMap}
         >
-          <input title="email" aria-describedby="existing-description" />
+          <input title="email" aria-describedby="existing-helperText" />
         </FormFieldBase>
       </>,
     );
@@ -196,7 +195,7 @@ describe("FormFieldBase", () => {
 
     expect(input).toHaveAttribute(
       "aria-describedby",
-      "existing-description email-helper email-error",
+      "existing-helperText email-helper email-errorMessage",
     );
   });
 
@@ -205,7 +204,7 @@ describe("FormFieldBase", () => {
       <FormFieldBase
         label="Email"
         required
-        error="Email is required."
+        errorMessage="Email is required."
         classMap={classMap}
       >
         <input
@@ -229,7 +228,7 @@ describe("FormFieldBase", () => {
       <FormFieldBase
         label="Search"
         helperText="Search by keyword."
-        error="Search failed."
+        errorMessage="Search failed."
         labelPosition="left"
         state="error"
         className="customRoot"
@@ -265,7 +264,7 @@ describe("FormFieldBase", () => {
       "customHelper",
     );
 
-    expect(screen.getByTestId("form-field-error")).toHaveClass(
+    expect(screen.getByTestId("form-field-errorMessage")).toHaveClass(
       "errorText",
       "customError",
     );
@@ -313,7 +312,7 @@ describe("FormFieldBase", () => {
     expect(screen.queryByTestId("fallback-id")).not.toBeInTheDocument();
   });
 
-  it("does not render label, helper, or error elements when omitted", () => {
+  it("does not render label, helper, or errorMessage elements when omitted", () => {
     render(
       <FormFieldBase classMap={classMap}>
         <input title="plain input" data-testid="plain-input" />
@@ -325,7 +324,9 @@ describe("FormFieldBase", () => {
     expect(screen.getByTestId("plain-input")).toBeInTheDocument();
 
     expect(screen.queryByTestId("form-field-helper")).not.toBeInTheDocument();
-    expect(screen.queryByTestId("form-field-error")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("form-field-errorMessage"),
+    ).not.toBeInTheDocument();
     expect(screen.queryByText("Optional")).not.toBeInTheDocument();
   });
 
@@ -346,13 +347,13 @@ describe("FormFieldBase", () => {
     expect(results).toHaveNoViolations();
   });
 
-  it("has no accessibility violations when displaying an error", async () => {
+  it("has no accessibility violations when displaying an errorMessage", async () => {
     const { container } = render(
       <FormFieldBase
         id="email"
         label="Email"
         helperText="Use your school email address."
-        error="Email is required."
+        errorMessage="Email is required."
         required
         classMap={classMap}
       >

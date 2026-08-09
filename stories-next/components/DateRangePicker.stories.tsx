@@ -14,6 +14,7 @@ import { useState } from "react";
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -45,12 +46,6 @@ const meta: Meta<DateRangePickerProps> = {
       control: "select",
       options: ["top", "bottom", "left", "right"],
     },
-    outline: {
-      control: "boolean",
-    },
-    glass: {
-      control: "boolean",
-    },
     disabled: {
       control: "boolean",
     },
@@ -66,6 +61,10 @@ const meta: Meta<DateRangePickerProps> = {
     onChange: {
       action: "changed",
     },
+    variant: {
+      control: "select",
+      options: ["solid", "outline", "glass", "glassOutline"],
+    },
   },
   args: {
     label: "Report range",
@@ -78,8 +77,7 @@ const meta: Meta<DateRangePickerProps> = {
     helperText: "Choose the date range used for the report.",
     theme: "primary",
     state: "",
-    outline: false,
-    glass: false,
+    variant: "solid",
     rounding: "medium",
     shadow: "none",
     disabled: false,
@@ -90,6 +88,19 @@ const meta: Meta<DateRangePickerProps> = {
 
 export default meta;
 type Story = StoryObj<DateRangePickerProps>;
+
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: DateRangePicker,
+      args: {
+        value: { start: "2026-05-01", end: "2026-05-12" },
+        onChange: () => {},
+        label: "Date range",
+      },
+      labelProp: "label",
+    }),
+};
 
 function DateRangePickerDemo(args: DateRangePickerProps) {
   const [value, setValue] = useState<DateRangeValue>(args.value);
@@ -114,7 +125,7 @@ export const Error: Story = {
   render: (args) => <DateRangePickerDemo {...args} />,
   args: {
     state: "error",
-    error: "End date must be after start date.",
+    errorMessage: "End date must be after start date.",
     helperText: "Start dates cannot be later than end dates.",
   },
 };
@@ -182,7 +193,7 @@ export const VisualVariants: Story = {
         label="Outlined"
         value={{ start: "2026-05-01", end: "2026-05-12" }}
         onChange={() => undefined}
-        outline
+        variant="outline"
         rounding="medium"
       />
 
@@ -198,8 +209,7 @@ export const VisualVariants: Story = {
         label="Glass"
         value={{ start: "2026-05-01", end: "2026-05-12" }}
         onChange={() => undefined}
-        glass
-        outline
+        variant="outline"
         shadow="medium"
       />
     </div>

@@ -84,11 +84,11 @@ const runAccordionTests = (
       cy.get('[data-testid="accordion-child"]').should("exist");
     });
 
-    it("toggles open and closed when clicked and calls onToggle with the next expanded state", () => {
-      const onToggle = cy.stub().as("onToggle");
+    it("toggles open and closed when clicked and calls onExpandedChange with the next expanded state", () => {
+      const onExpandedChange = cy.stub().as("onExpandedChange");
 
       mountAccordion(Accordion, {
-        onToggle,
+        onExpandedChange,
       });
 
       getToggle().should("have.attr", "aria-expanded", "false");
@@ -100,53 +100,53 @@ const runAccordionTests = (
       getToggle().should("have.attr", "aria-expanded", "true");
       getContent().should("have.attr", "data-state", "open");
       getIcon().should("have.text", "−");
-      cy.get("@onToggle").should("have.been.calledOnceWith", true);
+      cy.get("@onExpandedChange").should("have.been.calledOnceWith", true);
 
       getToggle().click();
 
       getToggle().should("have.attr", "aria-expanded", "false");
       getContent().should("have.attr", "data-state", "collapsed");
       getIcon().should("have.text", "+");
-      cy.get("@onToggle").should("have.been.calledTwice");
-      cy.get("@onToggle").should("have.been.calledWith", false);
+      cy.get("@onExpandedChange").should("have.been.calledTwice");
+      cy.get("@onExpandedChange").should("have.been.calledWith", false);
     });
 
-    it("supports keyboard toggling with Enter and Space and calls onToggle", () => {
-      const onToggle = cy.stub().as("onToggle");
+    it("supports keyboard toggling with Enter and Space and calls onExpandedChange", () => {
+      const onExpandedChange = cy.stub().as("onExpandedChange");
 
       mountAccordion(Accordion, {
-        onToggle,
+        onExpandedChange,
       });
 
       getToggle().focus().trigger("keydown", { key: "Enter" });
 
       getToggle().should("have.attr", "aria-expanded", "true");
       getContent().should("have.attr", "data-state", "open");
-      cy.get("@onToggle").should("have.been.calledOnceWith", true);
+      cy.get("@onExpandedChange").should("have.been.calledOnceWith", true);
 
       getToggle().trigger("keydown", { key: " " });
 
       getToggle().should("have.attr", "aria-expanded", "false");
       getContent().should("have.attr", "data-state", "collapsed");
-      cy.get("@onToggle").should("have.been.calledTwice");
-      cy.get("@onToggle").should("have.been.calledWith", false);
+      cy.get("@onExpandedChange").should("have.been.calledTwice");
+      cy.get("@onExpandedChange").should("have.been.calledWith", false);
     });
 
     it("ignores unsupported keyboard input", () => {
       mountAccordion(Accordion, {
-        onToggle: cy.stub().as("onToggle"),
+        onExpandedChange: cy.stub().as("onExpandedChange"),
       });
 
       getToggle().focus().trigger("keydown", { key: "Escape" });
 
       getToggle().should("have.attr", "aria-expanded", "false");
       getContent().should("have.attr", "data-state", "collapsed");
-      cy.get("@onToggle").should("not.have.been.called");
+      cy.get("@onExpandedChange").should("not.have.been.called");
     });
 
-    it("supports initiallyExpanded in uncontrolled mode", () => {
+    it("supports defaultExpanded in uncontrolled mode", () => {
       mountAccordion(Accordion, {
-        initiallyExpanded: true,
+        defaultExpanded: true,
       });
 
       getToggle().should("have.attr", "aria-expanded", "true");
@@ -155,7 +155,7 @@ const runAccordionTests = (
     });
 
     it("supports controlled expanded state", () => {
-      const onToggle = cy.stub().as("onToggle");
+      const onExpandedChange = cy.stub().as("onExpandedChange");
 
       interface OnToggleHandler {
         (nextExpanded: boolean): void;
@@ -165,7 +165,7 @@ const runAccordionTests = (
         const [expanded, setExpanded] = useState<boolean>(false);
 
         const handleToggle: OnToggleHandler = (nextExpanded: boolean): void => {
-          onToggle(nextExpanded);
+          onExpandedChange(nextExpanded);
           setExpanded(nextExpanded);
         };
 
@@ -191,7 +191,7 @@ const runAccordionTests = (
               title="Controlled accordion"
               data-testid="accordion"
               expanded={expanded}
-              onToggle={handleToggle}
+              onExpandedChange={handleToggle}
             >
               <p data-testid="accordion-child">Controlled content</p>
             </Accordion>
@@ -206,7 +206,7 @@ const runAccordionTests = (
 
       getToggle().click();
 
-      cy.get("@onToggle").should("have.been.calledOnceWith", true);
+      cy.get("@onExpandedChange").should("have.been.calledOnceWith", true);
       getToggle().should("have.attr", "aria-expanded", "true");
       getContent().should("have.attr", "data-state", "open");
 
@@ -221,23 +221,23 @@ const runAccordionTests = (
       getContent().should("have.attr", "data-state", "open");
     });
 
-    it("calls onToggle in controlled mode without changing visual state unless parent updates expanded", () => {
+    it("calls onExpandedChange in controlled mode without changing visual state unless parent updates expanded", () => {
       mountAccordion(Accordion, {
         expanded: false,
-        onToggle: cy.stub().as("onToggle"),
+        onExpandedChange: cy.stub().as("onExpandedChange"),
       });
 
       getToggle().click();
 
-      cy.get("@onToggle").should("have.been.calledOnceWith", true);
+      cy.get("@onExpandedChange").should("have.been.calledOnceWith", true);
       getToggle().should("have.attr", "aria-expanded", "false");
       getContent().should("have.attr", "data-state", "collapsed");
     });
 
-    it("allows opening but prevents collapsing when no-collapse is true", () => {
+    it("allows opening but prevents collapsing when disableCollapse is true", () => {
       mountAccordion(Accordion, {
-        "no-collapse": true,
-        onToggle: cy.stub().as("onToggle"),
+        disableCollapse: true,
+        onExpandedChange: cy.stub().as("onExpandedChange"),
       });
 
       getToggle().should("have.attr", "aria-expanded", "false");
@@ -248,20 +248,20 @@ const runAccordionTests = (
 
       getToggle().should("have.attr", "aria-expanded", "true");
       getContent().should("have.attr", "data-state", "open");
-      cy.get("@onToggle").should("have.been.calledOnceWith", true);
+      cy.get("@onExpandedChange").should("have.been.calledOnceWith", true);
 
       getToggle().click();
 
       getToggle().should("have.attr", "aria-expanded", "true");
       getContent().should("have.attr", "data-state", "open");
 
-      cy.get("@onToggle").should("have.been.calledOnce");
+      cy.get("@onExpandedChange").should("have.been.calledOnce");
     });
 
     it("does not toggle when disabled", () => {
       mountAccordion(Accordion, {
         disabled: true,
-        onToggle: cy.stub().as("onToggle"),
+        onExpandedChange: cy.stub().as("onExpandedChange"),
       });
 
       getToggle()
@@ -273,7 +273,7 @@ const runAccordionTests = (
 
       getToggle().should("have.attr", "aria-expanded", "false");
       getContent().should("have.attr", "data-state", "collapsed");
-      cy.get("@onToggle").should("not.have.been.called");
+      cy.get("@onExpandedChange").should("not.have.been.called");
     });
 
     it("supports custom expanded and collapsed icons", () => {
@@ -367,7 +367,7 @@ const runAccordionTests = (
       cy.clock();
 
       mountAccordion(Accordion, {
-        initiallyExpanded: true,
+        defaultExpanded: true,
         asyncContent: true,
         loadingAriaLabel: "Loading accordion details",
       });
@@ -599,7 +599,7 @@ const runAccordionTests = (
 
     it("does not set aria-busy when asyncContent is false", () => {
       mountAccordion(Accordion, {
-        initiallyExpanded: true,
+        defaultExpanded: true,
       });
 
       getContent().should("not.have.attr", "aria-busy");
@@ -612,8 +612,7 @@ const runAccordionTests = (
         size: "large",
         shadow: "strong",
         rounding: "large",
-        outline: true,
-        glass: true,
+        variant: "glassOutline",
       });
 
       getToggle().click();
@@ -625,7 +624,7 @@ const runAccordionTests = (
 
     it("does not render loading content unless async loading is active", () => {
       mountAccordion(Accordion, {
-        initiallyExpanded: true,
+        defaultExpanded: true,
         asyncContent: false,
       });
 

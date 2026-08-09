@@ -15,8 +15,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -53,8 +52,7 @@ const ValidationSummaryBase = forwardRef<
       onItemClick,
       theme = getDefaultTheme(),
       state,
-      outline = getDefaultOutline(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
       disabled = false,
@@ -138,8 +136,9 @@ const ValidationSummaryBase = forwardRef<
           classMap.root,
           classMap[theme],
           state && classMap[state],
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           loading && classMap.loading,
           !hasItems && classMap.empty,
@@ -151,8 +150,7 @@ const ValidationSummaryBase = forwardRef<
         classMap,
         theme,
         state,
-        outline,
-        glass,
+        variant,
         disabled,
         loading,
         hasItems,
@@ -316,7 +314,7 @@ const ValidationSummaryBase = forwardRef<
             <span
               id={srDescriptionId}
               className={combineClassNames(
-                classMap.srOnly ?? "sr_only",
+                "sr_only",
                 srOnlyClassName,
               )}
               data-testid={`${testId}-sr-only-text`}

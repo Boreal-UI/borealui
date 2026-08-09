@@ -1,9 +1,3 @@
-import type {
-  AnchorHTMLAttributes,
-  ElementType,
-  HTMLAttributes,
-  ReactNode,
-} from "react";
 import {
   RoundingType,
   ShadowType,
@@ -11,6 +5,12 @@ import {
   StateType,
   ThemeType,
 } from "@/types/types";
+import type {
+  AnchorHTMLAttributes,
+  ElementType,
+  HTMLAttributes,
+  ReactNode,
+} from "react";
 
 /**
  * A breadcrumb item used to define a single step in the navigation path.
@@ -121,7 +121,7 @@ export interface BreadcrumbsProps extends Omit<
 
   /**
    * State of the breadcrumbs
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    * Used for visual feedback.
    */
   state?: StateType;
@@ -138,21 +138,12 @@ export interface BreadcrumbsProps extends Omit<
    * Additional class name for custom styling.
    */
   className?: string;
-
   /**
-   * Whether to use the outline style.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Maximum number of visible items before collapsing into an ellipsis.
    */

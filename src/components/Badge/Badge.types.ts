@@ -1,12 +1,12 @@
 import type {
   AnchorHTMLAttributes,
+  AriaRole,
   ButtonHTMLAttributes,
   MouseEvent,
   ReactNode,
-  AriaRole,
 } from "react";
-import type { IconType } from "react-icons";
 import type {
+  IconComponent,
   RoundingType,
   ShadowType,
   SizeType,
@@ -75,7 +75,7 @@ export interface BadgeProps extends BadgeAccessibilityProps {
 
   /**
    * The badge state
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    *
    */
   state?: StateType;
@@ -108,25 +108,16 @@ export interface BadgeProps extends BadgeAccessibilityProps {
    * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
-
   /**
-   * Whether to use the outline style.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Optional icon to render inside the badge.
    */
-  icon?: IconType;
+  icon?: IconComponent;
 
   /**
    * Additional custom class names.

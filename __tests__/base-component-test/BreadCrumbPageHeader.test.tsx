@@ -24,12 +24,12 @@ const classMap = {
   loader: "loader",
   secondary: "secondary",
   success: "success",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   shadowStrong: "shadowStrong",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 const breadcrumbs = [
@@ -110,8 +110,7 @@ describe("BreadCrumbPageHeaderBase", () => {
       title: "Page header",
       theme: "secondary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       rounding: "large",
       shadow: "strong",
       loading: true,

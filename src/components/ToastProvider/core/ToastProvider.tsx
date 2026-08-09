@@ -6,6 +6,7 @@ import "./ToastProvider.scss";
 const classes = {
   viewport: "toast_viewport",
   toast: "toast",
+  exiting: "toast_exiting",
   content: "toast_content",
   title: "toast_title",
   message: "toast_message",
