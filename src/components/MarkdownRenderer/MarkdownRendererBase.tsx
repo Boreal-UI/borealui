@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { marked } from "marked";
+import sanitize from "sanitize-html";
 import { BaseMarkdownRendererProps } from "./MarkdownRenderer.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -171,6 +172,32 @@ const allowedHtmlTags = new Set([
 
 const voidHtmlTags = new Set(["br", "hr", "img"]);
 
+const safeSanitize = (html: string): string =>
+  sanitize(html, {
+    allowedTags: [...allowedHtmlTags],
+    allowedAttributes: {
+      "*": ["id", "class", "title", "lang", "dir", "aria-*", "data-*"],
+      a: ["href", "target", "rel"],
+      blockquote: ["cite"],
+      del: ["cite", "datetime"],
+      details: ["open"],
+      img: ["src", "alt", "title", "width", "height", "loading", "decoding"],
+      ins: ["cite", "datetime"],
+      li: ["value"],
+      ol: ["start", "type", "reversed"],
+      td: ["colspan", "rowspan", "headers"],
+      th: ["colspan", "rowspan", "headers", "scope"],
+    },
+    allowedSchemes: ["http", "https", "mailto", "tel"],
+    allowedSchemesByTag: {
+      img: ["http", "https", "data"],
+    },
+    allowProtocolRelative: false,
+    disallowedTagsMode: "completelyDiscard",
+    enforceHtmlBoundary: true,
+    parseStyleAttributes: false,
+  });
+
 const getSafeElementProps = (element: Element) => {
   const props: Record<string, string | number | boolean> = {};
 
@@ -297,9 +324,10 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
       renderer,
     });
 
-    const sanitize = sanitizeHtml ?? safeSanitize;
-    return htmlToReactNodes(sanitize(raw), "markdown");
-  }, [content, renderer, sanitizeHtml]);
+    const preprocessed = sanitizeHtml ? sanitizeHtml(raw) : raw;
+    const sanitized = allowHtml ? safeSanitize(preprocessed) : preprocessed;
+    return htmlToReactNodes(sanitized, "markdown");
+  }, [allowHtml, content, renderer, sanitizeHtml]);
 
   const wrapperClass = useMemo(
     () =>

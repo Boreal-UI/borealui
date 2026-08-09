@@ -49,7 +49,8 @@
     "react-dom": ">=18.2.0"
   },
   "dependencies": {
-    "@boreal-ui/types": "0.1.423"
+    "@boreal-ui/types": "0.1.423",
+    "sanitize-html": "^2.17.5"
   },
   "exports": {
     ".": {
