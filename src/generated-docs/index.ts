@@ -55,7 +55,7 @@ export { notificationCenterPropDocs } from "./NotificationCenter.props.js";
 export { numberInputPropDocs } from "./NumberInput.props.js";
 export { pageHeaderPropDocs } from "./PageHeader.props.js";
 export { pagerPropDocs } from "./Pager.props.js";
-export { popOverPropDocs } from "./PopOver.props.js";
+export { popOverPropDocs } from "./Popover.props.js";
 export { portalPropDocs } from "./Portal.props.js";
 export { progressBarPropDocs } from "./ProgressBar.props.js";
 export { radioButtonPropDocs } from "./RadioButton.props.js";
