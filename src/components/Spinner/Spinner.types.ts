@@ -20,7 +20,7 @@ export interface SpinnerProps {
   variant?: import("@/types/types").VariantType;
   /**
    * The state of the spinner.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

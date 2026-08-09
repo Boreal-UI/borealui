@@ -59,7 +59,7 @@ export interface StepperProps {
   variant?: import("@/types/types").VariantType;
   /**
    * State of the stepper.
-   * "success" | "error" | "warning" | "disabled" | ""
+   * "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

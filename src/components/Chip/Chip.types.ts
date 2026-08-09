@@ -123,7 +123,7 @@ export interface ChipProps
 
   /**
    * State of the chip
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    *
    */
   state?: StateType;

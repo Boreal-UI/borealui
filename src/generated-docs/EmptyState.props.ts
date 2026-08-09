@@ -178,7 +178,7 @@ export const emptyStatePropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "The EmptyState state ('success' | 'error' | 'warning' | 'disabled' | '').",
+      "description": "The EmptyState state ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').",
       "required": false,
       "inherited": false,
       "category": "styling"

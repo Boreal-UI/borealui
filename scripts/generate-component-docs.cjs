@@ -355,6 +355,8 @@ function mergePropDocs(existingProps, newProps) {
 
     const existing = map.get(prop.name);
 
+    const preferred = existing.inherited && !prop.inherited ? prop : existing;
+
     // Prefer richer description
     const description =
       existing.description &&
@@ -370,7 +372,7 @@ function mergePropDocs(existingProps, newProps) {
     const inherited = existing.inherited && prop.inherited;
 
     map.set(prop.name, {
-      ...existing,
+      ...preferred,
       description,
       required,
       inherited,
@@ -427,6 +429,26 @@ function getPropertySignaturesFromUnion(typeNode, sourceFile) {
   return props;
 }
 
+function isProjectSourceDeclaration(declaration) {
+  const filePath = path.resolve(declaration.getSourceFile().getFilePath());
+  const sourceRoot = path.resolve(rootDir, "src") + path.sep;
+
+  return filePath.startsWith(sourceRoot);
+}
+
+function getProjectTypeDeclaration(symbol) {
+  const resolvedSymbol = symbol?.getAliasedSymbol?.() ?? symbol;
+
+  return resolvedSymbol
+    ?.getDeclarations()
+    .find(
+      (candidate) =>
+        isProjectSourceDeclaration(candidate) &&
+        (Node.isInterfaceDeclaration(candidate) ||
+          Node.isTypeAliasDeclaration(candidate)),
+    );
+}
+
 function resolveTypeReferenceNode(typeRefNode, sourceFile) {
   const typeNameNode = typeRefNode.getTypeName();
   const typeName = typeNameNode.getText();
@@ -447,15 +469,122 @@ function resolveTypeReferenceNode(typeRefNode, sourceFile) {
     };
   }
 
+  const declaration = getProjectTypeDeclaration(typeNameNode.getSymbol());
+
+  if (declaration && Node.isInterfaceDeclaration(declaration)) {
+    return {
+      kind: "interface",
+      node: declaration,
+    };
+  }
+
+  if (declaration && Node.isTypeAliasDeclaration(declaration)) {
+    return {
+      kind: "typeAlias",
+      node: declaration,
+    };
+  }
+
   return null;
 }
 
+function getStringLiteralUnionValues(typeNode) {
+  if (!typeNode) return [];
+
+  if (Node.isLiteralTypeNode(typeNode)) {
+    const literal = typeNode.getLiteral();
+    return Node.isStringLiteral(literal) ? [literal.getLiteralText()] : [];
+  }
+
+  if (Node.isUnionTypeNode(typeNode)) {
+    return typeNode
+      .getTypeNodes()
+      .flatMap((part) => getStringLiteralUnionValues(part));
+  }
+
+  return [];
+}
+
+function getPropDocsFromHeritageClause(heritage, sourceFile) {
+  const expressionName = heritage.getExpression().getText();
+  const typeArguments = heritage.getTypeArguments();
+
+  if (["Omit", "Pick"].includes(expressionName) && typeArguments[0]) {
+    const sourceProps = getPropDocsFromTypeNode(
+      typeArguments[0],
+      sourceFile,
+      true,
+    );
+    const selectedNames = new Set(
+      getStringLiteralUnionValues(typeArguments[1]),
+    );
+
+    return expressionName === "Omit"
+      ? sourceProps.filter((prop) => !selectedNames.has(prop.name))
+      : sourceProps.filter((prop) => selectedNames.has(prop.name));
+  }
+
+  const localInterface = sourceFile.getInterface(expressionName);
+  if (localInterface) {
+    return getPropDocsFromInterface(localInterface, true);
+  }
+
+  const localTypeAlias = sourceFile.getTypeAlias(expressionName);
+  if (localTypeAlias) {
+    return getPropDocsFromTypeAlias(localTypeAlias, sourceFile, true);
+  }
+
+  const declaration = getProjectTypeDeclaration(
+    heritage.getExpression().getSymbol(),
+  );
+
+  if (declaration && Node.isInterfaceDeclaration(declaration)) {
+    return getPropDocsFromInterface(declaration, true);
+  }
+
+  if (declaration && Node.isTypeAliasDeclaration(declaration)) {
+    return getPropDocsFromTypeAlias(
+      declaration,
+      declaration.getSourceFile(),
+      true,
+    );
+  }
+
+  const projectProps = heritage
+    .getType()
+    .getProperties()
+    .map((property) =>
+      property
+        .getDeclarations()
+        .find(
+          (candidate) =>
+            isProjectSourceDeclaration(candidate) &&
+            Node.isPropertySignature(candidate),
+        ),
+    )
+    .filter(Boolean)
+    .map((member) => makePropDoc(member, true))
+    .filter(Boolean);
+
+  if (projectProps.length) return projectProps;
+
+  return [];
+}
+
 function getPropDocsFromInterface(iface, inherited = false) {
-  const props = [];
+  const sourceFile = iface.getSourceFile();
+  let props = [];
+
+  for (const heritage of iface.getExtends()) {
+    props = mergePropDocs(
+      props,
+      getPropDocsFromHeritageClause(heritage, sourceFile),
+    );
+  }
 
   for (const member of getPropertySignaturesFromInterfaceDeclaration(iface)) {
     const propDoc = makePropDoc(member, inherited);
-    if (propDoc) props.push(propDoc);
+    if (propDoc) props = mergePropDocs(props, [propDoc]);
   }
 
   return props.sort((a, b) => compareText(a.name, b.name));
@@ -628,14 +757,6 @@ function findBestPropsDeclaration(sourceFile, expectedPropsName) {
     return { kind: "typeAlias", node: caseInsensitiveTypeAlias };
   }
 
-  if (interfaces[0]) {
-    return { kind: "interface", node: interfaces[0] };
-  }
-
-  if (typeAliases[0]) {
-    return { kind: "typeAlias", node: typeAliases[0] };
-  }
-
   return null;
 }
 
@@ -686,11 +807,23 @@ function hasComponentWrapper(typesFilePath, componentName) {
 
   for (const searchDir of searchDirs) {
     try {
-      const match = fsSync
-        .readdirSync(searchDir)
-        .find((entry) => entry.toLowerCase() === expected);
+      const entries = fsSync.readdirSync(searchDir);
+      const match = entries.find((entry) => entry.toLowerCase() === expected);
 
       if (match) return true;
+
+      const escapedComponentName = componentName.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&",
+      );
+      const namedExportPattern = new RegExp(
+        `export\\s+(?:const|function|class)\\s+${escapedComponentName}\\b`,
+      );
+
+      for (const entry of entries.filter((name) => name.endsWith(".tsx"))) {
+        const contents = fsSync.readFileSync(path.join(searchDir, entry), "utf8");
+        if (namedExportPattern.test(contents)) return true;
+      }
     } catch {
       // Directory layouts differ by component; missing candidates are expected.
     }

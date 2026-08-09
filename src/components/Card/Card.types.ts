@@ -122,7 +122,7 @@ export interface ActionButton {
 
   /**
    * State of the action button.
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
 
@@ -201,7 +201,7 @@ export interface CardProps {
 
   /**
    * State of the card
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
 

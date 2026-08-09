@@ -168,7 +168,7 @@ export const pagerPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "Optional state of the component for feedback styling. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
+      "description": "Optional state of the component for feedback styling. One of: \"success\" | \"error\" | \"warning\" | \"info\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
       "category": "styling"

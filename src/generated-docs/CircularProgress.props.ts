@@ -133,7 +133,7 @@ export const circularProgressPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of progress ('success' | 'error' | 'warning' | 'disabled' | '').",
+      "description": "State of progress ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').",
       "required": false,
       "inherited": false,
       "category": "styling"

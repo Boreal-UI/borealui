@@ -60,7 +60,7 @@ export interface PagerProps {
   variant?: import("@/types/types").VariantType;
   /**
    * Optional state of the component for feedback styling.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

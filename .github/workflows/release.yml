@@ -1,0 +1,96 @@
+name: Release npm packages
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write
+  attestations: write
+
+jobs:
+  publish:
+    name: Verify, attest, and publish
+    if: github.event.release.prerelease == false
+    runs-on: ubuntu-latest
+    environment: npm
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          persist-credentials: false
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+
+      - name: Verify the release uses a signed annotated tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          tag_object=$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${RELEASE_TAG}" --jq '.object')
+          if [[ $(jq -r '.type' <<<"$tag_object") != "tag" ]]; then
+            echo "Release tag must be an annotated, signed tag." >&2
+            exit 1
+          fi
+          tag_sha=$(jq -r '.sha' <<<"$tag_object")
+          gh api "repos/${GITHUB_REPOSITORY}/git/tags/${tag_sha}" \
+            --jq 'if .verification.verified then empty else error("Release tag signature is not verified") end'
+
+      - run: npm ci --ignore-scripts
+      - run: npm run audit:dependencies
+      - run: npm run audit
+      - run: npm run stage:split-packages
+
+      - name: Verify package versions and registry availability
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          expected_version="${RELEASE_TAG#v}"
+          for package_dir in types core next docs cli; do
+            package_name=$(node -p "require('./packages/${package_dir}/package.json').name")
+            package_version=$(node -p "require('./packages/${package_dir}/package.json').version")
+            if [[ "$package_version" != "$expected_version" ]]; then
+              echo "${package_name} is ${package_version}; expected ${expected_version}." >&2
+              exit 1
+            fi
+            if npm view "${package_name}@${package_version}" version >/dev/null 2>&1; then
+              echo "${package_name}@${package_version} already exists on npm." >&2
+              exit 1
+            fi
+          done
+
+      - name: Create release tarballs and integrity checksums
+        run: |
+          npm pack ./packages/types
+          npm pack ./packages/core
+          npm pack ./packages/next
+          npm pack ./packages/docs
+          npm pack ./packages/cli
+          sha256sum ./*.tgz > SHA256SUMS
+
+      - uses: actions/attest@v4
+        with:
+          subject-path: "*.tgz"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: npm-release-artifacts
+          path: |
+            *.tgz
+            SHA256SUMS
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Publish packages with npm provenance
+        env:
+          NPM_CONFIG_PROVENANCE: "true"
+        run: |
+          npm publish ./packages/types --access public --provenance
+          npm publish ./packages/core --access public --provenance
+          npm publish ./packages/next --access public --provenance
+          npm publish ./packages/docs --access public --provenance
+          npm publish ./packages/cli --access public --provenance

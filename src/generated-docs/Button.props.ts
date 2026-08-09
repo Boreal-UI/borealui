@@ -286,7 +286,7 @@ export const buttonPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of the button ('success' | 'error' | 'warning' | 'disabled' | '').",
+      "description": "State of the button ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').",
       "required": false,
       "inherited": false,
       "category": "styling"

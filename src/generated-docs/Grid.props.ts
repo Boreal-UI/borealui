@@ -5,9 +5,9 @@
 
 import type { GeneratedComponentDoc } from "./types.js";
 
-export const layoutPrimitivePropDocs: GeneratedComponentDoc = {
-  "name": "LayoutPrimitive",
-  "interfaceName": "LayoutPrimitiveProps",
+export const gridPropDocs: GeneratedComponentDoc = {
+  "name": "Grid",
+  "interfaceName": "GridProps",
   "description": "",
   "sourcePath": "src/components/Layout/Layout.types.ts",
   "props": [
@@ -16,7 +16,7 @@ export const layoutPrimitivePropDocs: GeneratedComponentDoc = {
       "type": "LayoutAlign",
       "description": "Align prop for LayoutPrimitive.",
       "required": false,
-      "inherited": false,
+      "inherited": true,
       "category": "props"
     },
     {
@@ -24,7 +24,7 @@ export const layoutPrimitivePropDocs: GeneratedComponentDoc = {
       "type": "ElementType",
       "description": "As prop for LayoutPrimitive.",
       "required": false,
-      "inherited": false,
+      "inherited": true,
       "category": "props"
     },
     {
@@ -32,7 +32,7 @@ export const layoutPrimitivePropDocs: GeneratedComponentDoc = {
       "type": "ReactNode",
       "description": "Content rendered inside the component.",
       "required": false,
-      "inherited": false,
+      "inherited": true,
       "category": "props"
     },
     {
@@ -40,7 +40,7 @@ export const layoutPrimitivePropDocs: GeneratedComponentDoc = {
       "type": "string",
       "description": "Additional CSS class names for the component root.",
       "required": false,
-      "inherited": false,
+      "inherited": true,
       "category": "styling"
     },
     {
@@ -48,7 +48,7 @@ export const layoutPrimitivePropDocs: GeneratedComponentDoc = {
       "type": "string",
       "description": "Test id used to identify the component in tests.",
       "required": false,
-      "inherited": false,
+      "inherited": true,
       "category": "testing"
     },
     {
@@ -56,7 +56,7 @@ export const layoutPrimitivePropDocs: GeneratedComponentDoc = {
       "type": "LayoutGap",
       "description": "Gap.",
       "required": false,
-      "inherited": false,
+      "inherited": true,
       "category": "props",
       "defaultValue": "\"md\""
     },
@@ -65,15 +65,24 @@ export const layoutPrimitivePropDocs: GeneratedComponentDoc = {
       "type": "LayoutJustify",
       "description": "Justify prop for LayoutPrimitive.",
       "required": false,
-      "inherited": false,
+      "inherited": true,
       "category": "props"
+    },
+    {
+      "name": "minColumnWidth",
+      "type": "string",
+      "description": "Min Column Width.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"16rem\""
     },
     {
       "name": "testId",
       "type": "string",
       "description": "Test id used to identify the component in tests.",
       "required": false,
-      "inherited": false,
+      "inherited": true,
       "category": "props"
     }
   ]

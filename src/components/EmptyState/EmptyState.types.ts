@@ -53,7 +53,7 @@ export interface EmptyStateProps extends Omit<
   variant?: import("@/types/types").VariantType;
   /**
    * The EmptyState state
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
 

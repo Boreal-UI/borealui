@@ -33,7 +33,7 @@ export interface ProgressBarProps {
   variant?: import("@/types/types").VariantType;
   /**
    * State of the progress bar.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

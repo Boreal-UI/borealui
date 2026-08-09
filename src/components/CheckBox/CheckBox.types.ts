@@ -36,7 +36,7 @@ export interface CheckBoxProps extends Omit<
 
   /**
    * State of the checkbox
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
 

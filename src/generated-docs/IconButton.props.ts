@@ -231,6 +231,22 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "onKeyDown",
+      "type": "React.KeyboardEventHandler<Element>",
+      "description": "",
+      "required": false,
+      "inherited": true,
+      "category": "events"
+    },
+    {
+      "name": "onKeyUp",
+      "type": "React.KeyboardEventHandler<Element>",
+      "description": "",
+      "required": false,
+      "inherited": true,
+      "category": "events"
+    },
+    {
       "name": "rel",
       "type": "string",
       "description": "Optional rel attribute for link mode.",
@@ -275,7 +291,7 @@ export const iconButtonPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of the button. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
+      "description": "State of the button. One of: \"success\" | \"error\" | \"warning\" | \"info\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
       "category": "styling"

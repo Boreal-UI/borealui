@@ -106,7 +106,7 @@ export const spinnerPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "The state of the spinner. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
+      "description": "The state of the spinner. One of: \"success\" | \"error\" | \"warning\" | \"info\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
       "category": "styling"

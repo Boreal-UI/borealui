@@ -86,7 +86,7 @@ export interface SliderProps {
   variant?: import("@/types/types").VariantType;
   /**
    * State of the slider.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

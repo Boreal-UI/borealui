@@ -130,7 +130,7 @@ export const popOverPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of the popover, for feedback styling. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
+      "description": "State of the popover, for feedback styling. One of: \"success\" | \"error\" | \"warning\" | \"info\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
       "category": "styling"

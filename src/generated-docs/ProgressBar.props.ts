@@ -157,7 +157,7 @@ export const progressBarPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of the progress bar. One of: \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
+      "description": "State of the progress bar. One of: \"success\" | \"error\" | \"warning\" | \"info\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
       "category": "styling"

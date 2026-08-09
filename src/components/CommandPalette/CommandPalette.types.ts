@@ -89,7 +89,7 @@ export interface CommandPaletteProps
 
   /**
    * The state of the command palette
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
 

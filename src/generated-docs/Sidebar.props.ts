@@ -274,7 +274,7 @@ export const sidebarPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State variant for styling. Typically used to apply semantic states to the component. - \"success\" | \"error\" | \"warning\" | \"disabled\" | \"\"",
+      "description": "State variant for styling. Typically used to apply semantic states to the component. - \"success\" | \"error\" | \"warning\" | \"info\" | \"disabled\" | \"\"",
       "required": false,
       "inherited": false,
       "category": "styling"

@@ -85,7 +85,7 @@ export interface TabsProps {
   variant?: import("@/types/types").VariantType;
   /**
    * State of the tabs.
-   * "success" | "error" | "warning" | "disabled" | ""
+   * "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;

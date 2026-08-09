@@ -45,7 +45,7 @@ export interface IconButtonProps extends InteractiveProps {
 
   /**
    * State of the button.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    */
   state?: StateType;
 

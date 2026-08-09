@@ -91,7 +91,7 @@ export const dividerPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of the divider ('success' | 'error' | 'warning' | 'disabled' | '').",
+      "description": "State of the divider ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').",
       "required": false,
       "inherited": false,
       "category": "styling"

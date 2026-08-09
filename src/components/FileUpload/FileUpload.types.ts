@@ -61,7 +61,7 @@ export interface FileUploadProps
   variant?: import("@/types/types").VariantType;
   /**
    * The state of the file upload
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
 

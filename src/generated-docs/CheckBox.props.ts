@@ -229,7 +229,7 @@ export const checkBoxPropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "State of the checkbox ('success' | 'error' | 'warning' | 'disabled' | '').",
+      "description": "State of the checkbox ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').",
       "required": false,
       "inherited": false,
       "category": "styling"

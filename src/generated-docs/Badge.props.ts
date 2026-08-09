@@ -12,6 +12,46 @@ export const badgePropDocs: GeneratedComponentDoc = {
   "sourcePath": "src/components/Badge/Badge.types.ts",
   "props": [
     {
+      "name": "aria-atomic",
+      "type": "boolean",
+      "description": "Indicates whether the badge content is atomic when announced by screen readers.",
+      "required": false,
+      "inherited": true,
+      "category": "aria"
+    },
+    {
+      "name": "aria-describedby",
+      "type": "string",
+      "description": "References another element that describes this badge.",
+      "required": false,
+      "inherited": true,
+      "category": "aria"
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "description": "Accessible label for the badge. Useful when the badge content is icon-only or not descriptive enough.",
+      "required": false,
+      "inherited": true,
+      "category": "aria"
+    },
+    {
+      "name": "aria-labelledby",
+      "type": "string",
+      "description": "References another element that labels this badge.",
+      "required": false,
+      "inherited": true,
+      "category": "aria"
+    },
+    {
+      "name": "aria-live",
+      "type": "\"off\" | \"polite\" | \"assertive\"",
+      "description": "Announces dynamic badge updates to assistive technologies.",
+      "required": false,
+      "inherited": true,
+      "category": "aria"
+    },
+    {
       "name": "children",
       "type": "ReactNode",
       "description": "Optional custom badge content.",
@@ -77,6 +117,14 @@ export const badgePropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "role",
+      "type": "AriaRole",
+      "description": "Optional semantic role for the badge. Examples: \"status\", \"note\", \"button\", \"link\".",
+      "required": false,
+      "inherited": true,
+      "category": "aria"
+    },
+    {
       "name": "rounding",
       "type": "RoundingType",
       "description": "Rounding of the badge ('none' | 'small' | 'medium' | 'large' | 'full').",
@@ -105,10 +153,18 @@ export const badgePropDocs: GeneratedComponentDoc = {
     {
       "name": "state",
       "type": "StateType",
-      "description": "The badge state ('success' | 'error' | 'warning' | 'disabled' | '').",
+      "description": "The badge state ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').",
       "required": false,
       "inherited": false,
       "category": "styling"
+    },
+    {
+      "name": "tabIndex",
+      "type": "number",
+      "description": "Removes the badge from the tab order when needed.",
+      "required": false,
+      "inherited": true,
+      "category": "props"
     },
     {
       "name": "target",

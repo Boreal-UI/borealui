@@ -16,7 +16,7 @@ Use this package when you do not need Next.js-specific components or `next` peer
 Generated prop metadata is available separately from the optional
 `@boreal-ui/docs` package.
 
-TypeScript consumers should also install the shared declarations:
+Component declarations are included through this package. Install the shared declarations directly only when application code imports from `@boreal-ui/types`:
 
 ```sh
 npm install -D @boreal-ui/types

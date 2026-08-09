@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/cli",
-  "version": "0.1.422",
+  "version": "0.1.423",
   "readme": "README.md",
   "description": "Command-line setup assistant for adding Boreal UI to React and Next.js apps.",
   "keywords": [
