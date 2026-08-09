@@ -14,6 +14,7 @@ const externals = [
   "react/jsx-runtime",
   "react/jsx-dev-runtime",
   "marked",
+  "sanitize-html",
 ];
 
 const coreEntries = getEntryMap("./src/core") as Record<string, string>;

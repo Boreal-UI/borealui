@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { marked } from "marked";
+import sanitize from "sanitize-html";
 import { BaseMarkdownRendererProps } from "./MarkdownRenderer.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -7,70 +8,6 @@ import {
   getDefaultRounding,
   getDefaultShadow,
 } from "../../config/boreal-style-config";
-
-function safeSanitize(html: string): string {
-  const stripUnsafeAttributes = (value: string) =>
-    value
-      .replace(/\s+on[\w:-]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?/gi, "")
-      .replace(
-        /\s+(?:style|srcdoc)\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+)/gi,
-        "",
-      )
-      .replace(
-        /\s+(href|src|xlink:href|formaction)\s*=\s*(["']?)\s*(?:javascript|vbscript|data(?!:image\/(?:png|gif|jpeg|jpg|webp|avif))):[^"'\s>]*/gi,
-        "",
-      );
-
-  try {
-    if (
-      typeof window !== "undefined" &&
-      typeof window.DOMParser === "function"
-    ) {
-      const doc = new DOMParser().parseFromString(html, "text/html");
-      doc
-        .querySelectorAll("script, iframe, object, embed, link, meta, base")
-        .forEach((el) => el.remove());
-
-      doc.body.querySelectorAll<HTMLElement>("*").forEach((el) => {
-        [...el.attributes].forEach((attr) => {
-          const name = attr.name.toLowerCase();
-          const val = attr.value;
-          if (name.startsWith("on")) el.removeAttribute(attr.name);
-          if (name === "style" || name === "srcdoc") {
-            el.removeAttribute(attr.name);
-          }
-          if (
-            (name === "href" ||
-              name === "src" ||
-              name === "xlink:href" ||
-              name === "formaction") &&
-            /^\s*(?:javascript|vbscript|data(?!:image\/(?:png|gif|jpeg|jpg|webp|avif))):/i.test(
-              val,
-            )
-          ) {
-            el.removeAttribute(attr.name);
-          }
-        });
-      });
-
-      return doc.body.innerHTML;
-    }
-  } catch {
-    return "";
-  }
-
-  return html
-    .replace(/<!--[\s\S]*?-->/g, "")
-    .replace(
-      /<\s*(script|iframe|object|embed|meta|link|base)\b[^>]*>[\s\S]*?<\s*\/\s*\1\s*>/gi,
-      "",
-    )
-    .replace(
-      /<\s*\/?\s*(script|iframe|object|embed|meta|link|base)\b[^>]*>/gi,
-      "",
-    )
-    .replace(/<[^>]+>/g, (tag) => stripUnsafeAttributes(tag));
-}
 
 const escapeHtml = (s: string) =>
   s
@@ -158,6 +95,32 @@ const allowedHtmlTags = new Set([
 ]);
 
 const voidHtmlTags = new Set(["br", "hr", "img"]);
+
+const safeSanitize = (html: string): string =>
+  sanitize(html, {
+    allowedTags: [...allowedHtmlTags],
+    allowedAttributes: {
+      "*": ["id", "class", "title", "lang", "dir", "aria-*", "data-*"],
+      a: ["href", "target", "rel"],
+      blockquote: ["cite"],
+      del: ["cite", "datetime"],
+      details: ["open"],
+      img: ["src", "alt", "title", "width", "height", "loading", "decoding"],
+      ins: ["cite", "datetime"],
+      li: ["value"],
+      ol: ["start", "type", "reversed"],
+      td: ["colspan", "rowspan", "headers"],
+      th: ["colspan", "rowspan", "headers", "scope"],
+    },
+    allowedSchemes: ["http", "https", "mailto", "tel"],
+    allowedSchemesByTag: {
+      img: ["http", "https", "data"],
+    },
+    allowProtocolRelative: false,
+    disallowedTagsMode: "completelyDiscard",
+    enforceHtmlBoundary: true,
+    parseStyleAttributes: false,
+  });
 
 const getSafeElementProps = (element: Element) => {
   const props: Record<string, string | number | boolean> = {};
@@ -285,9 +248,10 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
       renderer,
     });
 
-    const sanitize = sanitizeHtml ?? safeSanitize;
-    return htmlToReactNodes(sanitize(raw), "markdown");
-  }, [content, renderer, sanitizeHtml]);
+    const preprocessed = sanitizeHtml ? sanitizeHtml(raw) : raw;
+    const sanitized = allowHtml ? safeSanitize(preprocessed) : preprocessed;
+    return htmlToReactNodes(sanitized, "markdown");
+  }, [allowHtml, content, renderer, sanitizeHtml]);
 
   const wrapperClass = useMemo(
     () =>
