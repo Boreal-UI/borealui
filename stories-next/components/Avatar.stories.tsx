@@ -19,14 +19,6 @@ import {
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
 
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-const stateOptions = ["success", "error", "warning"];
 const sizeOptions = [...["xs", "small", "medium", "large", "xl"]] as string[];
 const shapeOptions = [...["circle", "rounded", "square"]] as string[];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];

@@ -4,7 +4,6 @@ import {
   RoundingType,
   Select,
   ShadowType,
-  StateType,
   ThemeType,
 } from "../../src/index.next";
 import type { SelectProps } from "../../src/components/Select/Select.types";
@@ -18,16 +17,6 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
 const shadowOptions: ShadowType[] = [

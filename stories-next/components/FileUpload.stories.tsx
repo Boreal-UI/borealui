@@ -1,12 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import {
-  FileUpload,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "../../src/index.next";
+import { FileUpload, RoundingType, ShadowType } from "../../src/index.next";
 import type { FileUploadProps } from "../../src/components/FileUpload/FileUpload.types";
 import {
   renderThemeVariants,
@@ -16,16 +10,6 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
 const shadowOptions: ShadowType[] = [

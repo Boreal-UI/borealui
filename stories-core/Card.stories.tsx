@@ -12,7 +12,6 @@ import {
   roundingOptions,
   shadowOptions,
   sizeOptions,
-  stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import {

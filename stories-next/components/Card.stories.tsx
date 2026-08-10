@@ -5,8 +5,6 @@ import { FaInfoCircle, FaEdit, FaTrash } from "../../shared-story-assets/icons";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
 import testImageJpg from "../assets/test_pattern.jpg";
-import testImagePng from "../assets/test_pattern.png";
-import testImageSvg from "../assets/test_pattern.svg";
 import type { CardProps } from "../../src/components/Card/Card.types";
 import { StateType, ThemeType } from "../../src/types/types";
 import {
@@ -26,7 +24,6 @@ const themeOptions = [
   "clear",
 ];
 
-const stateOptions = ["success", "error", "warning"];
 const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
 const layoutOptions = ["vertical", "horizontal"] as const;
 const alignments: CardProps["align"][] = ["start", "center", "end"];

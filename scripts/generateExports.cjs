@@ -12,7 +12,10 @@ const preservedDirectExports = new Set([
 ]);
 
 for (const key of Object.keys(exportsMap)) {
-  if (/^\.\/(core|next)\/[^/]+$/.test(key) && !preservedDirectExports.has(key)) {
+  if (
+    /^\.\/(core|next)\/[^/]+$/.test(key) &&
+    !preservedDirectExports.has(key)
+  ) {
     delete exportsMap[key];
   }
 }
@@ -33,7 +36,7 @@ function buildExportEntry(type, name) {
   for (const candidate of typeCandidates) {
     const absPath = path.resolve(__dirname, candidate);
     if (fs.existsSync(absPath)) {
-      typesPath = candidate.replace(/\\/g, "/").replace("../", "./");
+      typesPath = candidate.replace(/\\/g, "/").replace(/\.\.\//g, "./");
       break;
     }
   }
@@ -56,9 +59,7 @@ function addExports(type) {
   fs.readdirSync(distDir)
     .filter((file) => {
       return (
-        file.endsWith(".js") &&
-        !file.startsWith("index") &&
-        !file.includes("-")
+        file.endsWith(".js") && !file.startsWith("index") && !file.includes("-")
       );
     })
     .forEach((file) => {

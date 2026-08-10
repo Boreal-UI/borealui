@@ -41,7 +41,10 @@ describe("prop aliases", () => {
   it("does not copy prototype pollution keys while expanding class maps", () => {
     const classMap = Object.create(null) as Record<string, string>;
     classMap.primary = "component_primary";
-    classMap.__proto__ = "polluted";
+    Object.defineProperty(classMap, "__proto__", {
+      value: null,
+      enumerable: true,
+    });
     classMap["constructor"] = "polluted";
     classMap.prototype = "polluted";
 

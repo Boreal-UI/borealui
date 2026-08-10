@@ -153,7 +153,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
     const horiz = resolvedOrientation === "horizontal";
     const { key } = event;
 
-    let newFocus = focusIndex;
+    let newFocus: number;
 
     if (horiz && key === "ArrowRight") {
       event.preventDefault();

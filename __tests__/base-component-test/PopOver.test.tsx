@@ -1,4 +1,3 @@
-import React from "react";
 import { act, render, screen, fireEvent } from "@testing-library/react";
 import BasePopOver from "@/components/PopOver/PopOverBase";
 import { axe, toHaveNoViolations } from "jest-axe";

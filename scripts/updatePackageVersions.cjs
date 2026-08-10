@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { updateFileSync } = require("./safeFileUpdates.cjs");
 
 const rootDir = path.resolve(__dirname, "..");
 const nextVersion = process.argv[2];
@@ -32,7 +33,7 @@ function readJson(filePath) {
 }
 
 function writeJson(filePath, value) {
-  fs.writeFileSync(filePath, `${JSON.stringify(value, null, 2)}\n`);
+  updateFileSync(filePath, () => `${JSON.stringify(value, null, 2)}\n`);
 }
 
 function updateInternalDependencyVersions(packageJson) {
@@ -108,17 +109,17 @@ function updateCliVersionConstant() {
     "constants.js",
   );
 
-  if (!fs.existsSync(constantsPath)) return false;
-
-  const source = fs.readFileSync(constantsPath, "utf8");
-  const nextSource = source.replace(
-    /export const VERSION = ".*?";/,
-    `export const VERSION = "${nextVersion}";`,
-  );
-
-  fs.writeFileSync(constantsPath, nextSource);
-
-  return nextSource !== source;
+  try {
+    return updateFileSync(constantsPath, (source) =>
+      source.replace(
+        /export const VERSION = ".*?";/,
+        `export const VERSION = "${nextVersion}";`,
+      ),
+    );
+  } catch (error) {
+    if (error?.code === "ENOENT") return false;
+    throw error;
+  }
 }
 
 assertVersion(nextVersion);
