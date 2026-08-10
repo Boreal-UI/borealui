@@ -5,8 +5,6 @@ import type { FileUploadProps } from "../src/components/FileUpload/FileUpload.ty
 import {
   roundingOptions,
   shadowOptions,
-  stateOptions,
-  themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import {
   renderThemeVariants,

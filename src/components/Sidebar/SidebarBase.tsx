@@ -262,7 +262,6 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                 aria-current={isActive ? "page" : undefined}
                 aria-label={linkAriaLabel}
                 aria-description={linkAriaDescription}
-                aria-disabled={linkAriaDisabled ? true : undefined}
                 data-testid={`${testId}-sidebarLink`}
               >
                 {icon && (

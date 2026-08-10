@@ -1,12 +1,11 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { Dropdown, RoundingType, ShadowType } from "../../src/index.next";
 import {
-  Dropdown,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "../../src/index.next";
-import { FaEllipsisV, FaUser, FaCog, FaSignOutAlt } from "../../shared-story-assets/icons";
+  FaEllipsisV,
+  FaUser,
+  FaCog,
+  FaSignOutAlt,
+} from "../../shared-story-assets/icons";
 import type { DropdownProps } from "../../src/components/Dropdown/Dropdown.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
 import {
@@ -18,13 +17,6 @@ import {
   renderThemeVariants,
 } from "../../shared-story-assets/VisualVariantStories";
 
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
 const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
 const shadowOptions: ShadowType[] = [
   "none",

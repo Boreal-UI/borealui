@@ -80,19 +80,27 @@ function ensureValidComponentName(name) {
 
 function writeFile(filePath, content, options) {
   const relativePath = path.relative(repoRoot, filePath);
-  if (fs.existsSync(filePath) && !options.force) {
-    throw new Error(
-      `${relativePath} already exists. Re-run with --force to overwrite it.`,
-    );
-  }
-
   if (options.dryRun) {
     console.log(`[create] ${relativePath}`);
     return;
   }
 
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  fs.writeFileSync(filePath, content, "utf8");
+  let fileDescriptor;
+  try {
+    fileDescriptor = fs.openSync(filePath, options.force ? "w" : "wx");
+    fs.writeFileSync(fileDescriptor, content, "utf8");
+  } catch (error) {
+    if (error?.code === "EEXIST") {
+      throw new Error(
+        `${relativePath} already exists. Re-run with --force to overwrite it.`,
+        { cause: error },
+      );
+    }
+    throw error;
+  } finally {
+    if (fileDescriptor !== undefined) fs.closeSync(fileDescriptor);
+  }
 }
 
 function updateTextFile(filePath, updater, options) {
@@ -1034,14 +1042,20 @@ export const Disabled: Story = {
 `;
 
   const storyNext = storyCore
-    .replace('@storybook/react-vite', '@storybook/nextjs-vite')
+    .replace("@storybook/react-vite", "@storybook/nextjs-vite")
     .replace(`from "../src/index.core"`, `from "../../src/index.next"`)
     .replace(
       `from "../src/components/${componentName}/${componentName}.types"`,
       `from "../../src/components/${componentName}/${componentName}.types"`,
     )
-    .replace(`from "../.storybook-core/helpers/StoryGrid"`, `from "../../.storybook-core/helpers/StoryGrid"`)
-    .replace(`from "../shared-story-assets/OptionTypes"`, `from "../../shared-story-assets/OptionTypes"`);
+    .replace(
+      `from "../.storybook-core/helpers/StoryGrid"`,
+      `from "../../.storybook-core/helpers/StoryGrid"`,
+    )
+    .replace(
+      `from "../shared-story-assets/OptionTypes"`,
+      `from "../../shared-story-assets/OptionTypes"`,
+    );
 
   return {
     types,
@@ -1090,8 +1104,14 @@ function main() {
       path.join(componentDir, "next", `${componentName}.module.scss`),
       templates.nextScss,
     ],
-    [path.join(repoRoot, "src", "core", `${componentName}.ts`), templates.coreEntry],
-    [path.join(repoRoot, "src", "next", `${componentName}.ts`), templates.nextEntry],
+    [
+      path.join(repoRoot, "src", "core", `${componentName}.ts`),
+      templates.coreEntry,
+    ],
+    [
+      path.join(repoRoot, "src", "next", `${componentName}.ts`),
+      templates.nextEntry,
+    ],
     [
       path.join(
         repoRoot,
@@ -1147,7 +1167,9 @@ function main() {
       ? `Dry run complete for ${componentName}.`
       : `Created ${componentName} scaffold.`,
   );
-  console.log("Run npm run generate:docs after adding component-specific props.");
+  console.log(
+    "Run npm run generate:docs after adding component-specific props.",
+  );
 }
 
 try {

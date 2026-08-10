@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BaseProgressBar from "@/components/ProgressBar/ProgressBarBase";

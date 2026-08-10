@@ -1,14 +1,13 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import {
-  RoundingType,
-  ShadowType,
-  Sidebar,
-  StateType,
-  ThemeType,
-} from "../../src/index.next";
+import { RoundingType, ShadowType, Sidebar } from "../../src/index.next";
 import { SidebarProps } from "../../src/components/Sidebar/Sidebar.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
-import { FaBook, FaCalendar, FaCogs, FaPaperclip } from "../../shared-story-assets/icons";
+import {
+  FaBook,
+  FaCalendar,
+  FaCogs,
+  FaPaperclip,
+} from "../../shared-story-assets/icons";
 import {
   renderThemeVariants,
   renderStateVariants,
@@ -17,15 +16,6 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
 const shadowOptions: ShadowType[] = [

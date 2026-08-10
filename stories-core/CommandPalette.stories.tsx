@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { CommandPalette } from "../src/index.core";
 import type { CommandPaletteProps } from "../src/components/CommandPalette/CommandPalette.types";

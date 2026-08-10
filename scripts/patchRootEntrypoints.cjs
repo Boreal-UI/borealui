@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { overwriteFileSync } = require("./safeFileUpdates.cjs");
 
 const rootDir = path.resolve(__dirname, "..");
 const isCheckMode = process.argv.includes("--check");
@@ -12,10 +13,7 @@ function createRootEntrypoint(flavor) {
   return source
     .replace(/^export \* from "\.\/types\/index";\n?/m, "")
     .replace(/^import "\.\/styles\/globals\.scss";\n?/m, "")
-    .replace(
-      new RegExp(`from "\\./${flavor}/([^\"]+)"`, "g"),
-      'from "./$1.js"',
-    )
+    .replace(new RegExp(`from "\\./${flavor}/([^\"]+)"`, "g"), 'from "./$1.js"')
     .trimEnd()
     .concat("\n");
 }
@@ -68,19 +66,34 @@ function validateRootEntrypoint(flavor, source, expectedSource) {
 
 function processFlavor(flavor) {
   const outputPath = path.join(rootDir, "dist", flavor, "index.js");
-  if (!fs.existsSync(outputPath)) {
-    throw new Error(`Missing ${outputPath}. Run the library build first.`);
-  }
-
   const expectedSource = createRootEntrypoint(flavor);
 
   if (!isCheckMode) {
-    fs.writeFileSync(outputPath, expectedSource, "utf8");
+    try {
+      overwriteFileSync(outputPath, expectedSource);
+    } catch (error) {
+      if (error?.code === "ENOENT") {
+        throw new Error(`Missing ${outputPath}. Run the library build first.`, {
+          cause: error,
+        });
+      }
+      throw error;
+    }
     console.log(`Patched root facade barrel: dist/${flavor}/index.js`);
     return [];
   }
 
-  const source = fs.readFileSync(outputPath, "utf8").replace(/\r\n/g, "\n");
+  let source;
+  try {
+    source = fs.readFileSync(outputPath, "utf8").replace(/\r\n/g, "\n");
+  } catch (error) {
+    if (error?.code === "ENOENT") {
+      throw new Error(`Missing ${outputPath}. Run the library build first.`, {
+        cause: error,
+      });
+    }
+    throw error;
+  }
   return validateRootEntrypoint(flavor, source, expectedSource);
 }
 

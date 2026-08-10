@@ -11,8 +11,6 @@ import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
 import {
   roundingOptions,
   shadowOptions,
-  stateOptions,
-  themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import {
   renderThemeVariants,

@@ -447,6 +447,25 @@ describe("ThemeProvider", () => {
     expect(document.documentElement.dataset.borealTheme).toBe("Ocean Breeze");
   });
 
+  it("escapes custom values embedded in the theme bootstrap script", () => {
+    const maliciousName = "</script><script>globalThis.injected=true</script>";
+    const script = getThemeInitializationScript({
+      customSchemes: [{ ...baseSchemes[1], name: maliciousName }],
+      initialSchemeName: maliciousName,
+      themeCookieName: "</script>",
+      useOnlyCustomSchemes: true,
+    });
+
+    expect(script.toLowerCase()).not.toContain("</script");
+
+    Function(script)();
+
+    expect(document.documentElement.dataset.borealTheme).toBe(maliciousName);
+    expect(
+      (globalThis as typeof globalThis & { injected?: boolean }).injected,
+    ).toBeUndefined();
+  });
+
   it("resolves server theme attributes from a cookie value", () => {
     const scheme = resolveThemeScheme("Ocean Breeze");
     const style = getThemeStyle(scheme);

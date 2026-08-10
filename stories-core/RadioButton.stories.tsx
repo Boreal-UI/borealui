@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { RadioButton, RadioGroup } from "../src/index.core";
 import type {

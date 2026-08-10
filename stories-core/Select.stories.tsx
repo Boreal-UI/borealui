@@ -6,8 +6,6 @@ import { withVariants } from "../.storybook-core/helpers/withVariants";
 import {
   roundingOptions,
   shadowOptions,
-  stateOptions,
-  themeOptions,
 } from "../shared-story-assets/OptionTypes";
 import {
   renderThemeVariants,

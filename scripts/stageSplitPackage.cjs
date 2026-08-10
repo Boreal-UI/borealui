@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { updateFileSync } = require("./safeFileUpdates.cjs");
 
 const rootDir = path.resolve(__dirname, "..");
 const rootPackage = JSON.parse(
@@ -21,9 +22,10 @@ function assertBuildExists(packageName) {
   if (packageName === "cli") return;
 
   const typesDist = path.join(rootDir, "dist", "types");
-  const runtimeDist = packageName === "types"
-    ? typesDist
-    : path.join(rootDir, "dist", packageName);
+  const runtimeDist =
+    packageName === "types"
+      ? typesDist
+      : path.join(rootDir, "dist", packageName);
 
   if (!fs.existsSync(runtimeDist) || !fs.existsSync(typesDist)) {
     throw new Error(
@@ -52,10 +54,7 @@ function copyFileIfExists(from, to) {
 }
 
 function writeEmptyRuntimeStub(packageDistDir) {
-  fs.writeFileSync(
-    path.join(packageDistDir, "empty.js"),
-    "export {};\n",
-  );
+  fs.writeFileSync(path.join(packageDistDir, "empty.js"), "export {};\n");
 }
 
 function readJson(filePath) {
@@ -81,16 +80,10 @@ function wait(milliseconds) {
 
 function writeJson(filePath, value) {
   const nextSource = `${JSON.stringify(value, null, 2)}\n`;
-  const currentSource = fs.existsSync(filePath)
-    ? fs.readFileSync(filePath, "utf8")
-    : undefined;
-
-  if (currentSource === nextSource) return false;
 
   for (let attempt = 0; ; attempt += 1) {
     try {
-      fs.writeFileSync(filePath, nextSource);
-      return true;
+      return updateFileSync(filePath, () => nextSource, { create: true });
     } catch (error) {
       const canRetry =
         error &&
@@ -237,12 +230,11 @@ function buildTypesExports() {
       });
 
       if (name.endsWith("/index")) {
-        exports[
-          `./${flavor}/${name.slice(0, -"/index".length)}`
-        ] = createExportTarget({
-          types: `./dist/types/${flavor}/${name}.d.ts`,
-          defaultPath: "./dist/empty.js",
-        });
+        exports[`./${flavor}/${name.slice(0, -"/index".length)}`] =
+          createExportTarget({
+            types: `./dist/types/${flavor}/${name}.d.ts`,
+            defaultPath: "./dist/empty.js",
+          });
       }
     }
   }
@@ -290,11 +282,17 @@ function stageTypesPackage() {
   removeDirectory(packageDistDir);
   fs.mkdirSync(packageDistDir, { recursive: true });
 
-  copyDirectory(path.join(rootDir, "dist", "types"), path.join(packageDistDir, "types"));
+  copyDirectory(
+    path.join(rootDir, "dist", "types"),
+    path.join(packageDistDir, "types"),
+  );
   removeDirectory(path.join(packageDistDir, "types", "docs"));
   removeDirectory(path.join(packageDistDir, "types", "generated-docs"));
   writeEmptyRuntimeStub(packageDistDir);
-  copyFileIfExists(path.join(rootDir, "LICENSE"), path.join(packageDir, "LICENSE"));
+  copyFileIfExists(
+    path.join(rootDir, "LICENSE"),
+    path.join(packageDir, "LICENSE"),
+  );
   syncPackageExports(packageDir, buildTypesExports());
 
   console.log("Staged @boreal-ui/types package output.");
@@ -323,7 +321,10 @@ function stageDocsPackage() {
     path.join(rootDir, "dist", "types", "generated-docs"),
     path.join(packageDistDir, "types", "generated-docs"),
   );
-  copyFileIfExists(path.join(rootDir, "LICENSE"), path.join(packageDir, "LICENSE"));
+  copyFileIfExists(
+    path.join(rootDir, "LICENSE"),
+    path.join(packageDir, "LICENSE"),
+  );
 
   console.log("Staged @boreal-ui/docs package output.");
 }
@@ -391,7 +392,10 @@ function stageRuntimePackage(flavor) {
   );
   stageRuntimeTypes(packageDistDir, flavor);
   writeEmptyRuntimeStub(packageDistDir);
-  copyFileIfExists(path.join(rootDir, "LICENSE"), path.join(packageDir, "LICENSE"));
+  copyFileIfExists(
+    path.join(rootDir, "LICENSE"),
+    path.join(packageDir, "LICENSE"),
+  );
   syncPackageExports(packageDir, buildRuntimeExports(flavor));
 
   console.log(`Staged @boreal-ui/${flavor} package output.`);
@@ -402,7 +406,10 @@ function stageCliPackage() {
 
   syncPackageVersion(packageDir);
   syncCliVersion();
-  copyFileIfExists(path.join(rootDir, "LICENSE"), path.join(packageDir, "LICENSE"));
+  copyFileIfExists(
+    path.join(rootDir, "LICENSE"),
+    path.join(packageDir, "LICENSE"),
+  );
 
   console.log("Staged @boreal-ui/cli package metadata.");
 }

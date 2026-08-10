@@ -111,11 +111,10 @@ const CardBase: React.FC<CardBaseProps> = ({
   );
 
   function isStaticCardImage(value: unknown): value is StaticCardImage {
+    if (value === null || typeof value !== "object") return false;
+
     return (
-      typeof value === "object" &&
-      value !== null &&
-      "src" in value &&
-      typeof (value as { src: unknown }).src === "string"
+      "src" in value && typeof (value as { src: unknown }).src === "string"
     );
   }
 

@@ -5,7 +5,6 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { ColorPicker } from "../src/index.core";
 import type { ColorPickerProps } from "../src/components/ColorPicker/ColorPicker.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
-import { ShadowType } from "../src/types/types";
 import { ShapeType } from "../src/components/ColorPicker/ColorPicker.types";
 import { shadowOptions, sizeOptions } from "../shared-story-assets/OptionTypes";
 

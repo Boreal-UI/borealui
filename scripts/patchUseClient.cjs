@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { updateFileSync } = require("./safeFileUpdates.cjs");
 
 const nextDistDir = path.resolve(__dirname, "../dist/next");
 const nonClientEntries = new Set([
@@ -21,23 +22,28 @@ function getFilesToPatch() {
 }
 
 function ensureUseClient(filePath) {
-  if (!fs.existsSync(filePath)) {
-    console.warn(`Skipped missing file: ${filePath}`);
-    return;
+  try {
+    const changed = updateFileSync(filePath, (content) => {
+      if (
+        content.startsWith('"use client";') ||
+        content.startsWith("'use client';")
+      ) {
+        return content;
+      }
+
+      return `"use client";\n${content}`;
+    });
+
+    console.log(
+      `${changed ? "Patched" : "Already patched"}: ${path.basename(filePath)}`,
+    );
+  } catch (error) {
+    if (error?.code === "ENOENT") {
+      console.warn(`Skipped missing file: ${filePath}`);
+      return;
+    }
+    throw error;
   }
-
-  const content = fs.readFileSync(filePath, "utf8");
-
-  if (
-    content.startsWith('"use client";') ||
-    content.startsWith("'use client';")
-  ) {
-    console.log(`Already patched: ${path.basename(filePath)}`);
-    return;
-  }
-
-  fs.writeFileSync(filePath, `"use client";\n${content}`, "utf8");
-  console.log(`Patched: ${path.basename(filePath)}`);
 }
 
 getFilesToPatch().forEach(ensureUseClient);

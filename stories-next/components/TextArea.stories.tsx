@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { FaCommentDots } from "../../shared-story-assets/icons";
-import { StateType, TextArea, ThemeType } from "../../src/index.next";
+import { TextArea } from "../../src/index.next";
 import type { TextAreaProps } from "../../src/components/TextArea/TextArea.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import {
@@ -13,16 +13,6 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
 
 const roundingOptions = ["none", "small", "medium", "large"];
 const shadowOptions = ["none", "light", "medium", "strong", "intense"];

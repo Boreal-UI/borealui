@@ -8,10 +8,7 @@ import {
   roundingOptions,
   sizeOptions,
 } from "../shared-story-assets/OptionTypes";
-import {
-  ComboBoxOption,
-  ComboBoxProps,
-} from "../src/components/ComboBox/ComboBox.types";
+import { ComboBoxProps } from "../src/components/ComboBox/ComboBox.types";
 import {
   renderThemeVariants,
   renderStateVariants,
