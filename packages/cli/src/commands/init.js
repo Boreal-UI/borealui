@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import {
   existsSync,
   mkdirSync,
@@ -76,10 +75,9 @@ export async function initCommand(rawOptions) {
 
   try {
     for (const change of plan) {
-      const changePath = resolveProjectPath(root, change.path);
+      const changePath = resolveSafeProjectWritePath(root, change.path);
 
       if (await shouldApplyChange(rl, change, options.yes)) {
-        mkdirSync(dirname(changePath), { recursive: true });
         writeFileSync(changePath, change.nextContents, "utf8");
         appliedCount += 1;
         console.log(`Updated ${relative(root, changePath) || basename(changePath)}`);
@@ -151,7 +149,54 @@ function resolveExistingProjectPath(root, filePath) {
     fail(`Refusing to read a file outside the project directory: ${resolvedPath}`);
   }
 
-  return resolvedPath;
+  return realPath;
+}
+
+function resolveSafeProjectWritePath(root, filePath) {
+  const realRoot = realpathSync(resolve(root));
+  const resolvedPath = resolveProjectPath(realRoot, filePath);
+
+  if (existsSync(resolvedPath)) {
+    const realPath = realpathSync(resolvedPath);
+
+    if (!isInsideProject(realRoot, realPath)) {
+      fail(`Refusing to write a file outside the project directory: ${resolvedPath}`);
+    }
+
+    return realPath;
+  }
+
+  const missingParents = [];
+  let existingParent = dirname(resolvedPath);
+
+  while (!existsSync(existingParent)) {
+    missingParents.unshift(basename(existingParent));
+    const nextParent = dirname(existingParent);
+
+    if (nextParent === existingParent) {
+      fail(`Could not resolve a safe project path: ${resolvedPath}`);
+    }
+
+    existingParent = nextParent;
+  }
+
+  let realParent = realpathSync(existingParent);
+
+  if (!isInsideProject(realRoot, realParent)) {
+    fail(`Refusing to write a file outside the project directory: ${resolvedPath}`);
+  }
+
+  for (const segment of missingParents) {
+    const nextParent = resolve(realParent, segment);
+    mkdirSync(nextParent);
+    realParent = realpathSync(nextParent);
+
+    if (!isInsideProject(realRoot, realParent)) {
+      fail(`Refusing to write a file outside the project directory: ${resolvedPath}`);
+    }
+  }
+
+  return resolve(realParent, basename(resolvedPath));
 }
 
 function projectFileExists(root, filePath) {
@@ -892,4 +937,5 @@ ${installWasRun ? "Dependencies installed.\n" : `Next step: run ${installCommand
 export const __testing = {
   createAgentsGuide,
   resolveProjectPath,
+  resolveSafeProjectWritePath,
 };

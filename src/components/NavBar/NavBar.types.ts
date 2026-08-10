@@ -133,7 +133,7 @@ export interface BaseNavBarProps extends NavBarProps {
    * Link Wrapper component dependency injected by the wrapper.
    */
   LinkWrapper: (props: {
-    href: string;
+    href?: string;
     target?: AnchorHTMLAttributes<HTMLAnchorElement>["target"];
     rel?: AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
     children: React.ReactNode;

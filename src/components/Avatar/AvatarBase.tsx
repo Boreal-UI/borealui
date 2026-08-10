@@ -10,6 +10,7 @@ import React, {
 import { AvatarBaseProps } from "./Avatar.types";
 import { getInitials } from "../../utils/getInitials";
 import { combineClassNames } from "../../utils/classNames";
+import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
 import { FallbackUserIcon } from "../../Icons/index";
 import {
   getDefaultVariant,
@@ -203,18 +204,19 @@ export const AvatarBase = forwardRef<
     onClick?.(e as MouseEvent<HTMLButtonElement | HTMLAnchorElement>);
   };
 
-  if (href) {
-    const isHttp = /^https?:\/\//i.test(href);
+  const safeHref = sanitizeNavigationHref(href);
+
+  if (safeHref) {
+    const isHttp = /^https?:\/\//i.test(safeHref);
     const target = disabled
       ? undefined
       : (targetProp ?? (isHttp ? "_blank" : undefined));
-    const rel =
-      relProp ?? (target === "_blank" ? "noopener noreferrer" : undefined);
+    const rel = mergeSafeRel(target, relProp);
 
     return LinkComponent === "a" ? (
       <a
         ref={ref as React.Ref<HTMLAnchorElement>}
-        href={disabled ? undefined : href}
+        href={disabled ? undefined : safeHref}
         className={combinedClassName}
         onClick={handleClick}
         data-testid={testId ? `${testId}-main` : undefined}
@@ -229,7 +231,7 @@ export const AvatarBase = forwardRef<
     ) : (
       <LinkComponent
         ref={ref}
-        href={href}
+        href={safeHref}
         className={combinedClassName}
         onClick={handleClick}
         data-testid={testId ? `${testId}-main` : undefined}

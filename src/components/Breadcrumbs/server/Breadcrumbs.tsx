@@ -1,6 +1,7 @@
 import { combineClassNames } from "@/utils/classNames";
 import { expandClassMap } from "@/utils/propAliases";
 import { capitalize } from "@/utils/capitalize";
+import { mergeSafeRel, sanitizeNavigationHref } from "@/utils/navigationSecurity";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -55,6 +56,7 @@ export default function Breadcrumbs({
         {items.map((item, index) => {
           const last = index === items.length - 1;
           const itemDisabled = disabled || item.disabled;
+          const safeHref = sanitizeNavigationHref(item.href);
           return (
             <li
               key={`${item.label}-${item.href ?? index}`}
@@ -64,16 +66,11 @@ export default function Breadcrumbs({
                 itemDisabled && classMap.disabled,
               )}
             >
-              {item.href && !last && !itemDisabled ? (
+              {safeHref && !last && !itemDisabled ? (
                 <a
-                  href={item.href}
+                  href={safeHref}
                   target={item.target}
-                  rel={
-                    item.rel ??
-                    (item.target === "_blank"
-                      ? "noopener noreferrer"
-                      : undefined)
-                  }
+                  rel={mergeSafeRel(item.target, item.rel)}
                   className={classMap.link}
                 >
                   <span className={classMap.link_label}>{item.label}</span>

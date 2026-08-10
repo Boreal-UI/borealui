@@ -12,6 +12,7 @@ import {
 } from "../../config/boreal-style-config";
 import { capitalize } from "@/utils/capitalize";
 import { resolvePropAlias } from "@/utils/propAliases";
+import { mergeSafeRel, sanitizeNavigationHref } from "@/utils/navigationSecurity";
 
 const slugify = (value: string) =>
   value.toLowerCase().trim().replace(/\s+/g, "-");
@@ -195,12 +196,13 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   ) => {
     const slug = slugify(link.label || link.href || `link-${index}`);
     const key = `${link.href ?? slug}-${index}`;
+    const safeHref = sanitizeNavigationHref(link.href);
     const resolvedLinkClassName = combineClassNames(
       classMap.link,
       customLinkClassName,
     );
 
-    if (link.disabled) {
+    if (link.disabled || !safeHref) {
       return (
         <li key={key}>
           <span
@@ -218,13 +220,13 @@ const FooterBase: React.FC<BaseFooterProps> = ({
     return (
       <li key={key}>
         <LinkWrapper
-          href={link.href}
+          href={safeHref}
           className={resolvedLinkClassName}
           data-testid={`${testId}-link-${slug}`}
           aria-label={link["aria-label"]}
           aria-current={link["aria-current"]}
           title={link.title}
-          rel={link.rel}
+          rel={mergeSafeRel(link.target, link.rel)}
           target={link.target}
         >
           {link.label}
@@ -291,6 +293,7 @@ const FooterBase: React.FC<BaseFooterProps> = ({
   };
 
   const renderBrand = () => {
+    const safeBrandHref = sanitizeNavigationHref(brandHref);
     const brandContent = (
       <>
         {renderLogo()}
@@ -314,18 +317,15 @@ const FooterBase: React.FC<BaseFooterProps> = ({
         className={combineClassNames(classMap.brand, brandClassName)}
         data-testid={`${testId}-brand`}
       >
-        {brandHref ? (
+        {safeBrandHref ? (
           <LinkWrapper
-            href={brandHref}
+            href={safeBrandHref}
             className={combineClassNames(
               classMap.brandLink,
               brandLinkClassName,
             )}
             target={brandTarget}
-            rel={
-              brandRel ??
-              (brandTarget === "_blank" ? "noopener noreferrer" : undefined)
-            }
+            rel={mergeSafeRel(brandTarget, brandRel)}
             aria-label={
               typeof brandTitle === "string" ? brandTitle : logoAriaLabel
             }

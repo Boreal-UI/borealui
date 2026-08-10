@@ -1,5 +1,6 @@
 import { HTMLAttributes } from "react";
 import { combineClassNames } from "@/utils/classNames";
+import { sanitizeNavigationHref } from "@/utils/navigationSecurity";
 import { capitalize } from "@/utils/capitalize";
 import { expandClassMap, resolvePropAlias } from "@/utils/propAliases";
 import {
@@ -192,8 +193,9 @@ export default function ValidationSummary({
             data-testid={`${testId}-list`}
           >
             {normalizedItems.map((item, index) => {
-              const href =
-                item.href ?? (item.fieldId ? `#${item.fieldId}` : undefined);
+              const href = sanitizeNavigationHref(
+                item.href ?? (item.fieldId ? `#${item.fieldId}` : undefined),
+              );
               return (
                 <li
                   key={item.id ?? item.fieldId ?? String(index)}

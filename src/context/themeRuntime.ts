@@ -1,6 +1,7 @@
 import { getDefaultColorSchemeName } from "../config/boreal-style-config";
 import { defaultColorSchemes } from "../styles/Themes";
 import { ColorScheme } from "@/types";
+import { assertSafeColorScheme } from "@/utils/colorSchemeSecurity";
 import type { CSSProperties } from "react";
 
 export const THEME_STORAGE_KEY = "boreal:selectedSchemeName";
@@ -46,6 +47,7 @@ export function mergeSchemes(
   const merged = [...baseSchemes];
 
   for (const scheme of customSchemes) {
+    assertSafeColorScheme(scheme);
     const index = merged.findIndex((s) => s.name === scheme.name);
 
     if (index >= 0) {
@@ -73,6 +75,7 @@ export function getAvailableSchemes({
   ThemeResolutionOptions,
   "customSchemes" | "useOnlyCustomSchemes"
 >): ColorScheme[] {
+  customSchemes.forEach(assertSafeColorScheme);
   return useOnlyCustomSchemes
     ? [...customSchemes]
     : mergeSchemes([...defaultColorSchemes], customSchemes);
@@ -377,6 +380,7 @@ function getAdaptiveBorderColor(
 }
 
 export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
+  assertSafeColorScheme(scheme);
   const {
     primaryColor,
     secondaryColor,
@@ -515,7 +519,7 @@ export function resolveThemeScheme(
 }
 
 export function getThemeStyle(scheme: ColorScheme): ThemeStyle {
-  return buildThemeVariables(scheme) as ThemeStyle;
+  return buildThemeVariables(scheme);
 }
 
 export function getThemeAttributes(scheme: ColorScheme): ThemeHtmlAttributes {

@@ -157,9 +157,7 @@ describe("DividerBase", () => {
     const divider = screen.getByTestId("divider");
 
     expect(divider).toHaveClass("dashed");
-    expect(divider).toHaveStyle({
-      backgroundColor: "transparent",
-    });
+    expect(divider.style.backgroundColor).toBe("transparent");
   });
 
   it("does not apply dashed class when dashed is false", () => {
@@ -236,8 +234,8 @@ describe("DividerBase", () => {
       margin: "0px",
       width: "100%",
       height: "0px",
-      borderTop: "1px solid currentColor",
     });
+    expect(divider.style.borderTop).toBe("1px solid currentcolor");
   });
 
   it("keeps native hr semantics for a non-decorative horizontal hr", () => {
@@ -282,8 +280,8 @@ describe("DividerBase", () => {
       margin: "0px",
       width: "0px",
       height: "48px",
-      borderLeft: "2px solid currentColor",
     });
+    expect(divider.style.borderLeft).toBe("2px solid currentcolor");
   });
 
   it("renders a dashed horizontal hr using borderTop", () => {
@@ -300,8 +298,8 @@ describe("DividerBase", () => {
     expect(divider).toHaveStyle({
       width: "75%",
       height: "0px",
-      borderTop: "3px dashed currentColor",
     });
+    expect(divider.style.borderTop).toBe("3px dashed currentcolor");
   });
 
   it("renders a dashed vertical hr using borderLeft", () => {
@@ -319,8 +317,8 @@ describe("DividerBase", () => {
     expect(divider).toHaveStyle({
       width: "0px",
       height: "80px",
-      borderLeft: "5px dashed currentColor",
     });
+    expect(divider.style.borderLeft).toBe("5px dashed currentcolor");
   });
 
   it("supports a custom test id", () => {
