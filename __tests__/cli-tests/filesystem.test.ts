@@ -49,11 +49,11 @@ describe("runCommand", () => {
       status: 1,
     } as ReturnType<typeof spawnSync>);
 
-    runCommand("pnpm", ["install"], "/tmp/demo", "Installed dependencies.");
+    runCommand("npm", ["install"], "/tmp/demo", "Installed dependencies.");
 
     expect(logSpy).not.toHaveBeenCalledWith("Installed dependencies.");
     expect(warnSpy).toHaveBeenCalledWith(
-      "Skipped: pnpm install did not complete successfully.",
+      "Skipped: npm install did not complete successfully.",
     );
   });
 
@@ -62,10 +62,24 @@ describe("runCommand", () => {
       status: 1,
     } as ReturnType<typeof spawnSync>);
 
-    runCommand("yarn", [], "/tmp/demo", "Installed dependencies.");
+    runCommand("npm", [], "/tmp/demo", "Installed dependencies.");
 
     expect(warnSpy).toHaveBeenCalledWith(
-      "Skipped: could not resolve a trusted yarn executable.",
+      "Skipped: npm did not complete successfully.",
+    );
+  });
+
+  it("warns when a trusted executable cannot be resolved", () => {
+    runCommand(
+      "boreal-command-that-does-not-exist",
+      ["install"],
+      "/tmp/demo",
+      "Installed dependencies.",
+    );
+
+    expect(mockedSpawnSync).not.toHaveBeenCalled();
+    expect(warnSpy).toHaveBeenCalledWith(
+      "Skipped: could not resolve a trusted boreal-command-that-does-not-exist executable.",
     );
   });
 });
