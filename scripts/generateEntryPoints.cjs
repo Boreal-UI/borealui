@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { updateFileSync } = require("./safeFileUpdates.cjs");
 
 const componentNames = {
   NavBar: "Navbar",
@@ -53,14 +54,14 @@ const serverEntries = [
 ];
 
 function writeFileIfChanged(filePath, content) {
-  const existing = fs.existsSync(filePath)
-    ? fs.readFileSync(filePath, "utf8")
-    : "";
   const normalize = (value) => value.replace(/\r\n/g, "\n");
 
-  if (normalize(existing) !== normalize(content)) {
-    fs.writeFileSync(filePath, content);
-  }
+  updateFileSync(
+    filePath,
+    (existing) =>
+      normalize(existing) === normalize(content) ? existing : content,
+    { create: true },
+  );
 }
 
 function writeEntrypoint({

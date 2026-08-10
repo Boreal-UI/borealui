@@ -1,5 +1,6 @@
 const fs = require("fs");
 const path = require("path");
+const { updateFileSync } = require("./safeFileUpdates.cjs");
 
 const rootDir = path.resolve(__dirname, "..");
 const isCheckMode = process.argv.includes("--check");
@@ -60,7 +61,9 @@ function patchFlavor(flavor) {
   const distDir = path.join(rootDir, "dist", flavor);
 
   if (!fs.existsSync(distDir)) {
-    throw new Error(`Missing ${flavor} dist output. Run the ${flavor} build first.`);
+    throw new Error(
+      `Missing ${flavor} dist output. Run the ${flavor} build first.`,
+    );
   }
 
   const missingImports = [];
@@ -70,22 +73,35 @@ function patchFlavor(flavor) {
     const jsPath = path.join(distDir, `${name}.js`);
     const cssPath = path.join(distDir, `${name}.css`);
 
-    if (!fs.existsSync(jsPath) || !fs.existsSync(cssPath)) continue;
+    if (!fs.existsSync(cssPath)) continue;
 
-    const source = fs.readFileSync(jsPath, "utf8");
+    try {
+      if (isCheckMode) {
+        const source = fs.readFileSync(jsPath, "utf8");
+        if (!hasCssImport(source, name)) {
+          missingImports.push(`${flavor}/${name}.js`);
+        }
+        continue;
+      }
 
-    if (hasCssImport(source, name)) continue;
+      const changed = updateFileSync(jsPath, (source) =>
+        hasCssImport(source, name) ? source : addCssImport(source, name),
+      );
 
-    missingImports.push(`${flavor}/${name}.js`);
-
-    if (!isCheckMode) {
-      fs.writeFileSync(jsPath, addCssImport(source, name), "utf8");
-      patchedFiles.push(`${flavor}/${name}.js`);
+      if (changed) {
+        missingImports.push(`${flavor}/${name}.js`);
+        patchedFiles.push(`${flavor}/${name}.js`);
+      }
+    } catch (error) {
+      if (error?.code === "ENOENT") continue;
+      throw error;
     }
   }
 
   if (patchedFiles.length > 0) {
-    console.log(`Patched ${patchedFiles.length} ${flavor} CSS sidecar imports.`);
+    console.log(
+      `Patched ${patchedFiles.length} ${flavor} CSS sidecar imports.`,
+    );
   }
 
   return missingImports;

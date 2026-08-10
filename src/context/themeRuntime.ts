@@ -525,6 +525,29 @@ export function getThemeAttributes(scheme: ColorScheme): ThemeHtmlAttributes {
   };
 }
 
+const inlineScriptCharacterEscapes: Record<string, string> = {
+  "<": "\\u003c",
+  ">": "\\u003e",
+  "/": "\\u002f",
+  "\u2028": "\\u2028",
+  "\u2029": "\\u2029",
+};
+
+function serializeForInlineScript(value: unknown): string {
+  const serialized = JSON.stringify(value);
+
+  if (serialized === undefined) {
+    throw new TypeError(
+      "Theme initialization values must be JSON serializable.",
+    );
+  }
+
+  return serialized.replace(
+    /[<>/\u2028\u2029]/g,
+    (character) => inlineScriptCharacterEscapes[character],
+  );
+}
+
 export function getThemeInitializationScript({
   customSchemes = [],
   initialSchemeName,
@@ -538,5 +561,5 @@ export function getThemeInitializationScript({
     variables: buildThemeVariables(scheme),
   }));
 
-  return `(function(){try{var s=${JSON.stringify(schemesWithVariables).replace(/</g, "\\u003c")};var k=${JSON.stringify(THEME_STORAGE_KEY)};var ck=${JSON.stringify(themeCookieName)};var initial=${JSON.stringify(initialSchemeName ?? null)};var fallback=${JSON.stringify(defaultSchemeName)};var saved=null;try{saved=localStorage.getItem(k)}catch(e){}var cv=null;try{var n=encodeURIComponent(ck)+"=";var c=(document.cookie||"").split(";").map(function(x){return x.trim()}).find(function(x){return x.indexOf(n)===0});if(c)cv=decodeURIComponent(c.slice(n.length))}catch(e){}var name=initial||saved||cv||fallback;var scheme=s.find(function(x){return x.name===name})||s.find(function(x){return x.name===fallback})||s[0];if(!scheme)return;var d=document.documentElement.style;Object.keys(scheme.variables).forEach(function(key){d.setProperty(key,scheme.variables[key])});document.documentElement.dataset.borealTheme=scheme.name}catch(e){}})();`;
+  return `(function(){try{var s=${serializeForInlineScript(schemesWithVariables)};var k=${serializeForInlineScript(THEME_STORAGE_KEY)};var ck=${serializeForInlineScript(themeCookieName)};var initial=${serializeForInlineScript(initialSchemeName ?? null)};var fallback=${serializeForInlineScript(defaultSchemeName)};var saved=null;try{saved=localStorage.getItem(k)}catch(e){}var cv=null;try{var n=encodeURIComponent(ck)+"=";var c=(document.cookie||"").split(";").map(function(x){return x.trim()}).find(function(x){return x.indexOf(n)===0});if(c)cv=decodeURIComponent(c.slice(n.length))}catch(e){}var name=initial||saved||cv||fallback;var scheme=s.find(function(x){return x.name===name})||s.find(function(x){return x.name===fallback})||s[0];if(!scheme)return;var d=document.documentElement.style;Object.keys(scheme.variables).forEach(function(key){d.setProperty(key,scheme.variables[key])});document.documentElement.dataset.borealTheme=scheme.name}catch(e){}})();`;
 }

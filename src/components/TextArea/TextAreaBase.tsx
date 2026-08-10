@@ -158,9 +158,7 @@ const TextAreaBase = forwardRef<
             id={id}
             placeholder={placeholder}
             aria-label={computedAriaLabel}
-            aria-labelledby={
-              ariaLabelledBy || (!ariaLabelledBy && label ? labelId : undefined)
-            }
+            aria-labelledby={ariaLabelledBy || (label ? labelId : undefined)}
             aria-describedby={describedByIds}
             aria-errormessage={errorMessageId}
             aria-invalid={isError || undefined}
