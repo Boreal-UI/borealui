@@ -6,7 +6,6 @@ import { PortalProps } from "../Portal.types";
 
 const classes = {
   root: "portal",
-  srOnly: "sr_only",
 };
 
 const Portal = forwardRef<HTMLDivElement, PortalProps>((props, ref) => (

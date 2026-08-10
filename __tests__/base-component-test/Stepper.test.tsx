@@ -19,7 +19,6 @@ const styles = {
   primary: "primary",
   secondary: "secondary",
   success: "success",
-  glass: "glass",
   medium: "medium",
   large: "large",
   step: "step",
@@ -29,6 +28,7 @@ const styles = {
   stepButton: "stepButton",
   stepLabel: "stepLabel",
   connector: "connector",
+  glass: "glass",
 };
 
 describe("StepperBase", () => {
@@ -375,7 +375,7 @@ describe("StepperBase", () => {
         orientation="vertical"
         theme="secondary"
         state="success"
-        glass
+        variant="glassOutline"
         size="large"
         className="customStepper"
         onStepClick={jest.fn()}
@@ -394,7 +394,7 @@ describe("StepperBase", () => {
   });
 
   it("applies active and completed classes to step buttons based on step state", () => {
-    render(<StepperBase {...defaultProps} glass />);
+    render(<StepperBase {...defaultProps} variant="glassOutline" />);
 
     expect(screen.getByTestId("stepper-step-0-icon")).toHaveClass(
       "stepButton",

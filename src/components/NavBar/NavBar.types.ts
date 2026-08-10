@@ -1,4 +1,4 @@
-import { RoundingType, ShadowType, ThemeType } from "@/types/types";
+import { ShadowType, ThemeType } from "@/types/types";
 import { AnchorHTMLAttributes, JSX } from "react";
 
 /**
@@ -33,21 +33,19 @@ export interface NavBarProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Adds translucent glass styling to nav items.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Optional rounding to apply to the NavBar.
    * One of: "none" | "small" | "medium" | "large" | "full"
    *
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Optional shadow to apply to the NavBar.
@@ -80,7 +78,6 @@ export interface NavBarProps {
 
   /** Additional class names for each label. */
   labelClassName?: string;
-
 
   /**
    * Optional test ID for testing frameworks.
@@ -122,7 +119,7 @@ export interface NavBarProps {
    *
    * @default "Main navigation items"
    */
-  "list-aria-label"?: string;
+  listAriaLabel?: string;
 
   /**
    * Optional callback to provide a custom accessible label for each nav item.

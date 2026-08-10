@@ -3,8 +3,7 @@ import { BaseMetricBoxProps } from "./MetricBox.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -19,11 +18,10 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
   subtext,
   loading = false,
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   shadow,
   rounding = getDefaultRounding(),
   state,
-  outline = getDefaultOutline(),
   align = "center",
   size = getDefaultSize(),
   className,
@@ -54,12 +52,15 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
     () =>
       combineClassNames(
         classMap.wrapper,
-        outline && classMap.outline,
+        (variant === "outline" || variant === "glassOutline") &&
+          classMap.outline,
         classMap[theme],
         state && classMap[state],
         classMap[size],
-        classMap[align],
-        glass && classMap.glass,
+        classMap[
+          align === "start" ? "left" : align === "end" ? "right" : align
+        ],
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         loading && classMap.loading,
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
@@ -71,9 +72,8 @@ const BaseMetricBox: React.FC<BaseMetricBoxProps> = ({
       state,
       size,
       align,
-      glass,
+      variant,
       loading,
-      outline,
       shadow,
       rounding,
       className,

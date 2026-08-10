@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/types",
-  "version": "0.1.421",
+  "version": "0.1.423",
   "readme": "README.md",
   "description": "Shared TypeScript declarations for Boreal UI core and Next.js packages.",
   "keywords": [
@@ -146,10 +146,6 @@
     },
     "./core/Divider": {
       "types": "./dist/types/core/Divider.d.ts",
-      "default": "./dist/empty.js"
-    },
-    "./core/docs": {
-      "types": "./dist/types/core/docs.d.ts",
       "default": "./dist/empty.js"
     },
     "./core/DonutChart": {
@@ -482,10 +478,6 @@
     },
     "./next/Divider": {
       "types": "./dist/types/next/Divider.d.ts",
-      "default": "./dist/empty.js"
-    },
-    "./next/docs": {
-      "types": "./dist/types/next/docs.d.ts",
       "default": "./dist/empty.js"
     },
     "./next/DonutChart": {

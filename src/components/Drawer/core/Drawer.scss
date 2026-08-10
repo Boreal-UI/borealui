@@ -52,6 +52,8 @@
     border: 0;
     background: var(--drawer-overlay-bg, rgb(0 0 0 / 45%));
     cursor: pointer;
+    opacity: 0;
+    transition: opacity var(--motion-exit, 160ms cubic-bezier(0.23, 1, 0.32, 1));
   }
 
   .drawer_panel {
@@ -67,6 +69,10 @@
     color: var(--text-color);
     font-family: var(--font-family-ui);
     box-shadow: var(--shadow-md, none);
+    opacity: 0.98;
+    transition:
+      transform var(--motion-exit, 160ms cubic-bezier(0.23, 1, 0.32, 1)),
+      opacity var(--motion-exit, 160ms cubic-bezier(0.23, 1, 0.32, 1));
   }
 
   @each $placement, $config in $drawer-placements {
@@ -84,29 +90,33 @@
     max-height: var(--drawer-sheet-max-height, min(80vh, 36rem));
   }
 
+  .drawer_right .drawer_panel {
+    transform: translateX(100%);
+  }
+
+  .drawer_left .drawer_panel {
+    transform: translateX(-100%);
+  }
+
+  .drawer_top .drawer_panel {
+    transform: translateY(-100%);
+  }
+
+  .drawer_bottom .drawer_panel {
+    transform: translateY(100%);
+  }
+
   .drawer_open .drawer_overlay {
-    animation: drawer-overlay-fade-in var(--drawer-animation-duration, 220ms)
-      var(--drawer-animation-easing, ease-out) both;
+    opacity: 1;
+    transition-duration: var(--drawer-overlay-animation-duration, 220ms);
   }
 
-  .drawer_open.drawer_right .drawer_panel {
-    animation: drawer-slide-in-right var(--drawer-animation-duration, 260ms)
-      var(--drawer-animation-easing, cubic-bezier(0.22, 1, 0.36, 1)) both;
-  }
-
-  .drawer_open.drawer_left .drawer_panel {
-    animation: drawer-slide-in-left var(--drawer-animation-duration, 260ms)
-      var(--drawer-animation-easing, cubic-bezier(0.22, 1, 0.36, 1)) both;
-  }
-
-  .drawer_open.drawer_top .drawer_panel {
-    animation: drawer-slide-in-top var(--drawer-animation-duration, 260ms)
-      var(--drawer-animation-easing, cubic-bezier(0.22, 1, 0.36, 1)) both;
-  }
-
-  .drawer_open.drawer_bottom .drawer_panel {
-    animation: drawer-slide-in-bottom var(--drawer-animation-duration, 260ms)
-      var(--drawer-animation-easing, cubic-bezier(0.22, 1, 0.36, 1)) both;
+  .drawer_open .drawer_panel {
+    opacity: 1;
+    transform: translate(0);
+    transition:
+      transform var(--drawer-animation-duration, var(--motion-drawer, 260ms cubic-bezier(0.32, 0.72, 0, 1))),
+      opacity var(--drawer-animation-duration, var(--motion-drawer, 260ms cubic-bezier(0.32, 0.72, 0, 1)));
   }
 
   .drawer_header,
@@ -309,6 +319,8 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .drawer_overlay,
+    .drawer_panel,
     .drawer_close_button {
       transition: none;
     }

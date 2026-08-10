@@ -53,7 +53,10 @@ export interface TypographyProps {
    *
    * @default "body"
    */
-  variant?: TypographyVariant;
+  textStyle?: TypographyVariant;
+
+  /** Common surface treatment. */
+  variant?: import("@/types/types").VariantType;
 
   /**
    * The HTML element or custom component to render as.
@@ -81,14 +84,6 @@ export interface TypographyProps {
    * @default "inherit"
    */
   theme?: TypographyTheme;
-
-  /**
-   * Applies a compact translucent frosted-glass treatment around the text.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
   /**
    * Whether the text should be displayed in italic style.
    *

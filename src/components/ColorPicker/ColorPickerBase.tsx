@@ -10,8 +10,8 @@ import {
 const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
   label = "Choose a color",
   colors,
-  selected,
-  onChange,
+  value,
+  onValueChange,
   name = "color-picker",
   disabled = false,
   size = getDefaultSize(),
@@ -21,7 +21,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
   required = false,
   invalid = false,
   helperText,
-  errorText,
+  errorMessage,
   customInputAriaLabel = "Custom color picker",
   hideLabel = false,
   className,
@@ -34,7 +34,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
 }) => {
   const legendId = `${testId}-legend`;
   const helperTextId = helperText ? `${testId}-helper-text` : undefined;
-  const errorTextId = errorText ? `${testId}-error-text` : undefined;
+  const errorTextId = errorMessage ? `${testId}-errorMessage-text` : undefined;
 
   const describedBy =
     [ariaDescribedBy, helperTextId, invalid ? errorTextId : undefined]
@@ -81,7 +81,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
         {colors.map((color, i) => {
           const id = `${testId}-color-${i}`;
           const optionLabelId = `${id}-label`;
-          const isSelected = selected === color.value;
+          const isSelected = value === color.value;
           const optionDisabled = disabled || color.disabled;
 
           return (
@@ -101,7 +101,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
                 id={id}
                 value={color.value}
                 checked={isSelected}
-                onChange={() => onChange(color.value)}
+                onChange={() => onValueChange(color.value)}
                 className={classMap.radio_input}
                 disabled={optionDisabled}
                 required={required}
@@ -117,7 +117,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
                 className={combineClassNames(
                   classMap.preview,
                   classMap[shape],
-                  isSelected && classMap.selected,
+                  isSelected && classMap.value,
                   optionDisabled && classMap.disabled,
                   shadow && classMap[`shadow${capitalize(shadow)}`],
                 )}
@@ -139,14 +139,14 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
         </div>
       )}
 
-      {invalid && errorText && (
+      {invalid && errorMessage && (
         <div
           id={errorTextId}
           className={classMap.error_text}
-          data-testid={`${testId}-error-text`}
+          data-testid={`${testId}-errorMessage-text`}
           aria-live="polite"
         >
-          {errorText}
+          {errorMessage}
         </div>
       )}
 
@@ -154,8 +154,8 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
         <input
           type="color"
           className={classMap.custom_input}
-          value={selected}
-          onChange={(e) => onChange(e.target.value)}
+          value={value}
+          onChange={(event) => onValueChange(event.target.value)}
           aria-label={customInputAriaLabel}
           aria-describedby={describedBy}
           aria-invalid={invalid || undefined}

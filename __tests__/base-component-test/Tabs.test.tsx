@@ -14,11 +14,11 @@ const mockStyles = {
   disabled: "disabled",
   content: "content",
   primary: "primary",
-  glass: "glass",
   medium: "medium",
   icon: "icon",
   shadowLight: "shadowLight",
   roundMedium: "roundMedium",
+  glass: "glass",
 };
 
 const tabsMock = [
@@ -58,12 +58,12 @@ describe("TabsBase", () => {
     expect(tab3).toHaveAttribute("tabindex", "-1");
   });
 
-  it("uses defaultIndex for uncontrolled initial selection", () => {
+  it("uses defaultValue for uncontrolled initial selection", () => {
     render(
       <TabsBase
         tabs={tabsMock}
         classMap={mockStyles}
-        defaultIndex={2}
+        defaultValue={2}
         data-testid="tabs"
       />,
     );
@@ -90,14 +90,14 @@ describe("TabsBase", () => {
     expect(tab2).toHaveFocus();
   });
 
-  it("calls onChange with the clicked tab index", () => {
+  it("calls onValueChange with the clicked tab index", () => {
     const handleChange = jest.fn();
 
     render(
       <TabsBase
         tabs={tabsMock}
         classMap={mockStyles}
-        onChange={handleChange}
+        onValueChange={handleChange}
         data-testid="tabs"
       />,
     );
@@ -116,7 +116,7 @@ describe("TabsBase", () => {
         tabs={tabsMock}
         classMap={mockStyles}
         value={0}
-        onChange={handleChange}
+        onValueChange={handleChange}
         data-testid="tabs"
       />,
     );
@@ -138,7 +138,7 @@ describe("TabsBase", () => {
         tabs={tabsMock}
         classMap={mockStyles}
         value={2}
-        onChange={handleChange}
+        onValueChange={handleChange}
         data-testid="tabs"
       />,
     );
@@ -176,7 +176,7 @@ describe("TabsBase", () => {
         tabs={tabsMock}
         classMap={mockStyles}
         theme="primary"
-        glass
+        variant="glassOutline"
         size="medium"
         rounding="medium"
         shadow="light"
@@ -250,7 +250,7 @@ describe("TabsBase", () => {
       <TabsBase
         tabs={tabsMock}
         classMap={mockStyles}
-        defaultIndex={1}
+        defaultValue={1}
         data-testid="tabs"
       />,
     );
@@ -351,7 +351,7 @@ describe("TabsBase", () => {
       <TabsBase
         tabs={disabledTabs}
         classMap={mockStyles}
-        onChange={handleChange}
+        onValueChange={handleChange}
         data-testid="tabs"
       />,
     );

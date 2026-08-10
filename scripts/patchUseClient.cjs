@@ -4,7 +4,6 @@ const path = require("path");
 const nextDistDir = path.resolve(__dirname, "../dist/next");
 const nonClientEntries = new Set([
   "colorSchemes.js",
-  "docs.js",
   "globals.js",
   "registerColorScheme.js",
   "registerColorSheme.js",
@@ -16,7 +15,6 @@ function getFilesToPatch() {
   return fs
     .readdirSync(nextDistDir)
     .filter((file) => file.endsWith(".js"))
-    .filter((file) => !file.endsWith(".cjs.js"))
     .filter((file) => !file.includes("-"))
     .filter((file) => !nonClientEntries.has(file))
     .map((file) => path.join(nextDistDir, file));

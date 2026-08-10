@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { FaCommentDots, FaInbox } from "react-icons/fa";
+import { FaCommentDots, FaInbox } from "../../shared-story-assets/icons";
 import { StateType, TextArea, ThemeType } from "../../src/index.next";
 import type { TextAreaProps } from "../../src/components/TextArea/TextArea.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -41,6 +42,15 @@ const meta: Meta<TextAreaProps> = {
 
 export default meta;
 type Story = StoryObj<TextAreaProps>;
+
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: TextArea,
+      args: { label: "Notes" },
+      labelProp: "label",
+    }),
+};
 
 export const Default: Story = {
   render: (args) => {

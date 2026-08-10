@@ -14,7 +14,7 @@ import { BaseMenuProps, MenuItem, MenuPosition } from "./Menu.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -58,7 +58,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
   closeOnSelect = true,
   focusFirstItemOnOpen = true,
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   rounding = getDefaultRounding(),
   shadow,
   state,
@@ -249,7 +249,8 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
 
     setPanelLayouts(nextLayouts);
   }, [isOpen, resolvedPosition.x, resolvedPosition.y]);
-  const schedulePanelLayoutUpdate = useAnimationFrameCallback(updatePanelLayouts);
+  const schedulePanelLayoutUpdate =
+    useAnimationFrameCallback(updatePanelLayouts);
 
   useLayoutEffect(() => {
     if (!isOpen) return;
@@ -317,7 +318,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
         classMap.menu,
         classMap[theme],
         state && classMap[state],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         menuClassName,
@@ -325,7 +326,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       ),
     [
       classMap,
-      glass,
+      variant,
       menuClassName,
       menuProps?.className,
       rounding,
@@ -342,7 +343,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       isSubmenuOpen && classMap.submenuOpen,
       classMap[theme],
       state && classMap[state],
-      glass && classMap.glass,
+      (variant === "glass" || variant === "glassOutline") && classMap.glass,
       getShadowClassName(classMap, theme, shadow),
       rounding && classMap[`round${capitalize(rounding)}`],
     );
@@ -386,9 +387,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
   };
 
   const handleTriggerClick = (event: MouseEvent<HTMLElement>) => {
-    triggerProps?.onClick?.(
-      event as unknown as MouseEvent<HTMLButtonElement>,
-    );
+    triggerProps?.onClick?.(event as unknown as MouseEvent<HTMLButtonElement>);
     if (event.defaultPrevented) return;
 
     event.stopPropagation();
@@ -413,8 +412,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       if (typeof triggerElementRef === "function") {
         triggerElementRef(node);
       } else if (triggerElementRef && "current" in triggerElementRef) {
-        (triggerElementRef as React.MutableRefObject<HTMLElement | null>).current =
-          node;
+        (
+          triggerElementRef as React.MutableRefObject<HTMLElement | null>
+        ).current = node;
       }
     },
     [hasCustomTriggerContent, trigger],
@@ -426,9 +426,9 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
     if (hasCustomTriggerContent) {
       const triggerElement = trigger as React.ReactElement<
         {
-        className?: string;
-        onClick?: (event: MouseEvent<HTMLElement>) => void;
-        ref?: React.Ref<HTMLElement>;
+          className?: string;
+          onClick?: (event: MouseEvent<HTMLElement>) => void;
+          ref?: React.Ref<HTMLElement>;
         } & Record<string, unknown>
       >;
 
@@ -873,13 +873,13 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       {renderTrigger()}
 
       {children && (
-          <div
-            ref={targetRef}
-            className={combineClassNames(classMap.target, targetClassName)}
-            role={activation === "manual" ? undefined : "button"}
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
-            tabIndex={activation === "manual" ? undefined : 0}
-            data-testid={`${testId}-target`}
+        <div
+          ref={targetRef}
+          className={combineClassNames(classMap.target, targetClassName)}
+          role={activation === "manual" ? undefined : "button"}
+          // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+          tabIndex={activation === "manual" ? undefined : 0}
+          data-testid={`${testId}-target`}
         >
           {children}
         </div>

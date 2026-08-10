@@ -3,9 +3,13 @@ import { ElementType, HTMLAttributes, ReactNode } from "react";
 export type LayoutGap = "none" | "xs" | "sm" | "md" | "lg" | "xl";
 export type LayoutAlign = "start" | "center" | "end" | "stretch";
 export type LayoutJustify = "start" | "center" | "end" | "between";
+export type BentoBoxColumns = 1 | 2 | 3 | 4 | 5 | 6;
+export type BentoBoxColumnSpan = BentoBoxColumns | "full";
 
-export interface LayoutPrimitiveProps
-  extends Omit<HTMLAttributes<HTMLElement>, "as"> {
+export interface LayoutPrimitiveProps extends Omit<
+  HTMLAttributes<HTMLElement>,
+  "as"
+> {
   /**
    * As prop for LayoutPrimitive.
    */
@@ -72,6 +76,31 @@ export interface GridProps extends LayoutPrimitiveProps {
   minColumnWidth?: string;
 }
 
+export interface BentoBoxProps extends LayoutPrimitiveProps {
+  /** Number of columns at wide container sizes. @default 4 */
+  columns?: BentoBoxColumns;
+  /** Minimum height used by each implicit grid row. @default "8rem" */
+  minRowHeight?: string;
+  /**
+   * Backfills open cells when possible. Keep this off when visual order must
+   * match reading and focus order.
+   * @default false
+   */
+  dense?: boolean;
+  /** Additional class name for the internal grid. */
+  gridClassName?: string;
+}
+
+export interface BentoBoxItemProps extends Omit<
+  LayoutPrimitiveProps,
+  "gap" | "align" | "justify"
+> {
+  /** Number of columns occupied at wide container sizes. @default 1 */
+  columnSpan?: BentoBoxColumnSpan;
+  /** Number of rows occupied at wide container sizes. @default 1 */
+  rowSpan?: BentoBoxColumns;
+}
+
 export interface SectionProps extends LayoutPrimitiveProps {
   /**
    * Padded prop for Section.
@@ -88,7 +117,14 @@ export interface LayoutBaseProps extends LayoutPrimitiveProps {
   /**
    * Visual variant applied to the component.
    */
-  variant: "container" | "stack" | "inline" | "grid" | "section";
+  variant:
+    | "container"
+    | "stack"
+    | "inline"
+    | "grid"
+    | "bentoBox"
+    | "bentoBoxItem"
+    | "section";
   /**
    * Framework-specific class name map supplied by the core or Next wrapper.
    */
@@ -109,6 +145,18 @@ export interface LayoutBaseProps extends LayoutPrimitiveProps {
    * Min Column Width prop for Layout.
    */
   minColumnWidth?: string;
+  /** Number of columns used by a BentoBox. */
+  columns?: BentoBoxColumns;
+  /** Minimum height used by BentoBox rows. */
+  minRowHeight?: string;
+  /** Enables dense BentoBox placement. */
+  dense?: boolean;
+  /** Additional class name for the BentoBox grid. */
+  gridClassName?: string;
+  /** Column span used by a BentoBoxItem. */
+  columnSpan?: BentoBoxColumnSpan;
+  /** Row span used by a BentoBoxItem. */
+  rowSpan?: BentoBoxColumns;
   /**
    * Tone prop for Layout.
    */

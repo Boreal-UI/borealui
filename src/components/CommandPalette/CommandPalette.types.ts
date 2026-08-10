@@ -65,15 +65,12 @@ export interface CommandPaletteProps
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * If true, applies a translucent glass surface using the selected theme/state.
-   * Defaults to `false`.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding style for the palette
    * ('none' | 'small' | 'medium' | 'large' | 'full').
@@ -92,12 +89,12 @@ export interface CommandPaletteProps
 
   /**
    * The state of the command palette
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
 
   /** Whether the command palette is currently open. */
-  isOpen: boolean;
+  open: boolean;
 
   /** Callback to close the command palette. */
   onClose: () => void;

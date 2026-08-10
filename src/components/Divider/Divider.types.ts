@@ -1,5 +1,5 @@
+import { OrientationType, StateType, ThemeType } from "@/types/types";
 import React from "react";
-import { ThemeType, OrientationType, StateType } from "@/types/types";
 
 /**
  * Props for the Divider component.
@@ -49,17 +49,15 @@ export interface DividerProps extends Omit<
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the divider
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
 
@@ -92,7 +90,6 @@ export interface DividerProps extends Omit<
    * Only used when decorative is false.
    */
   labelledBy?: string;
-
 
   /**
    * Optional test ID for testing frameworks.

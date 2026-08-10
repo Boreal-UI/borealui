@@ -25,9 +25,6 @@ const classMap = {
   medium: "medium",
   large: "large",
   xl: "xl",
-
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   clickable: "clickable",
   badge_icon: "badge_icon",
@@ -43,6 +40,8 @@ const classMap = {
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
   roundFull: "roundFull",
+  glass: "glass",
+  outline: "outline",
 };
 
 describe("BadgeBase", () => {
@@ -278,8 +277,7 @@ describe("BadgeBase", () => {
         size: "medium",
         shadow: "light",
         rounding: "small",
-        outline: true,
-        glass: true,
+        variant: "glassOutline",
         className: "custom-badge-class",
       },
       "Styled Badge",

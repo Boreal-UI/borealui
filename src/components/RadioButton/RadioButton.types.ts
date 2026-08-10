@@ -1,4 +1,4 @@
-import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
+import { ShadowType, StateType, ThemeType } from "@/types/types";
 import { FieldsetHTMLAttributes, InputHTMLAttributes, ReactNode } from "react";
 
 export type RadioButtonOption = {
@@ -65,17 +65,15 @@ export interface RadioButtonProps extends Omit<
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Applies a translucent frosted-glass treatment to the visible radio control.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the radio button.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;
@@ -86,7 +84,7 @@ export interface RadioButtonProps extends Omit<
    *
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Shadow style of the radio button.
@@ -135,7 +133,6 @@ export interface RadioButtonProps extends Omit<
    */
   className?: string;
 
-
   /**
    * Optional test ID for testing frameworks.
    *
@@ -145,6 +142,9 @@ export interface RadioButtonProps extends Omit<
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+  invalid?: boolean;
+  helperText?: import("react").ReactNode;
+  errorMessage?: import("react").ReactNode;
 }
 
 export interface BaseRadioButtonProps extends RadioButtonProps {
@@ -152,6 +152,7 @@ export interface BaseRadioButtonProps extends RadioButtonProps {
    * Framework-specific class name map supplied by the core or Next wrapper.
    */
   classMap: Record<string, string>;
+  invalid?: boolean;
 }
 
 export interface RadioGroupProps extends Omit<
@@ -178,15 +179,17 @@ export interface RadioGroupProps extends Omit<
 
   /** Theme applied for styling. */
   theme?: ThemeType;
-
-  /** Applies a translucent frosted-glass treatment to each radio option. */
-  glass?: boolean;
-
+  /**
+   * Surface treatment; glassOutline combines glass and outline.
+   *
+   * @default configured default variant (fallback: "solid")
+   */
+  variant?: import("@/types/types").VariantType;
   /** State of the radio group. */
   state?: StateType;
 
   /** Rounding of each radio control. */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /** Shadow style of each radio control. */
   shadow?: ShadowType;
@@ -199,10 +202,6 @@ export interface RadioGroupProps extends Omit<
 
   /** Marks the radio group as invalid. */
   invalid?: boolean;
-
-  /** Visible helper text for the radio group. */
-  description?: ReactNode;
-
   /** Visible error message for invalid state. */
   errorMessage?: ReactNode;
 
@@ -217,6 +216,7 @@ export interface RadioGroupProps extends Omit<
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+  helperText?: import("react").ReactNode;
 }
 
 export interface BaseRadioGroupProps extends RadioGroupProps {
@@ -224,4 +224,5 @@ export interface BaseRadioGroupProps extends RadioGroupProps {
    * Framework-specific class name map supplied by the core or Next wrapper.
    */
   classMap: Record<string, string>;
+  invalid?: boolean;
 }

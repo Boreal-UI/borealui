@@ -9,12 +9,14 @@ const classes = {
   overlay: "command_palette_overlay",
   command_palette: "command_palette",
   input: "command_palette_input",
+  label: "command_palette_label",
   list: "command_palette_list",
   item: "command_palette_item",
+  itemLabel: "command_palette_item_label",
   icon: "command_palette_icon",
   active: "command_palette_active",
+  disabled: "command_palette_disabled",
   empty: "command_palette_empty",
-  glass: "command_palette_glass",
 
   primary: "command_palette_primary",
   secondary: "command_palette_secondary",
@@ -38,6 +40,7 @@ const classes = {
   roundSmall: "command_palette_round-Small",
   roundMedium: "command_palette_round-Medium",
   roundLarge: "command_palette_round-Large",
+  glass: "command_palette_glass",
 };
 
 const CommandPalette: React.FC<CommandPaletteProps> = (props) => (

@@ -24,10 +24,11 @@
     align-items: baseline;
     max-width: 100%;
     font-family: var(--font-family-ui);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
     line-height: var(--line-height-label);
-    color: inherit;
+    letter-spacing: var(--letter-spacing-label);
+    white-space: nowrap;
     overflow-wrap: anywhere;
   }
 
@@ -145,8 +146,8 @@
   .content > input::placeholder,
   .content > select::placeholder,
   .content > textarea::placeholder {
-    color: currentcolor;
-    opacity: 0.78;
+    color: var(--text-color-placeholder);
+    opacity: 1;
   }
 
   .prefix,
@@ -209,8 +210,8 @@
   .errorText {
     max-width: 100%;
     margin: 0;
-    font-size: var(--font-size-body-sm);
-    line-height: var(--line-height-body);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
     overflow-wrap: anywhere;
   }
 
@@ -227,18 +228,6 @@
     grid-area: error;
     color: var(--error-color, currentcolor);
     font-weight: var(--font-weight-ui);
-  }
-
-  .srOnly {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 
   @each $themeName, $vals in theme.$themes {

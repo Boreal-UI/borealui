@@ -7,6 +7,7 @@ import DateTimePickerBase from "@/components/DateTimePicker/DateTimePickerBase";
 expect.extend(toHaveNoViolations);
 
 const classMap = {
+  large: "large",
   container: "container",
   label: "label",
   labelTop: "labelTop",
@@ -17,9 +18,9 @@ const classMap = {
   inputWrapper: "inputWrapper",
   input: "input",
   button: "button",
-  description: "description",
+  description: "helperText",
   helperText: "helperText",
-  errorText: "errorText",
+  errorText: "error",
   loader: "loader",
   srOnly: "srOnly",
   fullWidth: "fullWidth",
@@ -29,14 +30,14 @@ const classMap = {
   success: "success",
   error: "error",
   clear: "clear",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   shadowLight: "shadowLight",
   shadowStrong: "shadowStrong",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 const renderDateTimePicker = (
@@ -51,6 +52,11 @@ const renderDateTimePicker = (
   );
 
 describe("DateTimePickerBase", () => {
+  it("applies the selected size class", () => {
+    renderDateTimePicker({ size: "large" });
+    expect(screen.getByTestId("datetime-picker-root")).toHaveClass("large");
+  });
+
   beforeEach(() => {
     jest.restoreAllMocks();
   });
@@ -96,10 +102,9 @@ describe("DateTimePickerBase", () => {
     expect(onChange).toHaveBeenCalledWith("2026-06-01T14:45");
   });
 
-  it("connects description, helper text, error text, and screen-reader text", () => {
+  it("connects helper and screen-reader text", () => {
     renderDateTimePicker({
       id: "deadline",
-      description: "Choose the delivery date and time",
       helperText: "Weekdays are preferred",
       srOnlyText: "Native date and time picker",
     });
@@ -107,36 +112,36 @@ describe("DateTimePickerBase", () => {
     const input = screen.getByTestId("datetime-picker-input");
     expect(input).toHaveAttribute(
       "aria-describedby",
-      "deadline-description deadline-helper deadline-sr-description",
+      "deadline-helperText deadline-sr-helperText",
     );
-    expect(
-      screen.getByTestId("datetime-picker-description"),
-    ).toHaveTextContent("Choose the delivery date and time");
-    expect(screen.getByTestId("datetime-picker-helper")).toHaveTextContent(
+    expect(screen.getByTestId("datetime-picker-helperText")).toHaveTextContent(
       "Weekdays are preferred",
     );
-    expect(screen.getByTestId("datetime-picker-sr-only-text")).toHaveTextContent(
-      "Native date and time picker",
-    );
+    expect(
+      screen.getByTestId("datetime-picker-sr-only-text"),
+    ).toHaveTextContent("Native date and time picker");
   });
 
   it("renders errors as alerts and marks the input invalid", () => {
     renderDateTimePicker({
       id: "deadline",
       helperText: "Weekdays are preferred",
-      error: "Choose a valid date and time",
+      errorMessage: "Choose a valid date and time",
     });
 
     const input = screen.getByTestId("datetime-picker-input");
-    const error = screen.getByRole("alert");
+    const errorMessage = screen.getByRole("alert");
 
-    expect(
-      screen.queryByTestId("datetime-picker-helper"),
-    ).not.toBeInTheDocument();
-    expect(error).toHaveTextContent("Choose a valid date and time");
+    expect(screen.getByTestId("datetime-picker-helperText")).toHaveTextContent(
+      "Weekdays are preferred",
+    );
+    expect(errorMessage).toHaveTextContent("Choose a valid date and time");
     expect(input).toHaveAttribute("aria-invalid", "true");
-    expect(input).toHaveAttribute("aria-errormessage", "deadline-error");
-    expect(input).toHaveAttribute("aria-describedby", "deadline-error");
+    expect(input).toHaveAttribute("aria-errormessage", "deadline-errorMessage");
+    expect(input).toHaveAttribute(
+      "aria-describedby",
+      "deadline-helperText deadline-errorMessage",
+    );
   });
 
   it("marks values outside min and max as invalid", () => {
@@ -157,13 +162,16 @@ describe("DateTimePickerBase", () => {
       label: undefined,
       "aria-label": "Appointment date and time",
       "aria-invalid": true,
-      "aria-errormessage": "external-error-id",
+      "aria-errormessage": "external-errorMessage-id",
       "aria-describedby": "external-help",
     });
 
     const input = screen.getByLabelText("Appointment date and time");
     expect(input).toHaveAttribute("aria-invalid", "true");
-    expect(input).toHaveAttribute("aria-errormessage", "external-error-id");
+    expect(input).toHaveAttribute(
+      "aria-errormessage",
+      "external-errorMessage-id",
+    );
     expect(input).toHaveAttribute("aria-describedby", "external-help");
   });
 
@@ -171,8 +179,7 @@ describe("DateTimePickerBase", () => {
     renderDateTimePicker({
       theme: "secondary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       rounding: "large",
       shadow: "strong",
       fullWidth: true,
@@ -198,8 +205,8 @@ describe("DateTimePickerBase", () => {
       inputWrapperClassName: "customWrapper",
       inputClassName: "customInput",
       buttonClassName: "customButton",
-      description: "Helpful text",
-      descriptionClassName: "customDescription",
+      helperText: "Helpful text",
+      helperTextClassName: "customDescription",
     });
 
     expect(screen.getByTestId("datetime-picker")).toHaveClass("labelLeft");
@@ -218,7 +225,7 @@ describe("DateTimePickerBase", () => {
     expect(screen.getByTestId("datetime-picker-button")).toHaveClass(
       "customButton",
     );
-    expect(screen.getByTestId("datetime-picker-description")).toHaveClass(
+    expect(screen.getByTestId("datetime-picker-helperText")).toHaveClass(
       "customDescription",
     );
   });
@@ -315,7 +322,6 @@ describe("DateTimePickerBase", () => {
 
   it("has no accessibility violations", async () => {
     const { container } = renderDateTimePicker({
-      description: "Choose a start date and time",
       helperText: "Use the native datetime format",
     });
 

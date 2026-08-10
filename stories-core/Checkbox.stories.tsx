@@ -122,7 +122,7 @@ export const GlassThemeVariants = () =>
       checked: true,
       onChange: () => {},
       theme: "primary",
-      glass: true,
+      variant: "glass",
     },
     [
       {
@@ -159,7 +159,7 @@ export const GlassStateVariants = () =>
       onChange: () => {},
       theme: "primary",
       state: "success",
-      glass: true,
+      variant: "glass",
     },
     [
       {

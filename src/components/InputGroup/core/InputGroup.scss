@@ -146,8 +146,8 @@
   .inputGroup_content > input::placeholder,
   .inputGroup_content > select::placeholder,
   .inputGroup_content > textarea::placeholder {
-    color: currentcolor;
-    opacity: 0.78;
+    color: var(--text-color-placeholder);
+    opacity: 1;
   }
 
   .inputGroup_prefix,
@@ -210,8 +210,8 @@
   .inputGroup_errorText {
     max-width: 100%;
     margin: 0;
-    font-size: var(--font-size-body-sm);
-    line-height: var(--line-height-body);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
     overflow-wrap: anywhere;
   }
 
@@ -228,18 +228,6 @@
     grid-area: error;
     color: var(--error-color, currentcolor);
     font-weight: var(--font-weight-ui);
-  }
-
-  .sr_only {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
   }
 
   @each $themeName, $vals in theme.$themes {

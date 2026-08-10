@@ -4,7 +4,7 @@ import { ChipBaseProps } from "./Chip.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -21,11 +21,11 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   iconAriaLabel,
   size = getDefaultSize(),
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   rounding = getDefaultRounding(),
   shadow,
   state,
-  position = "topCenter",
+  placement = "topCenter",
   usePortal = true,
   className,
   autoClose = true,
@@ -109,8 +109,8 @@ const ChipBase: React.FC<ChipBaseProps> = ({
     classMap[theme],
     state && classMap[state],
     classMap[size],
-    classMap[position],
-    glass && classMap.glass,
+    classMap[placement],
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     getShadowClassName(classMap, theme, shadow),
     rounding && classMap[`round${capitalize(rounding)}`],
     closing && classMap.fadeout,

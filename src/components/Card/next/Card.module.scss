@@ -29,7 +29,7 @@
       border: 1px solid ButtonText;
     }
 
-    .clickable:focus-visible {
+    .selectable:focus-visible {
       outline: 2px solid Highlight;
       outline-offset: 3px;
     }
@@ -77,7 +77,7 @@
   }
 
   .fade_in {
-    animation: fade-in 0.8s ease-in-out;
+    animation: fade-in 240ms var(--ease-out, cubic-bezier(0.23, 1, 0.32, 1));
   }
 
   .media {
@@ -188,7 +188,9 @@
 
   .imageRoundFull {
     border-radius: var(--border-radius-full);
-    clip-path: inset(var(--card-image-inset, 0) round var(--border-radius-full));
+    clip-path: inset(
+      var(--card-image-inset, 0) round var(--border-radius-full)
+    );
   }
 
   .vertical {
@@ -297,7 +299,34 @@
     color: var(--text-color-primary);
     cursor: not-allowed;
     pointer-events: none;
+    user-select: none;
     opacity: 0.6;
+    box-shadow: none;
+  }
+
+  .selectable:not(.disabled) {
+    cursor: pointer;
+  }
+
+  .selectable:not(.disabled):hover {
+    border-color: var(--focus-outline-color, currentcolor);
+    box-shadow: var(--box-shadow-md);
+  }
+
+  .selectable:not(.disabled):focus-visible {
+    outline: 2px solid var(--focus-outline-color, currentcolor);
+    outline-offset: 3px;
+  }
+
+  .selected {
+    border-color: var(--focus-outline-color, currentcolor);
+    box-shadow:
+      0 0 0 2px var(--background-color),
+      0 0 0 4px var(--focus-outline-color, currentcolor);
+  }
+
+  .disabled.selected {
+    border-color: var(--disabled-color);
     box-shadow: none;
   }
 
@@ -340,7 +369,7 @@
         color: inherit;
       }
 
-      &.glass.clickable:hover {
+      &.glass.selectable:hover {
         background: var(--card-glass-hover-bg);
         border-color: var(--card-glass-border);
         box-shadow:
@@ -400,7 +429,7 @@
         color: inherit;
       }
 
-      &.glass.clickable:hover {
+      &.glass.selectable:hover {
         background: var(--card-glass-hover-bg);
         border-color: var(--card-glass-border);
       }
@@ -728,7 +757,7 @@
     }
   }
 
-  .clickable {
+  .selectable {
     cursor: pointer;
     transition:
       transform var(--transition-default),
@@ -760,14 +789,14 @@
       transition: none !important;
     }
 
-    .clickable:hover {
+    .selectable:hover {
       transform: none !important;
       box-shadow: none !important;
     }
   }
 
   @media (hover: none) {
-    .clickable:hover {
+    .selectable:hover {
       transform: none;
       box-shadow: none;
     }

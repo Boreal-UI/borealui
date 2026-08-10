@@ -65,7 +65,7 @@ describe("BaseMessagePopup", () => {
     );
     expect(screen.getByTestId("message-popup-confirm")).toBeInTheDocument();
     expect(screen.getByTestId("message-popup-cancel")).toBeInTheDocument();
-    expect(screen.getByTestId("message-popup-close")).toBeInTheDocument();
+    expect(screen.getAllByTestId("message-popup-close")).toHaveLength(1);
     expect(screen.getByTestId("message-popup-actions")).toBeInTheDocument();
   });
 
@@ -92,6 +92,7 @@ describe("BaseMessagePopup", () => {
     expect(
       screen.getByRole("heading", { name: "Delete item" }),
     ).toBeInTheDocument();
+    expect(screen.getAllByTestId("message-popup-close")).toHaveLength(1);
   });
 
   it("does not render confirm or cancel buttons when handlers are not provided", async () => {

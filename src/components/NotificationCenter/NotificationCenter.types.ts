@@ -124,7 +124,7 @@ export interface NotificationCenterProps {
   "aria-describedby"?: string;
 
   /** Accessible label for the notifications list when needed. */
-  "list-aria-label"?: string;
+  listAriaLabel?: string;
 
   /**
    * Live region politeness level for notification updates.
@@ -203,7 +203,6 @@ export interface NotificationCenterProps {
 
   /** Additional class names for each dismiss button. */
   closeButtonClassName?: string;
-
 
   /**
    * Optional test ID for testing frameworks.

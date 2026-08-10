@@ -49,6 +49,8 @@ $drawer-placements: (
   border: 0;
   background: var(--drawer-overlay-bg, rgb(0 0 0 / 45%));
   cursor: pointer;
+  opacity: 0;
+  transition: opacity var(--motion-exit, 160ms cubic-bezier(0.23, 1, 0.32, 1));
 }
 
 .panel {
@@ -65,6 +67,10 @@ $drawer-placements: (
   color: var(--text-color);
   font-family: var(--font-family-ui);
   box-shadow: var(--shadow-md, none);
+  opacity: 0.98;
+  transition:
+    transform var(--motion-exit, 160ms cubic-bezier(0.23, 1, 0.32, 1)),
+    opacity var(--motion-exit, 160ms cubic-bezier(0.23, 1, 0.32, 1));
 }
 
 @each $placement, $config in $drawer-placements {
@@ -82,29 +88,41 @@ $drawer-placements: (
   max-height: var(--drawer-sheet-max-height, min(80vh, 36rem));
 }
 
+.right .panel {
+  transform: translateX(100%);
+}
+
+.left .panel {
+  transform: translateX(-100%);
+}
+
+.top .panel {
+  transform: translateY(-100%);
+}
+
+.bottom .panel {
+  transform: translateY(100%);
+}
+
 .open .overlay {
-  animation: drawer-overlay-fade-in var(--drawer-animation-duration, 220ms)
-    var(--drawer-animation-easing, ease-out) both;
+  opacity: 1;
+  transition-duration: var(--drawer-overlay-animation-duration, 220ms);
 }
 
-.open.right .panel {
-  animation: drawer-slide-in-right var(--drawer-animation-duration, 260ms)
-    var(--drawer-animation-easing, cubic-bezier(0.22, 1, 0.36, 1)) both;
-}
-
-.open.left .panel {
-  animation: drawer-slide-in-left var(--drawer-animation-duration, 260ms)
-    var(--drawer-animation-easing, cubic-bezier(0.22, 1, 0.36, 1)) both;
-}
-
-.open.top .panel {
-  animation: drawer-slide-in-top var(--drawer-animation-duration, 260ms)
-    var(--drawer-animation-easing, cubic-bezier(0.22, 1, 0.36, 1)) both;
-}
-
-.open.bottom .panel {
-  animation: drawer-slide-in-bottom var(--drawer-animation-duration, 260ms)
-    var(--drawer-animation-easing, cubic-bezier(0.22, 1, 0.36, 1)) both;
+.open .panel {
+  opacity: 1;
+  transform: translate(0);
+  transition:
+    transform
+      var(
+        --drawer-animation-duration,
+        var(--motion-drawer, 260ms cubic-bezier(0.32, 0.72, 0, 1))
+      ),
+    opacity
+      var(
+        --drawer-animation-duration,
+        var(--motion-drawer, 260ms cubic-bezier(0.32, 0.72, 0, 1))
+      );
 }
 
 .header,
@@ -121,7 +139,7 @@ $drawer-placements: (
   border-top: 1px solid var(--drawer-border-color, var(--border-color));
 }
 
-.header_content {
+.headerContent {
   min-width: 0;
   flex: 1;
 }
@@ -230,7 +248,7 @@ $drawer-placements: (
 }
 
 @each $key, $value in theme.$shadow {
-  .shaddow#{$key} {
+  .shadow#{$key} {
     box-shadow: $value;
   }
 }
@@ -312,11 +330,8 @@ $drawer-placements: (
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .open .overlay,
-  .open .panel {
-    animation: none;
-  }
-
+  .overlay,
+  .panel,
   .closeButton {
     transition: none;
   }

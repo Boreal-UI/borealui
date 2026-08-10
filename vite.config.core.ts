@@ -14,6 +14,7 @@ const externals = [
   "react/jsx-runtime",
   "react/jsx-dev-runtime",
   "marked",
+  "sanitize-html",
 ];
 
 const coreEntries = getEntryMap("./src/core") as Record<string, string>;
@@ -38,9 +39,8 @@ export default defineConfig({
 
     lib: {
       entry: coreEntries,
-      formats: ["es", "cjs"],
-      fileName: (format, entryName) =>
-        `${entryName}${format === "es" ? ".js" : ".cjs.js"}`,
+      formats: ["es"],
+      fileName: (_format, entryName) => `${entryName}.js`,
     },
 
     rollupOptions: {

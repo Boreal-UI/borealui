@@ -4,8 +4,8 @@ import { combineClassNames } from "../../utils/classNames";
 
 const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
   label,
-  description,
-  error,
+  helperText,
+  errorMessage,
   children,
   id,
   required = false,
@@ -39,8 +39,8 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
   const controlId = controlProps?.id ?? baseId;
 
   const labelId = label ? `${baseId}-label` : undefined;
-  const descriptionId = description ? `${baseId}-description` : undefined;
-  const errorId = error ? `${baseId}-error` : undefined;
+  const descriptionId = helperText ? `${baseId}-helperText` : undefined;
+  const errorId = errorMessage ? `${baseId}-errorMessage` : undefined;
 
   const internalDescribedBy =
     [errorId, descriptionId].filter(Boolean).join(" ") || undefined;
@@ -56,10 +56,9 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
         classMap.wrapper,
         classMap[layout],
         classMap[spacing],
-        error && classMap.error,
         className,
       ),
-    [classMap, layout, spacing, error, className],
+    [classMap, layout, spacing, className],
   );
 
   return (
@@ -132,7 +131,7 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
                   ],
                 "aria-invalid":
                   controlProps?.["aria-invalid"] ??
-                  (!!error || undefined) ??
+                  (!!errorMessage || undefined) ??
                   (child.props as { "aria-invalid"?: boolean })["aria-invalid"],
                 "aria-errormessage":
                   controlProps?.["aria-errormessage"] ??
@@ -164,6 +163,7 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
               className={combineClassNames(
                 classMap.inputField,
                 inputFieldClassName,
+                errorMessage && classMap.formError,
               )}
               data-testid={`${testId}-input-field-${index}`}
             >
@@ -185,32 +185,32 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
         );
       })}
 
-      {description && !error && (
+      {helperText && !errorMessage && (
         <p
           id={descriptionId}
           className={combineClassNames(
-            classMap.description,
+            classMap.helperText,
             descriptionClassName,
           )}
-          data-testid={`${testId}-description`}
+          data-testid={`${testId}-helperText`}
           {...descriptionProps}
         >
-          {description}
+          {helperText}
         </p>
       )}
 
-      {error && (
+      {errorMessage && (
         <p
           id={errorId}
           className={combineClassNames(
-            classMap.errorMessage,
+            classMap.errorText,
             errorMessageClassName,
           )}
           role="alert"
-          data-testid={`${testId}-error`}
+          data-testid={`${testId}-errorMessage`}
           {...errorProps}
         >
-          {error}
+          {errorMessage}
         </p>
       )}
     </div>

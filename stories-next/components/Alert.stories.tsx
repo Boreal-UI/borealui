@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import { Alert, Button } from "../../src/index.next";
 import { AlertProps } from "../../src/components/Alert/Alert.types";
-import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from "react-icons/fa";
+import { FaCheckCircle, FaInfoCircle, FaTimesCircle } from "../../shared-story-assets/icons";
 import { useState } from "react";
 import {
   renderThemeVariants,
@@ -43,16 +43,6 @@ const meta: Meta<AlertProps> = {
       control: "select",
       options: ["primary", "secondary", "tertiary", "quaternary", "clear"],
       description: "Theme color applied to the alert.",
-    },
-    variant: {
-      control: "select",
-      options: ["soft", "solid", "outline", "subtle"],
-      description: "Visual alert style.",
-    },
-    glass: {
-      control: "boolean",
-      description:
-        "Applies the glass styling layer when supported by the theme.",
     },
     rounding: {
       control: "select",
@@ -120,6 +110,10 @@ const meta: Meta<AlertProps> = {
     testId: {
       control: "text",
       description: "Test id applied to the alert root.",
+    },
+    variant: {
+      control: "select",
+      options: ["solid", "soft", "outline", "glass", "glassOutline"],
     },
   },
   args: {
@@ -189,7 +183,7 @@ export const WithActions: Story = {
     actions: (
       <>
         <Button size="small">View build</Button>
-        <Button size="small" outline>
+        <Button size="small" variant="outline">
           Open dashboard
         </Button>
       </>

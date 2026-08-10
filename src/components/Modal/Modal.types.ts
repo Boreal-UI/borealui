@@ -102,7 +102,6 @@ export interface ModalProps {
    */
   closeButtonAriaLabel?: string;
 
-
   /**
    * Optional test ID for testing frameworks.
    *

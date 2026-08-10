@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { EmptyState } from "../src/index.core";
 import type { EmptyStateProps } from "../src/components/EmptyState/EmptyState.types";
-import { FaInbox, FaBug, FaFolderOpen } from "react-icons/fa";
+import { FaInbox, FaBug, FaFolderOpen } from "../shared-story-assets/icons";
 import {
   roundingOptions,
   shadowOptions,

@@ -3,8 +3,7 @@ import { BadgeBaseProps } from "./Badge.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -27,8 +26,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   shadow,
   title,
   size = getDefaultSize(),
-  outline = getDefaultOutline(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   icon: Icon,
   className,
   classMap,
@@ -56,8 +54,9 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
-        outline && classMap.outline,
-        glass && classMap.glass,
+        (variant === "outline" || variant === "glassOutline") &&
+          classMap.outline,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         onClick && classMap.clickable,
         className,
       ),
@@ -68,8 +67,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       shadow,
       rounding,
       disabled,
-      outline,
-      glass,
+      variant,
       onClick,
       className,
       classMap,

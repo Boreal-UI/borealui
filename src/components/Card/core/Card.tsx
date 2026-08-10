@@ -25,10 +25,10 @@ const classes = {
   error: "card_error",
 
   clear: "card_clear",
-  glass: "card_glass",
-
-  outline: "card_outline",
   loading: "card_loading",
+  disabled: "card_disabled",
+  selected: "card_selected",
+  selectable: "card_selectable",
 
   content: "card_content",
 
@@ -61,6 +61,7 @@ const classes = {
   horizontal: "card_horizontal",
 
   image: "card_image",
+  media: "card_media",
   insetNone: "card_insetNone",
   insetXs: "card_insetXs",
   insetSmall: "card_insetSmall",
@@ -87,6 +88,8 @@ const classes = {
   footer: "card_footer",
   actions: "card_actions",
   action_button: "card_action_button",
+  glass: "card_glass",
+  outline: "card_outline",
 };
 
 const Card: React.FC<CardProps> = (props) => {

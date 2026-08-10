@@ -1,5 +1,5 @@
-import type { HTMLAttributes } from "react";
 import { ShadowType, SizeType, StateType, ThemeType } from "@/types/types";
+import type { HTMLAttributes } from "react";
 
 /**
  * Props for the CircularProgress component.
@@ -110,17 +110,15 @@ export interface CircularProgressProps extends Omit<
 
   /**
    * State of progress
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    */
   state?: StateType;
-
   /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Optional class name for custom styling.
    */

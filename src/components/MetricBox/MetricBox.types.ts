@@ -1,5 +1,5 @@
-import { IconType } from "react-icons";
 import {
+  IconComponent,
   RoundingType,
   ShadowType,
   SizeType,
@@ -21,8 +21,8 @@ export interface MetricBoxProps {
   /** Optional unit label shown beside the value. */
   units?: string;
 
-  /** Optional icon to visually represent the metric (from react-icons, for example). */
-  icon?: IconType;
+  /** Optional SVG icon to visually represent the metric. */
+  icon?: IconComponent;
 
   /** Optional subtext providing additional context for the metric. */
   subtext?: string;
@@ -33,14 +33,12 @@ export interface MetricBoxProps {
    * @default false
    */
   loading?: boolean;
-
   /**
-   * Optional outline style for the component (default: false).
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Theme to apply for styling.
    * One of: "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
@@ -48,14 +46,6 @@ export interface MetricBoxProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
-  /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
   /**
    * Rounding style for the component.
    * One of: "none" | "small" | "medium" | "large" | "full"
@@ -74,7 +64,7 @@ export interface MetricBoxProps {
 
   /**
    * State of the metric.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;
@@ -93,7 +83,7 @@ export interface MetricBoxProps {
    *
    * @default "center"
    */
-  align?: "left" | "center" | "right";
+  align?: import("@/types/types").AlignmentType;
 
   /**
    * Optional additional CSS class names for custom styling.

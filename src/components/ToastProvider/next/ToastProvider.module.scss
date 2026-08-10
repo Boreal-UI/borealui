@@ -42,6 +42,7 @@
 }
 
 .toast {
+  position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -53,6 +54,45 @@
   font-family: var(--font-family-ui);
   pointer-events: auto;
   overflow-wrap: anywhere;
+  opacity: 1;
+  transform: translate(0);
+  touch-action: pan-y;
+  transition:
+    transform var(--motion-popover, 180ms cubic-bezier(0.23, 1, 0.32, 1)),
+    opacity var(--motion-popover, 180ms cubic-bezier(0.23, 1, 0.32, 1));
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+}
+
+.toast::before {
+  content: "";
+  position: absolute;
+  inset: calc(var(--spacing-xs) * -1) 0;
+  z-index: -1;
+}
+
+.exiting {
+  opacity: 0;
+  transform: translateX(100%);
+  pointer-events: none;
+  transition-duration: 160ms;
+}
+
+.topLeft .exiting,
+.bottomLeft .exiting {
+  transform: translateX(-100%);
+}
+
+.bottomLeft .toast,
+.bottomCenter .toast,
+.bottomRight .toast {
+  @starting-style {
+    opacity: 0;
+    transform: translateY(100%);
+  }
 }
 
 .content {
@@ -78,6 +118,13 @@
   color: currentcolor;
   cursor: pointer;
   font: inherit;
+  transition:
+    transform var(--motion-press, 140ms cubic-bezier(0.23, 1, 0.32, 1)),
+    background-color var(--motion-color, 160ms ease);
+}
+
+.dismissButton:active {
+  transform: scale(0.97);
 }
 
 .dismissButton:focus-visible {

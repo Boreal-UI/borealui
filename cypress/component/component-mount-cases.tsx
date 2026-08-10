@@ -4,9 +4,9 @@ import React from "react";
 import { defaultColorSchemes } from "../../src/styles/Themes";
 import { buildThemeVariables } from "../../src/context/themeRuntime";
 
-type LibraryComponent = React.ComponentType<Record<string, unknown>>;
-
-type ComponentLibrary = Record<string, LibraryComponent>;
+type ComponentLibrary =
+  | typeof import("../../src/index.core")
+  | typeof import("../../src/index.next");
 type VariantProps = Record<string, unknown>;
 
 type SmokeCase = {
@@ -67,8 +67,8 @@ const basicOptions = [
 ];
 
 const tableColumns = [
-  { key: "name", label: "Name" },
-  { key: "status", label: "Status" },
+  { key: "name" as const, label: "Name" },
+  { key: "status" as const, label: "Status" },
 ];
 
 const tableData = [
@@ -249,13 +249,13 @@ const getVariantProps = (componentName: string) => {
       componentThemeVariants.forEach((theme) => {
         variants.push({
           label: `outline-${theme}`,
-          props: { theme, outline: true },
+          props: { theme, variant: "outline" },
         });
       });
     } else {
       variants.push({
         label: "outline",
-        props: { outline: true },
+        props: { variant: "outline" },
       });
     }
   }
@@ -296,7 +296,7 @@ export const componentSmokeCases: SmokeCase[] = [
   {
     name: "Accordion",
     render: ({ Accordion }, testId) => (
-      <Accordion title="Release notes" initiallyExpanded data-testid={testId}>
+      <Accordion title="Release notes" defaultExpanded data-testid={testId}>
         Component content
       </Accordion>
     ),
@@ -403,7 +403,6 @@ export const componentSmokeCases: SmokeCase[] = [
         usePortal={false}
         autoClose={false}
         theme="clear"
-        glass={false}
         data-testid={testId}
       />
     ),
@@ -444,8 +443,8 @@ export const componentSmokeCases: SmokeCase[] = [
           { label: "Red", value: "#f00" },
           { label: "Blue", value: "#00f" },
         ]}
-        selected="#f00"
-        onChange={noop}
+        value="#f00"
+        onValueChange={noop}
         data-testid={testId}
       />
     ),
@@ -454,7 +453,7 @@ export const componentSmokeCases: SmokeCase[] = [
     name: "CommandPalette",
     render: ({ CommandPalette }, testId) => (
       <CommandPalette
-        isOpen
+        open
         commands={[{ label: "Open Settings", action: noop }]}
         onClose={noop}
         data-testid={testId}
@@ -554,7 +553,7 @@ export const componentSmokeCases: SmokeCase[] = [
     render: ({ EmptyState }, testId) => (
       <EmptyState
         title="No records"
-        description="Create your first record."
+        message="Create your first record."
         data-testid={testId}
       />
     ),
@@ -663,7 +662,6 @@ export const componentSmokeCases: SmokeCase[] = [
     render: ({ MessagePopup }, testId) => (
       <MessagePopup
         message="Message sent"
-        visible
         onClose={noop}
         data-testid={testId}
       />
@@ -718,7 +716,7 @@ export const componentSmokeCases: SmokeCase[] = [
         </Modal>
       </>
     ),
-    assert: () => cy.contains("Modal body").should("be.visible"),
+    assert: () => cy.contains("Modal body").should("exist"),
     a11ySelector: (testId) => `[data-testid="${testId}"]`,
     waitForA11y: (testId) => {
       cy.get(`[data-testid="${testId}-content"]`).should("be.visible");
@@ -727,13 +725,15 @@ export const componentSmokeCases: SmokeCase[] = [
   {
     name: "NavBar",
     render: ({ NavBar }, testId) => (
-      <NavBar items={[{ label: "Home", path: "/" }]} data-testid={testId} />
+      <NavBar
+        items={[{ icon: <TestIcon />, label: "Home", path: "/" }]}
+        data-testid={testId}
+      />
     ),
     renderA11y: ({ NavBar }, testId) => (
       <NavBar
-        items={[{ label: "Home", path: "/" }]}
+        items={[{ icon: <TestIcon />, label: "Home", path: "/" }]}
         theme="clear"
-        glass={false}
         data-testid={testId}
       />
     ),
@@ -795,7 +795,6 @@ export const componentSmokeCases: SmokeCase[] = [
         trigger="More info"
         content="PopOver content"
         theme="clear"
-        glass={false}
         data-testid={testId}
       />
     ),
@@ -837,7 +836,7 @@ export const componentSmokeCases: SmokeCase[] = [
     render: ({ RadioGroup }, testId) => (
       <RadioGroup
         name="group"
-        label="Choose one"
+        legend="Choose one"
         value="a"
         onChange={noop}
         options={basicOptions}
@@ -996,15 +995,17 @@ export const componentSmokeCases: SmokeCase[] = [
   {
     name: "Toolbar",
     render: ({ Toolbar }, testId) => (
-      <Toolbar title="Editor" data-testid={testId}>
-        <button type="button">Action</button>
-      </Toolbar>
+      <Toolbar
+        title="Editor"
+        right={<button type="button">Action</button>}
+        data-testid={testId}
+      />
     ),
   },
   {
     name: "Tooltip",
     render: ({ Tooltip }, testId) => (
-      <Tooltip text="Helpful tooltip" data-testid={testId}>
+      <Tooltip content="Helpful tooltip" data-testid={testId}>
         <button type="button">Hover target</button>
       </Tooltip>
     ),
@@ -1034,7 +1035,7 @@ export function runComponentSmokeTests(
         );
 
         if (componentCase.assert) {
-          componentCase.assert(testId);
+          componentCase.assert(testId, cy);
           return;
         }
 

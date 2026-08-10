@@ -7,7 +7,6 @@ expect.extend(toHaveNoViolations);
 
 const classNames = {
   wrapper: "pagerWrapper",
-  glass: "pagerGlass",
   controls: "pagerControls",
   controlButton: "pagerControlButton",
   buttonWrapper: "pagerButtonWrapper",
@@ -19,6 +18,7 @@ const classNames = {
   shadowMedium: "shadowMedium",
   roundSmall: "roundSmall",
   roundMedium: "roundMedium",
+  glass: "pagerGlass",
 };
 
 describe("BasePager", () => {
@@ -410,7 +410,7 @@ describe("BasePager", () => {
         itemsPerPage={10}
         currentPage={2}
         onPageChange={jest.fn()}
-        page-list-aria-label="Available pages"
+        pageListAriaLabel="Available pages"
         Button={DummyButton}
         IconButton={DummyIconButton}
         classMap={classNames}
@@ -453,8 +453,8 @@ describe("BasePager", () => {
         itemsPerPage={10}
         currentPage={2}
         onPageChange={jest.fn()}
-        previous-button-aria-label="Previous results page"
-        next-button-aria-label="Next results page"
+        previousButtonAriaLabel="Previous results page"
+        nextButtonAriaLabel="Next results page"
         Button={DummyButton}
         IconButton={DummyIconButton}
         classMap={classNames}
@@ -637,7 +637,7 @@ describe("BasePager", () => {
         className="customPager"
         theme="primary"
         state="success"
-        glass
+        variant="glassOutline"
         rounding="medium"
         shadow="light"
         Button={DummyButton}
@@ -703,9 +703,9 @@ describe("BasePager", () => {
         currentPage={2}
         onPageChange={jest.fn()}
         aria-label="Results pagination"
-        page-list-aria-label="Available pages"
-        previous-button-aria-label="Previous results page"
-        next-button-aria-label="Next results page"
+        pageListAriaLabel="Available pages"
+        previousButtonAriaLabel="Previous results page"
+        nextButtonAriaLabel="Next results page"
         Button={DummyButton}
         IconButton={DummyIconButton}
         classMap={classNames}

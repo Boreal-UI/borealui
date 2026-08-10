@@ -1,3 +1,4 @@
+@use "../../../styles/control-sizes" as control-sizes;
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
@@ -5,6 +6,8 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  @include control-sizes.variants(".textArea", (".textArea_text_input"));
+
   .container {
     display: flex;
     gap: var(--spacing-xs);
@@ -89,11 +92,6 @@
       border-radius: var(--border-radius-xs);
       min-height: 2.5em;
 
-      &::placeholder {
-        color: inherit;
-        font: inherit;
-      }
-
       &:focus-visible {
         outline: 2px solid var(--focus-outline-color, var(--primary-color));
         outline-offset: 2px;
@@ -157,14 +155,6 @@
             map.has-key($props, hover),
             map.get($props, hover),
             map.get($props, bg)
-          );
-        }
-
-        .textArea_text_input::placeholder {
-          color: if(
-            map.has-key($props, placeholder),
-            map.get($props, placeholder),
-            inherit
           );
         }
 
@@ -244,6 +234,12 @@
         background-color: transparent;
       }
     }
+  }
+
+  textarea::placeholder {
+    color: var(--text-color-placeholder);
+    font: inherit;
+    opacity: 1;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -3,8 +3,7 @@ import { combineClassNames } from "@/utils/classNames";
 import { expandClassMap } from "@/utils/propAliases";
 import { capitalize } from "@/utils/capitalize";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getDefaultSize,
   getDefaultTheme,
@@ -22,7 +21,7 @@ export default function Button({
   icon: Icon,
   iconPosition = "left",
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   state,
   rounding = getDefaultRounding(),
   shadow,
@@ -31,7 +30,6 @@ export default function Button({
   target,
   rel,
   isExternal = false,
-  outline = getDefaultOutline(),
   size = getDefaultSize(),
   loading = false,
   loadingLabel = "Loading",
@@ -54,8 +52,8 @@ export default function Button({
     classMap[theme],
     state && classMap[state],
     classMap[size],
-    outline && classMap.outline,
-    glass && classMap.glass,
+    (variant === "outline" || variant === "glassOutline") && classMap.outline,
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     getShadowClassName(classMap, theme, shadow),
     rounding && classMap[`round${capitalize(rounding)}`],
     fullWidth && classMap.fullWidth,
@@ -63,27 +61,43 @@ export default function Button({
     className,
   );
   const icon = Icon ? (
-    <span className={combineClassNames(classMap.buttonIcon, iconWrapperClassName)} aria-hidden="true">
-      <Icon className={combineClassNames(classMap.icon, iconClassName)} aria-hidden />
+    <span
+      className={combineClassNames(classMap.buttonIcon, iconWrapperClassName)}
+      aria-hidden="true"
+    >
+      <Icon
+        className={combineClassNames(classMap.icon, iconClassName)}
+        aria-hidden
+      />
     </span>
   ) : null;
   const content = (
     <>
       {iconPosition === "left" && icon}
       <span className={combineClassNames(classMap.buttonLabel, labelClassName)}>
-        {loading ? <span className={combineClassNames(classMap.loader, loaderClassName)} aria-label={loadingLabel} /> : children}
+        {loading ? (
+          <span
+            className={combineClassNames(classMap.loader, loaderClassName)}
+            aria-label={loadingLabel}
+          />
+        ) : (
+          children
+        )}
       </span>
       {iconPosition === "right" && icon}
     </>
   );
 
   if (href) {
-    const external = target === "_blank" || isExternal || /^https?:\/\//i.test(href);
+    const external =
+      target === "_blank" || isExternal || /^https?:\/\//i.test(href);
     return (
       <a
         {...rest}
         href={disabled ? undefined : href}
-        target={disabled ? undefined : target ?? (external ? "_blank" : undefined)}
+        target={
+          disabled ? undefined : (target ?? (external ? "_blank" : undefined))
+        }
         rel={rel ?? (external ? "noopener noreferrer" : undefined)}
         className={combineClassNames(classes, classMap.link)}
         aria-disabled={disabled || loading || undefined}
@@ -95,7 +109,13 @@ export default function Button({
   }
 
   return (
-    <button {...rest} type={type} className={classes} disabled={disabled || loading} data-testid={resolvedTestId}>
+    <button
+      {...rest}
+      type={type}
+      className={classes}
+      disabled={disabled || loading}
+      data-testid={resolvedTestId}
+    >
       {content}
     </button>
   );

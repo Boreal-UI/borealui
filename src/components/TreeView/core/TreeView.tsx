@@ -16,7 +16,6 @@ const classes = {
   icon: "treeView_icon",
   content: "treeView_content",
   loader: "treeView_loader",
-  srOnly: "sr_only",
 
   primary: "treeView_primary",
   secondary: "treeView_secondary",
@@ -29,8 +28,6 @@ const classes = {
   error: "treeView_error",
 
   clear: "treeView_clear",
-  outline: "treeView_outline",
-  glass: "treeView_glass",
   disabled: "treeView_disabled",
   loading: "treeView_loading",
 
@@ -45,6 +42,8 @@ const classes = {
   roundMedium: "treeView_round-Medium",
   roundLarge: "treeView_round-Large",
   roundFull: "treeView_round-Full",
+  glass: "treeView_glass",
+  outline: "treeView_outline",
 };
 
 const TreeView = forwardRef<HTMLDivElement, TreeViewProps>((props, ref) => (

@@ -1,16 +1,15 @@
 import {
-  InputHTMLAttributes,
-  ReactNode,
-  RefAttributes,
-  ForwardRefExoticComponent,
-} from "react";
-import {
   LabelPositionType,
-  RoundingType,
   ShadowType,
   StateType,
   ThemeType,
 } from "@/types/types";
+import {
+  ForwardRefExoticComponent,
+  InputHTMLAttributes,
+  ReactNode,
+  RefAttributes,
+} from "react";
 
 /**
  * Represents a single option in the MultiSelect component.
@@ -167,27 +166,18 @@ export interface MultiSelectProps extends NativeMultiSelectProps {
    * Visual state for styling.
    */
   state?: StateType;
-
   /**
-   * Whether to render outlined styling.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default outline setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Whether to render glass styling.
-   *
-   * @default configured default glass setting (fallback: false)
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding style for the component.
    *
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Shadow style for the component.
@@ -306,6 +296,10 @@ export interface MultiSelectProps extends NativeMultiSelectProps {
    * Backward-compatible alias for test ID attributes.
    */
   "data-testid"?: string;
+  invalid?: boolean;
+  helperText?: import("react").ReactNode;
+  errorMessage?: import("react").ReactNode;
+  size?: import("@/types/types").SizeType;
 }
 
 export interface MultiSelectBaseProps extends MultiSelectProps {

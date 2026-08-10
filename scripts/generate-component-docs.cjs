@@ -5,6 +5,7 @@ const fsSync = require("fs");
 const fs = require("fs/promises");
 const fg = require("fast-glob");
 const { Project, Node, SyntaxKind } = require("ts-morph");
+const rootDir = path.resolve(__dirname, "..");
 
 const TypeFormatFlagsForDocs = {
   NoTruncation: 1,
@@ -16,11 +17,22 @@ const TypeFormatFlagsForDocs = {
 };
 
 const config = {
-  tsConfigFilePath: path.resolve("tsconfig.json"),
+  tsConfigFilePath: path.join(rootDir, "tsconfig.json"),
   include: ["src/components/**/*.types.ts"],
   exclude: ["**/*.test.ts", "**/*.test.tsx", "**/*.stories.tsx"],
-  outputDir: path.resolve("src/generated-docs"),
+  outputDir: path.join(rootDir, "src", "generated-docs"),
 };
+const isCheckMode = process.argv.includes("--check");
+
+function compareText(left, right) {
+  if (left < right) return -1;
+  if (left > right) return 1;
+  return 0;
+}
+
+function toPosixPath(filePath) {
+  return filePath.replace(/\\/g, "/");
+}
 
 async function resetDir(dirPath) {
   await fs.rm(dirPath, { recursive: true, force: true });
@@ -61,15 +73,26 @@ function simplifyImportedTypes(typeText) {
   return typeText
     .replace(/import\(".*?@types\/react\/index"\)\./g, "React.")
     .replace(/import\(".*?@types\\react\\index"\)\./g, "React.")
+    .replace(/import\("@\/types\/types"\)\./g, "")
+    .replace(
+      /import\(".*?[\\/]src[\\/]index\.(?:core|next)"\)\./g,
+      "",
+    )
     .replace(/\bReact\.ReactNode\b/g, "ReactNode")
     .replace(/\bReact\.ComponentType</g, "ComponentType<")
     .replace(/\bReact\.JSXElementConstructor\b/g, "JSXElementConstructor");
 }
 
 function simplifyTypeText(typeText) {
-  return normalizeWhitespace(
+  const simplified = normalizeWhitespace(
     simplifyImportedTypes(removeUndefinedFromOptionalType(typeText)),
   );
+
+  if (/[A-Za-z]:[\\/]/.test(simplified) || /import\("\//.test(simplified)) {
+    throw new Error(`Generated type contains an absolute path: ${simplified}`);
+  }
+
+  return simplified;
 }
 
 const knownDefaultAccessors = new Map([
@@ -332,6 +355,8 @@ function mergePropDocs(existingProps, newProps) {
 
     const existing = map.get(prop.name);
 
+    const preferred = existing.inherited && !prop.inherited ? prop : existing;
+
     // Prefer richer description
     const description =
       existing.description &&
@@ -347,7 +372,7 @@ function mergePropDocs(existingProps, newProps) {
     const inherited = existing.inherited && prop.inherited;
 
     map.set(prop.name, {
-      ...existing,
+      ...preferred,
       description,
       required,
       inherited,
@@ -355,7 +380,7 @@ function mergePropDocs(existingProps, newProps) {
     });
   }
 
-  return Array.from(map.values()).sort((a, b) => a.name.localeCompare(b.name));
+  return Array.from(map.values()).sort((a, b) => compareText(a.name, b.name));
 }
 
 function applyDefaultValues(props, defaultValues) {
@@ -404,6 +429,26 @@ function getPropertySignaturesFromUnion(typeNode, sourceFile) {
   return props;
 }
 
+function isProjectSourceDeclaration(declaration) {
+  const filePath = path.resolve(declaration.getSourceFile().getFilePath());
+  const sourceRoot = path.resolve(rootDir, "src") + path.sep;
+
+  return filePath.startsWith(sourceRoot);
+}
+
+function getProjectTypeDeclaration(symbol) {
+  const resolvedSymbol = symbol?.getAliasedSymbol?.() ?? symbol;
+
+  return resolvedSymbol
+    ?.getDeclarations()
+    .find(
+      (candidate) =>
+        isProjectSourceDeclaration(candidate) &&
+        (Node.isInterfaceDeclaration(candidate) ||
+          Node.isTypeAliasDeclaration(candidate)),
+    );
+}
+
 function resolveTypeReferenceNode(typeRefNode, sourceFile) {
   const typeNameNode = typeRefNode.getTypeName();
   const typeName = typeNameNode.getText();
@@ -424,18 +469,125 @@ function resolveTypeReferenceNode(typeRefNode, sourceFile) {
     };
   }
 
+  const declaration = getProjectTypeDeclaration(typeNameNode.getSymbol());
+
+  if (declaration && Node.isInterfaceDeclaration(declaration)) {
+    return {
+      kind: "interface",
+      node: declaration,
+    };
+  }
+
+  if (declaration && Node.isTypeAliasDeclaration(declaration)) {
+    return {
+      kind: "typeAlias",
+      node: declaration,
+    };
+  }
+
   return null;
 }
 
+function getStringLiteralUnionValues(typeNode) {
+  if (!typeNode) return [];
+
+  if (Node.isLiteralTypeNode(typeNode)) {
+    const literal = typeNode.getLiteral();
+    return Node.isStringLiteral(literal) ? [literal.getLiteralText()] : [];
+  }
+
+  if (Node.isUnionTypeNode(typeNode)) {
+    return typeNode
+      .getTypeNodes()
+      .flatMap((part) => getStringLiteralUnionValues(part));
+  }
+
+  return [];
+}
+
+function getPropDocsFromHeritageClause(heritage, sourceFile) {
+  const expressionName = heritage.getExpression().getText();
+  const typeArguments = heritage.getTypeArguments();
+
+  if (["Omit", "Pick"].includes(expressionName) && typeArguments[0]) {
+    const sourceProps = getPropDocsFromTypeNode(
+      typeArguments[0],
+      sourceFile,
+      true,
+    );
+    const selectedNames = new Set(
+      getStringLiteralUnionValues(typeArguments[1]),
+    );
+
+    return expressionName === "Omit"
+      ? sourceProps.filter((prop) => !selectedNames.has(prop.name))
+      : sourceProps.filter((prop) => selectedNames.has(prop.name));
+  }
+
+  const localInterface = sourceFile.getInterface(expressionName);
+  if (localInterface) {
+    return getPropDocsFromInterface(localInterface, true);
+  }
+
+  const localTypeAlias = sourceFile.getTypeAlias(expressionName);
+  if (localTypeAlias) {
+    return getPropDocsFromTypeAlias(localTypeAlias, sourceFile, true);
+  }
+
+  const declaration = getProjectTypeDeclaration(
+    heritage.getExpression().getSymbol(),
+  );
+
+  if (declaration && Node.isInterfaceDeclaration(declaration)) {
+    return getPropDocsFromInterface(declaration, true);
+  }
+
+  if (declaration && Node.isTypeAliasDeclaration(declaration)) {
+    return getPropDocsFromTypeAlias(
+      declaration,
+      declaration.getSourceFile(),
+      true,
+    );
+  }
+
+  const projectProps = heritage
+    .getType()
+    .getProperties()
+    .map((property) =>
+      property
+        .getDeclarations()
+        .find(
+          (candidate) =>
+            isProjectSourceDeclaration(candidate) &&
+            Node.isPropertySignature(candidate),
+        ),
+    )
+    .filter(Boolean)
+    .map((member) => makePropDoc(member, true))
+    .filter(Boolean);
+
+  if (projectProps.length) return projectProps;
+
+  return [];
+}
+
 function getPropDocsFromInterface(iface, inherited = false) {
-  const props = [];
+  const sourceFile = iface.getSourceFile();
+  let props = [];
+
+  for (const heritage of iface.getExtends()) {
+    props = mergePropDocs(
+      props,
+      getPropDocsFromHeritageClause(heritage, sourceFile),
+    );
+  }
 
   for (const member of getPropertySignaturesFromInterfaceDeclaration(iface)) {
     const propDoc = makePropDoc(member, inherited);
-    if (propDoc) props.push(propDoc);
+    if (propDoc) props = mergePropDocs(props, [propDoc]);
   }
 
-  return props.sort((a, b) => a.name.localeCompare(b.name));
+  return props.sort((a, b) => compareText(a.name, b.name));
 }
 
 function getPropDocsFromTypeLiteral(typeLiteralNode, inherited = false) {
@@ -446,7 +598,7 @@ function getPropDocsFromTypeLiteral(typeLiteralNode, inherited = false) {
     if (propDoc) props.push(propDoc);
   }
 
-  return props.sort((a, b) => a.name.localeCompare(b.name));
+  return props.sort((a, b) => compareText(a.name, b.name));
 }
 
 function getPropDocsFromTypeNode(typeNode, sourceFile, inherited = false) {
@@ -529,20 +681,18 @@ function buildComponentFile(doc) {
  * Generated by scripts/generate-component-docs.cjs
  */
 
-import type { GeneratedComponentDoc } from "./types";
+import type { GeneratedComponentDoc } from "./types.js";
 
 export const ${exportName}: GeneratedComponentDoc = ${JSON.stringify(doc, null, 2)};
 `;
 }
 
 function buildIndexFile(componentNames) {
-  const uniqueNames = [...new Set(componentNames)].sort((a, b) =>
-    a.localeCompare(b),
-  );
+  const uniqueNames = [...new Set(componentNames)].sort(compareText);
 
   const lines = uniqueNames.map((name) => {
     const exportName = toExportName(name);
-    return `export { ${exportName} } from "./${name}.props";`;
+    return `export { ${exportName} } from "./${name}.props.js";`;
   });
 
   return `/**
@@ -550,7 +700,7 @@ function buildIndexFile(componentNames) {
  * Generated by scripts/generate-component-docs.cjs
  */
 
-export type { GeneratedComponentDoc, GeneratedPropDoc } from "./types";
+export type { GeneratedComponentDoc, GeneratedPropDoc } from "./types.js";
 ${lines.join("\n")}
 `;
 }
@@ -607,14 +757,6 @@ function findBestPropsDeclaration(sourceFile, expectedPropsName) {
     return { kind: "typeAlias", node: caseInsensitiveTypeAlias };
   }
 
-  if (interfaces[0]) {
-    return { kind: "interface", node: interfaces[0] };
-  }
-
-  if (typeAliases[0]) {
-    return { kind: "typeAlias", node: typeAliases[0] };
-  }
-
   return null;
 }
 
@@ -665,11 +807,23 @@ function hasComponentWrapper(typesFilePath, componentName) {
 
   for (const searchDir of searchDirs) {
     try {
-      const match = fsSync
-        .readdirSync(searchDir)
-        .find((entry) => entry.toLowerCase() === expected);
+      const entries = fsSync.readdirSync(searchDir);
+      const match = entries.find((entry) => entry.toLowerCase() === expected);
 
       if (match) return true;
+
+      const escapedComponentName = componentName.replace(
+        /[.*+?^${}()|[\]\\]/g,
+        "\\$&",
+      );
+      const namedExportPattern = new RegExp(
+        `export\\s+(?:const|function|class)\\s+${escapedComponentName}\\b`,
+      );
+
+      for (const entry of entries.filter((name) => name.endsWith(".tsx"))) {
+        const contents = fsSync.readFileSync(path.join(searchDir, entry), "utf8");
+        if (namedExportPattern.test(contents)) return true;
+      }
     } catch {
       // Directory layouts differ by component; missing candidates are expected.
     }
@@ -678,31 +832,38 @@ function hasComponentWrapper(typesFilePath, componentName) {
   return false;
 }
 
-async function main() {
+function normalizeGeneratedContent(content) {
+  return content.replace(/\r\n/g, "\n");
+}
+
+function getExistingGeneratedFileNames() {
+  if (!fsSync.existsSync(config.outputDir)) return [];
+
+  return fsSync
+    .readdirSync(config.outputDir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".ts"))
+    .map((entry) => entry.name)
+    .sort(compareText);
+}
+
+async function createGeneratedFiles() {
   const project = new Project({
     tsConfigFilePath: config.tsConfigFilePath,
     skipAddingFilesFromTsConfig: false,
   });
 
   const filePaths = await fg(config.include, {
-    cwd: process.cwd(),
+    cwd: rootDir,
     absolute: true,
     ignore: config.exclude,
   });
 
   if (!filePaths.length) {
-    console.warn("No .types.ts files found.");
-    return;
+    throw new Error("No .types.ts files found.");
   }
 
-  await resetDir(config.outputDir);
-
-  await fs.writeFile(
-    path.join(config.outputDir, "types.ts"),
-    buildTypesFile(),
-    "utf8",
-  );
-
+  filePaths.sort(compareText);
+  const generatedFiles = new Map([["types.ts", buildTypesFile()]]);
   const generatedComponentNames = [];
 
   for (const filePath of filePaths) {
@@ -735,29 +896,91 @@ async function main() {
         name: componentName,
         interfaceName: propsName,
         description: getJsDocText(declaration.node),
-        sourcePath: path.relative(process.cwd(), filePath),
+        sourcePath: toPosixPath(path.relative(rootDir, filePath)),
         props,
       };
 
-      const outputFile = path.join(
-        config.outputDir,
+      generatedFiles.set(
         `${componentName}.props.ts`,
+        buildComponentFile(doc),
       );
-      await fs.writeFile(outputFile, buildComponentFile(doc), "utf8");
 
       generatedComponentNames.push(componentName);
     }
   }
 
-  await fs.writeFile(
-    path.join(config.outputDir, "index.ts"),
+  generatedFiles.set(
+    "index.ts",
     buildIndexFile(generatedComponentNames),
-    "utf8",
   );
+
+  return {
+    generatedComponentNames,
+    generatedFiles,
+  };
+}
+
+function verifyGeneratedFiles(generatedFiles) {
+  const expectedFileNames = [...generatedFiles.keys()].sort(compareText);
+  const existingFileNames = getExistingGeneratedFileNames();
+  const errors = [];
+
+  if (expectedFileNames.join("\n") !== existingFileNames.join("\n")) {
+    errors.push("generated file names do not match the expected component set");
+  }
+
+  for (const fileName of expectedFileNames) {
+    const filePath = path.join(config.outputDir, fileName);
+    if (!fsSync.existsSync(filePath)) continue;
+
+    const actual = normalizeGeneratedContent(fsSync.readFileSync(filePath, "utf8"));
+    const expected = normalizeGeneratedContent(generatedFiles.get(fileName));
+
+    if (actual !== expected) {
+      errors.push(`${toPosixPath(path.relative(rootDir, filePath))} is stale`);
+    }
+  }
+
+  if (errors.length > 0) {
+    throw new Error(
+      [
+        "Generated component documentation is not reproducible:",
+        ...errors.map((error) => `- ${error}`),
+        "Run npm run gen:docs and commit the generated output.",
+      ].join("\n"),
+    );
+  }
+}
+
+async function writeGeneratedFiles(generatedFiles) {
+  await resetDir(config.outputDir);
+
+  for (const fileName of [...generatedFiles.keys()].sort(compareText)) {
+    await fs.writeFile(
+      path.join(config.outputDir, fileName),
+      generatedFiles.get(fileName),
+      "utf8",
+    );
+  }
+}
+
+async function main() {
+  const { generatedComponentNames, generatedFiles } =
+    await createGeneratedFiles();
+
+  if (isCheckMode) {
+    verifyGeneratedFiles(generatedFiles);
+    console.log(
+      `Verified ${generatedComponentNames.length} reproducible component prop docs files.`,
+    );
+    return;
+  }
+
+  await writeGeneratedFiles(generatedFiles);
 
   console.log(
     `Generated ${generatedComponentNames.length} component prop docs files in ${path.relative(
-      process.cwd(),
+      rootDir,
       config.outputDir,
     )}`,
   );

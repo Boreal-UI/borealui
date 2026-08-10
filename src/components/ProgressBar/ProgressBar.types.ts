@@ -1,12 +1,11 @@
-import React from "react";
 import {
   LabelPositionType,
-  RoundingType,
   ShadowType,
   SizeType,
   StateType,
   ThemeType,
 } from "@/types/types";
+import React from "react";
 
 /**
  * Props for the ProgressBar component.
@@ -26,17 +25,15 @@ export interface ProgressBarProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Applies a translucent frosted-glass treatment to the progress track.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the progress bar.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;
@@ -55,7 +52,7 @@ export interface ProgressBarProps {
    *
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Shadow to apply to the progress bar.
@@ -155,7 +152,6 @@ export interface ProgressBarProps {
    * Useful when connecting the description with aria-describedby.
    */
   descriptionId?: string;
-
 
   /**
    * Optional test ID for testing frameworks.

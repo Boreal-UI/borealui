@@ -7,6 +7,7 @@ import NumberInputBase from "@/components/NumberInput/NumberInputBase";
 expect.extend(toHaveNoViolations);
 
 const classMap = {
+  large: "large",
   container: "container",
   label: "label",
   labelTop: "labelTop",
@@ -23,27 +24,26 @@ const classMap = {
   success: "success",
   error: "error",
   clear: "clear",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   shadowLight: "shadowLight",
   shadowStrong: "shadowStrong",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "glass",
+  outline: "outline",
 };
 
 const renderNumberInput = (
   props: Partial<React.ComponentProps<typeof NumberInputBase>> = {},
 ) =>
-  render(
-    <NumberInputBase
-      label="Quantity"
-      classMap={classMap}
-      {...props}
-    />,
-  );
+  render(<NumberInputBase label="Quantity" classMap={classMap} {...props} />);
 
 describe("NumberInputBase", () => {
+  it("applies the selected size class", () => {
+    renderNumberInput({ size: "large" });
+    expect(screen.getByTestId("number-input-wrapper")).toHaveClass("large");
+  });
+
   it("renders a labelled native number input", () => {
     renderNumberInput({ value: 3 });
 
@@ -118,7 +118,9 @@ describe("NumberInputBase", () => {
   it("can hide stepper controls", () => {
     renderNumberInput({ showControls: false });
 
-    expect(screen.queryByTestId("number-input-controls")).not.toBeInTheDocument();
+    expect(
+      screen.queryByTestId("number-input-controls"),
+    ).not.toBeInTheDocument();
   });
 
   it("uses aria-label when no visible label is provided", () => {
@@ -148,8 +150,7 @@ describe("NumberInputBase", () => {
     renderNumberInput({
       theme: "secondary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
       rounding: "large",
       shadow: "strong",
     });
@@ -193,9 +194,7 @@ describe("NumberInputBase", () => {
 
   it("forwards refs to the input", () => {
     const ref = React.createRef<HTMLInputElement>();
-    render(
-      <NumberInputBase label="Quantity" classMap={classMap} ref={ref} />,
-    );
+    render(<NumberInputBase label="Quantity" classMap={classMap} ref={ref} />);
 
     expect(ref.current).toBe(screen.getByTestId("number-input-input"));
   });

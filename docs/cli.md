@@ -28,21 +28,21 @@ The setup edits are idempotent. Running the command again repairs missing setup 
 
 ## Options
 
-| Option | Description |
-| --- | --- |
-| `--cwd`, `--project`, `--dir <path>` | Project directory to configure. |
-| `--framework <react\|next>` | Override automatic framework detection. |
-| `--package-manager <npm\|pnpm\|yarn\|bun>` | Override automatic package-manager detection. |
-| `--install` | Install dependencies after applying edits. This is the default. |
-| `--no-install` | Leave dependency installation to you. |
-| `--recommended-globals` | Add or repair the Boreal-safe Next.js global CSS baseline. |
-| `--no-recommended-globals` | Skip the Next.js global CSS baseline. |
-| `--agents-guide` | Add an optional consumer-focused `AGENTS.md`. |
-| `--no-agents-guide` | Do not add `AGENTS.md`. This is the default. |
-| `--dry-run`, `--check` | Print planned changes without writing files or installing packages. |
-| `--yes`, `-y` | Accept recommended setup edits without file-by-file prompts. |
-| `--help`, `-h` | Print help. |
-| `--version`, `-v` | Print the CLI version. |
+| Option                                     | Description                                                         |
+| ------------------------------------------ | ------------------------------------------------------------------- |
+| `--cwd`, `--project`, `--dir <path>`       | Project directory to configure.                                     |
+| `--framework <react\|next>`                | Override automatic framework detection.                             |
+| `--package-manager <npm\|pnpm\|yarn\|bun>` | Override automatic package-manager detection.                       |
+| `--install`                                | Install dependencies after applying edits. This is the default.     |
+| `--no-install`                             | Leave dependency installation to you.                               |
+| `--recommended-globals`                    | Add or repair the Boreal-safe Next.js global CSS baseline.          |
+| `--no-recommended-globals`                 | Skip the Next.js global CSS baseline.                               |
+| `--agents-guide`                           | Add an optional consumer-focused `AGENTS.md`.                       |
+| `--no-agents-guide`                        | Do not add `AGENTS.md`. This is the default.                        |
+| `--dry-run`, `--check`                     | Print planned changes without writing files or installing packages. |
+| `--yes`, `-y`                              | Accept recommended setup edits without file-by-file prompts.        |
+| `--help`, `-h`                             | Print help.                                                         |
+| `--version`, `-v`                          | Print the CLI version.                                              |
 
 ## Generated Setup
 

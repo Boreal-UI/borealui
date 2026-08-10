@@ -13,7 +13,10 @@ import "@boreal-ui/next/globals.css";
 
 Use this package when you want the Next.js wrappers and `next/link`, `next/image`, and app router compatibility.
 
-TypeScript consumers should also install the shared declarations:
+Generated prop metadata is available separately from the optional
+`@boreal-ui/docs` package.
+
+Component declarations are included through this package. Install the shared declarations directly only when application code imports from `@boreal-ui/types`:
 
 ```sh
 npm install -D @boreal-ui/types
@@ -37,6 +40,9 @@ Available server entries are `Alert`, `Avatar`, `Badge`, `BarChart`,
 `PageHeader`, `ProgressBar`, `RadioButton`, `RadioGroup`, `Select`, `Skeleton`,
 `Sparkline`, `TextArea`, `TextInput`, `ThemeProvider`, `Timeline`, `Toolbar`,
 `Typography`, and `ValidationSummary`.
+
+The `Layout` entry exports `Container`, `Grid`, `Inline`, `Section`, `Stack`,
+`BentoBox`, and `BentoBoxItem`.
 
 The form and normally interactive entries are deliberately stripped server
 variants. They render static links, read-only fields, or native initial form

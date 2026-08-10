@@ -63,6 +63,12 @@ export interface TextInputProps extends NativeInputProps {
   /** Additional class names for the password toggle button. */
   togglePasswordClassName?: string;
 
+  /** Additional class names for the helper text. */
+  helperTextClassName?: string;
+
+  /** Additional class names for the validation error message. */
+  errorMessageClassName?: string;
+
   /** Additional class names for the screen-reader-only text. */
   srOnlyClassName?: string;
 
@@ -107,17 +113,15 @@ export interface TextInputProps extends NativeInputProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Adds translucent glass styling to the input wrapper.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * State of the input.
-   * "success" | "error" | "warning" | "disabled" | ""
+   * "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;
@@ -137,22 +141,6 @@ export interface TextInputProps extends NativeInputProps {
    * @default configured default shadow (fallback: "light")
    */
   shadow?: ShadowType;
-
-  /**
-   * If true, the input is outlined instead of filled.
-   *
-   * @default configured default outline setting (fallback: false)
-   */
-  outline?: boolean;
-
-  /**
-   * Controls whether autocomplete is enabled.
-   * Pass true for "on" or false for "off".
-   *
-   * @default false
-   */
-  autocomplete?: boolean;
-
   /**
    * Maximum length of the input.
    */
@@ -254,6 +242,14 @@ export interface TextInputProps extends NativeInputProps {
 
   /** Backward-compatible alias for test ID attributes. */
   "data-testid"?: string;
+  invalid?: boolean;
+  /** Supporting text associated with the input through aria-describedby. */
+  helperText?: ReactNode;
+
+  /** Validation message associated with the input and announced as an alert. */
+  errorMessage?: ReactNode;
+  size?: import("@/types/types").SizeType;
+  autoComplete?: string;
 }
 
 export interface TextInputBaseProps extends TextInputProps {

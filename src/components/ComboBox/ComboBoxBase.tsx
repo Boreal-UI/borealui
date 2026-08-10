@@ -10,9 +10,9 @@ import {
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
+  getDefaultSize,
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -36,10 +36,10 @@ export default function ComboBoxBase({
   id,
   theme = getDefaultTheme(),
   state,
-  outline = getDefaultOutline(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   rounding = getDefaultRounding(),
   shadow,
+  size = getDefaultSize(),
   className,
   layoutClassName,
   labelClassName,
@@ -47,7 +47,7 @@ export default function ComboBoxBase({
   listboxClassName,
   optionClassName,
   helperText,
-  error,
+  errorMessage,
   helperTextClassName,
   errorClassName,
   "aria-label": ariaLabel,
@@ -62,7 +62,7 @@ export default function ComboBoxBase({
   const resolvedTestId = testId ?? dataTestId ?? "combobox";
   const listboxId = `${resolvedId}-listbox`;
   const helperId = helperText ? `${resolvedId}-helper` : undefined;
-  const errorId = error ? `${resolvedId}-error` : undefined;
+  const errorId = errorMessage ? `${resolvedId}-errorMessage` : undefined;
   const [open, setOpen] = useState(false);
   const [internalInput, setInternalInput] = useState("");
   const [activeIndex, setActiveIndex] = useState(0);
@@ -122,10 +122,12 @@ export default function ComboBoxBase({
     () =>
       combineClassNames(
         classMap.comboBox,
+        classMap[size],
         classMap[theme],
         state && classMap[state],
-        outline && classMap.outline,
-        glass && classMap.glass,
+        (variant === "outline" || variant === "glassOutline") &&
+          classMap.outline,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
         disabled && classMap.disabled,
@@ -133,10 +135,10 @@ export default function ComboBoxBase({
       ),
     [
       classMap,
+      size,
       theme,
       state,
-      outline,
-      glass,
+      variant,
       shadow,
       rounding,
       disabled,
@@ -219,7 +221,7 @@ export default function ComboBoxBase({
           aria-label={ariaLabel}
           aria-labelledby={ariaLabelledBy}
           aria-describedby={describedBy || undefined}
-          aria-invalid={Boolean(error) || state === "error" || undefined}
+          aria-invalid={Boolean(errorMessage) || state === "error" || undefined}
           required={required}
           disabled={disabled}
           placeholder={placeholder}
@@ -243,7 +245,7 @@ export default function ComboBoxBase({
           }}
           data-testid={`${resolvedTestId}-toggle`}
         >
-          ▾
+          <span className={classMap.toggleIcon}>▾</span>
         </button>
         {open ? (
           <>
@@ -296,7 +298,7 @@ export default function ComboBoxBase({
                   >
                     <span>{option.label}</span>
                     {option.description ? (
-                      <small className={classMap.description}>
+                      <small className={classMap.helperText}>
                         {option.description}
                       </small>
                     ) : null}
@@ -318,13 +320,13 @@ export default function ComboBoxBase({
           {helperText}
         </div>
       ) : null}
-      {error ? (
+      {errorMessage ? (
         <div
           id={errorId}
-          className={combineClassNames(classMap.errorText, errorClassName)}
+          className={combineClassNames(classMap.error, errorClassName)}
           role="alert"
         >
-          {error}
+          {errorMessage}
         </div>
       ) : null}
     </div>

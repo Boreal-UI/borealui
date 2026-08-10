@@ -48,7 +48,7 @@ const PortalBase = forwardRef<HTMLDivElement, PortalBaseProps>(
         {srOnlyText ? (
           <span
             className={combineClassNames(
-              classMap.srOnly ?? "sr_only",
+              "sr_only",
               srOnlyClassName,
             )}
             data-testid={`${testId}-sr-only-text`}

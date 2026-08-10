@@ -1,3 +1,8 @@
+import type { ComponentType, SVGProps } from "react";
+
+/** A framework-neutral SVG icon component accepted by Boreal UI components. */
+export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
+
 /**
  * Represents a named color scheme used for theming components.
  */
@@ -79,13 +84,11 @@ export type ShadowType =
   | "none"
   | "light"
   | "lt"
-  | "small"
   | "sm"
   | "medium"
   | "md"
   | "strong"
   | "str"
-  | "large"
   | "lg"
   | "intense"
   | "xl";
@@ -100,8 +103,19 @@ export type RoundingType =
   | "medium"
   | "md"
   | "large"
-  | "lg"
-  | "full";
+  | "lg";
+
+/** Border radius values for controls and surfaces that support pill or circular shapes. */
+export type RoundableRoundingType = RoundingType | "full";
+
+/** Common surface treatments, including the composable glass-and-outline treatment. */
+export type VariantType = "solid" | "outline" | "glass" | "glassOutline";
+
+/** Common placement values for floating UI and edge-attached surfaces. */
+export type PlacementType = "top" | "bottom" | "left" | "right";
+
+/** Direction-aware content alignment. */
+export type AlignmentType = "start" | "center" | "end";
 
 /**
  * Border width values used for component borders.

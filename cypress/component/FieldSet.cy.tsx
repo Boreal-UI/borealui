@@ -14,13 +14,12 @@ implementations.forEach(({ name, FieldSet }) => {
       cy.viewport(800, 520);
     });
 
-    it("groups controls with legend, description, and helper text", () => {
+    it("groups controls with a legend and helper text", () => {
       cy.mount(
         <div style={{ padding: 24 }}>
           <FieldSet
             legend="Contact preferences"
-            description="Choose how account updates should reach you."
-            helperText="You can change this later."
+            helperText="Choose how account updates should reach you. You can change this later."
             data-testid="contact-fieldset"
           >
             <label htmlFor={`${name}-email-updates`}>
@@ -31,13 +30,9 @@ implementations.forEach(({ name, FieldSet }) => {
       );
 
       cy.get("fieldset").should("contain", "Contact preferences");
-      cy.get('[data-testid="contact-fieldset-description"]').should(
+      cy.get('[data-testid="contact-fieldset-helperText"]').should(
         "contain",
-        "Choose how account updates should reach you.",
-      );
-      cy.get('[data-testid="contact-fieldset-helper-text"]').should(
-        "contain",
-        "You can change this later.",
+        "Choose how account updates should reach you. You can change this later.",
       );
       cy.get('[data-testid="contact-fieldset-root"]').should(
         "have.attr",
@@ -51,7 +46,7 @@ implementations.forEach(({ name, FieldSet }) => {
           <FieldSet
             legend="Delivery speed"
             disabled
-            error="Pick a delivery speed before continuing."
+            errorMessage="Pick a delivery speed before continuing."
             data-testid="delivery-fieldset"
           >
             <label htmlFor={`${name}-standard-speed`}>

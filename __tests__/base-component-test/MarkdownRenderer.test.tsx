@@ -268,6 +268,24 @@ describe("BaseMarkdownRenderer", () => {
     });
   });
 
+  it("removes repeated and malformed event-handler attributes", async () => {
+    render(
+      <BaseMarkdownRenderer
+        content={`<img src="/safe.png" onerror="alert(1)" oonnerror="alert(2)" onfocus=alert(3) alt="safe" />`}
+        classMap={classNames}
+        allowHtml
+        data-testid="markdown-renderer"
+      />,
+    );
+
+    const image = await screen.findByRole("img", { name: "safe" });
+    expect(
+      [...image.attributes].filter((attribute) =>
+        attribute.name.toLowerCase().startsWith("on"),
+      ),
+    ).toHaveLength(0);
+  });
+
   it("sanitizes javascript: urls from links and images", async () => {
     render(
       <BaseMarkdownRenderer
@@ -361,7 +379,9 @@ describe("BaseMarkdownRenderer", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByRole("heading", { name: "Title" })).toBeInTheDocument();
+      expect(
+        screen.getByRole("heading", { name: "Title" }),
+      ).toBeInTheDocument();
       expect(
         screen.getByRole("heading", { name: "Subtitle" }),
       ).toBeInTheDocument();

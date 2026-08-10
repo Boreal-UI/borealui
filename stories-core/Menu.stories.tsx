@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { FaCopy, FaEdit, FaFolderOpen, FaTrash } from "react-icons/fa";
+import { FaCopy, FaEdit, FaFolderOpen, FaTrash } from "../shared-story-assets/icons";
 import { Button, Menu, StateType } from "../src/index.core";
 import type { MenuProps } from "../src/components/Menu/Menu.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
@@ -199,7 +199,7 @@ export const GlassThemeVariants: Story = {
           trigger={theme}
           activation="click"
           theme={theme}
-          glass
+          variant="glass"
           aria-label={`Glass ${theme} menu`}
           items={[{ label: `Glass ${theme}`, onClick: () => {} }]}
         />

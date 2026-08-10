@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { AttachmentType, IconButton, Toolbar } from "../src/index.core";
-import { FaBell, FaArrowLeft } from "react-icons/fa";
+import { FaBell, FaArrowLeft } from "../shared-story-assets/icons";
 import type { ToolbarBaseProps } from "../src/components/Toolbar/Toolbar.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import {
@@ -113,7 +113,7 @@ export const GlassThemeVariants: Story = {
             key={`glass-${theme}`}
             {...args}
             theme={theme}
-            glass
+            variant="glass"
             title={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
             left={leftIcon}
             right={rightIcon}

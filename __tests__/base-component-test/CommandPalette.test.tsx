@@ -47,16 +47,16 @@ const classMap: Record<string, string> = {
   active: "active",
   icon: "icon",
   empty: "empty",
-  glass: "glass",
   srOnly: "srOnly",
   shadowLight: "shadowLight",
   shadowNone: "shadowNone",
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
+  glass: "glass",
 };
 
 type RenderPaletteOptions = {
-  isOpen?: boolean;
+  open?: boolean;
   commands?: CommandItem[];
   onClose?: jest.Mock;
   asyncSearch?: (query: string) => Promise<CommandItem[]>;
@@ -67,7 +67,7 @@ type RenderPaletteOptions = {
   shadow?: "light" | "none";
   state?: "" | "success";
   className?: string;
-  glass?: boolean;
+  variant?: "solid" | "outline" | "glass" | "glassOutline";
   testId?: string;
 
   paletteId?: string;
@@ -99,7 +99,7 @@ const setupPortal = (): HTMLDivElement => {
 };
 
 const renderPalette = ({
-  isOpen = true,
+  open = true,
   commands = createMockCommands(),
   onClose = jest.fn(),
   asyncSearch,
@@ -110,7 +110,7 @@ const renderPalette = ({
   shadow = "light",
   state = "",
   className,
-  glass = false,
+  variant = "solid",
   testId = "command-palette",
   paletteId,
   inputId,
@@ -132,7 +132,7 @@ const renderPalette = ({
   return {
     ...render(
       <CommandPaletteBase
-        isOpen={isOpen}
+        open={open}
         commands={commands}
         onClose={onClose}
         asyncSearch={asyncSearch}
@@ -142,7 +142,6 @@ const renderPalette = ({
         rounding={rounding}
         shadow={shadow}
         state={state}
-        glass={glass}
         TextInputComponent={DummyTextInput}
         classMap={classMap}
         className={className}
@@ -163,6 +162,7 @@ const renderPalette = ({
         modal={modal}
         trapFocus={trapFocus}
         restoreFocusOnClose={restoreFocusOnClose}
+        variant={variant}
       />,
     ),
     commands,
@@ -183,7 +183,7 @@ describe("CommandPaletteBase", () => {
   });
 
   it("renders nothing when closed", () => {
-    renderPalette({ isOpen: false });
+    renderPalette({ open: false });
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
     expect(screen.queryByRole("combobox")).not.toBeInTheDocument();
@@ -216,7 +216,7 @@ describe("CommandPaletteBase", () => {
       rounding: "medium",
       shadow: "light",
       state: "success",
-      glass: true,
+      variant: "glassOutline",
     });
 
     const dialog = screen.getByRole("dialog");
@@ -230,7 +230,7 @@ describe("CommandPaletteBase", () => {
   });
 
   it("passes glass styling to the nested text input", () => {
-    renderPalette({ glass: true });
+    renderPalette({ variant: "glassOutline" });
 
     expect(screen.getByRole("combobox")).toHaveAttribute("data-glass", "true");
   });
@@ -350,6 +350,7 @@ describe("CommandPaletteBase", () => {
 
     const options = screen.getAllByRole("option");
     expect(options[0]).toHaveAttribute("aria-selected", "false");
+    expect(options[0]).toHaveClass("disabled");
     expect(options[1]).toHaveAttribute("aria-selected", "true");
   });
 
@@ -622,7 +623,7 @@ describe("CommandPaletteBase", () => {
         <h2 id="palette-heading">Command Menu</h2>
         <p id="palette-description">Search and run a command.</p>
         <CommandPaletteBase
-          isOpen
+          open
           commands={createMockCommands()}
           onClose={jest.fn()}
           TextInputComponent={DummyTextInput}
@@ -663,7 +664,7 @@ describe("CommandPaletteBase", () => {
       <>
         <span id="external-label">External command search label</span>
         <CommandPaletteBase
-          isOpen
+          open
           commands={createMockCommands()}
           onClose={jest.fn()}
           TextInputComponent={DummyTextInput}
@@ -685,7 +686,7 @@ describe("CommandPaletteBase", () => {
       <>
         <span id="input-description">Type to filter commands</span>
         <CommandPaletteBase
-          isOpen
+          open
           commands={createMockCommands()}
           onClose={jest.fn()}
           TextInputComponent={DummyTextInput}
@@ -728,7 +729,7 @@ describe("CommandPaletteBase", () => {
   it("respects a provided aria-activedescendant override", () => {
     render(
       <CommandPaletteBase
-        isOpen
+        open
         commands={createMockCommands()}
         onClose={jest.fn()}
         TextInputComponent={DummyTextInput}
@@ -756,7 +757,7 @@ describe("CommandPaletteBase", () => {
   it("respects a provided aria-expanded override", () => {
     render(
       <CommandPaletteBase
-        isOpen
+        open
         commands={createMockCommands()}
         onClose={jest.fn()}
         TextInputComponent={DummyTextInput}

@@ -52,17 +52,15 @@ export interface PagerProps {
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Applies a translucent frosted-glass treatment to the pager and nested controls.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Optional state of the component for feedback styling.
-   * One of: "success" | "error" | "warning" | "disabled" | ""
+   * One of: "success" | "error" | "warning" | "info" | "disabled" | ""
    *
    */
   state?: StateType;
@@ -101,21 +99,21 @@ export interface PagerProps {
    *
    * @default "Page list"
    */
-  "page-list-aria-label"?: string;
+  pageListAriaLabel?: string;
 
   /**
    * Accessible label for the previous page button.
    *
    * @default "Go to previous page"
    */
-  "previous-button-aria-label"?: string;
+  previousButtonAriaLabel?: string;
 
   /**
    * Accessible label for the next page button.
    *
    * @default "Go to next page"
    */
-  "next-button-aria-label"?: string;
+  nextButtonAriaLabel?: string;
 
   /**
    * Function used to generate an accessible label for each page button.
@@ -137,7 +135,6 @@ export interface PagerProps {
    * @default "polite"
    */
   liveRegionAriaLive?: "off" | "polite" | "assertive";
-
 
   /**
    * Optional test ID for testing frameworks.

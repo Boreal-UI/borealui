@@ -1,4 +1,3 @@
-import React from "react";
 import { render, screen } from "@testing-library/react";
 import BaseFormGroup from "@/components/FormGroup/FormGroupBase";
 import { axe, toHaveNoViolations } from "jest-axe";
@@ -13,14 +12,15 @@ const classNames = {
   inputWrapper: "inputWrapper",
   inputField: "inputField",
   controller: "controller",
-  description: "description",
-  errorMessage: "errorMessage",
+  helperText: "helperText",
+  error: "error",
+  errorText: "errorText",
   vertical: "layoutVertical",
   horizontal: "layoutHorizontal",
   xs: "spacingXs",
   medium: "spacingMedium",
   large: "spacingLarge",
-  error: "hasError",
+  formError: "inputFieldError",
 };
 
 describe("BaseFormGroup", () => {
@@ -29,7 +29,7 @@ describe("BaseFormGroup", () => {
       <BaseFormGroup
         id="login"
         label="Login Info"
-        description="Enter your email and password"
+        helperText="Enter your email and password"
         classMap={classNames}
         spacing="medium"
         layout="vertical"
@@ -42,7 +42,7 @@ describe("BaseFormGroup", () => {
       </BaseFormGroup>,
     );
 
-  it("renders the group with label, description, and children", () => {
+  it("renders the group with label, helperText, and children", () => {
     renderBasicGroup();
 
     const group = screen.getByRole("group");
@@ -51,7 +51,7 @@ describe("BaseFormGroup", () => {
     expect(screen.getByTestId("form-group-label")).toHaveTextContent(
       "Login Info",
     );
-    expect(screen.getByTestId("form-group-description")).toHaveTextContent(
+    expect(screen.getByTestId("form-group-helperText")).toHaveTextContent(
       "Enter your email and password",
     );
 
@@ -68,12 +68,12 @@ describe("BaseFormGroup", () => {
     ).toBeInTheDocument();
   });
 
-  it("sets aria-labelledby and aria-describedby correctly when label and description exist", () => {
+  it("sets aria-labelledby and aria-describedby correctly when label and helperText exist", () => {
     renderBasicGroup();
 
     const group = screen.getByRole("group");
     expect(group).toHaveAttribute("aria-labelledby", "login-label");
-    expect(group).toHaveAttribute("aria-describedby", "login-description");
+    expect(group).toHaveAttribute("aria-describedby", "login-helperText");
   });
 
   it("applies generated accessibility props to the first child control", () => {
@@ -81,7 +81,7 @@ describe("BaseFormGroup", () => {
       <BaseFormGroup
         id="contact"
         label="Contact Info"
-        description="Enter your contact info"
+        helperText="Enter your contact info"
         required
         classMap={classNames}
       >
@@ -92,7 +92,7 @@ describe("BaseFormGroup", () => {
     const input = screen.getByRole("textbox");
     expect(input).toHaveAttribute("id", "contact");
     expect(input).toHaveAttribute("aria-labelledby", "contact-label");
-    expect(input).toHaveAttribute("aria-describedby", "contact-description");
+    expect(input).toHaveAttribute("aria-describedby", "contact-helperText");
     expect(input).toHaveAttribute("aria-required", "true");
     expect(input).toBeRequired();
   });
@@ -115,12 +115,12 @@ describe("BaseFormGroup", () => {
     expect(required).toHaveAttribute("aria-hidden", "true");
   });
 
-  it("renders error message and alert role when error is provided", () => {
+  it("renders errorMessage message and alert role when errorMessage is provided", () => {
     render(
       <BaseFormGroup
         id="contact"
         label="Contact Info"
-        error="This field is required"
+        errorMessage="This field is required"
         required
         classMap={classNames}
       >
@@ -128,22 +128,22 @@ describe("BaseFormGroup", () => {
       </BaseFormGroup>,
     );
 
-    const error = screen.getByTestId("form-group-error");
+    const errorMessage = screen.getByTestId("form-group-errorMessage");
     const input = screen.getByRole("textbox");
 
-    expect(error).toHaveTextContent("This field is required");
-    expect(error).toHaveAttribute("role", "alert");
+    expect(errorMessage).toHaveTextContent("This field is required");
+    expect(errorMessage).toHaveAttribute("role", "alert");
     expect(input).toHaveAttribute("aria-invalid", "true");
-    expect(input).toHaveAttribute("aria-errormessage", "contact-error");
-    expect(input).toHaveAttribute("aria-describedby", "contact-error");
+    expect(input).toHaveAttribute("aria-errormessage", "contact-errorMessage");
+    expect(input).toHaveAttribute("aria-describedby", "contact-errorMessage");
   });
 
-  it("uses error id in wrapper aria-describedby when error is present", () => {
+  it("uses errorMessage id in wrapper aria-describedby when errorMessage is present", () => {
     render(
       <BaseFormGroup
         id="contact"
         label="Contact Info"
-        error="This field is required"
+        errorMessage="This field is required"
         classMap={classNames}
       >
         <input type="text" title="test input" />
@@ -151,16 +151,16 @@ describe("BaseFormGroup", () => {
     );
 
     const group = screen.getByRole("group");
-    expect(group).toHaveAttribute("aria-describedby", "contact-error");
+    expect(group).toHaveAttribute("aria-describedby", "contact-errorMessage");
   });
 
-  it("uses both error and description ids in wrapper aria-describedby when both are present", () => {
+  it("uses both errorMessage and helperText ids in wrapper aria-describedby when both are present", () => {
     render(
       <BaseFormGroup
         id="account"
         label="Account Info"
-        description="Use your primary email"
-        error="Email is invalid"
+        helperText="Use your primary email"
+        errorMessage="Email is invalid"
         classMap={classNames}
       >
         <input type="email" title="test input" />
@@ -170,17 +170,17 @@ describe("BaseFormGroup", () => {
     const group = screen.getByRole("group");
     expect(group).toHaveAttribute(
       "aria-describedby",
-      "account-error account-description",
+      "account-errorMessage account-helperText",
     );
   });
 
-  it("uses both error and description ids in child aria-describedby when both are present", () => {
+  it("uses both errorMessage and helperText ids in child aria-describedby when both are present", () => {
     render(
       <BaseFormGroup
         id="account"
         label="Account Info"
-        description="Use your primary email"
-        error="Email is invalid"
+        helperText="Use your primary email"
+        errorMessage="Email is invalid"
         classMap={classNames}
       >
         <input type="email" title="test input" />
@@ -190,19 +190,19 @@ describe("BaseFormGroup", () => {
     const input = screen.getByRole("textbox");
     expect(input).toHaveAttribute(
       "aria-describedby",
-      "account-error account-description",
+      "account-errorMessage account-helperText",
     );
-    expect(input).toHaveAttribute("aria-errormessage", "account-error");
+    expect(input).toHaveAttribute("aria-errormessage", "account-errorMessage");
     expect(input).toHaveAttribute("aria-invalid", "true");
   });
 
-  it("does not render description when error is present", () => {
+  it("does not render helperText when errorMessage is present", () => {
     render(
       <BaseFormGroup
         id="profile"
         label="Profile"
-        description="Helpful description"
-        error="Something went wrong"
+        helperText="Helpful helperText"
+        errorMessage="Something went wrong"
         classMap={classNames}
       >
         <input type="text" title="test input" />
@@ -210,9 +210,9 @@ describe("BaseFormGroup", () => {
     );
 
     expect(
-      screen.queryByTestId("form-group-description"),
+      screen.queryByTestId("form-group-helperText"),
     ).not.toBeInTheDocument();
-    expect(screen.getByTestId("form-group-error")).toBeInTheDocument();
+    expect(screen.getByTestId("form-group-errorMessage")).toBeInTheDocument();
   });
 
   it("applies wrapper, layout, and spacing classes", () => {
@@ -234,19 +234,27 @@ describe("BaseFormGroup", () => {
     expect(group).toHaveClass("spacingLarge");
   });
 
-  it("applies error class to wrapper when error exists", () => {
+  it("applies the error class to each input field when errorMessage exists", () => {
     render(
       <BaseFormGroup
         id="profile"
         label="Profile"
-        error="Required field"
+        errorMessage="Required field"
         classMap={classNames}
       >
         <input type="text" title="test input" />
+        <input type="text" title="second test input" />
       </BaseFormGroup>,
     );
 
-    expect(screen.getByTestId("form-group")).toHaveClass("hasError");
+    expect(screen.getByTestId("form-group-input-field-0")).toHaveClass(
+      "inputField",
+      "inputFieldError",
+    );
+    expect(screen.getByTestId("form-group-input-field-1")).toHaveClass(
+      "inputField",
+      "inputFieldError",
+    );
   });
 
   it("merges custom className into wrapper classes", () => {
@@ -269,7 +277,7 @@ describe("BaseFormGroup", () => {
       <BaseFormGroup
         id="custom-sections"
         label="Custom Sections"
-        description="Helpful detail"
+        helperText="Helpful detail"
         required
         classMap={classNames}
         labelClassName="custom-label"
@@ -277,7 +285,7 @@ describe("BaseFormGroup", () => {
         inputWrapperClassName="custom-input-wrapper"
         inputFieldClassName="custom-input-field"
         controllerClassName="custom-controller"
-        descriptionClassName="custom-description"
+        descriptionClassName="custom-helperText"
         controller={<button type="button">Reset</button>}
       >
         <input type="text" title="test input" />
@@ -304,28 +312,28 @@ describe("BaseFormGroup", () => {
       "controller",
       "custom-controller",
     );
-    expect(screen.getByTestId("form-group-description")).toHaveClass(
-      "description",
-      "custom-description",
+    expect(screen.getByTestId("form-group-helperText")).toHaveClass(
+      "helperText",
+      "custom-helperText",
     );
   });
 
-  it("applies custom class names to form group error messages", () => {
+  it("applies custom class names to form group errorMessage messages", () => {
     render(
       <BaseFormGroup
-        id="custom-error"
+        id="custom-errorMessage"
         label="Custom Error"
-        error="Required"
+        errorMessage="Required"
         classMap={classNames}
-        errorMessageClassName="custom-error-message"
+        errorMessageClassName="custom-errorMessage-message"
       >
         <input type="text" title="test input" />
       </BaseFormGroup>,
     );
 
-    expect(screen.getByTestId("form-group-error")).toHaveClass(
-      "errorMessage",
-      "custom-error-message",
+    expect(screen.getByTestId("form-group-errorMessage")).toHaveClass(
+      "errorText",
+      "custom-errorMessage-message",
     );
   });
 
@@ -425,7 +433,7 @@ describe("BaseFormGroup", () => {
     render(
       <BaseFormGroup
         label="Generated"
-        description="Generated description"
+        helperText="Generated helperText"
         data-testid="generated-group"
         classMap={classNames}
       >
@@ -435,15 +443,15 @@ describe("BaseFormGroup", () => {
 
     const group = screen.getByTestId("generated-group");
     const label = screen.getByTestId("generated-group-label");
-    const description = screen.getByTestId("generated-group-description");
+    const helperText = screen.getByTestId("generated-group-helperText");
     const input = screen.getByRole("textbox");
 
     expect(label.id).toMatch(/^generated-group-.*-label$/);
-    expect(description.id).toMatch(/^generated-group-.*-description$/);
+    expect(helperText.id).toMatch(/^generated-group-.*-helperText$/);
     expect(input.id).toMatch(/^generated-group-.*$/);
     expect(label).toHaveAttribute("for", input.id);
     expect(group).toHaveAttribute("aria-labelledby", label.id);
-    expect(group).toHaveAttribute("aria-describedby", description.id);
+    expect(group).toHaveAttribute("aria-describedby", helperText.id);
   });
 
   it("supports a custom data-testid prefix", () => {
@@ -451,7 +459,7 @@ describe("BaseFormGroup", () => {
       <BaseFormGroup
         id="custom-test"
         label="Custom Test"
-        description="Testing ids"
+        helperText="Testing ids"
         data-testid="custom-form-group"
         classMap={classNames}
       >
@@ -462,7 +470,7 @@ describe("BaseFormGroup", () => {
     expect(screen.getByTestId("custom-form-group")).toBeInTheDocument();
     expect(screen.getByTestId("custom-form-group-label")).toBeInTheDocument();
     expect(
-      screen.getByTestId("custom-form-group-description"),
+      screen.getByTestId("custom-form-group-helperText"),
     ).toBeInTheDocument();
     expect(
       screen.getByTestId("custom-form-group-wrapper-0"),
@@ -484,7 +492,7 @@ describe("BaseFormGroup", () => {
     expect(screen.queryByTestId("form-group-label")).not.toBeInTheDocument();
   });
 
-  it("renders without description or error and omits wrapper aria-describedby", () => {
+  it("renders without helperText or errorMessage and omits wrapper aria-describedby", () => {
     render(
       <BaseFormGroup id="simple" label="Simple" classMap={classNames}>
         <input type="text" title="test input" />
@@ -520,36 +528,38 @@ describe("BaseFormGroup", () => {
     expect(screen.getByTestId("form-group-label")).toHaveClass("formLabel");
   });
 
-  it("applies description class", () => {
+  it("applies helperText class", () => {
     render(
       <BaseFormGroup
         id="desc"
         label="Description"
-        description="Extra info"
+        helperText="Extra info"
         classMap={classNames}
       >
         <input type="text" title="test input" />
       </BaseFormGroup>,
     );
 
-    expect(screen.getByTestId("form-group-description")).toHaveClass(
-      "description",
+    expect(screen.getByTestId("form-group-helperText")).toHaveClass(
+      "helperText",
     );
   });
 
-  it("applies error message class", () => {
+  it("applies errorMessage message class", () => {
     render(
       <BaseFormGroup
         id="error"
         label="Error"
-        error="Invalid value"
+        errorMessage="Invalid value"
         classMap={classNames}
       >
         <input type="text" title="test input" />
       </BaseFormGroup>,
     );
 
-    expect(screen.getByTestId("form-group-error")).toHaveClass("errorMessage");
+    expect(screen.getByTestId("form-group-errorMessage")).toHaveClass(
+      "errorText",
+    );
   });
 
   it("supports wrapper aria-label override", () => {
@@ -590,11 +600,11 @@ describe("BaseFormGroup", () => {
   it("supports wrapper aria-describedby override", () => {
     render(
       <>
-        <span id="external-description">External group description</span>
+        <span id="external-helperText">External group helperText</span>
         <BaseFormGroup
           id="search"
           label="Search"
-          aria-describedby="external-description"
+          aria-describedby="external-helperText"
           classMap={classNames}
         >
           <input type="text" title="test input" />
@@ -603,7 +613,7 @@ describe("BaseFormGroup", () => {
     );
 
     const group = screen.getByRole("group");
-    expect(group).toHaveAttribute("aria-describedby", "external-description");
+    expect(group).toHaveAttribute("aria-describedby", "external-helperText");
   });
 
   it("supports custom role", () => {
@@ -641,9 +651,9 @@ describe("BaseFormGroup", () => {
   it("supports descriptionProps", () => {
     render(
       <BaseFormGroup
-        id="with-description-props"
+        id="with-helperText-props"
         label="With Description Props"
-        description="Helpful text"
+        helperText="Helpful text"
         descriptionProps={{ title: "Description title" }}
         classMap={classNames}
       >
@@ -651,16 +661,16 @@ describe("BaseFormGroup", () => {
       </BaseFormGroup>,
     );
 
-    const description = screen.getByTestId("form-group-description");
-    expect(description).toHaveAttribute("title", "Description title");
+    const helperText = screen.getByTestId("form-group-helperText");
+    expect(helperText).toHaveAttribute("title", "Description title");
   });
 
   it("supports errorProps", () => {
     render(
       <BaseFormGroup
-        id="with-error-props"
+        id="with-errorMessage-props"
         label="With Error Props"
-        error="Something is wrong"
+        errorMessage="Something is wrong"
         errorProps={{ title: "Error title", "aria-live": "assertive" }}
         classMap={classNames}
       >
@@ -668,9 +678,9 @@ describe("BaseFormGroup", () => {
       </BaseFormGroup>,
     );
 
-    const error = screen.getByTestId("form-group-error");
-    expect(error).toHaveAttribute("title", "Error title");
-    expect(error).toHaveAttribute("aria-live", "assertive");
+    const errorMessage = screen.getByTestId("form-group-errorMessage");
+    expect(errorMessage).toHaveAttribute("title", "Error title");
+    expect(errorMessage).toHaveAttribute("aria-live", "assertive");
   });
 
   it("supports controlProps overrides", () => {
@@ -678,12 +688,12 @@ describe("BaseFormGroup", () => {
       <BaseFormGroup
         id="email"
         label="Email"
-        description="Helpful text"
+        helperText="Helpful text"
         classMap={classNames}
         controlProps={{
           id: "custom-email",
           "aria-label": "Custom email field",
-          "aria-describedby": "custom-description",
+          "aria-describedby": "custom-helperText",
           "aria-labelledby": "custom-label",
         }}
       >
@@ -693,7 +703,7 @@ describe("BaseFormGroup", () => {
 
     const input = screen.getByLabelText("Custom email field");
     expect(input).toHaveAttribute("id", "custom-email");
-    expect(input).toHaveAttribute("aria-describedby", "custom-description");
+    expect(input).toHaveAttribute("aria-describedby", "custom-helperText");
     expect(input).toHaveAttribute("aria-labelledby", "custom-label");
     expect(screen.getByTestId("form-group-label")).toHaveAttribute(
       "for",
@@ -720,7 +730,7 @@ describe("BaseFormGroup", () => {
       <BaseFormGroup
         id="signup"
         label="Signup Info"
-        description="Enter a valid email and password"
+        helperText="Enter a valid email and password"
         classMap={classNames}
         spacing="medium"
         layout="vertical"
@@ -736,12 +746,12 @@ describe("BaseFormGroup", () => {
     expect(results).toHaveNoViolations();
   });
 
-  it("has no accessibility violations in error state", async () => {
+  it("has no accessibility violations in errorMessage state", async () => {
     const { container } = render(
       <BaseFormGroup
         id="email"
         label="Email"
-        error="Email is required"
+        errorMessage="Email is required"
         required
         classMap={classNames}
       >
@@ -758,7 +768,7 @@ describe("BaseFormGroup", () => {
       <BaseFormGroup
         id="search"
         label="Search"
-        description="Search for a record"
+        helperText="Search for a record"
         classMap={classNames}
         controller={<button type="button">Go</button>}
       >

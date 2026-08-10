@@ -29,11 +29,11 @@ const classMap = {
   disabled: "disabled",
   primary: "primary",
   success: "success",
-  glass: "glass",
   shadowLight: "shadowLight",
   shadowMedium: "shadowMedium",
   roundSmall: "roundSmall",
   roundMedium: "roundMedium",
+  glass: "glass",
 };
 
 const createItems = () => [
@@ -281,7 +281,7 @@ describe("BaseMenu", () => {
     renderMenu({
       theme: "primary",
       state: "success",
-      glass: true,
+      variant: "glassOutline",
       rounding: "medium",
       shadow: "light",
       menuClassName: "customMenu",

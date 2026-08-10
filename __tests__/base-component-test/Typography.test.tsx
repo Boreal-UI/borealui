@@ -45,13 +45,13 @@ const mockClassMap = {
   warning: "warning",
   error: "error",
   themeInherit: "themeInherit",
-  glass: "glass",
 
   italic: "italic",
   underline: "underline",
   truncate: "truncate",
   noWrap: "noWrap",
   srOnly: "srOnly",
+  glass: "glass",
 };
 
 const combineClassNames = (
@@ -99,7 +99,7 @@ describe("TypographyBase", () => {
     variantTagMap.forEach(([variant, expectedTag]) => {
       const { unmount } = render(
         <TypographyBase
-          variant={variant as TypographyVariant}
+          textStyle={variant as TypographyVariant}
           classMap={mockClassMap}
           combineClassNames={combineClassNames}
         >
@@ -113,7 +113,7 @@ describe("TypographyBase", () => {
   });
 
   it("uses the `as` prop instead of the default tag", () => {
-    renderTypography({ variant: "body", as: "div" });
+    renderTypography({ textStyle: "body", as: "div" });
 
     const element = screen.getByTestId("typography");
     expect(element.tagName).toBe("DIV");
@@ -121,11 +121,11 @@ describe("TypographyBase", () => {
 
   it("applies the base, variant, alignment, weight, theme, and glass classes", () => {
     renderTypography({
-      variant: "h2",
       align: "center",
       weight: "bold",
       theme: "success",
-      glass: true,
+      textStyle: "h2",
+      variant: "glassOutline",
     });
 
     const element = screen.getByTestId("typography");
@@ -154,7 +154,7 @@ describe("TypographyBase", () => {
       "underline",
       "truncate",
       "noWrap",
-      "srOnly",
+      "sr_only",
     );
   });
 
@@ -319,7 +319,7 @@ describe("TypographyBase", () => {
   });
 
   it("renders code variant with the code class", () => {
-    renderTypography({ variant: "code" });
+    renderTypography({ textStyle: "code" });
 
     const element = screen.getByTestId("typography");
     expect(element.tagName).toBe("CODE");
@@ -334,13 +334,13 @@ describe("TypographyBase", () => {
     const element = screen.getByTestId("typography");
     expect(element).toBeInTheDocument();
     expect(element).toHaveTextContent("Example text");
-    expect(element).toHaveClass("srOnly");
+    expect(element).toHaveClass("sr_only");
   });
 
   it("has no accessibility violations in a standard usage", async () => {
     const { container } = render(
       <TypographyBase
-        variant="h2"
+        textStyle="h2"
         theme="primary"
         classMap={mockClassMap}
         combineClassNames={combineClassNames}

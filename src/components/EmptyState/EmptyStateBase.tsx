@@ -3,8 +3,7 @@ import type { BaseEmptyStateProps } from "./EmptyState.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultSize,
@@ -16,12 +15,11 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
   title = "Nothing Here Yet",
   message = "There’s no content to display.",
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   state,
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
   shadow,
-  outline = getDefaultOutline(),
   actionLabel,
   onActionClick,
   className,
@@ -66,11 +64,12 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
         classMap[size],
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],
-        outline && classMap.outline,
-        glass && classMap.glass,
+        (variant === "outline" || variant === "glassOutline") &&
+          classMap.outline,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         className,
       ),
-    [classMap, rounding, shadow, size, state, theme, outline, glass, className],
+    [classMap, rounding, shadow, size, state, theme, variant, className],
   );
 
   const resolvedActionAriaLabel =
@@ -125,8 +124,7 @@ const BaseEmptyState: React.FC<BaseEmptyStateProps> = ({
       {actionLabel && onActionClick && (
         <Button
           theme="clear"
-          outline={outline}
-          glass={glass}
+          variant={variant}
           onClick={onActionClick}
           aria-label={resolvedActionAriaLabel}
           className={combineClassNames(

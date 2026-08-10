@@ -2,7 +2,7 @@ import React, { useState, KeyboardEvent, useMemo, useId } from "react";
 import { StarIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import {
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultSize,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -16,7 +16,7 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   size = getDefaultSize(),
   interactive = true,
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   state,
   className,
   label,
@@ -96,11 +96,11 @@ const BaseRating: React.FC<BaseRatingProps> = ({
         classMap[theme],
         state && classMap[state],
         classMap[size],
-        glass && classMap.glass,
+        (variant === "glass" || variant === "glassOutline") && classMap.glass,
         canInteract && classMap.interactive,
         className,
       ),
-    [classMap, theme, state, size, glass, canInteract, className],
+    [classMap, theme, state, size, variant, canInteract, className],
   );
 
   return (

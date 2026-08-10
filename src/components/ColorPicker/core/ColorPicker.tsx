@@ -13,7 +13,7 @@ const classes = {
   preview: "color_picker_preview",
   radio_input: "color_picker_radio_input",
   custom_input: "color_picker_custom_input",
-  selected: "color_picker_selected",
+  value: "color_picker_selected",
 
   xs: "color_picker_xs",
   small: "color_picker_small",

@@ -2,8 +2,7 @@ import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
 import { expandClassMap } from "@/utils/propAliases";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getDefaultSize,
   getDefaultTheme,
@@ -23,12 +22,11 @@ export default function EmptyState({
   actionLabel,
   actionHref,
   theme = getDefaultTheme(),
-  glass = getDefaultGlass(),
+  variant = getDefaultVariant(),
   state,
   size = getDefaultSize(),
   rounding = getDefaultRounding(),
   shadow,
-  outline = getDefaultOutline(),
   className,
   iconClassName,
   titleClassName,
@@ -48,7 +46,8 @@ export default function EmptyState({
 }: ServerEmptyStateProps) {
   const classMap = expandClassMap(styles);
   const titleId = title && !ariaLabelledBy ? `${testId}-title` : undefined;
-  const messageId = message && !ariaDescribedBy ? `${testId}-message` : undefined;
+  const messageId =
+    message && !ariaDescribedBy ? `${testId}-message` : undefined;
   const classes = combineClassNames(
     classMap.empty_state,
     classMap[theme],
@@ -56,8 +55,8 @@ export default function EmptyState({
     classMap[size],
     getShadowClassName(classMap, theme, shadow),
     rounding && classMap[`round${capitalize(rounding)}`],
-    outline && classMap.outline,
-    glass && classMap.glass,
+    (variant === "outline" || variant === "glassOutline") && classMap.outline,
+    (variant === "glass" || variant === "glassOutline") && classMap.glass,
     className,
   );
 
@@ -107,7 +106,10 @@ export default function EmptyState({
         <a
           href={actionHref}
           aria-label={actionAriaLabel}
-          className={combineClassNames(classMap.actionBtn, actionButtonClassName)}
+          className={combineClassNames(
+            classMap.actionBtn,
+            actionButtonClassName,
+          )}
           data-testid={`${testId}-action`}
         >
           {actionLabel}

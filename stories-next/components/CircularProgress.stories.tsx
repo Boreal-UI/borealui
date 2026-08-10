@@ -136,7 +136,7 @@ export const GlassThemeVariants = () => (
         key={theme}
         value={76}
         theme={theme}
-        glass
+        variant="glass"
         label={`Theme: ${theme}`}
       />
     ))}
@@ -163,7 +163,7 @@ export const GlassStateVariants = () => (
         key={state}
         value={76}
         state={state}
-        glass
+        variant="glass"
         label={`State: ${state}`}
       />
     ))}

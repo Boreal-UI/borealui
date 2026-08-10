@@ -93,7 +93,9 @@ export interface BaseMarkdownRendererProps extends MarkdownRendererProps {
   classMap: Record<string, string>;
 
   /**
-   * Optional sanitizer used after markdown is converted to HTML.
+   * Optional preprocessor used after markdown is converted to HTML and before
+   * Boreal's mandatory raw-HTML sanitizer. It cannot bypass the built-in
+   * element and attribute allowlists.
    * When allowHtml is false, raw HTML is escaped before this function runs.
    */
   sanitizeHtml?: (html: string) => string;

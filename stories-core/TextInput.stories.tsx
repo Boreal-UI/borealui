@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/react-vite";
-import { FaUser } from "react-icons/fa";
+import { FaUser } from "../shared-story-assets/icons";
 import { TextInput } from "../src/index.core";
 import type { TextInputProps } from "../src/components/TextInput/TextInput.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
@@ -11,6 +11,7 @@ import {
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -34,7 +35,7 @@ const meta: Meta<TextInputProps> = {
     disabled: false,
     readOnly: false,
     password: false,
-    autocomplete: false,
+    autoComplete: "off",
     labelPosition: "top",
   },
 };
@@ -42,6 +43,15 @@ const meta: Meta<TextInputProps> = {
 export default meta;
 
 type Story = StoryObj<TextInputProps>;
+
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: TextInput,
+      args: { label: "Name" },
+      labelProp: "label",
+    }),
+};
 
 export const Default: Story = {
   render: (args) => {
@@ -165,6 +175,38 @@ export const WithAriaDescription: Story = {
       />
     );
   },
+};
+
+export const HelperAndErrorMessages: Story = {
+  render: (args) => (
+    <div style={{ display: "grid", gap: "1.5rem", maxWidth: "32rem" }}>
+      <TextInput
+        {...args}
+        label="Email address"
+        helperText="We will only use this address for account notifications."
+        placeholder="name@example.com"
+        type="email"
+        fullWidth
+      />
+      <TextInput
+        {...args}
+        label="Email address with an error"
+        helperText="Enter the address associated with your account."
+        errorMessage="Enter a valid email address."
+        defaultValue="not-an-email"
+        type="email"
+        fullWidth
+      />
+      <TextInput
+        {...args}
+        label="Username"
+        labelPosition="left"
+        helperText="Letters, numbers, and underscores are supported."
+        placeholder="username"
+        fullWidth
+      />
+    </div>
+  ),
 };
 
 export const RoundingVariants = (

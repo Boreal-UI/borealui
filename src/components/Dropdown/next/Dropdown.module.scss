@@ -29,11 +29,13 @@
   .alignRight {
     right: 0;
     transform: translateX(0);
+    transform-origin: top right;
   }
 
   .alignLeft {
     left: 0;
     transform: translateX(0);
+    transform-origin: top left;
   }
 
   .menu {
@@ -55,7 +57,17 @@
     font-weight: var(--font-weight-body);
     line-height: var(--line-height-label);
     letter-spacing: var(--letter-spacing-label);
-    animation: fade-in 0.2s ease-in-out;
+    opacity: 1;
+    scale: 1;
+    transform-origin: top right;
+    transition:
+      opacity var(--motion-popover, 180ms cubic-bezier(0.23, 1, 0.32, 1)),
+      scale var(--motion-popover, 180ms cubic-bezier(0.23, 1, 0.32, 1));
+
+    @starting-style {
+      opacity: 0;
+      scale: 0.97;
+    }
 
     &[data-overflow-right="true"] {
       left: auto;
@@ -83,7 +95,6 @@
       min-width: 100%;
       max-height: 50vh;
       overflow: hidden auto;
-      animation: slide-up 0.3s ease-in-out;
       padding-bottom: calc(
         env(safe-area-inset-bottom, 0px) + var(--spacing-sm)
       );
@@ -97,6 +108,10 @@
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
       outline-offset: 2px;
     }
+  }
+
+  .menu.alignLeft {
+    transform-origin: top left;
   }
 
   @each $name, $values in theme.$themes {

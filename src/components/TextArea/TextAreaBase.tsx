@@ -4,9 +4,9 @@ import { TextAreaProps } from "./TextArea.types";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultOutline,
-  getDefaultGlass,
+  getDefaultVariant,
   getDefaultRounding,
+  getDefaultSize,
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
@@ -22,11 +22,12 @@ const TextAreaBase = forwardRef<
       icon: Icon,
       placeholder = "Enter text",
       readOnly = false,
-      outline = getDefaultOutline(),
-      autocomplete = false,
+      autoComplete,
+      size = getDefaultSize(),
+      invalid = false,
       onChange,
       theme = getDefaultTheme(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
       state,
@@ -74,9 +75,11 @@ const TextAreaBase = forwardRef<
         combineClassNames(
           classMap.textArea,
           classMap[theme],
+          size && classMap[size],
           state && classMap[state],
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
@@ -85,9 +88,9 @@ const TextAreaBase = forwardRef<
       [
         classMap,
         theme,
+        size,
         state,
-        outline,
-        glass,
+        variant,
         disabled,
         shadow,
         rounding,
@@ -95,7 +98,7 @@ const TextAreaBase = forwardRef<
       ],
     );
 
-    const isError = state === "error";
+    const isError = invalid || state === "error";
 
     const computedAriaLabel =
       !ariaLabelledBy && !label ? ariaLabel || placeholder : undefined;
@@ -164,7 +167,7 @@ const TextAreaBase = forwardRef<
             aria-required={required || undefined}
             aria-readonly={readOnly || undefined}
             aria-disabled={disabled || undefined}
-            autoComplete={autocomplete ? "on" : "off"}
+            autoComplete={autoComplete}
             onChange={(e) => onChange?.(e.currentTarget.value, e)}
             readOnly={readOnly}
             disabled={disabled}

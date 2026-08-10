@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { FaRocket, FaCalendarAlt, FaCheckCircle } from "react-icons/fa";
+import { FaRocket, FaCalendarAlt, FaCheckCircle } from "../../shared-story-assets/icons";
 import { ThemeType, Timeline } from "../../src/index.next";
 import type { TimelineProps } from "../../src/components/Timeline/Timeline.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
@@ -112,7 +112,7 @@ export const GlassThemeVariants: Story = {
             key={`glass-${theme}`}
             {...args}
             theme={theme}
-            glass
+            variant="glass"
             items={sampleEvents}
           />
         ))}

@@ -9,6 +9,89 @@
     box-sizing: border-box;
   }
 
+  .layout_bento_box {
+    container: boreal-layout-bento / inline-size;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .layout_bento_grid {
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    grid-auto-rows: minmax(var(--layout-bento-min-row-height, 8rem), auto);
+  }
+
+  .layout_bento_item {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
+  .layout_bento_dense {
+    grid-auto-flow: dense;
+  }
+
+  @for $columns from 1 through 6 {
+    .layout_bento_columns#{$columns} {
+      grid-template-columns: repeat(#{$columns}, minmax(0, 1fr));
+    }
+
+    @for $span from 2 through 6 {
+      @if $span > $columns {
+        .layout_bento_columns#{$columns}
+          > .layout_bento_item_columnSpan#{$span} {
+          grid-column: span #{$columns};
+        }
+      }
+    }
+  }
+
+  @for $span from 1 through 6 {
+    .layout_bento_item_columnSpan#{$span} {
+      grid-column: span #{$span};
+    }
+
+    .layout_bento_item_rowSpan#{$span} {
+      grid-row: span #{$span};
+    }
+  }
+
+  .layout_bento_item_columnSpanFull {
+    grid-column: 1 / -1;
+  }
+
+  @container boreal-layout-bento (width <= 48rem) {
+    .layout_bento_grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .layout_bento_item_columnSpan3,
+    .layout_bento_item_columnSpan4,
+    .layout_bento_item_columnSpan5,
+    .layout_bento_item_columnSpan6 {
+      grid-column: span 2;
+    }
+
+    .layout_bento_item_columnSpanFull {
+      grid-column: 1 / -1;
+    }
+  }
+
+  @container boreal-layout-bento (width <= 30rem) {
+    .layout_bento_grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .layout_bento_item {
+      grid-column: 1 / -1;
+      grid-row: span 1;
+    }
+  }
+
   .layout_container,
   .layout_section {
     width: 100%;

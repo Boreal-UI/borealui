@@ -6,13 +6,12 @@ import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
 import {
   roundingOptions,
   shadowOptions,
-  stateOptions,
-  themeOptions,
 } from "../../shared-story-assets/OptionTypes";
-import { FaTree } from "react-icons/fa";
+import { FaTree } from "../../shared-story-assets/icons";
 import {
   renderThemeVariants,
   renderStateVariants,
+  renderSizeVariants,
   renderOutlineVariants,
   renderGlassVariants,
   renderGlassOutlineVariants,
@@ -36,6 +35,19 @@ const meta: Meta<SearchInputProps> = {
 export default meta;
 
 type Story = StoryObj<SearchInputProps>;
+
+export const Sizes: Story = {
+  render: () =>
+    renderSizeVariants({
+      component: SearchInput,
+      args: {
+        label: "Search docs",
+        showSearchButton: true,
+        showClearButton: true,
+      },
+      labelProp: "label",
+    }),
+};
 
 export const Default: Story = {};
 

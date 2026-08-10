@@ -49,6 +49,10 @@ const packages = [
       "internal-resolution-error",
     ],
   },
+  {
+    dir: "packages/docs",
+    args: ["--profile", "esm-only", "--ignore-rules", "no-resolution"],
+  },
 ];
 
 for (const item of packages) {

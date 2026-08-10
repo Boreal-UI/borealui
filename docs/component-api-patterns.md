@@ -115,6 +115,35 @@ export function ContactFields() {
 
 Use `helperText`, `errorMessage`, `required`, and disabled props where supported. When a component does not render helper or error text itself, connect external text with `aria-describedby`.
 
+Use `invalid` for the validation state, `helperText` for supporting guidance, and `errorMessage` for the rendered error. Native input autocomplete uses React's industry-standard camel-cased `autoComplete` prop and accepts normal HTML autocomplete strings such as `name`, `email`, or `current-password`.
+
+## Controlled State Naming
+
+Controlled components follow standard React naming: `value` with `onValueChange`, and `open` with `onOpenChange`. Their initial uncontrolled counterparts use `defaultValue` or `defaultOpen`. Component-specific disclosure APIs follow the same pattern; for example, Accordion uses `defaultExpanded` and `onExpandedChange`, while Tabs uses `defaultValue` and `onValueChange`.
+
+Public prop names use camelCase, including `listAriaLabel`, `pageListAriaLabel`, `menuAriaLabelledBy`, and `menuAriaDescribedBy`.
+
+## Placement and Alignment
+
+Use `placement` with `top`, `bottom`, `left`, or `right` for floating UI such as Tooltip and positioned chips. Use direction-aware `start`, `center`, and `end` alignment values where components expose alignment. These values adapt more naturally to right-to-left layouts than `left` and `right`.
+
+## Consistent Prop Reference
+
+| Concern               | Public API                                                                |
+| --------------------- | ------------------------------------------------------------------------- |
+| Surface treatment     | `variant="solid"`, `"outline"`, `"glass"`, or `"glassOutline"`            |
+| Validation            | `invalid`, `helperText`, and `errorMessage`                               |
+| Native autocomplete   | `autoComplete="email"` or another HTML autocomplete token                 |
+| Controlled value      | `value`, `defaultValue`, and `onValueChange`                              |
+| Controlled visibility | `open`, `defaultOpen`, and `onOpenChange`                                 |
+| Floating position     | `placement="top"`, `"bottom"`, `"left"`, or `"right"`                     |
+| Content alignment     | `start`, `center`, or `end`                                               |
+| Pager labels          | `previousButtonAriaLabel`, `nextButtonAriaLabel`, and `pageListAriaLabel` |
+| List/menu labels      | `listAriaLabel`, `menuAriaLabelledBy`, and `menuAriaDescribedBy`          |
+| Typography style      | `textStyle`; `variant` remains the surface treatment                      |
+
+Pager and common form controls accept the shared `size` scale. Component-local values are intentionally not promoted into the global vocabulary: `rounding="full"` is available only to pill/circle-capable components, and `shape="pill"` belongs to ColorPicker.
+
 Use `InputGroup` to compose prefixes, suffixes, addons, and custom controls around form content. Use `FieldSet` for grouped controls with a semantic legend, and `ValidationSummary` to list form-level errors with accessible navigation targets.
 
 ## DataTable
@@ -241,17 +270,30 @@ export function ProjectWorkspace() {
 
 `Portal` is a structural utility for rendering content into another DOM container. It keeps a deliberately small API: target container, inline fallback behavior, custom class name, screen-reader-only context, and test IDs.
 
+`BentoBox` renders an outer layout element plus an internal responsive grid. `columns` accepts `1` through `6`, `minRowHeight` defaults to `"8rem"`, and each `BentoBoxItem` accepts `columnSpan` (`1` through `6` or `"full"`) and `rowSpan` (`1` through `6`).
+
+```tsx
+import { BentoBox, BentoBoxItem } from "@boreal-ui/core";
+
+export function DashboardGrid() {
+  return (
+    <BentoBox columns={4} gap="lg" minRowHeight="10rem">
+      <BentoBoxItem columnSpan={2} rowSpan={2}>Revenue</BentoBoxItem>
+      <BentoBoxItem>Alerts</BentoBoxItem>
+      <BentoBoxItem columnSpan="full">Recent activity</BentoBoxItem>
+    </BentoBox>
+  );
+}
+```
+
+`dense` backfills open grid cells. Leave it off when reading or keyboard focus order must match visual order.
+
 ## Charts and Metrics
 
 Use chart components for compact dashboard visuals and status summaries.
 
 ```tsx
-import {
-  BarChart,
-  DonutChart,
-  Legend,
-  Sparkline,
-} from "@boreal-ui/core";
+import { BarChart, DonutChart, Legend, Sparkline } from "@boreal-ui/core";
 
 export function RevenueSnapshot() {
   return (

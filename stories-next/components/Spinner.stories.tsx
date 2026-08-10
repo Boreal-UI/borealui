@@ -81,7 +81,12 @@ export const GlassThemeVariants: Story = {
       <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
         {themeOptions.map((theme) => (
           <div key={`glass-${theme}`} style={{ textAlign: "center" }}>
-            <Spinner {...args} theme={theme} glass label={`Glass: ${theme}`} />
+            <Spinner
+              {...args}
+              theme={theme}
+              label={`Glass: ${theme}`}
+              variant="glass"
+            />
           </div>
         ))}
       </div>
@@ -95,7 +100,12 @@ export const GlassStateVariants: Story = {
       <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
         {stateOptions.map((state) => (
           <div key={`glass-${state}`} style={{ textAlign: "center" }}>
-            <Spinner {...args} state={state} glass label={`Glass: ${state}`} />
+            <Spinner
+              {...args}
+              state={state}
+              label={`Glass: ${state}`}
+              variant="glass"
+            />
           </div>
         ))}
       </div>

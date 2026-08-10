@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus } from "../shared-story-assets/icons";
 import { Button } from "../src/index.core";
 import { ButtonProps } from "../src/components/Button/Button.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";

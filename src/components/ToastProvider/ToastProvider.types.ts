@@ -1,10 +1,5 @@
+import { PositionType, ShadowType, StateType } from "@/types/types";
 import { ReactNode } from "react";
-import {
-  PositionType,
-  RoundingType,
-  ShadowType,
-  StateType,
-} from "@/types/types";
 
 export interface Toast {
   /**
@@ -74,7 +69,7 @@ export interface ToastProviderProps {
    * Rounding.
    * @default configured default rounding (fallback: "medium")
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
   /**
    * Shadow.
    * @default configured default shadow (fallback: "light")

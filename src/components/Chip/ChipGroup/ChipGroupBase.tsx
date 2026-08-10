@@ -33,7 +33,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
       chips,
       children,
       onRemove,
-      position = "topCenter",
+      placement = "topCenter",
       size = getDefaultSize(),
       className,
       ChipComponent,
@@ -85,7 +85,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
 
     const containerClassName = combineClassNames(
       classMap.container,
-      classMap[position],
+      classMap[placement],
       className,
     );
     const renderedChildren = useMemo(() => {
@@ -107,7 +107,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
         const childProps = child.props as ClosableChildProps;
         const injectedProps: InjectedDefaults = {
           ...(childProps.size == null ? { size } : null),
-          ...(childProps.position == null ? { position } : null),
+          ...(childProps.placement == null ? { placement } : null),
         };
         const onClose = childProps.onClose || childProps.onRemove;
         closers.push(typeof onClose === "function" ? onClose : null);
@@ -117,7 +117,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
 
       childCloseFnsRef.current = closers;
       return mapped;
-    }, [children, isChildrenMode, position, size]);
+    }, [children, isChildrenMode, placement, size]);
 
     return (
       <div
@@ -130,7 +130,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
         <ul className={classMap.list}>
           {!isChildrenMode &&
             visibleChips.map((chip, index) => {
-              const chipPosition = chip.position || position;
+              const chipPosition = chip.placement || placement;
               const chipPositionClass = classMap[chipPosition];
 
               return (
@@ -148,7 +148,7 @@ const ChipGroupBase = forwardRef<ChipGroupRef, ChipGroupBaseProps>(
                     onClose={() => handleClose(chip.id!)}
                     autoClose={chip.autoClose}
                     duration={chip.duration}
-                    position={chipPosition}
+                    placement={chipPosition}
                     usePortal={false}
                     stackIndex={index}
                     className={combineClassNames(

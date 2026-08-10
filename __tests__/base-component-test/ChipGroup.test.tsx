@@ -18,13 +18,13 @@ type ClosableChildProps = {
   onClose?: () => void;
   onRemove?: () => void;
   size?: string;
-  position?: string;
+  placement?: string;
   "data-testid"?: string;
 };
 
 const ClosableChild = forwardRef<ClosableChildHandle, ClosableChildProps>(
   function ClosableChild(
-    { label, onClose, onRemove, size, position, "data-testid": testId },
+    { label, onClose, onRemove, size, placement, "data-testid": testId },
     ref,
   ) {
     const closeHandler = onClose ?? onRemove;
@@ -37,7 +37,7 @@ const ClosableChild = forwardRef<ClosableChildHandle, ClosableChildProps>(
       <div
         data-testid={testId}
         data-size={size}
-        data-position={position}
+        data-placement={placement}
         role="status"
       >
         <span>{label}</span>
@@ -83,7 +83,7 @@ describe("ChipGroupBase", () => {
   type ChipsModeRenderProps = {
     chips?: ChipProps[];
     onRemove?: (id: string) => void;
-    position?: React.ComponentProps<typeof ChipGroupBase>["position"];
+    placement?: React.ComponentProps<typeof ChipGroupBase>["placement"];
     size?: React.ComponentProps<typeof ChipGroupBase>["size"];
     className?: string;
     "data-testid"?: string;
@@ -92,7 +92,7 @@ describe("ChipGroupBase", () => {
   const renderGroupWithChips = ({
     chips: chipsOverride,
     onRemove,
-    position,
+    placement,
     size,
     className,
     "data-testid": testId = "chip-group",
@@ -103,7 +103,7 @@ describe("ChipGroupBase", () => {
         ChipComponent={DummyChip}
         classMap={classMap}
         onRemove={onRemove ?? jest.fn()}
-        position={position}
+        placement={placement}
         size={size}
         className={className}
         data-testid={testId}
@@ -113,7 +113,7 @@ describe("ChipGroupBase", () => {
   type ChildrenModeRenderProps = {
     children: React.ReactNode;
     onRemove?: (id: string) => void;
-    position?: React.ComponentProps<typeof ChipGroupBase>["position"];
+    placement?: React.ComponentProps<typeof ChipGroupBase>["placement"];
     size?: React.ComponentProps<typeof ChipGroupBase>["size"];
     className?: string;
     "data-testid"?: string;
@@ -122,7 +122,7 @@ describe("ChipGroupBase", () => {
   const renderGroupWithChildren = ({
     children,
     onRemove,
-    position,
+    placement,
     size,
     className,
     "data-testid": testId = "chip-group",
@@ -132,7 +132,7 @@ describe("ChipGroupBase", () => {
         ChipComponent={DummyChip}
         classMap={classMap}
         onRemove={onRemove ?? jest.fn()}
-        position={position}
+        placement={placement}
         size={size}
         className={className}
         data-testid={testId}
@@ -207,35 +207,35 @@ describe("ChipGroupBase", () => {
     expect(screen.getByTestId("chip-1")).toHaveAttribute("data-size", "small");
   });
 
-  it("uses the group position when chip position is not provided", () => {
-    renderGroupWithChips({ position: "bottomRight" });
+  it("uses the group placement when chip placement is not provided", () => {
+    renderGroupWithChips({ placement: "bottomRight" });
 
     expect(screen.getByTestId("chip-1")).toHaveAttribute(
-      "data-position",
+      "data-placement",
       "bottomRight",
     );
     expect(screen.getByTestId("chip-2")).toHaveAttribute(
-      "data-position",
+      "data-placement",
       "bottomRight",
     );
   });
 
-  it("uses chip-specific position over group position", () => {
+  it("uses chip-specific placement over group placement", () => {
     renderGroupWithChips({
       chips: [
         {
           id: "chip1",
           message: "First chip",
-          position: "topLeft",
+          placement: "topLeft",
           "data-testid": "chip-1",
           visible: true,
         },
       ],
-      position: "bottomRight",
+      placement: "bottomRight",
     });
 
     expect(screen.getByTestId("chip-1")).toHaveAttribute(
-      "data-position",
+      "data-placement",
       "topLeft",
     );
   });
@@ -253,9 +253,9 @@ describe("ChipGroupBase", () => {
     );
   });
 
-  it("applies container, list, position, and custom class names", () => {
+  it("applies container, list, placement, and custom class names", () => {
     renderGroupWithChips({
-      position: "topCenter",
+      placement: "topCenter",
       className: "custom-group-class",
     });
 
@@ -268,8 +268,8 @@ describe("ChipGroupBase", () => {
     expect(list).toHaveClass("chip-list");
   });
 
-  it("applies chip and position classes to rendered chips", () => {
-    renderGroupWithChips({ position: "topCenter" });
+  it("applies chip and placement classes to rendered chips", () => {
+    renderGroupWithChips({ placement: "topCenter" });
 
     expect(screen.getByTestId("chip-1")).toHaveClass("chip");
     expect(screen.getByTestId("chip-1")).toHaveClass("chip-topCenter");
@@ -304,27 +304,27 @@ describe("ChipGroupBase", () => {
     expect(screen.queryByTestId("chip-2")).not.toBeInTheDocument();
   });
 
-  it("injects default size and position into children when absent", () => {
+  it("injects default size and placement into children when absent", () => {
     renderGroupWithChildren({
       size: "large",
-      position: "bottomCenter",
+      placement: "bottomCenter",
       children: <ClosableChild label="Child chip" data-testid="child-chip" />,
     });
 
     const child = screen.getByTestId("child-chip");
     expect(child).toHaveAttribute("data-size", "large");
-    expect(child).toHaveAttribute("data-position", "bottomCenter");
+    expect(child).toHaveAttribute("data-placement", "bottomCenter");
   });
 
-  it("does not override child size and position when already provided", () => {
+  it("does not override child size and placement when already provided", () => {
     renderGroupWithChildren({
       size: "large",
-      position: "bottomCenter",
+      placement: "bottomCenter",
       children: (
         <ClosableChild
           label="Child chip"
           size="small"
-          position="topLeft"
+          placement="topLeft"
           data-testid="child-chip"
         />
       ),
@@ -332,7 +332,7 @@ describe("ChipGroupBase", () => {
 
     const child = screen.getByTestId("child-chip");
     expect(child).toHaveAttribute("data-size", "small");
-    expect(child).toHaveAttribute("data-position", "topLeft");
+    expect(child).toHaveAttribute("data-placement", "topLeft");
   });
 
   it("supports closeAllChips via ref in chips mode", () => {

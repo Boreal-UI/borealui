@@ -15,7 +15,6 @@ const classes = {
   root: "fieldSet",
   legend: "fieldSet_legend",
   legendText: "fieldSet_legendText",
-  legendHidden: "fieldSet_legendHidden",
   required: "fieldSet_required",
   optional: "fieldSet_optional",
   description: "fieldSet_description",
@@ -27,7 +26,6 @@ const classes = {
   loadingRow: "fieldSet_loadingRow",
   loadingMessage: "fieldSet_loadingMessage",
   loader: "fieldSet_loader",
-  srOnly: "sr_only",
 
   layoutStack: "fieldSet_layoutStack",
   layoutGrid: "fieldSet_layoutGrid",
@@ -50,8 +48,6 @@ const classes = {
   error: "fieldSet_error",
 
   clear: "fieldSet_clear",
-  outline: "fieldSet_outline",
-  glass: "fieldSet_glass",
   disabled: "fieldSet_disabled",
   loading: "fieldSet_loading",
 
@@ -66,6 +62,8 @@ const classes = {
   roundMedium: "fieldSet_round-Medium",
   roundLarge: "fieldSet_round-Large",
   roundFull: "fieldSet_round-Full",
+  glass: "fieldSet_glass",
+  outline: "fieldSet_outline",
 };
 
 const FieldSet = forwardRef<HTMLFieldSetElement, FieldSetProps>(

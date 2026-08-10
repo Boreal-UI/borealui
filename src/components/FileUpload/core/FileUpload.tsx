@@ -28,7 +28,6 @@ const classes = {
   tertiary: "file_upload_tertiary",
   quaternary: "file_upload_quaternary",
   clear: "file_upload_clear",
-  glass: "file_upload_glass",
 
   disabled: "file_upload_disabled",
   error: "file_upload_error",
@@ -46,6 +45,7 @@ const classes = {
   roundSmall: "file_upload_round-Small",
   roundMedium: "file_upload_round-Medium",
   roundLarge: "file_upload_round-Large",
+  glass: "file_upload_glass",
 };
 
 const FileUpload: React.FC<FileUploadProps> = (props) => {

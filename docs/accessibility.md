@@ -95,7 +95,7 @@ export function EmailField() {
 }
 ```
 
-When showing validation errors, pass the component's error or invalid state props where available so assistive technology receives the same state as sighted users.
+When showing validation errors, pass `invalid` with `errorMessage` (and `helperText` for supporting guidance) so assistive technology receives the same state as sighted users.
 
 ```tsx
 <>
@@ -176,7 +176,7 @@ For interactive rows, provide labels that explain the action.
   data={rows}
   onRowClick={(row) => openInvoice(row.id)}
   getRowAriaLabel={(row) => `Open invoice ${row.id}`}
-/>;
+/>
 ```
 
 ## Dialogs and Overlays
@@ -234,14 +234,14 @@ For content regions that update after async work, pair visual loading states wit
   loading={isLoading}
   loadingMessage="Loading search results"
   emptyMessage="No matching results"
-/>;
+/>
 ```
 
 ## Custom Color Schemes and Contrast
 
 Boreal derives foreground tokens for each registered color scheme with a WCAG 2.1 AA normal-text contrast target. If `forceTextColor` does not meet that target on a surface, the theme runtime falls back to the more readable black or white foreground for that surface.
 
-When registering custom schemes, still verify borders, focus indicators, success/error/warning states, outline variants, glass surfaces, and any app-specific CSS variable overrides against the backgrounds where they appear.
+When registering custom schemes, still verify borders, focus indicators, success/error/warning states, `outline`, `glass`, and combined `glassOutline` variants, plus any app-specific CSS variable overrides against the backgrounds where they appear.
 
 ```tsx
 import { ThemeProvider } from "@boreal-ui/core";

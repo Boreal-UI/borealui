@@ -13,8 +13,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -38,9 +37,8 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
     {
       children,
       label,
-      description,
       helperText,
-      error,
+      errorMessage,
       required = false,
       optionalText = "Optional",
       prefix,
@@ -51,8 +49,7 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
       fullWidth = true,
       theme = getDefaultTheme(),
       state,
-      outline = getDefaultOutline(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
       disabled = false,
@@ -103,18 +100,17 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
       `${testId}-${generatedId}-control`;
     const rootId = `${controlId}-group`;
     const labelId = label ? `${controlId}-label` : undefined;
-    const descriptionId = description ? `${controlId}-description` : undefined;
-    const helperId = helperText ? `${controlId}-helper` : undefined;
-    const errorId = error ? `${controlId}-error` : undefined;
+    const helperTextId = helperText ? `${controlId}-helperText` : undefined;
+    const errorId = errorMessage ? `${controlId}-errorMessage` : undefined;
     const srDescriptionId = srOnlyText
-      ? `${controlId}-sr-description`
+      ? `${controlId}-sr-helperText`
       : undefined;
-    const resolvedState = error ? "error" : state;
+    const resolvedState = errorMessage ? "error" : state;
     const hasAddons = Boolean(startAddon || endAddon);
     const hasInlineAddons = Boolean(prefix || suffix);
 
     const computedAriaDescribedBy =
-      [ariaDescribedBy, descriptionId, helperId, errorId, srDescriptionId]
+      [ariaDescribedBy, helperTextId, errorId, srDescriptionId]
         .filter(Boolean)
         .join(" ") || undefined;
 
@@ -138,7 +134,7 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
           nextProps["aria-required"] =
             child.props["aria-required"] ?? (required || undefined);
           nextProps["aria-invalid"] =
-            child.props["aria-invalid"] ?? (Boolean(error) || undefined);
+            child.props["aria-invalid"] ?? (Boolean(errorMessage) || undefined);
           nextProps["aria-describedby"] = childDescribedBy;
         }
 
@@ -153,7 +149,7 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
       computedAriaDescribedBy,
       controlId,
       disabled,
-      error,
+      errorMessage,
       required,
     ]);
 
@@ -174,8 +170,9 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
           classMap.root,
           classMap[theme],
           resolvedState && classMap[resolvedState],
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           loading && classMap.loading,
           hasAddons && classMap.withAddons,
@@ -188,8 +185,7 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
         classMap,
         theme,
         resolvedState,
-        outline,
-        glass,
+        variant,
         disabled,
         loading,
         hasAddons,
@@ -221,16 +217,17 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
           </label>
         ) : null}
 
-        {description ? (
+        {helperText ? (
           <div
-            id={descriptionId}
+            id={helperTextId}
             className={combineClassNames(
-              classMap.description,
+              classMap.helperText,
               descriptionClassName,
+              helperTextClassName,
             )}
-            data-testid={`${testId}-description`}
+            data-testid={`${testId}-helperText`}
           >
-            {description}
+            {helperText}
           </div>
         ) : null}
 
@@ -321,7 +318,7 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
             <span
               id={srDescriptionId}
               className={combineClassNames(
-                classMap.srOnly ?? "sr_only",
+                "sr_only",
                 srOnlyClassName,
               )}
               data-testid={`${testId}-sr-only-text`}
@@ -331,27 +328,14 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
           ) : null}
         </div>
 
-        {helperText ? (
-          <div
-            id={helperId}
-            className={combineClassNames(
-              classMap.helperText,
-              helperTextClassName,
-            )}
-            data-testid={`${testId}-helper`}
-          >
-            {helperText}
-          </div>
-        ) : null}
-
-        {error ? (
+        {errorMessage ? (
           <div
             id={errorId}
             className={combineClassNames(classMap.errorText, errorClassName)}
             role="alert"
-            data-testid={`${testId}-error`}
+            data-testid={`${testId}-errorMessage`}
           >
-            {error}
+            {errorMessage}
           </div>
         ) : null}
       </div>

@@ -34,13 +34,12 @@ const classes = {
   roundSmall: "badge_round-Small",
   roundMedium: "badge_round-Medium",
   roundLarge: "badge_round-Large",
-
-  outline: "badge_outline",
-  glass: "badge_glass",
   disabled: "badge_disabled",
   icon: "badge_icon",
   badge_icon: "badge_icon",
   clickable: "badge_clickable",
+  glass: "badge_glass",
+  outline: "badge_outline",
 };
 
 const Badge: React.FC<BadgeProps> = (props) => {

@@ -641,8 +641,7 @@ const runSharedAvatarTests = (
         size: "large",
         shape: "rounded",
         shadow: "strong",
-        outline: true,
-        glass: true,
+        variant: "glassOutline",
         onClick,
       });
 
@@ -772,8 +771,7 @@ const runCoreOnlyAvatarTests = (Avatar: AvatarComponent) => {
         size: "large",
         shape: "rounded",
         shadow: "strong",
-        outline: true,
-        glass: true,
+        variant: "glassOutline",
         onClick: cy.stub(),
       });
 

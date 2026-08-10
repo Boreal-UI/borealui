@@ -3,8 +3,7 @@ import { AppShellBaseProps } from "./AppShell.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
-  getDefaultGlass,
-  getDefaultOutline,
+  getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
@@ -25,8 +24,7 @@ const AppShellBase = forwardRef<HTMLDivElement, AppShellBaseProps>(
       stickyHeader = false,
       theme = getDefaultTheme(),
       state,
-      outline = getDefaultOutline(),
-      glass = getDefaultGlass(),
+      variant = getDefaultVariant(),
       rounding = getDefaultRounding(),
       shadow,
       disabled = false,
@@ -50,8 +48,9 @@ const AppShellBase = forwardRef<HTMLDivElement, AppShellBaseProps>(
           classMap.root,
           classMap[theme],
           state && classMap[state],
-          outline && classMap.outline,
-          glass && classMap.glass,
+          (variant === "outline" || variant === "glassOutline") &&
+            classMap.outline,
+          (variant === "glass" || variant === "glassOutline") && classMap.glass,
           disabled && classMap.disabled,
           loading && classMap.loading,
           sidebarCollapsed && classMap.sidebarCollapsed,
@@ -64,8 +63,7 @@ const AppShellBase = forwardRef<HTMLDivElement, AppShellBaseProps>(
         classMap,
         theme,
         state,
-        outline,
-        glass,
+        variant,
         disabled,
         loading,
         sidebarCollapsed,
@@ -126,7 +124,7 @@ const AppShellBase = forwardRef<HTMLDivElement, AppShellBaseProps>(
             {srOnlyText ? (
               <span
                 className={combineClassNames(
-                  classMap.srOnly ?? "sr_only",
+                  "sr_only",
                   srOnlyClassName,
                 )}
                 data-testid={`${testId}-sr-only-text`}

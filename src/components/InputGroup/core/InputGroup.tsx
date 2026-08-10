@@ -27,7 +27,6 @@ const classes = {
   loadingContainer: "inputGroup_loadingContainer",
   loadingMessage: "inputGroup_loadingMessage",
   loader: "inputGroup_loader",
-  srOnly: "sr_only",
 
   fullWidth: "inputGroup_fullWidth",
   withAddons: "inputGroup_withAddons",
@@ -44,8 +43,6 @@ const classes = {
   error: "inputGroup_error",
 
   clear: "inputGroup_clear",
-  outline: "inputGroup_outline",
-  glass: "inputGroup_glass",
   disabled: "inputGroup_disabled",
   loading: "inputGroup_loading",
 
@@ -60,6 +57,8 @@ const classes = {
   roundMedium: "inputGroup_round-Medium",
   roundLarge: "inputGroup_round-Large",
   roundFull: "inputGroup_round-Full",
+  glass: "inputGroup_glass",
+  outline: "inputGroup_outline",
 };
 
 const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>((props, ref) => (

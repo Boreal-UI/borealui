@@ -88,7 +88,7 @@ export const RadioGroupDefault: GroupStory = {
     legend: "Preferred contact method",
     name: "storybook-contact",
     theme: "secondary",
-    description: "Radio groups select one option from a shared set.",
+    helperText: "Radio groups select one option from a shared set.",
   },
 };
 
@@ -146,7 +146,7 @@ export const RadioGroupGlass: GroupStory = {
         value={selected}
         onChange={setSelected}
         theme="quaternary"
-        glass
+        variant="glass"
         options={[
           { label: "Design", value: "design" },
           { label: "Engineering", value: "engineering" },
@@ -218,7 +218,7 @@ export const GlassThemeVariants: Story = {
             label={`${theme.charAt(0).toUpperCase() + theme.slice(1)} Glass`}
             value={theme}
             theme={theme}
-            glass
+            variant="glass"
             checked={selected === theme}
             onChange={setSelected}
           />
@@ -261,7 +261,7 @@ export const GlassStateVariants: Story = {
             label={`${state.charAt(0).toUpperCase() + state.slice(1)} Glass`}
             value={state}
             state={state}
-            glass
+            variant="glass"
             checked={selected === state}
             onChange={setSelected}
           />

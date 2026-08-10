@@ -9,6 +9,8 @@ const styles = {
   header: "accordionHeader",
   content: "accordionContent",
   icon: "accordionIcon",
+  iconLeft: "iconLeft",
+  iconRight: "iconRight",
   accordionTitle: "accordionTitle",
   expanded: "expanded",
   primary: "primary",
@@ -16,8 +18,6 @@ const styles = {
   medium: "medium",
   small: "small",
   large: "large",
-  outline: "outline",
-  glass: "glass",
   disabled: "disabled",
   loading: "loading",
   shadowSmall: "shadowSmall",
@@ -29,6 +29,8 @@ const styles = {
   success: "success",
   warning: "warning",
   error: "error",
+  glass: "glass",
+  outline: "outline",
 };
 
 describe("AccordionBase (Jest)", () => {
@@ -102,8 +104,8 @@ describe("AccordionBase (Jest)", () => {
     expect(content).toHaveAttribute("data-state", "collapsed");
   });
 
-  it("honors initiallyExpanded", () => {
-    renderAccordion({ initiallyExpanded: true });
+  it("honors defaultExpanded", () => {
+    renderAccordion({ defaultExpanded: true });
 
     const toggle = screen.getByTestId("test-accordion-toggle");
     const content = screen.getByTestId("test-content");
@@ -113,12 +115,12 @@ describe("AccordionBase (Jest)", () => {
     expect(screen.getByText("Accordion content")).toBeInTheDocument();
   });
 
-  it("supports controlled mode and calls onToggle with the next value", () => {
-    const onToggle = jest.fn();
+  it("supports controlled mode and calls onExpandedChange with the next value", () => {
+    const onExpandedChange = jest.fn();
 
     renderAccordion({
       expanded: false,
-      onToggle,
+      onExpandedChange,
     });
 
     const toggle = screen.getByTestId("test-accordion-toggle");
@@ -127,18 +129,18 @@ describe("AccordionBase (Jest)", () => {
     expect(content).toHaveAttribute("data-state", "collapsed");
 
     fireEvent.click(toggle);
-    expect(onToggle).toHaveBeenCalledTimes(1);
-    expect(onToggle).toHaveBeenCalledWith(true);
+    expect(onExpandedChange).toHaveBeenCalledTimes(1);
+    expect(onExpandedChange).toHaveBeenCalledWith(true);
 
     expect(content).toHaveAttribute("data-state", "collapsed");
   });
 
-  it("calls onToggle with false when controlled and currently expanded", () => {
-    const onToggle = jest.fn();
+  it("calls onExpandedChange with false when controlled and currently expanded", () => {
+    const onExpandedChange = jest.fn();
 
     renderAccordion({
       expanded: true,
-      onToggle,
+      onExpandedChange,
     });
 
     const toggle = screen.getByTestId("test-accordion-toggle");
@@ -147,8 +149,8 @@ describe("AccordionBase (Jest)", () => {
     expect(content).toHaveAttribute("data-state", "open");
 
     fireEvent.click(toggle);
-    expect(onToggle).toHaveBeenCalledTimes(1);
-    expect(onToggle).toHaveBeenCalledWith(false);
+    expect(onExpandedChange).toHaveBeenCalledTimes(1);
+    expect(onExpandedChange).toHaveBeenCalledWith(false);
   });
 
   it("toggles with Enter key", () => {
@@ -394,6 +396,7 @@ describe("AccordionBase (Jest)", () => {
     const toggle = screen.getByTestId("test-accordion-toggle");
     const children = Array.from(toggle.children);
 
+    expect(toggle).toHaveClass("iconRight");
     expect(children[0]).toHaveAttribute("data-testid", "test-title");
     expect(children[1]).toHaveAttribute("data-testid", "test-icon");
   });
@@ -404,14 +407,15 @@ describe("AccordionBase (Jest)", () => {
     const toggle = screen.getByTestId("test-accordion-toggle");
     const children = Array.from(toggle.children);
 
+    expect(toggle).toHaveClass("iconLeft");
     expect(children[0]).toHaveAttribute("data-testid", "test-icon");
     expect(children[1]).toHaveAttribute("data-testid", "test-title");
   });
 
   it("prevents collapsing when no-collapse is true and already expanded", () => {
     renderAccordion({
-      initiallyExpanded: true,
-      "no-collapse": true,
+      defaultExpanded: true,
+      disableCollapse: true,
     });
 
     const toggle = screen.getByTestId("test-accordion-toggle");
@@ -425,7 +429,7 @@ describe("AccordionBase (Jest)", () => {
 
   it("still allows opening when no-collapse is true and currently collapsed", () => {
     renderAccordion({
-      "no-collapse": true,
+      disableCollapse: true,
     });
 
     const toggle = screen.getByTestId("test-accordion-toggle");
@@ -439,8 +443,8 @@ describe("AccordionBase (Jest)", () => {
 
   it("uses no-collapse as the single collapse-prevention prop", () => {
     renderAccordion({
-      initiallyExpanded: true,
-      "no-collapse": true,
+      defaultExpanded: true,
+      disableCollapse: true,
     });
 
     const toggle = screen.getByTestId("test-accordion-toggle");
@@ -487,7 +491,7 @@ describe("AccordionBase (Jest)", () => {
     jest.useFakeTimers();
 
     renderAccordion({
-      initiallyExpanded: true,
+      defaultExpanded: true,
       asyncContent: true,
     });
 
@@ -513,7 +517,7 @@ describe("AccordionBase (Jest)", () => {
     jest.useFakeTimers();
 
     renderAccordion({
-      initiallyExpanded: true,
+      defaultExpanded: true,
       asyncContent: true,
       loadingAriaLabel: "Fetching accordion panel",
     });
@@ -554,7 +558,7 @@ describe("AccordionBase (Jest)", () => {
           getUniqueId={getUniqueId}
           classMap={styles}
           data-testid="test"
-          initiallyExpanded={true}
+          defaultExpanded={true}
           asyncContent={true}
           regionAriaDescribedBy="external-region-description"
         >
@@ -614,9 +618,8 @@ describe("AccordionBase (Jest)", () => {
       theme: "primary",
       size: "medium",
       state: "success",
-      outline: true,
-      glass: true,
-      initiallyExpanded: true,
+      variant: "glassOutline",
+      defaultExpanded: true,
       disabled: false,
       className: "customClassName",
       shadow: "medium",
@@ -658,7 +661,7 @@ describe("AccordionBase (Jest)", () => {
   it("applies disabled classes when disabled", () => {
     renderAccordion({
       disabled: true,
-      initiallyExpanded: true,
+      defaultExpanded: true,
     });
 
     const toggle = screen.getByTestId("test-accordion-toggle");
@@ -713,7 +716,7 @@ describe("AccordionBase (Jest)", () => {
 
   it("has no accessibility violations when expanded with description", async () => {
     const { container } = renderAccordion({
-      initiallyExpanded: true,
+      defaultExpanded: true,
       description: "Accordion helper description",
     });
 
@@ -723,7 +726,7 @@ describe("AccordionBase (Jest)", () => {
 
   it("has no accessibility violations while async loader is visible", async () => {
     const { container } = renderAccordion({
-      initiallyExpanded: true,
+      defaultExpanded: true,
       asyncContent: true,
       loadingAriaLabel: "Fetching accordion content",
     });

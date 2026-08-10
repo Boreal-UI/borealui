@@ -1,3 +1,4 @@
+import { ShadowType, StateType, ThemeType } from "@/types/types";
 import {
   ComponentType,
   ForwardRefExoticComponent,
@@ -5,7 +6,6 @@ import {
   ReactNode,
   RefAttributes,
 } from "react";
-import { RoundingType, ShadowType, StateType, ThemeType } from "@/types/types";
 import { Breadcrumb, BreadcrumbsProps } from "../Breadcrumbs/Breadcrumbs.types";
 
 type NativeBreadCrumbPageHeaderProps = Omit<
@@ -68,21 +68,16 @@ export interface BreadCrumbPageHeaderProps extends NativeBreadCrumbPageHeaderPro
    * Visual state for styling.
    */
   state?: StateType;
-
   /**
-   * Whether to render outlined styling.
+   * Surface treatment; glassOutline combines glass and outline.
+   *
+   * @default configured default variant (fallback: "solid")
    */
-  outline?: boolean;
-
-  /**
-   * Whether to render glass styling.
-   */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding style for the component.
    */
-  rounding?: RoundingType;
+  rounding?: import("@/types/types").RoundableRoundingType;
 
   /**
    * Shadow style for the component.

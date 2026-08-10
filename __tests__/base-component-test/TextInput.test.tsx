@@ -1,13 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe, toHaveNoViolations } from "jest-axe";
-import { FaUser } from "react-icons/fa";
+import { FaUser } from "../../shared-story-assets/icons";
 import TextInputBase from "@/components/TextInput/TextInputBase";
 import IconButton from "@/components/IconButton/core/IconButton";
 
 expect.extend(toHaveNoViolations);
 
 const mockStyles = {
+  large: "large",
   container: "container",
   label: "label",
   labelTop: "labelTop",
@@ -16,11 +17,12 @@ const mockStyles = {
   labelBottom: "labelBottom",
   fullWidth: "fullWidth",
   textInput: "textInput",
+  input: "input",
   iconContainer: "iconContainer",
   togglePassword: "togglePassword",
+  helperText: "helperText",
+  errorMessage: "errorMessage",
   srOnly: "srOnly",
-  outline: "outline",
-  glass: "glass",
   primary: "primary",
   secondary: "secondary",
   error: "error",
@@ -35,9 +37,22 @@ const mockStyles = {
   roundMedium: "roundMedium",
   roundLarge: "roundLarge",
   roundFull: "roundFull",
+  glass: "glass",
+  outline: "outline",
 };
 
 describe("TextInputBase", () => {
+  it("applies the selected size class", () => {
+    render(
+      <TextInputBase
+        classMap={mockStyles}
+        IconButton={IconButton}
+        size="large"
+      />,
+    );
+    expect(screen.getByTestId("text-input-wrapper")).toHaveClass("large");
+  });
+
   it("renders a standard text input with icon and placeholder", async () => {
     const { container } = render(
       <TextInputBase
@@ -332,58 +347,56 @@ describe("TextInputBase", () => {
     );
   });
 
-  it("uses current-password autocomplete for password inputs when autocomplete is true", () => {
+  it("passes native password autocomplete values through", () => {
     render(
       <TextInputBase
         classMap={mockStyles}
         password
-        autocomplete
+        autoComplete="current-password"
         IconButton={IconButton}
       />,
     );
 
     expect(screen.getByTestId("text-input-input")).toHaveAttribute(
-      "autocomplete",
+      "autoComplete",
       "current-password",
     );
   });
 
-  it("uses on autocomplete for non-password inputs when autocomplete is true", () => {
+  it("passes native autocomplete values through", () => {
     render(
       <TextInputBase
         classMap={mockStyles}
-        autocomplete
+        autoComplete="on"
         IconButton={IconButton}
       />,
     );
 
     expect(screen.getByTestId("text-input-input")).toHaveAttribute(
-      "autocomplete",
+      "autoComplete",
       "on",
     );
   });
 
-  it("uses off autocomplete by default", () => {
+  it("does not force an autocomplete value by default", () => {
     render(<TextInputBase classMap={mockStyles} IconButton={IconButton} />);
 
-    expect(screen.getByTestId("text-input-input")).toHaveAttribute(
+    expect(screen.getByTestId("text-input-input")).not.toHaveAttribute(
       "autocomplete",
-      "off",
     );
   });
 
-  it("prefers explicit autoComplete prop over computed autocomplete behavior", () => {
+  it("supports explicit autocomplete tokens", () => {
     render(
       <TextInputBase
         classMap={mockStyles}
-        autocomplete={false}
         autoComplete="email"
         IconButton={IconButton}
       />,
     );
 
     expect(screen.getByTestId("text-input-input")).toHaveAttribute(
-      "autocomplete",
+      "autoComplete",
       "email",
     );
   });
@@ -410,8 +423,7 @@ describe("TextInputBase", () => {
       <TextInputBase
         classMap={mockStyles}
         IconButton={IconButton}
-        outline
-        glass
+        variant="glassOutline"
         theme="primary"
         rounding="medium"
         shadow="light"
@@ -445,11 +457,7 @@ describe("TextInputBase", () => {
 
   it("applies full-width styling to the container and wrapper when enabled", () => {
     render(
-      <TextInputBase
-        classMap={mockStyles}
-        IconButton={IconButton}
-        fullWidth
-      />,
+      <TextInputBase classMap={mockStyles} IconButton={IconButton} fullWidth />,
     );
 
     expect(screen.getByTestId("text-input")).toHaveClass("fullWidth");
@@ -496,7 +504,7 @@ describe("TextInputBase", () => {
       "custom-icon",
     );
     expect(screen.getByTestId("text-input-input")).toHaveClass(
-      "textInput",
+      "input",
       "custom-input",
     );
     expect(screen.getByTestId("text-input-password-toggle")).toHaveClass(
@@ -504,8 +512,34 @@ describe("TextInputBase", () => {
       "custom-toggle",
     );
     expect(screen.getByTestId("text-input-sr-only-text")).toHaveClass(
-      "srOnly",
+      "sr_only",
       "custom-sr-only",
+    );
+  });
+
+  it("renders FormField-style helper and error content with custom classes", () => {
+    render(
+      <TextInputBase
+        classMap={mockStyles}
+        IconButton={IconButton}
+        helperText="Use your work email"
+        errorMessage="Email is required"
+        helperTextClassName="custom-helper"
+        errorMessageClassName="custom-error"
+      />,
+    );
+
+    const input = screen.getByTestId("text-input-input");
+    const helper = screen.getByTestId("text-input-helper-text");
+    const error = screen.getByTestId("text-input-error-message");
+
+    expect(helper).toHaveClass("helperText", "custom-helper");
+    expect(error).toHaveClass("errorMessage", "custom-error");
+    expect(error).toHaveAttribute("role", "alert");
+    expect(input).toHaveAttribute("aria-invalid", "true");
+    expect(input).toHaveAttribute(
+      "aria-describedby",
+      `${helper.id} ${error.id}`,
     );
   });
 

@@ -36,9 +36,6 @@ const meta: Meta<DrawerProps> = {
       control: "select",
       options: shadowOptions,
     },
-    glass: {
-      control: "boolean",
-    },
     closeOnOverlayClick: {
       control: "boolean",
     },
@@ -54,13 +51,17 @@ const meta: Meta<DrawerProps> = {
     onClose: {
       action: "closed",
     },
+    variant: {
+      control: "select",
+      options: ["solid", "outline", "glass", "glassOutline"],
+    },
   },
   args: {
     open: true,
     title: "Filters",
     placement: "right",
     theme: "primary",
-    glass: false,
+    variant: "solid",
     rounding: "medium",
     shadow: "light",
     closeOnOverlayClick: true,
@@ -202,7 +203,7 @@ export const Glass: Story = {
   render: (args) => <DrawerDemo {...args} />,
   args: {
     title: "Glass drawer",
-    glass: true,
+    variant: "glass",
     shadow: "strong",
     rounding: "large",
     children: (

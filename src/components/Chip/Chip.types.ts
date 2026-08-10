@@ -1,12 +1,12 @@
-import type { AriaAttributes, ElementType, HTMLAttributes } from "react";
 import {
-  ThemeType,
   PositionType,
-  SizeType,
-  StateType,
   RoundingType,
   ShadowType,
+  SizeType,
+  StateType,
+  ThemeType,
 } from "@/types/types";
+import type { AriaAttributes, ElementType, HTMLAttributes } from "react";
 
 /**
  * Props for the ChipBase component (low-level, unstyled chip implementation).
@@ -27,7 +27,7 @@ export interface ChipBaseProps extends ChipProps {
 
   /**
    * Optional custom icon component for the close/remove button.
-   * Accepts a React component type (e.g., from react-icons).
+   * Accepts a React component type.
    */
   closeIcon?: ElementType;
 }
@@ -99,14 +99,12 @@ export interface ChipProps
    * @default configured default theme (fallback: "primary")
    */
   theme?: ThemeType;
-
   /**
-   * Applies a translucent frosted-glass treatment using the active theme palette.
+   * Surface treatment; glassOutline combines glass and outline.
    *
-   * @default configured default glass setting (fallback: false)
+   * @default configured default variant (fallback: "solid")
    */
-  glass?: boolean;
-
+  variant?: import("@/types/types").VariantType;
   /**
    * Rounding style for the chip
    * ('none' | 'small' | 'medium' | 'large' | 'full').
@@ -125,7 +123,7 @@ export interface ChipProps
 
   /**
    * State of the chip
-   * ('success' | 'error' | 'warning' | 'disabled' | '').
+   * ('success' | 'error' | 'warning' | 'info' | 'disabled' | '').
    *
    */
   state?: StateType;
@@ -136,7 +134,7 @@ export interface ChipProps
    *
    * @default "topCenter"
    */
-  position?: PositionType;
+  placement?: PositionType;
 
   /**
    * Additional class name for custom styling.
@@ -182,7 +180,6 @@ export interface ChipProps
    * If omitted, a stable fallback based on testId/id is used.
    */
   messageId?: string;
-
 
   /**
    * Optional test ID for testing frameworks.

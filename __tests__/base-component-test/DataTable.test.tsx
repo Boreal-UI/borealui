@@ -63,13 +63,13 @@ const classMap = {
   editButton: "editButton",
   cellEditor: "cellEditor",
   selectionCell: "selectionCell",
-  outline: "outline",
-  glass: "glass",
   primary: "primary",
   success: "success",
   roundMedium: "roundMedium",
   shadowLight: "shadowLight",
   srOnly: "srOnly",
+  glass: "glass",
+  outline: "outline",
 };
 
 const renderTable = (
@@ -161,8 +161,7 @@ describe("DataTableBase", () => {
     renderTable({
       theme: "primary",
       state: "success",
-      outline: true,
-      glass: true,
+      variant: "glassOutline",
     });
 
     const table = screen.getByRole("table");
@@ -455,7 +454,7 @@ describe("DataTableBase", () => {
 
     expect(caption).toBeInTheDocument();
     expect(caption).toHaveAttribute("id", "users-table-caption");
-    expect(caption).toHaveClass("srOnly");
+    expect(caption).toHaveClass("sr_only");
     expect(table).toHaveAttribute(
       "aria-describedby",
       expect.stringContaining("users-table-caption"),
@@ -470,7 +469,7 @@ describe("DataTableBase", () => {
 
     const caption = screen.getByText("Visible table caption");
     expect(caption).toBeInTheDocument();
-    expect(caption).not.toHaveClass("srOnly");
+    expect(caption).not.toHaveClass("sr_only");
   });
 
   it("merges custom aria-describedby with the generated caption and live region ids", () => {
@@ -1101,10 +1100,7 @@ describe("DataTableBase", () => {
     fireEvent.click(screen.getByTestId("data-table-pagination-next"));
     fireEvent.click(screen.getByRole("checkbox", { name: "Select row 2" }));
 
-    expect(onSelectionChange).toHaveBeenLastCalledWith(
-      [0, 1],
-      baseData,
-    );
+    expect(onSelectionChange).toHaveBeenLastCalledWith([0, 1], baseData);
   });
 
   it("supports server pagination without slicing provided data", () => {
