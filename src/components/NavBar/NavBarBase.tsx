@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -79,6 +80,7 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
           const isActive = isItemActive?.(item) ?? false;
           const slug = slugify(item.label || item.path);
           const itemAriaLabel = getItemAriaLabel?.(item) ?? item.label;
+          const safeHref = sanitizeNavigationHref(item.path);
 
           return (
             <li
@@ -90,12 +92,9 @@ const BaseNavBar: React.FC<BaseNavBarProps> = ({
               data-testid={`${testId}-nav-list-item-${slug}`}
             >
               <LinkWrapper
-                href={item.path}
+                href={safeHref}
                 target={item.target}
-                rel={
-                  item.rel ??
-                  (item.target === "_blank" ? "noopener noreferrer" : undefined)
-                }
+                rel={mergeSafeRel(item.target, item.rel)}
                 isActive={isActive}
                 className={combineClassNames(
                   itemClass,

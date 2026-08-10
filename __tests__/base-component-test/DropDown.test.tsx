@@ -238,7 +238,7 @@ describe("BaseDropdown", () => {
 
     const linkItem = screen.getByTestId("dropdown-docs");
     expect(linkItem).toHaveAttribute("target", "_blank");
-    expect(linkItem).toHaveAttribute("rel", "external");
+    expect(linkItem).toHaveAttribute("rel", "external noopener noreferrer");
   });
 
   it("supports trigger aria-labelledby instead of aria-label", () => {

@@ -15,6 +15,7 @@ import {
   IconButtonLikeRef,
 } from "./Dropdown.types";
 import { combineClassNames } from "../../utils/classNames";
+import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
 import MenuIcon from "../../Icons/MenuIcon";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -613,6 +614,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
         "data-dropdown-has-submenu": hasSubmenu ? "true" : undefined,
         "data-testid": itemTestId,
       };
+      const safeItemHref = sanitizeNavigationHref(item.href);
 
       return (
         <div
@@ -651,14 +653,11 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
             >
               {renderItemContent(item, true)}
             </button>
-          ) : item.href ? (
+          ) : safeItemHref ? (
             <a
-              href={item.disabled ? undefined : item.href}
+              href={item.disabled ? undefined : safeItemHref}
               target={item.disabled ? undefined : item.target}
-              rel={
-                item.rel ??
-                (item.target === "_blank" ? "noopener noreferrer" : undefined)
-              }
+              rel={mergeSafeRel(item.target, item.rel)}
               {...commonProps}
               onClick={(e) => {
                 e.stopPropagation();

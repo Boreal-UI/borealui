@@ -327,7 +327,7 @@ describe("FooterBase", () => {
       expect(link).toHaveAttribute("aria-current", "page");
       expect(link).toHaveAttribute("title", "View docs");
       expect(link).toHaveAttribute("target", "_blank");
-      expect(link).toHaveAttribute("rel", "noreferrer");
+      expect(link).toHaveAttribute("rel", "noreferrer noopener");
     });
 
     it("renders disabled footer links as non-interactive text", () => {
@@ -707,7 +707,10 @@ describe("FooterBase", () => {
 
       const brandLink = screen.getByRole("link", { name: "Boreal UI" });
       expect(brandLink).toHaveAttribute("target", "_blank");
-      expect(brandLink).toHaveAttribute("rel", "external");
+      expect(brandLink).toHaveAttribute(
+        "rel",
+        "external noopener noreferrer",
+      );
     });
 
     it("renders brand as non-link content when brandHref is omitted", () => {

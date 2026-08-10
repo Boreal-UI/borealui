@@ -140,7 +140,7 @@ describe("BaseNavBar", () => {
 
     const link = screen.getByTestId(`${testId}-nav-item-docs`);
     expect(link).toHaveAttribute("target", "_blank");
-    expect(link).toHaveAttribute("rel", "external");
+    expect(link).toHaveAttribute("rel", "external noopener noreferrer");
   });
 
   it("applies the default navigation aria-label", () => {

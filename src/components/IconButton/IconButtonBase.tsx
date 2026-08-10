@@ -2,6 +2,7 @@ import React, { forwardRef, useMemo } from "react";
 import { IconButtonBaseProps } from "./IconButton.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -74,7 +75,8 @@ const IconButtonBase = forwardRef<
 
   const resolvedBusy = loading || ariaBusy || undefined;
   const inert = disabled || loading;
-  const renderAsLink = !!href;
+  const safeHref = sanitizeNavigationHref(href);
+  const renderAsLink = !!safeHref;
 
   const classNames = useMemo(
     () =>
@@ -143,8 +145,7 @@ const IconButtonBase = forwardRef<
     const resolvedTarget = inert
       ? undefined
       : (target ?? (isExternal ? "_blank" : undefined));
-    const resolvedRel =
-      rel ?? (resolvedTarget === "_blank" ? "noopener noreferrer" : undefined);
+    const resolvedRel = mergeSafeRel(resolvedTarget, rel);
 
     const linkProps = {
       className: combineClassNames(classNames, classMap.link),
@@ -163,14 +164,14 @@ const IconButtonBase = forwardRef<
 
     if (isExternal) {
       return (
-        <a {...linkProps} href={inert ? undefined : href}>
+        <a {...linkProps} href={inert ? undefined : safeHref}>
           {iconContent}
         </a>
       );
     }
 
     return (
-      <LinkComponent {...linkProps} href={inert ? undefined : href}>
+      <LinkComponent {...linkProps} href={inert ? undefined : safeHref}>
         {iconContent}
       </LinkComponent>
     );

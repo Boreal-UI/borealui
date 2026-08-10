@@ -3,6 +3,7 @@ import { IconButtonProps } from "../../IconButton/IconButton.types";
 import FooterBase from "../FooterBase";
 import { FooterProps } from "../Footer.types";
 import styles from "../next/Footer.module.scss";
+import { mergeSafeRel, sanitizeNavigationHref } from "@/utils/navigationSecurity";
 
 export type ServerFooterProps = Omit<FooterProps, "showThemeSelect"> & {
   showThemeSelect?: false;
@@ -20,12 +21,13 @@ const StaticIconLink = ({
   "data-testid": dataTestId,
 }: IconButtonProps) => {
   const content = Icon ? <Icon aria-hidden focusable={false} /> : null;
-  return href && !disabled ? (
+  const safeHref = sanitizeNavigationHref(href);
+  return safeHref && !disabled ? (
     <a
-      href={href}
+      href={safeHref}
       aria-label={ariaLabel}
       title={title}
-      rel={rel ?? (target === "_blank" ? "noopener noreferrer" : undefined)}
+      rel={mergeSafeRel(target, rel)}
       target={target}
       data-testid={testId ?? dataTestId}
     >

@@ -30,11 +30,15 @@ describe("runCommand", () => {
 
     runCommand("npm", ["install"], "/tmp/demo", "Installed dependencies.");
 
-    expect(mockedSpawnSync).toHaveBeenCalledWith("npm", ["install"], {
-      cwd: "/tmp/demo",
-      stdio: "inherit",
-      shell: process.platform === "win32",
-    });
+    expect(mockedSpawnSync).toHaveBeenCalledWith(
+      expect.not.stringMatching(/^npm(?:\.cmd|\.exe)?$/i),
+      expect.any(Array),
+      {
+        cwd: "/tmp/demo",
+        stdio: "inherit",
+        shell: false,
+      },
+    );
 
     expect(logSpy).toHaveBeenCalledWith("Installed dependencies.");
     expect(warnSpy).not.toHaveBeenCalled();
@@ -61,7 +65,7 @@ describe("runCommand", () => {
     runCommand("yarn", [], "/tmp/demo", "Installed dependencies.");
 
     expect(warnSpy).toHaveBeenCalledWith(
-      "Skipped: yarn  did not complete successfully.",
+      "Skipped: could not resolve a trusted yarn executable.",
     );
   });
 });

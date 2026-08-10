@@ -428,7 +428,7 @@ describe("AvatarBase (Jest)", () => {
 
     const avatar = screen.getByRole("link", { name: "Docs Avatar" });
     expect(avatar).toHaveAttribute("target", "_blank");
-    expect(avatar).toHaveAttribute("rel", "external");
+    expect(avatar).toHaveAttribute("rel", "external noopener noreferrer");
   });
 
   it("prevents navigation behavior for disabled anchor", () => {
