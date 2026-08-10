@@ -8,7 +8,7 @@ import {
   stateOptions,
   themeOptions,
 } from "../shared-story-assets/OptionTypes";
-import { FaStop, FaStopCircle } from "../shared-story-assets/icons";
+import { FaStop } from "../shared-story-assets/icons";
 import {
   renderThemeVariants,
   renderStateVariants,
