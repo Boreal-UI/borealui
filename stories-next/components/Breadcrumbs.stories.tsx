@@ -18,16 +18,6 @@ import {
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
 
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
 const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
 
 const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];

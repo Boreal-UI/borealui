@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Footer, RoundingType, ShadowType, ThemeType } from "../src/index.core";
+import { Footer } from "../src/index.core";
 import type { FooterProps } from "../src/components/Footer/Footer.types";
 import {
   FaGithub,
