@@ -2,6 +2,7 @@ import React, { useMemo, MouseEvent } from "react";
 import { BadgeBaseProps } from "./Badge.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -110,17 +111,18 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
     </>
   );
 
-  if (href) {
-    const isHttp = /^https?:\/\//i.test(href);
+  const safeHref = sanitizeNavigationHref(href);
+
+  if (safeHref) {
+    const isHttp = /^https?:\/\//i.test(safeHref);
     const target = disabled
       ? undefined
       : (targetProp ?? (isHttp ? "_blank" : undefined));
-    const rel =
-      relProp ?? (target === "_blank" ? "noopener noreferrer" : undefined);
+    const rel = mergeSafeRel(target, relProp);
 
     return (
       <a
-        href={disabled ? undefined : href}
+        href={disabled ? undefined : safeHref}
         className={combinedClassName}
         onClick={handleClick}
         data-testid={testId ? `${testId}-main` : undefined}
@@ -166,7 +168,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       {...(ariaDescribedBy ? { "aria-describedby": ariaDescribedBy } : {})}
       {...(ariaLive ? { "aria-live": ariaLive } : {})}
       {...(ariaAtomic !== undefined ? { "aria-atomic": ariaAtomic } : {})}
-      {...(rest as React.HTMLAttributes<HTMLSpanElement>)}
+      {...rest}
     >
       {inner}
     </span>

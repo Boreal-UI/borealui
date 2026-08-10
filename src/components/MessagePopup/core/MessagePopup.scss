@@ -48,24 +48,20 @@
 
   .message_popup_message {
     margin: 0;
+    text-align: center;
   }
 
   .message_popup_actions {
     display: flex;
     gap: var(--spacing-sm);
-    justify-content: flex-end;
+    justify-content: center;
     padding: var(--spacing-sm) var(--spacing-md);
-    border-top: 1px solid var(--border-color);
   }
 
   .message_popup_close {
     flex-shrink: 0;
-  }
-
-  .message_popup_confirm {
-  }
-
-  .message_popup_cancel {
+    margin: 0.5rem;
+    align-self: flex-end;
   }
 
   /* Shadow variants */

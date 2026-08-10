@@ -7,6 +7,7 @@ import {
   getDefaultTheme,
 } from "@/config/boreal-style-config";
 import { capitalize } from "@/utils/capitalize";
+import { mergeSafeRel, sanitizeNavigationHref } from "@/utils/navigationSecurity";
 import { ChevronDownIcon } from "@/Icons";
 import { BaseSidebarProps, SidebarLink } from "./Sidebar.types";
 
@@ -163,8 +164,8 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
         const buttonId = `${sectionId}-button`;
         const panelId = `${sectionId}-panel`;
 
-        const linkRel =
-          rel ?? (target === "_blank" ? "noopener noreferrer" : undefined);
+        const safeHref = sanitizeNavigationHref(href);
+        const linkRel = mergeSafeRel(target, rel);
 
         return (
           <li
@@ -246,9 +247,9 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                   {renderLinks(children, true)}
                 </div>
               </>
-            ) : href && !linkAriaDisabled ? (
+            ) : safeHref && !linkAriaDisabled ? (
               <LinkComponent
-                href={href}
+                href={safeHref}
                 target={target}
                 rel={linkRel}
                 className={combineClassNames(
@@ -337,34 +338,45 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                 "aria-disabled": footerLinkAriaDisabled,
               },
               i,
-            ) => (
-              <LinkComponent
-                key={`${label}-${i}`}
-                href={href}
-                target={target}
-                rel={
-                  rel ??
-                  (target === "_blank" ? "noopener noreferrer" : undefined)
-                }
-                className={combineClassNames(
+            ) => {
+              const safeHref = sanitizeNavigationHref(href);
+              const content = (
+                <>
+                  {icon && (
+                    <span
+                      className={combineClassNames(classMap.icon, iconClassName)}
+                    >
+                      {icon}
+                    </span>
+                  )}
+                  {label}
+                </>
+              );
+              const sharedProps = {
+                className: combineClassNames(
                   classMap.footerLink,
                   footerLinkClassName,
-                )}
-                aria-label={footerLinkAriaLabel}
-                aria-description={footerLinkAriaDescription}
-                aria-disabled={footerLinkAriaDisabled ? true : undefined}
-                data-testid={`${testId}-footerLink`}
-              >
-                {icon && (
-                  <span
-                    className={combineClassNames(classMap.icon, iconClassName)}
-                  >
-                    {icon}
-                  </span>
-                )}
-                {label}
-              </LinkComponent>
-            ),
+                ),
+                "aria-label": footerLinkAriaLabel,
+                "aria-description": footerLinkAriaDescription,
+                "aria-disabled": footerLinkAriaDisabled ? true : undefined,
+                "data-testid": `${testId}-footerLink`,
+              };
+
+              return safeHref ? (
+                <LinkComponent
+                  key={`${label}-${i}`}
+                  {...sharedProps}
+                  href={safeHref}
+                  target={target}
+                  rel={mergeSafeRel(target, rel)}
+                >
+                  {content}
+                </LinkComponent>
+              ) : (
+                <span key={`${label}-${i}`} {...sharedProps}>{content}</span>
+              );
+            },
           )}
 
           {footerVersion && (

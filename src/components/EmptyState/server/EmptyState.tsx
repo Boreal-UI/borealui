@@ -1,4 +1,5 @@
 import { combineClassNames } from "@/utils/classNames";
+import { sanitizeNavigationHref } from "@/utils/navigationSecurity";
 import { capitalize } from "@/utils/capitalize";
 import { expandClassMap } from "@/utils/propAliases";
 import {
@@ -44,6 +45,7 @@ export default function EmptyState({
   testId = dataTestId ?? "empty-state",
   ...rest
 }: ServerEmptyStateProps) {
+  const safeActionHref = sanitizeNavigationHref(actionHref);
   const classMap = expandClassMap(styles);
   const titleId = title && !ariaLabelledBy ? `${testId}-title` : undefined;
   const messageId =
@@ -102,9 +104,9 @@ export default function EmptyState({
           {message}
         </p>
       ) : null}
-      {actionLabel && actionHref ? (
+      {actionLabel && safeActionHref ? (
         <a
-          href={actionHref}
+          href={safeActionHref}
           aria-label={actionAriaLabel}
           className={combineClassNames(
             classMap.actionBtn,

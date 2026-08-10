@@ -1,6 +1,7 @@
 import { combineClassNames } from "@/utils/classNames";
 import { expandClassMap } from "@/utils/propAliases";
 import { getInitials } from "@/utils/getInitials";
+import { mergeSafeRel, sanitizeNavigationHref } from "@/utils/navigationSecurity";
 import {
   getDefaultVariant,
   getDefaultSize,
@@ -98,12 +99,13 @@ export default function Avatar({
       ) : null}
     </>
   );
-  return href ? (
+  const safeHref = sanitizeNavigationHref(href);
+  return safeHref ? (
     <a
       {...rest}
-      href={disabled ? undefined : href}
+      href={disabled ? undefined : safeHref}
       target={target}
-      rel={rel ?? (target === "_blank" ? "noopener noreferrer" : undefined)}
+      rel={mergeSafeRel(target, rel)}
       className={classes}
       aria-label={computedLabel}
       aria-disabled={disabled || undefined}

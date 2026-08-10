@@ -600,6 +600,16 @@ describe("ButtonBase", () => {
     expect(link).not.toHaveAttribute("rel");
   });
 
+  it("removes unsafe navigation schemes from href", () => {
+    renderButton(
+      { href: "data:text/html,<script>alert(1)</script>" },
+      "Unsafe",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link).not.toHaveAttribute("href");
+  });
+
   it("prevents navigation for disabled anchors", () => {
     const handleClick = jest.fn();
 
@@ -881,7 +891,22 @@ describe("ButtonBase", () => {
 
     const link = screen.getByTestId("button-test");
     expect(link).toHaveAttribute("target", "_blank");
-    expect(link).toHaveAttribute("rel", "external");
+    expect(link).toHaveAttribute("rel", "external noopener noreferrer");
+  });
+
+  it("does not allow rel opener to restore access to the source tab", () => {
+    renderButton(
+      {
+        href: "https://example.com",
+        target: "_blank",
+        rel: "opener external",
+      },
+      "Open safely",
+    );
+
+    const link = screen.getByTestId("button-test");
+    expect(link).toHaveAttribute("rel", "external noopener noreferrer");
+    expect(link.getAttribute("rel")?.split(/\s+/)).not.toContain("opener");
   });
 
   it("applies a non-blank target value without rel", () => {

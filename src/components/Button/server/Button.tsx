@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { expandClassMap } from "@/utils/propAliases";
 import { capitalize } from "@/utils/capitalize";
+import { mergeSafeRel, sanitizeNavigationHref } from "@/utils/navigationSecurity";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -44,6 +45,7 @@ export default function Button({
   type = "button",
   ...rest
 }: ServerButtonProps) {
+  const safeHref = sanitizeNavigationHref(href);
   const classMap = expandClassMap(styles);
   const resolvedTestId = testId ?? dataTestId ?? "button";
   const classes = combineClassNames(
@@ -88,17 +90,16 @@ export default function Button({
     </>
   );
 
-  if (href) {
+  if (safeHref) {
     const external =
-      target === "_blank" || isExternal || /^https?:\/\//i.test(href);
+      target === "_blank" || isExternal || /^https?:\/\//i.test(safeHref);
+    const resolvedTarget = disabled ? undefined : (target ?? (external ? "_blank" : undefined));
     return (
       <a
         {...rest}
-        href={disabled ? undefined : href}
-        target={
-          disabled ? undefined : (target ?? (external ? "_blank" : undefined))
-        }
-        rel={rel ?? (external ? "noopener noreferrer" : undefined)}
+        href={disabled ? undefined : safeHref}
+        target={resolvedTarget}
+        rel={mergeSafeRel(resolvedTarget, rel)}
         className={combineClassNames(classes, classMap.link)}
         aria-disabled={disabled || loading || undefined}
         data-testid={resolvedTestId}

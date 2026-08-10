@@ -168,10 +168,10 @@ describe("TypographyBase", () => {
       style: { color: "red", marginTop: "12px" },
     });
 
-    expect(screen.getByTestId("typography")).toHaveStyle({
-      color: "red",
-      marginTop: "12px",
-    });
+    const typography = screen.getByTestId("typography");
+
+    expect(typography.style.color).toBe("red");
+    expect(typography.style.marginTop).toBe("12px");
   });
 
   it("applies id and title attributes", () => {

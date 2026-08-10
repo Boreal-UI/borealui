@@ -12,6 +12,7 @@ import {
   ValidationSummaryItem,
 } from "./ValidationSummary.types";
 import { combineClassNames } from "../../utils/classNames";
+import { sanitizeNavigationHref } from "../../utils/navigationSecurity";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
@@ -249,8 +250,9 @@ const ValidationSummaryBase = forwardRef<
             >
               {normalizedItems.map((item, index) => {
                 const itemKey = item.id ?? item.fieldId ?? String(index);
-                const href =
-                  item.href ?? (item.fieldId ? `#${item.fieldId}` : undefined);
+                const href = sanitizeNavigationHref(
+                  item.href ?? (item.fieldId ? `#${item.fieldId}` : undefined),
+                );
                 const handleClick = () => onItemClick?.(item, index);
 
                 return (

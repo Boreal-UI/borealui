@@ -235,7 +235,7 @@ describe("BadgeBase", () => {
 
     const badge = screen.getByTestId("badge-main");
     expect(badge).toHaveAttribute("target", "_blank");
-    expect(badge).toHaveAttribute("rel", "external");
+    expect(badge).toHaveAttribute("rel", "external noopener noreferrer");
   });
 
   it("renders disabled anchor without href and with aria-disabled", () => {

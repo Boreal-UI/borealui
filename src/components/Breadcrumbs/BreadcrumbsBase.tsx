@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { Breadcrumb, BreadcrumbsBaseProps } from "./Breadcrumbs.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -107,10 +108,9 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
           );
 
           const itemTitle = item.title ?? item.label;
+          const safeHref = sanitizeNavigationHref(item.href);
           const linkTarget = isItemDisabled ? undefined : item.target;
-          const linkRel =
-            item.rel ??
-            (linkTarget === "_blank" ? "noopener noreferrer" : undefined);
+          const linkRel = mergeSafeRel(linkTarget, item.rel);
 
           return (
             <li
@@ -136,7 +136,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                 >
                   {item.label}
                 </ButtonComponent>
-              ) : item.href && !isLast ? (
+              ) : safeHref && !isLast ? (
                 isItemDisabled ? (
                   <span
                     className={combineClassNames(
@@ -155,7 +155,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                   </span>
                 ) : (
                   <LinkComponent
-                    href={item.href}
+                    href={safeHref}
                     target={linkTarget}
                     rel={linkRel}
                     className={classMap.link}

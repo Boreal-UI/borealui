@@ -5,6 +5,7 @@ import {
   readFileSync,
   rmSync,
   writeFileSync,
+  symlinkSync,
 } from "node:fs";
 import { join } from "node:path";
 import {
@@ -675,6 +676,32 @@ createRoot(document.getElementById("root")!).render(<App />);
       );
     } finally {
       exitSpy.mockRestore();
+    }
+  });
+
+  it("rejects new files beneath a symlinked parent outside the project", () => {
+    const outside = mkdtempSync(join(process.cwd(), ".tmp-boreal-outside-"));
+    const linkedParent = join(root, "linked-parent");
+    const exitSpy = jest.spyOn(process, "exit").mockImplementation((() => {
+      throw new Error("process.exit");
+    }) as typeof process.exit);
+
+    try {
+      symlinkSync(outside, linkedParent, process.platform === "win32" ? "junction" : "dir");
+
+      expect(() =>
+        __testing.resolveSafeProjectWritePath(
+          root,
+          join(linkedParent, "globals.css"),
+        ),
+      ).toThrow("process.exit");
+      expect(existsSync(join(outside, "globals.css"))).toBe(false);
+      expect(errorSpy).toHaveBeenCalledWith(
+        expect.stringContaining("outside the project directory"),
+      );
+    } finally {
+      exitSpy.mockRestore();
+      rmSync(outside, { recursive: true, force: true });
     }
   });
 

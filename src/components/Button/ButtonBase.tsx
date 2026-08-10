@@ -2,6 +2,7 @@ import React, { forwardRef, useMemo } from "react";
 import { ButtonBaseProps } from "./Button.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -65,6 +66,7 @@ const ButtonBase = forwardRef<
     },
     ref,
   ) => {
+    const safeHref = sanitizeNavigationHref(href);
     const iconOnly =
       !children ||
       (typeof children !== "string" && React.Children.count(children) === 0);
@@ -148,9 +150,9 @@ const ButtonBase = forwardRef<
         ) : (
           <>
             {children}
-            {href &&
+            {safeHref &&
               (targetProp === "_blank" ||
-                (isExternal ?? /^https?:\/\//i.test(href))) && (
+                (isExternal ?? /^https?:\/\//i.test(safeHref))) && (
                 <span className="sr_only"> (opens in a new tab)</span>
               )}
           </>
@@ -166,9 +168,9 @@ const ButtonBase = forwardRef<
       </>
     );
 
-    if (href) {
+    if (safeHref) {
       const external =
-        (targetProp === "_blank" || isExternal || /^https?:\/\//i.test(href)) &&
+        (targetProp === "_blank" || isExternal || /^https?:\/\//i.test(safeHref)) &&
         !disabled;
 
       const Comp = external ? "a" : (as ?? LinkComponent ?? "a");
@@ -177,8 +179,7 @@ const ButtonBase = forwardRef<
         ? undefined
         : (targetProp ?? (external ? "_blank" : undefined));
 
-      const rel =
-        relProp ?? (target === "_blank" ? "noopener noreferrer" : undefined);
+      const rel = mergeSafeRel(target, relProp);
 
       const linkCommon = {
         ref: ref as React.Ref<HTMLAnchorElement>,
@@ -203,7 +204,7 @@ const ButtonBase = forwardRef<
         return (
           <a
             {...linkCommon}
-            href={disabled ? undefined : href}
+            href={disabled ? undefined : safeHref}
             target={target}
             rel={rel}
             {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
@@ -219,7 +220,7 @@ const ButtonBase = forwardRef<
             React.ComponentPropsWithoutRef<typeof Comp>,
             "children"
           >)}
-          href={href as never}
+          href={safeHref as never}
           target={target}
           rel={rel}
           {...(rest as React.ComponentPropsWithoutRef<typeof Comp>)}

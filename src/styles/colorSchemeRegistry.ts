@@ -14,6 +14,7 @@
 
 import { ColorScheme } from "@/types/types";
 import { defaultColorSchemes } from "./Themes";
+import { assertSafeColorScheme } from "@/utils/colorSchemeSecurity";
 
 const colorSchemes: ColorScheme[] = [...defaultColorSchemes];
 
@@ -33,6 +34,7 @@ export const registerColorScheme = (
   override: boolean = false,
 ) => {
   for (const scheme of customSchemes) {
+    assertSafeColorScheme(scheme);
     const index = colorSchemes.findIndex((s) => s.name === scheme.name);
     if (index === -1) {
       colorSchemes.push(scheme);

@@ -309,7 +309,7 @@ describe("SidebarBase", () => {
 
     const link = screen.getByRole("link", { name: "Docs" });
     expect(link).toHaveAttribute("target", "_blank");
-    expect(link).toHaveAttribute("rel", "external");
+    expect(link).toHaveAttribute("rel", "external noopener noreferrer");
   });
 
   it("renders aria-disabled links as non-link labels", () => {
@@ -484,7 +484,7 @@ describe("SidebarBase", () => {
 
     const footerLink = screen.getByRole("link", { name: "Docs" });
     expect(footerLink).toHaveAttribute("target", "_blank");
-    expect(footerLink).toHaveAttribute("rel", "external");
+    expect(footerLink).toHaveAttribute("rel", "external noopener noreferrer");
   });
 
   it("applies custom data-testid values consistently", () => {

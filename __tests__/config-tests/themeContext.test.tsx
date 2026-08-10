@@ -366,6 +366,33 @@ describe("ThemeProvider", () => {
     ).toBeGreaterThanOrEqual(4.5);
   });
 
+  it("rejects active CSS values in custom color fields", () => {
+    expect(() =>
+      buildThemeVariables({
+        name: "Unsafe Theme",
+        primaryColor: "#336699",
+        secondaryColor: "#993366",
+        tertiaryColor: "#669933",
+        quaternaryColor: "#cc9933",
+        backgroundColor: "url(https://attacker.example/pixel)",
+      }),
+    ).toThrow(/backgroundColor must be a hexadecimal color/i);
+  });
+
+  it("preserves supported hexadecimal colors including alpha", () => {
+    const vars = buildThemeVariables({
+      name: "Alpha Theme",
+      primaryColor: "#336699cc",
+      secondaryColor: "#936",
+      tertiaryColor: "#669933",
+      quaternaryColor: "#cc9933",
+      backgroundColor: "#101820ff",
+    });
+
+    expect(vars["--primary-color"]).toBe("#336699cc");
+    expect(vars["--background-color"]).toBe("#101820ff");
+  });
+
   it("adapts placeholder text to light and dark theme backgrounds", () => {
     const baseScheme = {
       name: "Placeholder contrast",

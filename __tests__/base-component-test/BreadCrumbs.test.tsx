@@ -223,7 +223,7 @@ describe("BreadcrumbsBase", () => {
 
     const link = screen.getByTestId("breadcrumbs-nav-item-label");
     expect(link).toHaveAttribute("target", "_blank");
-    expect(link).toHaveAttribute("rel", "external");
+    expect(link).toHaveAttribute("rel", "external noopener noreferrer");
   });
 
   it("renders the last breadcrumb as the current page", () => {
