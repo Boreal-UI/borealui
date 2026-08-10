@@ -413,9 +413,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       if (typeof triggerElementRef === "function") {
         triggerElementRef(node);
       } else if (triggerElementRef && "current" in triggerElementRef) {
-        (
-          triggerElementRef as React.MutableRefObject<HTMLElement | null>
-        ).current = node;
+        triggerElementRef.current = node;
       }
     },
     [hasCustomTriggerContent, trigger],

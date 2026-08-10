@@ -2,7 +2,7 @@
 
 import { expandClassMap } from "@/utils/propAliases";
 import React, { useMemo } from "react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Button from "../../Button/next/Button";
 import IconButton from "../../IconButton/next/IconButton";
 import Skeleton from "../../Skeleton/next/Skeleton";
@@ -33,7 +33,7 @@ const NextImageWrapper: React.FC<CardImageComponentProps> = ({
 
   return (
     <Image
-      src={src as StaticImageData | string}
+      src={src}
       alt={alt}
       className={className}
       {...(fill

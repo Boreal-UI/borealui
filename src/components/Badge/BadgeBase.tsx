@@ -168,7 +168,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       {...(ariaDescribedBy ? { "aria-describedby": ariaDescribedBy } : {})}
       {...(ariaLive ? { "aria-live": ariaLive } : {})}
       {...(ariaAtomic !== undefined ? { "aria-atomic": ariaAtomic } : {})}
-      {...(rest as React.HTMLAttributes<HTMLSpanElement>)}
+      {...rest}
     >
       {inner}
     </span>

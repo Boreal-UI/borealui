@@ -114,7 +114,7 @@ const CardBase: React.FC<CardBaseProps> = ({
     if (value === null || typeof value !== "object") return false;
 
     return (
-      "src" in value && typeof (value as { src: unknown }).src === "string"
+      "src" in value && typeof value.src === "string"
     );
   }
 

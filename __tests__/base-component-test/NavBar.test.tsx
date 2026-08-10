@@ -31,7 +31,7 @@ const classMap = {
 };
 
 type MockLinkWrapperProps = {
-  href: string;
+  href?: string;
   target?: React.AnchorHTMLAttributes<HTMLAnchorElement>["target"];
   rel?: React.AnchorHTMLAttributes<HTMLAnchorElement>["rel"];
   children: React.ReactNode;

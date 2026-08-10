@@ -519,7 +519,7 @@ export function resolveThemeScheme(
 }
 
 export function getThemeStyle(scheme: ColorScheme): ThemeStyle {
-  return buildThemeVariables(scheme) as ThemeStyle;
+  return buildThemeVariables(scheme);
 }
 
 export function getThemeAttributes(scheme: ColorScheme): ThemeHtmlAttributes {
