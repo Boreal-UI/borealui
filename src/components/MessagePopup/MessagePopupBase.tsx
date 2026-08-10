@@ -162,6 +162,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
       ref={closeBtnRef}
       className={combineClassNames(classMap.close, closeButtonClassName)}
       icon={CloseIcon}
+      state="error"
       aria-label={ariaLabelCloseButton}
       onClick={(e: React.MouseEvent) => {
         e.stopPropagation();
@@ -242,6 +243,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
                 onClick={() => onConfirm?.()}
                 data-testid={`${testId}-confirm`}
                 type="button"
+                state="success"
               >
                 {confirmText}
               </Button>
@@ -256,6 +258,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
                 onClick={() => onCancel?.()}
                 data-testid={`${testId}-cancel`}
                 type="button"
+                state="error"
               >
                 {cancelText}
               </Button>

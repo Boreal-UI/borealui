@@ -94,7 +94,6 @@ export function runCommand(command, commandArgs, cwd, successMessage) {
     return;
   }
 
-  console.warn(
-    `Skipped: ${command} ${commandArgs.join(" ")} did not complete successfully.`,
-  );
+  const commandDisplay = [command, ...commandArgs].join(" ");
+  console.warn(`Skipped: ${commandDisplay} did not complete successfully.`);
 }
