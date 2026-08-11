@@ -96,6 +96,33 @@ const allowedHtmlTags = new Set([
 
 const voidHtmlTags = new Set(["br", "hr", "img"]);
 
+type MarkedRendererContext = {
+  parser?: {
+    parseInline?: (tokens: unknown[]) => string;
+  };
+};
+
+type MarkedRendererToken = {
+  href?: unknown;
+  text?: unknown;
+  title?: unknown;
+  tokens?: unknown[];
+};
+
+const getTokenString = (value: unknown): string =>
+  typeof value === "string" ? value : "";
+
+const getInlineTokenText = (
+  context: MarkedRendererContext,
+  token: MarkedRendererToken,
+): string => {
+  if (token.tokens && typeof context.parser?.parseInline === "function") {
+    return context.parser.parseInline(token.tokens);
+  }
+
+  return getTokenString(token.text);
+};
+
 const safeSanitize = (html: string): string =>
   sanitize(html, {
     allowedTags: [...allowedHtmlTags],
@@ -217,24 +244,62 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
     const r = new marked.Renderer();
 
     if (!allowHtml) {
-      r.html = (html: string) => escapeHtml(html);
+      r.html = (function (
+        this: MarkedRendererContext,
+        htmlOrToken: string | MarkedRendererToken,
+      ) {
+        const html =
+          typeof htmlOrToken === "string"
+            ? htmlOrToken
+            : getTokenString(htmlOrToken.text);
+        return escapeHtml(html);
+      });
     }
 
-    r.link = (href: string, title: string | null | undefined, text: string) => {
-      const url = href ?? "#";
+    r.link = (function (
+      this: MarkedRendererContext,
+      hrefOrToken: string | MarkedRendererToken,
+      legacyTitle?: string | null,
+      legacyText?: string,
+    ) {
+      const isToken = typeof hrefOrToken !== "string";
+      const href = isToken ? getTokenString(hrefOrToken.href) : hrefOrToken;
+      const title = isToken
+        ? getTokenString(hrefOrToken.title)
+        : getTokenString(legacyTitle);
+      const text = isToken
+        ? getInlineTokenText(this, hrefOrToken)
+        : getTokenString(legacyText);
+      const url = href || "#";
       const isExternal = /^https?:\/\//i.test(url);
-      const t = title ? ` title="${escapeHtml(title)}"` : "";
+      const titleAttribute = title
+        ? ` title="${escapeHtml(title)}"`
+        : "";
       const target = isExternal ? ` target="_blank"` : "";
       const rel = isExternal ? ` rel="noopener noreferrer"` : "";
-      return `<a href="${escapeHtml(url)}"${t}${target}${rel}>${text}</a>`;
-    };
+      return `<a href="${escapeHtml(url)}"${titleAttribute}${target}${rel}>${text}</a>`;
+    });
 
-    r.image = (href: string, title: string | null, text: string) => {
-      const url = href ?? "";
-      const t = title ? ` title="${escapeHtml(title)}"` : "";
-      const alt = escapeHtml(text || "");
-      return `<img src="${escapeHtml(url)}"${t} alt="${alt}" loading="lazy" decoding="async" />`;
-    };
+    r.image = (function (
+      this: MarkedRendererContext,
+      hrefOrToken: string | MarkedRendererToken,
+      legacyTitle?: string | null,
+      legacyText?: string,
+    ) {
+      const isToken = typeof hrefOrToken !== "string";
+      const href = isToken ? getTokenString(hrefOrToken.href) : hrefOrToken;
+      const title = isToken
+        ? getTokenString(hrefOrToken.title)
+        : getTokenString(legacyTitle);
+      const text = isToken
+        ? getTokenString(hrefOrToken.text)
+        : getTokenString(legacyText);
+      const titleAttribute = title
+        ? ` title="${escapeHtml(title)}"`
+        : "";
+      const alt = escapeHtml(text);
+      return `<img src="${escapeHtml(href)}"${titleAttribute} alt="${alt}" loading="lazy" decoding="async" />`;
+    });
 
     return r;
   }, [allowHtml]);
