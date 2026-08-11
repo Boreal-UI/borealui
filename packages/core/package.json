@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/core",
-  "version": "0.1.424",
+  "version": "0.1.425",
   "readme": "README.md",
   "description": "Accessible, themeable React components for Boreal UI core consumers.",
   "keywords": [
@@ -47,7 +47,7 @@
     "react-dom": ">=18.2.0"
   },
   "dependencies": {
-    "@boreal-ui/types": "0.1.424",
+    "@boreal-ui/types": "0.1.425",
     "sanitize-html": "^2.17.5"
   },
   "exports": {
