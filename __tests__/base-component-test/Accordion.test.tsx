@@ -8,6 +8,7 @@ const styles = {
   accordion: "accordion",
   header: "accordionHeader",
   content: "accordionContent",
+  contentInner: "accordionContentInner",
   icon: "accordionIcon",
   iconLeft: "iconLeft",
   iconRight: "iconRight",
@@ -113,6 +114,27 @@ describe("AccordionBase (Jest)", () => {
     expect(content).toHaveAttribute("data-state", "open");
     expect(toggle).toHaveAttribute("aria-expanded", "true");
     expect(screen.getByText("Accordion content")).toBeInTheDocument();
+  });
+
+  it("wraps raw text content in the shrinkable grid child", () => {
+    render(
+      <AccordionBase
+        title="Raw text accordion"
+        getUniqueId={getUniqueId}
+        classMap={styles}
+        data-testid="raw-text"
+      >
+        A longer raw text answer that must fully collapse.
+      </AccordionBase>,
+    );
+
+    const content = screen.getByTestId("raw-text-content");
+    const contentInner = content.firstElementChild;
+
+    expect(contentInner).toHaveClass("accordionContentInner");
+    expect(contentInner).toHaveTextContent(
+      "A longer raw text answer that must fully collapse.",
+    );
   });
 
   it("supports controlled mode and calls onExpandedChange with the next value", () => {

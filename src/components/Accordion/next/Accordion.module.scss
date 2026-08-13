@@ -301,6 +301,11 @@
     }
   }
 
+  .contentInner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
   .expanded .content {
     grid-template-rows: 1fr;
     opacity: 1;

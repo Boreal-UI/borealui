@@ -253,21 +253,23 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         data-state={isExpanded ? "open" : "collapsed"}
         data-testid={testId ? `${testId}-content` : undefined}
       >
-        {isExpanded && asyncContent && isLoading && (
-          <div
-            id={loadingId}
-            className={classMap.loading}
-            aria-live="polite"
-            aria-atomic="true"
-            data-testid={testId ? `${testId}-loading` : undefined}
-          >
-            {loadingAriaLabel || "Loading content"}
-          </div>
-        )}
+        <div className={classMap.contentInner}>
+          {isExpanded && asyncContent && isLoading && (
+            <div
+              id={loadingId}
+              className={classMap.loading}
+              aria-live="polite"
+              aria-atomic="true"
+              data-testid={testId ? `${testId}-loading` : undefined}
+            >
+              {loadingAriaLabel || "Loading content"}
+            </div>
+          )}
 
-        {(!lazyLoad || hasBeenExpanded) &&
-          (!asyncContent || !isLoading) &&
-          children}
+          {(!lazyLoad || hasBeenExpanded) &&
+            (!asyncContent || !isLoading) &&
+            children}
+        </div>
       </div>
     </div>
   );
