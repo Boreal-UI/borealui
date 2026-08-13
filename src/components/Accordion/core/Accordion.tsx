@@ -8,6 +8,7 @@ const classes = {
   accordion: "accordion",
   header: "accordion_header",
   content: "accordion_content",
+  contentInner: "accordion_contentInner",
   loading: "accordion_loading",
   icon: "accordion_icon",
   iconLeft: "accordion_iconLeft",

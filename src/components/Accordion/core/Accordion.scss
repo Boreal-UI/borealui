@@ -297,6 +297,11 @@
     }
   }
 
+  .accordion_contentInner {
+    min-height: 0;
+    overflow: hidden;
+  }
+
   .accordion_expanded .accordion_content {
     grid-template-rows: 1fr;
     opacity: 1;
