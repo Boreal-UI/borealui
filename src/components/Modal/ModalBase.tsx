@@ -101,7 +101,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
   });
 
   useEffect(() => {
-    if (!isRendered) return;
+    if (!isRendered || !portalElement) return;
 
     const frame = requestAnimationFrame(() => {
       setIsVisible(true);
@@ -113,7 +113,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
     });
 
     return () => cancelAnimationFrame(frame);
-  }, [isRendered]);
+  }, [isRendered, portalElement]);
 
   useEffect(() => {
     if (shouldBeOpen) {
