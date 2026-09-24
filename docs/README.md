@@ -15,6 +15,7 @@ Start here:
 - [Generated Prop Docs and Types](./prop-docs-and-types.md)
 - [Development Workflow](./development-workflow.md)
 - [Security Foundation](./security-foundation.md)
+- [Access Control Standard](./access-control.md)
 - [Secure Development Lifecycle](./secure-development-lifecycle.md)
 - [Threat Model](./threat-model.md)
 

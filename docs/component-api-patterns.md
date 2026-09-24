@@ -209,6 +209,33 @@ Use `serverSort` with `onSortChange` when sorting is handled by your API.
 />
 ```
 
+## Markdown Content
+
+`MarkdownRenderer` treats embedded raw HTML as text by default. Set
+`allowHtml` only when HTML is required; Boreal still applies a mandatory tag,
+attribute, and URL-scheme allowlist before creating React elements.
+
+```tsx
+import { MarkdownRenderer } from "@boreal-ui/core";
+
+<MarkdownRenderer
+  aria-label="Release notes"
+  content={releaseNotes}
+  allowHtml={false}
+/>;
+```
+
+Links accept HTTP, HTTPS, mail, telephone, root-relative, query, fragment, and
+relative destinations. External HTTP(S) links open in a new tab with
+`noopener noreferrer`. Images use a narrower policy: HTTP(S), safe relative
+paths, and base64 data URLs for common raster image formats. Event handlers,
+inline styles, `srcdoc`, protocol-relative URLs, scripts, and unsupported
+elements or schemes are removed or discarded.
+
+The sanitizer is a defense-in-depth rendering boundary, not an authorization
+or content-moderation system. Continue to validate and limit untrusted content
+at the application boundary.
+
 ## Overlays and Interactive Components
 
 Components such as `Modal`, `Dropdown`, `PopOver`, `Tooltip`, `Tabs`, `Accordion`, `CommandPalette`, and `NotificationCenter` include keyboard and ARIA behavior. Prefer their public props instead of rebuilding focus or disclosure state around their internals.

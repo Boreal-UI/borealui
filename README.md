@@ -208,7 +208,7 @@ For deeper consumer API examples, see the [Boreal UI consumer API guides](./docs
 - `DataTable` supports generic row data, typed columns, sorting, server-side sorting hooks, interactive rows, captions, loading and empty states, row/cell class customization, wrapping cells, striped rows, theme, surface variants, rounding, shadow, and accessible sort announcements.
 - `DataTable` also covers admin/SaaS workflows with pagination, column visibility, column resize/reorder/pinning, row expansion, bulk actions, inline editing, server pagination contracts, and virtualization.
 - `Sparkline`, `BarChart`, `LineChart`, `DonutChart`, and `Legend` provide dashboard charting and data summaries.
-- `MarkdownRenderer` renders markdown content.
+- `MarkdownRenderer` renders Markdown with raw HTML disabled by default and mandatory element, attribute, and URL sanitization when HTML is enabled.
 - `Typography` provides semantic text rendering with variants and theme-aware color.
 - `MetricBox` displays key values and supporting content.
 
@@ -461,7 +461,10 @@ Useful scripts:
 | `npm run test:coverage`    | Run Jest with coverage.                                                         |
 | `npm run lint`             | Lint TypeScript and TSX files.                                                  |
 | `npm run lint:styles`      | Lint CSS and SCSS files.                                                        |
+| `npm run audit:docs`       | Verify generated component prop docs match their TypeScript sources.           |
+| `npm run audit:dependencies` | Audit runtime and complete development dependency graphs.                    |
 | `npm run audit`            | Run type, lint, style, test, build, and package checks.                         |
+| `npm run cypress:run`      | Run the Cypress browser component suite.                                       |
 | `npm run refresh:packages` | Delete generated package output, rebuild, and restage all publishable packages. |
 | `npm run gen:docs`         | Regenerate component prop docs.                                                 |
 | `npm run gen:entrypoints`  | Regenerate component entry points.                                              |
