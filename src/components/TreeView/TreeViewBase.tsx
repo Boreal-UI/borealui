@@ -1,4 +1,12 @@
-import { KeyboardEvent, forwardRef, useMemo, useState } from "react";
+import {
+  FocusEvent,
+  KeyboardEvent,
+  forwardRef,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { TreeViewBaseProps, TreeViewNode } from "./TreeView.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -10,15 +18,34 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
+type LogicalTreeNode = {
+  node: TreeViewNode;
+  level: number;
+  parentId: string | null;
+};
+
+const flattenTreeNodes = (
+  nodes: TreeViewNode[],
+  level = 1,
+  parentId: string | null = null,
+): LogicalTreeNode[] =>
+  nodes.flatMap((node) => [
+    { node, level, parentId },
+    ...(node.children?.length
+      ? flattenTreeNodes(node.children, level + 1, node.id)
+      : []),
+  ]);
+
 const flattenVisibleNodes = (
   nodes: TreeViewNode[],
   expanded: Set<string>,
   level = 1,
-): Array<{ node: TreeViewNode; level: number }> =>
+  parentId: string | null = null,
+): LogicalTreeNode[] =>
   nodes.flatMap((node) => [
-    { node, level },
+    { node, level, parentId },
     ...(node.children?.length && expanded.has(node.id)
-      ? flattenVisibleNodes(node.children, expanded, level + 1)
+      ? flattenVisibleNodes(node.children, expanded, level + 1, node.id)
       : []),
   ]);
 
@@ -46,6 +73,7 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
       contentClassName,
       srOnlyText,
       srOnlyClassName,
+      onBlurCapture: onRootBlurCapture,
       "data-testid": dataTestId,
       testId = dataTestId ?? "tree-view",
       ...rest
@@ -65,6 +93,74 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
       () => flattenVisibleNodes(items, expandedSet),
       [items, expandedSet],
     );
+    const allNodesById = useMemo(
+      () =>
+        new Map(
+          flattenTreeNodes(items).map((entry) => [entry.node.id, entry]),
+        ),
+      [items],
+    );
+    const focusableVisibleNodes = useMemo(
+      () =>
+        disabled
+          ? []
+          : visibleNodes.filter(({ node }) => !node.disabled),
+      [disabled, visibleNodes],
+    );
+    const focusableVisibleIds = useMemo(
+      () => new Set(focusableVisibleNodes.map(({ node }) => node.id)),
+      [focusableVisibleNodes],
+    );
+
+    const resolveActiveId = (currentId: string | null): string | null => {
+      if (currentId !== null && focusableVisibleIds.has(currentId)) {
+        return currentId;
+      }
+
+      let ancestorId = currentId !== null
+        ? (allNodesById.get(currentId)?.parentId ?? null)
+        : null;
+      while (ancestorId !== null) {
+        if (focusableVisibleIds.has(ancestorId)) return ancestorId;
+        ancestorId = allNodesById.get(ancestorId)?.parentId ?? null;
+      }
+
+      if (selected !== undefined && focusableVisibleIds.has(selected)) {
+        return selected;
+      }
+      return focusableVisibleNodes[0]?.node.id ?? null;
+    };
+
+    const [activeId, setActiveId] = useState<string | null>(() => {
+      const initialExpanded = new Set(expandedIds ?? defaultExpandedIds);
+      const initialVisible = flattenVisibleNodes(items, initialExpanded).filter(
+        ({ node }) => !disabled && !node.disabled,
+      );
+      const initialSelected = selectedId ?? defaultSelectedId;
+      return initialVisible.some(({ node }) => node.id === initialSelected)
+        ? (initialSelected ?? null)
+        : (initialVisible[0]?.node.id ?? null);
+    });
+    const resolvedActiveId = resolveActiveId(activeId);
+    const nodeRefs = useRef(new Map<string, HTMLButtonElement>());
+    const focusedNodeIdRef = useRef<string | null>(null);
+    const treeHadFocusRef = useRef(false);
+
+    useEffect(() => {
+      setActiveId((currentId) =>
+        currentId === resolvedActiveId ? currentId : resolvedActiveId,
+      );
+
+      const focusedId = focusedNodeIdRef.current;
+      if (
+        treeHadFocusRef.current &&
+        focusedId !== null &&
+        !focusableVisibleIds.has(focusedId) &&
+        resolvedActiveId
+      ) {
+        nodeRefs.current.get(resolvedActiveId)?.focus();
+      }
+    }, [focusableVisibleIds, resolvedActiveId]);
 
     const commitExpanded = (next: Set<string>) => {
       const ids = Array.from(next);
@@ -87,26 +183,61 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
       onSelectionChange?.(node.id, node);
     };
 
+    const focusNode = (id: string | null) => {
+      if (id === null || !focusableVisibleIds.has(id)) return;
+      setActiveId(id);
+      nodeRefs.current.get(id)?.focus();
+    };
+
+    const findFocusableParentId = (nodeId: string): string | null => {
+      let parentId = allNodesById.get(nodeId)?.parentId ?? null;
+      while (parentId !== null) {
+        if (focusableVisibleIds.has(parentId)) return parentId;
+        parentId = allNodesById.get(parentId)?.parentId ?? null;
+      }
+      return null;
+    };
+
     const handleKeyDown = (
       event: KeyboardEvent<HTMLButtonElement>,
       node: TreeViewNode,
-      index: number,
     ) => {
+      const currentIndex = focusableVisibleNodes.findIndex(
+        ({ node: visibleNode }) => visibleNode.id === node.id,
+      );
+
       if (event.key === "ArrowDown" || event.key === "ArrowUp") {
         event.preventDefault();
         const offset = event.key === "ArrowDown" ? 1 : -1;
-        const next = visibleNodes[index + offset];
-        if (next) {
-          document
-            .querySelector<HTMLElement>(`[data-tree-node-id="${next.node.id}"]`)
-            ?.focus();
-        }
+        focusNode(focusableVisibleNodes[currentIndex + offset]?.node.id ?? null);
       } else if (event.key === "ArrowRight") {
         event.preventDefault();
-        toggleNode(node, true);
+        if (!node.children?.length) return;
+        if (!expandedSet.has(node.id)) {
+          toggleNode(node, true);
+          return;
+        }
+
+        const firstFocusableChild = node.children.find(
+          (child) => !disabled && !child.disabled,
+        );
+        focusNode(firstFocusableChild?.id ?? null);
       } else if (event.key === "ArrowLeft") {
         event.preventDefault();
-        toggleNode(node, false);
+        if (node.children?.length && expandedSet.has(node.id)) {
+          toggleNode(node, false);
+          return;
+        }
+        focusNode(findFocusableParentId(node.id));
+      } else if (event.key === "Home") {
+        event.preventDefault();
+        focusNode(focusableVisibleNodes[0]?.node.id ?? null);
+      } else if (event.key === "End") {
+        event.preventDefault();
+        focusNode(
+          focusableVisibleNodes[focusableVisibleNodes.length - 1]?.node.id ??
+            null,
+        );
       } else if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         selectNode(node);
@@ -137,9 +268,6 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
           const hasChildren = Boolean(node.children?.length);
           const isExpanded = expandedSet.has(node.id);
           const isSelected = selected === node.id;
-          const visibleIndex = visibleNodes.findIndex(
-            ({ node: item }) => item.id === node.id,
-          );
 
           return (
             <li
@@ -149,8 +277,13 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
               data-testid={`${testId}-item`}
             >
               <button
+                ref={(element) => {
+                  if (element) nodeRefs.current.set(node.id, element);
+                  else nodeRefs.current.delete(node.id);
+                }}
                 type="button"
                 role="treeitem"
+                tabIndex={node.id === resolvedActiveId ? 0 : -1}
                 aria-level={level}
                 aria-expanded={hasChildren ? isExpanded : undefined}
                 aria-selected={isSelected}
@@ -165,7 +298,12 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
                   selectNode(node);
                   if (hasChildren) toggleNode(node);
                 }}
-                onKeyDown={(event) => handleKeyDown(event, node, visibleIndex)}
+                onFocus={() => {
+                  treeHadFocusRef.current = true;
+                  focusedNodeIdRef.current = node.id;
+                  if (!node.disabled && !disabled) setActiveId(node.id);
+                }}
+                onKeyDown={(event) => handleKeyDown(event, node)}
                 data-tree-node-id={node.id}
                 data-testid={`${testId}-node-${node.id}`}
               >
@@ -193,6 +331,18 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
         aria-busy={loading || undefined}
         aria-disabled={disabled || undefined}
         data-testid={testId}
+        onBlurCapture={(event: FocusEvent<HTMLDivElement>) => {
+          onRootBlurCapture?.(event);
+          const nextTarget = event.relatedTarget;
+          if (
+            nextTarget instanceof Node &&
+            nextTarget !== document.body &&
+            !event.currentTarget.contains(nextTarget)
+          ) {
+            treeHadFocusRef.current = false;
+            focusedNodeIdRef.current = null;
+          }
+        }}
         {...rest}
       >
         {loading ? (
