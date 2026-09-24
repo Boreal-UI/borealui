@@ -16,9 +16,50 @@ jobs:
     runs-on: ubuntu-latest
     environment: npm
     steps:
+      - name: Verify the release uses a signed annotated tag
+        id: verify-release-tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          if [[ ! "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Release tag must use the stable vX.Y.Z format." >&2
+            exit 1
+          fi
+
+          tag_object=$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${RELEASE_TAG}" --jq '.object')
+          if [[ $(jq -r '.type' <<<"$tag_object") != "tag" ]]; then
+            echo "Release tag must be an annotated, signed tag." >&2
+            exit 1
+          fi
+
+          tag_sha=$(jq -r '.sha' <<<"$tag_object")
+          tag=$(gh api "repos/${GITHUB_REPOSITORY}/git/tags/${tag_sha}")
+          if [[ $(jq -r '.tag' <<<"$tag") != "$RELEASE_TAG" ]]; then
+            echo "Verified tag object does not match the triggering release tag." >&2
+            exit 1
+          fi
+          if [[ $(jq -r '.verification.verified' <<<"$tag") != "true" ]]; then
+            echo "Release tag signature is not verified." >&2
+            exit 1
+          fi
+          if [[ $(jq -r '.object.type' <<<"$tag") != "commit" ]]; then
+            echo "Verified release tag must point directly to a commit." >&2
+            exit 1
+          fi
+
+          verified_commit=$(jq -r '.object.sha' <<<"$tag")
+          if [[ ! "$verified_commit" =~ ^[0-9a-f]{40}$ ]]; then
+            echo "Verified release commit is not a valid Git SHA." >&2
+            exit 1
+          fi
+
+          echo "commit_sha=${verified_commit}" >> "$GITHUB_OUTPUT"
+          echo "VERIFIED_RELEASE_COMMIT=${verified_commit}" >> "$GITHUB_ENV"
+
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
-          ref: ${{ github.event.release.tag_name }}
+          ref: ${{ steps.verify-release-tag.outputs.commit_sha }}
           persist-credentials: false
       - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
         with:
@@ -26,19 +67,12 @@ jobs:
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
 
-      - name: Verify the release uses a signed annotated tag
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RELEASE_TAG: ${{ github.event.release.tag_name }}
+      - name: Assert checkout matches the verified release commit
         run: |
-          tag_object=$(gh api "repos/${GITHUB_REPOSITORY}/git/ref/tags/${RELEASE_TAG}" --jq '.object')
-          if [[ $(jq -r '.type' <<<"$tag_object") != "tag" ]]; then
-            echo "Release tag must be an annotated, signed tag." >&2
+          if [[ $(git rev-parse HEAD) != "$VERIFIED_RELEASE_COMMIT" ]]; then
+            echo "Checked-out source does not match the verified release commit." >&2
             exit 1
           fi
-          tag_sha=$(jq -r '.sha' <<<"$tag_object")
-          gh api "repos/${GITHUB_REPOSITORY}/git/tags/${tag_sha}" \
-            --jq 'if .verification.verified then empty else error("Release tag signature is not verified") end'
 
       - run: npm ci --ignore-scripts
       - run: npm run audit:dependencies
@@ -65,6 +99,10 @@ jobs:
 
       - name: Create release tarballs and integrity checksums
         run: |
+          if [[ $(git rev-parse HEAD) != "$VERIFIED_RELEASE_COMMIT" ]]; then
+            echo "Source changed from the verified release commit before packaging." >&2
+            exit 1
+          fi
           npm pack ./packages/types
           npm pack ./packages/core
           npm pack ./packages/next
@@ -89,6 +127,10 @@ jobs:
         env:
           NPM_CONFIG_PROVENANCE: "true"
         run: |
+          if [[ $(git rev-parse HEAD) != "$VERIFIED_RELEASE_COMMIT" ]]; then
+            echo "Source changed from the verified release commit before publication." >&2
+            exit 1
+          fi
           npm publish ./packages/types --access public --provenance
           npm publish ./packages/core --access public --provenance
           npm publish ./packages/next --access public --provenance

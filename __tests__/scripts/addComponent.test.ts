@@ -14,6 +14,8 @@ import {
 } from "../../scripts/addComponent.cjs";
 import { parseLegacyArgs } from "../../scripts/boreal.cjs";
 
+const nodeFs = jest.requireActual<typeof import("fs")>("fs");
+
 describe("component generator safety", () => {
   let temporaryRoots: string[] = [];
   let logSpy: jest.SpyInstance;
@@ -121,6 +123,73 @@ describe("component generator safety", () => {
     );
   });
 
+  it("rejects generation through a symlinked parent outside the canonical root", () => {
+    const root = createRoot();
+    const outside = createRoot();
+    const linkedComponents = path.join(root, "src", "components");
+    mkdirSync(path.dirname(linkedComponents), { recursive: true });
+
+    try {
+      nodeFs.symlinkSync(
+        outside,
+        linkedComponents,
+        process.platform === "win32" ? "junction" : "dir",
+      );
+    } catch (error) {
+      if (
+        error &&
+        typeof error === "object" &&
+        "code" in error &&
+        ["EPERM", "EACCES", "ENOTSUP"].includes(String(error.code))
+      ) {
+        console.warn(
+          `Skipping symlink containment assertion: ${String(error.code)}`,
+        );
+        return;
+      }
+      throw error;
+    }
+
+    expect(() =>
+      generateComponent(["EscapeWidget", "--skip-exports"], {
+        repoRoot: root,
+      }),
+    ).toThrow(/Refusing to generate outside/);
+    expect(
+      existsSync(path.join(outside, "EscapeWidget", "EscapeWidget.types.ts")),
+    ).toBe(false);
+  });
+
+  it("rejects metadata hardlinks that alias files outside the root", () => {
+    const root = createRoot();
+    const outside = createRoot();
+    const outsidePackage = path.join(outside, "package.json");
+    const outsideContents =
+      '{\n  "name": "outside-metadata",\n  "exports": {}\n}\n';
+
+    mkdirSync(path.join(root, "src"), { recursive: true });
+    writeFileSync(
+      path.join(root, "src", "index.core.ts"),
+      'export { default as Alert } from "./core/Alert";\n',
+      "utf8",
+    );
+    writeFileSync(
+      path.join(root, "src", "index.next.ts"),
+      '"use client";\nexport { default as Alert } from "./next/Alert";\n',
+      "utf8",
+    );
+    writeFileSync(outsidePackage, outsideContents, "utf8");
+    nodeFs.linkSync(outsidePackage, path.join(root, "package.json"));
+
+    expect(() =>
+      generateComponent(["AliasedWidget"], { repoRoot: root }),
+    ).toThrow(/Refusing to update aliased or non-regular file/);
+    expect(readFileSync(outsidePackage, "utf8")).toBe(outsideContents);
+    expect(
+      existsSync(path.join(root, "src", "components", "AliasedWidget")),
+    ).toBe(false);
+  });
+
   it("refuses overwrite before creating any other component file", () => {
     const root = createRoot();
     const existingFile = path.join(
@@ -172,6 +241,68 @@ describe("component generator safety", () => {
     });
 
     expect(existsSync(path.join(root, "src"))).toBe(false);
+  });
+
+  it("rolls back generated files and metadata after a late write failure", () => {
+    const root = createRoot();
+    const coreIndexPath = path.join(root, "src", "index.core.ts");
+    const nextIndexPath = path.join(root, "src", "index.next.ts");
+    const packagePath = path.join(root, "package.json");
+    const coreIndex = 'export { default as Alert } from "./core/Alert";\n';
+    const nextIndex =
+      '"use client";\nexport { default as Alert } from "./next/Alert";\n';
+    const packageContents =
+      '{\n  "name": "generator-fixture",\n  "exports": {}\n}\n';
+
+    mkdirSync(path.join(root, "src"), { recursive: true });
+    writeFileSync(coreIndexPath, coreIndex, "utf8");
+    writeFileSync(nextIndexPath, nextIndex, "utf8");
+    writeFileSync(packagePath, packageContents, "utf8");
+
+    const originalWriteFileSync = nodeFs.writeFileSync.bind(nodeFs);
+    let failureInjected = false;
+    const writeSpy = jest
+      .spyOn(nodeFs, "writeFileSync")
+      .mockImplementation(((target, data, options) => {
+        if (
+          !failureInjected &&
+          typeof target !== "number" &&
+          path.resolve(String(target)) === packagePath
+        ) {
+          failureInjected = true;
+          throw new Error("forced late package update failure");
+        }
+
+        return originalWriteFileSync(target, data, options);
+      }) as typeof nodeFs.writeFileSync);
+
+    try {
+      expect(() =>
+        generateComponent(["RollbackWidget"], { repoRoot: root }),
+      ).toThrow("forced late package update failure");
+    } finally {
+      writeSpy.mockRestore();
+    }
+
+    expect(failureInjected).toBe(true);
+    expect(readFileSync(coreIndexPath, "utf8")).toBe(coreIndex);
+    expect(readFileSync(nextIndexPath, "utf8")).toBe(nextIndex);
+    expect(readFileSync(packagePath, "utf8")).toBe(packageContents);
+    expect(
+      existsSync(path.join(root, "src", "components", "RollbackWidget")),
+    ).toBe(false);
+    expect(
+      existsSync(
+        path.join(
+          root,
+          "__tests__",
+          "base-component-test",
+          "RollbackWidget.test.tsx",
+        ),
+      ),
+    ).toBe(false);
+    expect(existsSync(path.join(root, "stories-core"))).toBe(false);
+    expect(existsSync(path.join(root, "stories-next"))).toBe(false);
   });
 
   it("preserves the legacy new command while delegating its arguments", () => {

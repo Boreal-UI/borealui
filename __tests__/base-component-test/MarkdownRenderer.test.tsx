@@ -355,6 +355,33 @@ describe("BaseMarkdownRenderer", () => {
     expect(relTokens).not.toContain("opener");
   });
 
+  it.each([
+    '<a href="https://example.com" target="docs-window" rel="opener nofollow">Example</a>',
+    '<a href="https://example.com" rel="ugc opener sponsored" target="preview">Example</a>',
+  ])(
+    "protects named raw HTML targets while preserving safe rel tokens",
+    async (content) => {
+      render(
+        <BaseMarkdownRenderer
+          content={content}
+          classMap={classNames}
+          allowHtml
+          data-testid="markdown-renderer"
+        />,
+      );
+
+      const link = await screen.findByRole("link", { name: "Example" });
+      const relTokens = (link.getAttribute("rel") ?? "")
+        .split(/\s+/)
+        .map((token) => token.toLowerCase());
+
+      expect(relTokens).toEqual(
+        expect.arrayContaining(["noopener", "noreferrer"]),
+      );
+      expect(relTokens).not.toContain("opener");
+    },
+  );
+
   it.each(["javascript:alert(1)", "data:text/html,unsafe", "vbscript:msgbox(1)"])(
     "removes unsafe raw HTML link destination %s",
     async (href) => {
