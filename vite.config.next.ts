@@ -15,6 +15,7 @@ const externals = [
   "react/jsx-dev-runtime",
   "marked",
   "sanitize-html",
+  "htmlparser2",
 ];
 
 const isExternal = (id: string) =>

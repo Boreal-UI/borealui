@@ -1,9 +1,11 @@
 import React, { useMemo } from "react";
+import { ElementType, parseDocument } from "htmlparser2";
 import { marked } from "marked";
 import sanitize from "sanitize-html";
 import { BaseMarkdownRendererProps } from "./MarkdownRenderer.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { mergeSafeRel } from "../../utils/navigationSecurity";
 import {
   getDefaultRounding,
   getDefaultShadow,
@@ -149,12 +151,18 @@ const safeSanitize = (html: string): string =>
     parseStyleAttributes: false,
   });
 
-const getSafeElementProps = (element: Element) => {
+type ParsedHtmlNode = ReturnType<typeof parseDocument>["children"][number];
+
+type ParsedHtmlElement = {
+  name: string;
+  attribs: Record<string, string>;
+};
+
+const getSafeElementProps = (element: ParsedHtmlElement) => {
   const props: Record<string, string | number | boolean> = {};
 
-  [...element.attributes].forEach((attr) => {
-    const name = attr.name.toLowerCase();
-    const value = attr.value;
+  Object.entries(element.attribs).forEach(([attributeName, value]) => {
+    const name = attributeName.toLowerCase();
 
     if (name.startsWith("on") || name === "style" || name === "srcdoc") return;
 
@@ -172,12 +180,20 @@ const getSafeElementProps = (element: Element) => {
 
     if (name === "target") {
       props.target = value;
-      if (value === "_blank") props.rel = "noopener noreferrer";
       return;
     }
 
     props[attributeNameMap[name] ?? name] = value;
   });
+
+  if (element.name.toLowerCase() === "a") {
+    const target = typeof props.target === "string" ? props.target : undefined;
+    const rel = typeof props.rel === "string" ? props.rel : undefined;
+    const safeRel = mergeSafeRel(target, rel);
+
+    if (safeRel) props.rel = safeRel;
+    else delete props.rel;
+  }
 
   return props;
 };
@@ -186,39 +202,69 @@ const htmlToReactNodes = (
   html: string,
   keyPrefix: string,
 ): React.ReactNode[] => {
-  if (typeof window === "undefined" || typeof window.DOMParser !== "function") {
-    return [html];
-  }
+  const doc = parseDocument(html, { decodeEntities: true });
 
-  const doc = new DOMParser().parseFromString(html, "text/html");
+  const convertNode = (node: ParsedHtmlNode, key: string): React.ReactNode => {
+    if (node.type === ElementType.Text) return node.data;
+    if (node.type !== ElementType.Tag) return null;
 
-  const convertNode = (node: ChildNode, key: string): React.ReactNode => {
-    if (node.nodeType === Node.TEXT_NODE) return node.textContent ?? "";
-    if (node.nodeType !== Node.ELEMENT_NODE) return null;
+    const tagName = node.name.toLowerCase();
+    const children: React.ReactNode[] = [];
+    let pendingTableRows: ParsedHtmlNode[] = [];
 
-    const element = node as Element;
-    const tagName = element.tagName.toLowerCase();
-    const children = [...element.childNodes].map((child, index) =>
-      convertNode(child, `${key}-${index}`),
-    );
+    const flushTableRows = () => {
+      if (pendingTableRows.length === 0) return;
+
+      const rowKey = `${key}-tbody-${children.length}`;
+      children.push(
+        React.createElement(
+          "tbody",
+          { key: rowKey },
+          pendingTableRows.map((child, index) =>
+            convertNode(child, `${rowKey}-${index}`),
+          ),
+        ),
+      );
+      pendingTableRows = [];
+    };
+
+    node.children.forEach((child, index) => {
+      const isDirectTableRow =
+        tagName === "table" &&
+        child.type === ElementType.Tag &&
+        child.name.toLowerCase() === "tr";
+      const isWhitespaceBetweenRows =
+        pendingTableRows.length > 0 &&
+        child.type === ElementType.Text &&
+        child.data.trim() === "";
+
+      if (isDirectTableRow || isWhitespaceBetweenRows) {
+        pendingTableRows.push(child);
+        return;
+      }
+
+      flushTableRows();
+      children.push(convertNode(child, `${key}-${index}`));
+    });
+    flushTableRows();
 
     if (!allowedHtmlTags.has(tagName)) return children;
 
     if (voidHtmlTags.has(tagName)) {
       return React.createElement(tagName, {
         key,
-        ...getSafeElementProps(element),
+        ...getSafeElementProps(node),
       });
     }
 
     return React.createElement(
       tagName,
-      { key, ...getSafeElementProps(element) },
+      { key, ...getSafeElementProps(node) },
       children,
     );
   };
 
-  return [...doc.body.childNodes].map((node, index) =>
+  return doc.children.map((node, index) =>
     convertNode(node, `${keyPrefix}-${index}`),
   );
 };

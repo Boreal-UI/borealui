@@ -48,6 +48,7 @@
   },
   "dependencies": {
     "@boreal-ui/types": "0.1.426",
+    "htmlparser2": "^10.1.0",
     "sanitize-html": "^2.17.5"
   },
   "exports": {

@@ -1,5 +1,10 @@
+import { act } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
+import { hydrateRoot } from "react-dom/client";
+import { renderToStaticMarkup, renderToString } from "react-dom/server";
 import BaseMarkdownRenderer from "@/components/MarkdownRenderer/MarkdownRendererBase";
+import CoreMarkdownRenderer from "@/components/MarkdownRenderer/core/MarkdownRenderer";
+import NextMarkdownRenderer from "@/components/MarkdownRenderer/next/MarkdownRenderer";
 import { axe, toHaveNoViolations } from "jest-axe";
 
 expect.extend(toHaveNoViolations);
@@ -306,6 +311,68 @@ describe("BaseMarkdownRenderer", () => {
     });
   });
 
+  it.each([
+    '<a href="https://example.com" target="_blank" rel="opener">Example</a>',
+    '<a href="https://example.com" rel="opener" target="_blank">Example</a>',
+    '<a href="https://example.com" target="_BLANK">Example</a>',
+  ])("protects raw HTML blank-target links regardless of attribute order or target casing", async (content) => {
+    render(
+      <BaseMarkdownRenderer
+        content={content}
+        classMap={classNames}
+        allowHtml
+        data-testid="markdown-renderer"
+      />,
+    );
+
+    const link = await screen.findByRole("link", { name: "Example" });
+    const relTokens = (link.getAttribute("rel") ?? "")
+      .split(/\s+/)
+      .map((token) => token.toLowerCase());
+
+    expect(relTokens).toEqual(expect.arrayContaining(["noopener", "noreferrer"]));
+    expect(relTokens).not.toContain("opener");
+  });
+
+  it("preserves legitimate rel tokens while enforcing blank-target protection", async () => {
+    render(
+      <BaseMarkdownRenderer
+        content={'<a href="https://example.com" rel="nofollow opener" target="_blank">Example</a>'}
+        classMap={classNames}
+        allowHtml
+        data-testid="markdown-renderer"
+      />,
+    );
+
+    const link = await screen.findByRole("link", { name: "Example" });
+    const relTokens = (link.getAttribute("rel") ?? "")
+      .split(/\s+/)
+      .map((token) => token.toLowerCase());
+
+    expect(relTokens).toEqual(
+      expect.arrayContaining(["nofollow", "noopener", "noreferrer"]),
+    );
+    expect(relTokens).not.toContain("opener");
+  });
+
+  it.each(["javascript:alert(1)", "data:text/html,unsafe", "vbscript:msgbox(1)"])(
+    "removes unsafe raw HTML link destination %s",
+    async (href) => {
+      render(
+        <BaseMarkdownRenderer
+          content={`<a href="${href}">Unsafe destination</a>`}
+          classMap={classNames}
+          allowHtml
+          data-testid="markdown-renderer"
+        />,
+      );
+
+      const link = (await screen.findByText("Unsafe destination")).closest("a");
+      expect(link).not.toBeNull();
+      expect(link).not.toHaveAttribute("href");
+    },
+  );
+
   it("sanitizes unsafe single-quoted and unquoted attributes without DOMParser", async () => {
     const originalDomParser = window.DOMParser;
     Object.defineProperty(window, "DOMParser", {
@@ -390,6 +457,141 @@ describe("BaseMarkdownRenderer", () => {
       expect(screen.getByText("Blockquote").closest("blockquote")).toBeTruthy();
       expect(screen.getByText("inline code").tagName).toBe("CODE");
     });
+  });
+
+  it("server-renders ordinary markdown as semantic elements", () => {
+    const html = renderToStaticMarkup(
+      <BaseMarkdownRenderer
+        content={`# Hello
+
+Paragraph text.
+
+- One
+- Two
+
+[Example](https://example.com)
+
+\`inline code\``}
+        classMap={classNames}
+        data-testid="markdown-renderer"
+      />,
+    );
+
+    expect(html).toContain("<h1>Hello</h1>");
+    expect(html).toContain("<p>Paragraph text.</p>");
+    expect(html).toContain("<ul>");
+    expect(html).toContain("<li>One</li>");
+    expect(html).toContain('<a href="https://example.com"');
+    expect(html).toContain("<code>inline code</code>");
+    expect(html).not.toContain("&lt;h1&gt;Hello&lt;/h1&gt;");
+  });
+
+  it("keeps raw HTML inert during server rendering by default", () => {
+    const html = renderToStaticMarkup(
+      <BaseMarkdownRenderer
+        content="<strong>Unsafe raw HTML</strong>"
+        classMap={classNames}
+        data-testid="markdown-renderer"
+      />,
+    );
+
+    expect(html).not.toContain("<strong>");
+    expect(html).toContain("&lt;strong&gt;Unsafe raw HTML&lt;/strong&gt;");
+  });
+
+  it("server-renders allowed sanitized raw HTML deterministically", () => {
+    const html = renderToStaticMarkup(
+      <BaseMarkdownRenderer
+        content={'<div><strong>Allowed</strong><script>alert(1)</script></div>'}
+        classMap={classNames}
+        allowHtml
+        data-testid="markdown-renderer"
+      />,
+    );
+
+    expect(html).toContain("<div><strong>Allowed</strong></div>");
+    expect(html).not.toContain("<script");
+  });
+
+  it.each([
+    ["Core", CoreMarkdownRenderer],
+    ["Next", NextMarkdownRenderer],
+  ])("server-renders semantic Markdown through the %s wrapper", (_name, Renderer) => {
+    const html = renderToStaticMarkup(
+      <Renderer content="# Wrapper heading" data-testid="markdown-renderer" />,
+    );
+
+    expect(html).toContain("<h1>Wrapper heading</h1>");
+  });
+
+  it("hydrates representative markdown without recoverable mismatches", async () => {
+    const content = `# Hydration heading
+
+Paragraph text with an [Example](https://example.com) link.
+
+- One
+- Two`;
+    const element = (
+      <BaseMarkdownRenderer
+        content={content}
+        classMap={classNames}
+        data-testid="markdown-renderer"
+      />
+    );
+    const serverHtml = renderToString(element);
+    const container = document.createElement("div");
+    const recoverableErrors: unknown[] = [];
+    container.innerHTML = serverHtml;
+    document.body.appendChild(container);
+
+    const root = hydrateRoot(container, element, {
+      onRecoverableError: (error) => recoverableErrors.push(error),
+    });
+
+    await act(async () => undefined);
+
+    expect(recoverableErrors).toHaveLength(0);
+    expect(container.querySelector("h1")).toHaveTextContent("Hydration heading");
+    expect(container.querySelectorAll("li")).toHaveLength(2);
+    expect(container.querySelector("a")).toHaveAttribute(
+      "href",
+      "https://example.com",
+    );
+
+    await act(async () => root.unmount());
+    container.remove();
+  });
+
+  it("hydrates allowed raw table rows with deterministic browser structure", async () => {
+    const element = (
+      <BaseMarkdownRenderer
+        content="<table><tr><td>Cell</td></tr></table>"
+        classMap={classNames}
+        allowHtml
+        data-testid="markdown-renderer"
+      />
+    );
+    const serverHtml = renderToString(element);
+    const container = document.createElement("div");
+    const recoverableErrors: unknown[] = [];
+    container.innerHTML = serverHtml;
+    document.body.appendChild(container);
+
+    expect(serverHtml).toContain(
+      "<table><tbody><tr><td>Cell</td></tr></tbody></table>",
+    );
+
+    const root = hydrateRoot(container, element, {
+      onRecoverableError: (error) => recoverableErrors.push(error),
+    });
+
+    await act(async () => undefined);
+
+    expect(recoverableErrors).toHaveLength(0);
+    expect(container.querySelector("tbody > tr > td")).toHaveTextContent("Cell");
+
+    await act(async () => root.unmount());
+    container.remove();
   });
 
   it("has no accessibility violations with rendered markdown", async () => {
