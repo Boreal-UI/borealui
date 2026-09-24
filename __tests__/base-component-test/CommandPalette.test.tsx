@@ -276,6 +276,26 @@ describe("CommandPaletteBase", () => {
     expect(document.body).toHaveClass("noScroll");
   });
 
+  it("makes the default modal configuration isolate and contain focus", () => {
+    const background = document.createElement("button");
+    background.textContent = "Background action";
+    document.body.insertBefore(
+      background,
+      document.getElementById("widget-portal"),
+    );
+
+    renderPalette({ trapFocus: false });
+
+    const dialog = screen.getByRole("dialog");
+    const input = screen.getByRole("combobox");
+    expect(dialog).toHaveAttribute("aria-modal", "true");
+    expect(background).toHaveAttribute("aria-hidden", "true");
+    expect(background).toHaveAttribute("inert");
+
+    background.focus();
+    expect(input).toHaveFocus();
+  });
+
   it("filters commands based on input value", () => {
     renderPalette();
 
@@ -585,7 +605,7 @@ describe("CommandPaletteBase", () => {
 
     fireEvent.keyDown(screen.getByRole("combobox"), { key: "Escape" });
 
-    expect(onClose).toHaveBeenCalledTimes(2);
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 
   it("closes when Escape is pressed on the dialog container", () => {
@@ -594,6 +614,15 @@ describe("CommandPaletteBase", () => {
     renderPalette({ onClose });
 
     fireEvent.keyDown(screen.getByRole("dialog"), { key: "Escape" });
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("closes a non-modal palette once when Escape is pressed on the input", () => {
+    const onClose = jest.fn();
+
+    renderPalette({ modal: false, onClose });
+    fireEvent.keyDown(screen.getByRole("combobox"), { key: "Escape" });
 
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -1031,7 +1060,7 @@ describe("CommandPaletteBase", () => {
     );
   });
 
-  it("restores focus to the previously focused element when closed", () => {
+  it("restores focus to the previously focused element when closed", async () => {
     const trigger = document.createElement("button");
     trigger.textContent = "Open palette";
     document.body.appendChild(trigger);
@@ -1041,7 +1070,7 @@ describe("CommandPaletteBase", () => {
 
     unmount();
 
-    expect(trigger).toHaveFocus();
+    await waitFor(() => expect(trigger).toHaveFocus());
   });
 
   it("does not restore focus when restoreFocusOnClose is false", () => {
@@ -1058,10 +1087,23 @@ describe("CommandPaletteBase", () => {
   });
 
   it("uses region role instead of dialog when modal is false", () => {
+    const background = document.createElement("button");
+    background.textContent = "Background action";
+    document.body.insertBefore(
+      background,
+      document.getElementById("widget-portal"),
+    );
+
     renderPalette({ modal: false, ariaLabel: "Command palette region" });
 
-    expect(screen.getByRole("region")).toBeInTheDocument();
+    expect(screen.getByRole("region")).not.toHaveAttribute("aria-modal");
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(document.body).not.toHaveClass("noScroll");
+    expect(background).not.toHaveAttribute("aria-hidden");
+    expect(background).not.toHaveAttribute("inert");
+
+    background.focus();
+    expect(background).toHaveFocus();
   });
 
   it("traps focus with Tab when trapFocus is true", () => {

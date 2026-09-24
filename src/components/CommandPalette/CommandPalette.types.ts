@@ -159,7 +159,9 @@ export interface CommandPaletteProps
   modal?: boolean;
 
   /**
-   * Whether focus should be trapped while the palette is open.
+   * Whether focus should be trapped while an explicitly non-modal palette is
+   * open. Modal palettes always contain focus so their behavior matches
+   * `aria-modal="true"`.
    *
    * @default false
    */

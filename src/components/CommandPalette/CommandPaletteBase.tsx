@@ -20,6 +20,8 @@ import {
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
+import { useModalLayer } from "../../hooks/useModalLayer";
+import { getFocusableElements } from "../../utils/modalLayerManager";
 
 const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   commands,
@@ -70,6 +72,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
   const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
   const [asyncResults, setAsyncResults] = useState<CommandItem[]>([]);
@@ -158,19 +161,24 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
       })();
 
     setPortalElement(portal);
-    document.body.classList.add("noScroll");
-
     return () => {
-      document.body.classList.remove("noScroll");
       setQuery("");
       setActiveIndex(-1);
       setMounted(false);
 
-      if (restoreFocusOnClose) {
+      if (!modal && restoreFocusOnClose) {
         prevFocusRef.current?.focus?.();
       }
     };
-  }, [open, restoreFocusOnClose]);
+  }, [open, restoreFocusOnClose, modal]);
+
+  useModalLayer({
+    active: open && mounted && portalElement !== null && modal,
+    layerRef: overlayRef,
+    focusScopeRef: containerRef,
+    onEscape: onClose,
+    restoreFocus: restoreFocusOnClose,
+  });
 
   useEffect(() => {
     if (open && mounted && portalElement && inputRef.current) {
@@ -230,6 +238,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
         }
       } else if (e.key === "Escape") {
         e.preventDefault();
+        e.stopPropagation();
         onClose();
       } else if (e.key === "Home") {
         e.preventDefault();
@@ -251,26 +260,17 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
 
   const handleContainerKeyDown = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === "Escape") {
+      if (!modal && e.key === "Escape") {
         e.preventDefault();
         onClose();
         return;
       }
 
-      if (trapFocus && e.key === "Tab") {
+      if (!modal && trapFocus && e.key === "Tab") {
         const container = containerRef.current;
         if (!container) return;
 
-        const focusable = container.querySelectorAll<HTMLElement>(
-          [
-            "a[href]",
-            "button:not([disabled])",
-            "input:not([disabled])",
-            "select:not([disabled])",
-            "textarea:not([disabled])",
-            '[tabindex]:not([tabindex="-1"])',
-          ].join(","),
-        );
+        const focusable = getFocusableElements(container);
 
         if (focusable.length === 0) {
           e.preventDefault();
@@ -290,7 +290,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
         }
       }
     },
-    [onClose, trapFocus],
+    [modal, onClose, trapFocus],
   );
 
   if (!open || !mounted || !portalElement) return null;
@@ -318,6 +318,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   return ReactDOM.createPortal(
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
+      ref={overlayRef}
       className={classMap.overlay}
       onMouseDown={onClose}
       data-testid={`${testId}-overlay`}

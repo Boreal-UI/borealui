@@ -8,6 +8,7 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 import { DrawerBaseProps } from "./Drawer.types";
+import { useModalLayer } from "../../hooks/useModalLayer";
 
 export default function DrawerBase({
   open = false,
@@ -44,6 +45,8 @@ export default function DrawerBase({
   const generatedTitleId = useId();
   const titleId = ariaLabelledBy ?? (title ? generatedTitleId : undefined);
   const closeRef = useRef<HTMLButtonElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
   const [isRendered, setIsRendered] = useState(open);
 
   useEffect(() => {
@@ -58,23 +61,17 @@ export default function DrawerBase({
     return () => window.clearTimeout(timer);
   }, [open, isRendered]);
 
+  useModalLayer({
+    active: open && isRendered,
+    layerRef: rootRef,
+    focusScopeRef: panelRef,
+    onEscape: closeOnEscape ? onClose : undefined,
+  });
+
   useEffect(() => {
     if (!open || !isRendered) return;
-    const previous = document.activeElement as HTMLElement | null;
     closeRef.current?.focus();
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && closeOnEscape) {
-        onClose();
-      }
-    };
-
-    document.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      previous?.focus?.();
-    };
-  }, [open, isRendered, closeOnEscape, onClose]);
+  }, [open, isRendered]);
 
   const rootClassName = useMemo(
     () =>
@@ -104,7 +101,7 @@ export default function DrawerBase({
   if (!isRendered) return null;
 
   return (
-    <div className={rootClassName} data-testid={resolvedTestId}>
+    <div ref={rootRef} className={rootClassName} data-testid={resolvedTestId}>
       <button
         type="button"
         className={combineClassNames(classMap.overlay, overlayClassName)}
@@ -113,6 +110,7 @@ export default function DrawerBase({
         data-testid={`${resolvedTestId}-overlay`}
       />
       <section
+        ref={panelRef}
         className={panelClasses}
         role="dialog"
         aria-modal="true"
@@ -120,6 +118,7 @@ export default function DrawerBase({
         aria-label={ariaLabel}
         aria-labelledby={titleId}
         aria-describedby={ariaDescribedBy}
+        tabIndex={-1}
         data-testid={`${resolvedTestId}-panel`}
       >
         <div className={combineClassNames(classMap.header, headerClassName)}>
