@@ -7,6 +7,7 @@ import {
   writeFileSync,
   symlinkSync,
 } from "node:fs";
+import { tmpdir } from "node:os";
 import { join } from "node:path";
 import {
   __testing,
@@ -21,7 +22,7 @@ describe("Boreal UI CLI setup", () => {
   let warnSpy: jest.SpyInstance<void, Parameters<typeof console.warn>>;
 
   beforeEach(() => {
-    root = mkdtempSync(join(process.cwd(), ".tmp-boreal-cli-"));
+    root = mkdtempSync(join(tmpdir(), "boreal-ui-cli-"));
 
     logSpy = jest.spyOn(console, "log").mockImplementation(() => {});
     errorSpy = jest.spyOn(console, "error").mockImplementation(() => {});
@@ -33,7 +34,12 @@ describe("Boreal UI CLI setup", () => {
     errorSpy.mockRestore();
     warnSpy.mockRestore();
 
-    rmSync(root, { recursive: true, force: true });
+    rmSync(root, {
+      recursive: true,
+      force: true,
+      maxRetries: 5,
+      retryDelay: 100,
+    });
   });
 
   function writePackageJson(
@@ -680,7 +686,7 @@ createRoot(document.getElementById("root")!).render(<App />);
   });
 
   it("rejects new files beneath a symlinked parent outside the project", () => {
-    const outside = mkdtempSync(join(process.cwd(), ".tmp-boreal-outside-"));
+    const outside = mkdtempSync(join(tmpdir(), "boreal-ui-cli-outside-"));
     const linkedParent = join(root, "linked-parent");
     const exitSpy = jest.spyOn(process, "exit").mockImplementation((() => {
       throw new Error("process.exit");
@@ -701,7 +707,12 @@ createRoot(document.getElementById("root")!).render(<App />);
       );
     } finally {
       exitSpy.mockRestore();
-      rmSync(outside, { recursive: true, force: true });
+      rmSync(outside, {
+        recursive: true,
+        force: true,
+        maxRetries: 5,
+        retryDelay: 100,
+      });
     }
   });
 
