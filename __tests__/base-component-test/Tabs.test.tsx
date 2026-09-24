@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { axe, toHaveNoViolations } from "jest-axe";
 import TabsBase from "@/components/Tabs/TabsBase";
 import { DummyIcon } from "../test-utils/dummyComponents";
@@ -55,6 +56,21 @@ describe("TabsBase", () => {
     expect(tab1).toHaveAttribute("tabindex", "0");
     expect(tab2).toHaveAttribute("tabindex", "-1");
     expect(tab3).toHaveAttribute("tabindex", "-1");
+  });
+
+  it("server-renders exactly one enabled tab in the page tab sequence", () => {
+    const html = renderToStaticMarkup(
+      <TabsBase tabs={tabsMock} classMap={mockStyles} data-testid="tabs" />,
+    );
+    const container = document.createElement("div");
+    container.innerHTML = html;
+    const renderedTabs = [...container.querySelectorAll('[role="tab"]')];
+
+    expect(renderedTabs.filter((tab) => tab.getAttribute("tabindex") === "0"))
+      .toHaveLength(1);
+    expect(
+      renderedTabs.filter((tab) => tab.getAttribute("tabindex") === "-1"),
+    ).toHaveLength(2);
   });
 
   it("uses defaultValue for uncontrolled initial selection", () => {
@@ -146,6 +162,143 @@ describe("TabsBase", () => {
       "aria-selected",
       "true",
     );
+    expect(screen.getByTestId("tabs-tab-2")).toHaveAttribute("tabindex", "0");
+    expect(screen.getByTestId("tabs-tab-0")).toHaveAttribute("tabindex", "-1");
+  });
+
+  it("recovers the roving target when the selected tab becomes disabled", () => {
+    const initialTabs = [
+      { id: "first-tab", label: "First" },
+      { id: "second-tab", label: "Second" },
+      { id: "third-tab", label: "Third" },
+    ];
+    const { rerender } = render(
+      <TabsBase
+        tabs={initialTabs}
+        classMap={mockStyles}
+        defaultValue={1}
+        data-testid="tabs"
+      />,
+    );
+
+    rerender(
+      <TabsBase
+        tabs={initialTabs.map((tab, index) => ({
+          ...tab,
+          disabled: index === 1,
+        }))}
+        classMap={mockStyles}
+        defaultValue={1}
+        data-testid="tabs"
+      />,
+    );
+
+    expect(screen.getByTestId("tabs-tab-0")).toHaveAttribute("tabindex", "0");
+    expect(screen.getByTestId("tabs-tab-1")).toHaveAttribute("tabindex", "-1");
+    expect(screen.getByTestId("tabs-tab-1")).toHaveAttribute(
+      "aria-disabled",
+      "true",
+    );
+  });
+
+  it("uses the first enabled tab when the first tab is disabled", () => {
+    render(
+      <TabsBase
+        tabs={[
+          { label: "Disabled", disabled: true },
+          { label: "Available" },
+          { label: "Also available" },
+        ]}
+        classMap={mockStyles}
+        data-testid="tabs"
+      />,
+    );
+
+    expect(screen.getByTestId("tabs-tab-0")).toHaveAttribute("tabindex", "-1");
+    expect(screen.getByTestId("tabs-tab-1")).toHaveAttribute("tabindex", "0");
+  });
+
+  it("leaves every tab outside the page tab sequence when all are disabled", () => {
+    render(
+      <TabsBase
+        tabs={tabsMock.map((tab) => ({ ...tab, disabled: true }))}
+        classMap={mockStyles}
+        data-testid="tabs"
+      />,
+    );
+
+    screen.getAllByRole("tab").forEach((tab) => {
+      expect(tab).toHaveAttribute("tabindex", "-1");
+      expect(tab).toHaveAttribute("aria-disabled", "true");
+    });
+  });
+
+  it("preserves the roving tab identity when tabs are reordered", () => {
+    const initialTabs = [
+      { id: "first-tab", label: "First" },
+      { id: "second-tab", label: "Second" },
+      { id: "third-tab", label: "Third" },
+    ];
+    const { rerender } = render(
+      <TabsBase
+        tabs={initialTabs}
+        classMap={mockStyles}
+        activationMode="manual"
+        data-testid="tabs"
+      />,
+    );
+
+    fireEvent.keyDown(screen.getByTestId("tabs-tab-0"), {
+      key: "ArrowRight",
+    });
+    expect(screen.getByTestId("tabs-tab-1")).toHaveFocus();
+
+    rerender(
+      <TabsBase
+        tabs={[initialTabs[2], initialTabs[1], initialTabs[0]]}
+        classMap={mockStyles}
+        activationMode="manual"
+        data-testid="tabs"
+      />,
+    );
+
+    expect(screen.getByTestId("tabs-tab-1")).toHaveAttribute(
+      "id",
+      "second-tab",
+    );
+    expect(screen.getByTestId("tabs-tab-1")).toHaveAttribute("tabindex", "0");
+  });
+
+  it("recovers when the current roving tab is removed", () => {
+    const initialTabs = [
+      { id: "first-tab", label: "First" },
+      { id: "second-tab", label: "Second" },
+      { id: "third-tab", label: "Third" },
+    ];
+    const { rerender } = render(
+      <TabsBase
+        tabs={initialTabs}
+        classMap={mockStyles}
+        activationMode="manual"
+        data-testid="tabs"
+      />,
+    );
+
+    fireEvent.keyDown(screen.getByTestId("tabs-tab-0"), {
+      key: "ArrowRight",
+    });
+
+    rerender(
+      <TabsBase
+        tabs={[initialTabs[0], initialTabs[2]]}
+        classMap={mockStyles}
+        activationMode="manual"
+        data-testid="tabs"
+      />,
+    );
+
+    expect(screen.getByTestId("tabs-tab-0")).toHaveAttribute("tabindex", "0");
+    expect(screen.getByTestId("tabs-tab-1")).toHaveAttribute("tabindex", "-1");
   });
 
   it("renders icons when provided", () => {
@@ -443,8 +596,10 @@ describe("TabsBase", () => {
     expect(overviewTab).toHaveAttribute("id", "overview-tab");
     expect(overviewTab).toHaveAttribute("aria-label", "Overview tab");
     expect(overviewTab).toHaveAttribute("aria-describedby", "overview-help");
+    expect(overviewTab).toHaveAttribute("aria-controls", "overview-panel");
 
     expect(detailsTab).toHaveAttribute("id", "details-tab");
+    expect(detailsTab).toHaveAttribute("aria-controls", "details-panel");
   });
 
   it("generates stable tab ids from idBase when overrides are not provided", () => {
