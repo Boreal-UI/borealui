@@ -110,7 +110,7 @@ export const buttonPropDocs: GeneratedComponentDoc = {
     {
       "name": "as",
       "type": "React.ElementType<any, keyof React.JSX.IntrinsicElements>",
-      "description": "Optional element or component override. Example: \"a\", \"button\", Link",
+      "description": "Optional element or component override. Example: \"a\", \"button\", Link Public ref typing covers the built-in button and anchor render paths. Consumers using another custom element through `as` may need to adapt its ref.",
       "required": false,
       "inherited": false,
       "category": "props"

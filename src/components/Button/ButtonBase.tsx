@@ -1,5 +1,5 @@
 import React, { forwardRef, useMemo } from "react";
-import { ButtonBaseProps } from "./Button.types";
+import { ButtonBaseProps, ButtonElement } from "./Button.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
@@ -12,7 +12,7 @@ import {
 } from "../../config/boreal-style-config";
 
 const ButtonBase = forwardRef<
-  HTMLButtonElement | HTMLAnchorElement,
+  ButtonElement,
   ButtonBaseProps
 >(
   (

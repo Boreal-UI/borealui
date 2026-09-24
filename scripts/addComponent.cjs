@@ -3,7 +3,7 @@
 const fs = require("fs");
 const path = require("path");
 
-const repoRoot = path.resolve(__dirname, "..");
+const defaultRepoRoot = path.resolve(__dirname, "..");
 
 function printUsage() {
   console.log(`Usage: node scripts/addComponent.cjs <ComponentName> [options]
@@ -13,12 +13,11 @@ SCSS, Jest tests, and core/next Storybook stories.
 
 Options:
   --dry-run       Print files that would be created or updated.
-  --force         Overwrite generated files if they already exist.
   --skip-exports  Do not update src index files or package.json exports.
   --help          Show this help message.
 
 Examples:
-  npm run generate:component -- SearchInput
+  npm run gen:component -- SearchInput
   node scripts/addComponent.cjs EmptyStateBadge --dry-run
 `);
 }
@@ -26,17 +25,22 @@ Examples:
 function parseArgs(argv) {
   const options = {
     dryRun: false,
-    force: false,
     skipExports: false,
   };
   const names = [];
 
   for (const arg of argv) {
     if (arg === "--dry-run") options.dryRun = true;
-    else if (arg === "--force") options.force = true;
     else if (arg === "--skip-exports") options.skipExports = true;
     else if (arg === "--help" || arg === "-h") options.help = true;
+    else if (arg.startsWith("--")) {
+      throw new Error(`Unknown option "${arg}".`);
+    }
     else names.push(arg);
+  }
+
+  if (names.length > 1) {
+    throw new Error("Provide exactly one component name.");
   }
 
   return { name: names[0], options };
@@ -73,12 +77,30 @@ function ensureValidComponentName(name) {
 
   if (!/^[A-Z][A-Za-z0-9]*$/.test(name)) {
     throw new Error(
-      `Component name must resolve to PascalCase. Received "${name}".`,
+      `Component name must be a PascalCase identifier. Received "${name}".`,
     );
   }
 }
 
-function writeFile(filePath, content, options) {
+function ensurePathInside(rootPath, destinationPath) {
+  const resolvedRoot = path.resolve(rootPath);
+  const resolvedDestination = path.resolve(destinationPath);
+  const relative = path.relative(resolvedRoot, resolvedDestination);
+
+  if (
+    relative === ".." ||
+    relative.startsWith(`..${path.sep}`) ||
+    path.isAbsolute(relative)
+  ) {
+    throw new Error(
+      `Refusing to generate outside ${resolvedRoot}: ${resolvedDestination}`,
+    );
+  }
+
+  return resolvedDestination;
+}
+
+function writeFile(filePath, content, options, repoRoot) {
   const relativePath = path.relative(repoRoot, filePath);
   if (options.dryRun) {
     console.log(`[create] ${relativePath}`);
@@ -86,24 +108,15 @@ function writeFile(filePath, content, options) {
   }
 
   fs.mkdirSync(path.dirname(filePath), { recursive: true });
-  let fileDescriptor;
+  const fileDescriptor = fs.openSync(filePath, "wx");
   try {
-    fileDescriptor = fs.openSync(filePath, options.force ? "w" : "wx");
     fs.writeFileSync(fileDescriptor, content, "utf8");
-  } catch (error) {
-    if (error?.code === "EEXIST") {
-      throw new Error(
-        `${relativePath} already exists. Re-run with --force to overwrite it.`,
-        { cause: error },
-      );
-    }
-    throw error;
   } finally {
-    if (fileDescriptor !== undefined) fs.closeSync(fileDescriptor);
+    fs.closeSync(fileDescriptor);
   }
 }
 
-function updateTextFile(filePath, updater, options) {
+function updateTextFile(filePath, updater, options, repoRoot) {
   const relativePath = path.relative(repoRoot, filePath);
   const current = fs.readFileSync(filePath, "utf8");
   const next = updater(current);
@@ -122,12 +135,26 @@ function insertSortedExport(current, exportLine) {
   if (current.includes(exportLine)) return current;
 
   const lines = current.trimEnd().split(/\r?\n/);
-  lines.push(exportLine);
-  lines.sort((a, b) => a.localeCompare(b));
+  const defaultExportIndexes = lines
+    .map((line, index) =>
+      line.startsWith("export { default as ") ? index : -1,
+    )
+    .filter((index) => index >= 0);
+
+  if (defaultExportIndexes.length === 0) {
+    lines.push(exportLine);
+  } else {
+    const firstIndex = defaultExportIndexes[0];
+    const defaultExports = defaultExportIndexes.map((index) => lines[index]);
+    defaultExports.push(exportLine);
+    defaultExports.sort((a, b) => a.localeCompare(b));
+    lines.splice(firstIndex, defaultExportIndexes.length, ...defaultExports);
+  }
+
   return `${lines.join("\n")}\n`;
 }
 
-function updatePackageExports(componentName, options) {
+function updatePackageExports(componentName, options, repoRoot) {
   const packagePath = path.join(repoRoot, "package.json");
   const pkg = JSON.parse(fs.readFileSync(packagePath, "utf8"));
   pkg.exports = pkg.exports || {};
@@ -1072,94 +1099,132 @@ export const Disabled: Story = {
   };
 }
 
-function main() {
-  const { name, options } = parseArgs(process.argv.slice(2));
+function planComponentFiles(componentName, repoRoot, templates) {
+  const componentRoot = path.join(repoRoot, "src", "components", componentName);
+  const coreEntryRoot = path.join(repoRoot, "src", "core");
+  const nextEntryRoot = path.join(repoRoot, "src", "next");
+  const testRoot = path.join(repoRoot, "__tests__", "base-component-test");
+  const coreStoryRoot = path.join(repoRoot, "stories-core");
+  const nextStoryRoot = path.join(repoRoot, "stories-next", "components");
+
+  return [
+    {
+      root: componentRoot,
+      filePath: path.join(componentRoot, `${componentName}.types.ts`),
+      content: templates.types,
+    },
+    {
+      root: componentRoot,
+      filePath: path.join(componentRoot, `${componentName}Base.tsx`),
+      content: templates.base,
+    },
+    {
+      root: componentRoot,
+      filePath: path.join(componentRoot, "core", `${componentName}.tsx`),
+      content: templates.coreWrapper,
+    },
+    {
+      root: componentRoot,
+      filePath: path.join(componentRoot, "core", `${componentName}.scss`),
+      content: templates.coreScss,
+    },
+    {
+      root: componentRoot,
+      filePath: path.join(componentRoot, "next", `${componentName}.tsx`),
+      content: templates.nextWrapper,
+    },
+    {
+      root: componentRoot,
+      filePath: path.join(
+        componentRoot,
+        "next",
+        `${componentName}.module.scss`,
+      ),
+      content: templates.nextScss,
+    },
+    {
+      root: coreEntryRoot,
+      filePath: path.join(coreEntryRoot, `${componentName}.ts`),
+      content: templates.coreEntry,
+    },
+    {
+      root: nextEntryRoot,
+      filePath: path.join(nextEntryRoot, `${componentName}.ts`),
+      content: templates.nextEntry,
+    },
+    {
+      root: testRoot,
+      filePath: path.join(testRoot, `${componentName}.test.tsx`),
+      content: templates.test,
+    },
+    {
+      root: coreStoryRoot,
+      filePath: path.join(coreStoryRoot, `${componentName}.stories.tsx`),
+      content: templates.storyCore,
+    },
+    {
+      root: nextStoryRoot,
+      filePath: path.join(nextStoryRoot, `${componentName}.stories.tsx`),
+      content: templates.storyNext,
+    },
+  ];
+}
+
+function preflightFiles(files, repoRoot) {
+  for (const { root, filePath } of files) {
+    ensurePathInside(repoRoot, root);
+    ensurePathInside(root, filePath);
+
+    if (fs.existsSync(filePath)) {
+      throw new Error(
+        `${path.relative(repoRoot, filePath)} already exists. No files were created.`,
+      );
+    }
+  }
+}
+
+function generateComponent(argv, { repoRoot = defaultRepoRoot } = {}) {
+  const resolvedRepoRoot = path.resolve(repoRoot);
+  const { name, options } = parseArgs(argv);
 
   if (options.help) {
     printUsage();
-    return;
+    return [];
   }
 
-  const componentName = toPascalCase(name || "");
-  ensureValidComponentName(componentName);
+  ensureValidComponentName(name);
+  const componentName = name;
 
   const templates = buildTemplates(componentName);
-  const componentDir = path.join(repoRoot, "src", "components", componentName);
-  const files = new Map([
-    [path.join(componentDir, `${componentName}.types.ts`), templates.types],
-    [path.join(componentDir, `${componentName}Base.tsx`), templates.base],
-    [
-      path.join(componentDir, "core", `${componentName}.tsx`),
-      templates.coreWrapper,
-    ],
-    [
-      path.join(componentDir, "core", `${componentName}.scss`),
-      templates.coreScss,
-    ],
-    [
-      path.join(componentDir, "next", `${componentName}.tsx`),
-      templates.nextWrapper,
-    ],
-    [
-      path.join(componentDir, "next", `${componentName}.module.scss`),
-      templates.nextScss,
-    ],
-    [
-      path.join(repoRoot, "src", "core", `${componentName}.ts`),
-      templates.coreEntry,
-    ],
-    [
-      path.join(repoRoot, "src", "next", `${componentName}.ts`),
-      templates.nextEntry,
-    ],
-    [
-      path.join(
-        repoRoot,
-        "__tests__",
-        "base-component-test",
-        `${componentName}.test.tsx`,
-      ),
-      templates.test,
-    ],
-    [
-      path.join(repoRoot, "stories-core", `${componentName}.stories.tsx`),
-      templates.storyCore,
-    ],
-    [
-      path.join(
-        repoRoot,
-        "stories-next",
-        "components",
-        `${componentName}.stories.tsx`,
-      ),
-      templates.storyNext,
-    ],
-  ]);
+  const files = planComponentFiles(componentName, resolvedRepoRoot, templates);
+  preflightFiles(files, resolvedRepoRoot);
 
-  for (const [filePath, content] of files) {
-    writeFile(filePath, content, options);
+  for (const { filePath, content } of files) {
+    writeFile(filePath, content, options, resolvedRepoRoot);
   }
 
   if (!options.skipExports) {
     updateTextFile(
-      path.join(repoRoot, "src", "index.core.ts"),
+      path.join(resolvedRepoRoot, "src", "index.core.ts"),
       (current) =>
         insertSortedExport(
           current,
           `export { default as ${componentName} } from "./core/${componentName}";`,
-        ),
+      ),
       options,
+      resolvedRepoRoot,
     );
     updateTextFile(
-      path.join(repoRoot, "src", "index.next.ts"),
+      path.join(resolvedRepoRoot, "src", "index.next.ts"),
       (current) =>
         insertSortedExport(
           current,
           `export { default as ${componentName} } from "./next/${componentName}";`,
-        ),
+      ),
       options,
+      resolvedRepoRoot,
     );
-    updatePackageExports(componentName, options);
+    updatePackageExports(componentName, options, resolvedRepoRoot);
   }
 
   console.log(
@@ -1168,15 +1233,27 @@ function main() {
       : `Created ${componentName} scaffold.`,
   );
   console.log(
-    "Run npm run generate:docs after adding component-specific props.",
+    "Run npm run gen:docs after adding component-specific props.",
   );
+
+  return files.map(({ filePath }) => filePath);
 }
 
-try {
-  main();
-} catch (error) {
-  console.error(error.message);
-  console.error("");
-  printUsage();
-  process.exitCode = 1;
+module.exports = {
+  ensurePathInside,
+  ensureValidComponentName,
+  generateComponent,
+  parseArgs,
+  planComponentFiles,
+};
+
+if (require.main === module) {
+  try {
+    generateComponent(process.argv.slice(2));
+  } catch (error) {
+    console.error(error.message);
+    console.error("");
+    printUsage();
+    process.exitCode = 1;
+  }
 }

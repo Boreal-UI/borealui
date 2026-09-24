@@ -537,7 +537,18 @@ describe("TooltipBase", () => {
 
     expect(trigger.tagName.toLowerCase()).toBe("span");
     expect(trigger).toHaveAttribute("tabindex", "0");
+    expect(trigger).not.toHaveAttribute("role");
+    expect(screen.queryByRole("button", { name: "Plain text trigger" })).toBeNull();
     expect(trigger).toHaveClass("triggerWrapper");
+
+    fireEvent.focus(trigger);
+    const tooltip = screen.getByRole("tooltip");
+    expect(tooltip).toHaveClass("visible");
+    expect(trigger).toHaveAttribute("aria-describedby", tooltip.id);
+
+    fireEvent.keyDown(document, { key: "Escape" });
+    expect(tooltip).not.toHaveClass("visible");
+    expect(trigger).not.toHaveAttribute("aria-describedby");
   });
 
   it("supports accessible props on the wrapped span trigger for non-element children", () => {

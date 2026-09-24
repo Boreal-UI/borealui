@@ -2,7 +2,7 @@ import { expandClassMap } from "@/utils/propAliases";
 import { forwardRef } from "react";
 import ButtonBase from "../ButtonBase";
 import "./Button.scss";
-import { ButtonProps } from "../Button.types";
+import { ButtonElement, ButtonProps } from "../Button.types";
 
 const classes = {
   button: "button",
@@ -48,7 +48,7 @@ const classes = {
   outline: "button_outline",
 };
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
+const Button = forwardRef<ButtonElement, ButtonProps>((props, ref) => (
   <ButtonBase {...props} classMap={expandClassMap(classes)} ref={ref} />
 ));
 Button.displayName = "Button";

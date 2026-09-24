@@ -39,7 +39,7 @@
     "cli:check": "node --check packages/cli/src/index.js",
     "dev": "vite",
     "clean": "rimraf dist",
-    "boreal": "ts-node ./scripts/boreal.cjs",
+    "boreal": "node ./scripts/boreal.cjs",
     "build:core": "vite build --config vite.config.core.ts",
     "build:next": "vite build --config vite.config.next.ts",
     "build:docs": "vite build --config vite.config.docs.ts",

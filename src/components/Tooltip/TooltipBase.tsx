@@ -130,10 +130,10 @@ const TooltipBase = forwardRef<
       onBlur: callAll<React.FocusEvent<HTMLElement>>(childProps.onBlur, hide),
     });
   } else {
+    /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-tabindex -- A text tooltip needs a neutral, focusable discovery target, not a false interactive role. */
     trigger = (
       <span
         id={triggerId}
-        role="button"
         tabIndex={0}
         className={classMap.triggerWrapper}
         aria-label={triggerAriaLabel}
@@ -151,6 +151,7 @@ const TooltipBase = forwardRef<
         {children}
       </span>
     );
+    /* eslint-enable jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-tabindex */
   }
 
   const shouldRenderTooltip = keepMountedWhenHidden || visible;
