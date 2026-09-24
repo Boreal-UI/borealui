@@ -27,6 +27,10 @@ export default defineConfig({
         resolve: {
           alias: {
             "@": path.resolve(configDirectory, "src"),
+            "next/image": path.resolve(
+              configDirectory,
+              "cypress/support/next-image.ts",
+            ),
           },
         },
         css: {
