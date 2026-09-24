@@ -25,6 +25,12 @@ const parsePixelWidth = (value: string | undefined, fallback = 160): number => {
   return Number.isFinite(parsed) ? parsed : fallback;
 };
 
+type ResolvedRow<T> = {
+  row: T;
+  sourceIndex: number;
+  key: string | number;
+};
+
 function DataTableBase<T extends object>({
   columns,
   data,
@@ -148,6 +154,9 @@ function DataTableBase<T extends object>({
   const [scrollTop, setScrollTop] = useState(0);
   const scrollFrameRef = useRef<number | null>(null);
   const pendingScrollTopRef = useRef(0);
+  const previousDataRef = useRef(data);
+  const warnedMissingRowKeyRef = useRef(false);
+  const warnedDuplicateRowKeyRef = useRef(false);
 
   const captionId = `${testId}-caption`;
   const liveRegionId = `${testId}-live-region`;
@@ -179,10 +188,84 @@ function DataTableBase<T extends object>({
     [resolvedExpandedRowKeys],
   );
 
-  const getResolvedRowKey = useCallback(
-    (row: T, index: number): string | number => (rowKey ? rowKey(row) : index),
-    [rowKey],
+  const resolvedSourceData = useMemo<ResolvedRow<T>[]>(
+    () =>
+      data.map((row, sourceIndex) => ({
+        row,
+        sourceIndex,
+        key: rowKey ? rowKey(row) : sourceIndex,
+      })),
+    [data, rowKey],
   );
+
+  const duplicateRowKeys = useMemo(() => {
+    if (!rowKey) return [];
+
+    const seen = new Set<string | number>();
+    const duplicates = new Set<string | number>();
+    resolvedSourceData.forEach(({ key }) => {
+      if (seen.has(key)) duplicates.add(key);
+      seen.add(key);
+    });
+    return Array.from(duplicates);
+  }, [resolvedSourceData, rowKey]);
+
+  const hasIdentitySensitiveFeatures =
+    selectableRows ||
+    Boolean(bulkActions) ||
+    Boolean(renderExpandedRow) ||
+    Boolean(onCellEdit) ||
+    columns.some((column) => column.editable) ||
+    selectedRowKeys !== undefined ||
+    defaultSelectedRowKeys.length > 0 ||
+    expandedRowKeys !== undefined ||
+    defaultExpandedRowKeys.length > 0;
+
+  useEffect(() => {
+    if (
+      process.env.NODE_ENV === "development" &&
+      !rowKey &&
+      hasIdentitySensitiveFeatures &&
+      !warnedMissingRowKeyRef.current
+    ) {
+      warnedMissingRowKeyRef.current = true;
+      console.warn(
+        "Boreal UI DataTable: stateful row features are being used without rowKey. Provide a stable, unique rowKey to preserve row identity across data replacement and server pagination.",
+      );
+    }
+  }, [hasIdentitySensitiveFeatures, rowKey]);
+
+  useEffect(() => {
+    if (
+      process.env.NODE_ENV === "development" &&
+      duplicateRowKeys.length > 0 &&
+      !warnedDuplicateRowKeyRef.current
+    ) {
+      warnedDuplicateRowKeyRef.current = true;
+      console.warn(
+        `Boreal UI DataTable: rowKey returned duplicate values (${duplicateRowKeys.join(
+          ", ",
+        )}). Row keys must be unique for reliable row state.`,
+      );
+    }
+  }, [duplicateRowKeys]);
+
+  useEffect(() => {
+    const previousData = previousDataRef.current;
+    previousDataRef.current = data;
+
+    if (rowKey || previousData === data) return;
+
+    const preservesSourceRecords =
+      previousData.length === data.length &&
+      previousData.every((row, index) => row === data[index]);
+
+    if (!preservesSourceRecords) {
+      if (selectedRowKeys === undefined) setInternalSelectedKeys([]);
+      if (expandedRowKeys === undefined) setInternalExpandedRowKeys([]);
+      setEditingCell(null);
+    }
+  }, [data, expandedRowKeys, rowKey, selectedRowKeys]);
 
   const orderedColumns = useMemo(() => {
     const byKey = new Map(columns.map((column) => [column.key, column]));
@@ -244,10 +327,10 @@ function DataTableBase<T extends object>({
   ]);
 
   const filteredData = useMemo(() => {
-    if (!filterable || !filterQuery.trim()) return data;
+    if (!filterable || !filterQuery.trim()) return resolvedSourceData;
 
     const query = filterQuery.toLowerCase();
-    return data.filter((row) =>
+    return resolvedSourceData.filter(({ row }) =>
       columns.some((column) => {
         const value = row[column.key];
         return String(value ?? "")
@@ -255,14 +338,14 @@ function DataTableBase<T extends object>({
           .includes(query);
       }),
     );
-  }, [columns, data, filterable, filterQuery]);
+  }, [columns, filterable, filterQuery, resolvedSourceData]);
 
   const sortedData = useMemo(() => {
     if (serverSort || !sortKey) return filteredData;
 
     return [...filteredData].sort((a, b) => {
-      const valA = a[sortKey];
-      const valB = b[sortKey];
+      const valA = a.row[sortKey];
+      const valB = b.row[sortKey];
 
       if (valA === valB) return 0;
       if (valA == null) return 1;
@@ -318,10 +401,10 @@ function DataTableBase<T extends object>({
     () =>
       !bulkActions || selectedKeySet.size === 0
         ? []
-        : sortedData.filter((row, index) =>
-            selectedKeySet.has(getResolvedRowKey(row, index)),
-          ),
-    [bulkActions, getResolvedRowKey, selectedKeySet, sortedData],
+        : sortedData
+            .filter(({ key }) => selectedKeySet.has(key))
+            .map(({ row }) => row),
+    [bulkActions, selectedKeySet, sortedData],
   );
 
   const updateSelection = (nextKeys: Array<string | number>) => {
@@ -330,9 +413,9 @@ function DataTableBase<T extends object>({
     }
 
     const nextKeySet = new Set(nextKeys);
-    const nextRows = sortedData.filter((row, index) =>
-      nextKeySet.has(getResolvedRowKey(row, index)),
-    );
+    const nextRows = sortedData
+      .filter(({ key }) => nextKeySet.has(key))
+      .map(({ row }) => row);
     onSelectionChange?.(nextKeys, nextRows);
   };
 
@@ -358,12 +441,7 @@ function DataTableBase<T extends object>({
   };
 
   const allVisibleKeys = selectableRows
-    ? renderedData.map((row, index) =>
-        getResolvedRowKey(
-          row,
-          (serverPagination ? 0 : pageOffset) + virtualStartIndex + index,
-        ),
-      )
+    ? renderedData.map(({ key }) => key)
     : [];
   const allVisibleKeySet = new Set(allVisibleKeys);
   const allVisibleSelected =
@@ -379,8 +457,7 @@ function DataTableBase<T extends object>({
     updateSelection(Array.from(new Set([...selectedKeys, ...allVisibleKeys])));
   };
 
-  const toggleRow = (row: T, index: number) => {
-    const key = getResolvedRowKey(row, index);
+  const toggleRow = (key: string | number) => {
     updateSelection(
       selectedKeySet.has(key)
         ? selectedKeys.filter((selectedKey) => selectedKey !== key)
@@ -388,8 +465,7 @@ function DataTableBase<T extends object>({
     );
   };
 
-  const toggleExpandedRow = (row: T, index: number) => {
-    const key = getResolvedRowKey(row, index);
+  const toggleExpandedRow = (key: string | number) => {
     const nextKeys = expandedRowKeySet.has(key)
       ? resolvedExpandedRowKeys.filter((expandedKey) => expandedKey !== key)
       : [...resolvedExpandedRowKeys, key];
@@ -398,9 +474,9 @@ function DataTableBase<T extends object>({
     if (!expandedRowKeys) setInternalExpandedRowKeys(nextKeys);
     onExpandedRowsChange?.(
       nextKeys,
-      sortedData.filter((candidate, candidateIndex) =>
-        nextKeySet.has(getResolvedRowKey(candidate, candidateIndex)),
-      ),
+      sortedData
+        .filter(({ key: candidateKey }) => nextKeySet.has(candidateKey))
+        .map(({ row }) => row),
     );
   };
 
@@ -586,6 +662,7 @@ function DataTableBase<T extends object>({
   const commitCellEdit = (
     row: T,
     rowIndex: number,
+    resolvedRowKey: string | number,
     column: Column<T>,
     value: unknown,
   ) => {
@@ -593,7 +670,7 @@ function DataTableBase<T extends object>({
       row,
       rowIndex,
       column,
-      rowKey: getResolvedRowKey(row, rowIndex),
+      rowKey: resolvedRowKey,
     });
     setEditingCell(null);
   };
@@ -1028,12 +1105,12 @@ function DataTableBase<T extends object>({
                       />
                     </tr>
                   ) : null}
-                  {renderedData.map((row, visibleIndex) => {
+                  {renderedData.map((resolvedRow, visibleIndex) => {
+                    const { row, key } = resolvedRow;
                     const index = virtualStartIndex + visibleIndex;
                     const absoluteIndex = serverPagination
                       ? index
                       : pageOffset + index;
-                    const key = getResolvedRowKey(row, absoluteIndex);
                     const rowAriaLabel = getRowAriaLabel?.(row, absoluteIndex);
                     const rowAriaDescription = getRowAriaDescription?.(
                       row,
@@ -1070,7 +1147,7 @@ function DataTableBase<T extends object>({
                                 aria-label={`${expanded ? "Collapse" : "Expand"} row ${absoluteIndex + 1}`}
                                 onClick={(event) => {
                                   event.stopPropagation();
-                                  toggleExpandedRow(row, absoluteIndex);
+                                  toggleExpandedRow(key);
                                 }}
                                 data-testid={`${testId}-expand-row-${key}`}
                               >
@@ -1089,7 +1166,7 @@ function DataTableBase<T extends object>({
                                 checked={selectedKeySet.has(key)}
                                 onChange={(event) => {
                                   event.stopPropagation();
-                                  toggleRow(row, absoluteIndex);
+                                  toggleRow(key);
                                 }}
                                 onClick={(event) => event.stopPropagation()}
                                 data-testid={`${testId}-select-row-${key}`}
@@ -1133,6 +1210,7 @@ function DataTableBase<T extends object>({
                                       commitCellEdit(
                                         row,
                                         absoluteIndex,
+                                        key,
                                         column,
                                         nextValue,
                                       ),
@@ -1157,6 +1235,7 @@ function DataTableBase<T extends object>({
                                         commitCellEdit(
                                           row,
                                           absoluteIndex,
+                                          key,
                                           column,
                                           event.currentTarget.value,
                                         );
@@ -1169,6 +1248,7 @@ function DataTableBase<T extends object>({
                                       commitCellEdit(
                                         row,
                                         absoluteIndex,
+                                        key,
                                         column,
                                         event.currentTarget.value,
                                       )

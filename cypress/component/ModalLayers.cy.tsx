@@ -3,6 +3,7 @@
 import { useState } from "react";
 import * as Core from "../../src/index.core";
 import * as Next from "../../src/index.next";
+import { __resetModalLayerManagerForTests } from "../../src/utils/modalLayerManager";
 
 type Library = Pick<
   typeof Core,
@@ -171,7 +172,12 @@ const libraries: Array<["core" | "next", Library]> = [
 
 libraries.forEach(([flavor, library]) => {
   describe(`${flavor} modal layers`, () => {
+    beforeEach(() => {
+      __resetModalLayerManagerForTests();
+    });
+
     afterEach(() => {
+      __resetModalLayerManagerForTests();
       cy.document().then((documentRef) => {
         documentRef.body.classList.remove("noScroll", "no-scroll");
         documentRef
@@ -197,7 +203,7 @@ libraries.forEach(([flavor, library]) => {
         ($background[0] as HTMLButtonElement).focus();
       });
       cy.get('[data-testid="modal-close"]').should("be.focused");
-      cy.get("body").trigger("keydown", { key: "Escape" });
+      cy.focused().type("{esc}");
       cy.get('[data-testid="modal-content"]').should("not.exist");
       cy.get('[data-testid="background"]').should("be.focused");
       cy.get("body").should("not.have.class", "noScroll");

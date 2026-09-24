@@ -140,5 +140,56 @@ implementations.forEach(({ name, DataTable }) => {
       cy.contains("Row 99").should("not.exist");
       cy.get('[data-testid="virtual-table-virtual-bottom"]').should("exist");
     });
+
+    it("preserves fallback row identity across sorting and filtering", () => {
+      const identityData: Row[] = [
+        { id: "three", name: "Cascade", status: "Draft", owner: "Lin" },
+        { id: "one", name: "Aurora", status: "Ready", owner: "Ada" },
+        { id: "two", name: "Boreal", status: "Stable", owner: "Grace" },
+      ];
+
+      cy.mount(
+        <div style={{ padding: 24, maxWidth: 900 }}>
+          <DataTable<Row>
+            data={identityData}
+            columns={columns}
+            selectableRows
+            filterable
+            renderExpandedRow={(row) => <div>{row.name} identity details</div>}
+            bulkActions={(_keys, rows) => (
+              <span data-testid="identity-selected-rows">
+                {rows.map((row) => row.name).join(",")}
+              </span>
+            )}
+            data-testid="identity-table"
+          />
+        </div>,
+      );
+
+      cy.get('[data-testid="identity-table-select-row-0"]').check({
+        force: true,
+      });
+      cy.get('[data-testid="identity-table-expand-row-0"]').click();
+      cy.get('[data-testid="identity-table-sort-name"]').click();
+
+      cy.get('[data-testid="identity-table-row-0"]')
+        .should("contain.text", "Cascade")
+        .find('input[type="checkbox"]')
+        .should("be.checked");
+      cy.get('[data-testid="identity-table-expanded-row-0"]').should(
+        "contain.text",
+        "Cascade identity details",
+      );
+      cy.get('[data-testid="identity-selected-rows"]').should(
+        "have.text",
+        "Cascade",
+      );
+
+      cy.get('[data-testid="identity-table-filter"]').type("Cascade");
+      cy.get('[data-testid="identity-table-row-0"]')
+        .should("contain.text", "Cascade")
+        .find('input[type="checkbox"]')
+        .should("be.checked");
+    });
   });
 });
