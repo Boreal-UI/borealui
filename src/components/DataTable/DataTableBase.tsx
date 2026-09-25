@@ -1,5 +1,6 @@
 import {
   useEffect,
+  useId,
   useMemo,
   useCallback,
   useRef,
@@ -123,6 +124,7 @@ function DataTableBase<T extends object>({
   "data-testid": dataTestId,
   testId = dataTestId ?? "data-table",
 }: DataTableBaseProps<T>) {
+  const generatedId = useId();
   const [sortKey, setSortKey] = useState<keyof T | undefined>(defaultSortKey);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">(defaultSortOrder);
   const [sortAnnouncement, setSortAnnouncement] = useState("");
@@ -158,8 +160,8 @@ function DataTableBase<T extends object>({
   const warnedMissingRowKeyRef = useRef(false);
   const warnedDuplicateRowKeyRef = useRef(false);
 
-  const captionId = `${testId}-caption`;
-  const liveRegionId = `${testId}-live-region`;
+  const captionId = `${generatedId}-caption`;
+  const liveRegionId = `${generatedId}-live-region`;
 
   const computedAriaDescribedBy = [
     ariaDescribedBy,
@@ -622,7 +624,7 @@ function DataTableBase<T extends object>({
     column.scope ?? "col";
 
   const getHeaderId = (column: Column<T>): string =>
-    column.id ?? `${testId}-header-${String(column.key)}`;
+    column.id ?? `${generatedId}-header-${String(column.key)}`;
 
   const getColumnAriaLabel = (
     column: Column<T>,

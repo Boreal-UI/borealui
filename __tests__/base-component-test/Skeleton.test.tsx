@@ -31,12 +31,9 @@ describe("SkeletonBase", () => {
     expect(skeleton).toHaveAttribute("aria-live", "polite");
     expect(skeleton).toHaveAttribute("aria-busy", "true");
     expect(skeleton).toHaveAttribute("aria-relevant", "additions text");
-    expect(skeleton).toHaveAttribute(
-      "aria-describedby",
-      "skeleton-loader-desc",
-    );
     expect(description).toBeInTheDocument();
-    expect(description).toHaveAttribute("id", "skeleton-loader-desc");
+    expect(description.id).not.toBe("");
+    expect(skeleton).toHaveAttribute("aria-describedby", description.id);
     expect(description).toHaveTextContent("Loading content...");
   });
 

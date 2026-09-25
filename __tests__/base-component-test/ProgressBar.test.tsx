@@ -190,8 +190,8 @@ describe("BaseProgressBar", () => {
 
     expect(label).toBeInTheDocument();
     expect(label).toHaveTextContent("File upload");
-    expect(label).toHaveAttribute("id", "progressbar-label");
-    expect(progressbar).toHaveAttribute("aria-labelledby", "progressbar-label");
+    expect(label.id).not.toBe("");
+    expect(progressbar).toHaveAttribute("aria-labelledby", label.id);
     expect(progressbar).not.toHaveAttribute("aria-label", "Progress");
   });
 
@@ -284,11 +284,8 @@ describe("BaseProgressBar", () => {
 
     expect(description).toBeInTheDocument();
     expect(description).toHaveTextContent("Uploading 2 of 4 files");
-    expect(description).toHaveAttribute("id", "progressbar-description");
-    expect(progressbar).toHaveAttribute(
-      "aria-describedby",
-      "progressbar-description",
-    );
+    expect(description.id).not.toBe("");
+    expect(progressbar).toHaveAttribute("aria-describedby", description.id);
   });
 
   it("uses a custom descriptionId when provided", () => {

@@ -47,8 +47,10 @@ describe("StepperBase", () => {
 
     expect(stepper).toBeInTheDocument();
     expect(stepper).toHaveAttribute("data-testid", "stepper");
-    expect(stepper).toHaveAttribute("aria-labelledby", "stepper-label");
-    expect(screen.getByText("Progress Stepper")).toBeInTheDocument();
+    const fallbackLabel = screen.getByText("Progress Stepper");
+    expect(fallbackLabel).toBeInTheDocument();
+    expect(fallbackLabel.id).not.toBe("");
+    expect(stepper).toHaveAttribute("aria-labelledby", fallbackLabel.id);
   });
 
   it("renders all steps and list items", () => {

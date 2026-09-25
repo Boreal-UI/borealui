@@ -93,7 +93,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   ...rest
 }) => {
   const reactId = useId();
-  const baseId = id || testId || `file-upload-${reactId.replace(/:/g, "")}`;
+  const baseId = id ?? `file-upload-${reactId.replace(/:/g, "")}`;
 
   const [files, setFiles] = useState<File[]>([]);
   const [rejectedFiles, setRejectedFiles] = useState<

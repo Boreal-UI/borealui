@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -30,7 +30,8 @@ const SkeletonBase: React.FC<SkeletonBaseProps & ExtraProps> = ({
 
   ...rest
 }) => {
-  const descriptionId = `${testId}-desc`;
+  const generatedId = useId();
+  const descriptionId = `${generatedId}-desc`;
 
   const shouldAnnounce = announce && ariaHidden !== true;
 

@@ -460,11 +460,11 @@ describe("DataTableBase", () => {
     const caption = screen.getByText("User records");
 
     expect(caption).toBeInTheDocument();
-    expect(caption).toHaveAttribute("id", "users-table-caption");
+    expect(caption.id).not.toBe("");
     expect(caption).toHaveClass("sr_only");
     expect(table).toHaveAttribute(
       "aria-describedby",
-      expect.stringContaining("users-table-caption"),
+      expect.stringContaining(caption.id),
     );
   });
 
@@ -487,17 +487,22 @@ describe("DataTableBase", () => {
     });
 
     const table = screen.getByRole("table");
+    const caption = screen.getByText("User records");
+    const liveRegion = screen
+      .getByTestId("users-table")
+      .querySelector<HTMLElement>("[aria-live]");
+    expect(liveRegion).not.toBeNull();
     expect(table).toHaveAttribute(
       "aria-describedby",
       expect.stringContaining("external-description"),
     );
     expect(table).toHaveAttribute(
       "aria-describedby",
-      expect.stringContaining("users-table-caption"),
+      expect.stringContaining(caption.id),
     );
     expect(table).toHaveAttribute(
       "aria-describedby",
-      expect.stringContaining("users-table-live-region"),
+      expect.stringContaining(liveRegion?.id ?? ""),
     );
   });
 
@@ -664,9 +669,9 @@ describe("DataTableBase", () => {
       "data-testid": "users-table",
     });
 
-    const liveRegion = screen.getByText("", {
-      selector: "#users-table-live-region",
-    });
+    const liveRegion = screen
+      .getByTestId("users-table")
+      .querySelector<HTMLElement>("[aria-live]");
     const nameHeader = screen.getByRole("columnheader", { name: /name/i });
     const nameButton = within(nameHeader).getByRole("button");
 
@@ -682,9 +687,9 @@ describe("DataTableBase", () => {
         `Sorted ${column.label} in ${order} order`,
     });
 
-    const liveRegion = screen.getByText("", {
-      selector: "#users-table-live-region",
-    });
+    const liveRegion = screen
+      .getByTestId("users-table")
+      .querySelector<HTMLElement>("[aria-live]");
     const ageHeader = screen.getByRole("columnheader", { name: /age/i });
     const ageButton = within(ageHeader).getByRole("button");
 
@@ -827,7 +832,9 @@ describe("DataTableBase", () => {
   it("renders a loading row when loading is true", () => {
     renderTable({ loading: true, loadingMessage: "Loading users" });
 
-    const liveRegion = document.getElementById("data-table-live-region");
+    const liveRegion = screen
+      .getByTestId("data-table")
+      .querySelector<HTMLElement>("[aria-live]");
     const loadingCell = screen.getByRole("cell", { name: "Loading users" });
 
     expect(liveRegion).toBeInTheDocument();

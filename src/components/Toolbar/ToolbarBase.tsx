@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import React, { JSX, useId } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { ToolbarBaseProps } from "./Toolbar.types";
 import { capitalize } from "../../utils/capitalize";
@@ -46,6 +46,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
   classMap,
   headingLevel = 1,
 }): JSX.Element => {
+  const generatedId = useId();
   const safeHeading = Math.min(6, Math.max(1, headingLevel));
   const TitleTag = `h${safeHeading}` as keyof JSX.IntrinsicElements;
 
@@ -66,7 +67,7 @@ const ToolbarBase: React.FC<ToolbarBaseProps> = ({
       ? true
       : undefined;
 
-  const resolvedTitleId = title ? (titleId ?? `${testId}-title`) : undefined;
+  const resolvedTitleId = title ? (titleId ?? `${generatedId}-title`) : undefined;
 
   return (
     <div

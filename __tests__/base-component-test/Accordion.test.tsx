@@ -35,13 +35,11 @@ const styles = {
 };
 
 describe("AccordionBase (Jest)", () => {
-  const getUniqueId = () => "unique-id";
 
   const renderAccordion = (props = {}) =>
     render(
       <AccordionBase
         title="Test Accordion"
-        getUniqueId={getUniqueId}
         classMap={styles}
         data-testid="test"
         {...props}
@@ -120,7 +118,6 @@ describe("AccordionBase (Jest)", () => {
     render(
       <AccordionBase
         title="Raw text accordion"
-        getUniqueId={getUniqueId}
         classMap={styles}
         data-testid="raw-text"
       >
@@ -225,8 +222,8 @@ describe("AccordionBase (Jest)", () => {
     expect(description).toHaveTextContent(
       "Helpful description for assistive tech",
     );
-    expect(description).toHaveAttribute("id", "unique-id-desc");
-    expect(toggle).toHaveAttribute("aria-describedby", "unique-id-desc");
+    expect(description.id).toBeTruthy();
+    expect(toggle).toHaveAttribute("aria-describedby", description.id);
   });
 
   it("merges generated description id with external aria-describedby", () => {
@@ -236,10 +233,11 @@ describe("AccordionBase (Jest)", () => {
     });
 
     const toggle = screen.getByTestId("test-accordion-toggle");
+    const description = screen.getByTestId("test-description");
 
     expect(toggle).toHaveAttribute(
       "aria-describedby",
-      "unique-id-desc external-description",
+      `${description.id} external-description`,
     );
   });
 
@@ -278,7 +276,6 @@ describe("AccordionBase (Jest)", () => {
         <span id="external-toggle-label">External accordion label</span>
         <AccordionBase
           title="Test Accordion"
-          getUniqueId={getUniqueId}
           classMap={styles}
           data-testid="test"
           aria-labelledby="external-toggle-label"
@@ -302,12 +299,12 @@ describe("AccordionBase (Jest)", () => {
     const toggle = screen.getByTestId("test-accordion-toggle");
     const content = screen.getByTestId("test-content");
 
-    expect(toggle).toHaveAttribute("id", "unique-id-button");
-    expect(toggle).toHaveAttribute("aria-controls", "unique-id-content");
+    expect(toggle.id).toBeTruthy();
+    expect(content.id).toBeTruthy();
+    expect(toggle).toHaveAttribute("aria-controls", content.id);
 
-    expect(content).toHaveAttribute("id", "unique-id-content");
     expect(content).toHaveAttribute("role", "region");
-    expect(content).toHaveAttribute("aria-labelledby", "unique-id-button");
+    expect(content).toHaveAttribute("aria-labelledby", toggle.id);
   });
 
   it("uses provided id prop instead of generated id", () => {
@@ -342,7 +339,6 @@ describe("AccordionBase (Jest)", () => {
         <span id="external-region-label">External region label</span>
         <AccordionBase
           title="Test Accordion"
-          getUniqueId={getUniqueId}
           classMap={styles}
           data-testid="test"
           regionAriaLabelledBy="external-region-label"
@@ -368,7 +364,6 @@ describe("AccordionBase (Jest)", () => {
         </span>
         <AccordionBase
           title="Test Accordion"
-          getUniqueId={getUniqueId}
           classMap={styles}
           data-testid="test"
           regionAriaDescribedBy="external-region-description"
@@ -522,7 +517,10 @@ describe("AccordionBase (Jest)", () => {
     expect(screen.getByTestId("test-loading")).toBeInTheDocument();
     expect(screen.getByText("Loading content")).toBeInTheDocument();
     expect(content).toHaveAttribute("aria-busy", "true");
-    expect(content).toHaveAttribute("aria-describedby", "unique-id-loading");
+    expect(content).toHaveAttribute(
+      "aria-describedby",
+      screen.getByTestId("test-loading").id,
+    );
     expect(screen.queryByText("Accordion content")).not.toBeInTheDocument();
 
     act(() => {
@@ -577,7 +575,6 @@ describe("AccordionBase (Jest)", () => {
         </span>
         <AccordionBase
           title="Test Accordion"
-          getUniqueId={getUniqueId}
           classMap={styles}
           data-testid="test"
           defaultExpanded={true}
@@ -590,10 +587,11 @@ describe("AccordionBase (Jest)", () => {
     );
 
     const content = screen.getByTestId("test-content");
+    const loading = screen.getByTestId("test-loading");
 
     expect(content).toHaveAttribute(
       "aria-describedby",
-      "external-region-description unique-id-loading",
+      `external-region-description ${loading.id}`,
     );
 
     act(() => {
@@ -697,7 +695,6 @@ describe("AccordionBase (Jest)", () => {
     render(
       <AccordionBase
         title="Fallback Test Id"
-        getUniqueId={getUniqueId}
         classMap={styles}
       >
         <div>Fallback content</div>
@@ -716,7 +713,6 @@ describe("AccordionBase (Jest)", () => {
     render(
       <AccordionBase
         title="Forward Props"
-        getUniqueId={getUniqueId}
         classMap={styles}
         data-testid="test"
         data-surface="wrapper"

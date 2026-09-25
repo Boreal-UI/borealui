@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { expandClassMap, resolvePropAlias } from "@/utils/propAliases";
 import { capitalize } from "@/utils/capitalize";
@@ -48,7 +49,8 @@ export default function Select({
 }: ServerSelectProps) {
   const classMap = expandClassMap(styles);
   const resolvedTestId = testId ?? dataTestId ?? "select";
-  const selectId = id ?? `${resolvedTestId}-input`;
+  const generatedId = useId();
+  const selectId = id ?? `${generatedId}-input`;
   const helperTextId = helperText ? `${selectId}-helper-text` : undefined;
   const errorMessageId = errorMessage ? `${selectId}-error-message` : undefined;
   const describedBy =

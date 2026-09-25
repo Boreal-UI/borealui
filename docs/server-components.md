@@ -2,7 +2,9 @@
 
 Boreal UI publishes dedicated React Server Component entries for static UI in
 Next.js app-router projects. These entries use the Next SCSS Modules without
-adding `"use client"`, React hooks, browser APIs, or callback props.
+adding `"use client"`, client-state/effect hooks, browser APIs, or callback
+props. They may use React's server-safe `useId` hook for deterministic,
+hydration-safe accessibility relationships.
 
 Import server components from the server barrel:
 

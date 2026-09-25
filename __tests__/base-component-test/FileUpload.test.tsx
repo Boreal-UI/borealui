@@ -122,19 +122,16 @@ describe("BaseFileUpload", () => {
       helperText: "Only PNG files",
       errorMessage: "A file is required",
     });
+    const baseId = input.id.replace(/-input$/u, "");
+    const describedBy = `${baseId}-helperText ${baseId}-errorMessage`;
+    const errorId = `${baseId}-errorMessage`;
 
-    expect(wrapper).toHaveAttribute(
-      "aria-describedby",
-      "upload-helperText upload-errorMessage",
-    );
-    expect(wrapper).toHaveAttribute("aria-errormessage", "upload-errorMessage");
+    expect(wrapper).toHaveAttribute("aria-describedby", describedBy);
+    expect(wrapper).toHaveAttribute("aria-errormessage", errorId);
     expect(wrapper).toHaveAttribute("aria-invalid", "true");
 
-    expect(input).toHaveAttribute(
-      "aria-describedby",
-      "upload-helperText upload-errorMessage",
-    );
-    expect(input).toHaveAttribute("aria-errormessage", "upload-errorMessage");
+    expect(input).toHaveAttribute("aria-describedby", describedBy);
+    expect(input).toHaveAttribute("aria-errormessage", errorId);
     expect(input).toHaveAttribute("aria-invalid", "true");
   });
 
@@ -269,9 +266,10 @@ describe("BaseFileUpload", () => {
       target: { files: [file] },
     });
 
+    const fileList = screen.getByRole("list", { name: "Selected files" });
     expect(screen.getByTestId("upload-file-button")).toHaveAttribute(
       "aria-describedby",
-      "upload-file-list",
+      fileList.id,
     );
   });
 
@@ -880,13 +878,11 @@ describe("BaseFileUpload", () => {
     });
 
     expect(wrapper).toHaveAttribute("role", "region");
-    expect(wrapper).toHaveAttribute(
-      "aria-describedby",
-      "upload-dropzone-helperText",
+    const description = screen.getByText(
+      "Drop files here or use the select button.",
     );
-    expect(
-      screen.getByText("Drop files here or use the select button."),
-    ).toBeInTheDocument();
+    expect(description).toBeInTheDocument();
+    expect(wrapper).toHaveAttribute("aria-describedby", description.id);
   });
 
   it("passes through wrapper aria props", () => {

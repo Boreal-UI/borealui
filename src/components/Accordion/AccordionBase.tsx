@@ -1,4 +1,4 @@
-import React, { useMemo, useState, KeyboardEvent, useEffect } from "react";
+import React, { useId, useMemo, useState, KeyboardEvent, useEffect } from "react";
 import { AccordionProps } from "./Accordion.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -11,7 +11,6 @@ import {
 } from "../../config/boreal-style-config";
 
 export interface AccordionBaseProps extends AccordionProps {
-  getUniqueId: () => string;
   classMap: Record<string, string>;
 }
 
@@ -37,7 +36,6 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   onExpandedChange,
   defaultExpanded = false,
   className,
-  getUniqueId,
   classMap,
   regionAriaLabel,
   regionAriaLabelledBy,
@@ -51,7 +49,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   ...rest
 }) => {
   const isControlled = expanded !== undefined;
-  const internalId = useMemo(() => getUniqueId(), [getUniqueId]);
+  const internalId = useId();
 
   const [internalExpanded, setInternalExpanded] = useState(defaultExpanded);
 

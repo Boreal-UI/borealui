@@ -67,7 +67,7 @@ describe("ToolbarBase", () => {
     const heading = screen.getByRole("heading", { name: "Toolbar Title" });
     expect(heading).toBeInTheDocument();
     expect(heading.tagName).toBe("H1");
-    expect(heading).toHaveAttribute("id", "toolbar-title");
+    expect(heading.id).not.toBe("");
   });
 
   it("renders custom section aria labels when provided", () => {

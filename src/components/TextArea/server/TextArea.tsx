@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { expandClassMap, resolvePropAlias } from "@/utils/propAliases";
 import { capitalize } from "@/utils/capitalize";
@@ -42,7 +43,8 @@ export default function TextArea({
 }: ServerTextAreaProps) {
   const classMap = expandClassMap(styles);
   const resolvedTestId = testId ?? dataTestId ?? "text-area";
-  const inputId = id ?? `${resolvedTestId}-input`;
+  const generatedId = useId();
+  const inputId = id ?? `${generatedId}-input`;
   const position = resolvePropAlias(labelPosition);
   return (
     <div

@@ -50,15 +50,9 @@ const classes = {
   outline: "accordion_outline",
 };
 
-const generateUniqueId = (() => {
-  let counter = 0;
-  return () => `accordion-core-${counter++}`;
-})();
-
 const Accordion: React.FC<AccordionProps> = (props) => (
   <AccordionBase
     {...props}
-    getUniqueId={generateUniqueId}
     classMap={expandClassMap(classes)}
   />
 );

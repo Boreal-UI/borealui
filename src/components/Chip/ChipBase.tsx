@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ChipBaseProps } from "./Chip.types";
 import { combineClassNames } from "../../utils/classNames";
@@ -50,11 +50,8 @@ const ChipBase: React.FC<ChipBaseProps> = ({
 }) => {
   const [closing, setClosing] = useState(false);
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const resolvedMessageId = useMemo(
-    () => messageId ?? `${id || testId}-message`,
-    [messageId, id, testId],
-  );
+  const generatedId = useId();
+  const resolvedMessageId = messageId ?? `${id ?? generatedId}-message`;
 
   const handleClose = useCallback(() => {
     if (closeTimerRef.current !== null) return;
