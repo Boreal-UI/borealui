@@ -215,6 +215,7 @@ export const AvatarBase = forwardRef<
 
     return LinkComponent === "a" ? (
       <a
+        {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}
         ref={ref as React.Ref<HTMLAnchorElement>}
         href={disabled ? undefined : safeHref}
         className={combinedClassName}
@@ -224,12 +225,12 @@ export const AvatarBase = forwardRef<
         rel={rel}
         tabIndex={disabled ? -1 : 0}
         {...linkAria}
-        {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {content}
       </a>
     ) : (
       <LinkComponent
+        {...(rest as Record<string, unknown>)}
         ref={ref}
         href={safeHref}
         className={combinedClassName}
@@ -239,7 +240,6 @@ export const AvatarBase = forwardRef<
         target={target}
         rel={rel}
         {...linkAria}
-        {...(rest as Record<string, unknown>)}
       >
         {content}
       </LinkComponent>
@@ -248,6 +248,7 @@ export const AvatarBase = forwardRef<
 
   return (
     <button
+      {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}
       ref={ref as React.Ref<HTMLButtonElement>}
       type="button"
       className={combinedClassName}
@@ -255,7 +256,6 @@ export const AvatarBase = forwardRef<
       disabled={disabled}
       data-testid={testId ? `${testId}-main` : undefined}
       {...buttonAria}
-      {...(rest as ButtonHTMLAttributes<HTMLButtonElement>)}
     >
       {content}
     </button>

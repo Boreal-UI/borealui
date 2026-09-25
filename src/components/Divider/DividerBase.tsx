@@ -68,6 +68,7 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
 
     return (
       <ComponentTag
+        {...rest}
         ref={ref as never}
         className={combineClassNames(
           classMap.divider,
@@ -86,7 +87,6 @@ const DividerBase = forwardRef<HTMLElement, DividerBaseProps>(
         data-orientation={resolvedOrientation}
         style={computedStyle}
         data-testid={testId}
-        {...rest}
       />
     );
   },

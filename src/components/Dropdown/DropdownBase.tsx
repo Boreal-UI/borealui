@@ -15,6 +15,7 @@ import {
   IconButtonLikeRef,
 } from "./Dropdown.types";
 import { combineClassNames } from "../../utils/classNames";
+import { composeEventHandlers } from "../../utils/eventHandlers";
 import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
 import MenuIcon from "../../Icons/MenuIcon";
 import { capitalize } from "../../utils/capitalize";
@@ -76,6 +77,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   testId = dataTestId ?? "dropdown",
   IconButton,
   classMap,
+  onKeyDown,
   ...rest
 }: BaseDropdownProps): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -714,10 +716,10 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     <div
       ref={dropdownRef}
       className={combineClassNames(classMap.wrapper, className)}
-      role="presentation"
-      onKeyDown={handleKeyDown}
-      data-testid={testId}
       {...rest}
+      role="presentation"
+      onKeyDown={composeEventHandlers(onKeyDown, handleKeyDown)}
+      data-testid={testId}
     >
       <IconButton
         ref={triggerRef}

@@ -95,6 +95,13 @@ export interface ButtonProps extends Pick<
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 
   /**
+   * Keyboard event handler. For polymorphic non-native buttons, it runs before
+   * Boreal's Enter/Space activation and can cancel that behavior with
+   * `event.preventDefault()`.
+   */
+  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
+
+  /**
    * Child content to display inside the button.
    */
   children?: React.ReactNode;

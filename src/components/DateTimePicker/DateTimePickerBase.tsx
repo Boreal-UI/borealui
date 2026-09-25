@@ -184,6 +184,7 @@ const DateTimePickerBase = forwardRef<HTMLDivElement, DateTimePickerBaseProps>(
         ) : null}
 
         <div
+          {...restRoot}
           ref={ref}
           id={rootId}
           role={roleProp}
@@ -191,7 +192,6 @@ const DateTimePickerBase = forwardRef<HTMLDivElement, DateTimePickerBaseProps>(
           aria-busy={loading || undefined}
           aria-disabled={computedAriaDisabled}
           data-testid={`${testId}-root`}
-          {...restRoot}
         >
           {loading ? (
             <span

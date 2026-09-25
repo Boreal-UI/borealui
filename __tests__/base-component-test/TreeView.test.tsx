@@ -78,6 +78,40 @@ describe("TreeViewBase", () => {
     expect(onExpandedChange).toHaveBeenCalledWith(["components"]);
   });
 
+  it("runs consumer blur capture first and honors cancellation", async () => {
+    const onBlurCapture = jest.fn(
+      (event: React.FocusEvent<HTMLDivElement>) => event.preventDefault(),
+    );
+    const view = (expandedIds: string[]) => (
+      <>
+        <button type="button" data-testid="outside-tree">
+          Outside
+        </button>
+        <TreeViewBase
+          classMap={classMap}
+          items={items}
+          expandedIds={expandedIds}
+          onBlurCapture={onBlurCapture}
+        />
+      </>
+    );
+    const { rerender } = render(view(["components"]));
+    const child = screen.getByTestId("tree-view-node-button");
+    const outside = screen.getByTestId("outside-tree");
+
+    act(() => child.focus());
+    fireEvent.blur(screen.getByTestId("tree-view"), {
+      relatedTarget: outside,
+    });
+    act(() => outside.focus());
+    rerender(view([]));
+
+    expect(onBlurCapture).toHaveBeenCalled();
+    await waitFor(() =>
+      expect(screen.getByTestId("tree-view-node-components")).toHaveFocus(),
+    );
+  });
+
   it("supports keyboard expansion and selection", () => {
     const onSelectionChange = jest.fn();
     render(

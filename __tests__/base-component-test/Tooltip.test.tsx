@@ -113,6 +113,26 @@ describe("TooltipBase", () => {
     expect(trigger).not.toHaveAttribute("aria-describedby");
   });
 
+  it("lets a child prevent Boreal's focus behavior", () => {
+    const onFocus = jest.fn((event: React.FocusEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+    });
+    render(
+      <TooltipBase content="Canceled tooltip" classMap={mockStyles}>
+        <button type="button" onFocus={onFocus}>
+          Focus me
+        </button>
+      </TooltipBase>,
+    );
+
+    const trigger = screen.getByTestId("tooltip-trigger");
+    fireEvent.focus(trigger);
+
+    expect(onFocus).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId("tooltip")).toHaveAttribute("aria-hidden", "true");
+    expect(trigger).not.toHaveAttribute("aria-describedby");
+  });
+
   it("hides the tooltip when Escape is pressed while visible", () => {
     render(
       <TooltipBase content="Escape tooltip" classMap={mockStyles}>

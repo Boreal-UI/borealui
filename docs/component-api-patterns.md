@@ -240,6 +240,13 @@ at the application boundary.
 
 Components such as `Modal`, `Dropdown`, `PopOver`, `Tooltip`, `Tabs`, `Accordion`, `CommandPalette`, and `NotificationCenter` include keyboard and ARIA behavior. Prefer their public props instead of rebuilding focus or disclosure state around their internals.
 
+When a consumer event handler and Boreal behavior share an event, Boreal calls
+the consumer first. Calling `event.preventDefault()` cancels Boreal's
+corresponding default interaction. Semantic attributes derived from component
+state—such as required roles, disabled/loading state, and managed ARIA
+relationships—remain protected, while documented labels, IDs, styling hooks,
+and unclaimed native attributes remain consumer-controlled.
+
 Timed components keep their lifecycle state per mounted instance. `Chip` and `Modal` coalesce repeated close requests during their exit transitions, `ToastProvider` restarts expiry when a toast ID is replaced, and `NotificationCenter` schedules its next poll only after the previous request settles. See [Performance and Async Behavior](./performance-and-async-behavior.md) for exact timing and cleanup semantics.
 
 ```tsx

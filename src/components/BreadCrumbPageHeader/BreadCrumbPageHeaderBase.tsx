@@ -55,12 +55,12 @@ const BreadCrumbPageHeaderBase = forwardRef<
 
     return (
       <header
+        {...rest}
         ref={ref}
         className={rootClass}
         aria-busy={loading || undefined}
         aria-disabled={disabled || undefined}
         data-testid={testId}
-        {...rest}
       >
         {loading ? (
           <span

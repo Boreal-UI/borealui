@@ -386,6 +386,38 @@ describe("BaseDropdown", () => {
     expect(screen.queryByTestId("dropdown-menu")).not.toBeInTheDocument();
   });
 
+  it("runs consumer key handling before internal navigation", () => {
+    const observations: string[] = [];
+    renderDropdown({
+      onKeyDown: () => {
+        observations.push(
+          screen.getByTestId("dropdown-profile") === document.activeElement
+            ? "consumer-before-navigation"
+            : "consumer-after-navigation",
+        );
+      },
+    });
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+    fireEvent.keyDown(screen.getByTestId("dropdown"), { key: "ArrowDown" });
+
+    expect(observations).toEqual(["consumer-before-navigation"]);
+    expect(screen.getByTestId("dropdown-logout")).toHaveFocus();
+  });
+
+  it("allows consumer key handling to cancel internal navigation", () => {
+    const onKeyDown = jest.fn((event: React.KeyboardEvent<HTMLDivElement>) => {
+      event.preventDefault();
+    });
+    renderDropdown({ onKeyDown });
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+    fireEvent.keyDown(screen.getByTestId("dropdown"), { key: "ArrowDown" });
+
+    expect(onKeyDown).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId("dropdown-profile")).toHaveFocus();
+  });
+
   it("supports ArrowUp navigation wrapping from first item to last item", () => {
     renderDropdown();
 

@@ -250,6 +250,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "category": "events"
     },
     {
+      "name": "onKeyDown",
+      "type": "React.KeyboardEventHandler<HTMLElement>",
+      "description": "Keyboard event handler. For polymorphic non-native buttons, it runs before Boreal's Enter/Space activation and can cancel that behavior with `event.preventDefault()`.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
       "name": "rel",
       "type": "string",
       "description": "Optional rel attribute for link rendering. Defaults to \"noopener noreferrer\" when opening in a new tab.",

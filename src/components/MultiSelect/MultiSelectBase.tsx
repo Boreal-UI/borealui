@@ -296,6 +296,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
         ) : null}
 
         <div
+          {...rest}
           ref={(node) => {
             rootRef.current = node;
             if (typeof ref === "function") ref(node);
@@ -305,7 +306,6 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
           className={rootClass}
           aria-busy={loading || undefined}
           data-testid={`${testId}-root`}
-          {...rest}
         >
           <button
             type="button"

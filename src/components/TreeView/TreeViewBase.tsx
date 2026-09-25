@@ -9,6 +9,7 @@ import {
 } from "react";
 import { TreeViewBaseProps, TreeViewNode } from "./TreeView.types";
 import { combineClassNames } from "../../utils/classNames";
+import { composeEventHandlers } from "../../utils/eventHandlers";
 import { capitalize } from "../../utils/capitalize";
 import { ChevronDownIcon } from "../../Icons";
 import {
@@ -324,26 +325,30 @@ const TreeViewBase = forwardRef<HTMLDivElement, TreeViewBaseProps>(
       </ul>
     );
 
+    const handleRootBlurCapture = composeEventHandlers(
+      onRootBlurCapture,
+      (event: FocusEvent<HTMLDivElement>) => {
+        const nextTarget = event.relatedTarget;
+        if (
+          nextTarget instanceof Node &&
+          nextTarget !== document.body &&
+          !event.currentTarget.contains(nextTarget)
+        ) {
+          treeHadFocusRef.current = false;
+          focusedNodeIdRef.current = null;
+        }
+      },
+    );
+
     return (
       <div
+        {...rest}
         ref={ref}
         className={rootClass}
         aria-busy={loading || undefined}
         aria-disabled={disabled || undefined}
         data-testid={testId}
-        onBlurCapture={(event: FocusEvent<HTMLDivElement>) => {
-          onRootBlurCapture?.(event);
-          const nextTarget = event.relatedTarget;
-          if (
-            nextTarget instanceof Node &&
-            nextTarget !== document.body &&
-            !event.currentTarget.contains(nextTarget)
-          ) {
-            treeHadFocusRef.current = false;
-            focusedNodeIdRef.current = null;
-          }
-        }}
-        {...rest}
+        onBlurCapture={handleRootBlurCapture}
       >
         {loading ? (
           <span

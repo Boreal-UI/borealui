@@ -83,6 +83,7 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
 
   return (
     <ul
+      {...rest}
       className={outerWrapper}
       data-testid={testId}
       role={role}
@@ -90,7 +91,6 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       aria-busy={loading || undefined}
-      {...rest}
     >
       {items.map((item, index) => {
         const IconComponent = item.icon;

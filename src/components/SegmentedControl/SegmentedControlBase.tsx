@@ -251,6 +251,7 @@ const SegmentedControlBase = forwardRef<
 
         {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
         <div
+          {...restRoot}
           ref={ref}
           id={rootId}
           role={roleProp ?? "radiogroup"}
@@ -264,7 +265,6 @@ const SegmentedControlBase = forwardRef<
           tabIndex={-1}
           data-testid={`${testId}-root`}
           onKeyDown={handleKeyDown}
-          {...restRoot}
         >
           {loading ? (
             <span

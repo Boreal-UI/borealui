@@ -169,6 +169,7 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
         ) : null}
 
         <div
+          {...restRoot}
           ref={ref}
           id={rootId}
           role={roleProp}
@@ -176,7 +177,6 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
           aria-busy={loading || undefined}
           aria-disabled={computedAriaDisabled}
           data-testid={`${testId}-root`}
-          {...restRoot}
         >
           {loading ? (
             <span

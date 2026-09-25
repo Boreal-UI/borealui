@@ -148,6 +148,7 @@ const IconButtonBase = forwardRef<
     const resolvedRel = mergeSafeRel(resolvedTarget, rel);
 
     const linkProps = {
+      ...rest,
       className: combineClassNames(classNames, classMap.link),
       ref: ref as React.Ref<HTMLAnchorElement>,
       onClick: inert
@@ -158,7 +159,6 @@ const IconButtonBase = forwardRef<
       target: resolvedTarget,
       rel: resolvedRel,
       ...sharedAccessibilityProps,
-      ...rest,
       tabIndex: inert ? -1 : tabIndex,
     };
 
@@ -179,6 +179,7 @@ const IconButtonBase = forwardRef<
 
   return (
     <button
+      {...rest}
       type={type}
       disabled={inert}
       className={classNames}
@@ -186,7 +187,6 @@ const IconButtonBase = forwardRef<
       onKeyDown={onKeyDown}
       ref={ref as React.Ref<HTMLButtonElement>}
       {...sharedAccessibilityProps}
-      {...rest}
       tabIndex={tabIndex}
     >
       {iconContent}

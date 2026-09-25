@@ -1,6 +1,7 @@
 import React, { forwardRef, useMemo } from "react";
 import { ButtonBaseProps, ButtonElement } from "./Button.types";
 import { combineClassNames } from "../../utils/classNames";
+import { composeEventHandlers } from "../../utils/eventHandlers";
 import { capitalize } from "../../utils/capitalize";
 import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
 import {
@@ -62,6 +63,9 @@ const ButtonBase = forwardRef<
       testId = dataTestId ?? "button",
       classMap,
       LinkComponent = "a",
+      onKeyDown,
+      role,
+      tabIndex,
       ...rest
     },
     ref,
@@ -196,7 +200,9 @@ const ButtonBase = forwardRef<
         "aria-haspopup": ariaHasPopup,
         "aria-busy": loading ? (ariaBusy ?? true) : ariaBusy,
         "aria-disabled": disabled ? (ariaDisabled ?? true) : ariaDisabled,
-        tabIndex: disabled ? -1 : undefined,
+        role,
+        tabIndex: disabled ? -1 : tabIndex,
+        onKeyDown,
         "data-testid": testId,
       } as const;
 
@@ -251,6 +257,9 @@ const ButtonBase = forwardRef<
           aria-disabled={ariaDisabled}
           data-testid={testId}
           onClick={disabled || loading ? undefined : onClick}
+          onKeyDown={onKeyDown}
+          role={role}
+          tabIndex={tabIndex}
           {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
         >
           {content}
@@ -260,10 +269,11 @@ const ButtonBase = forwardRef<
 
     return (
       <Comp
+        {...(rest as React.ComponentPropsWithoutRef<typeof Comp>)}
         ref={ref as React.Ref<HTMLElement>}
         className={combinedClassName}
         role="button"
-        tabIndex={disabled || loading ? -1 : 0}
+        tabIndex={disabled || loading ? -1 : (tabIndex ?? 0)}
         aria-label={computedAriaLabel}
         aria-labelledby={ariaLabelledBy}
         aria-describedby={ariaDescribedBy}
@@ -276,15 +286,17 @@ const ButtonBase = forwardRef<
         aria-disabled={disabled || loading ? true : ariaDisabled}
         data-testid={testId}
         onClick={disabled || loading ? undefined : onClick}
-        onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
-          if (disabled || loading) return;
+        onKeyDown={composeEventHandlers(
+          onKeyDown,
+          (e: React.KeyboardEvent<HTMLElement>) => {
+            if (disabled || loading) return;
 
-          if (e.key === "Enter" || e.key === " ") {
-            e.preventDefault();
-            onClick?.(e as unknown as React.MouseEvent<HTMLElement>);
-          }
-        }}
-        {...(rest as React.ComponentPropsWithoutRef<typeof Comp>)}
+            if (e.key === "Enter" || e.key === " ") {
+              e.preventDefault();
+              onClick?.(e as unknown as React.MouseEvent<HTMLElement>);
+            }
+          },
+        )}
       >
         {content}
       </Comp>

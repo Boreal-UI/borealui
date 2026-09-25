@@ -166,6 +166,7 @@ const ValidationSummaryBase = forwardRef<
     return (
       <div className={containerClass} data-testid={testId}>
         <div
+          {...restRoot}
           ref={rootRef}
           id={rootId}
           className={rootClass}
@@ -177,7 +178,6 @@ const ValidationSummaryBase = forwardRef<
           aria-labelledby={computedAriaLabelledBy}
           tabIndex={tabIndex}
           data-testid={`${testId}-root`}
-          {...restRoot}
         >
           {loading ? (
             <div
