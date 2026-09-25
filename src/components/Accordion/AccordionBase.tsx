@@ -1,4 +1,10 @@
-import React, { useId, useMemo, useState, KeyboardEvent, useEffect } from "react";
+import React, {
+  useId,
+  useMemo,
+  useState,
+  KeyboardEvent,
+  useEffect,
+} from "react";
 import { AccordionProps } from "./Accordion.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -21,6 +27,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   lazyLoad = false,
   iconPosition = "right",
   disableCollapse: preventCollapse = false,
+  loading,
   asyncContent = false,
   rounding = getDefaultRounding(),
   shadow,
@@ -60,7 +67,11 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   const isExpanded = controlledOrInternalExpanded;
 
   const [hasBeenExpanded, setHasBeenExpanded] = useState(isExpanded);
-  const [isLoading, setIsLoading] = useState(asyncContent && isExpanded);
+  const [legacyLoading, setLegacyLoading] = useState(
+    loading === undefined && asyncContent && isExpanded,
+  );
+  const isLoading = loading ?? legacyLoading;
+  const isShowingLoading = isExpanded && isLoading;
 
   const baseId = id || internalId;
   const contentId = `${baseId}-content`;
@@ -75,10 +86,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
     regionAriaLabelledBy || (!regionAriaLabel ? buttonId : undefined);
 
   const regionDescribedBy =
-    [
-      regionAriaDescribedBy,
-      asyncContent && isExpanded && isLoading ? loadingId : undefined,
-    ]
+    [regionAriaDescribedBy, isShowingLoading ? loadingId : undefined]
       .filter(Boolean)
       .join(" ") || undefined;
 
@@ -112,19 +120,24 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   }, [isExpanded, hasBeenExpanded]);
 
   useEffect(() => {
+    if (loading !== undefined) {
+      setLegacyLoading(false);
+      return undefined;
+    }
+
     if (asyncContent && isExpanded) {
-      setIsLoading(true);
+      setLegacyLoading(true);
 
       const timer = window.setTimeout(() => {
-        setIsLoading(false);
+        setLegacyLoading(false);
       }, 1000);
 
       return () => window.clearTimeout(timer);
     }
 
-    setIsLoading(false);
+    setLegacyLoading(false);
     return undefined;
-  }, [asyncContent, isExpanded]);
+  }, [asyncContent, isExpanded, loading]);
 
   const renderedIcon = isExpanded
     ? (customExpandedIcon ?? "−")
@@ -246,13 +259,13 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
         aria-label={regionAriaLabel}
         aria-labelledby={regionLabelledBy}
         aria-describedby={regionDescribedBy}
-        aria-busy={asyncContent && isExpanded && isLoading ? true : undefined}
+        aria-busy={isLoading || undefined}
         className={contentClassName}
         data-state={isExpanded ? "open" : "collapsed"}
         data-testid={testId ? `${testId}-content` : undefined}
       >
         <div className={classMap.contentInner}>
-          {isExpanded && asyncContent && isLoading && (
+          {isShowingLoading && (
             <div
               id={loadingId}
               className={classMap.loading}
@@ -264,9 +277,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
             </div>
           )}
 
-          {(!lazyLoad || hasBeenExpanded) &&
-            (!asyncContent || !isLoading) &&
-            children}
+          {(!lazyLoad || hasBeenExpanded) && !isLoading && children}
         </div>
       </div>
     </div>

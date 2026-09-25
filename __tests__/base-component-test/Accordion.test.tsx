@@ -35,7 +35,6 @@ const styles = {
 };
 
 describe("AccordionBase (Jest)", () => {
-
   const renderAccordion = (props = {}) =>
     render(
       <AccordionBase
@@ -504,6 +503,168 @@ describe("AccordionBase (Jest)", () => {
     );
   });
 
+  it("keeps controlled loading active until the consumer updates it", () => {
+    jest.useFakeTimers();
+
+    const renderView = (loading: boolean) => (
+      <AccordionBase
+        title="Controlled loading"
+        classMap={styles}
+        data-testid="test"
+        defaultExpanded={true}
+        loading={loading}
+      >
+        <div>Accordion content</div>
+      </AccordionBase>
+    );
+    const { rerender } = render(renderView(true));
+    const content = screen.getByTestId("test-content");
+
+    expect(screen.getByTestId("test-loading")).toBeInTheDocument();
+    expect(content).toHaveAttribute("aria-busy", "true");
+    expect(screen.queryByText("Accordion content")).not.toBeInTheDocument();
+    expect(jest.getTimerCount()).toBe(0);
+
+    act(() => {
+      jest.advanceTimersByTime(1000);
+    });
+
+    expect(screen.getByTestId("test-loading")).toBeInTheDocument();
+    expect(screen.queryByText("Accordion content")).not.toBeInTheDocument();
+
+    rerender(renderView(false));
+
+    expect(screen.queryByTestId("test-loading")).not.toBeInTheDocument();
+    expect(content).not.toHaveAttribute("aria-busy");
+    expect(screen.getByText("Accordion content")).toBeInTheDocument();
+  });
+
+  it("lets controlled loading take precedence over legacy asyncContent", () => {
+    jest.useFakeTimers();
+
+    renderAccordion({
+      defaultExpanded: true,
+      asyncContent: true,
+      loading: false,
+    });
+
+    expect(screen.queryByTestId("test-loading")).not.toBeInTheDocument();
+    expect(screen.getByText("Accordion content")).toBeInTheDocument();
+    expect(jest.getTimerCount()).toBe(0);
+  });
+
+  it("tracks controlled expansion and loading independently", () => {
+    const renderView = (expanded: boolean, loading: boolean) => (
+      <AccordionBase
+        title="Controlled state"
+        classMap={styles}
+        data-testid="test"
+        expanded={expanded}
+        loading={loading}
+        lazyLoad={true}
+      >
+        <div>Accordion content</div>
+      </AccordionBase>
+    );
+    const { rerender } = render(renderView(false, true));
+    const content = screen.getByTestId("test-content");
+
+    expect(content).toHaveAttribute("data-state", "collapsed");
+    expect(content).toHaveAttribute("aria-busy", "true");
+    expect(screen.queryByTestId("test-loading")).not.toBeInTheDocument();
+
+    rerender(renderView(true, true));
+    expect(screen.getByTestId("test-loading")).toBeInTheDocument();
+
+    rerender(renderView(true, false));
+    expect(screen.queryByTestId("test-loading")).not.toBeInTheDocument();
+    expect(screen.getByText("Accordion content")).toBeInTheDocument();
+
+    rerender(renderView(true, true));
+    expect(screen.getByTestId("test-loading")).toBeInTheDocument();
+
+    rerender(renderView(false, false));
+    rerender(renderView(true, false));
+    expect(screen.getByText("Accordion content")).toBeInTheDocument();
+  });
+
+  it("preserves uncontrolled expansion while loading is controlled", () => {
+    const renderView = (loading: boolean) => (
+      <AccordionBase
+        title="Uncontrolled expansion"
+        classMap={styles}
+        data-testid="test"
+        loading={loading}
+      >
+        <div>Accordion content</div>
+      </AccordionBase>
+    );
+    const { rerender } = render(renderView(true));
+
+    fireEvent.click(screen.getByTestId("test-accordion-toggle"));
+    expect(screen.getByTestId("test-content")).toHaveAttribute(
+      "data-state",
+      "open",
+    );
+    expect(screen.getByTestId("test-loading")).toBeInTheDocument();
+
+    rerender(renderView(false));
+    expect(screen.getByTestId("test-content")).toHaveAttribute(
+      "data-state",
+      "open",
+    );
+    expect(screen.getByText("Accordion content")).toBeInTheDocument();
+  });
+
+  it("keeps loading state independent across accordion instances", () => {
+    jest.useFakeTimers();
+
+    render(
+      <>
+        <AccordionBase
+          title="First"
+          classMap={styles}
+          testId="first"
+          defaultExpanded={true}
+          loading={true}
+        >
+          First content
+        </AccordionBase>
+        <AccordionBase
+          title="Second"
+          classMap={styles}
+          testId="second"
+          defaultExpanded={true}
+          loading={false}
+        >
+          Second content
+        </AccordionBase>
+        <AccordionBase
+          title="Third"
+          classMap={styles}
+          testId="third"
+          defaultExpanded={true}
+          loading={true}
+        >
+          Third content
+        </AccordionBase>
+      </>,
+    );
+
+    expect(screen.getByTestId("first-loading")).toBeInTheDocument();
+    expect(screen.getByText("Second content")).toBeInTheDocument();
+    expect(screen.getByTestId("third-loading")).toBeInTheDocument();
+    expect(jest.getTimerCount()).toBe(0);
+
+    fireEvent.click(screen.getByTestId("first-accordion-toggle"));
+    expect(screen.getByTestId("first-content")).toHaveAttribute(
+      "data-state",
+      "collapsed",
+    );
+    expect(screen.getByText("Second content")).toBeInTheDocument();
+    expect(screen.getByTestId("third-loading")).toBeInTheDocument();
+  });
+
   it("renders asyncContent loader with default message and then content", () => {
     jest.useFakeTimers();
 
@@ -693,10 +854,7 @@ describe("AccordionBase (Jest)", () => {
 
   it("supports rendering without a custom data-testid prop by falling back to default", () => {
     render(
-      <AccordionBase
-        title="Fallback Test Id"
-        classMap={styles}
-      >
+      <AccordionBase title="Fallback Test Id" classMap={styles}>
         <div>Fallback content</div>
       </AccordionBase>,
     );
@@ -750,6 +908,23 @@ describe("AccordionBase (Jest)", () => {
     });
 
     expect(screen.getByTestId("test-loading")).toBeInTheDocument();
+
+    const results = await axe(container);
+    expect(results).toHaveNoViolations();
+  });
+
+  it("has no accessibility violations while controlled loading is visible", async () => {
+    const { container } = renderAccordion({
+      defaultExpanded: true,
+      loading: true,
+      loadingAriaLabel: "Fetching accordion content",
+    });
+
+    const content = screen.getByTestId("test-content");
+    const loading = screen.getByTestId("test-loading");
+
+    expect(content).toHaveAttribute("aria-busy", "true");
+    expect(content).toHaveAttribute("aria-describedby", loading.id);
 
     const results = await axe(container);
     expect(results).toHaveNoViolations();

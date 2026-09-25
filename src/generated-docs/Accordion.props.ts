@@ -38,7 +38,7 @@ export const accordionPropDocs: GeneratedComponentDoc = {
     {
       "name": "asyncContent",
       "type": "boolean",
-      "description": "If true, the accordion content is loaded asynchronously.",
+      "description": "Deprecated compatibility API that temporarily simulates loading for one second each time the accordion opens.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -154,9 +154,17 @@ export const accordionPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
+      "name": "loading",
+      "type": "boolean",
+      "description": "Whether the accordion content is currently loading. The consumer owns the request lifecycle and must update this value. Defaults to false when omitted unless deprecated `asyncContent` compatibility is active.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "loadingAriaLabel",
       "type": "string",
-      "description": "Announces loading state for assistive technologies when async content is enabled.",
+      "description": "Accessible message shown and announced while content is loading.",
       "required": false,
       "inherited": false,
       "category": "props"

@@ -240,6 +240,14 @@ at the application boundary.
 
 Components such as `Modal`, `Dropdown`, `PopOver`, `Tooltip`, `Tabs`, `Accordion`, `CommandPalette`, and `NotificationCenter` include keyboard and ARIA behavior. Prefer their public props instead of rebuilding focus or disclosure state around their internals.
 
+Accordion loading is consumer-controlled through `loading`. Consumers start and
+finish their own request lifecycle and pass the current state to each Accordion
+instance. While loading, the expanded content region is marked busy and the
+loading message replaces its children. The older `asyncContent` prop is
+deprecated and temporarily retains its one-second compatibility timer; migrate
+`asyncContent={true}` to `loading={requestPending}`. When both are supplied,
+`loading` wins.
+
 When a consumer event handler and Boreal behavior share an event, Boreal calls
 the consumer first. Calling `event.preventDefault()` cancels Boreal's
 corresponding default interaction. Semantic attributes derived from component
@@ -312,7 +320,9 @@ import { BentoBox, BentoBoxItem } from "@boreal-ui/core";
 export function DashboardGrid() {
   return (
     <BentoBox columns={4} gap="lg" minRowHeight="10rem">
-      <BentoBoxItem columnSpan={2} rowSpan={2}>Revenue</BentoBoxItem>
+      <BentoBoxItem columnSpan={2} rowSpan={2}>
+        Revenue
+      </BentoBoxItem>
       <BentoBoxItem>Alerts</BentoBoxItem>
       <BentoBoxItem columnSpan="full">Recent activity</BentoBoxItem>
     </BentoBox>
