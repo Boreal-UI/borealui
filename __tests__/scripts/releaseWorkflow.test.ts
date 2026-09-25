@@ -43,4 +43,14 @@ describe("release workflow source binding", () => {
       workflow.indexOf("npm publish ./packages/types"),
     );
   });
+
+  it("runs the canonical Cypress component suite before packaging", () => {
+    const cypressInstallIndex = workflow.indexOf("- run: npx cypress install");
+    const cypressRunIndex = workflow.indexOf("- run: npm run cypress:run");
+    const packageStageIndex = workflow.indexOf("- run: npm run stage:split-packages");
+
+    expect(cypressInstallIndex).toBeGreaterThanOrEqual(0);
+    expect(cypressRunIndex).toBeGreaterThan(cypressInstallIndex);
+    expect(packageStageIndex).toBeGreaterThan(cypressRunIndex);
+  });
 });
