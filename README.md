@@ -37,6 +37,9 @@ npm install @boreal-ui/docs
 
 `@boreal-ui/core` expects React and React DOM in the consuming app. `@boreal-ui/next` also expects Next.js. `marked` is a peer dependency used by the Markdown renderer.
 
+See the [published compatibility matrix](./docs/compatibility.md) for the
+verified React, Next.js, Node, runtime, build, and type boundaries.
+
 ## CLI Setup
 
 Use the CLI inside an existing React or Next.js project to detect the framework and package manager, install the runtime dependency, import the global stylesheet, and wire `ThemeProvider`.

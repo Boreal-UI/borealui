@@ -34,6 +34,8 @@
     "audit:dependencies": "npm run audit:dependencies:runtime && npm run audit:dependencies:all",
     "audit:dependencies:runtime": "npm audit --omit=dev --audit-level=high",
     "audit:dependencies:all": "npm audit --audit-level=critical",
+    "compat:pack": "node scripts/prepareCompatibilityPackages.cjs",
+    "compat:test": "node scripts/runCompatibility.cjs",
     "audit:security": "npm run audit:dependencies && npm run sbom",
     "audit": "npm run audit:docs && npm run audit:types && npm run audit:lint && npm run audit:styles && npm run audit:test && npm run audit:build && npm run audit:package-quality",
     "cli:check": "node --check packages/cli/src/index.js",

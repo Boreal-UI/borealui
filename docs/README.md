@@ -6,6 +6,7 @@ Start here:
 
 - [Installation and Imports](./installation-and-imports.md)
 - [Next.js Server Components](./server-components.md)
+- [Published Compatibility](./compatibility.md)
 - [CLI](./cli.md)
 - [Public API Reference](./public-api-reference.md)
 - [Styling and Theming](./styling-and-theming.md)

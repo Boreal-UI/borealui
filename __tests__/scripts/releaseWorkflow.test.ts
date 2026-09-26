@@ -53,4 +53,11 @@ describe("release workflow source binding", () => {
     expect(cypressRunIndex).toBeGreaterThan(cypressInstallIndex);
     expect(packageStageIndex).toBeGreaterThan(cypressRunIndex);
   });
+
+  it("requires compatibility validation for the immutable release commit", () => {
+    expect(workflow).toContain("checks: read");
+    expect(workflow).toContain("- name: Require published compatibility validation");
+    expect(workflow).toContain('select(.name == "Published compatibility")');
+    expect(workflow).toContain("commits/${VERIFIED_RELEASE_COMMIT}/check-runs");
+  });
 });

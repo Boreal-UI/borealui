@@ -33,4 +33,15 @@ describe("CI Cypress component-test gate", () => {
     expect(cypressJob).toContain("path: cypress/screenshots");
     expect(cypressJob).toContain("if-no-files-found: ignore");
   });
+
+  it("enforces the packed consumer compatibility matrix", () => {
+    expect(workflow).toContain("name: Compatibility package artifacts");
+    expect(workflow).toContain("npm run compat:pack");
+    expect(workflow).toContain("fixture: core-react-18");
+    expect(workflow).toContain("fixture: next-13");
+    expect(workflow).toContain("fixture: next-16-node-22");
+    expect(workflow).toContain("fixture: cli-node-18");
+    expect(workflow).toContain("name: Published compatibility");
+    expect(workflow).toContain("npm run compat:test");
+  });
 });

@@ -13,6 +13,9 @@ import "@boreal-ui/next/globals.css";
 
 Use this package when you want the Next.js wrappers and `next/link`, `next/image`, and app router compatibility.
 
+Verified React, Next.js, and Node combinations are documented in the
+[published compatibility matrix](https://github.com/DaveC6662/borealui/blob/main/docs/compatibility.md).
+
 Generated prop metadata is available separately from the optional
 `@boreal-ui/docs` package.
 
