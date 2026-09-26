@@ -1,7 +1,10 @@
 import { combineClassNames } from "@/utils/classNames";
 import { expandClassMap } from "@/utils/propAliases";
 import { capitalize } from "@/utils/capitalize";
-import { mergeSafeRel, sanitizeNavigationHref } from "@/utils/navigationSecurity";
+import {
+  mergeSafeRel,
+  sanitizeNavigationHref,
+} from "@/utils/navigationSecurity";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -49,7 +52,7 @@ export default function Badge({
   );
   const content = (
     <>
-      {Icon ? <Icon className={classMap.badge_icon} aria-hidden /> : null}
+      {Icon ? <Icon className={classMap.icon} aria-hidden /> : null}
       {children}
     </>
   );

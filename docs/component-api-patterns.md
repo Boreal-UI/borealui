@@ -248,6 +248,18 @@ deprecated and temporarily retains its one-second compatibility timer; migrate
 `asyncContent={true}` to `loading={requestPending}`. When both are supplied,
 `loading` wins.
 
+## Core and Next styling parity
+
+Core global SCSS and Next CSS Modules may use different selectors and source
+structure, but they must expose the same styling semantics to shared base
+components. Run `npm run audit:styles` to lint styles and verify every paired
+family's required `classMap` keys, variants, sizes, compiled SCSS classes,
+accessibility features, and CSS-variable usage.
+
+Intentional differences belong in `scripts/styleParityExceptions.cjs` as a
+narrow component/key/surface entry with a reason. Do not suppress a whole
+component merely because its Core and Next SCSS are not textually identical.
+
 When a consumer event handler and Boreal behavior share an event, Boreal calls
 the consumer first. Calling `event.preventDefault()` cancels Boreal's
 corresponding default interaction. Semantic attributes derived from component

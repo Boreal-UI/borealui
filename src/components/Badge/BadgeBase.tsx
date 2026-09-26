@@ -2,7 +2,10 @@ import React, { useMemo, MouseEvent } from "react";
 import { BadgeBaseProps } from "./Badge.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
-import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
+import {
+  mergeSafeRel,
+  sanitizeNavigationHref,
+} from "../../utils/navigationSecurity";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -101,7 +104,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
     <>
       {Icon && (
         <Icon
-          className={classMap.badge_icon}
+          className={classMap.icon}
           aria-hidden="true"
           focusable="false"
           data-testid={testId ? `${testId}-icon` : undefined}

@@ -13,7 +13,7 @@
     "audit:types": "tsc --noEmit && npm run audit:types:cypress",
     "audit:types:cypress": "tsc -p cypress/tsconfig.json --noEmit",
     "audit:lint": "npm run lint",
-    "audit:styles": "stylelint \"src/**/*.{scss,css}\"",
+    "audit:styles": "stylelint \"src/**/*.{scss,css}\" && npm run check:sync",
     "audit:docs": "node scripts/generate-component-docs.cjs --check",
     "audit:style-sidecars": "node scripts/patchStyleSidecars.cjs --check",
     "audit:root-entrypoints": "node scripts/patchRootEntrypoints.cjs --check",

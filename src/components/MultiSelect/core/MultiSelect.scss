@@ -267,6 +267,11 @@
     min-width: 0;
   }
 
+  .multiSelect_optionLabel {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
   .multiSelect_description {
     opacity: 0.72;
     font-size: var(--font-size-body-xs);

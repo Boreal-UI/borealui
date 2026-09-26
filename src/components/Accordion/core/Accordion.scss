@@ -327,6 +327,12 @@
     opacity: 0.5;
   }
 
+  .accordion_loading {
+    width: 100%;
+    color: inherit;
+    font: inherit;
+  }
+
   .accordion_title {
     min-width: 0;
     max-width: 100%;

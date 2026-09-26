@@ -7,8 +7,8 @@ import { ButtonElement, ButtonProps } from "../Button.types";
 const classes = {
   button: "button",
   icon: "button_icon",
-  iconLeft: "button_icon_left",
-  iconRight: "button_icon_right",
+  iconLeft: "button_button_icon_left",
+  iconRight: "button_button_icon_right",
   buttonIcon: "button_button_icon",
   buttonLabel: "button_label",
   loader: "button_loader",

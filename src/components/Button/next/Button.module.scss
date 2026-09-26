@@ -160,6 +160,15 @@
     line-height: 1em;
   }
 
+  .icon {
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .link {
+    text-decoration: none;
+  }
+
   .button.iconLeft {
     flex-direction: row;
 

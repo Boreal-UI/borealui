@@ -152,6 +152,15 @@
       align-items: center;
     }
 
+    &_icon {
+      display: block;
+      flex-shrink: 0;
+    }
+
+    &_link {
+      text-decoration: none;
+    }
+
     &_button_icon_left {
       flex-direction: row;
 
