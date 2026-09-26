@@ -8,6 +8,7 @@ import { ChipGroupProps, ChipGroupRef } from "../ChipGroup.types";
 const classMap = {
   container: "chip_group",
   list: "chip_group_list",
+  chip: "chip",
   topCenter: "chip_group_topCenter",
   bottomCenter: "chip_group_bottomCenter",
   topLeft: "chip_group_topLeft",

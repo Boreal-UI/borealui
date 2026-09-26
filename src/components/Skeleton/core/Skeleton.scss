@@ -35,8 +35,11 @@
         var(--skeleton-sheen) 50%,
         transparent 100%
       );
-      animation: skeleton-loading var(--skeleton-duration) infinite ease-in-out;
     }
+  }
+
+  .skeleton_animated::after {
+    animation: skeleton-loading var(--skeleton-duration) infinite ease-in-out;
   }
 
   @each $key, $value in theme.$rounding {

@@ -22,6 +22,7 @@ const classes = {
   error: "toast_error",
   warning: "toast_warning",
   info: "toast_info",
+  disabled: "toast_disabled",
   shadowNone: "toast_shadow-None",
   shadowLight: "toast_shadow-Light",
   shadowMedium: "toast_shadow-Medium",

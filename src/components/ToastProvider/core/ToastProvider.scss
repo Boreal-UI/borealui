@@ -161,6 +161,11 @@
     }
   }
 
+  .toast_disabled {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .toast_viewport,
     .toast_viewport * {

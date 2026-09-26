@@ -157,6 +157,28 @@
         margin-top: var(--spacing-sm);
       }
     }
+
+    &_helper_text,
+    &_error_text {
+      margin: 0;
+      font-size: var(--font-size-caption);
+      line-height: var(--line-height-body);
+    }
+
+    &_helper_text {
+      color: var(--text-color);
+      opacity: 0.8;
+    }
+
+    &_error_text {
+      color: var(--error-color);
+    }
+
+    &_invalid {
+      .color_picker_swatch {
+        outline-color: var(--error-color);
+      }
+    }
   }
 
   .color_picker_square {

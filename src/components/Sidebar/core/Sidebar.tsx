@@ -39,6 +39,7 @@ const classes = {
   info: "sidebar_info",
   error: "sidebar_error",
   warning: "sidebar_warning",
+  disabled: "sidebar_disabled",
 
   clear: "sidebar_clear",
 

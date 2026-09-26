@@ -20,6 +20,7 @@ const classes = {
   info: "rating_info",
   error: "rating_error",
   warning: "rating_warning",
+  disabled: "rating_disabled",
 
   clear: "rating_clear",
 

@@ -21,6 +21,7 @@ const classes = {
   info: "lineChart_info",
   warning: "lineChart_warning",
   error: "lineChart_error",
+  disabled: "lineChart_disabled",
   loading: "lineChart_loading",
 };
 

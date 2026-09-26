@@ -53,6 +53,12 @@
   padding: var(--spacing-sm) var(--spacing-md);
 }
 
+.confirm,
+.cancel {
+  min-width: 0;
+  flex: 0 1 auto;
+}
+
 .close {
   flex-shrink: 0;
   margin: 0.5rem;

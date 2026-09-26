@@ -14,6 +14,7 @@ const classes = {
   nodeDisabled: "treeView_nodeDisabled",
   disclosure: "treeView_disclosure",
   icon: "treeView_icon",
+  label: "treeView_label",
   content: "treeView_content",
   loader: "treeView_loader",
 

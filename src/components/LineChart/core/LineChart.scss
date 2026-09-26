@@ -1,4 +1,6 @@
 @use "../../../styles/_animations";
+@use "../../../styles/theme" as theme;
+@use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 
@@ -99,6 +101,23 @@
   .lineChart_loading,
   .loading {
     cursor: progress;
+  }
+
+  @each $name, $values in theme.$themes {
+    .lineChart_#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .lineChart_#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  .lineChart_disabled {
+    color: var(--disabled-color);
+    opacity: 0.6;
   }
 
   @media (max-width: 420px) {

@@ -65,6 +65,17 @@
       overflow-x: auto;
     }
 
+    &_clear_all {
+      flex-shrink: 0;
+    }
+
+    &_empty {
+      margin: 0;
+      padding: var(--spacing-sm);
+      color: var(--text-color);
+      text-align: center;
+    }
+
     &_list {
       display: flex;
       width: fit-content;
@@ -206,6 +217,10 @@
         border-color: $color;
       }
     }
+  }
+
+  .notification_center_general {
+    border-color: var(--border-color);
   }
 
   @each $key, $value in theme.$rounding {

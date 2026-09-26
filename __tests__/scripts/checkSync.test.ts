@@ -75,6 +75,18 @@ describe("Core/Next style semantic parity", () => {
     expect(report.families).toHaveLength(1);
   });
 
+  it("isolates each styled family from sibling base components", () => {
+    const root = createFixture();
+    writeFileSync(
+      path.join(root, "src", "components", "Fixture", "SiblingBase.tsx"),
+      "export const SiblingBase = ({ classMap }: { classMap: Record<string, string> }) => <div className={classMap.siblingOnly} />;\n",
+    );
+
+    const report = analyze(root);
+    expect(report.errors).toEqual([]);
+    expect(report.families[0]?.requiredKeys).not.toContain("siblingOnly");
+  });
+
   it("fails when Core omits a required key", () => {
     const root = createFixture({
       coreKeys: { root: "fixture", disabled: "fixture_disabled" },
@@ -125,6 +137,31 @@ describe("Core/Next style semantic parity", () => {
     expect(analyze(root).warnings).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ kind: "dead-key", key: "stale" }),
+      ]),
+    );
+  });
+
+  it("recognizes styling keys consumed by the shared shadow helper", () => {
+    const root = createFixture({
+      baseSource: `export const FixtureBase = ({ classMap }: { classMap: Record<string, string> }) => <div className={getShadowClassName(classMap, "primary", "light")} />;\n`,
+      coreKeys: {
+        root: "fixture",
+        disabled: "fixture_disabled",
+        loading: "fixture_loading",
+        shadowLight: "fixture_shadowLight",
+      },
+      nextKeys: ["root", "disabled", "loading", "shadowLight"],
+      coreClasses: [
+        "fixture",
+        "fixture_disabled",
+        "fixture_loading",
+        "fixture_shadowLight",
+      ],
+    });
+
+    expect(analyze(root).warnings).not.toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ kind: "dead-key", key: "shadowLight" }),
       ]),
     );
   });

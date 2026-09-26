@@ -48,6 +48,7 @@ const classMap = {
   truncate: "typography_truncate",
   noWrap: "typography_no-wrap",
   glass: "typography_glass",
+  outline: "typography_outline",
 };
 
 export default function Typography(props: TypographyProps): JSX.Element {

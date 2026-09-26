@@ -54,6 +54,7 @@ const classes = {
   info: "data_table_info",
   error: "data_table_error",
   warning: "data_table_warning",
+  disabled: "data_table_disabled",
 
   clear: "data_table_clear",
 

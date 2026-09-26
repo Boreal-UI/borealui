@@ -58,6 +58,12 @@
     padding: var(--spacing-sm) var(--spacing-md);
   }
 
+  .message_popup_confirm,
+  .message_popup_cancel {
+    min-width: 0;
+    flex: 0 1 auto;
+  }
+
   .message_popup_close {
     flex-shrink: 0;
     margin: 0.5rem;

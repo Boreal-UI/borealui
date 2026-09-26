@@ -62,7 +62,7 @@
   }
 
   .controls,
-  .buttons {
+  .buttonWrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -80,7 +80,7 @@
     }
   }
 
-  .buttons {
+  .buttonWrapper {
     flex-wrap: wrap;
     gap: $small-gap;
 
@@ -117,6 +117,23 @@
 
   .active {
     font-weight: var(--font-weight-bold);
+  }
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  .disabled {
+    color: var(--disabled-color);
+    opacity: 0.6;
   }
 
   @each $size, $values in $sizes {

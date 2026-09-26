@@ -126,6 +126,23 @@
     }
   }
 
+  @each $name, $values in theme.$themes {
+    .pagination_#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .pagination_#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  .pagination_disabled {
+    color: var(--disabled-color);
+    opacity: 0.6;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .pagination,
     .pagination * {

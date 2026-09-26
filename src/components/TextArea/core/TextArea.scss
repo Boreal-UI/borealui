@@ -43,6 +43,34 @@
     align-items: center;
   }
 
+  .textArea_helperText,
+  .textArea_errorMessage {
+    max-width: 100%;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+    overflow-wrap: anywhere;
+  }
+
+  .textArea_helperText {
+    color: var(--text-color-secondary);
+  }
+
+  .textArea_errorMessage {
+    color: var(--error-color);
+  }
+
+  .textArea_customResizeHandle {
+    align-self: flex-end;
+    flex: 0 0 auto;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 2px solid currentcolor;
+    border-bottom: 2px solid currentcolor;
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
   .textArea {
     display: inline-flex;
     justify-content: space-between;

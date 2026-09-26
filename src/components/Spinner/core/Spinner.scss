@@ -52,7 +52,6 @@
     animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
     transition: transform var(--transition-default);
 
-
     @include bp.down(xs) {
       width: 40px;
       height: 40px;
@@ -140,6 +139,11 @@
         font-size: var(--font-size-body-sm);
       }
     }
+  }
+
+  .spinner_disabled {
+    border-top-color: var(--disabled-color);
+    opacity: 0.55;
   }
 
   @media (prefers-reduced-motion: reduce) {

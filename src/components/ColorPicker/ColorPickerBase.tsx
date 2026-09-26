@@ -80,7 +80,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
         {label}
       </legend>
 
-      <div className={classMap.color_picker_grid} role="radiogroup">
+      <div className={classMap.grid} role="radiogroup">
         {colors.map((color, i) => {
           const id = `${generatedId}-color-${i}`;
           const optionLabelId = `${id}-label`;
@@ -135,7 +135,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
       {helperText && (
         <div
           id={helperTextId}
-          className={classMap.helper_text}
+          className={classMap.helperText}
           data-testid={`${testId}-helper-text`}
         >
           {helperText}
@@ -145,7 +145,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
       {invalid && errorMessage && (
         <div
           id={errorTextId}
-          className={classMap.error_text}
+          className={classMap.errorText}
           data-testid={`${testId}-errorMessage-text`}
           aria-live="polite"
         >

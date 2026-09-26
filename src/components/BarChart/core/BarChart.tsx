@@ -20,6 +20,7 @@ const classes = {
   info: "barChart_info",
   warning: "barChart_warning",
   error: "barChart_error",
+  disabled: "barChart_disabled",
   loading: "barChart_loading",
 };
 

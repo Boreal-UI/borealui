@@ -316,6 +316,11 @@
     }
   }
 
+  .dropdown_disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .dropdown_menu,
     .dropdown_item {

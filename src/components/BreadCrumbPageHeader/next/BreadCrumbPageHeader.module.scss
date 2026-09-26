@@ -60,6 +60,16 @@
     transition: var(--transition-default);
   }
 
+  .breadcrumbs {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .content {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
   .bodyContent {
     min-width: 0;
     max-width: 100%;

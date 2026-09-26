@@ -22,6 +22,7 @@ const classes = {
   info: "sparkline_info",
   warning: "sparkline_warning",
   error: "sparkline_error",
+  disabled: "sparkline_disabled",
   loading: "sparkline_loading",
 };
 

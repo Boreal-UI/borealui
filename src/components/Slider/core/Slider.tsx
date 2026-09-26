@@ -34,6 +34,7 @@ const coreStyles = {
   info: "slider_info",
   error: "slider_error",
   warning: "slider_warning",
+  disabled: "slider_disabled",
 
   clear: "slider_clear",
 

@@ -51,12 +51,22 @@
       padding: var(--spacing-xs) var(--spacing-sm);
     }
 
+    &:focus-within {
+      border-color: var(--focus-outline-color, var(--primary-color));
+    }
+
     &_input_wrapper {
       list-style: none;
 
       li {
         list-style: none;
       }
+    }
+
+    &_input {
+      flex: 1 1 8rem;
+      min-width: 0;
+      max-width: 100%;
     }
 
     &_tag_container {
@@ -130,6 +140,20 @@
         width: 0.75em;
         height: 0.75em;
       }
+    }
+
+    &_remove_button_icon {
+      display: block;
+      width: 0.75em;
+      height: 0.75em;
+      line-height: 1;
+    }
+
+    &_disabled {
+      color: var(--disabled-color);
+      cursor: not-allowed;
+      opacity: 0.6;
+      pointer-events: none;
     }
 
     &_tag {

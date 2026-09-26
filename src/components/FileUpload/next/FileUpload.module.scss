@@ -46,6 +46,12 @@
       outline-offset: 3px;
     }
 
+    &.dragging {
+      background-color: var(--background-color-lighter);
+      border-color: var(--focus-outline-color, var(--primary-color));
+      border-style: solid;
+    }
+
     &.disabled,
     &[aria-disabled="true"] {
       background-color: var(--background-color-light);
@@ -64,6 +70,10 @@
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    .fileInput {
+      max-width: 100%;
     }
 
     .uploadControls {
@@ -173,6 +183,11 @@
 
     .rejectedItem {
       margin-bottom: 2px;
+    }
+
+    .rejectedReason {
+      font-size: var(--font-size-caption);
+      opacity: 0.85;
     }
   }
 

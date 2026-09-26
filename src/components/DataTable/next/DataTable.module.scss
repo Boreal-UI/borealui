@@ -5,6 +5,21 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .wrapper.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .editableCell {
+    cursor: text;
+  }
+
+  .paginationStatus {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
   .wrapper {
     --data-table-min-width: 600px;
 

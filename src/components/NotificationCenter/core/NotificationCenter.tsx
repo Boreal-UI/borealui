@@ -18,6 +18,7 @@ const classes = {
   timestamp: "notification_center_timestamp",
   close: "notification_center_close",
   clearAll: "notification_center_clear_all",
+  empty: "notification_center_empty",
 
   general: "notification_center_general",
   success: "notification_center_success",

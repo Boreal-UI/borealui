@@ -213,6 +213,31 @@
     }
   }
 
+  .disabled {
+    opacity: 0.55;
+    filter: grayscale(0.35);
+  }
+
+  .state_success {
+    color: var(--success-color);
+  }
+
+  .state_info {
+    color: var(--info-color);
+  }
+
+  .state_error {
+    color: var(--error-color);
+  }
+
+  .state_warning {
+    color: var(--warning-color);
+  }
+
+  .state_disabled {
+    color: var(--disabled-color);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .circular_progress,
     .circular_progress * {

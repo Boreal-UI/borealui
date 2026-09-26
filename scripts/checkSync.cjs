@@ -173,6 +173,7 @@ function extractCoreClassMap(sourceFiles) {
 
 function extractClassMapUsage(sourceFiles) {
   const requiredKeys = new Set();
+  const helperConsumedKeyPrefixes = new Set();
   let hasUnknownDynamicAccess = false;
 
   for (const sourceFile of sourceFiles) {
@@ -211,6 +212,16 @@ function extractClassMapUsage(sourceFiles) {
         hasUnknownDynamicAccess = true;
       }
     }
+
+    for (const call of sourceFile.getDescendantsOfKind(
+      SyntaxKind.CallExpression,
+    )) {
+      if (call.getExpression().getText() !== "getShadowClassName") continue;
+      const [classMapArgument] = call.getArguments();
+      if (classMapArgument?.getText() === "classMap") {
+        helperConsumedKeyPrefixes.add("shadow");
+      }
+    }
   }
 
   for (const [alias, canonical] of classAliases) {
@@ -219,7 +230,7 @@ function extractClassMapUsage(sourceFiles) {
     }
   }
 
-  return { requiredKeys, hasUnknownDynamicAccess };
+  return { requiredKeys, hasUnknownDynamicAccess, helperConsumedKeyPrefixes };
 }
 
 function compileClassNames(stylePath, rootDir) {
@@ -256,7 +267,12 @@ function sourceFeatures(stylePath) {
 function familySourcePaths(family) {
   const baseSources = fs
     .readdirSync(family.familyDir, { withFileTypes: true })
-    .filter((entry) => entry.isFile() && /Base\.(ts|tsx)$/.test(entry.name))
+    .filter(
+      (entry) =>
+        entry.isFile() &&
+        entry.name.toLowerCase() ===
+          `${family.component}Base.tsx`.toLowerCase(),
+    )
     .map((entry) => path.join(family.familyDir, entry.name));
   const sourcesIn = (directory) =>
     fs.existsSync(directory)
@@ -379,9 +395,8 @@ function analyzeFamily(family, options) {
   const sourceFiles = (paths) =>
     paths.map((file) => projectFiles.get(path.resolve(file))).filter(Boolean);
   const coreMap = extractCoreClassMap(sourceFiles(coreSources));
-  const { requiredKeys, hasUnknownDynamicAccess } = extractClassMapUsage(
-    sourceFiles(baseSources),
-  );
+  const { requiredKeys, hasUnknownDynamicAccess, helperConsumedKeyPrefixes } =
+    extractClassMapUsage(sourceFiles(baseSources));
   const coreClasses = compileClassNames(family.coreStylePath, rootDir);
   const nextClasses = compileClassNames(family.nextStylePath, rootDir);
   const reported = new Set();
@@ -451,6 +466,11 @@ function analyzeFamily(family, options) {
 
   if (!hasUnknownDynamicAccess) {
     for (const key of sorted(coreMap.keys())) {
+      if (
+        [...helperConsumedKeyPrefixes].some((prefix) => key.startsWith(prefix))
+      ) {
+        continue;
+      }
       if (!usedCoreKeys.has(key)) {
         report(
           makeDiagnostic(

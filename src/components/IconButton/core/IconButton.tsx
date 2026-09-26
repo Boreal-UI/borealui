@@ -7,6 +7,7 @@ import { forwardRef } from "react";
 const classes = {
   iconButton: "icon_button",
   buttonLabel: "icon_button_button_label",
+  link: "icon_button_link",
   loader: "icon_button_loader",
 
   disabled: "icon_button_disabled",

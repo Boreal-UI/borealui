@@ -142,6 +142,11 @@
     }
   }
 
+  .center {
+    align-items: center;
+    text-align: center;
+  }
+
   @each $k, $v in theme.$rounding {
     .round#{$k} {
       border-radius: $v;
@@ -225,6 +230,11 @@
     box-shadow: none;
   }
 
+  .disabled {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
   .glass {
     @include mixins.glass-surface(
       var(--metric-box-glass-bg, var(--glass-background)),
@@ -306,24 +316,44 @@
     ),
   );
 
-  @each $size, $vals in $sizes {
-    .#{$size} {
-      .icon {
-        font-size: map.get($vals, icon);
-      }
+  @mixin metric-size($size) {
+    $values: map.get($sizes, $size);
 
-      .title {
-        font-size: map.get($vals, title);
-      }
-
-      .value {
-        font-size: map.get($vals, value);
-      }
-
-      .subtext {
-        font-size: map.get($vals, subtext);
-      }
+    .icon {
+      font-size: map.get($values, icon-size);
     }
+
+    .title {
+      font-size: map.get($values, title-size);
+    }
+
+    .value {
+      font-size: map.get($values, value-size);
+    }
+
+    .subtext {
+      font-size: map.get($values, subtext-size);
+    }
+  }
+
+  .xs {
+    @include metric-size("xs");
+  }
+
+  .small {
+    @include metric-size("small");
+  }
+
+  .medium {
+    @include metric-size("medium");
+  }
+
+  .large {
+    @include metric-size("large");
+  }
+
+  .xl {
+    @include metric-size("xl");
   }
 
   @media (prefers-reduced-motion: reduce) {

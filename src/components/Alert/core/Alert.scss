@@ -5,6 +5,11 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .alert_disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
   .alert {
     display: flex;
     align-items: flex-start;

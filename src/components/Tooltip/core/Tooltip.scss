@@ -110,6 +110,16 @@
     }
   }
 
+  .tooltip_triggerWrapper {
+    display: inline-flex;
+    max-width: 100%;
+  }
+
+  .tooltip_disabled {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
   .tooltip_visible {
     opacity: 1;
     visibility: visible;

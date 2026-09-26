@@ -29,6 +29,7 @@ const classes = {
   info: "progress_info",
   error: "progress_error",
   warning: "progress_warning",
+  disabled: "progress_disabled",
 
   clear: "progress_clear",
 

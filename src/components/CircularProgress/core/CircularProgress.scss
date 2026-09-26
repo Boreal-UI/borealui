@@ -215,6 +215,31 @@
     }
   }
 
+  .circular_progress_disabled {
+    opacity: 0.55;
+    filter: grayscale(0.35);
+  }
+
+  .circular_progress_state_success {
+    color: var(--success-color);
+  }
+
+  .circular_progress_state_info {
+    color: var(--info-color);
+  }
+
+  .circular_progress_state_error {
+    color: var(--error-color);
+  }
+
+  .circular_progress_state_warning {
+    color: var(--warning-color);
+  }
+
+  .circular_progress_state_disabled {
+    color: var(--disabled-color);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .circular_progress,
     .circular_progress * {

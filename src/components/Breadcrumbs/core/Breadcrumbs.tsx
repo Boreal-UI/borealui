@@ -44,6 +44,7 @@ const classes = {
   item_active: "breadcrumbs_item_active",
   ellipsis: "breadcrumbs_ellipsis",
   link: "breadcrumbs_link",
+  link_disabled: "breadcrumbs_link_disabled",
   link_label: "breadcrumbs_link_label",
   current: "breadcrumbs_current",
   separator: "breadcrumbs_separator",

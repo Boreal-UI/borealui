@@ -52,6 +52,10 @@
     }
   }
 
+  .vertical {
+    flex-direction: column;
+  }
+
   .item {
     box-sizing: border-box;
     position: relative;
@@ -186,6 +190,13 @@
       width: 9px;
       height: 9px;
     }
+  }
+
+  .icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
   }
 
   .content {
@@ -337,6 +348,10 @@
   }
 
   .loading {
+    cursor: progress;
+  }
+
+  .loadingItem {
     cursor: progress;
   }
 

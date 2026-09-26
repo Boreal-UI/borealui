@@ -1,4 +1,6 @@
 @use "../../../styles/_animations";
+@use "../../../styles/theme" as theme;
+@use "sass:map";
 
 @layer boreal-ui.components {
   .root,
@@ -28,6 +30,9 @@
   .vertical .list,
   .vertical .list {
     flex-direction: column;
+  }
+  .horizontal .list {
+    flex-direction: row;
   }
   .item,
   .item {
@@ -68,5 +73,22 @@
   .loading,
   .loading {
     cursor: progress;
+  }
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  .disabled {
+    color: var(--disabled-color);
+    opacity: 0.6;
   }
 }

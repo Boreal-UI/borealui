@@ -329,6 +329,11 @@ $drawer-placements: (
   }
 }
 
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .overlay,
   .panel,

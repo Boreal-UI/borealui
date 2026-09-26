@@ -1,4 +1,6 @@
 @use "../../../styles/_animations";
+@use "../../../styles/theme" as theme;
+@use "sass:map";
 
 @layer boreal-ui.components {
   .legend,
@@ -28,6 +30,10 @@
   .legend_vertical .legend_list,
   .vertical .list {
     flex-direction: column;
+  }
+  .legend_horizontal .legend_list,
+  .horizontal .list {
+    flex-direction: row;
   }
   .legend_item,
   .item {
@@ -68,5 +74,22 @@
   .legend_loading,
   .loading {
     cursor: progress;
+  }
+
+  @each $name, $values in theme.$themes {
+    .legend_#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .legend_#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  .legend_disabled {
+    color: var(--disabled-color);
+    opacity: 0.6;
   }
 }

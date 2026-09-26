@@ -112,6 +112,16 @@
     }
   }
 
+  .triggerWrapper {
+    display: inline-flex;
+    max-width: 100%;
+  }
+
+  .disabled {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
   .visible {
     opacity: 1;
     visibility: visible;
