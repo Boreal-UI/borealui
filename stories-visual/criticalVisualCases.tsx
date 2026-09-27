@@ -1,3 +1,4 @@
+import { useState } from "react";
 import ThemeProvider from "../src/context/ThemeContext";
 import * as Core from "../src/index.core";
 import * as Next from "../src/index.next";
@@ -21,6 +22,64 @@ import {
 } from "../visual-regression/criticalVisualMatrix";
 
 const implementations = { core: Core, next: Next } as const;
+
+const TransientSurfaceVisual = ({ Components }: { Components: typeof Core }) => {
+  const [showChip, setShowChip] = useState(false);
+  const { addToast } = Components.useToast();
+
+  return (
+    <>
+      <Components.ChipGroup
+        chips={[
+          {
+            id: "visual-group-chip",
+            message: "Background notification",
+            visible: true,
+            autoClose: false,
+          },
+        ]}
+      />
+      <Components.NotificationCenter
+        notifications={[
+          { id: "visual-notification", message: "Background activity" },
+        ]}
+        onRemove={() => undefined}
+      />
+      <Components.ScrollToTop offset={-1} />
+      <Components.Modal
+        open
+        title="Review notification policy"
+        testId="visual-transient-modal"
+        onClose={() => undefined}
+      >
+        <div>
+          <p>Application notifications and utilities remain below this modal.</p>
+          <Components.Button
+            testId="visual-show-transients"
+            onClick={() => {
+              setShowChip(true);
+              addToast({
+                id: "visual-toast",
+                message: "Background toast",
+                duration: 0,
+              });
+            }}
+          >
+            Exercise background surfaces
+          </Components.Button>
+        </div>
+      </Components.Modal>
+      {showChip ? (
+        <Components.Chip
+          visible
+          message="Late portaled notification"
+          autoClose={false}
+          testId="visual-late-chip"
+        />
+      ) : null}
+    </>
+  );
+};
 
 type DataRow = {
   id: string;
@@ -467,6 +526,13 @@ const renderCaseBody = (
           </div>
         </Components.Modal>
       );
+
+    case "overlay-modal-transients":
+      return (
+        <Components.ToastProvider placement="topCenter">
+          <TransientSurfaceVisual Components={Components as typeof Core} />
+        </Components.ToastProvider>
+      );
   }
 };
 
@@ -609,6 +675,14 @@ export const runVisualPlay = async (
     document
       .querySelector<HTMLButtonElement>(
         "[data-testid='visual-overlay-dropdown-trigger']",
+      )
+      ?.click();
+  }
+
+  if (id === "overlay-modal-transients") {
+    document
+      .querySelector<HTMLButtonElement>(
+        "[data-testid='visual-show-transients']",
       )
       ?.click();
   }

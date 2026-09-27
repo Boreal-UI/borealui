@@ -43,3 +43,4 @@ export const OverlayModalStack = createStory("overlay-modal-stack");
 export const OverlayModalPopup = createStory("overlay-modal-popup");
 export const OverlayDrawerModal = createStory("overlay-drawer-modal");
 export const OverlayModalDropdown = createStory("overlay-modal-dropdown");
+export const OverlayModalTransients = createStory("overlay-modal-transients");

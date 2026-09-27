@@ -16,7 +16,7 @@
 
   .chip {
     position: relative;
-    z-index: 9999;
+    z-index: var(--z-index-notification, 1100);
     display: flex;
     align-items: center;
     justify-content: space-between;

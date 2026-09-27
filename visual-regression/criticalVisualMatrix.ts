@@ -32,7 +32,8 @@ export type CriticalVisualCaseId =
   | "overlay-modal-stack"
   | "overlay-modal-popup"
   | "overlay-drawer-modal"
-  | "overlay-modal-dropdown";
+  | "overlay-modal-dropdown"
+  | "overlay-modal-transients";
 
 type CriticalVisualCase = {
   id: CriticalVisualCaseId;
@@ -266,6 +267,23 @@ export const criticalVisualMatrix: CriticalVisualCase[] = [
     theme: "light",
     viewports: ["desktop"],
     storyIds: storyIds("overlay-modal-dropdown"),
+  },
+  {
+    id: "overlay-modal-transients",
+    exportName: "OverlayModalTransients",
+    category: "overlay layers",
+    components: [
+      "Modal",
+      "Chip",
+      "ChipGroup",
+      "ToastProvider",
+      "NotificationCenter",
+      "ScrollToTop",
+    ],
+    states: ["modal-active", "background-isolated", "late-portal"],
+    theme: "light",
+    viewports: ["desktop"],
+    storyIds: storyIds("overlay-modal-transients"),
   },
 ];
 
