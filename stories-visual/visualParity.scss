@@ -46,6 +46,13 @@
   place-items: center;
 }
 
+.visualParityPopOverEdge {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 [data-visual-case="navigation-narrow"] {
   padding-inline-start: 7rem;
 }

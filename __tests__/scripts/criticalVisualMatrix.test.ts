@@ -66,8 +66,8 @@ describe("critical visual regression matrix", () => {
       criticalVisualMatrix.flatMap((entry) => entry.components),
     );
 
-    expect(criticalVisualMatrix).toHaveLength(15);
+    expect(criticalVisualMatrix).toHaveLength(16);
     expect(components.size).toBe(18);
-    expect(snapshotCount).toBe(38);
+    expect(snapshotCount).toBe(40);
   });
 });

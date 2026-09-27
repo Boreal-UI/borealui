@@ -26,7 +26,8 @@ export type CriticalVisualCaseId =
   | "navigation-narrow"
   | "menu-submenu-edge"
   | "dropdown-submenu-edge"
-  | "popover-open";
+  | "popover-open"
+  | "popover-edge";
 
 type CriticalVisualCase = {
   id: CriticalVisualCaseId;
@@ -200,6 +201,16 @@ export const criticalVisualMatrix: CriticalVisualCase[] = [
     theme: "light",
     viewports: ["desktop"],
     storyIds: storyIds("popover-open"),
+  },
+  {
+    id: "popover-edge",
+    exportName: "PopOverEdge",
+    category: "floating panels",
+    components: ["PopOver"],
+    states: ["open", "bottom-requested", "top-resolved", "edge-flip"],
+    theme: "light",
+    viewports: ["desktop"],
+    storyIds: storyIds("popover-edge"),
   },
 ];
 

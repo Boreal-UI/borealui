@@ -64,15 +64,14 @@ The duplication classification was:
   PopOver's anchor-relative transform policy is not the same abstraction as the
   Menu/Dropdown tree geometry.
 
-## Existing PopOver finding
+## PopOver remediation status
 
-PopOver currently opens by setting `rendered` after its positioning effect has
-already run. Because `rendered` is not a dependency, the newly mounted content
-is not measured on the initial open. Its resize/scroll callback also calls
-`setDynamicPlacement(previous => previous)`, which React can discard as a
-no-op. As a result, an edge PopOver can retain the requested placement and
-overflow the viewport. This is characterized in Jest and Cypress, but was not
-silently remediated during this behavior-preserving extraction.
+Phase 4A identified an initial-mount race in which the positioning effect could
+run before the content ref existed and never receive a meaningful retry.
+Phase 4A-R resolves that defect locally with a state-backed callback ref and a
+layout-timed measurement while preserving PopOver's distinct placement policy.
+See [PopOver initial positioning remediation](popover-positioning-remediation.md)
+for the lifecycle trace and verification record.
 
 ## Cost and lifecycle accounting
 

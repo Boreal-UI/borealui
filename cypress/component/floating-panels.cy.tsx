@@ -4,6 +4,7 @@ import * as Core from "../../src/index.core";
 import * as Next from "../../src/index.next";
 
 type FloatingComponents = Pick<typeof Core, "Menu" | "PopOver">;
+type PopOverPlacement = "top" | "bottom" | "left" | "right";
 
 const assertWithinViewport = (selector: string) => {
   cy.get(selector).then(($element) => {
@@ -19,6 +20,41 @@ const assertWithinViewport = (selector: string) => {
     expect(rect.bottom).to.be.at.most(height);
   });
 };
+
+const edgeCases: Array<{
+  requested: PopOverPlacement;
+  wrapperStyle: React.CSSProperties;
+  assertResolved: (content: DOMRect, trigger: DOMRect) => void;
+}> = [
+  {
+    requested: "bottom",
+    wrapperStyle: { position: "fixed", bottom: 0, left: 240 },
+    assertResolved: (content, trigger) => {
+      expect(content.bottom).to.be.at.most(trigger.top + 2);
+    },
+  },
+  {
+    requested: "top",
+    wrapperStyle: { position: "fixed", top: 0, left: 240 },
+    assertResolved: (content, trigger) => {
+      expect(content.top).to.be.at.least(trigger.bottom);
+    },
+  },
+  {
+    requested: "left",
+    wrapperStyle: { position: "fixed", left: 0, top: 180 },
+    assertResolved: (content, trigger) => {
+      expect(content.left).to.be.at.least(trigger.right);
+    },
+  },
+  {
+    requested: "right",
+    wrapperStyle: { position: "fixed", right: 0, top: 180 },
+    assertResolved: (content, trigger) => {
+      expect(content.right).to.be.at.most(trigger.left);
+    },
+  },
+];
 
 const runFloatingPanelTests = (
   flavor: "core" | "next",
@@ -92,25 +128,64 @@ const runFloatingPanelTests = (
       cy.get('[data-testid="center-popover-content"]').should("be.visible");
     });
 
-    it("records the current PopOver edge-overflow behavior", () => {
+    edgeCases.forEach(({ requested, wrapperStyle, assertResolved }) => {
+      it(`positions an initially ${requested}-placed PopOver within the viewport edge`, () => {
+        cy.mount(
+          <div style={wrapperStyle}>
+            <Components.PopOver
+              trigger={`${requested} edge details`}
+              content={
+                <div style={{ minHeight: 96, width: 180 }}>
+                  Edge panel content
+                </div>
+              }
+              placement={requested}
+              data-testid={`${requested}-edge-popover`}
+            />
+          </div>,
+        );
+
+        const contentSelector = `[data-testid="${requested}-edge-popover-content"]`;
+        const triggerSelector = `[data-testid="${requested}-edge-popover-trigger"]`;
+
+        cy.get(triggerSelector).click();
+        cy.get(contentSelector)
+          .should("be.visible")
+          .then(($content) => {
+            cy.get(triggerSelector).then(($trigger) => {
+              assertResolved(
+                $content[0].getBoundingClientRect(),
+                $trigger[0].getBoundingClientRect(),
+              );
+            });
+          });
+        assertWithinViewport(contentSelector);
+      });
+    });
+
+    it("remeasures an edge PopOver after close and reopen", () => {
       cy.mount(
-        <div style={{ position: "fixed", right: 0, bottom: 0 }}>
+        <div style={{ position: "fixed", bottom: 0, left: 240 }}>
           <Components.PopOver
-            trigger="Edge details"
+            trigger="Reopen edge details"
             content={<div style={{ minHeight: 96 }}>Edge panel content</div>}
             placement="bottom"
-            data-testid="edge-popover"
+            data-testid="reopen-edge-popover"
           />
         </div>,
       );
 
-      cy.get('[data-testid="edge-popover-trigger"]').click();
-      cy.get('[data-testid="edge-popover-content"]').then(($content) => {
-        const rect = $content[0].getBoundingClientRect();
-        const height = $content[0].ownerDocument.defaultView?.innerHeight ?? 480;
+      const trigger = '[data-testid="reopen-edge-popover-trigger"]';
+      const content = '[data-testid="reopen-edge-popover-content"]';
 
-        expect(rect.bottom).to.be.greaterThan(height);
-      });
+      cy.get(trigger).click();
+      assertWithinViewport(content);
+      cy.get(trigger).click();
+      cy.get(content).should("have.attr", "aria-hidden", "true");
+      cy.wait(200);
+      cy.get(content).should("not.exist");
+      cy.get(trigger).click();
+      assertWithinViewport(content);
     });
   });
 };

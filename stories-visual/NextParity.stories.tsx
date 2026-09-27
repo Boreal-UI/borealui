@@ -37,3 +37,4 @@ export const NavigationNarrow = createStory("navigation-narrow");
 export const MenuSubmenuEdge = createStory("menu-submenu-edge");
 export const DropdownSubmenuEdge = createStory("dropdown-submenu-edge");
 export const PopOverOpen = createStory("popover-open");
+export const PopOverEdge = createStory("popover-edge");

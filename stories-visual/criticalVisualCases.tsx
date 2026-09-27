@@ -381,6 +381,18 @@ const renderCaseBody = (
           />
         </div>
       );
+
+    case "popover-edge":
+      return (
+        <div className="visualParityPopOverEdge">
+          <Components.PopOver
+            trigger="View edge details"
+            content="This panel resolves above its bottom-edge trigger on first open."
+            placement="bottom"
+            testId="visual-popover-edge"
+          />
+        </div>
+      );
   }
 };
 
@@ -508,6 +520,14 @@ export const runVisualPlay = async (
   if (id === "popover-open") {
     canvasElement
       .querySelector<HTMLButtonElement>("[data-testid='visual-popover-trigger']")
+      ?.click();
+  }
+
+  if (id === "popover-edge") {
+    canvasElement
+      .querySelector<HTMLButtonElement>(
+        "[data-testid='visual-popover-edge-trigger']",
+      )
       ?.click();
   }
 
