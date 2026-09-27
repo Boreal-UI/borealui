@@ -393,6 +393,80 @@ const renderCaseBody = (
           />
         </div>
       );
+
+    case "overlay-modal":
+      return (
+        <Components.Modal open title="Release details" onClose={() => undefined}>
+          <div>
+            <p>The active release is ready for final review.</p>
+            <Components.Button>Review release</Components.Button>
+          </div>
+        </Components.Modal>
+      );
+
+    case "overlay-modal-stack":
+      return (
+        <>
+          <Components.Modal open title="Workspace settings" testId="visual-lower-modal" onClose={() => undefined}>
+            <p>The lower modal remains visible beneath the confirmation layer.</p>
+          </Components.Modal>
+          <Components.Modal open title="Confirm changes" testId="visual-upper-modal" onClose={() => undefined}>
+            <div>
+              <p>The most recently registered modal owns visual and logical precedence.</p>
+              <Components.Button state="success">Confirm changes</Components.Button>
+            </div>
+          </Components.Modal>
+        </>
+      );
+
+    case "overlay-modal-popup":
+      return (
+        <>
+          <Components.Modal open title="Delete project" onClose={() => undefined}>
+            <p>The project modal is the lower cross-portal layer.</p>
+          </Components.Modal>
+          <Components.MessagePopup
+            title="Confirm deletion"
+            message="This confirmation is painted above the project modal."
+            confirmText="Delete"
+            cancelText="Cancel"
+            onConfirm={() => undefined}
+            onCancel={() => undefined}
+            onClose={() => undefined}
+          />
+        </>
+      );
+
+    case "overlay-drawer-modal":
+      return (
+        <>
+          <Components.Drawer open title="Navigation" onClose={() => undefined}>
+            <p>The inline drawer remains below the active modal.</p>
+          </Components.Drawer>
+          <Components.Modal open title="Session expired" onClose={() => undefined}>
+            <div>
+              <p>Sign in again before continuing.</p>
+              <Components.Button>Sign in</Components.Button>
+            </div>
+          </Components.Modal>
+        </>
+      );
+
+    case "overlay-modal-dropdown":
+      return (
+        <Components.Modal open title="Export project" onClose={() => undefined}>
+          <div>
+            <p>Choose a format from the floating control inside this modal.</p>
+            <Components.Dropdown
+              triggerIcon={FaInfoCircle}
+              aria-label="Choose export format"
+              focusFirstItemOnOpen={false}
+              testId="visual-overlay-dropdown"
+              items={[{ label: "JSON" }, { label: "CSV" }, { label: "PDF" }]}
+            />
+          </div>
+        </Components.Modal>
+      );
   }
 };
 
@@ -527,6 +601,14 @@ export const runVisualPlay = async (
     canvasElement
       .querySelector<HTMLButtonElement>(
         "[data-testid='visual-popover-edge-trigger']",
+      )
+      ?.click();
+  }
+
+  if (id === "overlay-modal-dropdown") {
+    document
+      .querySelector<HTMLButtonElement>(
+        "[data-testid='visual-overlay-dropdown-trigger']",
       )
       ?.click();
   }

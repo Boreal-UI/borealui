@@ -12,16 +12,12 @@ import {
   ThemeType,
 } from "../../src/types/types";
 import { ChipBaseProps } from "../../src/components/Chip/Chip.types";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const positions: PositionType[] = [
   "topLeft",
@@ -31,9 +27,6 @@ const positions: PositionType[] = [
   "bottomCenter",
   "bottomRight",
 ];
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<ChipBaseProps> = {
   title: "Components/Chip",
@@ -121,7 +114,7 @@ export const Themes: Story = {
           {themeOptions.map((theme) => (
             <button
               key={theme}
-              onClick={() => setVisibleTheme(theme as ThemeType)}
+              onClick={() => setVisibleTheme(theme)}
               className="p-2 border rounded"
             >
               {theme}
@@ -156,7 +149,7 @@ export const GlassThemes: Story = {
           {themeOptions.map((theme) => (
             <button
               key={theme}
-              onClick={() => setVisibleTheme(theme as ThemeType)}
+              onClick={() => setVisibleTheme(theme)}
               className="p-2 border rounded"
             >
               {theme}
@@ -192,7 +185,7 @@ export const States: Story = {
           {stateOptions.map((state) => (
             <button
               key={state}
-              onClick={() => setVisibleState(state as StateType)}
+              onClick={() => setVisibleState(state)}
               className="p-2 border rounded"
             >
               {state}
@@ -227,7 +220,7 @@ export const GlassStates: Story = {
           {stateOptions.map((state) => (
             <button
               key={state}
-              onClick={() => setVisibleState(state as StateType)}
+              onClick={() => setVisibleState(state)}
               className="p-2 border rounded"
             >
               {state}
@@ -302,7 +295,7 @@ export const RoundingVariants: Story = {
           {roundingOptions.map((rounding) => (
             <button
               key={rounding}
-              onClick={() => setVisibleRounding(rounding as RoundingType)}
+              onClick={() => setVisibleRounding(rounding)}
               className="p-2 border rounded"
             >
               {rounding}
@@ -338,7 +331,7 @@ export const ShadowVariants: Story = {
           {shadowOptions.map((shadow) => (
             <button
               key={shadow}
-              onClick={() => setVisibleShadow(shadow as ShadowType)}
+              onClick={() => setVisibleShadow(shadow)}
               className="p-2 border rounded"
             >
               {shadow}

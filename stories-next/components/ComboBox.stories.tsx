@@ -6,10 +6,7 @@ import {
   shadowOptions,
   roundingOptions,
 } from "../../shared-story-assets/OptionTypes";
-import {
-  ComboBoxOption,
-  ComboBoxProps,
-} from "../../src/components/ComboBox/ComboBox.types";
+import { ComboBoxProps } from "../../src/components/ComboBox/ComboBox.types";
 import { useState } from "react";
 import {
   renderThemeVariants,
@@ -128,9 +125,9 @@ export const Controlled: Story = {
         inputValue={inputValue}
         onInputChange={setInputValue}
         onChange={(nextValue, option) => {
-          setValue(nextValue as string);
-          setInputValue(option.label as string);
-          args.onChange?.(nextValue as string, option as ComboBoxOption);
+          setValue(nextValue);
+          setInputValue(option.label);
+          args.onChange?.(nextValue, option);
         }}
       />
     );

@@ -10,7 +10,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    z-index: calc(
+      var(--z-index-modal, 9999) + var(--boreal-modal-layer-index, 0)
+    );
     padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0)
       env(safe-area-inset-bottom, 0) env(safe-area-inset-left, 0);
   }

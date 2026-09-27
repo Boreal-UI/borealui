@@ -1,34 +1,15 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import {
-  CommandPalette,
-  RoundingType,
-  ShadowType,
-  StateType,
-  ThemeType,
-} from "../../src/index.next";
+import { CommandPalette } from "../../src/index.next";
 import type { CommandPaletteProps } from "../../src/components/CommandPalette/CommandPalette.types";
 import { FaSearch, FaUser, FaCog } from "../../shared-story-assets/icons";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const meta: Meta<CommandPaletteProps> = {
   title: "Components/CommandPalette",

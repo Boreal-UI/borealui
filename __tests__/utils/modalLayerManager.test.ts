@@ -71,16 +71,25 @@ describe("modalLayerManager", () => {
       getFocusScope: () => second.scope,
     });
 
+    expect(first.root).toHaveStyle({ "--boreal-modal-layer-index": "0" });
+    expect(second.root).toHaveStyle({ "--boreal-modal-layer-index": "1" });
     expect(first.root).toHaveAttribute("inert");
     expect(second.root).not.toHaveAttribute("inert");
 
     removeFirst();
     removeFirst();
+    expect(first.root.style.getPropertyValue("--boreal-modal-layer-index")).toBe(
+      "",
+    );
+    expect(second.root).toHaveStyle({ "--boreal-modal-layer-index": "0" });
     expect(document.body).toHaveClass("noScroll");
     expect(background).toHaveAttribute("inert");
     expect(second.root).not.toHaveAttribute("inert");
 
     removeSecond();
+    expect(second.root.style.getPropertyValue("--boreal-modal-layer-index")).toBe(
+      "",
+    );
     expect(document.body).not.toHaveClass("noScroll");
     expect(background).not.toHaveAttribute("inert");
   });

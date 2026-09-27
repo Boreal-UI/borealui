@@ -27,7 +27,12 @@ export type CriticalVisualCaseId =
   | "menu-submenu-edge"
   | "dropdown-submenu-edge"
   | "popover-open"
-  | "popover-edge";
+  | "popover-edge"
+  | "overlay-modal"
+  | "overlay-modal-stack"
+  | "overlay-modal-popup"
+  | "overlay-drawer-modal"
+  | "overlay-modal-dropdown";
 
 type CriticalVisualCase = {
   id: CriticalVisualCaseId;
@@ -211,6 +216,56 @@ export const criticalVisualMatrix: CriticalVisualCase[] = [
     theme: "light",
     viewports: ["desktop"],
     storyIds: storyIds("popover-edge"),
+  },
+  {
+    id: "overlay-modal",
+    exportName: "OverlayModal",
+    category: "overlay layers",
+    components: ["Modal"],
+    states: ["open"],
+    theme: "light",
+    viewports: ["desktop"],
+    storyIds: storyIds("overlay-modal"),
+  },
+  {
+    id: "overlay-modal-stack",
+    exportName: "OverlayModalStack",
+    category: "overlay layers",
+    components: ["Modal"],
+    states: ["nested", "top-layer"],
+    theme: "dark",
+    viewports: ["desktop"],
+    storyIds: storyIds("overlay-modal-stack"),
+  },
+  {
+    id: "overlay-modal-popup",
+    exportName: "OverlayModalPopup",
+    category: "overlay layers",
+    components: ["Modal", "MessagePopup"],
+    states: ["cross-portal", "top-layer"],
+    theme: "light",
+    viewports: ["desktop"],
+    storyIds: storyIds("overlay-modal-popup"),
+  },
+  {
+    id: "overlay-drawer-modal",
+    exportName: "OverlayDrawerModal",
+    category: "overlay layers",
+    components: ["Drawer", "Modal"],
+    states: ["inline-base", "portal-top-layer"],
+    theme: "dark",
+    viewports: ["desktop"],
+    storyIds: storyIds("overlay-drawer-modal"),
+  },
+  {
+    id: "overlay-modal-dropdown",
+    exportName: "OverlayModalDropdown",
+    category: "overlay layers",
+    components: ["Modal", "Dropdown"],
+    states: ["nested-floating", "open"],
+    theme: "light",
+    viewports: ["desktop"],
+    storyIds: storyIds("overlay-modal-dropdown"),
   },
 ];
 

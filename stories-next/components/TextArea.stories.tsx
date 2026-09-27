@@ -13,9 +13,10 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const meta: Meta<TextAreaProps> = {
   title: "Components/TextArea",

@@ -1,19 +1,17 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { FaRocket, FaCalendarAlt, FaCheckCircle } from "../../shared-story-assets/icons";
-import { ThemeType, Timeline } from "../../src/index.next";
+import {
+  FaRocket,
+  FaCalendarAlt,
+  FaCheckCircle,
+} from "../../shared-story-assets/icons";
+import { Timeline } from "../../src/index.next";
 import type { TimelineProps } from "../../src/components/Timeline/Timeline.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+  themeOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const sampleEvents = [
   {

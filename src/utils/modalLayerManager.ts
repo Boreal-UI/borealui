@@ -32,6 +32,7 @@ interface IsolationState {
 }
 
 const layers: ModalLayer[] = [];
+const MODAL_LAYER_INDEX_PROPERTY = "--boreal-modal-layer-index";
 const isolatedElements = new Map<HTMLElement, IsolationState>();
 const pendingRestorations = new Map<
   ModalLayerId,
@@ -63,6 +64,14 @@ const focusInside = (layer: ModalLayer, fromEnd = false) => {
 };
 
 const getTopLayer = () => layers.at(-1);
+
+const refreshVisualOrder = () => {
+  layers.forEach((layer, index) => {
+    layer
+      .getLayerElement()
+      ?.style.setProperty(MODAL_LAYER_INDEX_PROPERTY, String(index));
+  });
+};
 
 const handleKeyDown = (event: globalThis.KeyboardEvent) => {
   const layer = getTopLayer();
@@ -230,6 +239,7 @@ export const registerModalLayer = (
   };
 
   layers.push(layer);
+  refreshVisualOrder();
   if (wasEmpty) beginGlobalOwnership();
   refreshIsolation();
 
@@ -242,7 +252,11 @@ export const registerModalLayer = (
     if (index < 0) return;
 
     const wasTop = index === layers.length - 1;
-    layers.splice(index, 1);
+    const [removedLayer] = layers.splice(index, 1);
+    removedLayer
+      ?.getLayerElement()
+      ?.style.removeProperty(MODAL_LAYER_INDEX_PROPERTY);
+    refreshVisualOrder();
 
     if (layers.length === 0) endGlobalOwnership();
     else refreshIsolation();
@@ -252,6 +266,11 @@ export const registerModalLayer = (
 };
 
 export const __resetModalLayerManagerForTests = () => {
+  layers.forEach((layer) => {
+    layer
+      .getLayerElement()
+      ?.style.removeProperty(MODAL_LAYER_INDEX_PROPERTY);
+  });
   layers.splice(0, layers.length);
   pendingRestorations.forEach((pending) => {
     pending.cancelled = true;
