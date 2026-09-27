@@ -21,6 +21,7 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 import { useModalLayer } from "../../hooks/useModalLayer";
+import { usePortalHost } from "../../hooks/usePortalHost";
 import { getFocusableElements } from "../../utils/modalLayerManager";
 
 const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
@@ -74,7 +75,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
+  const portalElement = usePortalHost("widget-portal", open);
   const [asyncResults, setAsyncResults] = useState<CommandItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -151,16 +152,6 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
     setMounted(true);
     prevFocusRef.current = document.activeElement as HTMLElement | null;
 
-    const portal =
-      document.getElementById("widget-portal") ||
-      (() => {
-        const el = document.createElement("div");
-        el.id = "widget-portal";
-        document.body.appendChild(el);
-        return el;
-      })();
-
-    setPortalElement(portal);
     return () => {
       setQuery("");
       setActiveIndex(-1);

@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useId,
-  useCallback,
-} from "react";
+import React, { useEffect, useRef, useId, useCallback } from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "../../Icons";
 import { BaseMessagePopupProps } from "./MessagePopup.types";
@@ -15,6 +9,7 @@ import {
   getDefaultShadow,
 } from "../../config/boreal-style-config";
 import { useModalLayer } from "../../hooks/useModalLayer";
+import { usePortalHost } from "../../hooks/usePortalHost";
 
 const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   message,
@@ -61,23 +56,11 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   const hasConfirm = typeof onConfirm === "function";
   const hasCancel = typeof onCancel === "function";
 
-  const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
+  const portalElement = usePortalHost("popup-portal");
 
   const handleClose = useCallback(() => {
     onClose();
   }, [onClose]);
-
-  useEffect(() => {
-    const portalId = "popup-portal";
-    let portal = document.getElementById(portalId);
-    if (!portal) {
-      portal = document.createElement("div");
-      portal.id = portalId;
-      document.body.appendChild(portal);
-    }
-    setPortalElement(portal);
-
-  }, []);
 
   useModalLayer({
     active: portalElement !== null,

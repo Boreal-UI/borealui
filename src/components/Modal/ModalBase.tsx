@@ -1,10 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useId,
-  useCallback,
-} from "react";
+import React, { useEffect, useRef, useState, useId, useCallback } from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "../../Icons";
 import { BaseModalProps } from "./Modal.types";
@@ -15,6 +9,7 @@ import {
   getDefaultShadow,
 } from "../../config/boreal-style-config";
 import { useModalLayer } from "../../hooks/useModalLayer";
+import { usePortalHost } from "../../hooks/usePortalHost";
 import { getFocusableElements } from "../../utils/modalLayerManager";
 
 const BaseModal: React.FC<BaseModalProps> = ({
@@ -45,7 +40,6 @@ const BaseModal: React.FC<BaseModalProps> = ({
   portalId = "widget-portal",
 }) => {
   const [isVisible, setIsVisible] = useState(false);
-  const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
   const [isRendered, setIsRendered] = useState(false);
 
   const isControlled = typeof open === "boolean";
@@ -77,21 +71,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
     [],
   );
 
-  useEffect(() => {
-    if (!isRendered) return;
-
-    let portal = document.getElementById(portalId);
-    if (!portal) {
-      portal = document.createElement("div");
-      portal.id = portalId;
-      document.body.appendChild(portal);
-    }
-    setPortalElement(portal);
-
-    return () => {
-      setPortalElement(null);
-    };
-  }, [isRendered, portalId]);
+  const portalElement = usePortalHost(portalId, isRendered);
 
   useModalLayer({
     active: isRendered && portalElement !== null,
