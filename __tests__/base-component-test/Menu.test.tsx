@@ -134,6 +134,143 @@ describe("BaseMenu", () => {
     });
   });
 
+  it("clamps a context menu to the bottom-right viewport padding", async () => {
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 320,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      writable: true,
+      value: 240,
+    });
+    const rectSpy = jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(function getRect(this: HTMLElement) {
+        if (this.dataset.testid === "menu-menu") {
+          return {
+            x: 0,
+            y: 0,
+            width: 180,
+            height: 120,
+            top: 0,
+            right: 180,
+            bottom: 120,
+            left: 0,
+            toJSON: () => ({}),
+          };
+        }
+
+        return {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          toJSON: () => ({}),
+        };
+      });
+
+    renderMenu();
+    fireEvent.contextMenu(screen.getByTestId("menu-target"), {
+      clientX: 310,
+      clientY: 230,
+    });
+
+    const menu = screen.getByTestId("menu-menu");
+    await waitFor(() => {
+      expect(menu.style.left).toBe("132px");
+      expect(menu.style.top).toBe("112px");
+    });
+
+    rectSpy.mockRestore();
+  });
+
+  it("flips and vertically offsets a submenu at the bottom-right corner", async () => {
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 320,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      writable: true,
+      value: 240,
+    });
+    const rectSpy = jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(function getRect(this: HTMLElement) {
+        if (this.dataset.menuItemWrapper === "true") {
+          return {
+            x: 260,
+            y: 180,
+            width: 48,
+            height: 40,
+            top: 180,
+            right: 308,
+            bottom: 220,
+            left: 260,
+            toJSON: () => ({}),
+          };
+        }
+        if (this.dataset.menuPanelPath === "0") {
+          return {
+            x: 308,
+            y: 180,
+            width: 180,
+            height: 160,
+            top: 180,
+            right: 488,
+            bottom: 340,
+            left: 308,
+            toJSON: () => ({}),
+          };
+        }
+
+        return {
+          x: 20,
+          y: 20,
+          width: 180,
+          height: 120,
+          top: 20,
+          right: 200,
+          bottom: 140,
+          left: 20,
+          toJSON: () => ({}),
+        };
+      });
+
+    renderMenu({
+      items: [
+        {
+          label: "Settings",
+          "data-testid": "menu-settings",
+          items: [{ label: "Profile", "data-testid": "menu-profile" }],
+        },
+      ],
+    });
+
+    fireEvent.contextMenu(screen.getByTestId("menu-target"), {
+      clientX: 20,
+      clientY: 20,
+    });
+    fireEvent.click(screen.getByTestId("menu-settings"));
+
+    const submenu = screen.getByTestId("menu-settings-submenu");
+    await waitFor(() => {
+      expect(submenu).toHaveAttribute("data-placement", "left");
+      expect(submenu.style.getPropertyValue("--menu-panel-offset-y")).toBe(
+        "-108px",
+      );
+    });
+
+    rectSpy.mockRestore();
+  });
+
   it("supports trigger-based menus", () => {
     render(
       <BaseMenu

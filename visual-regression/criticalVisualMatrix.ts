@@ -23,7 +23,10 @@ export type CriticalVisualCaseId =
   | "skeleton-reduced-motion"
   | "tabs-focus"
   | "feedback-states"
-  | "navigation-narrow";
+  | "navigation-narrow"
+  | "menu-submenu-edge"
+  | "dropdown-submenu-edge"
+  | "popover-open";
 
 type CriticalVisualCase = {
   id: CriticalVisualCaseId;
@@ -167,6 +170,36 @@ export const criticalVisualMatrix: CriticalVisualCase[] = [
     theme: "dark",
     viewports: ["mobile"],
     storyIds: storyIds("navigation-narrow"),
+  },
+  {
+    id: "menu-submenu-edge",
+    exportName: "MenuSubmenuEdge",
+    category: "floating panels",
+    components: ["Menu"],
+    states: ["open", "submenu", "edge-flip"],
+    theme: "light",
+    viewports: ["desktop"],
+    storyIds: storyIds("menu-submenu-edge"),
+  },
+  {
+    id: "dropdown-submenu-edge",
+    exportName: "DropdownSubmenuEdge",
+    category: "floating panels",
+    components: ["Dropdown"],
+    states: ["open", "submenu", "edge-flip"],
+    theme: "dark",
+    viewports: ["desktop"],
+    storyIds: storyIds("dropdown-submenu-edge"),
+  },
+  {
+    id: "popover-open",
+    exportName: "PopOverOpen",
+    category: "floating panels",
+    components: ["PopOver"],
+    states: ["open", "bottom-placement"],
+    theme: "light",
+    viewports: ["desktop"],
+    storyIds: storyIds("popover-open"),
   },
 ];
 

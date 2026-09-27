@@ -308,6 +308,14 @@ const runDropdownSubmenuTests = (
       assertWithinViewport(
         '[data-testid="dropdown-developer-formats-submenu"]',
       );
+
+      cy.window().trigger("resize");
+      cy.window().trigger("scroll");
+      assertWithinViewport('[data-testid="dropdown-menu"]');
+      assertWithinViewport('[data-testid="dropdown-export-submenu"]');
+      assertWithinViewport(
+        '[data-testid="dropdown-developer-formats-submenu"]',
+      );
     });
 
     it("keeps flipped submenus open while moving from a trigger into child content", () => {

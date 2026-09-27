@@ -662,6 +662,11 @@ describe("BaseDropdown", () => {
       writable: true,
       value: 320,
     });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      writable: true,
+      value: 240,
+    });
 
     renderDropdown({
       items: [
@@ -713,6 +718,9 @@ describe("BaseDropdown", () => {
 
     await waitFor(() => {
       expect(submenu).toHaveAttribute("data-placement", "left");
+      expect(
+        submenu.style.getPropertyValue("--dropdown-panel-offset-y"),
+      ).toBe("-8px");
     });
   });
 

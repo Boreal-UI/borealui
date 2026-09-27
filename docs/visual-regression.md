@@ -8,8 +8,8 @@ project contains only high-risk cases with an explicit Core/Next mapping.
 
 The source of truth is
 [`visual-regression/criticalVisualMatrix.ts`](../visual-regression/criticalVisualMatrix.ts).
-It currently covers 12 cases, 15 components, two exact viewports, light and dark
-schemes, and approximately 32 snapshots:
+It currently covers 15 cases, 18 components, two exact viewports, light and dark
+schemes, and approximately 38 snapshots:
 
 - Desktop: 1280 × 900.
 - Mobile: 375 × 812.

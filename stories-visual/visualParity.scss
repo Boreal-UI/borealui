@@ -33,6 +33,19 @@
   max-width: 32rem;
 }
 
+.visualParityFloatingEdge {
+  display: flex;
+  min-height: 24rem;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.visualParityFloatingCenter {
+  display: grid;
+  min-height: 24rem;
+  place-items: center;
+}
+
 [data-visual-case="navigation-narrow"] {
   padding-inline-start: 7rem;
 }

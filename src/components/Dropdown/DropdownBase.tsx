@@ -33,7 +33,13 @@ import {
   MENU_VIEWPORT_MARGIN as VIEWPORT_MARGIN,
   ROOT_MENU_PANEL_PATH as ROOT_PANEL_PATH,
 } from "../../utils/menuNavigation";
-import { useAnimationFrameCallback } from "../../hooks/useAnimationFrameCallback";
+import { useFloatingPanelSync } from "../../hooks/useFloatingPanelSync";
+import {
+  getFloatingPanelHorizontalOverflow,
+  getFloatingPanelSizeLimits,
+  readFloatingPanelViewport,
+  resolveNestedPanelLayout,
+} from "../../utils/floatingPanelGeometry";
 
 type PanelPlacement = "left" | "right";
 type PanelStyle = React.CSSProperties & Record<string, string>;
@@ -151,12 +157,13 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
         return;
       }
 
-      const viewportWidth =
-        window.innerWidth || document.documentElement.clientWidth || 0;
-      const viewportHeight =
-        window.innerHeight || document.documentElement.clientHeight || 0;
-      const maxHeight = `${Math.max(120, viewportHeight - VIEWPORT_MARGIN * 2)}px`;
-      const maxWidth = `${Math.max(160, viewportWidth - VIEWPORT_MARGIN * 2)}px`;
+      const viewport = readFloatingPanelViewport();
+      const sizeLimits = getFloatingPanelSizeLimits(
+        viewport,
+        VIEWPORT_MARGIN,
+      );
+      const maxHeight = `${sizeLimits.maxHeight}px`;
+      const maxWidth = `${sizeLimits.maxWidth}px`;
       const panels = [
         menuRef.current,
         ...Array.from(
@@ -186,9 +193,13 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
           };
 
           if (path === ROOT_PANEL_PATH) {
+            const overflow = getFloatingPanelHorizontalOverflow(
+              rect,
+              viewport.width,
+              VIEWPORT_MARGIN,
+            );
             nextLayouts[path] = {
-              overflowLeft: rect.left < VIEWPORT_MARGIN,
-              overflowRight: rect.right > viewportWidth - VIEWPORT_MARGIN,
+              ...overflow,
               style,
             };
             return;
@@ -199,25 +210,13 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
           );
           const wrapperRect = wrapper?.getBoundingClientRect();
           const panelWidth = Math.max(rect.width, panel.offsetWidth, 160);
-          const rightSpace = wrapperRect
-            ? viewportWidth - wrapperRect.right - VIEWPORT_MARGIN
-            : viewportWidth - rect.right - VIEWPORT_MARGIN;
-          const leftSpace = wrapperRect
-            ? wrapperRect.left - VIEWPORT_MARGIN
-            : rect.left - VIEWPORT_MARGIN;
-          const placement: PanelPlacement =
-            rightSpace >= panelWidth || rightSpace >= leftSpace
-              ? "right"
-              : "left";
-          let offsetY = 0;
-
-          if (rect.bottom > viewportHeight - VIEWPORT_MARGIN) {
-            offsetY -= rect.bottom - (viewportHeight - VIEWPORT_MARGIN);
-          }
-
-          if (rect.top + offsetY < VIEWPORT_MARGIN) {
-            offsetY += VIEWPORT_MARGIN - (rect.top + offsetY);
-          }
+          const { placement, offsetY } = resolveNestedPanelLayout({
+            panelRect: rect,
+            anchorRect: wrapperRect,
+            panelWidth,
+            viewport,
+            padding: VIEWPORT_MARGIN,
+          });
 
           style["--dropdown-panel-offset-y"] = `${Math.round(offsetY)}px`;
 
@@ -232,8 +231,26 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     },
     [open],
   );
-  const schedulePanelLayoutUpdate =
-    useAnimationFrameCallback(updatePanelLayouts);
+
+  const updateAllPanelLayouts = useCallback(
+    () => updatePanelLayouts(true),
+    [updatePanelLayouts],
+  );
+  const shouldUpdatePanelLayouts = useCallback((event: Event) => {
+    const target = event.target;
+
+    return !(
+      event.type === "scroll" &&
+      target instanceof Node &&
+      menuRef.current?.contains(target)
+    );
+  }, []);
+
+  useFloatingPanelSync({
+    open,
+    updatePosition: updateAllPanelLayouts,
+    shouldUpdate: shouldUpdatePanelLayouts,
+  });
 
   const toggleDropdown = () => {
     setOpen((prev) => {
@@ -293,32 +310,6 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
 
     updatePanelLayouts(false);
   }, [open, openSubmenuPath, updatePanelLayouts]);
-
-  useEffect(() => {
-    if (!open) return;
-
-    const handleViewportChange = (event?: Event) => {
-      const target = event?.target;
-
-      if (
-        event?.type === "scroll" &&
-        target instanceof Node &&
-        menuRef.current?.contains(target)
-      ) {
-        return;
-      }
-
-      schedulePanelLayoutUpdate(true);
-    };
-
-    window.addEventListener("resize", handleViewportChange);
-    window.addEventListener("scroll", handleViewportChange, true);
-
-    return () => {
-      window.removeEventListener("resize", handleViewportChange);
-      window.removeEventListener("scroll", handleViewportChange, true);
-    };
-  }, [open, schedulePanelLayoutUpdate]);
 
   useEffect(() => {
     if (!open) return;

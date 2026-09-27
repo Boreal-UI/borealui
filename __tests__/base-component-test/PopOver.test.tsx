@@ -1,4 +1,9 @@
-import { act, render, screen, fireEvent } from "@testing-library/react";
+import {
+  act,
+  render,
+  screen,
+  fireEvent,
+} from "@testing-library/react";
 import BasePopOver from "@/components/PopOver/PopOverBase";
 import { axe, toHaveNoViolations } from "jest-axe";
 
@@ -377,6 +382,108 @@ describe("BasePopOver", () => {
       "shadowMedium",
       "stateSuccess",
     );
+  });
+
+  it("retains its requested placement on initial open before edge measurement", () => {
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 320,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      writable: true,
+      value: 240,
+    });
+    const heightSpy = jest
+      .spyOn(HTMLElement.prototype, "offsetHeight", "get")
+      .mockReturnValue(120);
+    const rectSpy = jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(function getRect(this: HTMLElement) {
+        if (this.dataset.testid === "popover-trigger") {
+          return {
+            x: 120,
+            y: 200,
+            width: 40,
+            height: 20,
+            top: 200,
+            right: 160,
+            bottom: 220,
+            left: 120,
+            toJSON: () => ({}),
+          };
+        }
+
+        return {
+          x: 80,
+          y: 80,
+          width: 160,
+          height: 120,
+          top: 80,
+          right: 240,
+          bottom: 200,
+          left: 80,
+          toJSON: () => ({}),
+        };
+      });
+
+    renderPopOver({ placement: "bottom" });
+    fireEvent.click(screen.getByTestId("popover-trigger"));
+
+    expect(screen.getByTestId("popover-content")).toHaveClass(
+      "placementBottom",
+    );
+
+    rectSpy.mockRestore();
+    heightSpy.mockRestore();
+  });
+
+  it("does not apply viewport translation before initial content measurement", () => {
+    const animationFrameSpy = jest
+      .spyOn(window, "requestAnimationFrame")
+      .mockImplementation((callback: FrameRequestCallback) => {
+        callback(0);
+        return 1;
+      });
+    const rectSpy = jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(function getRect(this: HTMLElement) {
+        if (this.dataset.testid === "popover-trigger") {
+          return {
+            x: 20,
+            y: 40,
+            width: 40,
+            height: 20,
+            top: 40,
+            right: 60,
+            bottom: 60,
+            left: 20,
+            toJSON: () => ({}),
+          };
+        }
+
+        return {
+          x: -20,
+          y: 60,
+          width: 160,
+          height: 100,
+          top: 60,
+          right: 140,
+          bottom: 160,
+          left: -20,
+          toJSON: () => ({}),
+        };
+      });
+
+    renderPopOver({ placement: "bottom" });
+    fireEvent.click(screen.getByTestId("popover-trigger"));
+
+    expect(screen.getByTestId("popover-content").style.transform).toBe("");
+    expect(animationFrameSpy).not.toHaveBeenCalled();
+
+    rectSpy.mockRestore();
+    animationFrameSpy.mockRestore();
   });
 
   it("keeps the popover open when clicking the trigger again only if toggled intentionally", () => {

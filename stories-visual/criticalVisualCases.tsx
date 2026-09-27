@@ -319,6 +319,68 @@ const renderCaseBody = (
           />
         </div>
       );
+
+    case "menu-submenu-edge":
+      return (
+        <div style={{ minHeight: "24rem" }}>
+          <Components.Menu
+            activation="manual"
+            defaultOpen
+            position={{ x: 1040, y: 180 }}
+            aria-label="Export actions"
+            testId="visual-menu"
+            items={[
+              {
+                label: "Export",
+                testId: "visual-menu-export",
+                items: [
+                  { label: "JSON" },
+                  { label: "CSV" },
+                  { label: "PDF" },
+                ],
+              },
+              { label: "Archive" },
+            ]}
+          />
+        </div>
+      );
+
+    case "dropdown-submenu-edge":
+      return (
+        <div className="visualParityFloatingEdge">
+          <Components.Dropdown
+            triggerIcon={FaInfoCircle}
+            aria-label="Project actions"
+            align="end"
+            focusFirstItemOnOpen={false}
+            testId="visual-dropdown"
+            items={[
+              {
+                label: "Export",
+                testId: "visual-dropdown-export",
+                items: [
+                  { label: "JSON" },
+                  { label: "CSV" },
+                  { label: "PDF" },
+                ],
+              },
+              { label: "Archive" },
+            ]}
+          />
+        </div>
+      );
+
+    case "popover-open":
+      return (
+        <div className="visualParityFloatingCenter">
+          <Components.PopOver
+            trigger="View release details"
+            content="Version 0.1.426 is ready for compatibility verification."
+            placement="bottom"
+            testId="visual-popover"
+          />
+        </div>
+      );
   }
 };
 
@@ -425,6 +487,28 @@ export const runVisualPlay = async (
 
   if (id === "tabs-focus") {
     canvasElement.querySelector<HTMLElement>("[role='tab']")?.focus();
+  }
+
+  if (id === "menu-submenu-edge") {
+    canvasElement
+      .querySelector<HTMLButtonElement>("[data-testid='visual-menu-export']")
+      ?.click();
+  }
+
+  if (id === "dropdown-submenu-edge") {
+    canvasElement
+      .querySelector<HTMLButtonElement>("[data-testid='visual-dropdown-trigger']")
+      ?.click();
+    await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+    canvasElement
+      .querySelector<HTMLButtonElement>("[data-testid='visual-dropdown-export']")
+      ?.click();
+  }
+
+  if (id === "popover-open") {
+    canvasElement
+      .querySelector<HTMLButtonElement>("[data-testid='visual-popover-trigger']")
+      ?.click();
   }
 
   await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
