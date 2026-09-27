@@ -91,7 +91,7 @@
     "storybook:build:core": "storybook build  --output-dir ./storybook-core-json -c .storybook-core",
     "storybook:build:next": "storybook build  --output-dir ./storybook-next-json -c .storybook-next",
     "storybook:build:visual": "storybook build --output-dir ./storybook-visual-json -c .storybook-visual",
-    "chromatic:visual": "chromatic --storybook-build-dir ./storybook-visual-json --exit-zero-on-changes --skip-update-check",
+    "chromatic:visual": "chromatic --storybook-build-dir ./storybook-visual-json --skip-update-check",
     "build-storybook": "storybook build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"src/**/*.{ts,tsx}\" \"cypress/**/*.{ts,tsx}\" \"stories-visual/**/*.{ts,tsx}\" \"visual-regression/**/*.{ts,tsx}\" \".storybook-visual/**/*.{ts,tsx}\" \"*.config.ts\" --max-warnings=0",
