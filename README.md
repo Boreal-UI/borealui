@@ -40,6 +40,10 @@ npm install @boreal-ui/docs
 See the [published compatibility matrix](./docs/compatibility.md) for the
 verified React, Next.js, Node, runtime, build, and type boundaries.
 
+Contributors can review the curated [visual regression and Core/Next parity
+workflow](./docs/visual-regression.md), including local commands, CI secrets,
+fork behavior, and baseline approval.
+
 ## CLI Setup
 
 Use the CLI inside an existing React or Next.js project to detect the framework and package manager, install the runtime dependency, import the global stylesheet, and wire `ThemeProvider`.

@@ -44,4 +44,16 @@ describe("CI Cypress component-test gate", () => {
     expect(workflow).toContain("name: Published compatibility");
     expect(workflow).toContain("npm run compat:test");
   });
+
+  it("keeps Storybook builds separate from curated visual regression", () => {
+    expect(workflow).toContain("name: Storybook builds");
+    expect(workflow).toContain("npm run storybook:build:core");
+    expect(workflow).toContain("npm run storybook:build:next");
+    expect(workflow).toContain("name: Visual Regression");
+    expect(workflow).toContain("npm run storybook:build:visual");
+    expect(workflow).toContain("CHROMATIC_PROJECT_TOKEN_VISUAL");
+    expect(workflow).toContain("if: env.CHROMATIC_PROJECT_TOKEN != ''");
+    expect(workflow).toContain("if: env.CHROMATIC_PROJECT_TOKEN == ''");
+    expect(workflow).not.toContain("--auto-accept-changes");
+  });
 });

@@ -1,0 +1,48 @@
+.visualParityCanvas {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 2rem;
+  color: var(--text-color);
+  background: var(--background-color);
+  font-family: var(--font-family-ui);
+}
+
+.visualParityHeading {
+  margin: 0 0 1.5rem;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.visualParityGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1.25rem;
+  align-items: start;
+  min-width: 0;
+}
+
+.visualParityStack {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.visualParityChart {
+  width: 100%;
+  max-width: 32rem;
+}
+
+[data-visual-case="navigation-narrow"] {
+  padding-inline-start: 7rem;
+}
+
+@media (width < 500px) {
+  .visualParityCanvas {
+    padding: 1rem;
+  }
+
+  .visualParityGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

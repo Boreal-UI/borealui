@@ -87,6 +87,41 @@ jobs:
           if-no-files-found: ignore
           retention-days: 14
 
+  storybook-builds:
+    name: Storybook builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run storybook:build:core
+      - run: npm run storybook:build:next
+
+  visual-regression:
+    name: Visual Regression
+    runs-on: ubuntu-latest
+    env:
+      CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN_VISUAL }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run storybook:build:visual
+      - name: Publish curated visual matrix
+        if: env.CHROMATIC_PROJECT_TOKEN != ''
+        run: npm run chromatic:visual
+      - name: Explain unavailable visual upload
+        if: env.CHROMATIC_PROJECT_TOKEN == ''
+        run: echo "Chromatic upload skipped because CHROMATIC_PROJECT_TOKEN_VISUAL is unavailable; the curated Storybook build still passed."
+
   build-and-package:
     name: Build and package verification
     runs-on: ubuntu-latest

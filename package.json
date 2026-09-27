@@ -87,11 +87,14 @@
     "playground": "vite --config playground/vite.config.ts",
     "storybook:core": "storybook dev -p 6006 -c .storybook-core",
     "storybook:next": "storybook dev -p 6007 -c .storybook-next",
+    "storybook:visual": "storybook dev -p 6008 -c .storybook-visual",
     "storybook:build:core": "storybook build  --output-dir ./storybook-core-json -c .storybook-core",
     "storybook:build:next": "storybook build  --output-dir ./storybook-next-json -c .storybook-next",
+    "storybook:build:visual": "storybook build --output-dir ./storybook-visual-json -c .storybook-visual",
+    "chromatic:visual": "chromatic --storybook-build-dir ./storybook-visual-json --exit-zero-on-changes --skip-update-check",
     "build-storybook": "storybook build",
     "typecheck": "tsc --noEmit",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" \"cypress/**/*.{ts,tsx}\" \"*.config.ts\" --max-warnings=0",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"cypress/**/*.{ts,tsx}\" \"stories-visual/**/*.{ts,tsx}\" \"visual-regression/**/*.{ts,tsx}\" \".storybook-visual/**/*.{ts,tsx}\" \"*.config.ts\" --max-warnings=0",
     "sbom": "cyclonedx-npm --output-format JSON --output-file bom.cdx.json --validate --mc-type library"
   },
   "keywords": [
@@ -126,6 +129,7 @@
     "@types/sanitize-html": "^2.16.1",
     "@vitejs/plugin-react": "^6.0.5",
     "axe-core": "^4.11.4",
+    "chromatic": "16.10.0",
     "cypress": "^15.21.1",
     "cypress-axe": "^1.7.0",
     "esbuild": "^0.28.2",
