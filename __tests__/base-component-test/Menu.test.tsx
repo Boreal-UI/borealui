@@ -589,6 +589,28 @@ describe("BaseMenu", () => {
     expect(screen.queryByTestId("menu-menu")).not.toBeInTheDocument();
   });
 
+  it("requests outside dismissal without forcing a controlled menu closed", () => {
+    const onOpenChange = jest.fn();
+    render(
+      <>
+        <BaseMenu
+          items={[{ label: "Controlled item" }]}
+          open
+          onOpenChange={onOpenChange}
+          classMap={classMap}
+        />
+        <button type="button" data-testid="controlled-outside">
+          Outside
+        </button>
+      </>,
+    );
+
+    fireEvent.mouseDown(screen.getByTestId("controlled-outside"));
+
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+    expect(screen.getByRole("menu")).toBeInTheDocument();
+  });
+
   it("has no accessibility violations when closed", async () => {
     const { container } = renderMenu();
 

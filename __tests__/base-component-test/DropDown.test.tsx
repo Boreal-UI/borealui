@@ -782,6 +782,29 @@ describe("BaseDropdown", () => {
     expect(screen.getByTestId("dropdown-menu")).toBeInTheDocument();
   });
 
+  it("registers the outside listener only while open and cleans it up on close", () => {
+    const addSpy = jest.spyOn(document, "addEventListener");
+    const removeSpy = jest.spyOn(document, "removeEventListener");
+    renderDropdown();
+
+    expect(
+      addSpy.mock.calls.filter(([type]) => type === "mousedown"),
+    ).toHaveLength(0);
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+    expect(
+      addSpy.mock.calls.filter(([type]) => type === "mousedown"),
+    ).toHaveLength(1);
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+    expect(
+      removeSpy.mock.calls.filter(([type]) => type === "mousedown"),
+    ).toHaveLength(1);
+
+    addSpy.mockRestore();
+    removeSpy.mockRestore();
+  });
+
   it("does not respond to navigation keys when closed", () => {
     const { items } = renderDropdown();
 

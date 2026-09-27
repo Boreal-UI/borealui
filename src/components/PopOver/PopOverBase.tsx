@@ -20,6 +20,7 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 import { useAnimationFrameCallback } from "../../hooks/useAnimationFrameCallback";
+import { useOutsideInteraction } from "../../hooks/useOutsideInteraction";
 
 const useIsomorphicLayoutEffect =
   typeof window === "undefined" ? useEffect : useLayoutEffect;
@@ -104,19 +105,11 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
     setPopoverElement(node);
   }, []);
 
-  useEffect(() => {
-    if (!open) return;
-
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Node;
-      if (popoverRef.current?.contains(target)) return;
-      if (triggerRef.current?.contains(target)) return;
-      close();
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [close, open]);
+  useOutsideInteraction({
+    active: open,
+    insideRefs: [triggerRef, popoverRef],
+    onOutsideInteraction: close,
+  });
 
   const updatePosition = useCallback(() => {
     const triggerElement = triggerRef.current;

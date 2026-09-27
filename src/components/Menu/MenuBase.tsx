@@ -29,6 +29,7 @@ import {
   ROOT_MENU_PANEL_PATH as ROOT_PANEL_PATH,
 } from "../../utils/menuNavigation";
 import { useFloatingPanelSync } from "../../hooks/useFloatingPanelSync";
+import { useOutsideInteraction } from "../../hooks/useOutsideInteraction";
 import {
   clampFloatingPanelCoordinates,
   getFloatingPanelSizeLimits,
@@ -284,17 +285,11 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
     focusFirstItemInPanel(menuRef.current);
   }, [focusFirstItemOnOpen, focusFirstItemInPanel, isOpen]);
 
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handleMouseDown = (event: globalThis.MouseEvent) => {
-      if (wrapperRef.current?.contains(event.target as Node)) return;
-      closeMenu();
-    };
-
-    document.addEventListener("mousedown", handleMouseDown);
-    return () => document.removeEventListener("mousedown", handleMouseDown);
-  }, [closeMenu, isOpen]);
+  useOutsideInteraction({
+    active: isOpen,
+    insideRefs: [wrapperRef],
+    onOutsideInteraction: closeMenu,
+  });
 
   const menuClassNames = useMemo(
     () =>

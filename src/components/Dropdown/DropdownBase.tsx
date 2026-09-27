@@ -34,6 +34,7 @@ import {
   ROOT_MENU_PANEL_PATH as ROOT_PANEL_PATH,
 } from "../../utils/menuNavigation";
 import { useFloatingPanelSync } from "../../hooks/useFloatingPanelSync";
+import { useOutsideInteraction } from "../../hooks/useOutsideInteraction";
 import {
   getFloatingPanelHorizontalOverflow,
   getFloatingPanelSizeLimits,
@@ -319,20 +320,11 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     focusFirstItemInPanel(menuRef.current);
   }, [focusFirstItemInPanel, focusFirstItemOnOpen, open]);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
-        closeDropdown();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [closeDropdown]);
+  useOutsideInteraction({
+    active: open,
+    insideRefs: [dropdownRef],
+    onOutsideInteraction: closeDropdown,
+  });
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
