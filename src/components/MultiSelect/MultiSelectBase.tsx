@@ -3,6 +3,7 @@ import { ChevronDownIcon, CloseIcon } from "../../Icons";
 import { MultiSelectBaseProps, MultiSelectOption } from "./MultiSelect.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { composeEventHandlers } from "../../utils/eventHandlers";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
   getDefaultVariant,
@@ -66,6 +67,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
       "aria-required": ariaRequired,
       "data-testid": dataTestId,
       testId = dataTestId ?? "multi-select",
+      onKeyDown,
       ...rest
     },
     ref,
@@ -201,9 +203,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
       setQuery("");
     };
 
-    const handleTriggerKeyDown = (
-      event: React.KeyboardEvent<HTMLButtonElement>,
-    ) => {
+    const handleTriggerKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
       if (disabled || loading) return;
 
       if (
@@ -220,9 +220,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
       }
     };
 
-    const handleListKeyDown = (
-      event: React.KeyboardEvent<HTMLInputElement | HTMLDivElement>,
-    ) => {
+    const handleListKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
       if (event.key === "Escape") {
         event.preventDefault();
         setOpen(false);
@@ -239,6 +237,27 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
         event.preventDefault();
         toggleOption(activeOption);
       }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+
+      if (target.dataset.multiSelectTrigger === "true") {
+        handleTriggerKeyDown(event);
+        return;
+      }
+
+      if (
+        target === searchRef.current ||
+        target.closest('[role="listbox"]')
+      ) {
+        handleListKeyDown(event);
+      }
+    };
+
+    const rootEventHandlers = {
+      onKeyDown: composeEventHandlers(onKeyDown, handleKeyDown),
     };
 
     const containerClass = useMemo(
@@ -297,6 +316,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
 
         <div
           {...rest}
+          {...rootEventHandlers}
           ref={(node) => {
             rootRef.current = node;
             if (typeof ref === "function") ref(node);
@@ -320,7 +340,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
             data-required={isRequired || undefined}
             disabled={disabled || loading}
             onClick={() => setOpen((isOpen) => !isOpen)}
-            onKeyDown={handleTriggerKeyDown}
+            data-multi-select-trigger="true"
             data-testid={`${testId}-trigger`}
           >
             <span
@@ -388,7 +408,6 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
                   type="text"
                   value={query}
                   onChange={(event) => setQuery(event.currentTarget.value)}
-                  onKeyDown={handleListKeyDown}
                   className={combineClassNames(
                     classMap.searchInput,
                     searchInputClassName,
@@ -427,7 +446,6 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
                     classMap.listbox,
                     listboxClassName,
                   )}
-                  onKeyDown={handleListKeyDown}
                   tabIndex={-1}
                   data-testid={`${testId}-listbox`}
                 >
