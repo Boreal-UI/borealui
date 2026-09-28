@@ -19,17 +19,20 @@ import {
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
+import {
+  filterRows,
+  findDuplicateRowKeys,
+  paginateRows,
+  resolvePagination,
+  resolveRows,
+  sortRows,
+} from "./dataTableRows";
+import { resolveVirtualWindow } from "./dataTableVirtualization";
 
 const parsePixelWidth = (value: string | undefined, fallback = 160): number => {
   if (!value) return fallback;
   const parsed = Number.parseFloat(value);
   return Number.isFinite(parsed) ? parsed : fallback;
-};
-
-type ResolvedRow<T> = {
-  row: T;
-  sourceIndex: number;
-  key: string | number;
 };
 
 function DataTableBase<T extends object>({
@@ -190,26 +193,15 @@ function DataTableBase<T extends object>({
     [resolvedExpandedRowKeys],
   );
 
-  const resolvedSourceData = useMemo<ResolvedRow<T>[]>(
-    () =>
-      data.map((row, sourceIndex) => ({
-        row,
-        sourceIndex,
-        key: rowKey ? rowKey(row) : sourceIndex,
-      })),
+  const resolvedSourceData = useMemo(
+    () => resolveRows(data, rowKey),
     [data, rowKey],
   );
 
   const duplicateRowKeys = useMemo(() => {
     if (!rowKey) return [];
 
-    const seen = new Set<string | number>();
-    const duplicates = new Set<string | number>();
-    resolvedSourceData.forEach(({ key }) => {
-      if (seen.has(key)) duplicates.add(key);
-      seen.add(key);
-    });
-    return Array.from(duplicates);
+    return findDuplicateRowKeys(resolvedSourceData);
   }, [resolvedSourceData, rowKey]);
 
   const hasIdentitySensitiveFeatures =
@@ -328,76 +320,51 @@ function DataTableBase<T extends object>({
     visibleColumns,
   ]);
 
-  const filteredData = useMemo(() => {
-    if (!filterable || !filterQuery.trim()) return resolvedSourceData;
+  const filteredData = useMemo(
+    () => filterRows(resolvedSourceData, columns, filterable, filterQuery),
+    [columns, filterable, filterQuery, resolvedSourceData],
+  );
 
-    const query = filterQuery.toLowerCase();
-    return resolvedSourceData.filter(({ row }) =>
-      columns.some((column) => {
-        const value = row[column.key];
-        return String(value ?? "")
-          .toLowerCase()
-          .includes(query);
-      }),
-    );
-  }, [columns, filterable, filterQuery, resolvedSourceData]);
-
-  const sortedData = useMemo(() => {
-    if (serverSort || !sortKey) return filteredData;
-
-    return [...filteredData].sort((a, b) => {
-      const valA = a.row[sortKey];
-      const valB = b.row[sortKey];
-
-      if (valA === valB) return 0;
-      if (valA == null) return 1;
-      if (valB == null) return -1;
-
-      const numA = Number(valA);
-      const numB = Number(valB);
-      const bothNumeric = !Number.isNaN(numA) && !Number.isNaN(numB);
-
-      if (bothNumeric) {
-        return sortOrder === "asc" ? numA - numB : numB - numA;
-      }
-
-      const cmp = String(valA).localeCompare(String(valB), undefined, {
-        numeric: true,
-      });
-
-      return sortOrder === "asc" ? cmp : -cmp;
-    });
-  }, [filteredData, sortKey, sortOrder, serverSort]);
+  const sortedData = useMemo(
+    () => sortRows(filteredData, sortKey, sortOrder, serverSort),
+    [filteredData, sortKey, sortOrder, serverSort],
+  );
 
   const totalRows = totalItems ?? sortedData.length;
-  const perPage = Math.max(1, itemsPerPage);
-  const pageCount = Math.max(1, Math.ceil(totalRows / perPage));
-  const clampedPage = Math.min(Math.max(1, page), pageCount);
-  const pageOffset = (clampedPage - 1) * perPage;
+  const { perPage, pageCount, clampedPage, pageOffset } = resolvePagination(
+    totalRows,
+    itemsPerPage,
+    page,
+  );
 
-  const paginatedData = useMemo(() => {
-    if (!pagination || serverPagination) return sortedData;
-    return sortedData.slice(pageOffset, pageOffset + perPage);
-  }, [pageOffset, pagination, perPage, serverPagination, sortedData]);
+  const paginatedData = useMemo(
+    () =>
+      paginateRows(
+        sortedData,
+        pagination,
+        serverPagination,
+        pageOffset,
+        perPage,
+      ),
+    [pageOffset, pagination, perPage, serverPagination, sortedData],
+  );
 
-  const virtualStartIndex = virtualized
-    ? Math.max(0, Math.floor(scrollTop / virtualRowHeight) - virtualOverscan)
-    : 0;
-  const virtualVisibleCount = virtualized
-    ? Math.ceil(virtualViewportHeight / virtualRowHeight) + virtualOverscan * 2
-    : paginatedData.length;
-  const virtualEndIndex = virtualized
-    ? Math.min(paginatedData.length, virtualStartIndex + virtualVisibleCount)
-    : paginatedData.length;
+  const {
+    startIndex: virtualStartIndex,
+    endIndex: virtualEndIndex,
+    topSpacer: virtualTopSpacer,
+    bottomSpacer: virtualBottomSpacer,
+  } = resolveVirtualWindow(
+    paginatedData.length,
+    virtualized,
+    scrollTop,
+    virtualRowHeight,
+    virtualViewportHeight,
+    virtualOverscan,
+  );
   const renderedData = virtualized
     ? paginatedData.slice(virtualStartIndex, virtualEndIndex)
     : paginatedData;
-  const virtualTopSpacer = virtualized
-    ? virtualStartIndex * virtualRowHeight
-    : 0;
-  const virtualBottomSpacer = virtualized
-    ? Math.max(0, (paginatedData.length - virtualEndIndex) * virtualRowHeight)
-    : 0;
 
   const selectedRows = useMemo(
     () =>

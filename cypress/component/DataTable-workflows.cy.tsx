@@ -191,5 +191,52 @@ implementations.forEach(({ name, DataTable }) => {
         .find('input[type="checkbox"]')
         .should("be.checked");
     });
+
+    it("keeps editing attached to the logical row across sorting", () => {
+      const editableColumns: DataTableProps<Row>["columns"] = [
+        {
+          key: "name",
+          label: "Name",
+          sortable: true,
+          editable: true,
+          renderEditor: ({ row }) => (
+            <input
+              aria-label={`Editing ${row.name}`}
+              defaultValue={row.name}
+              data-testid={`persistent-editor-${row.id}`}
+            />
+          ),
+        },
+        { key: "status", label: "Status" },
+      ];
+
+      cy.mount(
+        <DataTable<Row>
+          data={[
+            { id: "three", name: "Cascade", status: "Draft", owner: "Lin" },
+            { id: "one", name: "Aurora", status: "Ready", owner: "Ada" },
+          ]}
+          columns={editableColumns}
+          rowKey={(row) => row.id}
+          data-testid="editing-identity-table"
+        />,
+      );
+
+      cy.get('[data-testid="editing-identity-table-edit-three-name"]').click();
+      cy.get('[data-testid="persistent-editor-three"]').should(
+        "have.value",
+        "Cascade",
+      );
+
+      cy.get('[data-testid="editing-identity-table-sort-name"]').click();
+
+      cy.get('[data-testid="editing-identity-table-row-three"]')
+        .should("contain.text", "Draft")
+        .find('[data-testid="persistent-editor-three"]')
+        .should("have.value", "Cascade");
+      cy.get('[data-testid="editing-identity-table-row-one"]')
+        .find('input[aria-label^="Editing"]')
+        .should("not.exist");
+    });
   });
 });
