@@ -233,12 +233,16 @@ function extractClassMapUsage(sourceFiles) {
   return { requiredKeys, hasUnknownDynamicAccess, helperConsumedKeyPrefixes };
 }
 
-function compileClassNames(stylePath, rootDir) {
-  const result = sass.compile(stylePath, {
+function compileStyle(stylePath, rootDir) {
+  return sass.compile(stylePath, {
     loadPaths: [rootDir, path.join(rootDir, "node_modules")],
     logger: sass.Logger.silent,
     style: "expanded",
   });
+}
+
+function compileClassNames(stylePath, rootDir) {
+  const result = compileStyle(stylePath, rootDir);
   const classes = new Set();
   const classPattern = /\.(-?[_a-zA-Z]+[_a-zA-Z0-9-]*)/g;
   postcss.parse(result.css).walkRules((rule) => {
@@ -250,8 +254,30 @@ function compileClassNames(stylePath, rootDir) {
   return classes;
 }
 
+function readFeatureSource(stylePath, visited = new Set()) {
+  const resolvedPath = path.resolve(stylePath);
+  if (visited.has(resolvedPath)) return "";
+  visited.add(resolvedPath);
+
+  const source = fs.readFileSync(resolvedPath, "utf8");
+  const sharedSources = [...source.matchAll(/@use\s+["']([^"']+\.shared)["']/g)]
+    .map((match) => {
+      const importPath = path.resolve(path.dirname(resolvedPath), match[1]);
+      const parsed = path.parse(importPath);
+      const candidates = [
+        `${importPath}.scss`,
+        path.join(parsed.dir, `_${parsed.base}.scss`),
+      ];
+      const sharedPath = candidates.find((candidate) => fs.existsSync(candidate));
+      return sharedPath ? readFeatureSource(sharedPath, visited) : "";
+    })
+    .join("\n");
+
+  return `${source}\n${sharedSources}`;
+}
+
 function sourceFeatures(stylePath) {
-  const source = fs.readFileSync(stylePath, "utf8");
+  const source = readFeatureSource(stylePath);
   const features = new Map([
     ["focus-visible", /:focus-visible/.test(source)],
     ["focus-within", /:focus-within/.test(source)],

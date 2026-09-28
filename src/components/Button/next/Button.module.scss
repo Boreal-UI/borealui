@@ -5,6 +5,7 @@
 @use "sass:list";
 
 @use "../../../styles/_animations";
+@use "../Button.shared" as shared;
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
@@ -38,11 +39,11 @@
 
   @media (prefers-reduced-motion: reduce) {
     .button {
-      transition: none;
+      @include shared.reduced-motion-root;
     }
 
     .loader {
-      animation-duration: 2s;
+      @include shared.reduced-motion-loader;
     }
   }
 
@@ -60,54 +61,7 @@
   }
 
   .button {
-    min-height: 44px;
-    min-width: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-xs);
-    flex-wrap: nowrap;
-    width: fit-content;
-    border: none;
-    cursor: pointer;
-    transition:
-      transform var(--motion-press, 140ms cubic-bezier(0.23, 1, 0.32, 1)),
-      box-shadow var(--motion-color, 160ms ease);
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
-    color: inherit;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: none;
-    }
-
-    &:active {
-      transform: scale(0.97);
-    }
-
-    &:focus {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 2px;
-    }
-
-    @include bp.down(sm) {
-      gap: var(--spacing-xs);
-      padding: 8px 14px;
-    }
-
-    @include bp.between(sm, md) {
-      gap: var(--spacing-sm);
-      padding: 10px 16px;
-    }
-
-    @include bp.up(lg) {
-      gap: var(--spacing-md);
-      padding: 12px 20px;
-    }
+    @include shared.root;
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -117,20 +71,11 @@
   }
 
   .button.fullWidth {
-    width: 100%;
-    max-width: none;
-    display: flex;
-
-    @include bp.up(xl) {
-      max-width: 640px;
-    }
+    @include shared.full-width;
   }
 
   .button.autoFull {
-    @include bp.down(sm) {
-      width: 100%;
-      display: flex;
-    }
+    @include shared.auto-full;
   }
 
   @each $key, $value in theme.$rounding {
@@ -146,194 +91,81 @@
   }
 
   .loader {
-    width: 1.2rem;
-    height: 1.2rem;
-    border: 2px solid transparent;
-    border-top-color: var(--text-color-primary);
-    border-radius: 50%;
-    animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    @include shared.loader;
   }
 
   .buttonIcon {
-    display: flex;
-    align-items: center;
-    line-height: 1em;
+    @include shared.button-icon(1em);
   }
 
   .icon {
-    display: block;
-    flex-shrink: 0;
+    @include shared.icon;
   }
 
   .link {
-    text-decoration: none;
+    @include shared.link;
   }
 
   .button.iconLeft {
-    flex-direction: row;
-
-    .buttonIcon {
-      margin-right: var(--spacing-sm);
-
-      @include bp.down(sm) {
-        margin-right: var(--spacing-xs);
-      }
-
-      @include bp.up(lg) {
-        margin-right: var(--spacing-sm);
-      }
-    }
+    @include shared.icon-position(".buttonIcon", margin-right);
   }
 
   .button.iconRight {
-    flex-direction: row;
-
-    .buttonIcon {
-      margin-left: var(--spacing-sm);
-
-      @include bp.down(sm) {
-        margin-left: var(--spacing-xs);
-      }
-
-      @include bp.up(lg) {
-        margin-left: var(--spacing-sm);
-      }
-    }
+    @include shared.icon-position(".buttonIcon", margin-left);
   }
 
   .buttonLabel {
-    font: inherit;
-    line-height: inherit;
-    letter-spacing: inherit;
+    @include shared.label;
   }
 
   .glass {
-    @include mixins.glass-surface(
-      var(--button-glass-bg, var(--glass-background)),
-      var(--button-glass-border, var(--glass-border-color)),
-      var(--glass-blur)
-    );
-
-    color: inherit;
-    isolation: isolate;
-
-    &:hover {
-      background: var(--button-glass-hover-bg, var(--glass-background-strong));
-    }
+    @include shared.glass;
 
     &.outline {
-      border-color: var(--button-glass-border, var(--glass-border-color));
-
-      &:hover {
-        background: var(--button-glass-hover-bg, var(--glass-background));
-      }
+      @include shared.glass-outline;
     }
   }
 
   .clear {
-    background-color: transparent;
-    box-shadow: none;
-    color: inherit;
+    @include shared.clear;
   }
 
   .outline {
-    background-color: transparent;
-    border: 2px solid currentcolor;
-    box-shadow: none;
-
-    @include bp.down(sm) {
-      border-width: 1.5px;
-    }
-
-    @include bp.up(lg) {
-      border-width: 2px;
-    }
+    @include shared.outline;
   }
 
   @each $name, $values in theme.$themes {
     .#{$name} {
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-
-      --button-glass-bg: #{map.get($values, glass-bg)};
-      --button-glass-hover-bg: #{map.get($values, glass-hover)};
-      --button-glass-border: #{map.get($values, glass-border)};
-      --button-glass-text: #{map.get($values, text)};
-
-      &:hover {
-        background-color: map.get($values, hover);
-      }
+      @include shared.theme-base($values);
 
       .loader {
         border-top-color: map.get($values, text);
       }
 
       &.glass {
-        background-color: transparent;
-        background: var(--button-glass-bg);
-        border: 1px solid var(--button-glass-border);
-        color: inherit;
-
-        &:hover {
-          background-color: transparent;
-          background: var(--button-glass-hover-bg);
-        }
+        @include shared.themed-glass;
       }
 
       &.outline {
-        background-color: transparent;
-        color: inherit;
-        border-color: map.get($values, border);
-
-        &:hover {
-          border-color: map.get($values, hover);
-          color: inherit;
-          background-color: map.get($values, bg);
-        }
+        @include shared.themed-outline($values);
       }
     }
   }
 
   @each $name, $values in theme.$states {
     .#{$name} {
-      background-color: map.get($values, bg);
-      color: map.get($values, text);
-
-      --button-glass-bg: #{map.get($values, glass-bg)};
-      --button-glass-hover-bg: #{map.get($values, glass-hover)};
-      --button-glass-border: #{map.get($values, glass-border)};
-      --button-glass-text: #{map.get($values, text)};
-
-      &:hover {
-        background-color: map.get($values, hover);
-      }
+      @include shared.theme-base($values);
 
       .loader {
         border-top-color: map.get($values, text);
       }
 
       &.glass {
-        background-color: transparent;
-        background: var(--button-glass-bg);
-        border: 1px solid var(--button-glass-border);
-        color: inherit;
-
-        &:hover {
-          background-color: transparent;
-          background: var(--button-glass-hover-bg);
-        }
+        @include shared.themed-glass;
       }
 
       &.outline {
-        background-color: transparent;
-        color: inherit;
-        border-color: map.get($values, border);
-
-        &:hover {
-          border-color: map.get($values, hover);
-          color: inherit;
-          background-color: map.get($values, bg);
-        }
+        @include shared.themed-outline($values);
       }
     }
   }
@@ -374,37 +206,14 @@
 
   @each $size, $values in $sizes {
     .#{$size} {
-      padding: map.get($values, padding);
-
-      @include bp.down(sm) {
-        padding: max(8px, 0.6em) 10px;
-      }
-
-      @include bp.up(xl) {
-        $vpad: list.nth(map.get($values, padding), 1);
-        $hpad: list.nth(map.get($values, padding), 2);
-
-        padding: $vpad ($hpad * 1.1) $vpad ($hpad * 1.1);
-      }
+      @include shared.size($values);
 
       .buttonLabel {
-        font-size: map.get($values, label);
-
-        @include bp.up(lg) {
-          font-size: calc(#{map.get($values, label)} * 1.05);
-        }
+        @include shared.size-label($values);
       }
 
       .buttonIcon {
-        $ic: map.get($values, icon);
-
-        width: $ic;
-        height: $ic;
-
-        @include bp.up(lg) {
-          width: calc(#{$ic} * 1.05);
-          height: calc(#{$ic} * 1.05);
-        }
+        @include shared.size-icon($values);
       }
     }
   }

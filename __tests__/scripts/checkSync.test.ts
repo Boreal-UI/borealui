@@ -75,6 +75,40 @@ describe("Core/Next style semantic parity", () => {
     expect(report.families).toHaveLength(1);
   });
 
+  it("recognizes semantic classes and tokens emitted by a shared mixin", () => {
+    const root = createFixture();
+    const family = path.join(root, "src", "components", "Fixture");
+    writeFileSync(
+      path.join(family, "_Fixture.shared.scss"),
+      `@mixin styles($root, $disabled, $loading) {
+  #{$root} { color: var(--fixture-color); }
+  #{$disabled} { color: var(--fixture-disabled-color); }
+  #{$loading} { color: var(--fixture-loading-color); }
+}
+`,
+    );
+    writeFileSync(
+      path.join(family, "core", "Fixture.scss"),
+      `@use "../Fixture.shared" as shared;
+@include shared.styles(".fixture", ".fixture_disabled", ".fixture_loading");
+`,
+    );
+    writeFileSync(
+      path.join(family, "next", "Fixture.module.scss"),
+      `@use "../Fixture.shared" as shared;
+@include shared.styles(".root", ".disabled", ".loading");
+`,
+    );
+
+    const report = analyze(root);
+
+    expect(report.errors).toEqual([]);
+    expect(report.warnings).toEqual([]);
+    expect(report.families[0]?.nextKeys).toEqual(
+      expect.arrayContaining(["root", "disabled", "loading"]),
+    );
+  });
+
   it("isolates each styled family from sibling base components", () => {
     const root = createFixture();
     writeFileSync(
