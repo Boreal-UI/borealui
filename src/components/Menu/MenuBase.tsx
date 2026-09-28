@@ -23,9 +23,11 @@ import {
 import {
   getMenuItemPath as getItemPath,
   getParentMenuPath as getParentPath,
+  getWrappedMenuIndex,
   isDisabledMenuElement as isDisabledElement,
   isMenuPathOpen as isPathOpen,
   MENU_VIEWPORT_MARGIN as VIEWPORT_MARGIN,
+  resolveMenuNavigationIntent,
   ROOT_MENU_PANEL_PATH as ROOT_PANEL_PATH,
 } from "../../utils/menuNavigation";
 import { useFloatingPanelSync } from "../../hooks/useFloatingPanelSync";
@@ -166,8 +168,10 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       const enabledItems = getEnabledItemsInPanel(panel);
       if (enabledItems.length === 0) return;
 
-      const resolvedIndex =
-        (nextIndex + enabledItems.length) % enabledItems.length;
+      const resolvedIndex = getWrappedMenuIndex(
+        nextIndex,
+        enabledItems.length,
+      );
       enabledItems[resolvedIndex]?.focus();
     },
     [getEnabledItemsInPanel],
@@ -512,83 +516,58 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
     const currentIndex = activeElement
       ? enabledItems.indexOf(activeElement)
       : -1;
-
-    if (event.key === "Escape") {
-      event.preventDefault();
-      closeMenu();
-      return;
-    }
-
-    if (event.key === "Tab") {
-      closeMenu();
-      return;
-    }
-
-    if (event.key === "ArrowDown") {
-      event.preventDefault();
-      focusItemInPanel(currentPanel, currentIndex + 1);
-      return;
-    }
-
-    if (event.key === "ArrowUp") {
-      event.preventDefault();
-      focusItemInPanel(
-        currentPanel,
-        currentIndex < 0 ? enabledItems.length - 1 : currentIndex - 1,
-      );
-      return;
-    }
-
-    if (event.key === "Home") {
-      event.preventDefault();
-      focusItemInPanel(currentPanel, 0);
-      return;
-    }
-
-    if (event.key === "End") {
-      event.preventDefault();
-      focusItemInPanel(currentPanel, enabledItems.length - 1);
-      return;
-    }
-
-    if (event.key === "ArrowRight") {
-      const submenuPath = activeElement?.dataset.menuItemPath;
-      const submenuId = activeElement?.getAttribute("aria-controls");
-
-      if (
+    const panelPath = currentPanel?.dataset.menuPanelPath;
+    const submenuPath = activeElement?.dataset.menuItemPath;
+    const submenuId = activeElement?.getAttribute("aria-controls");
+    const activeItem =
+      activeElement?.dataset.menuItem === "true" ? activeElement : null;
+    const intent = resolveMenuNavigationIntent({
+      key: event.key,
+      currentIndex,
+      itemCount: enabledItems.length,
+      activeHasSubmenu:
         activeElement?.dataset.menuHasSubmenu === "true" &&
-        submenuPath &&
-        submenuId
-      ) {
-        event.preventDefault();
-        setOpenSubmenuPath(submenuPath);
-        focusSubmenuPanel(submenuId);
-      }
+        Boolean(submenuPath && submenuId),
+      activeItemAvailable: Boolean(
+        activeItem && !isDisabledElement(activeItem),
+      ),
+      isSubmenuPanel: Boolean(panelPath && panelPath !== ROOT_PANEL_PATH),
+    });
 
-      return;
-    }
-
-    if (event.key === "ArrowLeft") {
-      const panelPath = currentPanel?.dataset.menuPanelPath;
-      if (panelPath && panelPath !== ROOT_PANEL_PATH) {
+    switch (intent.type) {
+      case "dismiss":
         event.preventDefault();
-        const parentPath = getParentPath(panelPath);
+        closeMenu();
+        return;
+      case "tab-dismiss":
+        closeMenu();
+        return;
+      case "focus":
+        event.preventDefault();
+        focusItemInPanel(currentPanel, intent.index);
+        return;
+      case "open-submenu":
+        event.preventDefault();
+        setOpenSubmenuPath(submenuPath!);
+        focusSubmenuPanel(submenuId!);
+        return;
+      case "close-submenu": {
+        event.preventDefault();
+        const closingPanelPath = panelPath!;
+        const parentPath = getParentPath(closingPanelPath);
         setOpenSubmenuPath(parentPath);
         const parentTrigger = wrapperRef.current?.querySelector<HTMLElement>(
-          `[data-menu-item-path="${panelPath}"][data-menu-item="true"]`,
+          `[data-menu-item-path="${closingPanelPath}"][data-menu-item="true"]`,
         );
         parentTrigger?.focus();
+        return;
       }
-      return;
-    }
-
-    if (event.key === "Enter" || event.key === " ") {
-      const activeItem =
-        activeElement?.dataset.menuItem === "true" ? activeElement : null;
-      if (!activeItem || isDisabledElement(activeItem)) return;
-
-      event.preventDefault();
-      activeItem.click();
+      case "activate":
+        event.preventDefault();
+        activeItem!.click();
+        return;
+      case "none":
+        return;
     }
   };
 
@@ -694,6 +673,10 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
         if (isStackedMenuViewport()) return;
         openDirectSubmenu();
       };
+      const handleDirectItemFocus = () => {
+        if (!hasSubmenu) closeChildSubmenus();
+      };
+      const handleSubmenuTriggerFocus = () => undefined;
       const handleSubmenuWrapperOver = (
         event:
           | React.MouseEvent<HTMLDivElement>
@@ -760,7 +743,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
           onPointerOver={handleSubmenuWrapperOver}
           onMouseEnter={handleDirectItemHover}
           onMouseOver={handleSubmenuWrapperOver}
-          onFocus={handleDirectItemHover}
+          onFocus={handleDirectItemFocus}
         >
           {hasSubmenu ? (
             <button
@@ -771,7 +754,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
               onPointerOver={handleSubmenuTriggerOver}
               onMouseEnter={handleSubmenuTriggerEnter}
               onMouseOver={handleSubmenuTriggerOver}
-              onFocus={handleSubmenuTriggerEnter}
+              onFocus={handleSubmenuTriggerFocus}
               onClick={(event) => {
                 event.stopPropagation();
                 openDirectSubmenu();
@@ -785,6 +768,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
               target={item.disabled ? undefined : item.target}
               rel={mergeSafeRel(item.target, item.rel)}
               {...commonProps}
+              onFocus={closeChildSubmenus}
               onClick={(event) => {
                 event.stopPropagation();
                 if (item.disabled) {
@@ -801,6 +785,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
               type="button"
               disabled={item.disabled}
               {...commonProps}
+              onFocus={closeChildSubmenus}
               onClick={(event) => handleItemSelect(event, item)}
             >
               {renderItemContent(item, false)}
