@@ -366,6 +366,36 @@ describe("BaseFileUpload", () => {
     ).toBeInTheDocument();
   });
 
+  it("accepts files whose size is exactly the maximum", () => {
+    const file = createFile("boundary.txt", "text/plain", 1024);
+
+    renderFileUpload({ maxFileSizeBytes: 1024 });
+
+    fireEvent.change(screen.getByTestId("upload-input"), {
+      target: { files: [file] },
+    });
+
+    expect(screen.getByText("boundary.txt")).toBeInTheDocument();
+    expect(screen.queryByText("Rejected Files:")).not.toBeInTheDocument();
+  });
+
+  it("gives size validation precedence when type and size are invalid", () => {
+    const file = createFile("bad.exe", "application/x-msdownload", 2048);
+
+    renderFileUpload({
+      allowedFileTypes: ["image/png"],
+      maxFileSizeBytes: 1024,
+    });
+
+    fireEvent.change(screen.getByTestId("upload-input"), {
+      target: { files: [file] },
+    });
+
+    const rejectedFiles = screen.getByTestId("upload-rejected-files");
+    expect(rejectedFiles).toHaveTextContent("Exceeds size limit");
+    expect(rejectedFiles).not.toHaveTextContent("Invalid type");
+  });
+
   it("replaces files in single mode when a new file is selected", () => {
     const first = createFile("first.txt", "text/plain", 1000);
     const second = createFile("second.txt", "text/plain", 1000);
@@ -402,6 +432,23 @@ describe("BaseFileUpload", () => {
 
     expect(screen.getByText("first.txt")).toBeInTheDocument();
     expect(screen.getByText("second.txt")).toBeInTheDocument();
+  });
+
+  it("preserves duplicate selections in multiple mode", () => {
+    const file = createFile("duplicate.txt", "text/plain", 1000);
+    const onFilesChange = jest.fn();
+
+    renderFileUpload({ multiple: true, onFilesChange });
+
+    fireEvent.change(screen.getByTestId("upload-input"), {
+      target: { files: [file] },
+    });
+    fireEvent.change(screen.getByTestId("upload-input"), {
+      target: { files: [file] },
+    });
+
+    expect(screen.getAllByText("duplicate.txt")).toHaveLength(2);
+    expect(onFilesChange).toHaveBeenLastCalledWith([file, file]);
   });
 
   it("calls onFilesChange when files are selected", () => {
@@ -445,6 +492,18 @@ describe("BaseFileUpload", () => {
     expect(
       screen.queryByTestId("upload-upload-button"),
     ).not.toBeInTheDocument();
+  });
+
+  it("allows the same file to be selected again after removal", () => {
+    const file = createFile("again.txt", "text/plain", 1000);
+    const { input } = renderFileUpload();
+
+    fireEvent.change(input, { target: { files: [file] } });
+    fireEvent.click(screen.getByLabelText("Remove again.txt"));
+    fireEvent.change(input, { target: { files: [file] } });
+
+    expect(screen.getByText("again.txt")).toBeInTheDocument();
+    expect(input.value).toBe("");
   });
 
   it("calls onFilesChange when a file is removed", () => {
@@ -527,6 +586,40 @@ describe("BaseFileUpload", () => {
     expect(wrapper).not.toHaveClass("dragging");
   });
 
+  it("composes consumer drag handlers before internal behavior", () => {
+    const calls: string[] = [];
+    const { wrapper } = renderFileUpload({
+      onDragOver: () => {
+        calls.push("consumer");
+        expect(wrapper).not.toHaveClass("dragging");
+      },
+    });
+
+    fireEvent.dragOver(wrapper);
+
+    expect(calls).toEqual(["consumer"]);
+    expect(wrapper).toHaveClass("dragging");
+  });
+
+  it("allows consumer drag handlers to cancel internal behavior", () => {
+    const file = createFile("cancelled.txt", "text/plain", 1000);
+    const onDragOver = jest.fn((event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault();
+    });
+    const onDrop = jest.fn((event: React.DragEvent<HTMLDivElement>) => {
+      event.preventDefault();
+    });
+    const { wrapper } = renderFileUpload({ onDragOver, onDrop });
+
+    fireEvent.dragOver(wrapper);
+    fireEvent.drop(wrapper, { dataTransfer: { files: [file] } });
+
+    expect(onDragOver).toHaveBeenCalledTimes(1);
+    expect(onDrop).toHaveBeenCalledTimes(1);
+    expect(wrapper).not.toHaveClass("dragging");
+    expect(screen.queryByText("cancelled.txt")).not.toBeInTheDocument();
+  });
+
   it("handles dropping files onto the drop area", () => {
     const file = createFile("dropped.txt", "text/plain", 1000);
     const { wrapper } = renderFileUpload();
@@ -548,6 +641,19 @@ describe("BaseFileUpload", () => {
 
     fireEvent.dragOver(wrapper);
     expect(wrapper).not.toHaveClass("dragging");
+  });
+
+  it("ignores dropped files while disabled", () => {
+    const file = createFile("disabled.txt", "text/plain", 1000);
+    const { wrapper } = renderFileUpload({ disabled: true });
+
+    fireEvent.drop(wrapper, {
+      dataTransfer: {
+        files: [file],
+      },
+    });
+
+    expect(screen.queryByText("disabled.txt")).not.toBeInTheDocument();
   });
 
   it("does nothing when the input change event has no files", () => {
