@@ -193,6 +193,141 @@ const runDropdownSubmenuTests = (
       cy.get('[data-testid="dropdown-trigger"]').should("be.focused");
     });
 
+    it("wraps across enabled items and honors Home and End", () => {
+      mountDropdown(Dropdown, {
+        items: [
+          {
+            label: "Disabled first",
+            disabled: true,
+            "data-testid": "dropdown-disabled-first",
+          },
+          { label: "Alpha", "data-testid": "dropdown-alpha" },
+          {
+            label: "Disabled middle",
+            disabled: true,
+            "data-testid": "dropdown-disabled-middle",
+          },
+          { label: "Omega", "data-testid": "dropdown-omega" },
+          {
+            label: "Disabled last",
+            disabled: true,
+            "data-testid": "dropdown-disabled-last",
+          },
+        ],
+      });
+
+      cy.get('[data-testid="dropdown-trigger"]').click();
+      cy.get('[data-testid="dropdown-alpha"]').should("be.focused");
+
+      cy.focused().type("{downArrow}");
+      cy.get('[data-testid="dropdown-omega"]').should("be.focused");
+
+      cy.focused().type("{downArrow}");
+      cy.get('[data-testid="dropdown-alpha"]').should("be.focused");
+
+      cy.focused().type("{end}");
+      cy.get('[data-testid="dropdown-omega"]').should("be.focused");
+
+      cy.focused().type("{home}");
+      cy.get('[data-testid="dropdown-alpha"]').should("be.focused");
+
+      cy.focused().type("{upArrow}");
+      cy.get('[data-testid="dropdown-omega"]').should("be.focused");
+    });
+
+    it("keeps an all-disabled menu stable under keyboard input", () => {
+      mountDropdown(Dropdown, {
+        items: [
+          {
+            label: "Disabled first",
+            disabled: true,
+            "data-testid": "dropdown-disabled-first",
+            onClick: cy.stub().as("disabledFirstClick"),
+          },
+          {
+            label: "Disabled second",
+            disabled: true,
+            "data-testid": "dropdown-disabled-second",
+            onClick: cy.stub().as("disabledSecondClick"),
+          },
+        ],
+      });
+
+      cy.get('[data-testid="dropdown-trigger"]').click();
+      cy.get('[data-testid="dropdown"]')
+        .trigger("keydown", { key: "ArrowDown" })
+        .trigger("keydown", { key: "ArrowUp" })
+        .trigger("keydown", { key: "Home" })
+        .trigger("keydown", { key: "End" })
+        .trigger("keydown", { key: "Enter" })
+        .trigger("keydown", { key: " " });
+
+      cy.get('[data-testid="dropdown-menu"]').should("be.visible");
+      cy.get("@disabledFirstClick").should("not.have.been.called");
+      cy.get("@disabledSecondClick").should("not.have.been.called");
+    });
+
+    it("activates focused items with Enter and Space", () => {
+      const enterClick = cy.stub();
+      mountDropdown(Dropdown, {
+        items: [
+          {
+            label: "Profile",
+            "data-testid": "dropdown-profile",
+            onClick: enterClick,
+          },
+        ],
+      });
+
+      cy.get('[data-testid="dropdown-trigger"]').click();
+      cy.get('[data-testid="dropdown-profile"]')
+        .should("be.focused");
+      cy.get('[data-testid="dropdown"]').trigger("keydown", { key: "Enter" });
+      cy.then(() => {
+        expect(enterClick).to.have.been.calledOnce;
+      });
+      cy.get('[data-testid="dropdown-menu"]').should("not.exist");
+
+      const spaceClick = cy.stub();
+      mountDropdown(Dropdown, {
+        items: [
+          {
+            label: "Archive",
+            "data-testid": "dropdown-archive",
+            onClick: spaceClick,
+          },
+        ],
+      });
+
+      cy.get('[data-testid="dropdown-trigger"]').click();
+      cy.get('[data-testid="dropdown-archive"]')
+        .should("be.focused");
+      cy.get('[data-testid="dropdown"]').trigger("keydown", { key: " " });
+      cy.then(() => {
+        expect(spaceClick).to.have.been.calledOnce;
+      });
+      cy.get('[data-testid="dropdown-menu"]').should("not.exist");
+    });
+
+    it("dismisses on Tab without cancelling the browser event", () => {
+      mountDropdown(Dropdown);
+
+      cy.get('[data-testid="dropdown-trigger"]').click();
+      cy.get('[data-testid="dropdown-profile"]').should("be.focused");
+      cy.get('[data-testid="dropdown"]').then(($dropdown) => {
+        const tabEvent = new KeyboardEvent("keydown", {
+          key: "Tab",
+          bubbles: true,
+          cancelable: true,
+        });
+
+        expect($dropdown[0].dispatchEvent(tabEvent)).to.equal(true);
+      });
+
+      cy.get('[data-testid="dropdown-menu"]').should("not.exist");
+      cy.get('[data-testid="dropdown-trigger"]').should("be.focused");
+    });
+
     it("keeps disabled submenu triggers inert and selectable siblings working", () => {
       mountDropdown(Dropdown, {
         items: [

@@ -31,6 +31,7 @@ import {
   isDisabledMenuElement as isDisabledElement,
   isMenuPathOpen as isPathOpen,
   MENU_VIEWPORT_MARGIN as VIEWPORT_MARGIN,
+  resolveMenuNavigationIntent,
   ROOT_MENU_PANEL_PATH as ROOT_PANEL_PATH,
 } from "../../utils/menuNavigation";
 import { useFloatingPanelSync } from "../../hooks/useFloatingPanelSync";
@@ -354,80 +355,55 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       const currentIndex = activeElement
         ? enabledItems.indexOf(activeElement)
         : -1;
+      const activeItem =
+        activeElement?.dataset.dropdownMenuItem === "true"
+          ? activeElement
+          : null;
+      const panelPath = currentPanel?.dataset.dropdownPanelPath;
+      const submenuPath = activeItem?.dataset.dropdownItemPath;
+      const submenuId = activeItem?.getAttribute("aria-controls");
+      const intent = resolveMenuNavigationIntent({
+        key: e.key,
+        currentIndex,
+        itemCount: enabledItems.length,
+        activeHasSubmenu: activeItem?.dataset.dropdownHasSubmenu === "true",
+        activeItemAvailable: Boolean(
+          activeItem && !isDisabledElement(activeItem),
+        ),
+        isSubmenuPanel: Boolean(
+          panelPath && panelPath !== ROOT_PANEL_PATH,
+        ),
+      });
 
-      if (e.key === "ArrowDown") {
+      if (intent.type === "focus") {
         e.preventDefault();
-        focusItemInPanel(currentPanel, currentIndex + 1);
+        focusItemInPanel(currentPanel, intent.index);
         return;
       }
 
-      if (e.key === "ArrowUp") {
+      if (intent.type === "open-submenu" && submenuPath && submenuId) {
         e.preventDefault();
-        focusItemInPanel(
-          currentPanel,
-          currentIndex < 0 ? enabledItems.length - 1 : currentIndex - 1,
+        openSubmenu(submenuPath);
+        focusSubmenuPanel(submenuId);
+        return;
+      }
+
+      if (intent.type === "close-submenu" && panelPath) {
+        e.preventDefault();
+        const parentPath = getParentPath(panelPath);
+        setOpenSubmenuPath(parentPath);
+
+        const parentTrigger = dropdownRef.current?.querySelector<HTMLElement>(
+          `[data-dropdown-item-path="${panelPath}"][data-dropdown-menu-item="true"]`,
         );
+        parentTrigger?.focus();
         return;
       }
 
-      if (e.key === "Home") {
-        e.preventDefault();
-        focusItemInPanel(currentPanel, 0);
-        return;
-      }
-
-      if (e.key === "End") {
-        e.preventDefault();
-        focusItemInPanel(currentPanel, enabledItems.length - 1);
-        return;
-      }
-
-      if (e.key === "ArrowRight") {
-        const submenuPath = activeElement?.dataset.dropdownItemPath;
-        const submenuId = activeElement?.getAttribute("aria-controls");
-
-        if (
-          activeElement?.dataset.dropdownHasSubmenu === "true" &&
-          submenuPath &&
-          submenuId
-        ) {
-          e.preventDefault();
-          openSubmenu(submenuPath);
-          focusSubmenuPanel(submenuId);
-        }
-
-        return;
-      }
-
-      if (e.key === "ArrowLeft") {
-        const panelPath = currentPanel?.dataset.dropdownPanelPath;
-
-        if (panelPath && panelPath !== ROOT_PANEL_PATH) {
-          e.preventDefault();
-          const parentPath = getParentPath(panelPath);
-          setOpenSubmenuPath(parentPath);
-
-          const parentTrigger = dropdownRef.current?.querySelector<HTMLElement>(
-            `[data-dropdown-item-path="${panelPath}"][data-dropdown-menu-item="true"]`,
-          );
-          parentTrigger?.focus();
-        }
-
-        return;
-      }
-
-      if (e.key === "Enter" || e.key === " ") {
-        const activeItem =
-          activeElement?.dataset.dropdownMenuItem === "true"
-            ? activeElement
-            : null;
-
-        if (!activeItem || isDisabledElement(activeItem)) return;
-
+      if (intent.type === "activate" && activeItem) {
         e.preventDefault();
 
         if (activeItem.dataset.dropdownHasSubmenu === "true") {
-          const submenuPath = activeItem.dataset.dropdownItemPath;
           if (submenuPath) {
             toggleSubmenu(submenuPath);
           }
