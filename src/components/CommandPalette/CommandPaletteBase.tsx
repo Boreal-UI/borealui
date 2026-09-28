@@ -23,6 +23,7 @@ import {
 import { useModalLayer } from "../../hooks/useModalLayer";
 import { usePortalHost } from "../../hooks/usePortalHost";
 import { getFocusableElements } from "../../utils/modalLayerManager";
+import { composeEventHandlers } from "../../utils/eventHandlers";
 
 const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   commands,
@@ -60,6 +61,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   "data-testid": dataTestId,
   testId = dataTestId ?? "command-palette",
   className,
+  onKeyDown,
   ...rest
 }) => {
   const reactId = useId();
@@ -212,14 +214,14 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
     [onClose],
   );
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleInputKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLElement>) => {
       if (e.key === "ArrowDown") {
-        if (filtered.length === 0) return;
+        if (filtered.length === 0) return true;
         e.preventDefault();
         setActiveIndex((prev) => getNextEnabledIndex(prev < 0 ? -1 : prev, 1));
       } else if (e.key === "ArrowUp") {
-        if (filtered.length === 0) return;
+        if (filtered.length === 0) return true;
         e.preventDefault();
         setActiveIndex((prev) => getNextEnabledIndex(prev < 0 ? 0 : prev, -1));
       } else if (e.key === "Enter") {
@@ -244,7 +246,9 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
         if (reversedIndex >= 0) {
           setActiveIndex(filtered.length - 1 - reversedIndex);
         }
-      }
+      } else return false;
+
+      return true;
     },
     [filtered, activeIndex, getNextEnabledIndex, activateCommand, onClose],
   );
@@ -282,6 +286,36 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
       }
     },
     [modal, onClose, trapFocus],
+  );
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      const target = event.target;
+
+      if (target === inputRef.current && handleInputKeyDown(event)) return;
+
+      if (target instanceof Element) {
+        const option = target.closest<HTMLElement>(
+          "[data-command-palette-option-index]",
+        );
+
+        if (
+          option &&
+          containerRef.current?.contains(option) &&
+          (event.key === "Enter" || event.key === " ")
+        ) {
+          event.preventDefault();
+          const optionIndex = Number(
+            option.dataset.commandPaletteOptionIndex,
+          );
+          activateCommand(filtered[optionIndex]);
+          return;
+        }
+      }
+
+      handleContainerKeyDown(event);
+    },
+    [activateCommand, filtered, handleContainerKeyDown, handleInputKeyDown],
   );
 
   if (!open || !mounted || !portalElement) return null;
@@ -329,7 +363,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           className,
         )}
         onMouseDown={(e) => e.stopPropagation()}
-        onKeyDown={handleContainerKeyDown}
+        onKeyDown={composeEventHandlers(onKeyDown, handleKeyDown)}
         role={dialogRole}
         aria-modal={modal ? true : undefined}
         aria-label={ariaLabel}
@@ -365,7 +399,6 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
 
             setQuery(valueOrEvent.target.value ?? event?.target.value ?? "");
           }}
-          onKeyDown={handleKeyDown}
           placeholder={placeholder}
           theme={theme}
           state={state}
@@ -427,6 +460,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
                 : undefined;
 
               return (
+                // Keyboard activation is delegated to the composed palette handler.
+                // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                 <div
                   key={cmd.id ?? `${cmd.label}-${index}`}
                   id={itemId}
@@ -442,16 +477,11 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
                     isDisabled && classMap.disabled,
                   )}
                   onClick={() => activateCommand(cmd)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      activateCommand(cmd);
-                    }
-                  }}
                   onMouseEnter={() => {
                     if (!isDisabled) setActiveIndex(index);
                   }}
                   tabIndex={-1}
+                  data-command-palette-option-index={index}
                   data-testid={`${testId}-option-${index}`}
                 >
                   {cmd.icon && (
