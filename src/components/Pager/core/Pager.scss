@@ -3,157 +3,97 @@
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 @use "sass:list";
+@use "../Pager.shared" as pager-shared;
 
 @layer boreal-ui.components {
-  $small-gap: var(--spacing-xxs);
-  $medium-gap: var(--spacing-sm);
-  $large-gap: var(--spacing-lg);
-
-  $sizes: (
-    "xs": (
-      size: 1.75rem,
-      font-size: var(--font-size-caption),
-      gap: var(--spacing-xxs),
-    ),
-    "small": (
-      size: 2rem,
-      font-size: var(--font-size-caption),
-      gap: var(--spacing-xs),
-    ),
-    "medium": (
-      size: 2.25rem,
-      font-size: var(--font-size-label),
-      gap: var(--spacing-xs),
-    ),
-    "large": (
-      size: 2.75rem,
-      font-size: var(--font-size-body),
-      gap: var(--spacing-sm),
-    ),
-    "xl": (
-      size: 3.25rem,
-      font-size: var(--font-size-body),
-      gap: var(--spacing-sm),
-    ),
-  );
-
   .pagination {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    width: fit-content;
-    margin-inline: auto;
-    gap: $medium-gap;
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
+    @include pager-shared.root;
 
     @include bp.down(sm) {
-      flex-wrap: wrap;
+      @include pager-shared.root-wrap;
     }
 
     @include bp.down(xs) {
-      gap: $medium-gap;
+      @include pager-shared.root-narrow;
     }
 
     &_controls,
     &_button_wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      list-style: none;
-      margin: 0;
-      padding: 0;
+      @include pager-shared.list-reset;
     }
 
     &_controls {
-      gap: $small-gap;
+      @include pager-shared.controls;
 
       @include bp.down(xs) {
-        order: -1;
-        gap: clamp(0.25rem, 4vw, #{$large-gap});
+        @include pager-shared.controls-narrow;
       }
     }
 
     &_button_wrapper {
-      flex-wrap: wrap;
-      gap: $small-gap;
+      @include pager-shared.button-wrapper;
 
       @include bp.down(xs) {
-        flex-grow: 1;
-        width: 100%;
-        margin-top: $small-gap;
+        @include pager-shared.button-wrapper-narrow;
       }
     }
 
     &_button,
     &_control_button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      flex: 0 0 auto;
-      aspect-ratio: 1;
-      margin: 0;
-      padding: 0;
-      min-width: var(--pagination-button-size, 2.25rem);
-      width: var(--pagination-button-size, 2.25rem);
-      height: var(--pagination-button-size, 2.25rem);
-      min-height: var(--pagination-button-size, 2.25rem);
-      font-size: var(--pagination-button-font-size, var(--font-size-label));
-      line-height: 1;
-      white-space: nowrap;
+      @include pager-shared.button;
 
       &:focus-visible {
-        outline: 2px solid var(--focus-outline-color, var(--primary-color));
-        outline-offset: 2px;
-        border-radius: var(--border-radius-sm, 4px);
+        @include pager-shared.button-focus-visible;
       }
     }
 
     &_active {
-      font-weight: var(--font-weight-bold);
+      @include pager-shared.active;
     }
 
-    @each $size, $values in $sizes {
+    @each $size, $values in pager-shared.$sizes {
       &_#{$size} {
-        --pagination-button-size: #{map.get($values, size)};
-        --pagination-button-font-size: #{map.get($values, font-size)};
-        gap: map.get($values, gap);
+        @include pager-shared.size($values);
       }
     }
+  }
+
+  @each $name, $values in theme.$themes {
+    .pagination_#{$name} {
+      @include pager-shared.variant-color(map.get($values, border));
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .pagination_#{$name} {
+      @include pager-shared.variant-color(map.get($values, border));
+    }
+  }
+
+  .pagination_disabled {
+    @include pager-shared.disabled;
   }
 
   @media (prefers-reduced-motion: reduce) {
     .pagination,
     .pagination * {
-      transition: none !important;
-      animation: none !important;
+      @include pager-shared.reduced-motion;
     }
   }
 
   @media (forced-colors: active) {
     .pagination_button,
     .pagination_control_button {
-      color: ButtonText;
-      border: 1px solid ButtonText;
-      background: Canvas;
+      @include pager-shared.forced-control;
     }
 
     .pagination_button:focus-visible,
     .pagination_control_button:focus-visible {
-      outline: 2px solid Highlight;
-      outline-offset: 2px;
+      @include pager-shared.forced-focus;
     }
 
     .pagination.pagination_glass {
-      background: Canvas !important;
-      border: 1px solid ButtonText !important;
-      box-shadow: none !important;
-      -webkit-backdrop-filter: none !important;
-      backdrop-filter: none !important;
+      @include pager-shared.forced-glass;
     }
   }
 }

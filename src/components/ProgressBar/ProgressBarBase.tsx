@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
@@ -37,6 +37,7 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
   testId = dataTestId ?? "progressbar",
   classMap,
 }) => {
+  const generatedId = useId();
   const resolvedLabelPosition = resolvePropAlias(labelPosition);
   const numeric = Number(value);
   const clamped = Number.isFinite(numeric)
@@ -44,9 +45,9 @@ const BaseProgressBar: React.FC<BaseProgressBarProps> = ({
     : 0;
   const progressValue = Math.round(clamped);
 
-  const resolvedLabelId = label ? labelId || `${testId}-label` : undefined;
+  const resolvedLabelId = label ? labelId || `${generatedId}-label` : undefined;
   const resolvedDescriptionId = description
-    ? descriptionId || `${testId}-description`
+    ? descriptionId || `${generatedId}-description`
     : undefined;
 
   const computedAriaLabel =

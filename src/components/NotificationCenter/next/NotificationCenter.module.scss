@@ -66,6 +66,17 @@
     overflow-x: auto;
   }
 
+  .clearAll {
+    flex-shrink: 0;
+  }
+
+  .empty {
+    margin: 0;
+    padding: var(--spacing-sm);
+    color: var(--text-color);
+    text-align: center;
+  }
+
   .list {
     display: flex;
     width: fit-content;
@@ -207,6 +218,10 @@
         margin-left: var(--spacing-xs);
       }
     }
+  }
+
+  .general {
+    border-color: var(--border-color);
   }
 
   @each $key, $value in theme.$rounding {

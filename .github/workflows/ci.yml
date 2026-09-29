@@ -2,9 +2,13 @@ name: CI
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - Dev
   pull_request:
-    branches: [main]
+    branches:
+      - main
+      - Dev
 
 permissions:
   contents: read
@@ -67,6 +71,61 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run test:a11y
 
+  cypress-component:
+    name: Cypress Component Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run cypress:run
+      - name: Upload Cypress failure screenshots
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-component-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore
+          retention-days: 14
+
+  storybook-builds:
+    name: Storybook builds
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run storybook:build:core
+      - run: npm run storybook:build:next
+
+  visual-regression:
+    name: Visual Regression
+    runs-on: ubuntu-latest
+    env:
+      CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN_VISUAL }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run storybook:build:visual
+      - name: Publish curated visual matrix
+        if: env.CHROMATIC_PROJECT_TOKEN != ''
+        run: npm run chromatic:visual
+      - name: Explain unavailable visual upload
+        if: env.CHROMATIC_PROJECT_TOKEN == ''
+        run: echo "Chromatic upload skipped because CHROMATIC_PROJECT_TOKEN_VISUAL is unavailable; the curated Storybook build still passed."
+
   build-and-package:
     name: Build and package verification
     runs-on: ubuntu-latest
@@ -79,3 +138,72 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run audit:build
       - run: npm run audit:package-quality
+
+  compatibility-packages:
+    name: Compatibility package artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 20.19.0
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run compat:pack -- "$RUNNER_TEMP/boreal-compat-packages"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: boreal-compat-packages
+          path: ${{ runner.temp }}/boreal-compat-packages
+          if-no-files-found: error
+          retention-days: 1
+
+  compatibility:
+    name: Compatibility (${{ matrix.fixture }}, Node ${{ matrix.node }})
+    needs: compatibility-packages
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - fixture: core-react-18
+            node: 20.19.0
+          - fixture: core-react-19-node-20
+            node: 20.19.0
+          - fixture: core-react-19-node-22
+            node: 22.12.0
+          - fixture: next-13
+            node: 20.19.0
+          - fixture: next-15
+            node: 20.19.0
+          - fixture: next-16-node-20
+            node: 20.19.0
+          - fixture: next-16-node-22
+            node: 22.12.0
+          - fixture: cli-node-18
+            node: 18.20.8
+          - fixture: cli-node-22
+            node: 22.12.0
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: boreal-compat-packages
+          path: ${{ runner.temp }}/boreal-compat-packages
+      - run: npm run compat:test -- --fixture "${{ matrix.fixture }}" --tarball-dir "$RUNNER_TEMP/boreal-compat-packages"
+
+  compatibility-status:
+    name: Published compatibility
+    if: always()
+    needs: [compatibility-packages, compatibility]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Require every compatibility fixture
+        env:
+          PACKAGE_RESULT: ${{ needs.compatibility-packages.result }}
+          MATRIX_RESULT: ${{ needs.compatibility.result }}
+        run: |
+          test "$PACKAGE_RESULT" = "success"
+          test "$MATRIX_RESULT" = "success"

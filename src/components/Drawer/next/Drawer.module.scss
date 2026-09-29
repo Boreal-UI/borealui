@@ -34,7 +34,10 @@ $drawer-placements: (
 .drawer {
   position: fixed;
   inset: 0;
-  z-index: var(--z-index-drawer, 1000);
+  z-index: calc(
+    var(--z-index-drawer, var(--z-index-modal, 9999)) +
+      var(--boreal-modal-layer-index, 0)
+  );
   display: grid;
   pointer-events: none;
 }
@@ -327,6 +330,11 @@ $drawer-placements: (
   .body {
     padding: var(--spacing-sm);
   }
+}
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

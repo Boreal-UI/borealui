@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { RoundingType, ShadowType, Sidebar } from "../../src/index.next";
+import { Sidebar } from "../../src/index.next";
 import { SidebarProps } from "../../src/components/Sidebar/Sidebar.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";
 import {
@@ -16,15 +16,10 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const mockLinks = [
   { label: "Dashboard", href: "/Dashboard", icon: <FaBook /> },

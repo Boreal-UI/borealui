@@ -1,12 +1,17 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { FaCheckCircle, FaClipboardList, FaFileAlt } from "../../shared-story-assets/icons";
+import {
+  FaCheckCircle,
+  FaClipboardList,
+  FaFileAlt,
+} from "../../shared-story-assets/icons";
 import { StateType, Stepper, ThemeType } from "../../src/index.next";
 import type { StepperProps } from "../../src/components/Stepper/Stepper.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const steps = [
   { label: "Start", icon: FaClipboardList },

@@ -224,7 +224,7 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
     {
       "name": "trapFocus",
       "type": "boolean",
-      "description": "Whether focus should be trapped while the palette is open.",
+      "description": "Whether focus should be trapped while an explicitly non-modal palette is open. Modal palettes always contain focus so their behavior matches `aria-modal=\"true\"`.",
       "required": false,
       "inherited": false,
       "category": "props",

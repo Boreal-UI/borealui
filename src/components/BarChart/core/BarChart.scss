@@ -1,4 +1,6 @@
 @use "../../../styles/_animations";
+@use "../../../styles/theme" as theme;
+@use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
@@ -81,6 +83,23 @@
   .barChart_loading,
   .loading {
     cursor: progress;
+  }
+
+  @each $name, $values in theme.$themes {
+    .barChart_#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .barChart_#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  .barChart_disabled {
+    color: var(--disabled-color);
+    opacity: 0.6;
   }
 
   @media (max-width: 420px) {

@@ -366,7 +366,13 @@ export interface DataTableProps<T> {
   /** Function to handle server-side sorting. */
   onSortChange?: (key: keyof T, order: "asc" | "desc") => void;
 
-  /** Function to derive a unique key for each row. */
+  /**
+   * Function that returns a stable, unique identity for each logical row.
+   * Strongly recommended for selection, expansion, editing, virtualization,
+   * and server pagination. When omitted, Boreal uses the row's source index;
+   * that fallback survives local view transforms but cannot identify immutable
+   * replacements or records across server-provided pages.
+   */
   rowKey?: (row: T) => string | number;
 
   /**

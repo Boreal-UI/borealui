@@ -15,16 +15,16 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
+import {
+  borderOptions,
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+  themeOptions,
+} from "../../shared-story-assets/OptionTypes";
 
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
 
-const sizeOptions = ["xs", "small", "medium", "large", "xl"] as const;
+
 const layoutOptions = ["vertical", "horizontal"] as const;
 const alignments: CardProps["align"][] = ["start", "center", "end"];
 const titles = ["Left-Aligned", "Center-Aligned", "Right-Aligned"];
@@ -33,10 +33,6 @@ const descriptions = [
   "This content is centered.",
   "This content is aligned to the right.",
 ];
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const borderOptions = ["none", "xs", "small", "medium", "large", "xl"] as const;
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
 
 const meta: Meta<CardProps> = {
   title: "Components/Card",
@@ -267,7 +263,7 @@ export const AlignmentGrid: Story = {
           imageAlt={`${titles[index]} image`}
           align={align}
           layout="vertical"
-          theme={themeOptions[index] as ThemeType}
+          theme={themeOptions[index]}
           size="medium"
           cardIcon={FaInfoCircle}
           actionButtons={[
@@ -301,7 +297,7 @@ export const AlignmentGrid: Story = {
           imageAlt={`${titles[index]} image`}
           align={align}
           layout="horizontal"
-          theme={themeOptions[index] as ThemeType}
+          theme={themeOptions[index]}
           size="medium"
           cardIcon={FaInfoCircle}
           actionButtons={[

@@ -229,6 +229,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             </div>
           )}
           <input
+            {...restInput}
             ref={ref}
             id={inputId}
             type={inputType}
@@ -253,7 +254,6 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             disabled={disabled}
             required={required}
             data-testid={`${testId}-input`}
-            {...restInput}
           />
 
           {password && (

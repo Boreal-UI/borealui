@@ -56,11 +56,11 @@ const meta: Meta<ButtonProps> = {
 
 const defaultArgs: ButtonProps = {
   children: "Click Me",
-  size: "medium" as SizeType,
-  theme: "primary" as ThemeType,
-  state: "" as StateType,
-  rounding: "medium" as RoundingType,
-  shadow: "medium" as ShadowType,
+  size: "medium",
+  theme: "primary",
+  state: "",
+  rounding: "medium",
+  shadow: "medium",
 };
 
 export default meta;

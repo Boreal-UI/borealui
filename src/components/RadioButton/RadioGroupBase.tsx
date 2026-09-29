@@ -62,13 +62,13 @@ const BaseRadioGroup = ({
 
   return (
     <fieldset
+      {...props}
       id={groupId}
       className={groupClasses}
       disabled={disabled}
       aria-describedby={resolvedAriaDescribedBy}
       aria-invalid={invalid || state === "error" ? true : undefined}
       data-testid={testId}
-      {...props}
     >
       {legend && (
         <legend

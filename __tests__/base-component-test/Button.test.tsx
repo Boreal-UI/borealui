@@ -949,6 +949,45 @@ describe("ButtonBase", () => {
     expect(element).toHaveTextContent("Div Button");
   });
 
+  it("composes consumer key handling before custom-element activation", () => {
+    const calls: string[] = [];
+    renderButton({
+      as: "div",
+      onKeyDown: () => calls.push("consumer"),
+      onClick: () => calls.push("internal-activation"),
+    });
+
+    fireEvent.keyDown(screen.getByTestId("button-test"), { key: "Enter" });
+
+    expect(calls).toEqual(["consumer", "internal-activation"]);
+  });
+
+  it("allows consumer key handling to cancel custom-element activation", () => {
+    const onClick = jest.fn();
+    const onKeyDown = jest.fn((event: React.KeyboardEvent<HTMLElement>) => {
+      event.preventDefault();
+    });
+    renderButton({ as: "div", onClick, onKeyDown });
+
+    fireEvent.keyDown(screen.getByTestId("button-test"), { key: " " });
+
+    expect(onKeyDown).toHaveBeenCalledTimes(1);
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it("protects custom-element button semantics from generic native props", () => {
+    renderButton({
+      as: "div",
+      role: "presentation",
+      disabled: true,
+      tabIndex: 4,
+    });
+
+    expect(screen.getByTestId("button-test"))
+      .toHaveAttribute("role", "button");
+    expect(screen.getByTestId("button-test")).toHaveAttribute("tabindex", "-1");
+  });
+
   it("renders as a custom anchor element when as='a' and href is provided", () => {
     renderButton(
       {

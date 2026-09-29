@@ -3,6 +3,10 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .form_group_vertical {
+    flex-direction: column;
+  }
+
   $size-margins: (
     "xs": var(--spacing-xs),
     "small": var(--spacing-sm),

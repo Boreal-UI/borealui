@@ -20,6 +20,7 @@ const classes = {
   info: "tabs_info",
   error: "tabs_error",
   warning: "tabs_warning",
+  disabled: "tabs_disabled",
 
   clear: "tabs_clear",
 

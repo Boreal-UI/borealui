@@ -36,7 +36,6 @@ const classes = {
   roundLarge: "badge_round-Large",
   disabled: "badge_disabled",
   icon: "badge_icon",
-  badge_icon: "badge_icon",
   clickable: "badge_clickable",
   glass: "badge_glass",
   outline: "badge_outline",

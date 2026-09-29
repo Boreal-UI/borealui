@@ -1,0 +1,75 @@
+@use "../../styles/theme" as theme;
+@use "../../styles/_breakpoints" as bp;
+@use "../../styles/animations";
+
+@mixin styles($loader, $animated, $rounding-prefix, $shadow-prefix) {
+  @layer boreal-ui.components {
+    #{$loader} {
+      --skeleton-sheen: var(--disabled-color);
+      --skeleton-duration: 3s;
+
+      background-color: var(--background-color-light);
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      min-height: 1rem;
+
+      @include bp.down(xs) {
+        min-height: 0.85rem;
+      }
+
+      @include bp.up(lg) {
+        min-height: 1.2rem;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        left: -100%;
+        display: block;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          var(--skeleton-sheen) 50%,
+          transparent 100%
+        );
+      }
+    }
+
+    #{$animated}::after {
+      animation: skeleton-loading var(--skeleton-duration) infinite ease-in-out;
+    }
+
+    @each $key, $value in theme.$rounding {
+      .#{$rounding-prefix}#{$key} {
+        border-radius: $value;
+      }
+    }
+
+    @each $key, $value in theme.$shadow {
+      .#{$shadow-prefix}#{$key} {
+        box-shadow: $value;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #{$loader}::after {
+        animation: none !important;
+        background: none !important;
+      }
+    }
+
+    @media (forced-colors: active) {
+      #{$loader} {
+        background: Canvas;
+        color: CanvasText;
+        border: 1px solid ButtonText;
+      }
+
+      #{$loader}::after {
+        content: none !important;
+      }
+    }
+  }
+}

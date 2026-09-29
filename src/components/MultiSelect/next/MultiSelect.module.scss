@@ -269,6 +269,11 @@
     min-width: 0;
   }
 
+  .optionLabel {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
   .description {
     opacity: 0.72;
     font-size: var(--font-size-body-xs);

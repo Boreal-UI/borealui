@@ -307,6 +307,11 @@
     }
   }
 
+  .disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .menu,
     .item {

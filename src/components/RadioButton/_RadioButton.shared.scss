@@ -1,0 +1,131 @@
+@mixin interactive-cursor {
+  cursor: pointer;
+}
+
+@mixin group {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  padding: 0;
+  margin: 0;
+  border: 0;
+  color: inherit;
+  font-family: var(--font-family-ui);
+}
+
+@mixin legend {
+  padding: 0;
+  margin: 0 0 var(--spacing-xs);
+  color: inherit;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+}
+
+@mixin options {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  gap: var(--spacing-sm);
+  align-items: flex-start;
+}
+
+@mixin supporting-text {
+  max-width: 100%;
+  margin: 0;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+  overflow-wrap: anywhere;
+}
+
+@mixin circle {
+  inline-size: var(--radio-control-size);
+  block-size: var(--radio-control-size);
+  min-inline-size: var(--radio-control-size);
+  min-block-size: var(--radio-control-size);
+  margin-block-start: 0.05em;
+  border: 2px solid currentcolor;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  position: relative;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  overflow: hidden;
+  color: currentcolor;
+  transition:
+    background-color var(--transition-default),
+    border-color var(--transition-default),
+    box-shadow var(--transition-default),
+    transform var(--transition-default);
+}
+
+@mixin dot {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  inline-size: var(--radio-dot-size);
+  block-size: var(--radio-dot-size);
+  display: block;
+  box-sizing: border-box;
+  border-radius: inherit;
+  background-color: currentcolor;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+  transform-origin: center;
+  transition:
+    opacity var(--transition-default),
+    transform var(--transition-default);
+}
+
+@mixin label-wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  min-width: 0;
+  max-width: 100%;
+  gap: var(--spacing-xs);
+}
+
+@mixin label {
+  color: inherit;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+@mixin disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  color: var(--disabled-color);
+}
+
+@mixin forced-circle {
+  background: Canvas;
+  border-color: ButtonText !important;
+}
+
+@mixin forced-dot {
+  background: Highlight !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+@mixin forced-glass {
+  background: Canvas !important;
+  border: 1px solid ButtonText !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}

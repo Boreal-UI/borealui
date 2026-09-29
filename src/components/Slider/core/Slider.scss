@@ -328,6 +328,10 @@
     }
   }
 
+  .slider_disabled {
+    opacity: 0.55;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .slider,
     .slider * {

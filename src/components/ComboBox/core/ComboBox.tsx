@@ -14,6 +14,7 @@ const classes = {
   label: "combobox_label",
   input: "combobox_input",
   toggle: "combobox_toggle",
+  toggleIcon: "combobox_toggle_icon",
   listbox: "combobox_listbox",
   option: "combobox_option",
   active: "combobox_active",

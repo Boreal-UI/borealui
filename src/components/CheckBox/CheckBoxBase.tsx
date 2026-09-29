@@ -137,6 +137,7 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
           {resolvedLabelPosition === "left" ? renderedLabel : null}
 
           <input
+            {...props}
             id={checkboxId}
             ref={inputRef}
             type="checkbox"
@@ -155,7 +156,6 @@ const CheckBoxBase = forwardRef<HTMLInputElement, CheckBoxBaseProps>(
                 : undefined
             }
             aria-checked={indeterminate ? "mixed" : checked}
-            {...props}
           />
 
           <span

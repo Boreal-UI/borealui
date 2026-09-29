@@ -2,6 +2,7 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
+@use "../RadioButton.shared" as radio-shared;
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
@@ -9,7 +10,7 @@
   .radio_labelWrapper,
   .radio_circle,
   .radio_label {
-    cursor: pointer;
+    @include radio-shared.interactive-cursor;
   }
 
   .radio_wrapper {
@@ -56,34 +57,15 @@
   }
 
   .radio_group {
-    display: flex;
-    min-width: 0;
-    max-width: 100%;
-    flex-direction: column;
-    gap: var(--spacing-sm);
-    padding: 0;
-    margin: 0;
-    border: 0;
-    color: inherit;
-    font-family: var(--font-family-ui);
+    @include radio-shared.group;
   }
 
   .radio_legend {
-    padding: 0;
-    margin: 0 0 var(--spacing-xs);
-    color: inherit;
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label);
+    @include radio-shared.legend;
   }
 
   .radio_options {
-    display: flex;
-    min-width: 0;
-    max-width: 100%;
-    gap: var(--spacing-sm);
-    align-items: flex-start;
+    @include radio-shared.options;
   }
 
   .radio_vertical {
@@ -104,12 +86,7 @@
 
   .radio_description,
   .radio_errorMessage {
-    max-width: 100%;
-    margin: 0;
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-caption);
-    line-height: var(--line-height-caption);
-    overflow-wrap: anywhere;
+    @include radio-shared.supporting-text;
   }
 
   .radio_description {
@@ -136,45 +113,11 @@
   }
 
   .radio_circle {
-    inline-size: var(--radio-control-size);
-    block-size: var(--radio-control-size);
-    min-inline-size: var(--radio-control-size);
-    min-block-size: var(--radio-control-size);
-    margin-block-start: 0.05em;
-    border: 2px solid currentcolor;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-    position: relative;
-    box-sizing: border-box;
-    flex-shrink: 0;
-    overflow: hidden;
-    color: currentcolor;
-    transition:
-      background-color var(--transition-default),
-      border-color var(--transition-default),
-      box-shadow var(--transition-default),
-      transform var(--transition-default);
+    @include radio-shared.circle;
   }
 
   .radio_circle::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    inline-size: var(--radio-dot-size);
-    block-size: var(--radio-dot-size);
-    display: block;
-    box-sizing: border-box;
-    border-radius: inherit;
-    background-color: currentcolor;
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.7);
-    transform-origin: center;
-    transition:
-      opacity var(--transition-default),
-      transform var(--transition-default);
+    @include radio-shared.dot;
   }
 
   .radio_input:checked + .radio_circle::after {
@@ -208,24 +151,11 @@
   }
 
   .radio_labelWrapper {
-    display: flex;
-    align-items: flex-start;
-    justify-content: flex-start;
-    min-width: 0;
-    max-width: 100%;
-    gap: var(--spacing-xs);
+    @include radio-shared.label-wrapper;
   }
 
   .radio_label {
-    color: inherit;
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
-    min-width: 0;
-    max-width: 100%;
-    overflow-wrap: anywhere;
+    @include radio-shared.label;
 
     @include bp.down(sm) {
       line-height: 1.2;
@@ -288,9 +218,7 @@
   }
 
   .radio_disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-    color: var(--disabled-color);
+    @include radio-shared.disabled;
 
     .radio_circle {
       border-color: var(--disabled-color);
@@ -324,22 +252,15 @@
 
   @media (forced-colors: active) {
     .radio_circle {
-      background: Canvas;
-      border-color: ButtonText !important;
+      @include radio-shared.forced-circle;
     }
 
     .radio_input:checked + .radio_circle::after {
-      background: Highlight !important;
-      opacity: 1 !important;
-      transform: none !important;
+      @include radio-shared.forced-dot;
     }
 
     .radio_glass .radio_glassCircle {
-      background: Canvas !important;
-      border: 1px solid ButtonText !important;
-      box-shadow: none !important;
-      -webkit-backdrop-filter: none !important;
-      backdrop-filter: none !important;
+      @include radio-shared.forced-glass;
     }
   }
 

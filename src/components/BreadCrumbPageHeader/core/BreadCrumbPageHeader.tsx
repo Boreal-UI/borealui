@@ -15,6 +15,7 @@ const classes = {
 
   root: "breadCrumbPageHeader",
   breadcrumbs: "breadCrumbPageHeader_breadcrumbs",
+  content: "breadCrumbPageHeader_content",
   breadcrumbList: "breadCrumbPageHeader_breadcrumbList",
   breadcrumbItem: "breadCrumbPageHeader_breadcrumbItem",
   breadcrumbLink: "breadCrumbPageHeader_breadcrumbLink",

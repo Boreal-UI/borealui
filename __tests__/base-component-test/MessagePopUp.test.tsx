@@ -354,7 +354,7 @@ describe("BaseMessagePopup", () => {
     await waitFor(() => expect(trigger).toHaveFocus());
   });
 
-  it("adds and removes the no-scroll class on the body", async () => {
+  it("adds and removes the shared noScroll class on the body", async () => {
     const { unmount } = render(
       <BaseMessagePopup
         message="Scroll lock test"
@@ -366,10 +366,10 @@ describe("BaseMessagePopup", () => {
     );
 
     await screen.findByRole("dialog");
-    expect(document.body).toHaveClass("no-scroll");
+    expect(document.body).toHaveClass("noScroll");
 
     unmount();
-    expect(document.body).not.toHaveClass("no-scroll");
+    expect(document.body).not.toHaveClass("noScroll");
   });
 
   it("sets aria-hidden on sibling body elements while mounted and restores them on unmount", async () => {

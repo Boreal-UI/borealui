@@ -82,13 +82,13 @@ const AppShellBase = forwardRef<HTMLDivElement, AppShellBaseProps>(
 
     return (
       <div
+        {...rest}
         ref={ref}
         className={rootClass}
         style={shellStyle}
         aria-busy={loading || undefined}
         aria-disabled={disabled || undefined}
         data-testid={testId}
-        {...rest}
       >
         {loading ? (
           <span

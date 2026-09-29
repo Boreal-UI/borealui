@@ -45,6 +45,11 @@
       }
     }
 
+    &_horizontal {
+      flex-direction: row;
+      align-items: center;
+    }
+
     @each $size, $font in $stepper-sizes {
       &_#{$size} {
         font-size: $font;

@@ -1,12 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import {
-  IconButton,
-  RoundingType,
-  ShadowType,
-  SizeType,
-  StateType,
-  ThemeType,
-} from "../../src/index.next";
+import { IconButton } from "../../src/index.next";
 import { FaPlus, FaExternalLinkAlt } from "../../shared-story-assets/icons";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
 import {
@@ -17,27 +10,13 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "warning", "error"];
-
-const sizeOptions: SizeType[] = ["xs", "small", "medium", "large", "xl"];
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const meta: Meta<typeof IconButton> = {
   title: "Components/IconButton",

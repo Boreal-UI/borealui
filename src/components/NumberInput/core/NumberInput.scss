@@ -3,25 +3,18 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
+@use "../NumberInput.shared" as number-input-shared;
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
   @include control-sizes.variants(".numberInput", (".numberInput_input", ".numberInput_controlButton"));
 
   .numberInput_container {
-    display: inline-flex;
-    gap: var(--spacing-xs);
-    align-items: flex-start;
-    max-width: 100%;
-    font-family: var(--font-family-body);
+    @include number-input-shared.container;
   }
 
   .numberInput_label {
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-ui);
-    line-height: var(--line-height-label);
-    color: inherit;
+    @include number-input-shared.label;
   }
 
   .numberInput_labelTop {
@@ -48,17 +41,7 @@
     --numberInput-glass-border: rgba(255, 255, 255, 0.28);
     --numberInput-glass-text: inherit;
 
-    display: inline-flex;
-    align-items: stretch;
-    min-width: min(100%, 9rem);
-    max-width: 100%;
-    border: 1px solid transparent;
-    border-radius: var(--border-radius-md);
-    background: var(--background-color);
-    color: inherit;
-    box-shadow: var(--box-shadow-sm);
-    transition: var(--transition-default);
-    overflow: hidden;
+    @include number-input-shared.root;
 
     &:focus-within {
       outline: 2px solid var(--focus-outline-color, var(--primary-color));
@@ -143,9 +126,7 @@
       --numberInput-glass-hover-bg: #{map.get($vals, glass-hover)};
       --numberInput-glass-border: #{map.get($vals, glass-border)};
       --numberInput-glass-text: #{map.get($vals, text)};
-      background-color: map.get($vals, bg);
-      color: map.get($vals, text);
-      border-color: map.get($vals, border);
+      @include number-input-shared.theme-colors($vals);
 
       &:hover {
         background-color: if(
@@ -156,10 +137,7 @@
       }
 
       &.numberInput_outline {
-        background-color: transparent;
-        color: inherit;
-        box-shadow: none;
-        border: 2px solid map.get($vals, border);
+        @include number-input-shared.outline(map.get($vals, border));
       }
 
       .numberInput_controls {
@@ -178,10 +156,7 @@
       border-color: map.get($vals, border);
 
       &.numberInput_outline {
-        background-color: transparent;
-        color: inherit;
-        box-shadow: none;
-        border: 2px solid map.get($vals, border);
+        @include number-input-shared.outline(map.get($vals, border));
       }
 
       .numberInput_controls {
@@ -215,10 +190,7 @@
   }
 
   .numberInput_disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-    background-color: var(--disabled-color);
-    border-color: var(--disabled-color);
+    @include number-input-shared.disabled;
 
     &:hover {
       background-color: var(--disabled-color);
@@ -265,17 +237,11 @@
 
   @media (forced-colors: active) {
     .numberInput {
-      background: Canvas;
-      color: CanvasText;
-      border: 1px solid ButtonText;
-      box-shadow: none;
+      @include number-input-shared.forced-root;
     }
 
     .numberInput_glass {
-      background: Canvas;
-      border-color: ButtonText;
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
+      @include number-input-shared.forced-glass;
     }
 
     .numberInput:focus-within,

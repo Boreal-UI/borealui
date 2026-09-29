@@ -1,5 +1,6 @@
 import {
   useEffect,
+  useId,
   useMemo,
   useCallback,
   useRef,
@@ -18,6 +19,15 @@ import {
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
+import {
+  filterRows,
+  findDuplicateRowKeys,
+  paginateRows,
+  resolvePagination,
+  resolveRows,
+  sortRows,
+} from "./dataTableRows";
+import { resolveVirtualWindow } from "./dataTableVirtualization";
 
 const parsePixelWidth = (value: string | undefined, fallback = 160): number => {
   if (!value) return fallback;
@@ -117,6 +127,7 @@ function DataTableBase<T extends object>({
   "data-testid": dataTestId,
   testId = dataTestId ?? "data-table",
 }: DataTableBaseProps<T>) {
+  const generatedId = useId();
   const [sortKey, setSortKey] = useState<keyof T | undefined>(defaultSortKey);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">(defaultSortOrder);
   const [sortAnnouncement, setSortAnnouncement] = useState("");
@@ -148,9 +159,12 @@ function DataTableBase<T extends object>({
   const [scrollTop, setScrollTop] = useState(0);
   const scrollFrameRef = useRef<number | null>(null);
   const pendingScrollTopRef = useRef(0);
+  const previousDataRef = useRef(data);
+  const warnedMissingRowKeyRef = useRef(false);
+  const warnedDuplicateRowKeyRef = useRef(false);
 
-  const captionId = `${testId}-caption`;
-  const liveRegionId = `${testId}-live-region`;
+  const captionId = `${generatedId}-caption`;
+  const liveRegionId = `${generatedId}-live-region`;
 
   const computedAriaDescribedBy = [
     ariaDescribedBy,
@@ -179,10 +193,73 @@ function DataTableBase<T extends object>({
     [resolvedExpandedRowKeys],
   );
 
-  const getResolvedRowKey = useCallback(
-    (row: T, index: number): string | number => (rowKey ? rowKey(row) : index),
-    [rowKey],
+  const resolvedSourceData = useMemo(
+    () => resolveRows(data, rowKey),
+    [data, rowKey],
   );
+
+  const duplicateRowKeys = useMemo(() => {
+    if (!rowKey) return [];
+
+    return findDuplicateRowKeys(resolvedSourceData);
+  }, [resolvedSourceData, rowKey]);
+
+  const hasIdentitySensitiveFeatures =
+    selectableRows ||
+    Boolean(bulkActions) ||
+    Boolean(renderExpandedRow) ||
+    Boolean(onCellEdit) ||
+    columns.some((column) => column.editable) ||
+    selectedRowKeys !== undefined ||
+    defaultSelectedRowKeys.length > 0 ||
+    expandedRowKeys !== undefined ||
+    defaultExpandedRowKeys.length > 0;
+
+  useEffect(() => {
+    if (
+      process.env.NODE_ENV === "development" &&
+      !rowKey &&
+      hasIdentitySensitiveFeatures &&
+      !warnedMissingRowKeyRef.current
+    ) {
+      warnedMissingRowKeyRef.current = true;
+      console.warn(
+        "Boreal UI DataTable: stateful row features are being used without rowKey. Provide a stable, unique rowKey to preserve row identity across data replacement and server pagination.",
+      );
+    }
+  }, [hasIdentitySensitiveFeatures, rowKey]);
+
+  useEffect(() => {
+    if (
+      process.env.NODE_ENV === "development" &&
+      duplicateRowKeys.length > 0 &&
+      !warnedDuplicateRowKeyRef.current
+    ) {
+      warnedDuplicateRowKeyRef.current = true;
+      console.warn(
+        `Boreal UI DataTable: rowKey returned duplicate values (${duplicateRowKeys.join(
+          ", ",
+        )}). Row keys must be unique for reliable row state.`,
+      );
+    }
+  }, [duplicateRowKeys]);
+
+  useEffect(() => {
+    const previousData = previousDataRef.current;
+    previousDataRef.current = data;
+
+    if (rowKey || previousData === data) return;
+
+    const preservesSourceRecords =
+      previousData.length === data.length &&
+      previousData.every((row, index) => row === data[index]);
+
+    if (!preservesSourceRecords) {
+      if (selectedRowKeys === undefined) setInternalSelectedKeys([]);
+      if (expandedRowKeys === undefined) setInternalExpandedRowKeys([]);
+      setEditingCell(null);
+    }
+  }, [data, expandedRowKeys, rowKey, selectedRowKeys]);
 
   const orderedColumns = useMemo(() => {
     const byKey = new Map(columns.map((column) => [column.key, column]));
@@ -243,85 +320,60 @@ function DataTableBase<T extends object>({
     visibleColumns,
   ]);
 
-  const filteredData = useMemo(() => {
-    if (!filterable || !filterQuery.trim()) return data;
+  const filteredData = useMemo(
+    () => filterRows(resolvedSourceData, columns, filterable, filterQuery),
+    [columns, filterable, filterQuery, resolvedSourceData],
+  );
 
-    const query = filterQuery.toLowerCase();
-    return data.filter((row) =>
-      columns.some((column) => {
-        const value = row[column.key];
-        return String(value ?? "")
-          .toLowerCase()
-          .includes(query);
-      }),
-    );
-  }, [columns, data, filterable, filterQuery]);
-
-  const sortedData = useMemo(() => {
-    if (serverSort || !sortKey) return filteredData;
-
-    return [...filteredData].sort((a, b) => {
-      const valA = a[sortKey];
-      const valB = b[sortKey];
-
-      if (valA === valB) return 0;
-      if (valA == null) return 1;
-      if (valB == null) return -1;
-
-      const numA = Number(valA);
-      const numB = Number(valB);
-      const bothNumeric = !Number.isNaN(numA) && !Number.isNaN(numB);
-
-      if (bothNumeric) {
-        return sortOrder === "asc" ? numA - numB : numB - numA;
-      }
-
-      const cmp = String(valA).localeCompare(String(valB), undefined, {
-        numeric: true,
-      });
-
-      return sortOrder === "asc" ? cmp : -cmp;
-    });
-  }, [filteredData, sortKey, sortOrder, serverSort]);
+  const sortedData = useMemo(
+    () => sortRows(filteredData, sortKey, sortOrder, serverSort),
+    [filteredData, sortKey, sortOrder, serverSort],
+  );
 
   const totalRows = totalItems ?? sortedData.length;
-  const perPage = Math.max(1, itemsPerPage);
-  const pageCount = Math.max(1, Math.ceil(totalRows / perPage));
-  const clampedPage = Math.min(Math.max(1, page), pageCount);
-  const pageOffset = (clampedPage - 1) * perPage;
+  const { perPage, pageCount, clampedPage, pageOffset } = resolvePagination(
+    totalRows,
+    itemsPerPage,
+    page,
+  );
 
-  const paginatedData = useMemo(() => {
-    if (!pagination || serverPagination) return sortedData;
-    return sortedData.slice(pageOffset, pageOffset + perPage);
-  }, [pageOffset, pagination, perPage, serverPagination, sortedData]);
+  const paginatedData = useMemo(
+    () =>
+      paginateRows(
+        sortedData,
+        pagination,
+        serverPagination,
+        pageOffset,
+        perPage,
+      ),
+    [pageOffset, pagination, perPage, serverPagination, sortedData],
+  );
 
-  const virtualStartIndex = virtualized
-    ? Math.max(0, Math.floor(scrollTop / virtualRowHeight) - virtualOverscan)
-    : 0;
-  const virtualVisibleCount = virtualized
-    ? Math.ceil(virtualViewportHeight / virtualRowHeight) + virtualOverscan * 2
-    : paginatedData.length;
-  const virtualEndIndex = virtualized
-    ? Math.min(paginatedData.length, virtualStartIndex + virtualVisibleCount)
-    : paginatedData.length;
+  const {
+    startIndex: virtualStartIndex,
+    endIndex: virtualEndIndex,
+    topSpacer: virtualTopSpacer,
+    bottomSpacer: virtualBottomSpacer,
+  } = resolveVirtualWindow(
+    paginatedData.length,
+    virtualized,
+    scrollTop,
+    virtualRowHeight,
+    virtualViewportHeight,
+    virtualOverscan,
+  );
   const renderedData = virtualized
     ? paginatedData.slice(virtualStartIndex, virtualEndIndex)
     : paginatedData;
-  const virtualTopSpacer = virtualized
-    ? virtualStartIndex * virtualRowHeight
-    : 0;
-  const virtualBottomSpacer = virtualized
-    ? Math.max(0, (paginatedData.length - virtualEndIndex) * virtualRowHeight)
-    : 0;
 
   const selectedRows = useMemo(
     () =>
       !bulkActions || selectedKeySet.size === 0
         ? []
-        : sortedData.filter((row, index) =>
-            selectedKeySet.has(getResolvedRowKey(row, index)),
-          ),
-    [bulkActions, getResolvedRowKey, selectedKeySet, sortedData],
+        : sortedData
+            .filter(({ key }) => selectedKeySet.has(key))
+            .map(({ row }) => row),
+    [bulkActions, selectedKeySet, sortedData],
   );
 
   const updateSelection = (nextKeys: Array<string | number>) => {
@@ -330,9 +382,9 @@ function DataTableBase<T extends object>({
     }
 
     const nextKeySet = new Set(nextKeys);
-    const nextRows = sortedData.filter((row, index) =>
-      nextKeySet.has(getResolvedRowKey(row, index)),
-    );
+    const nextRows = sortedData
+      .filter(({ key }) => nextKeySet.has(key))
+      .map(({ row }) => row);
     onSelectionChange?.(nextKeys, nextRows);
   };
 
@@ -358,12 +410,7 @@ function DataTableBase<T extends object>({
   };
 
   const allVisibleKeys = selectableRows
-    ? renderedData.map((row, index) =>
-        getResolvedRowKey(
-          row,
-          (serverPagination ? 0 : pageOffset) + virtualStartIndex + index,
-        ),
-      )
+    ? renderedData.map(({ key }) => key)
     : [];
   const allVisibleKeySet = new Set(allVisibleKeys);
   const allVisibleSelected =
@@ -379,8 +426,7 @@ function DataTableBase<T extends object>({
     updateSelection(Array.from(new Set([...selectedKeys, ...allVisibleKeys])));
   };
 
-  const toggleRow = (row: T, index: number) => {
-    const key = getResolvedRowKey(row, index);
+  const toggleRow = (key: string | number) => {
     updateSelection(
       selectedKeySet.has(key)
         ? selectedKeys.filter((selectedKey) => selectedKey !== key)
@@ -388,8 +434,7 @@ function DataTableBase<T extends object>({
     );
   };
 
-  const toggleExpandedRow = (row: T, index: number) => {
-    const key = getResolvedRowKey(row, index);
+  const toggleExpandedRow = (key: string | number) => {
     const nextKeys = expandedRowKeySet.has(key)
       ? resolvedExpandedRowKeys.filter((expandedKey) => expandedKey !== key)
       : [...resolvedExpandedRowKeys, key];
@@ -398,9 +443,9 @@ function DataTableBase<T extends object>({
     if (!expandedRowKeys) setInternalExpandedRowKeys(nextKeys);
     onExpandedRowsChange?.(
       nextKeys,
-      sortedData.filter((candidate, candidateIndex) =>
-        nextKeySet.has(getResolvedRowKey(candidate, candidateIndex)),
-      ),
+      sortedData
+        .filter(({ key: candidateKey }) => nextKeySet.has(candidateKey))
+        .map(({ row }) => row),
     );
   };
 
@@ -546,7 +591,7 @@ function DataTableBase<T extends object>({
     column.scope ?? "col";
 
   const getHeaderId = (column: Column<T>): string =>
-    column.id ?? `${testId}-header-${String(column.key)}`;
+    column.id ?? `${generatedId}-header-${String(column.key)}`;
 
   const getColumnAriaLabel = (
     column: Column<T>,
@@ -586,6 +631,7 @@ function DataTableBase<T extends object>({
   const commitCellEdit = (
     row: T,
     rowIndex: number,
+    resolvedRowKey: string | number,
     column: Column<T>,
     value: unknown,
   ) => {
@@ -593,7 +639,7 @@ function DataTableBase<T extends object>({
       row,
       rowIndex,
       column,
-      rowKey: getResolvedRowKey(row, rowIndex),
+      rowKey: resolvedRowKey,
     });
     setEditingCell(null);
   };
@@ -1028,12 +1074,12 @@ function DataTableBase<T extends object>({
                       />
                     </tr>
                   ) : null}
-                  {renderedData.map((row, visibleIndex) => {
+                  {renderedData.map((resolvedRow, visibleIndex) => {
+                    const { row, key } = resolvedRow;
                     const index = virtualStartIndex + visibleIndex;
                     const absoluteIndex = serverPagination
                       ? index
                       : pageOffset + index;
-                    const key = getResolvedRowKey(row, absoluteIndex);
                     const rowAriaLabel = getRowAriaLabel?.(row, absoluteIndex);
                     const rowAriaDescription = getRowAriaDescription?.(
                       row,
@@ -1070,7 +1116,7 @@ function DataTableBase<T extends object>({
                                 aria-label={`${expanded ? "Collapse" : "Expand"} row ${absoluteIndex + 1}`}
                                 onClick={(event) => {
                                   event.stopPropagation();
-                                  toggleExpandedRow(row, absoluteIndex);
+                                  toggleExpandedRow(key);
                                 }}
                                 data-testid={`${testId}-expand-row-${key}`}
                               >
@@ -1089,7 +1135,7 @@ function DataTableBase<T extends object>({
                                 checked={selectedKeySet.has(key)}
                                 onChange={(event) => {
                                   event.stopPropagation();
-                                  toggleRow(row, absoluteIndex);
+                                  toggleRow(key);
                                 }}
                                 onClick={(event) => event.stopPropagation()}
                                 data-testid={`${testId}-select-row-${key}`}
@@ -1133,6 +1179,7 @@ function DataTableBase<T extends object>({
                                       commitCellEdit(
                                         row,
                                         absoluteIndex,
+                                        key,
                                         column,
                                         nextValue,
                                       ),
@@ -1157,6 +1204,7 @@ function DataTableBase<T extends object>({
                                         commitCellEdit(
                                           row,
                                           absoluteIndex,
+                                          key,
                                           column,
                                           event.currentTarget.value,
                                         );
@@ -1169,6 +1217,7 @@ function DataTableBase<T extends object>({
                                       commitCellEdit(
                                         row,
                                         absoluteIndex,
+                                        key,
                                         column,
                                         event.currentTarget.value,
                                       )

@@ -7,6 +7,7 @@ import { MarkdownRendererProps } from "../MarkdownRenderer.types";
 const classes = {
   wrapper: "markdown",
   loading: "markdown_loading",
+  empty: "markdown_empty",
 
   shadowNone: "markdown_shadow-None",
   shadowLight: "markdown_shadow-Light",

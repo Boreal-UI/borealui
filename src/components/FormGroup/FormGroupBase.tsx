@@ -73,6 +73,7 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
     >
       {label && (
         <label
+          {...labelProps}
           id={labelId}
           htmlFor={controlId}
           className={combineClassNames(
@@ -81,7 +82,6 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
             labelClassName,
           )}
           data-testid={`${testId}-label`}
-          {...labelProps}
         >
           {label}
           {required && (
@@ -187,13 +187,13 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
 
       {helperText && !errorMessage && (
         <p
+          {...descriptionProps}
           id={descriptionId}
           className={combineClassNames(
             classMap.helperText,
             descriptionClassName,
           )}
           data-testid={`${testId}-helperText`}
-          {...descriptionProps}
         >
           {helperText}
         </p>
@@ -201,6 +201,7 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
 
       {errorMessage && (
         <p
+          {...errorProps}
           id={errorId}
           className={combineClassNames(
             classMap.errorText,
@@ -208,7 +209,6 @@ const BaseFormGroup: React.FC<BaseFormGroupProps> = ({
           )}
           role="alert"
           data-testid={`${testId}-errorMessage`}
-          {...errorProps}
         >
           {errorMessage}
         </p>

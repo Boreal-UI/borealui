@@ -15,6 +15,7 @@ import {
   IconButtonLikeRef,
 } from "./Dropdown.types";
 import { combineClassNames } from "../../utils/classNames";
+import { composeEventHandlers } from "../../utils/eventHandlers";
 import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
 import MenuIcon from "../../Icons/MenuIcon";
 import { capitalize } from "../../utils/capitalize";
@@ -30,9 +31,17 @@ import {
   isDisabledMenuElement as isDisabledElement,
   isMenuPathOpen as isPathOpen,
   MENU_VIEWPORT_MARGIN as VIEWPORT_MARGIN,
+  resolveMenuNavigationIntent,
   ROOT_MENU_PANEL_PATH as ROOT_PANEL_PATH,
 } from "../../utils/menuNavigation";
-import { useAnimationFrameCallback } from "../../hooks/useAnimationFrameCallback";
+import { useFloatingPanelSync } from "../../hooks/useFloatingPanelSync";
+import { useOutsideInteraction } from "../../hooks/useOutsideInteraction";
+import {
+  getFloatingPanelHorizontalOverflow,
+  getFloatingPanelSizeLimits,
+  readFloatingPanelViewport,
+  resolveNestedPanelLayout,
+} from "../../utils/floatingPanelGeometry";
 
 type PanelPlacement = "left" | "right";
 type PanelStyle = React.CSSProperties & Record<string, string>;
@@ -76,6 +85,7 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   testId = dataTestId ?? "dropdown",
   IconButton,
   classMap,
+  onKeyDown,
   ...rest
 }: BaseDropdownProps): JSX.Element => {
   const [open, setOpen] = useState(false);
@@ -149,12 +159,13 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
         return;
       }
 
-      const viewportWidth =
-        window.innerWidth || document.documentElement.clientWidth || 0;
-      const viewportHeight =
-        window.innerHeight || document.documentElement.clientHeight || 0;
-      const maxHeight = `${Math.max(120, viewportHeight - VIEWPORT_MARGIN * 2)}px`;
-      const maxWidth = `${Math.max(160, viewportWidth - VIEWPORT_MARGIN * 2)}px`;
+      const viewport = readFloatingPanelViewport();
+      const sizeLimits = getFloatingPanelSizeLimits(
+        viewport,
+        VIEWPORT_MARGIN,
+      );
+      const maxHeight = `${sizeLimits.maxHeight}px`;
+      const maxWidth = `${sizeLimits.maxWidth}px`;
       const panels = [
         menuRef.current,
         ...Array.from(
@@ -184,9 +195,13 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
           };
 
           if (path === ROOT_PANEL_PATH) {
+            const overflow = getFloatingPanelHorizontalOverflow(
+              rect,
+              viewport.width,
+              VIEWPORT_MARGIN,
+            );
             nextLayouts[path] = {
-              overflowLeft: rect.left < VIEWPORT_MARGIN,
-              overflowRight: rect.right > viewportWidth - VIEWPORT_MARGIN,
+              ...overflow,
               style,
             };
             return;
@@ -197,25 +212,13 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
           );
           const wrapperRect = wrapper?.getBoundingClientRect();
           const panelWidth = Math.max(rect.width, panel.offsetWidth, 160);
-          const rightSpace = wrapperRect
-            ? viewportWidth - wrapperRect.right - VIEWPORT_MARGIN
-            : viewportWidth - rect.right - VIEWPORT_MARGIN;
-          const leftSpace = wrapperRect
-            ? wrapperRect.left - VIEWPORT_MARGIN
-            : rect.left - VIEWPORT_MARGIN;
-          const placement: PanelPlacement =
-            rightSpace >= panelWidth || rightSpace >= leftSpace
-              ? "right"
-              : "left";
-          let offsetY = 0;
-
-          if (rect.bottom > viewportHeight - VIEWPORT_MARGIN) {
-            offsetY -= rect.bottom - (viewportHeight - VIEWPORT_MARGIN);
-          }
-
-          if (rect.top + offsetY < VIEWPORT_MARGIN) {
-            offsetY += VIEWPORT_MARGIN - (rect.top + offsetY);
-          }
+          const { placement, offsetY } = resolveNestedPanelLayout({
+            panelRect: rect,
+            anchorRect: wrapperRect,
+            panelWidth,
+            viewport,
+            padding: VIEWPORT_MARGIN,
+          });
 
           style["--dropdown-panel-offset-y"] = `${Math.round(offsetY)}px`;
 
@@ -230,8 +233,26 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     },
     [open],
   );
-  const schedulePanelLayoutUpdate =
-    useAnimationFrameCallback(updatePanelLayouts);
+
+  const updateAllPanelLayouts = useCallback(
+    () => updatePanelLayouts(true),
+    [updatePanelLayouts],
+  );
+  const shouldUpdatePanelLayouts = useCallback((event: Event) => {
+    const target = event.target;
+
+    return !(
+      event.type === "scroll" &&
+      target instanceof Node &&
+      menuRef.current?.contains(target)
+    );
+  }, []);
+
+  useFloatingPanelSync({
+    open,
+    updatePosition: updateAllPanelLayouts,
+    shouldUpdate: shouldUpdatePanelLayouts,
+  });
 
   const toggleDropdown = () => {
     setOpen((prev) => {
@@ -295,51 +316,16 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
   useEffect(() => {
     if (!open) return;
 
-    const handleViewportChange = (event?: Event) => {
-      const target = event?.target;
-
-      if (
-        event?.type === "scroll" &&
-        target instanceof Node &&
-        menuRef.current?.contains(target)
-      ) {
-        return;
-      }
-
-      schedulePanelLayoutUpdate(true);
-    };
-
-    window.addEventListener("resize", handleViewportChange);
-    window.addEventListener("scroll", handleViewportChange, true);
-
-    return () => {
-      window.removeEventListener("resize", handleViewportChange);
-      window.removeEventListener("scroll", handleViewportChange, true);
-    };
-  }, [open, schedulePanelLayoutUpdate]);
-
-  useEffect(() => {
-    if (!open) return;
-
     if (!focusFirstItemOnOpen) return;
 
     focusFirstItemInPanel(menuRef.current);
   }, [focusFirstItemInPanel, focusFirstItemOnOpen, open]);
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
-        closeDropdown();
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [closeDropdown]);
+  useOutsideInteraction({
+    active: open,
+    insideRefs: [dropdownRef],
+    onOutsideInteraction: closeDropdown,
+  });
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
@@ -369,80 +355,55 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
       const currentIndex = activeElement
         ? enabledItems.indexOf(activeElement)
         : -1;
+      const activeItem =
+        activeElement?.dataset.dropdownMenuItem === "true"
+          ? activeElement
+          : null;
+      const panelPath = currentPanel?.dataset.dropdownPanelPath;
+      const submenuPath = activeItem?.dataset.dropdownItemPath;
+      const submenuId = activeItem?.getAttribute("aria-controls");
+      const intent = resolveMenuNavigationIntent({
+        key: e.key,
+        currentIndex,
+        itemCount: enabledItems.length,
+        activeHasSubmenu: activeItem?.dataset.dropdownHasSubmenu === "true",
+        activeItemAvailable: Boolean(
+          activeItem && !isDisabledElement(activeItem),
+        ),
+        isSubmenuPanel: Boolean(
+          panelPath && panelPath !== ROOT_PANEL_PATH,
+        ),
+      });
 
-      if (e.key === "ArrowDown") {
+      if (intent.type === "focus") {
         e.preventDefault();
-        focusItemInPanel(currentPanel, currentIndex + 1);
+        focusItemInPanel(currentPanel, intent.index);
         return;
       }
 
-      if (e.key === "ArrowUp") {
+      if (intent.type === "open-submenu" && submenuPath && submenuId) {
         e.preventDefault();
-        focusItemInPanel(
-          currentPanel,
-          currentIndex < 0 ? enabledItems.length - 1 : currentIndex - 1,
+        openSubmenu(submenuPath);
+        focusSubmenuPanel(submenuId);
+        return;
+      }
+
+      if (intent.type === "close-submenu" && panelPath) {
+        e.preventDefault();
+        const parentPath = getParentPath(panelPath);
+        setOpenSubmenuPath(parentPath);
+
+        const parentTrigger = dropdownRef.current?.querySelector<HTMLElement>(
+          `[data-dropdown-item-path="${panelPath}"][data-dropdown-menu-item="true"]`,
         );
+        parentTrigger?.focus();
         return;
       }
 
-      if (e.key === "Home") {
-        e.preventDefault();
-        focusItemInPanel(currentPanel, 0);
-        return;
-      }
-
-      if (e.key === "End") {
-        e.preventDefault();
-        focusItemInPanel(currentPanel, enabledItems.length - 1);
-        return;
-      }
-
-      if (e.key === "ArrowRight") {
-        const submenuPath = activeElement?.dataset.dropdownItemPath;
-        const submenuId = activeElement?.getAttribute("aria-controls");
-
-        if (
-          activeElement?.dataset.dropdownHasSubmenu === "true" &&
-          submenuPath &&
-          submenuId
-        ) {
-          e.preventDefault();
-          openSubmenu(submenuPath);
-          focusSubmenuPanel(submenuId);
-        }
-
-        return;
-      }
-
-      if (e.key === "ArrowLeft") {
-        const panelPath = currentPanel?.dataset.dropdownPanelPath;
-
-        if (panelPath && panelPath !== ROOT_PANEL_PATH) {
-          e.preventDefault();
-          const parentPath = getParentPath(panelPath);
-          setOpenSubmenuPath(parentPath);
-
-          const parentTrigger = dropdownRef.current?.querySelector<HTMLElement>(
-            `[data-dropdown-item-path="${panelPath}"][data-dropdown-menu-item="true"]`,
-          );
-          parentTrigger?.focus();
-        }
-
-        return;
-      }
-
-      if (e.key === "Enter" || e.key === " ") {
-        const activeItem =
-          activeElement?.dataset.dropdownMenuItem === "true"
-            ? activeElement
-            : null;
-
-        if (!activeItem || isDisabledElement(activeItem)) return;
-
+      if (intent.type === "activate" && activeItem) {
         e.preventDefault();
 
         if (activeItem.dataset.dropdownHasSubmenu === "true") {
-          const submenuPath = activeItem.dataset.dropdownItemPath;
           if (submenuPath) {
             toggleSubmenu(submenuPath);
           }
@@ -714,10 +675,10 @@ const BaseDropdown: React.FC<BaseDropdownProps> = ({
     <div
       ref={dropdownRef}
       className={combineClassNames(classMap.wrapper, className)}
-      role="presentation"
-      onKeyDown={handleKeyDown}
-      data-testid={testId}
       {...rest}
+      role="presentation"
+      onKeyDown={composeEventHandlers(onKeyDown, handleKeyDown)}
+      data-testid={testId}
     >
       <IconButton
         ref={triggerRef}

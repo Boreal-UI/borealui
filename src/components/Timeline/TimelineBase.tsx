@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { TimelineBaseProps } from "./Timeline.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -43,6 +43,7 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
   testId = dataTestId ?? "timeline",
   ...rest
 }) => {
+  const generatedId = useId();
   const outerWrapper = combineClassNames(
     classMap.timeline,
     classMap[orientation],
@@ -82,6 +83,7 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
 
   return (
     <ul
+      {...rest}
       className={outerWrapper}
       data-testid={testId}
       role={role}
@@ -89,16 +91,16 @@ const TimelineBase: React.FC<TimelineBaseProps> = ({
       aria-labelledby={ariaLabelledBy}
       aria-describedby={ariaDescribedBy}
       aria-busy={loading || undefined}
-      {...rest}
     >
       {items.map((item, index) => {
         const IconComponent = item.icon;
         const itemTestId = `${testId}-item-${index}`;
-        const labelId = `${itemTestId}-title`;
+        const itemId = `${generatedId}-item-${index}`;
+        const labelId = `${itemId}-title`;
         const descriptionId = item.description
-          ? `${itemTestId}-description`
+          ? `${itemId}-description`
           : undefined;
-        const dateId = item.date ? `${itemTestId}-date` : undefined;
+        const dateId = item.date ? `${itemId}-date` : undefined;
         const hasTitle = Boolean(item.title);
 
         let dateTimeAttr: string | undefined;

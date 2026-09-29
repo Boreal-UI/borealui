@@ -2,7 +2,10 @@ import React, { useMemo, MouseEvent } from "react";
 import { BadgeBaseProps } from "./Badge.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
-import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
+import {
+  mergeSafeRel,
+  sanitizeNavigationHref,
+} from "../../utils/navigationSecurity";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -101,7 +104,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
     <>
       {Icon && (
         <Icon
-          className={classMap.badge_icon}
+          className={classMap.icon}
           aria-hidden="true"
           focusable="false"
           data-testid={testId ? `${testId}-icon` : undefined}
@@ -122,6 +125,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
 
     return (
       <a
+        {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
         href={disabled ? undefined : safeHref}
         className={combinedClassName}
         onClick={handleClick}
@@ -132,7 +136,6 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
         target={target}
         rel={rel}
         {...sharedAccessibilityProps}
-        {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {inner}
       </a>
@@ -142,6 +145,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
   if (onClick) {
     return (
       <button
+        {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
         type="button"
         className={combinedClassName}
         onClick={handleClick}
@@ -149,7 +153,6 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
         data-testid={testId ? `${testId}-main` : undefined}
         title={title ?? accessibleLabel}
         {...sharedAccessibilityProps}
-        {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
       >
         {inner}
       </button>
@@ -158,6 +161,7 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
 
   return (
     <span
+      {...rest}
       className={combinedClassName}
       data-testid={testId ? `${testId}-main` : undefined}
       title={title ?? accessibleLabel}
@@ -168,7 +172,6 @@ export const BadgeBase: React.FC<BadgeBaseProps> = ({
       {...(ariaDescribedBy ? { "aria-describedby": ariaDescribedBy } : {})}
       {...(ariaLive ? { "aria-live": ariaLive } : {})}
       {...(ariaAtomic !== undefined ? { "aria-atomic": ariaAtomic } : {})}
-      {...rest}
     >
       {inner}
     </span>

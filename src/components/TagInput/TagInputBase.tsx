@@ -50,7 +50,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   TextInput,
 }) => {
   const uid = useId();
-  const baseId = idBase || testId || `tag-input-${uid}`;
+  const baseId = idBase ?? `tag-input-${uid}`;
 
   const inputId = `${baseId}-input`;
   const descId = `${baseId}-desc`;

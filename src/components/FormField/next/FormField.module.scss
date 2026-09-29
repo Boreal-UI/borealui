@@ -1,144 +1,103 @@
+@use "../FormField.shared" as shared;
+
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
   .formField {
-    display: grid;
-    gap: var(--spacing-xs);
-    width: fit-content;
-    min-width: 0;
-    font-family: var(--font-family-ui);
-    color: var(--text-color);
+    @include shared.root;
   }
 
   .labelTop {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "label"
-      "control"
-      "helper"
-      "error";
+    @include shared.label-top;
   }
 
   .labelBottom {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      "control"
-      "label"
-      "helper"
-      "error";
+    @include shared.label-bottom;
   }
 
   .labelLeft,
   .labelRight {
-    grid-template-columns: max-content minmax(0, 1fr);
-    grid-template-areas:
-      "label control"
-      ". helper"
-      ". error";
-    align-items: start;
-    column-gap: var(--spacing-sm);
-    row-gap: var(--spacing-xs);
+    @include shared.label-side;
   }
 
   .labelRight {
-    grid-template-columns: minmax(0, 1fr) fit-content;
-    grid-template-areas:
-      "control label"
-      "helper ."
-      "error .";
+    @include shared.label-right;
   }
 
   .label {
-    grid-area: label;
-    display: inline-flex;
-    align-items: baseline;
-    gap: var(--spacing-xs);
-    min-width: 0;
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label, 1.2);
+    @include shared.label;
   }
 
   .labelLeft .label,
   .labelRight .label {
-    padding-block-start: 0.45em;
+    @include shared.side-label;
   }
 
   .control {
-    grid-area: control;
-    min-width: 0;
+    @include shared.control;
   }
 
   .helperText {
-    grid-area: helper;
-    min-width: 0;
-    font-size: var(--font-size-caption);
-    line-height: var(--line-height-caption);
+    @include shared.message(helper);
   }
 
   .errorText {
-    grid-area: error;
-    min-width: 0;
-    font-size: var(--font-size-caption);
-    line-height: var(--line-height-caption);
+    @include shared.message(error);
   }
 
   .optional {
-    color: var(--text-color-secondary);
-    font-size: var(--font-size-caption);
-    font-weight: var(--font-weight-body);
+    @include shared.optional;
   }
 
   .errorText,
   .error {
-    color: var(--error-color, #b00020);
+    @include shared.color(var(--error-color, #b00020));
   }
 
   .warning .helperText {
-    color: var(--warning-color, #8a5a00);
+    @include shared.color(var(--warning-color, #8a5a00));
   }
 
   .info .helperText {
-    color: var(--info-color, #0057b8);
+    @include shared.color(var(--info-color, #0057b8));
   }
 
   .success .helperText {
-    color: var(--success-color, #0a6b35);
+    @include shared.color(var(--success-color, #0a6b35));
   }
 
   .disabled {
-    opacity: 0.6;
+    @include shared.disabled;
   }
 
   @media (prefers-reduced-motion: reduce) {
     .formField,
     .formField * {
-      transition: none !important;
-      animation: none !important;
+      @include shared.reduced-motion;
     }
   }
 
   @media (forced-colors: active) {
     .formField {
-      color: CanvasText;
+      @include shared.color(CanvasText);
     }
 
     .control {
-      forced-color-adjust: auto;
+      @include shared.forced-control;
     }
 
     .errorText,
     .error {
-      color: Mark;
+      @include shared.color(Mark);
     }
 
     .warning,
     .info,
     .success {
-      color: CanvasText;
+      @include shared.color(CanvasText);
     }
 
     .disabled {
-      color: GrayText;
+      @include shared.color(GrayText);
     }
   }
 }

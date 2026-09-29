@@ -209,9 +209,63 @@ Use `serverSort` with `onSortChange` when sorting is handled by your API.
 />
 ```
 
+## Markdown Content
+
+`MarkdownRenderer` treats embedded raw HTML as text by default. Set
+`allowHtml` only when HTML is required; Boreal still applies a mandatory tag,
+attribute, and URL-scheme allowlist before creating React elements.
+
+```tsx
+import { MarkdownRenderer } from "@boreal-ui/core";
+
+<MarkdownRenderer
+  aria-label="Release notes"
+  content={releaseNotes}
+  allowHtml={false}
+/>;
+```
+
+Links accept HTTP, HTTPS, mail, telephone, root-relative, query, fragment, and
+relative destinations. External HTTP(S) links open in a new tab with
+`noopener noreferrer`. Images use a narrower policy: HTTP(S), safe relative
+paths, and base64 data URLs for common raster image formats. Event handlers,
+inline styles, `srcdoc`, protocol-relative URLs, scripts, and unsupported
+elements or schemes are removed or discarded.
+
+The sanitizer is a defense-in-depth rendering boundary, not an authorization
+or content-moderation system. Continue to validate and limit untrusted content
+at the application boundary.
+
 ## Overlays and Interactive Components
 
 Components such as `Modal`, `Dropdown`, `PopOver`, `Tooltip`, `Tabs`, `Accordion`, `CommandPalette`, and `NotificationCenter` include keyboard and ARIA behavior. Prefer their public props instead of rebuilding focus or disclosure state around their internals.
+
+Accordion loading is consumer-controlled through `loading`. Consumers start and
+finish their own request lifecycle and pass the current state to each Accordion
+instance. While loading, the expanded content region is marked busy and the
+loading message replaces its children. The older `asyncContent` prop is
+deprecated and temporarily retains its one-second compatibility timer; migrate
+`asyncContent={true}` to `loading={requestPending}`. When both are supplied,
+`loading` wins.
+
+## Core and Next styling parity
+
+Core global SCSS and Next CSS Modules may use different selectors and source
+structure, but they must expose the same styling semantics to shared base
+components. Run `npm run audit:styles` to lint styles and verify every paired
+family's required `classMap` keys, variants, sizes, compiled SCSS classes,
+accessibility features, and CSS-variable usage.
+
+Intentional differences belong in `scripts/styleParityExceptions.cjs` as a
+narrow component/key/surface entry with a reason. Do not suppress a whole
+component merely because its Core and Next SCSS are not textually identical.
+
+When a consumer event handler and Boreal behavior share an event, Boreal calls
+the consumer first. Calling `event.preventDefault()` cancels Boreal's
+corresponding default interaction. Semantic attributes derived from component
+state—such as required roles, disabled/loading state, and managed ARIA
+relationships—remain protected, while documented labels, IDs, styling hooks,
+and unclaimed native attributes remain consumer-controlled.
 
 Timed components keep their lifecycle state per mounted instance. `Chip` and `Modal` coalesce repeated close requests during their exit transitions, `ToastProvider` restarts expiry when a toast ID is replaced, and `NotificationCenter` schedules its next poll only after the previous request settles. See [Performance and Async Behavior](./performance-and-async-behavior.md) for exact timing and cleanup semantics.
 
@@ -278,7 +332,9 @@ import { BentoBox, BentoBoxItem } from "@boreal-ui/core";
 export function DashboardGrid() {
   return (
     <BentoBox columns={4} gap="lg" minRowHeight="10rem">
-      <BentoBoxItem columnSpan={2} rowSpan={2}>Revenue</BentoBoxItem>
+      <BentoBoxItem columnSpan={2} rowSpan={2}>
+        Revenue
+      </BentoBoxItem>
       <BentoBoxItem>Alerts</BentoBoxItem>
       <BentoBoxItem columnSpan="full">Recent activity</BentoBoxItem>
     </BentoBox>

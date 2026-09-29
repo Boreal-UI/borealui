@@ -22,6 +22,7 @@ const classes = {
   info: "pagination_info",
   error: "pagination_error",
   warning: "pagination_warning",
+  disabled: "pagination_disabled",
   xs: "pagination_xs",
   small: "pagination_small",
   medium: "pagination_medium",

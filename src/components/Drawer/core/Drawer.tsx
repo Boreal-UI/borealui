@@ -27,6 +27,7 @@ const classes = {
   error: "drawer_error",
   warning: "drawer_warning",
   info: "drawer_info",
+  disabled: "drawer_disabled",
   shadowNone: "drawer_shadow-None",
   shadowLight: "drawer_shadow-Light",
   shadowMedium: "drawer_shadow-Medium",

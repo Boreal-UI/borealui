@@ -110,7 +110,7 @@ export const buttonPropDocs: GeneratedComponentDoc = {
     {
       "name": "as",
       "type": "React.ElementType<any, keyof React.JSX.IntrinsicElements>",
-      "description": "Optional element or component override. Example: \"a\", \"button\", Link",
+      "description": "Optional element or component override. Example: \"a\", \"button\", Link Public ref typing covers the built-in button and anchor render paths. Consumers using another custom element through `as` may need to adapt its ref.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -245,6 +245,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "name": "onClick",
       "type": "((e: React.MouseEvent<HTMLElement>) => void)",
       "description": "Click event handler for the button.",
+      "required": false,
+      "inherited": false,
+      "category": "events"
+    },
+    {
+      "name": "onKeyDown",
+      "type": "React.KeyboardEventHandler<HTMLElement>",
+      "description": "Keyboard event handler. For polymorphic non-native buttons, it runs before Boreal's Enter/Space activation and can cancel that behavior with `event.preventDefault()`.",
       "required": false,
       "inherited": false,
       "category": "events"

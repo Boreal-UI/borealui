@@ -237,6 +237,7 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
         >
           {iconPosition === "left" ? iconElement : null}
           <input
+            {...restInput}
             ref={ref}
             id={inputId}
             type="search"
@@ -263,7 +264,6 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             data-testid={`${testId}-input`}
-            {...restInput}
           />
 
           {loading ? (

@@ -100,6 +100,7 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
             </span>
           )}
           <input
+            {...props}
             ref={ref}
             type="radio"
             id={inputId}
@@ -115,7 +116,6 @@ const BaseRadioButton = forwardRef<HTMLInputElement, BaseRadioButtonProps>(
             aria-describedby={ariaDescribedBy}
             data-invalid={ariaInvalid || undefined}
             data-testid={testId}
-            {...props}
           />
           <span
             className={radioClasses}

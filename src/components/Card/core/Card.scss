@@ -463,6 +463,11 @@
       }
     }
 
+    &_action_button {
+      min-width: 0;
+      max-width: 100%;
+    }
+
     &_xs {
       .card_description {
         font-size: var(--font-size-caption);

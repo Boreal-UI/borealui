@@ -67,7 +67,7 @@ describe("ColorPickerBase", () => {
     const legend = screen.getByText("Pick a color");
     expect(legend).toBeInTheDocument();
     expect(legend.tagName).toBe("LEGEND");
-    expect(legend).toHaveAttribute("id", "color-picker-legend");
+    expect(legend.id).not.toBe("");
   });
 
   it("renders all radio options", () => {
@@ -407,9 +407,9 @@ describe("ColorPickerBase", () => {
 
     const radios = screen.getAllByRole("radio");
 
-    expect(radios[0]).toHaveAttribute("id", "color-picker-color-0");
-    expect(radios[1]).toHaveAttribute("id", "color-picker-color-1");
-    expect(radios[2]).toHaveAttribute("id", "color-picker-color-2");
+    const radioIds = radios.map(({ id }) => id);
+    expect(radioIds.every(Boolean)).toBe(true);
+    expect(new Set(radioIds).size).toBe(radios.length);
   });
 
   it("associates labels with radios using htmlFor", () => {
@@ -443,7 +443,8 @@ describe("ColorPickerBase", () => {
 
     const fieldset = screen.getByRole("group", { name: "Pick a color" });
     expect(fieldset).toBeInTheDocument();
-    expect(fieldset).toHaveAttribute("aria-labelledby", "color-picker-legend");
+    const legend = screen.getByText("Pick a color");
+    expect(fieldset).toHaveAttribute("aria-labelledby", legend.id);
     expect(fieldset).not.toHaveAttribute("aria-label");
   });
 
@@ -496,18 +497,12 @@ describe("ColorPickerBase", () => {
 
     expect(helper).toBeInTheDocument();
     expect(helper).toHaveTextContent("Choose a preset swatch or custom color.");
-    expect(helper).toHaveAttribute("id", "color-picker-helper-text");
-    expect(fieldset).toHaveAttribute(
-      "aria-describedby",
-      "color-picker-helper-text",
-    );
+    expect(helper.id).not.toBe("");
+    expect(fieldset).toHaveAttribute("aria-describedby", helper.id);
 
     const radios = screen.getAllByRole("radio");
     radios.forEach((radio) => {
-      expect(radio).toHaveAttribute(
-        "aria-describedby",
-        "color-picker-helper-text",
-      );
+      expect(radio).toHaveAttribute("aria-describedby", helper.id);
     });
   });
 
@@ -522,24 +517,15 @@ describe("ColorPickerBase", () => {
 
     expect(errorMessage).toBeInTheDocument();
     expect(errorMessage).toHaveTextContent("Please choose a color.");
-    expect(errorMessage).toHaveAttribute(
-      "id",
-      "color-picker-errorMessage-text",
-    );
+    expect(errorMessage.id).not.toBe("");
     expect(errorMessage).toHaveAttribute("aria-live", "polite");
     expect(fieldset).toHaveAttribute("aria-invalid", "true");
-    expect(fieldset).toHaveAttribute(
-      "aria-describedby",
-      "color-picker-errorMessage-text",
-    );
+    expect(fieldset).toHaveAttribute("aria-describedby", errorMessage.id);
 
     const radios = screen.getAllByRole("radio");
     radios.forEach((radio) => {
       expect(radio).not.toHaveAttribute("aria-invalid");
-      expect(radio).toHaveAttribute(
-        "aria-describedby",
-        "color-picker-errorMessage-text",
-      );
+      expect(radio).toHaveAttribute("aria-describedby", errorMessage.id);
     });
   });
 
@@ -563,15 +549,17 @@ describe("ColorPickerBase", () => {
     );
 
     const fieldset = screen.getByTestId("color-picker");
+    const helper = screen.getByTestId("color-picker-helper-text");
+    const errorMessage = screen.getByTestId("color-picker-errorMessage-text");
     expect(fieldset).toHaveAttribute(
       "aria-describedby",
-      "external-helperText color-picker-helper-text color-picker-errorMessage-text",
+      `external-helperText ${helper.id} ${errorMessage.id}`,
     );
 
     const redRadio = screen.getByRole("radio", { name: "Red" });
     expect(redRadio).toHaveAttribute(
       "aria-describedby",
-      "external-helperText color-picker-helper-text color-picker-errorMessage-text",
+      `external-helperText ${helper.id} ${errorMessage.id}`,
     );
   });
 
@@ -607,13 +595,13 @@ describe("ColorPickerBase", () => {
     });
 
     const fieldset = screen.getByTestId("color-picker");
-    expect(screen.getByTestId("color-picker-helper-text")).toBeInTheDocument();
-    expect(
-      screen.getByTestId("color-picker-errorMessage-text"),
-    ).toBeInTheDocument();
+    const helper = screen.getByTestId("color-picker-helper-text");
+    const errorMessage = screen.getByTestId("color-picker-errorMessage-text");
+    expect(helper).toBeInTheDocument();
+    expect(errorMessage).toBeInTheDocument();
     expect(fieldset).toHaveAttribute(
       "aria-describedby",
-      "color-picker-helper-text color-picker-errorMessage-text",
+      `${helper.id} ${errorMessage.id}`,
     );
   });
 
@@ -684,15 +672,9 @@ describe("ColorPickerBase", () => {
     renderColorPicker();
 
     const redRadio = screen.getByRole("radio", { name: "Red" });
-    expect(redRadio).toHaveAttribute(
-      "aria-labelledby",
-      "color-picker-color-0-label",
-    );
-
-    expect(screen.getByText("Red")).toHaveAttribute(
-      "id",
-      "color-picker-color-0-label",
-    );
+    const redLabel = screen.getByText("Red");
+    expect(redLabel.id).not.toBe("");
+    expect(redRadio).toHaveAttribute("aria-labelledby", redLabel.id);
   });
 
   it("hides the visible legend with sr-only styling when hideLabel is true", () => {
@@ -710,10 +692,8 @@ describe("ColorPickerBase", () => {
     });
 
     const customInput = screen.getByLabelText("Custom color picker");
-    expect(customInput).toHaveAttribute(
-      "aria-describedby",
-      "color-picker-helper-text",
-    );
+    const helper = screen.getByTestId("color-picker-helper-text");
+    expect(customInput).toHaveAttribute("aria-describedby", helper.id);
   });
 
   it("passes invalid state to custom input when invalid is true", () => {

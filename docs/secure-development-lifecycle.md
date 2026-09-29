@@ -51,11 +51,16 @@ The author completes the pull request checklist. A reviewer independently checks
 Only a reviewed commit on the protected default branch may be released. The release version and all package manifests must match. Releases require:
 
 1. all required branch checks passing on the release commit;
-2. a GitHub-verified signed annotated tag;
+2. a GitHub-verified signed annotated tag that points directly to the release commit;
 3. approval from a required reviewer on the protected `npm` environment, with self-review prevented;
 4. successful clean build, tests, dependency audit, package checks, checksums, and artifact attestations;
 5. npm trusted publishing with provenance and no long-lived publish token;
 6. release notes that identify security fixes without exposing an unpatched vulnerability.
+
+The release workflow resolves the verified tag to its immutable commit SHA,
+checks out that SHA, and asserts that `HEAD` still matches after checkout,
+before packaging, and before publishing. A tag-name checkout alone is not a
+sufficient release boundary.
 
 The release approver must not be the person who created the release when two qualified maintainers are available. Failed or partially completed publishing is an incident: stop, preserve logs, identify which package versions were published, and do not overwrite artifacts or tags.
 

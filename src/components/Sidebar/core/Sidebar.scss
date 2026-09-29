@@ -203,7 +203,7 @@
     transition: transform 0.2s ease;
   }
 
-  .icon {
+  .sidebar_icon {
     display: inline-flex;
     align-items: center;
     margin-right: 1rem;
@@ -228,6 +228,16 @@
         height: 1.05em;
       }
     }
+  }
+
+  .sidebar_item {
+    min-width: 0;
+    list-style: none;
+  }
+
+  .sidebar_disabled {
+    opacity: 0.55;
+    pointer-events: none;
   }
 
   .sidebar_chevron_open {

@@ -23,6 +23,7 @@ const classes = {
   info: "legend_info",
   warning: "legend_warning",
   error: "legend_error",
+  disabled: "legend_disabled",
   loading: "legend_loading",
 };
 

@@ -257,6 +257,11 @@ Use the scoped package that matches your framework; pre-alpha builds do not publ
 - `Card`
 - `Avatar`
 
+`MarkdownRenderer` escapes embedded raw HTML by default. When `allowHtml` is
+enabled, Boreal still applies mandatory element, attribute, and URL-scheme
+allowlists before rendering React elements. Unsupported schemes, scripts,
+event handlers, inline styles, and `srcdoc` are removed or discarded.
+
 ### Feedback and Status
 
 - `Alert`

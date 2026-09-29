@@ -4,166 +4,121 @@
 @use "sass:map";
 
 @use "../../../styles/_animations";
+@use "../Spinner.shared" as spinner-shared;
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
   .spinner_wrapper {
-    width: fit-content;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--spacing-sm);
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-label);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
-    user-select: none;
-    position: relative;
+    @include spinner-shared.wrapper-base;
 
     @include bp.down(xs) {
-      gap: var(--spacing-xs);
-      font-size: var(--font-size-caption);
+      @include spinner-shared.wrapper-small;
     }
 
     @include bp.up(lg) {
-      gap: var(--spacing-md);
-      font-size: var(--font-size-body-sm);
+      @include spinner-shared.wrapper-large;
     }
 
     &:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 3px;
-      border-radius: 8px;
+      @include spinner-shared.wrapper-focus-visible;
     }
   }
 
   .spinner {
-    display: inline-block;
-    position: relative;
-    width: 50px;
-    height: 50px;
-    border-style: solid;
-    border-width: 4px;
-    border-radius: 50%;
-    border-color: transparent;
-    border-top-color: var(--primary-color);
-    animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-    transition: transform var(--transition-default);
-
+    @include spinner-shared.spinner-base;
 
     @include bp.down(xs) {
-      width: 40px;
-      height: 40px;
-      border-width: 3px;
+      @include spinner-shared.spinner-small;
     }
 
     @include bp.up(lg) {
-      width: 56px;
-      height: 56px;
-      border-width: 4px;
+      @include spinner-shared.spinner-large;
     }
 
     @each $name, $vals in theme.$themes {
       &_#{$name} {
-        border-top-color: map.get($vals, border);
+        @include spinner-shared.theme-border(map.get($vals, border));
       }
 
       &_#{$name}.spinner_glass {
-        --spinner-glass-border: #{map.get($vals, glass-border)};
-        border-top-color: map.get($vals, glass-border);
+        @include spinner-shared.glass-variable(map.get($vals, glass-border));
+        @include spinner-shared.theme-border(map.get($vals, glass-border));
       }
     }
 
     @each $name, $vals in theme.$states {
       &_#{$name} {
-        border-top-color: map.get($vals, border);
+        @include spinner-shared.theme-border(map.get($vals, border));
       }
 
       &_#{$name}.spinner_glass {
-        --spinner-glass-border: #{map.get($vals, glass-border)};
-        border-top-color: map.get($vals, glass-border);
+        @include spinner-shared.glass-variable(map.get($vals, glass-border));
+        @include spinner-shared.theme-border(map.get($vals, glass-border));
       }
     }
 
     @each $key, $value in theme.$rounding {
       &_round-#{$key} {
-        border-radius: $value;
+        @include spinner-shared.rounding($value);
       }
     }
 
     @each $key, $value in theme.$shadow {
       &_shadow-#{$key} {
-        box-shadow: $value;
+        @include spinner-shared.shadow($value);
       }
     }
 
     &_shadowElement {
-      position: absolute;
-      top: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      border-radius: 50%;
-      background: transparent;
-      z-index: 0;
+      @include spinner-shared.shadow-element;
     }
 
     &_clear {
-      border-top-color: var(--text-color);
+      @include spinner-shared.clear;
     }
 
     &_glassRing {
-      border-right-color: var(--spinner-glass-border, transparent);
+      @include spinner-shared.glass-ring;
     }
 
     &_clear.spinner_glass {
-      border-top-color: var(--disabled-color);
+      @include spinner-shared.clear-glass;
     }
 
     &_label {
-      font-family: var(--font-family-ui);
-      font-size: var(--font-size-label);
-      font-weight: var(--font-weight-label);
-      line-height: var(--line-height-label);
-      letter-spacing: var(--letter-spacing-label);
-      margin-top: var(--spacing-xs);
-      color: inherit;
-      text-align: center;
-      width: max-content;
+      @include spinner-shared.label-base;
 
       @include bp.down(xs) {
-        font-size: var(--font-size-caption);
+        @include spinner-shared.label-small;
       }
 
       @include bp.up(lg) {
-        font-size: var(--font-size-body-sm);
+        @include spinner-shared.label-large;
       }
     }
   }
 
+  .spinner_disabled {
+    @include spinner-shared.disabled;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .spinner {
-      animation: none !important;
+      @include spinner-shared.reduced-motion;
     }
   }
 
   @media (forced-colors: active) {
     .spinner {
-      border-color: transparent;
-      border-top-color: Highlight;
+      @include spinner-shared.forced-colors-spinner;
     }
 
     .spinner_label {
-      color: CanvasText;
+      @include spinner-shared.forced-colors-label;
     }
 
     .spinner_glass {
-      background: Canvas !important;
-      border: 1px solid ButtonText !important;
-      box-shadow: none !important;
-      -webkit-backdrop-filter: none !important;
-      backdrop-filter: none !important;
+      @include spinner-shared.forced-colors-glass;
     }
   }
 }

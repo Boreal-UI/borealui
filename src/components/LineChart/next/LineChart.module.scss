@@ -1,4 +1,6 @@
 @use "../../../styles/_animations";
+@use "../../../styles/theme" as theme;
+@use "sass:map";
 
 @layer boreal-ui.components {
   .root,
@@ -9,6 +11,7 @@
     max-width: 100%;
     color: inherit;
     font-family: var(--font-family-ui);
+    animation: fade-in-up 240ms ease-out both;
   }
   .label,
   .label {
@@ -30,11 +33,22 @@
   .line,
   .line {
     vector-effect: non-scaling-stroke;
+    animation: line-chart-draw 520ms ease-out both;
+    transition:
+      opacity var(--transition-default),
+      filter var(--transition-default);
   }
   .point,
   .point {
     stroke: var(--background-color);
     stroke-width: 2;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: line-chart-point-in 320ms ease-out both;
+    transition:
+      opacity var(--transition-default),
+      r var(--transition-default),
+      filter var(--transition-default);
   }
   .axisLabel,
   .axisLabel {
@@ -54,5 +68,75 @@
   .loading,
   .loading {
     cursor: progress;
+  }
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  .disabled {
+    color: var(--disabled-color);
+    opacity: 0.6;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .root,
+    .line,
+    .point,
+    .loader {
+      animation: none;
+      transition: none;
+    }
+
+    .line,
+    .point {
+      opacity: 1;
+      transform: none;
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .root,
+    .svg {
+      color: CanvasText;
+    }
+
+    .label,
+    .axisLabel {
+      color: CanvasText;
+      fill: CanvasText;
+      opacity: 1;
+    }
+
+    .gridLine {
+      stroke: GrayText;
+      opacity: 1;
+    }
+
+    .line {
+      stroke: Highlight;
+      opacity: 1;
+    }
+
+    .point {
+      fill: Highlight;
+      stroke: Canvas;
+      opacity: 1;
+    }
+
+    .loader {
+      border-color: CanvasText;
+      border-right-color: Canvas;
+    }
   }
 }

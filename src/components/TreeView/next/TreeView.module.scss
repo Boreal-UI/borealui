@@ -42,6 +42,16 @@
     border-radius: var(--border-radius-sm);
   }
 
+  .item,
+  .label {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .label {
+    overflow-wrap: anywhere;
+  }
+
   .disclosure {
     display: inline-flex;
     align-items: center;

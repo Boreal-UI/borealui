@@ -378,9 +378,10 @@ describe("BasePager", () => {
       />,
     );
 
+    const status = screen.getByTestId("pager-status");
     expect(screen.getByTestId("pager")).toHaveAttribute(
       "aria-describedby",
-      "pager-status",
+      status.id,
     );
   });
 
@@ -400,7 +401,7 @@ describe("BasePager", () => {
 
     const pageList = screen.getByRole("list", { name: /page list/i });
     expect(pageList).toBeInTheDocument();
-    expect(pageList).toHaveAttribute("id", "pager-page-list");
+    expect(pageList.id).not.toBe("");
   });
 
   it("supports a custom accessible label for the page list", () => {
@@ -485,13 +486,14 @@ describe("BasePager", () => {
       />,
     );
 
+    const pageList = screen.getByRole("list", { name: /page list/i });
     expect(screen.getByTestId("pager-prev")).toHaveAttribute(
       "aria-controls",
-      "pager-page-list",
+      pageList.id,
     );
     expect(screen.getByTestId("pager-next")).toHaveAttribute(
       "aria-controls",
-      "pager-page-list",
+      pageList.id,
     );
   });
 
@@ -557,9 +559,10 @@ describe("BasePager", () => {
       />,
     );
 
+    const status = screen.getByTestId("pager-status");
     expect(screen.getByTestId("pager-button-2")).toHaveAttribute(
       "aria-describedby",
-      "pager-status",
+      status.id,
     );
     expect(screen.getByTestId("pager-button-1")).not.toHaveAttribute(
       "aria-describedby",

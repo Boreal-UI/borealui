@@ -46,6 +46,7 @@ docs/.next/
 .storybook-static/
 storybook-next-json/
 storybook-core-json/
+storybook-visual-json/
 
 # Optional: Local tooling
 yalc.lock

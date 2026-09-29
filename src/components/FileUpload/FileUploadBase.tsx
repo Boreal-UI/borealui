@@ -3,12 +3,14 @@ import { BaseFileUploadProps } from "./FileUpload.types";
 import { FileIcon, TrashIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { composeEventHandlers } from "../../utils/eventHandlers";
 import {
   getDefaultVariant,
   getDefaultRounding,
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
+import { validateFiles } from "./fileValidation";
 
 const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   label = "Upload File",
@@ -89,11 +91,14 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   removeButtonProps,
   progressBarProps,
 
+  onDragOver: consumerOnDragOver,
+  onDragLeave: consumerOnDragLeave,
+  onDrop: consumerOnDrop,
   className,
   ...rest
 }) => {
   const reactId = useId();
-  const baseId = id || testId || `file-upload-${reactId.replace(/:/g, "")}`;
+  const baseId = id ?? `file-upload-${reactId.replace(/:/g, "")}`;
 
   const [files, setFiles] = useState<File[]>([]);
   const [rejectedFiles, setRejectedFiles] = useState<
@@ -131,35 +136,6 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     [files],
   );
 
-  const validateFiles = (newFiles: File[]) => {
-    const valid: File[] = [];
-    const rejected: { name: string; reason: string }[] = [];
-
-    newFiles.forEach((file) => {
-      const isSizeOk = file.size <= maxFileSizeBytes;
-      const ext = file.name.includes(".")
-        ? "." + file.name.split(".").pop()!.toLowerCase()
-        : "";
-      const typeAllowed =
-        allowedFileTypes.length === 0 ||
-        allowedFileTypes.includes(file.type) ||
-        (ext && allowedFileTypes.map((t) => t.toLowerCase()).includes(ext));
-
-      if (isSizeOk && typeAllowed) {
-        valid.push(file);
-      } else {
-        rejected.push({
-          name: file.name,
-          reason: !isSizeOk
-            ? `Exceeds size limit (${(file.size / 1024 / 1024).toFixed(2)}MB)`
-            : `Invalid type (${file.type || ext || "unknown"})`,
-        });
-      }
-    });
-
-    return { valid, rejected };
-  };
-
   const announce = (message: string | null) => {
     setUploadMessage(message);
   };
@@ -186,7 +162,10 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     const selected = e.target.files;
     if (!selected || selected.length === 0) return;
 
-    const { valid, rejected } = validateFiles(Array.from(selected));
+    const { valid, rejected } = validateFiles(Array.from(selected), {
+      allowedFileTypes,
+      maxFileSizeBytes,
+    });
     const updatedFiles = multiple ? [...files, ...valid] : valid;
 
     setFiles(updatedFiles);
@@ -367,9 +346,18 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       <div
         {...rest}
         className={containerClassName}
-        onDragOver={enableDragAndDrop ? handleDragOver : undefined}
-        onDragLeave={enableDragAndDrop ? handleDragLeave : undefined}
-        onDrop={enableDragAndDrop ? handleDrop : undefined}
+        onDragOver={composeEventHandlers(
+          consumerOnDragOver,
+          enableDragAndDrop ? handleDragOver : undefined,
+        )}
+        onDragLeave={composeEventHandlers(
+          consumerOnDragLeave,
+          enableDragAndDrop ? handleDragLeave : undefined,
+        )}
+        onDrop={composeEventHandlers(
+          consumerOnDrop,
+          enableDragAndDrop ? handleDrop : undefined,
+        )}
         role={dropzoneRole}
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}

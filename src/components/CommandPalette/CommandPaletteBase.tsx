@@ -20,6 +20,10 @@ import {
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
+import { useModalLayer } from "../../hooks/useModalLayer";
+import { usePortalHost } from "../../hooks/usePortalHost";
+import { getFocusableElements } from "../../utils/modalLayerManager";
+import { composeEventHandlers } from "../../utils/eventHandlers";
 
 const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   commands,
@@ -57,6 +61,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   "data-testid": dataTestId,
   testId = dataTestId ?? "command-palette",
   className,
+  onKeyDown,
   ...rest
 }) => {
   const reactId = useId();
@@ -70,8 +75,9 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   const [activeIndex, setActiveIndex] = useState<number>(-1);
   const inputRef = useRef<HTMLInputElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const [mounted, setMounted] = useState(false);
-  const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
+  const portalElement = usePortalHost("widget-portal", open);
   const [asyncResults, setAsyncResults] = useState<CommandItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -148,29 +154,24 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
     setMounted(true);
     prevFocusRef.current = document.activeElement as HTMLElement | null;
 
-    const portal =
-      document.getElementById("widget-portal") ||
-      (() => {
-        const el = document.createElement("div");
-        el.id = "widget-portal";
-        document.body.appendChild(el);
-        return el;
-      })();
-
-    setPortalElement(portal);
-    document.body.classList.add("noScroll");
-
     return () => {
-      document.body.classList.remove("noScroll");
       setQuery("");
       setActiveIndex(-1);
       setMounted(false);
 
-      if (restoreFocusOnClose) {
+      if (!modal && restoreFocusOnClose) {
         prevFocusRef.current?.focus?.();
       }
     };
-  }, [open, restoreFocusOnClose]);
+  }, [open, restoreFocusOnClose, modal]);
+
+  useModalLayer({
+    active: open && mounted && portalElement !== null && modal,
+    layerRef: overlayRef,
+    focusScopeRef: containerRef,
+    onEscape: onClose,
+    restoreFocus: restoreFocusOnClose,
+  });
 
   useEffect(() => {
     if (open && mounted && portalElement && inputRef.current) {
@@ -213,14 +214,14 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
     [onClose],
   );
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent<HTMLInputElement>) => {
+  const handleInputKeyDown = useCallback(
+    (e: KeyboardEvent<HTMLElement>) => {
       if (e.key === "ArrowDown") {
-        if (filtered.length === 0) return;
+        if (filtered.length === 0) return true;
         e.preventDefault();
         setActiveIndex((prev) => getNextEnabledIndex(prev < 0 ? -1 : prev, 1));
       } else if (e.key === "ArrowUp") {
-        if (filtered.length === 0) return;
+        if (filtered.length === 0) return true;
         e.preventDefault();
         setActiveIndex((prev) => getNextEnabledIndex(prev < 0 ? 0 : prev, -1));
       } else if (e.key === "Enter") {
@@ -230,6 +231,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
         }
       } else if (e.key === "Escape") {
         e.preventDefault();
+        e.stopPropagation();
         onClose();
       } else if (e.key === "Home") {
         e.preventDefault();
@@ -244,33 +246,26 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
         if (reversedIndex >= 0) {
           setActiveIndex(filtered.length - 1 - reversedIndex);
         }
-      }
+      } else return false;
+
+      return true;
     },
     [filtered, activeIndex, getNextEnabledIndex, activateCommand, onClose],
   );
 
   const handleContainerKeyDown = useCallback(
     (e: KeyboardEvent<HTMLDivElement>) => {
-      if (e.key === "Escape") {
+      if (!modal && e.key === "Escape") {
         e.preventDefault();
         onClose();
         return;
       }
 
-      if (trapFocus && e.key === "Tab") {
+      if (!modal && trapFocus && e.key === "Tab") {
         const container = containerRef.current;
         if (!container) return;
 
-        const focusable = container.querySelectorAll<HTMLElement>(
-          [
-            "a[href]",
-            "button:not([disabled])",
-            "input:not([disabled])",
-            "select:not([disabled])",
-            "textarea:not([disabled])",
-            '[tabindex]:not([tabindex="-1"])',
-          ].join(","),
-        );
+        const focusable = getFocusableElements(container);
 
         if (focusable.length === 0) {
           e.preventDefault();
@@ -290,7 +285,37 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
         }
       }
     },
-    [onClose, trapFocus],
+    [modal, onClose, trapFocus],
+  );
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent<HTMLDivElement>) => {
+      const target = event.target;
+
+      if (target === inputRef.current && handleInputKeyDown(event)) return;
+
+      if (target instanceof Element) {
+        const option = target.closest<HTMLElement>(
+          "[data-command-palette-option-index]",
+        );
+
+        if (
+          option &&
+          containerRef.current?.contains(option) &&
+          (event.key === "Enter" || event.key === " ")
+        ) {
+          event.preventDefault();
+          const optionIndex = Number(
+            option.dataset.commandPaletteOptionIndex,
+          );
+          activateCommand(filtered[optionIndex]);
+          return;
+        }
+      }
+
+      handleContainerKeyDown(event);
+    },
+    [activateCommand, filtered, handleContainerKeyDown, handleInputKeyDown],
   );
 
   if (!open || !mounted || !portalElement) return null;
@@ -318,6 +343,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   return ReactDOM.createPortal(
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
+      ref={overlayRef}
       className={classMap.overlay}
       onMouseDown={onClose}
       data-testid={`${testId}-overlay`}
@@ -337,7 +363,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
           className,
         )}
         onMouseDown={(e) => e.stopPropagation()}
-        onKeyDown={handleContainerKeyDown}
+        onKeyDown={composeEventHandlers(onKeyDown, handleKeyDown)}
         role={dialogRole}
         aria-modal={modal ? true : undefined}
         aria-label={ariaLabel}
@@ -373,7 +399,6 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
 
             setQuery(valueOrEvent.target.value ?? event?.target.value ?? "");
           }}
-          onKeyDown={handleKeyDown}
           placeholder={placeholder}
           theme={theme}
           state={state}
@@ -435,6 +460,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
                 : undefined;
 
               return (
+                // Keyboard activation is delegated to the composed palette handler.
+                // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                 <div
                   key={cmd.id ?? `${cmd.label}-${index}`}
                   id={itemId}
@@ -450,16 +477,11 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
                     isDisabled && classMap.disabled,
                   )}
                   onClick={() => activateCommand(cmd)}
-                  onKeyDown={(event) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      activateCommand(cmd);
-                    }
-                  }}
                   onMouseEnter={() => {
                     if (!isDisabled) setActiveIndex(index);
                   }}
                   tabIndex={-1}
+                  data-command-palette-option-index={index}
                   data-testid={`${testId}-option-${index}`}
                 >
                   {cmd.icon && (

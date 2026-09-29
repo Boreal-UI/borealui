@@ -30,6 +30,7 @@ const classes = {
   error: "tag_input_error",
 
   clear: "tag_input_clear",
+  disabled: "tag_input_disabled",
 
   xs: "tag_input_xs",
   small: "tag_input_small",

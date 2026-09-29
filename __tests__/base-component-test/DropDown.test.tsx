@@ -386,6 +386,38 @@ describe("BaseDropdown", () => {
     expect(screen.queryByTestId("dropdown-menu")).not.toBeInTheDocument();
   });
 
+  it("runs consumer key handling before internal navigation", () => {
+    const observations: string[] = [];
+    renderDropdown({
+      onKeyDown: () => {
+        observations.push(
+          screen.getByTestId("dropdown-profile") === document.activeElement
+            ? "consumer-before-navigation"
+            : "consumer-after-navigation",
+        );
+      },
+    });
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+    fireEvent.keyDown(screen.getByTestId("dropdown"), { key: "ArrowDown" });
+
+    expect(observations).toEqual(["consumer-before-navigation"]);
+    expect(screen.getByTestId("dropdown-logout")).toHaveFocus();
+  });
+
+  it("allows consumer key handling to cancel internal navigation", () => {
+    const onKeyDown = jest.fn((event: React.KeyboardEvent<HTMLDivElement>) => {
+      event.preventDefault();
+    });
+    renderDropdown({ onKeyDown });
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+    fireEvent.keyDown(screen.getByTestId("dropdown"), { key: "ArrowDown" });
+
+    expect(onKeyDown).toHaveBeenCalledTimes(1);
+    expect(screen.getByTestId("dropdown-profile")).toHaveFocus();
+  });
+
   it("supports ArrowUp navigation wrapping from first item to last item", () => {
     renderDropdown();
 
@@ -441,6 +473,81 @@ describe("BaseDropdown", () => {
     fireEvent.click(screen.getByTestId("dropdown-trigger"));
 
     expect(screen.getByTestId("dropdown-logout")).toHaveFocus();
+  });
+
+  it("skips disabled boundary and middle items while wrapping navigation", () => {
+    renderDropdown({
+      items: [
+        {
+          label: "Disabled first",
+          disabled: true,
+          "data-testid": "dropdown-disabled-first",
+        },
+        { label: "First enabled", "data-testid": "dropdown-first-enabled" },
+        {
+          label: "Disabled middle",
+          disabled: true,
+          "data-testid": "dropdown-disabled-middle",
+        },
+        { label: "Last enabled", "data-testid": "dropdown-last-enabled" },
+        {
+          label: "Disabled last",
+          disabled: true,
+          "data-testid": "dropdown-disabled-last",
+        },
+      ],
+    });
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+    const wrapper = screen.getByTestId("dropdown");
+
+    expect(screen.getByTestId("dropdown-first-enabled")).toHaveFocus();
+
+    fireEvent.keyDown(wrapper, { key: "ArrowDown" });
+    expect(screen.getByTestId("dropdown-last-enabled")).toHaveFocus();
+
+    fireEvent.keyDown(wrapper, { key: "ArrowDown" });
+    expect(screen.getByTestId("dropdown-first-enabled")).toHaveFocus();
+
+    fireEvent.keyDown(wrapper, { key: "End" });
+    expect(screen.getByTestId("dropdown-last-enabled")).toHaveFocus();
+
+    fireEvent.keyDown(wrapper, { key: "Home" });
+    expect(screen.getByTestId("dropdown-first-enabled")).toHaveFocus();
+  });
+
+  it("keeps all-disabled menus stable for navigation and activation keys", () => {
+    const firstClick = jest.fn();
+    const secondClick = jest.fn();
+    renderDropdown({
+      items: [
+        {
+          label: "Disabled first",
+          disabled: true,
+          onClick: firstClick,
+          "data-testid": "dropdown-disabled-first",
+        },
+        {
+          label: "Disabled second",
+          disabled: true,
+          onClick: secondClick,
+          "data-testid": "dropdown-disabled-second",
+        },
+      ],
+    });
+
+    const trigger = screen.getByTestId("dropdown-trigger");
+    fireEvent.click(trigger);
+    const wrapper = screen.getByTestId("dropdown");
+
+    ["ArrowDown", "ArrowUp", "Home", "End", "Enter", " "].forEach((key) => {
+      fireEvent.keyDown(wrapper, { key });
+    });
+
+    expect(firstClick).not.toHaveBeenCalled();
+    expect(secondClick).not.toHaveBeenCalled();
+    expect(screen.getByTestId("dropdown-menu")).toBeInTheDocument();
+    expect(trigger).not.toHaveFocus();
   });
 
   it("does not call onClick for a disabled button item", () => {
@@ -590,6 +697,48 @@ describe("BaseDropdown", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("keeps navigation independent from arbitrary public item and submenu IDs", async () => {
+    renderDropdown({
+      items: [
+        {
+          id: 'consumer "item" \\ [settings] 雪',
+          submenuId: 'consumer "submenu" \\ [settings] 雪',
+          label: "Settings",
+          "data-testid": "dropdown-settings",
+          items: [
+            {
+              id: "consumer:item/[profile]",
+              label: "Profile settings",
+              "data-testid": "dropdown-profile-settings",
+            },
+          ],
+        },
+      ],
+    });
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+    const wrapper = screen.getByTestId("dropdown");
+
+    expect(screen.getByTestId("dropdown-settings")).toHaveAttribute(
+      "id",
+      'consumer "item" \\ [settings] 雪',
+    );
+    fireEvent.keyDown(wrapper, { key: "ArrowRight" });
+
+    await waitFor(() => {
+      expect(screen.getByTestId("dropdown-profile-settings")).toHaveFocus();
+    });
+    expect(screen.getByTestId("dropdown-settings-submenu")).toHaveAttribute(
+      "id",
+      'consumer "submenu" \\ [settings] 雪',
+    );
+
+    fireEvent.keyDown(wrapper, { key: "ArrowLeft" });
+
+    expect(screen.getByTestId("dropdown-settings")).toHaveFocus();
+    expect(screen.queryByTestId("dropdown-settings-submenu")).not.toBeInTheDocument();
+  });
+
   it("marks the root menu when it would overflow the viewport", async () => {
     Object.defineProperty(window, "innerWidth", {
       configurable: true,
@@ -629,6 +778,11 @@ describe("BaseDropdown", () => {
       configurable: true,
       writable: true,
       value: 320,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      writable: true,
+      value: 240,
     });
 
     renderDropdown({
@@ -681,6 +835,9 @@ describe("BaseDropdown", () => {
 
     await waitFor(() => {
       expect(submenu).toHaveAttribute("data-placement", "left");
+      expect(
+        submenu.style.getPropertyValue("--dropdown-panel-offset-y"),
+      ).toBe("-8px");
     });
   });
 
@@ -702,10 +859,13 @@ describe("BaseDropdown", () => {
     const trigger = screen.getByTestId("dropdown-trigger");
     fireEvent.click(trigger);
 
-    fireEvent.keyDown(screen.getByTestId("dropdown"), { key: "Tab" });
+    const tabWasNotCancelled = fireEvent.keyDown(screen.getByTestId("dropdown"), {
+      key: "Tab",
+    });
 
     expect(screen.queryByTestId("dropdown-menu")).not.toBeInTheDocument();
     expect(trigger).toHaveFocus();
+    expect(tabWasNotCancelled).toBe(true);
   });
 
   it("closes when clicking outside the dropdown", () => {
@@ -740,6 +900,29 @@ describe("BaseDropdown", () => {
     fireEvent.mouseDown(screen.getByTestId("dropdown-menu"));
 
     expect(screen.getByTestId("dropdown-menu")).toBeInTheDocument();
+  });
+
+  it("registers the outside listener only while open and cleans it up on close", () => {
+    const addSpy = jest.spyOn(document, "addEventListener");
+    const removeSpy = jest.spyOn(document, "removeEventListener");
+    renderDropdown();
+
+    expect(
+      addSpy.mock.calls.filter(([type]) => type === "mousedown"),
+    ).toHaveLength(0);
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+    expect(
+      addSpy.mock.calls.filter(([type]) => type === "mousedown"),
+    ).toHaveLength(1);
+
+    fireEvent.click(screen.getByTestId("dropdown-trigger"));
+    expect(
+      removeSpy.mock.calls.filter(([type]) => type === "mousedown"),
+    ).toHaveLength(1);
+
+    addSpy.mockRestore();
+    removeSpy.mockRestore();
   });
 
   it("does not respond to navigation keys when closed", () => {

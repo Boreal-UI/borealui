@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import {
   getDefaultVariant,
@@ -31,8 +31,9 @@ const StepperBase: React.FC<StepperBaseProps> = ({
   className,
   IconButtonComponent,
 }) => {
+  const generatedId = useId();
   const stepCount = steps.length;
-  const fallbackGroupLabelId = `${testId}-label`;
+  const fallbackGroupLabelId = `${generatedId}-label`;
 
   const resolvedAriaLabelledBy = ariaLabelledBy
     ? ariaLabelledBy

@@ -3,6 +3,7 @@ import React, {
   useRef,
   useCallback,
   useEffect,
+  useLayoutEffect,
   JSX,
   useMemo,
   useId,
@@ -18,6 +19,11 @@ import {
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
+import { useAnimationFrameCallback } from "../../hooks/useAnimationFrameCallback";
+import { useOutsideInteraction } from "../../hooks/useOutsideInteraction";
+
+const useIsomorphicLayoutEffect =
+  typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 const BasePopOver: React.FC<BasePopOverProps> = ({
   trigger,
@@ -47,6 +53,9 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
   const [open, setOpen] = useState(false);
   const [rendered, setRendered] = useState(false);
   const [dynamicPlacement, setDynamicPlacement] = useState(placement);
+  const [popoverElement, setPopoverElement] = useState<HTMLDivElement | null>(
+    null,
+  );
   const popoverRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLElement>(null);
   const uid = useId();
@@ -91,45 +100,24 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
     triggerRef.current?.focus();
   }, [placement]);
 
-  useEffect(() => {
-    if (!open) return;
+  const setPopoverRef = useCallback((node: HTMLDivElement | null) => {
+    popoverRef.current = node;
+    setPopoverElement(node);
+  }, []);
 
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as Node;
-      if (popoverRef.current?.contains(target)) return;
-      if (triggerRef.current?.contains(target)) return;
-      close();
-    };
+  useOutsideInteraction({
+    active: open,
+    insideRefs: [triggerRef, popoverRef],
+    onOutsideInteraction: close,
+  });
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [close, open]);
+  const updatePosition = useCallback(() => {
+    const triggerElement = triggerRef.current;
 
-  useEffect(() => {
-    if (!open) return;
+    if (!open || !popoverElement || !triggerElement) return;
 
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") close();
-    };
-
-    const onReflow = () => setDynamicPlacement((prev) => prev);
-
-    document.addEventListener("keydown", onKey);
-    window.addEventListener("resize", onReflow, { passive: true });
-    window.addEventListener("scroll", onReflow, { passive: true });
-
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      window.removeEventListener("resize", onReflow);
-      window.removeEventListener("scroll", onReflow);
-    };
-  }, [close, open]);
-
-  useEffect(() => {
-    if (!open || !popoverRef.current || !triggerRef.current) return;
-
-    const triggerRect = triggerRef.current.getBoundingClientRect();
-    const popoverEl = popoverRef.current;
+    const triggerRect = triggerElement.getBoundingClientRect();
+    const popoverEl = popoverElement;
 
     const vw = window.innerWidth;
     const vh = window.innerHeight;
@@ -156,27 +144,56 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
       newPlacement = "left";
     }
 
-    setDynamicPlacement(newPlacement);
+    if (newPlacement !== dynamicPlacement) {
+      setDynamicPlacement(newPlacement);
+      return;
+    }
 
-    requestAnimationFrame(() => {
-      const rect = popoverEl.getBoundingClientRect();
-      let dx = 0;
-      let dy = 0;
-      const pad = 8;
+    const rect = popoverEl.getBoundingClientRect();
+    let dx = 0;
+    let dy = 0;
+    const pad = 8;
 
-      if (rect.left < pad) dx = pad - rect.left;
-      else if (rect.right > vw - pad) dx = vw - pad - rect.right;
+    if (rect.left < pad) dx = pad - rect.left;
+    else if (rect.right > vw - pad) dx = vw - pad - rect.right;
 
-      if (rect.top < pad) dy = pad - rect.top;
-      else if (rect.bottom > vh - pad) dy = vh - pad - rect.bottom;
+    if (rect.top < pad) dy = pad - rect.top;
+    else if (rect.bottom > vh - pad) dy = vh - pad - rect.bottom;
 
-      if (dx !== 0 || dy !== 0) {
-        const tx = dx !== 0 ? `translateX(${dx}px)` : "";
-        const ty = dy !== 0 ? `translateY(${dy}px)` : "";
-        popoverEl.style.transform = `${tx} ${ty}`.trim();
-      }
+    if (dx !== 0 || dy !== 0) {
+      const tx = dx !== 0 ? `translateX(${dx}px)` : "";
+      const ty = dy !== 0 ? `translateY(${dy}px)` : "";
+      popoverEl.style.transform = `${tx} ${ty}`.trim();
+    }
+  }, [dynamicPlacement, open, placement, popoverElement]);
+
+  const schedulePositionUpdate = useAnimationFrameCallback(updatePosition);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+
+    document.addEventListener("keydown", onKey);
+    window.addEventListener("resize", schedulePositionUpdate, {
+      passive: true,
     });
-  }, [open, placement, dynamicPlacement]);
+    window.addEventListener("scroll", schedulePositionUpdate, {
+      passive: true,
+    });
+
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", schedulePositionUpdate);
+      window.removeEventListener("scroll", schedulePositionUpdate);
+    };
+  }, [close, open, schedulePositionUpdate]);
+
+  useIsomorphicLayoutEffect(() => {
+    updatePosition();
+  }, [updatePosition]);
 
   const popoverContentClass = useMemo(
     () =>
@@ -296,7 +313,7 @@ const BasePopOver: React.FC<BasePopOverProps> = ({
 
       {rendered && (
         <div
-          ref={popoverRef}
+          ref={setPopoverRef}
           id={contentId}
           role={popupRole}
           aria-label={ariaLabel}

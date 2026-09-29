@@ -232,6 +232,7 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
         ) : null}
 
         <div
+          {...restRoot}
           ref={ref}
           id={rootId}
           className={rootClass}
@@ -240,7 +241,6 @@ const InputGroupBase = forwardRef<HTMLDivElement, InputGroupBaseProps>(
           aria-disabled={disabled || undefined}
           aria-describedby={computedAriaDescribedBy}
           data-testid={`${testId}-root`}
-          {...restRoot}
         >
           {startAddon ? (
             <div

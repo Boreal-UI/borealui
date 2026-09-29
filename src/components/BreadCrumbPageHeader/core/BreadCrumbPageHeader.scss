@@ -59,6 +59,16 @@
     transition: var(--transition-default);
   }
 
+  .breadCrumbPageHeader_breadcrumbs {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .breadCrumbPageHeader_content {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
   .breadCrumbPageHeader_bodyContent {
     min-width: 0;
     max-width: 100%;

@@ -79,6 +79,7 @@
   }
 
   .selected,
+  .value,
   .swatch:focus-visible {
     outline: 2px solid var(--focus-outline-color, var(--primary-color));
     outline-offset: 2px;
@@ -157,6 +158,26 @@
     @include bp.up(lg) {
       margin-top: var(--spacing-sm);
     }
+  }
+
+  .helperText,
+  .errorText {
+    margin: 0;
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-body);
+  }
+
+  .helperText {
+    color: var(--text-color);
+    opacity: 0.8;
+  }
+
+  .errorText {
+    color: var(--error-color);
+  }
+
+  .invalid .swatch {
+    outline-color: var(--error-color);
   }
 
   .square {

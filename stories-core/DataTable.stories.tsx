@@ -137,7 +137,7 @@ const documentationData: DocumentationRow[] = [
     defaultValue: "[]",
     required: true,
     description:
-      "The rows rendered by the table. Each item should match the shape expected by the column definitions. The table can optionally use a custom rowKey function when the default index-based key is not preferred.",
+      "The rows rendered by the table. Each item should match the column definitions. Provide rowKey for stable application identity when using selection, expansion, editing, virtualization, or server pagination; the source-index fallback only remains stable across local view transforms.",
   },
   {
     name: "wrapCells",
@@ -348,6 +348,14 @@ export const SortedByScore: Story = {
 export const CustomRowKey: Story = {
   args: {
     rowKey: (row) => `row-${row.id}`,
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Use a stable, unique rowKey for stateful tables. This keeps selection, expansion, editing, and React reconciliation attached to the same record across view changes and server-provided pages.",
+      },
+    },
   },
 };
 

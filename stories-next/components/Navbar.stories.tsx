@@ -10,17 +10,11 @@ import {
   FaPaintBrush,
 } from "../../shared-story-assets/icons";
 import type { NavBarProps } from "../../src/components/NavBar/NavBar.types";
-
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-] as const;
-
-const roundingOptions = ["full", "none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+  themeOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const mockItems: NavBarProps["items"] = [
   { icon: <FaHome />, label: "Home", path: "/" },

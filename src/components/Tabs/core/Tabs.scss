@@ -214,6 +214,11 @@
     }
   }
 
+  .tabs_disabled {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .tabs_tab {
       transition: none !important;

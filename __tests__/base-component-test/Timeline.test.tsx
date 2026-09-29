@@ -212,10 +212,10 @@ describe("TimelineBase", () => {
     const firstItem = screen.getByTestId("timeline-item-0");
     const title = screen.getByTestId("timeline-item-0-title");
 
-    expect(title).toHaveAttribute("id", "timeline-item-0-title");
+    expect(title.id).not.toBe("");
     expect(firstItem).toHaveAttribute(
       "aria-labelledby",
-      "timeline-item-0-title",
+      title.id,
     );
     expect(firstItem).not.toHaveAttribute("aria-label");
   });
@@ -223,17 +223,14 @@ describe("TimelineBase", () => {
   it("links item descriptions and dates through aria-describedby", () => {
     render(<TimelineBase items={items} classMap={mockStyles} />);
 
-    expect(screen.getByTestId("timeline-item-0-date")).toHaveAttribute(
-      "id",
-      "timeline-item-0-date",
-    );
-    expect(screen.getByTestId("timeline-item-0-description")).toHaveAttribute(
-      "id",
-      "timeline-item-0-description",
-    );
+    const date = screen.getByTestId("timeline-item-0-date");
+    const description = screen.getByTestId("timeline-item-0-description");
+
+    expect(date.id).not.toBe("");
+    expect(description.id).not.toBe("");
     expect(screen.getByTestId("timeline-item-0")).toHaveAttribute(
       "aria-describedby",
-      "timeline-item-0-date timeline-item-0-description",
+      `${date.id} ${description.id}`,
     );
   });
 

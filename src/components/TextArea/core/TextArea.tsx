@@ -36,6 +36,8 @@ const classes = {
   disabled: "textArea_disabled",
 
   errorMessage: "textArea_errorMessage",
+  helperText: "textArea_helperText",
+  customResizeHandle: "textArea_customResizeHandle",
   iconContainer: "textArea_iconContainer",
   errorMessageContainer: "textArea_errorMessageContainer",
 

@@ -29,6 +29,9 @@ npm install react react-dom marked
 
 Next.js apps should also install `next`.
 
+See [Published Compatibility](./compatibility.md) for the peer ranges and the
+packed consumer combinations exercised in CI.
+
 Install generated prop metadata only when it is needed:
 
 ```bash

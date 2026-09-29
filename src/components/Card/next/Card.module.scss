@@ -612,6 +612,11 @@
     }
   }
 
+  .action_button {
+    min-width: 0;
+    max-width: 100%;
+  }
+
   .xs {
     .description {
       font-size: var(--font-size-caption);
@@ -779,6 +784,18 @@
         transform: translateY(-1px);
         box-shadow: var(--box-shadow-light);
       }
+    }
+  }
+
+  .primary,
+  .secondary,
+  .tertiary,
+  .quaternary,
+  .success,
+  .error,
+  .warning {
+    &:focus-within {
+      box-shadow: 0 0 0 3px color.adjust(#000, $lightness: 30%, $alpha: -0.85);
     }
   }
 

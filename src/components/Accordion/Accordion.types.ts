@@ -99,7 +99,18 @@ export interface AccordionProps extends Omit<
   onExpandedChange?: (expanded: boolean) => void;
 
   /**
-   * If true, the accordion content is loaded asynchronously.
+   * Whether the accordion content is currently loading.
+   * The consumer owns the request lifecycle and must update this value.
+   * Defaults to false when omitted unless deprecated `asyncContent` compatibility is active.
+   *
+   * @default false
+   */
+  loading?: boolean;
+
+  /**
+   * Deprecated compatibility API that temporarily simulates loading for one second each time the accordion opens.
+   *
+   * @deprecated Use `loading` to represent the consumer's actual request state.
    *
    * @default false
    */
@@ -178,7 +189,9 @@ export interface AccordionProps extends Omit<
   regionAriaDescribedBy?: string;
 
   /**
-   * Announces loading state for assistive technologies when async content is enabled.
+   * Accessible message shown and announced while content is loading.
+   *
+   * @default "Loading content"
    */
   loadingAriaLabel?: string;
 

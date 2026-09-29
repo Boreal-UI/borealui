@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState, useId } from "react";
-import { BaseTabsProps } from "./Tabs.types";
+import { BaseTabsProps, Tab } from "./Tabs.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
@@ -12,6 +12,38 @@ import {
 } from "../../config/boreal-style-config";
 
 type Dir = 1 | -1;
+type TabIdentity = string | Tab | null;
+
+const getTabIdentity = (tab: Tab): Exclude<TabIdentity, null> => {
+  if (tab.id) return `id:${tab.id}`;
+  if (tab.panelId) return `panel:${tab.panelId}`;
+  return tab;
+};
+
+const findEnabledTabIndex = (
+  tabs: Tab[],
+  identity: TabIdentity,
+): number => {
+  if (identity === null) return -1;
+
+  return tabs.findIndex(
+    (tab) => !tab.disabled && getTabIdentity(tab) === identity,
+  );
+};
+
+const firstEnabledTabIndex = (tabs: Tab[]): number =>
+  tabs.findIndex((tab) => !tab.disabled);
+
+const resolveRovingIndex = (
+  tabs: Tab[],
+  identity: TabIdentity,
+  activeIndex: number,
+): number => {
+  const identityIndex = findEnabledTabIndex(tabs, identity);
+  if (identityIndex >= 0) return identityIndex;
+  if (tabs[activeIndex] && !tabs[activeIndex].disabled) return activeIndex;
+  return firstEnabledTabIndex(tabs);
+};
 
 const getClass = (
   classMap: Record<string, string>,
@@ -64,24 +96,41 @@ const TabsBase: React.FC<BaseTabsProps> = ({
     ? (value as number)
     : uncontrolledIndex;
 
-  const [focusIndex, setFocusIndex] = useState<number>(defaultValue);
+  const [rovingIdentity, setRovingIdentity] = useState<TabIdentity>(() => {
+    const initialActiveIndex = typeof value === "number" ? value : defaultValue;
+    const initialIndex = resolveRovingIndex(tabs, null, initialActiveIndex);
+    return initialIndex >= 0 ? getTabIdentity(tabs[initialIndex]) : null;
+  });
 
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
+  const tabsRef = useRef(tabs);
+  tabsRef.current = tabs;
+  const rovingIndex = resolveRovingIndex(tabs, rovingIdentity, activeIndex);
 
   useEffect(() => {
-    const current = activationMode === "manual" ? focusIndex : activeIndex;
+    if (!isControlled) return;
 
-    tabRefs.current.forEach((el, i) => {
-      if (!el) return;
-      el.setAttribute("tabindex", i === current ? "0" : "-1");
-    });
-
-    tabRefs.current[current]?.focus();
-  }, [activeIndex, focusIndex, activationMode]);
-
-  useEffect(() => {
-    if (isControlled) setFocusIndex(activeIndex);
+    const currentTabs = tabsRef.current;
+    const controlledIndex = resolveRovingIndex(
+      currentTabs,
+      null,
+      activeIndex,
+    );
+    setRovingIdentity(
+      controlledIndex >= 0
+        ? getTabIdentity(currentTabs[controlledIndex])
+        : null,
+    );
   }, [activeIndex, isControlled]);
+
+  useEffect(() => {
+    const resolvedIdentity =
+      rovingIndex >= 0 ? getTabIdentity(tabs[rovingIndex]) : null;
+    setRovingIdentity((currentIdentity) =>
+      currentIdentity === resolvedIdentity ? currentIdentity : resolvedIdentity,
+    );
+    tabRefs.current.length = tabs.length;
+  }, [rovingIndex, tabs]);
 
   const containerClassNames = useMemo(() => {
     const containerClass =
@@ -128,10 +177,12 @@ const TabsBase: React.FC<BaseTabsProps> = ({
     return getClass(classMap, ["tabs", "tabs"]) ?? "";
   }, [classMap]);
 
-  const isDisabled = (index: number): boolean => Boolean(tabs[index]?.disabled);
+  const isDisabled = (index: number): boolean =>
+    index < 0 || index >= tabs.length || Boolean(tabs[index].disabled);
 
   const nextEnabled = (start: number, dir: Dir): number => {
     const len = tabs.length;
+    if (len === 0) return -1;
     let i = start;
 
     for (let n = 0; n < len; n++) {
@@ -139,7 +190,7 @@ const TabsBase: React.FC<BaseTabsProps> = ({
       if (!isDisabled(i)) return i;
     }
 
-    return start;
+    return -1;
   };
 
   const activate = (index: number): void => {
@@ -153,20 +204,26 @@ const TabsBase: React.FC<BaseTabsProps> = ({
     const horiz = resolvedOrientation === "horizontal";
     const { key } = event;
 
+    const eventTargetIndex = tabRefs.current.findIndex(
+      (tab) => tab === event.target,
+    );
+    const currentFocusIndex = isDisabled(eventTargetIndex)
+      ? rovingIndex
+      : eventTargetIndex;
     let newFocus: number;
 
     if (horiz && key === "ArrowRight") {
       event.preventDefault();
-      newFocus = nextEnabled(focusIndex, 1);
+      newFocus = nextEnabled(currentFocusIndex, 1);
     } else if (horiz && key === "ArrowLeft") {
       event.preventDefault();
-      newFocus = nextEnabled(focusIndex, -1);
+      newFocus = nextEnabled(currentFocusIndex, -1);
     } else if (!horiz && key === "ArrowDown") {
       event.preventDefault();
-      newFocus = nextEnabled(focusIndex, 1);
+      newFocus = nextEnabled(currentFocusIndex, 1);
     } else if (!horiz && key === "ArrowUp") {
       event.preventDefault();
-      newFocus = nextEnabled(focusIndex, -1);
+      newFocus = nextEnabled(currentFocusIndex, -1);
     } else if (key === "Home") {
       event.preventDefault();
       newFocus = nextEnabled(-1, 1);
@@ -178,13 +235,16 @@ const TabsBase: React.FC<BaseTabsProps> = ({
       (key === "Enter" || key === " ")
     ) {
       event.preventDefault();
-      if (!isDisabled(focusIndex)) activate(focusIndex);
+      if (!isDisabled(currentFocusIndex)) activate(currentFocusIndex);
       return;
     } else {
       return;
     }
 
-    setFocusIndex(newFocus);
+    if (newFocus < 0) return;
+
+    setRovingIdentity(getTabIdentity(tabs[newFocus]));
+    tabRefs.current[newFocus]?.focus();
     if (activationMode === "auto") activate(newFocus);
   };
 
@@ -222,14 +282,20 @@ const TabsBase: React.FC<BaseTabsProps> = ({
               )}
               role="tab"
               type="button"
+              tabIndex={index === rovingIndex ? 0 : -1}
               aria-selected={isActive}
               aria-label={tab["aria-label"]}
               aria-describedby={tab["aria-describedby"]}
+              aria-controls={tab.panelId}
               id={tabId}
               aria-disabled={disabled || undefined}
+              onFocus={() => {
+                if (!disabled) setRovingIdentity(getTabIdentity(tab));
+              }}
               onClick={() => {
                 if (disabled) return;
-                setFocusIndex(index);
+                setRovingIdentity(getTabIdentity(tab));
+                tabRefs.current[index]?.focus();
                 activate(index);
               }}
               data-testid={`${testId}-tab-${index}`}

@@ -251,6 +251,11 @@
     }
   }
 
+  .markdown_empty {
+    margin: 0;
+    color: var(--text-color);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .markdown,
     .markdown * {

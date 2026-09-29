@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useId,
-  useCallback,
-  KeyboardEvent,
-} from "react";
+import React, { useEffect, useRef, useId, useCallback } from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "../../Icons";
 import { BaseMessagePopupProps } from "./MessagePopup.types";
@@ -15,6 +8,8 @@ import {
   getDefaultRounding,
   getDefaultShadow,
 } from "../../config/boreal-style-config";
+import { useModalLayer } from "../../hooks/useModalLayer";
+import { usePortalHost } from "../../hooks/usePortalHost";
 
 const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   message,
@@ -53,65 +48,29 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
   const messageId = `${uid}-message`;
 
   const dialogRef = useRef<HTMLDivElement>(null);
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const closeBtnRef = useRef<HTMLButtonElement | HTMLAnchorElement>(null);
   const confirmBtnRef = useRef<HTMLButtonElement>(null);
   const cancelBtnRef = useRef<HTMLButtonElement>(null);
-  const openerRef = useRef<HTMLElement | null>(null);
-  const focusablesRef = useRef<HTMLElement[]>([]);
 
   const hasConfirm = typeof onConfirm === "function";
   const hasCancel = typeof onCancel === "function";
 
-  const [portalElement, setPortalElement] = useState<HTMLElement | null>(null);
+  const portalElement = usePortalHost("popup-portal");
 
   const handleClose = useCallback(() => {
     onClose();
   }, [onClose]);
 
-  useEffect(() => {
-    openerRef.current = (document.activeElement as HTMLElement) ?? null;
-
-    const portalId = "popup-portal";
-    let portal = document.getElementById(portalId);
-    if (!portal) {
-      portal = document.createElement("div");
-      portal.id = portalId;
-      document.body.appendChild(portal);
-    }
-    setPortalElement(portal);
-
-    document.body.classList.add("no-scroll");
-
-    const siblings = Array.from(document.body.children) as HTMLElement[];
-    const hidden: HTMLElement[] = [];
-    siblings.forEach((el) => {
-      if (el !== portal && !el.hasAttribute("aria-hidden")) {
-        el.setAttribute("aria-hidden", "true");
-        hidden.push(el);
-      }
-    });
-
-    const handleEsc = (e: globalThis.KeyboardEvent) => {
-      if (e.key === "Escape") handleClose();
-    };
-    document.addEventListener("keydown", handleEsc);
-
-    return () => {
-      document.body.classList.remove("no-scroll");
-      document.removeEventListener("keydown", handleEsc);
-      hidden.forEach((el) => el.removeAttribute("aria-hidden"));
-      openerRef.current?.focus?.();
-    };
-  }, [handleClose]);
+  useModalLayer({
+    active: portalElement !== null,
+    layerRef: wrapperRef,
+    focusScopeRef: dialogRef,
+    onEscape: handleClose,
+  });
 
   useEffect(() => {
     if (!dialogRef.current) return;
-
-    focusablesRef.current = Array.from(
-      dialogRef.current.querySelectorAll<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-      ),
-    ).filter((el) => !el.hasAttribute("disabled") && el.tabIndex !== -1);
 
     if (hasConfirm && confirmBtnRef.current) {
       (confirmBtnRef.current as HTMLElement).focus();
@@ -121,24 +80,6 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
       (closeBtnRef.current as HTMLElement).focus();
     }
   }, [hasConfirm, hasCancel, portalElement]);
-
-  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key !== "Tab") return;
-
-    const list = focusablesRef.current;
-    if (!list.length) return;
-
-    const first = list[0];
-    const last = list[list.length - 1];
-
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
-    }
-  };
 
   const resolvedAriaLabelledBy = ariaLabel
     ? undefined
@@ -177,6 +118,7 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
     // The non-interactive overlay only observes pointer events to dismiss the dialog.
     // eslint-disable-next-line jsx-a11y/no-static-element-interactions
     <div
+      ref={wrapperRef}
       className={wrapperClassName}
       onMouseDown={handleClose}
       data-testid={testId}
@@ -193,7 +135,6 @@ const BaseMessagePopup: React.FC<BaseMessagePopupProps> = ({
         aria-labelledby={resolvedAriaLabelledBy}
         aria-describedby={resolvedAriaDescribedBy}
         tabIndex={-1}
-        onKeyDown={handleKeyDown}
         data-testid={`${testId}-dialog`}
       >
         {title ? (
