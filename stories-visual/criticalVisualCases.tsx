@@ -314,6 +314,18 @@ const renderCaseBody = (
         </div>
       );
 
+    case "pager-states":
+      return (
+        <Components.Pager
+          totalItems={40}
+          itemsPerPage={10}
+          currentPage={1}
+          onPageChange={() => undefined}
+          aria-label="Release pages"
+          testId="visual-pager"
+        />
+      );
+
     case "shared-scss-primitives":
       return (
         <div className="visualParityStack">
@@ -678,6 +690,12 @@ export const runVisualPlay = async (
 
   if (id === "tabs-focus") {
     canvasElement.querySelector<HTMLElement>("[role='tab']")?.focus();
+  }
+
+  if (id === "pager-states") {
+    canvasElement
+      .querySelector<HTMLElement>("[data-testid='visual-pager-button-2']")
+      ?.focus();
   }
 
   if (id === "menu-submenu-edge") {

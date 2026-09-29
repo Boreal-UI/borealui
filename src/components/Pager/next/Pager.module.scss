@@ -2,177 +2,99 @@
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
+@use "../Pager.shared" as pager-shared;
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 
 @layer boreal-ui.components {
-  $small-gap: var(--spacing-xxs);
-  $medium-gap: var(--spacing-sm);
-  $large-gap: var(--spacing-lg);
-
-  $sizes: (
-    "xs": (
-      size: 1.75rem,
-      font-size: var(--font-size-caption),
-      gap: var(--spacing-xxs),
-    ),
-    "small": (
-      size: 2rem,
-      font-size: var(--font-size-caption),
-      gap: var(--spacing-xs),
-    ),
-    "medium": (
-      size: 2.25rem,
-      font-size: var(--font-size-label),
-      gap: var(--spacing-xs),
-    ),
-    "large": (
-      size: 2.75rem,
-      font-size: var(--font-size-body),
-      gap: var(--spacing-sm),
-    ),
-    "xl": (
-      size: 3.25rem,
-      font-size: var(--font-size-body),
-      gap: var(--spacing-sm),
-    ),
-  );
-
   .wrapper {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    width: fit-content;
-    margin-inline: auto;
-    gap: $medium-gap;
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-label);
-    font-weight: var(--font-weight-body);
-    line-height: var(--line-height-label);
-    letter-spacing: var(--letter-spacing-label);
+    @include pager-shared.root;
 
     @include bp.down(md) {
-      flex-wrap: wrap;
+      @include pager-shared.root-wrap;
     }
 
     @include bp.down(xs) {
-      gap: $medium-gap;
+      @include pager-shared.root-narrow;
     }
   }
 
   .controls,
   .buttonWrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+    @include pager-shared.list-reset;
   }
 
   .controls {
-    gap: $small-gap;
+    @include pager-shared.controls;
 
     @include bp.down(xs) {
-      order: -1;
-      gap: clamp(0.25rem, 4vw, #{$large-gap});
+      @include pager-shared.controls-narrow;
     }
   }
 
   .buttonWrapper {
-    flex-wrap: wrap;
-    gap: $small-gap;
+    @include pager-shared.button-wrapper;
 
     @include bp.down(xs) {
-      flex-grow: 1;
-      width: 100%;
-      margin-top: $small-gap;
+      @include pager-shared.button-wrapper-narrow;
     }
   }
 
   .button,
   .controlButton {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    flex: 0 0 auto;
-    aspect-ratio: 1;
-    margin: 0;
-    padding: 0;
-    min-width: var(--pagination-button-size, 2.25rem);
-    width: var(--pagination-button-size, 2.25rem);
-    height: var(--pagination-button-size, 2.25rem);
-    min-height: var(--pagination-button-size, 2.25rem);
-    font-size: var(--pagination-button-font-size, var(--font-size-label));
-    line-height: 1;
-    white-space: nowrap;
+    @include pager-shared.button;
 
     &:focus-visible {
-      outline: 2px solid var(--focus-outline-color, var(--primary-color));
-      outline-offset: 2px;
-      border-radius: var(--border-radius-sm, 4px);
+      @include pager-shared.button-focus-visible;
     }
   }
 
   .active {
-    font-weight: var(--font-weight-bold);
+    @include pager-shared.active;
   }
 
   @each $name, $values in theme.$themes {
     .#{$name} {
-      color: map.get($values, border);
+      @include pager-shared.variant-color(map.get($values, border));
     }
   }
 
   @each $name, $values in theme.$states {
     .#{$name} {
-      color: map.get($values, border);
+      @include pager-shared.variant-color(map.get($values, border));
     }
   }
 
   .disabled {
-    color: var(--disabled-color);
-    opacity: 0.6;
+    @include pager-shared.disabled;
   }
 
-  @each $size, $values in $sizes {
+  @each $size, $values in pager-shared.$sizes {
     .#{$size} {
-      --pagination-button-size: #{map.get($values, size)};
-      --pagination-button-font-size: #{map.get($values, font-size)};
-
-      gap: map.get($values, gap);
+      @include pager-shared.size($values);
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .wrapper,
     .wrapper * {
-      transition: none !important;
-      animation: none !important;
+      @include pager-shared.reduced-motion;
     }
   }
 
   @media (forced-colors: active) {
     .button,
     .controlButton {
-      color: ButtonText;
-      border: 1px solid ButtonText;
-      background: Canvas;
+      @include pager-shared.forced-control;
     }
 
     .button:focus-visible,
     .controlButton:focus-visible {
-      outline: 2px solid Highlight;
-      outline-offset: 2px;
+      @include pager-shared.forced-focus;
     }
 
     .wrapper.glass {
-      background: Canvas !important;
-      border: 1px solid ButtonText !important;
-      box-shadow: none !important;
-      -webkit-backdrop-filter: none !important;
-      backdrop-filter: none !important;
+      @include pager-shared.forced-glass;
     }
   }
 }

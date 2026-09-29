@@ -22,6 +22,7 @@ export type CriticalVisualCaseId =
   | "tree-view-states"
   | "skeleton-reduced-motion"
   | "spinner-variants"
+  | "pager-states"
   | "shared-scss-primitives"
   | "tabs-focus"
   | "feedback-states"
@@ -159,6 +160,16 @@ export const criticalVisualMatrix: CriticalVisualCase[] = [
     theme: "light",
     viewports: ["desktop"],
     storyIds: storyIds("spinner-variants"),
+  },
+  {
+    id: "pager-states",
+    exportName: "PagerStates",
+    category: "navigation",
+    components: ["Pager"],
+    states: ["pages", "current", "disabled-previous", "focus-visible"],
+    theme: "light",
+    viewports: ["desktop"],
+    storyIds: storyIds("pager-states"),
   },
   {
     id: "shared-scss-primitives",

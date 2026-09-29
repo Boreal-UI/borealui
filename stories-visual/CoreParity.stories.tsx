@@ -32,6 +32,7 @@ export const LineChartAccessibility = createStory("line-chart-accessibility");
 export const TreeViewStates = createStory("tree-view-states");
 export const SkeletonReducedMotion = createStory("skeleton-reduced-motion");
 export const SpinnerVariants = createStory("spinner-variants");
+export const PagerStates = createStory("pager-states");
 export const SharedScssPrimitives = createStory("shared-scss-primitives");
 export const TabsFocus = createStory("tabs-focus");
 export const FeedbackStates = createStory("feedback-states");
