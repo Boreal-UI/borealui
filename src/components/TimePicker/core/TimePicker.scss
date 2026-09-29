@@ -4,25 +4,18 @@
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 @use "../../../styles/_animations";
+@use "../TimePicker.shared" as time-picker-shared;
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
   @include control-sizes.variants(".timePicker", (".timePicker_input"));
 
   .timePicker_container {
-    display: inline-flex;
-    gap: var(--spacing-xs);
-    align-items: flex-start;
-    max-width: 100%;
-    font-family: var(--font-family-body);
+    @include time-picker-shared.container;
   }
 
   .timePicker_label {
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-ui);
-    line-height: var(--line-height-label);
-    color: inherit;
+    @include time-picker-shared.label;
   }
 
   .timePicker_labelTop {
@@ -49,17 +42,7 @@
     --timePicker-glass-border: rgba(255, 255, 255, 0.28);
     --timePicker-glass-text: inherit;
 
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-sm);
-    min-width: 0;
-    max-width: 100%;
-    border: 1px solid transparent;
-    border-radius: var(--border-radius-md);
-    background: var(--background-color);
-    color: inherit;
-    box-shadow: var(--box-shadow-sm);
-    transition: var(--transition-default);
+    @include time-picker-shared.root;
   }
 
   .timePicker_content {
@@ -77,13 +60,7 @@
   }
 
   .timePicker_inputWrapper {
-    display: flex;
-    align-items: stretch;
-    width: min(100%, 18rem);
-    min-width: 0;
-    overflow: hidden;
-    color: inherit;
-    border-radius: inherit;
+    @include time-picker-shared.input-wrapper;
   }
 
   .timePicker_inputWrapper:focus-within {
@@ -92,16 +69,7 @@
   }
 
   .timePicker_input {
-    flex: 1 1 auto;
-    width: 100%;
-    min-width: 0;
-    padding: var(--spacing-xs) var(--spacing-sm);
-    font: inherit;
-    color: inherit;
-    background: transparent;
-    border: 0;
-    outline: 0;
-    color-scheme: dark;
+    @include time-picker-shared.input;
   }
 
   .timePicker_input::-webkit-calendar-picker-indicator {
@@ -110,20 +78,7 @@
   }
 
   .timePicker_button {
-    display: inline-flex;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    width: var(--boreal-control-min-height, 2.25rem);
-    min-width: var(--boreal-control-min-height, 2.25rem);
-    min-height: var(--boreal-control-min-height, 2.25rem);
-    padding: 0;
-    color: inherit;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-    border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
-    border-left: 1px solid var(--border-color);
+    @include time-picker-shared.button;
   }
 
   .timePicker_button svg {
@@ -144,11 +99,7 @@
   .timePicker_description,
   .timePicker_helperText,
   .timePicker_errorText {
-    max-width: 100%;
-    margin: 0;
-    font-size: var(--font-size-body-sm);
-    line-height: 1.4;
-    overflow-wrap: anywhere;
+    @include time-picker-shared.supporting-text;
   }
 
   .timePicker_description,
@@ -161,15 +112,7 @@
   }
 
   .timePicker_loader {
-    display: inline-block;
-    flex: 0 0 auto;
-    width: 1rem;
-    height: 1rem;
-    border: 2px solid currentcolor;
-    border-right-color: transparent;
-    border-radius: 50%;
-    opacity: 0.72;
-    animation: spin 700ms linear infinite;
+    @include time-picker-shared.loader;
   }
 
   @each $themeName, $vals in theme.$themes {
@@ -178,9 +121,7 @@
       --timePicker-glass-hover-bg: #{map.get($vals, glass-hover)};
       --timePicker-glass-border: #{map.get($vals, glass-border)};
       --timePicker-glass-text: #{map.get($vals, text)};
-      background-color: map.get($vals, bg);
-      color: map.get($vals, text);
-      border-color: map.get($vals, border);
+      @include time-picker-shared.theme-colors($vals);
 
       .timePicker_button {
         border-color: map.get($vals, text);
@@ -195,10 +136,7 @@
       }
 
       &.timePicker_outline {
-        background-color: transparent;
-        color: inherit;
-        box-shadow: none;
-        border: 2px solid map.get($vals, border);
+        @include time-picker-shared.outline(map.get($vals, border));
 
         .timePicker_button {
           border-color: map.get($vals, border);
@@ -221,10 +159,7 @@
       }
 
       &.timePicker_outline {
-        background-color: transparent;
-        color: inherit;
-        box-shadow: none;
-        border: 2px solid map.get($vals, border);
+        @include time-picker-shared.outline(map.get($vals, border));
 
         .timePicker_button {
           border-color: map.get($vals, border);
@@ -262,10 +197,7 @@
   }
 
   .timePicker_disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-    background-color: var(--disabled-color);
-    border-color: var(--disabled-color);
+    @include time-picker-shared.disabled;
 
     input {
       cursor: not-allowed;
@@ -324,17 +256,11 @@
 
   @media (forced-colors: active) {
     .timePicker {
-      background: Canvas;
-      color: CanvasText;
-      border: 1px solid ButtonText;
-      box-shadow: none;
+      @include time-picker-shared.forced-root;
     }
 
     .timePicker_glass {
-      background: Canvas;
-      border-color: ButtonText;
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
+      @include time-picker-shared.forced-glass;
     }
   }
 }

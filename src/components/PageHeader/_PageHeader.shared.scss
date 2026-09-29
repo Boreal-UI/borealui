@@ -1,0 +1,165 @@
+@use "sass:map";
+
+@mixin root {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-xl, var(--border-radius-md));
+  color: inherit;
+  box-shadow: var(--box-shadow-sm);
+  font-family: var(--font-family-ui);
+  transition:
+    background-color var(--transition-default),
+    border-color var(--transition-default),
+    box-shadow var(--transition-default),
+    color var(--transition-default);
+}
+
+@mixin main {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "icon content"
+    "actions actions";
+  align-items: start;
+  gap: var(--spacing-md);
+  width: 100%;
+  min-width: 0;
+  padding: var(--spacing-lg);
+}
+
+@mixin icon {
+  grid-area: icon;
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: var(--border-radius-lg, 0.75rem);
+  background: transparent;
+  color: inherit;
+  margin-top: 1.35rem;
+}
+
+@mixin content {
+  grid-area: content;
+  display: grid;
+  gap: var(--spacing-xs);
+  align-items: start;
+  min-width: 0;
+  max-width: 100%;
+  color: inherit;
+}
+
+@mixin eyebrow {
+  margin: 0;
+  max-width: 100%;
+  color: inherit;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-caption, 0.75rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.25;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.72;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+@mixin title {
+  margin: 0;
+  max-width: 100%;
+  color: inherit;
+  font-family: var(--font-family-heading);
+  font-size: clamp(1.6rem, 7cqw, 2.5rem);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+@mixin subtitle {
+  margin: 0;
+  max-width: 60ch;
+  color: inherit;
+  font-family: var(--font-family-body);
+  font-size: clamp(0.95rem, 3cqw, 1.125rem);
+  line-height: 1.55;
+  overflow-wrap: normal;
+  word-break: normal;
+}
+
+@mixin meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-xs);
+  color: inherit;
+  font-family: var(--font-family-body);
+  font-size: var(--font-size-body-sm, 0.875rem);
+  line-height: 1.4;
+}
+
+@mixin actions {
+  grid-area: actions;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-sm);
+  min-width: 0;
+  max-width: 100%;
+  padding-top: var(--spacing-sm);
+}
+
+@mixin footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  min-width: 0;
+  max-width: 100%;
+  padding: var(--spacing-xs) var(--spacing-lg);
+  border-top: 1px solid var(--border-color);
+  overflow-x: auto;
+}
+
+@mixin loader {
+  position: absolute;
+  inset-block-start: var(--spacing-sm);
+  inset-inline-end: var(--spacing-sm);
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  opacity: 0.72;
+  animation: spin 700ms linear infinite;
+}
+
+@mixin theme-colors($values) {
+  background-color: map.get($values, bg);
+  color: map.get($values, text);
+  border-color: map.get($values, border);
+}
+
+@mixin state-border($values) {
+  border-width: 2px;
+  border-color: map.get($values, border);
+}
+
+@mixin outline($border-color) {
+  background-color: transparent;
+  color: inherit;
+  box-shadow: none;
+  border: 2px solid $border-color;
+}

@@ -1,0 +1,65 @@
+@use "sass:map";
+
+@mixin container {
+  display: inline-flex;
+  gap: var(--spacing-xs);
+  align-items: flex-start;
+  max-width: 100%;
+  font-family: var(--font-family-body);
+}
+
+@mixin label {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-ui);
+  line-height: var(--line-height-label);
+  color: inherit;
+}
+
+@mixin root {
+  display: inline-flex;
+  align-items: stretch;
+  min-width: min(100%, 9rem);
+  max-width: 100%;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-md);
+  background: var(--background-color);
+  color: inherit;
+  box-shadow: var(--box-shadow-sm);
+  transition: var(--transition-default);
+  overflow: hidden;
+}
+
+@mixin theme-colors($values) {
+  background-color: map.get($values, bg);
+  color: map.get($values, text);
+  border-color: map.get($values, border);
+}
+
+@mixin outline($border-color) {
+  background-color: transparent;
+  color: inherit;
+  box-shadow: none;
+  border: 2px solid $border-color;
+}
+
+@mixin disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: var(--disabled-color);
+  border-color: var(--disabled-color);
+}
+
+@mixin forced-root {
+  background: Canvas;
+  color: CanvasText;
+  border: 1px solid ButtonText;
+  box-shadow: none;
+}
+
+@mixin forced-glass {
+  background: Canvas;
+  border-color: ButtonText;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
