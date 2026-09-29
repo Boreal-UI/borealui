@@ -1,0 +1,3 @@
+@use "../Fixture.shared" as shared;
+
+@include shared.styles(".fixture", ".fixture_item");

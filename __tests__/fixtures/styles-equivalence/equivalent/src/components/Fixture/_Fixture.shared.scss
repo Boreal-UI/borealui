@@ -1,0 +1,17 @@
+@mixin styles($root, $item) {
+  #{$root} {
+    color: var(--fixture-color, #123456);
+    display: block;
+  }
+
+  #{$item} {
+    margin: 0;
+    padding: 4px;
+  }
+
+  @media (max-width: 40rem) {
+    #{$root} {
+      display: grid;
+    }
+  }
+}

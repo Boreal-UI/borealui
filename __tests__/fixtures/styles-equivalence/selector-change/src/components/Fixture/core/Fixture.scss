@@ -1,0 +1,15 @@
+.fixture_changed {
+  color: var(--fixture-color, #123456);
+  display: block;
+}
+
+.fixture_item {
+  margin: 0;
+  padding: 4px;
+}
+
+@media (max-width: 40rem) {
+  .fixture_changed {
+    display: grid;
+  }
+}

@@ -70,6 +70,7 @@
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" \"cypress/**/*.{ts,tsx}\" \"*.config.ts\" --fix",
     "lint:all": "eslint . --max-warnings=0",
     "check:sync": "node scripts/checkSync.cjs",
+    "styles:equivalence": "node scripts/stylesEquivalence.cjs",
     "gen:entrypoints": "node scripts/generateEntryPoints.cjs",
     "gen:exports": "node scripts/generateExports.cjs",
     "gen:component": "node scripts/addComponent.cjs",
