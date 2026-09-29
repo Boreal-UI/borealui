@@ -1,0 +1,131 @@
+@use "../../styles/theme" as theme;
+@use "../../styles/_mixins" as mixins;
+@use "sass:map";
+
+@mixin root {
+  display: block;
+  margin: 0 auto;
+  flex-shrink: 0;
+  transition:
+    background-color theme.$transition-default,
+    opacity theme.$transition-default;
+  background-color: var(--text-color-primary);
+  border: none;
+}
+
+@mixin horizontal {
+  width: 100%;
+  height: 1px;
+  margin: var(--spacing-sm) 0;
+}
+
+@mixin horizontal-small {
+  margin: var(--spacing-xs) 0;
+}
+
+@mixin horizontal-large {
+  height: 2px;
+  margin: var(--spacing-md) 0;
+}
+
+@mixin vertical {
+  width: 1px;
+  height: 100%;
+  margin: 0 var(--spacing-sm);
+}
+
+@mixin vertical-small {
+  margin: 0 var(--spacing-xs);
+}
+
+@mixin vertical-large {
+  width: 2px;
+  margin: 0 var(--spacing-md);
+}
+
+@mixin dashed {
+  background-color: transparent;
+  border-color: transparent;
+}
+
+@mixin dashed-horizontal {
+  height: 0;
+  border-top: 1px dashed currentcolor;
+}
+
+@mixin dashed-horizontal-large {
+  border-top-width: 2px;
+}
+
+@mixin dashed-vertical {
+  width: 0;
+  border-left: 1px dashed currentcolor;
+}
+
+@mixin dashed-vertical-large {
+  border-left-width: 2px;
+}
+
+@mixin disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@mixin theme($values) {
+  --divider-glass-bg: #{map.get($values, glass-bg)};
+  --divider-glass-hover-bg: #{map.get($values, glass-hover)};
+  --divider-glass-border: #{map.get($values, glass-border)};
+  --divider-glass-text: #{map.get($values, text)};
+
+  background-color: map.get($values, border);
+  border-color: map.get($values, border);
+}
+
+@mixin theme-dashed($values) {
+  color: map.get($values, border);
+}
+
+@mixin glass {
+  @include mixins.glass-surface(
+    var(--divider-glass-bg, var(--glass-background)),
+    var(--divider-glass-border, var(--glass-border-color)),
+    var(--glass-blur)
+  );
+
+  color: inherit;
+  box-shadow: none;
+}
+
+@mixin glass-dashed {
+  color: var(--divider-glass-border, currentcolor);
+}
+
+@mixin reduced-motion {
+  transition: none !important;
+}
+
+@mixin forced-root {
+  background: ButtonText;
+  border-color: ButtonText;
+}
+
+@mixin forced-dashed {
+  background: transparent;
+  border-color: transparent;
+}
+
+@mixin forced-horizontal {
+  border-top: 1px dashed ButtonText;
+}
+
+@mixin forced-vertical {
+  border-left: 1px dashed ButtonText;
+}
+
+@mixin forced-glass {
+  background: Canvas !important;
+  border-color: ButtonText !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}

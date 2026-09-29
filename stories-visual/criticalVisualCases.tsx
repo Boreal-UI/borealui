@@ -301,6 +301,32 @@ const renderCaseBody = (
         </div>
       );
 
+    case "shared-scss-primitives":
+      return (
+        <div className="visualParityStack">
+          <Components.FormField
+            id={`visual-environment-${implementation}`}
+            label="Environment name"
+            helperText="Used in deployment summaries."
+          >
+            <input
+              className="visualParityInput"
+              defaultValue="Production"
+              type="text"
+            />
+          </Components.FormField>
+          <Components.Divider theme="secondary" dashed />
+          <Components.Legend
+            label="Deployment health"
+            items={[
+              { label: "Healthy", color: "#2f855a", value: "18" },
+              { label: "Monitoring", color: "#b7791f", value: "3" },
+              { label: "Blocked", color: "#c53030", value: "1" },
+            ]}
+          />
+        </div>
+      );
+
     case "tabs-focus":
       return (
         <Components.Tabs

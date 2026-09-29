@@ -31,6 +31,7 @@ export const FileUploadDragRejected = createStory("file-upload-drag-rejected");
 export const LineChartAccessibility = createStory("line-chart-accessibility");
 export const TreeViewStates = createStory("tree-view-states");
 export const SkeletonReducedMotion = createStory("skeleton-reduced-motion");
+export const SharedScssPrimitives = createStory("shared-scss-primitives");
 export const TabsFocus = createStory("tabs-focus");
 export const FeedbackStates = createStory("feedback-states");
 export const NavigationNarrow = createStory("navigation-narrow");

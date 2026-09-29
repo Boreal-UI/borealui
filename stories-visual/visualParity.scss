@@ -28,6 +28,18 @@
   min-width: 0;
 }
 
+.visualParityInput {
+  box-sizing: border-box;
+  width: min(100%, 24rem);
+  min-width: 0;
+  padding: var(--spacing-sm);
+  color: var(--text-color);
+  background: var(--background-color-lighter);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font: inherit;
+}
+
 .visualParityChart {
   width: 100%;
   max-width: 32rem;

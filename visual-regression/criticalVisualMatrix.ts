@@ -21,6 +21,7 @@ export type CriticalVisualCaseId =
   | "line-chart-accessibility"
   | "tree-view-states"
   | "skeleton-reduced-motion"
+  | "shared-scss-primitives"
   | "tabs-focus"
   | "feedback-states"
   | "navigation-narrow"
@@ -147,6 +148,16 @@ export const criticalVisualMatrix: CriticalVisualCase[] = [
     viewports: ["desktop"],
     reducedMotion: true,
     storyIds: storyIds("skeleton-reduced-motion"),
+  },
+  {
+    id: "shared-scss-primitives",
+    exportName: "SharedScssPrimitives",
+    category: "foundation",
+    components: ["Divider", "FormField", "Legend"],
+    states: ["helper", "dashed", "themed", "horizontal"],
+    theme: "light",
+    viewports: ["desktop", "mobile"],
+    storyIds: storyIds("shared-scss-primitives"),
   },
   {
     id: "tabs-focus",

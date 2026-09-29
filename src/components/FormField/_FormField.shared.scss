@@ -1,0 +1,96 @@
+@mixin root {
+  display: grid;
+  gap: var(--spacing-xs);
+  width: fit-content;
+  min-width: 0;
+  font-family: var(--font-family-ui);
+  color: var(--text-color);
+}
+
+@mixin label-top {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "label"
+    "control"
+    "helper"
+    "error";
+}
+
+@mixin label-bottom {
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "control"
+    "label"
+    "helper"
+    "error";
+}
+
+@mixin label-side {
+  grid-template-columns: max-content minmax(0, 1fr);
+  grid-template-areas:
+    "label control"
+    ". helper"
+    ". error";
+  align-items: start;
+  // stylelint-disable-next-line declaration-block-no-redundant-longhand-properties
+  column-gap: var(--spacing-sm);
+  row-gap: var(--spacing-xs);
+}
+
+@mixin label-right {
+  grid-template-columns: minmax(0, 1fr) fit-content;
+  grid-template-areas:
+    "control label"
+    "helper ."
+    "error .";
+}
+
+@mixin label {
+  grid-area: label;
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--spacing-xs);
+  min-width: 0;
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label, 1.2);
+}
+
+@mixin side-label {
+  padding-block-start: 0.45em;
+}
+
+@mixin control {
+  grid-area: control;
+  min-width: 0;
+}
+
+@mixin message($area) {
+  grid-area: $area;
+  min-width: 0;
+  font-size: var(--font-size-caption);
+  line-height: var(--line-height-caption);
+}
+
+@mixin optional {
+  color: var(--text-color-secondary);
+  font-size: var(--font-size-caption);
+  font-weight: var(--font-weight-body);
+}
+
+@mixin color($value) {
+  color: $value;
+}
+
+@mixin disabled {
+  opacity: 0.6;
+}
+
+@mixin reduced-motion {
+  transition: none !important;
+  animation: none !important;
+}
+
+@mixin forced-control {
+  forced-color-adjust: auto;
+}

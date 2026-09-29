@@ -1,157 +1,114 @@
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
-@use "../../../styles/_mixins" as mixins;
-@use "sass:color";
 @use "sass:map";
+@use "../Divider.shared" as shared;
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
 
 .divider {
-  display: block;
-  margin: 0 auto;
-  flex-shrink: 0;
-  transition:
-    background-color theme.$transition-default,
-    opacity theme.$transition-default;
-  background-color: var(--text-color-primary);
-  border: none;
+  @include shared.root;
 
   &_horizontal {
-    width: 100%;
-    height: 1px;
-    margin: var(--spacing-sm) 0;
+    @include shared.horizontal;
 
     @include bp.down(sm) {
-      margin: var(--spacing-xs) 0;
+      @include shared.horizontal-small;
     }
 
     @include bp.up(lg) {
-      height: 2px;
-      margin: var(--spacing-md) 0;
+      @include shared.horizontal-large;
     }
   }
 
   &_vertical {
-    width: 1px;
-    height: 100%;
-    margin: 0 var(--spacing-sm);
+    @include shared.vertical;
 
     @include bp.down(sm) {
-      margin: 0 var(--spacing-xs);
+      @include shared.vertical-small;
     }
 
     @include bp.up(lg) {
-      width: 2px;
-      margin: 0 var(--spacing-md);
+      @include shared.vertical-large;
     }
   }
 
   &_dashed {
-    background-color: transparent;
-    border-color: transparent;
+    @include shared.dashed;
 
     &.divider_horizontal {
-      height: 0;
-      border-top: 1px dashed currentcolor;
+      @include shared.dashed-horizontal;
 
       @include bp.up(lg) {
-        border-top-width: 2px;
+        @include shared.dashed-horizontal-large;
       }
     }
 
     &.divider_vertical {
-      width: 0;
-      border-left: 1px dashed currentcolor;
+      @include shared.dashed-vertical;
 
       @include bp.up(lg) {
-        border-left-width: 2px;
+        @include shared.dashed-vertical-large;
       }
     }
   }
 
   &_disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
+    @include shared.disabled;
   }
 
   @each $theme, $values in theme.$themes {
     &_#{$theme} {
-      --divider-glass-bg: #{map.get($values, glass-bg)};
-      --divider-glass-hover-bg: #{map.get($values, glass-hover)};
-      --divider-glass-border: #{map.get($values, glass-border)};
-      --divider-glass-text: #{map.get($values, text)};
-
-      background-color: map.get($values, border);
-      border-color: map.get($values, border);
+      @include shared.theme($values);
     }
     &_#{$theme}.divider_dashed {
-      color: map.get($values, border);
+      @include shared.theme-dashed($values);
     }
   }
 
   @each $state, $values in theme.$states {
     &_#{$state} {
-      --divider-glass-bg: #{map.get($values, glass-bg)};
-      --divider-glass-hover-bg: #{map.get($values, glass-hover)};
-      --divider-glass-border: #{map.get($values, glass-border)};
-      --divider-glass-text: #{map.get($values, text)};
-
-      background-color: map.get($values, border);
-      border-color: map.get($values, border);
+      @include shared.theme($values);
     }
     &_#{$state}.divider_dashed {
-      color: map.get($values, border);
+      @include shared.theme-dashed($values);
     }
   }
 
   &_glass {
-    @include mixins.glass-surface(
-      var(--divider-glass-bg, var(--glass-background)),
-      var(--divider-glass-border, var(--glass-border-color)),
-      var(--glass-blur)
-    );
-
-    color: inherit;
-    box-shadow: none;
+    @include shared.glass;
   }
 
   &_glass.divider_dashed {
-    color: var(--divider-glass-border, currentcolor);
+    @include shared.glass-dashed;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .divider {
-    transition: none !important;
+    @include shared.reduced-motion;
   }
 }
 
 @media (forced-colors: active) {
   .divider {
-    background: ButtonText;
-    border-color: ButtonText;
+    @include shared.forced-root;
   }
 
   .divider.divider_dashed {
-    background: transparent;
-    border-color: transparent;
+    @include shared.forced-dashed;
   }
 
   .divider.divider_dashed.divider_horizontal {
-    border-top: 1px dashed ButtonText;
+    @include shared.forced-horizontal;
   }
 
   .divider.divider_dashed.divider_vertical {
-    border-left: 1px dashed ButtonText;
+    @include shared.forced-vertical;
   }
 
   .divider.divider_glass {
-    background: Canvas !important;
-    border-color: ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+    @include shared.forced-glass;
   }
 }
 }
