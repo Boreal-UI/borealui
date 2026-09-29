@@ -1,0 +1,141 @@
+@mixin wrapper-base {
+  width: fit-content;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  user-select: none;
+  position: relative;
+}
+
+@mixin wrapper-small {
+  gap: var(--spacing-xs);
+  font-size: var(--font-size-caption);
+}
+
+@mixin wrapper-large {
+  gap: var(--spacing-md);
+  font-size: var(--font-size-body-sm);
+}
+
+@mixin wrapper-focus-visible {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+@mixin spinner-base {
+  display: inline-block;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-style: solid;
+  border-width: 4px;
+  border-radius: 50%;
+  border-color: transparent;
+  border-top-color: var(--primary-color);
+  animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  transition: transform var(--transition-default);
+}
+
+@mixin spinner-small {
+  width: 40px;
+  height: 40px;
+  border-width: 3px;
+}
+
+@mixin spinner-large {
+  width: 56px;
+  height: 56px;
+  border-width: 4px;
+}
+
+@mixin theme-border($value) {
+  border-top-color: $value;
+}
+
+@mixin glass-variable($value) {
+  --spinner-glass-border: #{$value};
+}
+
+@mixin rounding($value) {
+  border-radius: $value;
+}
+
+@mixin shadow($value) {
+  box-shadow: $value;
+}
+
+@mixin shadow-element {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: transparent;
+  z-index: 0;
+}
+
+@mixin clear {
+  border-top-color: var(--text-color);
+}
+
+@mixin glass-ring {
+  border-right-color: var(--spinner-glass-border, transparent);
+}
+
+@mixin clear-glass {
+  border-top-color: var(--disabled-color);
+}
+
+@mixin label-base {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-label);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+  margin-top: var(--spacing-xs);
+  color: inherit;
+  text-align: center;
+  width: max-content;
+}
+
+@mixin label-small {
+  font-size: var(--font-size-caption);
+}
+
+@mixin label-large {
+  font-size: var(--font-size-body-sm);
+}
+
+@mixin disabled {
+  border-top-color: var(--disabled-color);
+  opacity: 0.55;
+}
+
+@mixin reduced-motion {
+  animation: none !important;
+}
+
+@mixin forced-colors-spinner {
+  border-color: transparent;
+  border-top-color: Highlight;
+}
+
+@mixin forced-colors-label {
+  color: CanvasText;
+}
+
+@mixin forced-colors-glass {
+  background: Canvas !important;
+  border: 1px solid ButtonText !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}

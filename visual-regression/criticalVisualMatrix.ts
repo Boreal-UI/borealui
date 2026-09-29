@@ -21,6 +21,7 @@ export type CriticalVisualCaseId =
   | "line-chart-accessibility"
   | "tree-view-states"
   | "skeleton-reduced-motion"
+  | "spinner-variants"
   | "shared-scss-primitives"
   | "tabs-focus"
   | "feedback-states"
@@ -148,6 +149,16 @@ export const criticalVisualMatrix: CriticalVisualCase[] = [
     viewports: ["desktop"],
     reducedMotion: true,
     storyIds: storyIds("skeleton-reduced-motion"),
+  },
+  {
+    id: "spinner-variants",
+    exportName: "SpinnerVariants",
+    category: "feedback",
+    components: ["Spinner"],
+    states: ["default", "themed-glass", "success", "label"],
+    theme: "light",
+    viewports: ["desktop"],
+    storyIds: storyIds("spinner-variants"),
   },
   {
     id: "shared-scss-primitives",

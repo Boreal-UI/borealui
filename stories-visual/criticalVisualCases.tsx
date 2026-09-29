@@ -301,6 +301,19 @@ const renderCaseBody = (
         </div>
       );
 
+    case "spinner-variants":
+      return (
+        <div className="visualParityGrid">
+          <Components.Spinner label="Loading content" />
+          <Components.Spinner
+            theme="tertiary"
+            variant="glass"
+            label="Themed glass"
+          />
+          <Components.Spinner state="success" label="Upload complete" />
+        </div>
+      );
+
     case "shared-scss-primitives":
       return (
         <div className="visualParityStack">
