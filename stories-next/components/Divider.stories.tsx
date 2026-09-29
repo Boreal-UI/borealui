@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Divider, StateType, ThemeType } from "../../src/index.next";
+import { Divider } from "../../src/index.next";
 import type { DividerProps } from "../../src/components/Divider/Divider.types";
 
 const meta: Meta<DividerProps> = {
