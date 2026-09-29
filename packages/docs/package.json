@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/docs",
-  "version": "0.1.426",
+  "version": "0.2.0-beta.1",
   "readme": "README.md",
   "description": "Generated component documentation metadata for Boreal UI tooling and websites.",
   "keywords": [
