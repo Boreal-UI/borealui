@@ -1,0 +1,80 @@
+@mixin root {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  max-width: 100%;
+  color: inherit;
+  font-family: var(--font-family-ui);
+}
+
+@mixin label {
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-ui);
+  color: inherit;
+}
+
+@mixin list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs) var(--spacing-md);
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+@mixin vertical {
+  flex-direction: column;
+}
+
+@mixin horizontal {
+  flex-direction: row;
+}
+
+@mixin item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  min-width: 0;
+  font-size: var(--font-size-body-sm);
+}
+
+@mixin swatch {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex: 0 0 auto;
+  border-radius: var(--border-radius-full);
+}
+
+@mixin text {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: inherit;
+}
+
+@mixin value {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.76;
+  color: inherit;
+}
+
+@mixin loader {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+
+@mixin loading {
+  cursor: progress;
+}
+
+@mixin theme($color) {
+  color: $color;
+}
+
+@mixin disabled {
+  color: var(--disabled-color);
+  opacity: 0.6;
+}

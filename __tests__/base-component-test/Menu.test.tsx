@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import BaseMenu from "@/components/Menu/MenuBase";
 
@@ -132,6 +132,143 @@ describe("BaseMenu", () => {
       expect(menu.style.left).toBe("120px");
       expect(menu.style.top).toBe("80px");
     });
+  });
+
+  it("clamps a context menu to the bottom-right viewport padding", async () => {
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 320,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      writable: true,
+      value: 240,
+    });
+    const rectSpy = jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(function getRect(this: HTMLElement) {
+        if (this.dataset.testid === "menu-menu") {
+          return {
+            x: 0,
+            y: 0,
+            width: 180,
+            height: 120,
+            top: 0,
+            right: 180,
+            bottom: 120,
+            left: 0,
+            toJSON: () => ({}),
+          };
+        }
+
+        return {
+          x: 0,
+          y: 0,
+          width: 0,
+          height: 0,
+          top: 0,
+          right: 0,
+          bottom: 0,
+          left: 0,
+          toJSON: () => ({}),
+        };
+      });
+
+    renderMenu();
+    fireEvent.contextMenu(screen.getByTestId("menu-target"), {
+      clientX: 310,
+      clientY: 230,
+    });
+
+    const menu = screen.getByTestId("menu-menu");
+    await waitFor(() => {
+      expect(menu.style.left).toBe("132px");
+      expect(menu.style.top).toBe("112px");
+    });
+
+    rectSpy.mockRestore();
+  });
+
+  it("flips and vertically offsets a submenu at the bottom-right corner", async () => {
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 320,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      writable: true,
+      value: 240,
+    });
+    const rectSpy = jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(function getRect(this: HTMLElement) {
+        if (this.dataset.menuItemWrapper === "true") {
+          return {
+            x: 260,
+            y: 180,
+            width: 48,
+            height: 40,
+            top: 180,
+            right: 308,
+            bottom: 220,
+            left: 260,
+            toJSON: () => ({}),
+          };
+        }
+        if (this.dataset.menuPanelPath === "0") {
+          return {
+            x: 308,
+            y: 180,
+            width: 180,
+            height: 160,
+            top: 180,
+            right: 488,
+            bottom: 340,
+            left: 308,
+            toJSON: () => ({}),
+          };
+        }
+
+        return {
+          x: 20,
+          y: 20,
+          width: 180,
+          height: 120,
+          top: 20,
+          right: 200,
+          bottom: 140,
+          left: 20,
+          toJSON: () => ({}),
+        };
+      });
+
+    renderMenu({
+      items: [
+        {
+          label: "Settings",
+          "data-testid": "menu-settings",
+          items: [{ label: "Profile", "data-testid": "menu-profile" }],
+        },
+      ],
+    });
+
+    fireEvent.contextMenu(screen.getByTestId("menu-target"), {
+      clientX: 20,
+      clientY: 20,
+    });
+    fireEvent.click(screen.getByTestId("menu-settings"));
+
+    const submenu = screen.getByTestId("menu-settings-submenu");
+    await waitFor(() => {
+      expect(submenu).toHaveAttribute("data-placement", "left");
+      expect(submenu.style.getPropertyValue("--menu-panel-offset-y")).toBe(
+        "-108px",
+      );
+    });
+
+    rectSpy.mockRestore();
   });
 
   it("supports trigger-based menus", () => {
@@ -385,6 +522,7 @@ describe("BaseMenu", () => {
 
     fireEvent.keyDown(screen.getByTestId("menu"), { key: "ArrowLeft" });
     expect(create).toHaveFocus();
+    expect(screen.queryByTestId("menu-create-submenu")).not.toBeInTheDocument();
   });
 
   it("does not open nested submenus from pointer hover on stacked mobile layouts", () => {
@@ -450,6 +588,153 @@ describe("BaseMenu", () => {
     fireEvent.contextMenu(screen.getByTestId("menu-target"));
     fireEvent.mouseDown(screen.getByTestId("outside"));
     expect(screen.queryByTestId("menu-menu")).not.toBeInTheDocument();
+  });
+
+  it("requests outside dismissal without forcing a controlled menu closed", () => {
+    const onOpenChange = jest.fn();
+    render(
+      <>
+        <BaseMenu
+          items={[{ label: "Controlled item" }]}
+          open
+          onOpenChange={onOpenChange}
+          classMap={classMap}
+        />
+        <button type="button" data-testid="controlled-outside">
+          Outside
+        </button>
+      </>,
+    );
+
+    fireEvent.mouseDown(screen.getByTestId("controlled-outside"));
+
+    expect(onOpenChange).toHaveBeenCalledWith(false);
+    expect(screen.getByRole("menu")).toBeInTheDocument();
+  });
+
+  it("keeps empty and all-disabled menus stable under navigation keys", () => {
+    const { rerender } = render(
+      <BaseMenu items={[]} open classMap={classMap} data-testid="empty-menu" />,
+    );
+
+    const emptyWrapper = screen.getByTestId("empty-menu");
+    for (const key of ["ArrowDown", "ArrowUp", "Home", "End", "Enter", " "]) {
+      expect(() => fireEvent.keyDown(emptyWrapper, { key })).not.toThrow();
+    }
+
+    rerender(
+      <BaseMenu
+        items={[
+          { label: "First", disabled: true, testId: "disabled-first" },
+          { label: "Last", disabled: true, testId: "disabled-last" },
+        ]}
+        open
+        classMap={classMap}
+        data-testid="empty-menu"
+      />,
+    );
+
+    for (const key of ["ArrowDown", "ArrowUp", "Home", "End"]) {
+      fireEvent.keyDown(emptyWrapper, { key });
+    }
+    expect(screen.getByTestId("disabled-first")).not.toHaveFocus();
+    expect(screen.getByTestId("disabled-last")).not.toHaveFocus();
+  });
+
+  it("skips disabled items at both sequence boundaries", () => {
+    renderMenu({
+      items: [
+        { label: "Disabled first", disabled: true, testId: "disabled-first" },
+        { label: "Available", testId: "available" },
+        { label: "Disabled last", disabled: true, testId: "disabled-last" },
+      ],
+    });
+
+    fireEvent.contextMenu(screen.getByTestId("menu-target"));
+    expect(screen.getByTestId("available")).toHaveFocus();
+    fireEvent.keyDown(screen.getByTestId("menu"), { key: "ArrowDown" });
+    expect(screen.getByTestId("available")).toHaveFocus();
+    fireEvent.keyDown(screen.getByTestId("menu"), { key: "ArrowUp" });
+    expect(screen.getByTestId("available")).toHaveFocus();
+  });
+
+  it("uses internal paths for submenu return with arbitrary consumer ids", async () => {
+    const arbitraryId = 'item"\\[] spaces Ω';
+    renderMenu({
+      items: [
+        {
+          id: arbitraryId,
+          label: "Special",
+          testId: "special-trigger",
+          items: [{ id: `${arbitraryId}-child`, label: "Child", testId: "special-child" }],
+        },
+      ],
+    });
+
+    fireEvent.contextMenu(screen.getByTestId("menu-target"));
+    fireEvent.keyDown(screen.getByTestId("menu"), { key: "ArrowRight" });
+    await waitFor(() => expect(screen.getByTestId("special-child")).toHaveFocus());
+    fireEvent.keyDown(screen.getByTestId("menu"), { key: "ArrowLeft" });
+
+    expect(screen.getByTestId("special-trigger")).toHaveFocus();
+    expect(screen.queryByTestId("special-trigger-submenu")).not.toBeInTheDocument();
+  });
+
+  it("recovers navigation from live reorder, insertion, removal, and disable changes", () => {
+    const renderItems = (items: React.ComponentProps<typeof BaseMenu>["items"]) => (
+      <BaseMenu
+        items={items}
+        open
+        focusFirstItemOnOpen={false}
+        classMap={classMap}
+        data-testid="dynamic-menu"
+      />
+    );
+    const { rerender } = render(
+      renderItems([
+        { id: "alpha", label: "Alpha", testId: "dynamic-alpha" },
+        { id: "beta", label: "Beta", testId: "dynamic-beta" },
+      ]),
+    );
+
+    act(() => screen.getByTestId("dynamic-beta").focus());
+    rerender(
+      renderItems([
+        { id: "beta", label: "Beta", testId: "dynamic-beta" },
+        { id: "inserted", label: "Inserted", testId: "dynamic-inserted" },
+        { id: "alpha", label: "Alpha", testId: "dynamic-alpha" },
+      ]),
+    );
+    fireEvent.keyDown(screen.getByTestId("dynamic-menu"), { key: "ArrowDown" });
+    expect(screen.getByTestId("dynamic-inserted")).toHaveFocus();
+
+    rerender(
+      renderItems([
+        { id: "inserted", label: "Inserted", testId: "dynamic-inserted", disabled: true },
+        { id: "alpha", label: "Alpha", testId: "dynamic-alpha" },
+      ]),
+    );
+    fireEvent.keyDown(screen.getByTestId("dynamic-menu"), { key: "ArrowDown" });
+    expect(screen.getByTestId("dynamic-alpha")).toHaveFocus();
+  });
+
+  it("lets consumers cancel navigation and preserves Tab dismissal semantics", () => {
+    const onKeyDown = jest.fn((event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === "ArrowDown") event.preventDefault();
+    });
+    renderMenu({ trigger: "Actions", activation: "click", onKeyDown });
+
+    fireEvent.click(screen.getByTestId("menu-trigger"));
+    expect(screen.getByTestId("menu-rename")).toHaveFocus();
+    fireEvent.keyDown(screen.getByTestId("menu"), { key: "ArrowDown" });
+    expect(screen.getByTestId("menu-rename")).toHaveFocus();
+
+    const tabWasNotCancelled = fireEvent.keyDown(screen.getByTestId("menu"), {
+      key: "Tab",
+    });
+    expect(tabWasNotCancelled).toBe(true);
+    expect(screen.queryByTestId("menu-menu")).not.toBeInTheDocument();
+    expect(screen.getByTestId("menu-trigger")).toHaveFocus();
   });
 
   it("has no accessibility violations when closed", async () => {

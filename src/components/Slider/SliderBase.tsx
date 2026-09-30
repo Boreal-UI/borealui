@@ -155,6 +155,7 @@ const SliderBase: React.FC<
 
       <div className={classMap.wrapper} data-testid={`${testId}-wrapper`}>
         <input
+          {...rest}
           id={inputId}
           name={name}
           type="range"
@@ -178,7 +179,6 @@ const SliderBase: React.FC<
           aria-invalid={computedAriaInvalid}
           aria-orientation={ariaOrientation}
           data-testid={testId}
-          {...rest}
         />
       </div>
       {showValue &&

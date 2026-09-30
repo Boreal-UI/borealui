@@ -18,6 +18,7 @@ const classes = {
   info: "divider_info",
   warning: "divider_warning",
   error: "divider_error",
+  disabled: "divider_disabled",
   glass: "divider_glass",
 };
 

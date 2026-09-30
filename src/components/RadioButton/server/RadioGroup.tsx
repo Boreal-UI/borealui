@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { expandClassMap } from "@/utils/propAliases";
 import { RadioGroupProps } from "../RadioButton.types";
@@ -38,7 +39,8 @@ export default function RadioGroup({
 }: ServerRadioGroupProps) {
   const classMap = expandClassMap(styles);
   const resolvedTestId = testId ?? dataTestId ?? "radio-group";
-  const groupId = id ?? resolvedTestId;
+  const generatedId = useId();
+  const groupId = id ?? generatedId;
   return (
     <fieldset
       {...rest}

@@ -6,6 +6,14 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .inputGroup_withAddons {
+    gap: 0;
+  }
+
+  .inputGroup_withInlineAddons .inputGroup_frame {
+    flex-wrap: nowrap;
+  }
+
   .inputGroup_container {
     display: inline-grid;
     gap: var(--spacing-xs);

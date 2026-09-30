@@ -247,6 +247,7 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
 
         <div className={wrapperClass} data-testid={`${testId}-wrapper`}>
           <input
+            {...restInput}
             ref={ref}
             id={inputId}
             type="number"
@@ -271,7 +272,6 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
             onChange={handleChange}
             onBlur={handleBlur}
             data-testid={`${testId}-input`}
-            {...restInput}
           />
 
           {showControls ? (

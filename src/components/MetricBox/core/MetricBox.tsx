@@ -19,6 +19,7 @@ const classes = {
   info: "metricBox_info",
   error: "metricBox_error",
   warning: "metricBox_warning",
+  disabled: "metricBox_disabled",
 
   clear: "metricBox_clear",
 

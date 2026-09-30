@@ -5,6 +5,13 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .combobox_toggle_icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
   @include control-sizes.variants(
     ".combobox",
     (".combobox_input", ".combobox_option")

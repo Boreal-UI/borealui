@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { expandClassMap, resolvePropAlias } from "@/utils/propAliases";
 import { capitalize } from "@/utils/capitalize";
@@ -47,7 +48,8 @@ export default function TextInput({
 }: ServerTextInputProps) {
   const classMap = expandClassMap(styles);
   const resolvedTestId = testId ?? dataTestId ?? "text-input";
-  const inputId = id ?? `${resolvedTestId}-input`;
+  const generatedId = useId();
+  const inputId = id ?? `${generatedId}-input`;
   const helperTextId = helperText ? `${inputId}-helper-text` : undefined;
   const errorMessageId = errorMessage ? `${inputId}-error-message` : undefined;
   const describedBy =

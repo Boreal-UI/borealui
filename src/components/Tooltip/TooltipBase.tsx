@@ -8,6 +8,7 @@ import React, {
   cloneElement,
 } from "react";
 import { combineClassNames } from "../../utils/classNames";
+import { composeEventHandlers } from "../../utils/eventHandlers";
 import { TooltipProps, TriggerElementProps } from "./Tooltip.types";
 import { capitalize } from "../../utils/capitalize";
 import {
@@ -19,12 +20,6 @@ import {
 
 function mergeIds(...values: Array<string | undefined>) {
   return values.filter(Boolean).join(" ") || undefined;
-}
-
-function callAll<E>(...handlers: Array<((event: E) => void) | undefined>) {
-  return (event: E) => {
-    handlers.forEach((handler) => handler?.(event));
-  };
 }
 
 const TooltipBase = forwardRef<
@@ -118,22 +113,28 @@ const TooltipBase = forwardRef<
       "aria-labelledby": triggerAriaLabelledBy ?? childProps["aria-labelledby"],
       "aria-describedby": mergedAriaDescribedBy,
       "data-testid": `${testId}-trigger`,
-      onMouseEnter: callAll<React.MouseEvent<HTMLElement>>(
+      onMouseEnter: composeEventHandlers<React.MouseEvent<HTMLElement>>(
         childProps.onMouseEnter,
         show,
       ),
-      onMouseLeave: callAll<React.MouseEvent<HTMLElement>>(
+      onMouseLeave: composeEventHandlers<React.MouseEvent<HTMLElement>>(
         childProps.onMouseLeave,
         hide,
       ),
-      onFocus: callAll<React.FocusEvent<HTMLElement>>(childProps.onFocus, show),
-      onBlur: callAll<React.FocusEvent<HTMLElement>>(childProps.onBlur, hide),
+      onFocus: composeEventHandlers<React.FocusEvent<HTMLElement>>(
+        childProps.onFocus,
+        show,
+      ),
+      onBlur: composeEventHandlers<React.FocusEvent<HTMLElement>>(
+        childProps.onBlur,
+        hide,
+      ),
     });
   } else {
+    /* eslint-disable jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-tabindex -- A text tooltip needs a neutral, focusable discovery target, not a false interactive role. */
     trigger = (
       <span
         id={triggerId}
-        role="button"
         tabIndex={0}
         className={classMap.triggerWrapper}
         aria-label={triggerAriaLabel}
@@ -151,6 +152,7 @@ const TooltipBase = forwardRef<
         {children}
       </span>
     );
+    /* eslint-enable jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-tabindex */
   }
 
   const shouldRenderTooltip = keepMountedWhenHidden || visible;
@@ -164,6 +166,7 @@ const TooltipBase = forwardRef<
 
       {shouldRenderTooltip && (
         <div
+          {...rest}
           ref={ref}
           id={tooltipId}
           className={toolTipClassName}
@@ -172,7 +175,6 @@ const TooltipBase = forwardRef<
           aria-label={ariaLabel}
           aria-labelledby={ariaLabelledBy}
           data-testid={testId}
-          {...rest}
         >
           {content}
         </div>

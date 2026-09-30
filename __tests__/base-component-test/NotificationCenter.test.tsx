@@ -92,7 +92,9 @@ describe("BaseNotificationCenter", () => {
     const region = screen.getByRole("region", { name: /notifications/i });
     expect(region).toBeInTheDocument();
     expect(region).toHaveAttribute("data-testid", testId);
-    expect(region).toHaveAttribute("aria-labelledby", `${testId}-title`);
+    const title = screen.getByText("Notifications");
+    expect(title.id).not.toBe("");
+    expect(region).toHaveAttribute("aria-labelledby", title.id);
 
     expect(screen.getByTestId(`${testId}-header`)).toBeInTheDocument();
     expect(screen.getByText("Notifications")).toBeInTheDocument();
@@ -138,7 +140,8 @@ describe("BaseNotificationCenter", () => {
 
     const list = screen.getByRole("list");
     expect(list).toBeInTheDocument();
-    expect(list).toHaveAttribute("aria-labelledby", `${testId}-title`);
+    const title = screen.getByText("Notifications");
+    expect(list).toHaveAttribute("aria-labelledby", title.id);
     expect(list).not.toHaveAttribute("aria-label");
   });
 
@@ -478,7 +481,8 @@ describe("BaseNotificationCenter", () => {
     renderNotificationCenter();
 
     const item = screen.getByTestId(`${testId}-item-1`);
-    expect(item).toHaveAttribute("aria-labelledby", `${testId}-item-1-message`);
+    const message = screen.getByTestId(`${testId}-item-1-message`);
+    expect(item).toHaveAttribute("aria-labelledby", message.id);
     expect(item).not.toHaveAttribute("aria-label");
   });
 
@@ -486,10 +490,8 @@ describe("BaseNotificationCenter", () => {
     renderNotificationCenter();
 
     const item = screen.getByTestId(`${testId}-item-1`);
-    expect(item).toHaveAttribute(
-      "aria-describedby",
-      `${testId}-item-1-timestamp`,
-    );
+    const timestamp = screen.getByTestId(`${testId}-item-1-timestamp`);
+    expect(item).toHaveAttribute("aria-describedby", timestamp.id);
   });
 
   it("adds both timestamp and custom description ids to aria-describedby when both are present", () => {
@@ -515,9 +517,15 @@ describe("BaseNotificationCenter", () => {
     );
 
     const item = screen.getByTestId(`${testId}-item-described`);
+    const timestamp = screen.getByTestId(
+      `${testId}-item-described-timestamp`,
+    );
+    const description = screen.getByTestId(
+      `${testId}-item-described-description`,
+    );
     expect(item).toHaveAttribute(
       "aria-describedby",
-      `${testId}-item-described-timestamp ${testId}-item-described-description`,
+      `${timestamp.id} ${description.id}`,
     );
   });
 

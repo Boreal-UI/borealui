@@ -146,6 +146,7 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
     return (
       <div className={containerClass} data-testid={testId}>
         <fieldset
+          {...restRoot}
           ref={ref}
           id={rootId}
           className={rootClass}
@@ -155,7 +156,6 @@ const FieldSetBase = forwardRef<HTMLFieldSetElement, FieldSetBaseProps>(
           aria-invalid={hasError || undefined}
           disabled={disabled}
           data-testid={`${testId}-root`}
-          {...restRoot}
         >
           {resolvedLegend ? (
             <legend

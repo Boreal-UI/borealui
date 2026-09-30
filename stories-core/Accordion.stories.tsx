@@ -84,24 +84,29 @@ export const Disabled: Story = {
   },
 };
 
-export const LazyAndAsync: Story = {
+export const ControlledLoading: Story = {
+  render: (args) => {
+    const [loading, setLoading] = useState(true);
+
+    return (
+      <div>
+        <button type="button" onClick={() => setLoading((value) => !value)}>
+          {loading ? "Complete request" : "Start request"}
+        </button>
+        <Accordion {...args} loading={loading} />
+      </div>
+    );
+  },
   args: {
     ...defaultArgs,
-    title: "Lazy & Async Accordion",
+    title: "Consumer-controlled loading",
     lazyLoad: true,
-    asyncContent: true,
     loadingAriaLabel: "Loading accordion content",
-    defaultExpanded: false,
+    defaultExpanded: true,
     children: (
       <div>
-        <p>
-          This content is both <strong>lazy-loaded</strong> and{" "}
-          <strong>async-loaded</strong>.
-        </p>
-        <p>
-          It is not rendered until the accordion is opened, then a simulated
-          loading state is shown before the content appears.
-        </p>
+        <p>The consumer has completed its request.</p>
+        <p>Accordion never starts or finishes the request itself.</p>
       </div>
     ),
   },

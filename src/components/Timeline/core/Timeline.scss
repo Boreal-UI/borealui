@@ -53,6 +53,10 @@
     }
   }
 
+  .timeline_vertical {
+    flex-direction: column;
+  }
+
   .timeline_item {
     box-sizing: border-box;
     position: relative;
@@ -187,6 +191,13 @@
       width: 9px;
       height: 9px;
     }
+  }
+
+  .timeline_icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
   }
 
   .timeline_content {
@@ -338,6 +349,10 @@
   }
 
   .timeline_loading {
+    cursor: progress;
+  }
+
+  .timeline_itemLoading {
     cursor: progress;
   }
 

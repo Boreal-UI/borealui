@@ -110,11 +110,21 @@
       }
     }
 
+    &_dragging {
+      background-color: var(--background-color-lighter);
+      border-color: var(--focus-outline-color, var(--primary-color));
+      border-style: solid;
+    }
+
     &_upload_actions {
       width: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+
+    &_file_input {
+      max-width: 100%;
     }
 
     &_upload_controls {
@@ -224,6 +234,11 @@
 
     &_rejected_item {
       margin-bottom: 2px;
+    }
+
+    &_rejected_reason {
+      font-size: var(--font-size-caption);
+      opacity: 0.85;
     }
   }
 

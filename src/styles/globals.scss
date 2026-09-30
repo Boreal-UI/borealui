@@ -402,6 +402,8 @@
         $lightness: 20%
       )};
     --overlay-color: rgb(0 0 0 / 50%);
+    --z-index-notification: 1100;
+    --z-index-modal: 9999;
     --font-family-body: #{theme.$font-family-body};
     --font-family-heading: #{theme.$font-family-heading};
     --font-family-ui: #{theme.$font-family-ui};

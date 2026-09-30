@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, useId } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { sanitizeNavigationHref } from "@/utils/navigationSecurity";
 import { capitalize } from "@/utils/capitalize";
@@ -66,6 +66,7 @@ export default function ValidationSummary({
   testId = dataTestId ?? "validation-summary",
   ...rest
 }: ServerValidationSummaryProps) {
+  const generatedId = useId();
   const classMap = expandClassMap(styles);
   const normalizedItems = items.map(normalizeItem);
   const hasItems = normalizedItems.length > 0;
@@ -80,7 +81,7 @@ export default function ValidationSummary({
     tabIndex: tabIndexProp,
     ...restRoot
   } = rest as HTMLAttributes<HTMLDivElement>;
-  const rootId = idProp ?? testId;
+  const rootId = idProp ?? generatedId;
   const resolvedTitle = title ?? label ?? "There is a problem";
   const titleId = resolvedTitle ? `${rootId}-title` : undefined;
   const descriptionId = description ? `${rootId}-description` : undefined;

@@ -11,6 +11,9 @@ import React, {
   ButtonHTMLAttributes,
 } from "react";
 
+/** Native element targets guaranteed by Button's default and href rendering. */
+export type ButtonElement = HTMLButtonElement | HTMLAnchorElement;
+
 /**
  * Props for the reusable Button component.
  */
@@ -44,6 +47,9 @@ export interface ButtonProps extends Pick<
   /**
    * Optional element or component override.
    * Example: "a", "button", Link
+   *
+   * Public ref typing covers the built-in button and anchor render paths.
+   * Consumers using another custom element through `as` may need to adapt its ref.
    */
   as?: React.ElementType;
 
@@ -87,6 +93,13 @@ export interface ButtonProps extends Pick<
    * Click event handler for the button.
    */
   onClick?: (e: React.MouseEvent<HTMLElement>) => void;
+
+  /**
+   * Keyboard event handler. For polymorphic non-native buttons, it runs before
+   * Boreal's Enter/Space activation and can cancel that behavior with
+   * `event.preventDefault()`.
+   */
+  onKeyDown?: React.KeyboardEventHandler<HTMLElement>;
 
   /**
    * Child content to display inside the button.

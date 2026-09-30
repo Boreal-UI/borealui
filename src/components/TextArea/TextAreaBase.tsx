@@ -153,8 +153,9 @@ const TextAreaBase = forwardRef<
             </div>
           )}
 
-          <textarea
-            ref={ref}
+        <textarea
+          {...props}
+          ref={ref}
             id={id}
             placeholder={placeholder}
             aria-label={computedAriaLabel}
@@ -176,8 +177,7 @@ const TextAreaBase = forwardRef<
             }}
             className={combineClassNames(classMap.textInput, inputClassName)}
             data-testid={`${testId}-input`}
-            {...props}
-          />
+        />
 
           <div
             className={combineClassNames(

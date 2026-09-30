@@ -10,7 +10,7 @@ Development review, threat modeling, vulnerability handling, release approvals, 
 - `CodeQL` performs JavaScript/TypeScript SAST on pushes, pull requests, and a weekly schedule.
 - `Dependency and supply-chain security` runs dependency review on pull requests, blocks high-severity runtime findings and critical findings anywhere in the development tree, and generates a validated CycloneDX SBOM.
 - Dependabot updates npm dependencies and GitHub Actions every week.
-- Release jobs require a GitHub-verified signed annotated tag, rebuild and verify every package, generate SHA-256 checksums, create signed GitHub artifact attestations, and publish with npm provenance.
+- Release jobs require a GitHub-verified signed annotated tag, resolve that tag to an immutable commit SHA before checkout, verify `HEAD` again before packaging and publishing, rebuild and verify every package, generate SHA-256 checksums, create signed GitHub artifact attestations, and publish with npm provenance.
 
 Run the local security checks with:
 
@@ -21,14 +21,14 @@ npm run sbom
 
 The generated `bom.cdx.json` is intentionally ignored locally and uploaded as a workflow artifact in CI.
 
-### Temporary development-tool advisory
+### Dependency audit policy
 
-The full-tree audit currently reports the high-severity `image-size` advisories
-`GHSA-w3rx-r6r6-pgpr` and `GHSA-5p2g-fcmc-qvqq`. This package is used only by
-`@storybook/nextjs-vite` through `vite-plugin-storybook-nextjs`; it is not a
-runtime dependency of the published Boreal packages. npm reports no fix as of
-August 10, 2026. The audit still displays these findings and fails if their
-severity becomes critical.
+`audit:dependencies:runtime` audits the production dependency graph and fails
+on high- or critical-severity findings. `audit:dependencies:all` audits the
+complete development graph and fails on critical findings while continuing to
+display lower-severity advisories for review. Treat the command output and the
+lockfile as the current source of truth; do not copy point-in-time advisory
+lists into this guide.
 
 ## One-time GitHub configuration
 
@@ -43,7 +43,12 @@ Repository administrators must configure these controls after the workflows land
 7. Require signed annotated release tags. Create them with `git tag -s vX.Y.Z -m "Boreal UI vX.Y.Z"`, push the tag, then publish the matching GitHub release. Enable immutable releases in GitHub if available for the repository.
 8. Apply the organization ownership, two-administrator, secure MFA, team-role, and audit-review controls in the [Access Control Standard](./access-control.md).
 
-The release workflow deliberately fails before publishing if any package version differs from the release tag or already exists on npm. Packages publish in dependency order: types, core, next, docs, then CLI.
+The release workflow resolves the verified tag object to the commit it points
+to, checks out that SHA rather than the mutable tag name, and confirms `HEAD`
+still matches immediately after checkout, before packaging, and before
+publication. It also fails before publishing if any package version differs
+from the release tag or already exists on npm. Packages publish in dependency
+order: types, core, next, docs, then CLI.
 
 The release job uses Node 24 because npm trusted publishing requires Node 22.14 or newer and npm 11.5.1 or newer.
 

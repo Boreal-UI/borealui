@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { capitalize } from "@/utils/capitalize";
 import { expandClassMap } from "@/utils/propAliases";
@@ -46,8 +47,9 @@ export default function MetricBox({
   testId = dataTestId ?? "metric-box",
 }: ServerMetricBoxProps) {
   const classMap = expandClassMap(styles);
-  const titleId = title ? `${testId}-title` : undefined;
-  const subtextId = subtext ? `${testId}-subtext` : undefined;
+  const generatedId = useId();
+  const titleId = title ? `${generatedId}-title` : undefined;
+  const subtextId = subtext ? `${generatedId}-subtext` : undefined;
   const displayValue = units ? `${value} ${units}` : String(value ?? "");
   const classes = combineClassNames(
     classMap.wrapper,

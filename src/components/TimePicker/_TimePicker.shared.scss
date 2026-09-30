@@ -1,0 +1,129 @@
+@use "sass:map";
+
+@mixin container {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+  align-items: flex-start;
+  max-width: 100%;
+  min-inline-size: 0;
+  font-family: var(--font-family-body);
+}
+
+@mixin label {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-body-sm);
+  font-weight: var(--font-weight-ui);
+  line-height: var(--line-height-label);
+  color: inherit;
+}
+
+@mixin root {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  min-width: 0;
+  max-width: 100%;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-md);
+  background: var(--background-color);
+  color: inherit;
+  box-shadow: var(--box-shadow-sm);
+  transition: var(--transition-default);
+}
+
+@mixin input-wrapper {
+  display: flex;
+  align-items: stretch;
+  width: min(100%, 18rem);
+  min-width: 0;
+  overflow: hidden;
+  color: inherit;
+  border-radius: inherit;
+}
+
+@mixin input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color-scheme: dark;
+}
+
+@mixin button {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: var(--boreal-control-min-height, 2.25rem);
+  min-width: var(--boreal-control-min-height, 2.25rem);
+  min-height: var(--boreal-control-min-height, 2.25rem);
+  padding: 0;
+  color: inherit;
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0;
+  border-left: 1px solid var(--border-color);
+}
+
+@mixin supporting-text {
+  max-width: 100%;
+  margin: 0;
+  font-size: var(--font-size-body-sm);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+@mixin loader {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  opacity: 0.72;
+  animation: spin 700ms linear infinite;
+}
+
+@mixin theme-colors($values) {
+  background-color: map.get($values, bg);
+  color: map.get($values, text);
+  border-color: map.get($values, border);
+}
+
+@mixin outline($border-color) {
+  background-color: transparent;
+  color: inherit;
+  box-shadow: none;
+  border: 2px solid $border-color;
+}
+
+@mixin disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  background-color: var(--disabled-color);
+  border-color: var(--disabled-color);
+}
+
+@mixin forced-root {
+  background: Canvas;
+  color: CanvasText;
+  border: 1px solid ButtonText;
+  box-shadow: none;
+}
+
+@mixin forced-glass {
+  background: Canvas;
+  border-color: ButtonText;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}

@@ -29,6 +29,9 @@
   );
 
   .tabs_container {
+    @include mixins.contained-root;
+    @include mixins.inline-query-container(boreal-tabs);
+
     width: 100%;
     background-color: transparent;
 
@@ -211,6 +214,26 @@
   @each $key, $value in theme.$shadow {
     .tabs_shadow-#{$key} {
       box-shadow: $value;
+    }
+  }
+
+  .tabs_disabled {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  .tabs[aria-orientation="vertical"] {
+    flex-direction: column;
+  }
+
+  @container boreal-tabs (inline-size < 24rem) {
+    .tabs[aria-orientation="horizontal"] {
+      flex-direction: column;
+    }
+
+    .tabs[aria-orientation="horizontal"] .tabs_tab {
+      border-right: none;
+      border-bottom: 0.5px solid inherit;
     }
   }
 

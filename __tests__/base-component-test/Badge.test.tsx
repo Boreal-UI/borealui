@@ -27,7 +27,7 @@ const classMap = {
   xl: "xl",
   disabled: "disabled",
   clickable: "clickable",
-  badge_icon: "badge_icon",
+  icon: "badge_icon",
 
   shadowNone: "shadowNone",
   shadowLight: "shadowLight",

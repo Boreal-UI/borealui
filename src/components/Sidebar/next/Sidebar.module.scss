@@ -229,6 +229,16 @@
     }
   }
 
+  .item {
+    min-width: 0;
+    list-style: none;
+  }
+
+  .disabled {
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
   .chevronOpen {
     transform: rotate(180deg);
   }

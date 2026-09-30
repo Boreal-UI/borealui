@@ -36,8 +36,13 @@
   }
 
   :where(.card) {
+    @include mixins.contained-root;
+
+    --card-outer-margin: var(--spacing-sm);
+
     overflow: hidden;
-    margin: var(--spacing-sm);
+    margin: var(--card-outer-margin);
+    max-inline-size: calc(100% - (2 * var(--card-outer-margin)));
     position: relative;
     background-color: var(--background-color-surface);
     display: flex;
@@ -48,11 +53,11 @@
     transition: transform var(--transition-default);
 
     @include bp.down(sm) {
-      margin: var(--spacing-xs);
+      --card-outer-margin: var(--spacing-xs);
     }
 
     @include bp.up(lg) {
-      margin: var(--spacing-md);
+      --card-outer-margin: var(--spacing-md);
     }
   }
 
@@ -491,6 +496,12 @@
     width: 100%;
   }
 
+  .children {
+    min-width: 0;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+
   .header {
     display: flex;
     flex-direction: column;
@@ -610,6 +621,11 @@
     @include bp.up(lg) {
       gap: var(--spacing-md);
     }
+  }
+
+  .action_button {
+    min-width: 0;
+    max-width: 100%;
   }
 
   .xs {
@@ -779,6 +795,18 @@
         transform: translateY(-1px);
         box-shadow: var(--box-shadow-light);
       }
+    }
+  }
+
+  .primary,
+  .secondary,
+  .tertiary,
+  .quaternary,
+  .success,
+  .error,
+  .warning {
+    &:focus-within {
+      box-shadow: 0 0 0 3px color.adjust(#000, $lightness: 30%, $alpha: -0.85);
     }
   }
 

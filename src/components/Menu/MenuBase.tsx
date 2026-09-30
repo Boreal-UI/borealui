@@ -23,12 +23,21 @@ import {
 import {
   getMenuItemPath as getItemPath,
   getParentMenuPath as getParentPath,
+  getWrappedMenuIndex,
   isDisabledMenuElement as isDisabledElement,
   isMenuPathOpen as isPathOpen,
   MENU_VIEWPORT_MARGIN as VIEWPORT_MARGIN,
+  resolveMenuNavigationIntent,
   ROOT_MENU_PANEL_PATH as ROOT_PANEL_PATH,
 } from "../../utils/menuNavigation";
-import { useAnimationFrameCallback } from "../../hooks/useAnimationFrameCallback";
+import { useFloatingPanelSync } from "../../hooks/useFloatingPanelSync";
+import { useOutsideInteraction } from "../../hooks/useOutsideInteraction";
+import {
+  clampFloatingPanelCoordinates,
+  getFloatingPanelSizeLimits,
+  readFloatingPanelViewport,
+  resolveNestedPanelLayout,
+} from "../../utils/floatingPanelGeometry";
 
 const STACKED_MENU_QUERY = "(max-width: 479.98px)";
 
@@ -100,6 +109,8 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
   const isOpen = open ?? uncontrolledOpen;
   const resolvedMenuId = menuId ?? `${generatedId}-menu`;
   const resolvedPosition = position ?? internalPosition;
+  const resolvedPositionX = resolvedPosition.x;
+  const resolvedPositionY = resolvedPosition.y;
   const hasCustomTriggerContent = React.isValidElement(trigger);
 
   const setOpenState = useCallback(
@@ -157,8 +168,10 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       const enabledItems = getEnabledItemsInPanel(panel);
       if (enabledItems.length === 0) return;
 
-      const resolvedIndex =
-        (nextIndex + enabledItems.length) % enabledItems.length;
+      const resolvedIndex = getWrappedMenuIndex(
+        nextIndex,
+        enabledItems.length,
+      );
       enabledItems[resolvedIndex]?.focus();
     },
     [getEnabledItemsInPanel],
@@ -177,12 +190,13 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       return;
     }
 
-    const viewportWidth =
-      window.innerWidth || document.documentElement.clientWidth || 0;
-    const viewportHeight =
-      window.innerHeight || document.documentElement.clientHeight || 0;
-    const maxHeight = `${Math.max(120, viewportHeight - VIEWPORT_MARGIN * 2)}px`;
-    const maxWidth = `${Math.max(160, viewportWidth - VIEWPORT_MARGIN * 2)}px`;
+    const viewport = readFloatingPanelViewport();
+    const sizeLimits = getFloatingPanelSizeLimits(
+      viewport,
+      VIEWPORT_MARGIN,
+    );
+    const maxHeight = `${sizeLimits.maxHeight}px`;
+    const maxWidth = `${sizeLimits.maxWidth}px`;
     const panels = [
       menuRef.current,
       ...Array.from(
@@ -200,23 +214,16 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       };
 
       if (path === ROOT_PANEL_PATH) {
-        const left = Math.min(
-          Math.max(VIEWPORT_MARGIN, resolvedPosition.x),
-          Math.max(
-            VIEWPORT_MARGIN,
-            viewportWidth - rect.width - VIEWPORT_MARGIN,
-          ),
-        );
-        const top = Math.min(
-          Math.max(VIEWPORT_MARGIN, resolvedPosition.y),
-          Math.max(
-            VIEWPORT_MARGIN,
-            viewportHeight - rect.height - VIEWPORT_MARGIN,
-          ),
-        );
+        const coordinates = clampFloatingPanelCoordinates({
+          requested: { x: resolvedPositionX, y: resolvedPositionY },
+          panelWidth: rect.width,
+          panelHeight: rect.height,
+          viewport,
+          padding: VIEWPORT_MARGIN,
+        });
 
-        style.left = `${Math.round(left)}px`;
-        style.top = `${Math.round(top)}px`;
+        style.left = `${Math.round(coordinates.x)}px`;
+        style.top = `${Math.round(coordinates.y)}px`;
         nextLayouts[path] = { style };
         return;
       }
@@ -226,32 +233,25 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
       );
       const wrapperRect = wrapper?.getBoundingClientRect();
       const panelWidth = Math.max(rect.width, panel.offsetWidth, 160);
-      const rightSpace = wrapperRect
-        ? viewportWidth - wrapperRect.right - VIEWPORT_MARGIN
-        : viewportWidth - rect.right - VIEWPORT_MARGIN;
-      const leftSpace = wrapperRect
-        ? wrapperRect.left - VIEWPORT_MARGIN
-        : rect.left - VIEWPORT_MARGIN;
-      const placement =
-        rightSpace >= panelWidth || rightSpace >= leftSpace ? "right" : "left";
-      let offsetY = 0;
-
-      if (rect.bottom > viewportHeight - VIEWPORT_MARGIN) {
-        offsetY -= rect.bottom - (viewportHeight - VIEWPORT_MARGIN);
-      }
-
-      if (rect.top + offsetY < VIEWPORT_MARGIN) {
-        offsetY += VIEWPORT_MARGIN - (rect.top + offsetY);
-      }
+      const { placement, offsetY } = resolveNestedPanelLayout({
+        panelRect: rect,
+        anchorRect: wrapperRect,
+        panelWidth,
+        viewport,
+        padding: VIEWPORT_MARGIN,
+      });
 
       style["--menu-panel-offset-y"] = `${Math.round(offsetY)}px`;
       nextLayouts[path] = { placement, style };
     });
 
     setPanelLayouts(nextLayouts);
-  }, [isOpen, resolvedPosition.x, resolvedPosition.y]);
-  const schedulePanelLayoutUpdate =
-    useAnimationFrameCallback(updatePanelLayouts);
+  }, [isOpen, resolvedPositionX, resolvedPositionY]);
+
+  useFloatingPanelSync({
+    open: isOpen,
+    updatePosition: updatePanelLayouts,
+  });
 
   useLayoutEffect(() => {
     if (!isOpen) return;
@@ -285,33 +285,15 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
   }, [isOpen, openSubmenuPath]);
 
   useEffect(() => {
-    if (!isOpen) return;
-
-    window.addEventListener("resize", schedulePanelLayoutUpdate);
-    window.addEventListener("scroll", schedulePanelLayoutUpdate, true);
-
-    return () => {
-      window.removeEventListener("resize", schedulePanelLayoutUpdate);
-      window.removeEventListener("scroll", schedulePanelLayoutUpdate, true);
-    };
-  }, [isOpen, schedulePanelLayoutUpdate]);
-
-  useEffect(() => {
     if (!isOpen || !focusFirstItemOnOpen) return;
     focusFirstItemInPanel(menuRef.current);
   }, [focusFirstItemOnOpen, focusFirstItemInPanel, isOpen]);
 
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const handleMouseDown = (event: globalThis.MouseEvent) => {
-      if (wrapperRef.current?.contains(event.target as Node)) return;
-      closeMenu();
-    };
-
-    document.addEventListener("mousedown", handleMouseDown);
-    return () => document.removeEventListener("mousedown", handleMouseDown);
-  }, [closeMenu, isOpen]);
+  useOutsideInteraction({
+    active: isOpen,
+    insideRefs: [wrapperRef],
+    onOutsideInteraction: closeMenu,
+  });
 
   const menuClassNames = useMemo(
     () =>
@@ -534,83 +516,58 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
     const currentIndex = activeElement
       ? enabledItems.indexOf(activeElement)
       : -1;
-
-    if (event.key === "Escape") {
-      event.preventDefault();
-      closeMenu();
-      return;
-    }
-
-    if (event.key === "Tab") {
-      closeMenu();
-      return;
-    }
-
-    if (event.key === "ArrowDown") {
-      event.preventDefault();
-      focusItemInPanel(currentPanel, currentIndex + 1);
-      return;
-    }
-
-    if (event.key === "ArrowUp") {
-      event.preventDefault();
-      focusItemInPanel(
-        currentPanel,
-        currentIndex < 0 ? enabledItems.length - 1 : currentIndex - 1,
-      );
-      return;
-    }
-
-    if (event.key === "Home") {
-      event.preventDefault();
-      focusItemInPanel(currentPanel, 0);
-      return;
-    }
-
-    if (event.key === "End") {
-      event.preventDefault();
-      focusItemInPanel(currentPanel, enabledItems.length - 1);
-      return;
-    }
-
-    if (event.key === "ArrowRight") {
-      const submenuPath = activeElement?.dataset.menuItemPath;
-      const submenuId = activeElement?.getAttribute("aria-controls");
-
-      if (
+    const panelPath = currentPanel?.dataset.menuPanelPath;
+    const submenuPath = activeElement?.dataset.menuItemPath;
+    const submenuId = activeElement?.getAttribute("aria-controls");
+    const activeItem =
+      activeElement?.dataset.menuItem === "true" ? activeElement : null;
+    const intent = resolveMenuNavigationIntent({
+      key: event.key,
+      currentIndex,
+      itemCount: enabledItems.length,
+      activeHasSubmenu:
         activeElement?.dataset.menuHasSubmenu === "true" &&
-        submenuPath &&
-        submenuId
-      ) {
-        event.preventDefault();
-        setOpenSubmenuPath(submenuPath);
-        focusSubmenuPanel(submenuId);
-      }
+        Boolean(submenuPath && submenuId),
+      activeItemAvailable: Boolean(
+        activeItem && !isDisabledElement(activeItem),
+      ),
+      isSubmenuPanel: Boolean(panelPath && panelPath !== ROOT_PANEL_PATH),
+    });
 
-      return;
-    }
-
-    if (event.key === "ArrowLeft") {
-      const panelPath = currentPanel?.dataset.menuPanelPath;
-      if (panelPath && panelPath !== ROOT_PANEL_PATH) {
+    switch (intent.type) {
+      case "dismiss":
         event.preventDefault();
-        const parentPath = getParentPath(panelPath);
+        closeMenu();
+        return;
+      case "tab-dismiss":
+        closeMenu();
+        return;
+      case "focus":
+        event.preventDefault();
+        focusItemInPanel(currentPanel, intent.index);
+        return;
+      case "open-submenu":
+        event.preventDefault();
+        setOpenSubmenuPath(submenuPath!);
+        focusSubmenuPanel(submenuId!);
+        return;
+      case "close-submenu": {
+        event.preventDefault();
+        const closingPanelPath = panelPath!;
+        const parentPath = getParentPath(closingPanelPath);
         setOpenSubmenuPath(parentPath);
         const parentTrigger = wrapperRef.current?.querySelector<HTMLElement>(
-          `[data-menu-item-path="${panelPath}"][data-menu-item="true"]`,
+          `[data-menu-item-path="${closingPanelPath}"][data-menu-item="true"]`,
         );
         parentTrigger?.focus();
+        return;
       }
-      return;
-    }
-
-    if (event.key === "Enter" || event.key === " ") {
-      const activeItem =
-        activeElement?.dataset.menuItem === "true" ? activeElement : null;
-      if (!activeItem || isDisabledElement(activeItem)) return;
-
-      event.preventDefault();
-      activeItem.click();
+      case "activate":
+        event.preventDefault();
+        activeItem!.click();
+        return;
+      case "none":
+        return;
     }
   };
 
@@ -716,6 +673,10 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
         if (isStackedMenuViewport()) return;
         openDirectSubmenu();
       };
+      const handleDirectItemFocus = () => {
+        if (!hasSubmenu) closeChildSubmenus();
+      };
+      const handleSubmenuTriggerFocus = () => undefined;
       const handleSubmenuWrapperOver = (
         event:
           | React.MouseEvent<HTMLDivElement>
@@ -782,7 +743,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
           onPointerOver={handleSubmenuWrapperOver}
           onMouseEnter={handleDirectItemHover}
           onMouseOver={handleSubmenuWrapperOver}
-          onFocus={handleDirectItemHover}
+          onFocus={handleDirectItemFocus}
         >
           {hasSubmenu ? (
             <button
@@ -793,7 +754,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
               onPointerOver={handleSubmenuTriggerOver}
               onMouseEnter={handleSubmenuTriggerEnter}
               onMouseOver={handleSubmenuTriggerOver}
-              onFocus={handleSubmenuTriggerEnter}
+              onFocus={handleSubmenuTriggerFocus}
               onClick={(event) => {
                 event.stopPropagation();
                 openDirectSubmenu();
@@ -807,6 +768,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
               target={item.disabled ? undefined : item.target}
               rel={mergeSafeRel(item.target, item.rel)}
               {...commonProps}
+              onFocus={closeChildSubmenus}
               onClick={(event) => {
                 event.stopPropagation();
                 if (item.disabled) {
@@ -823,6 +785,7 @@ const BaseMenu: React.FC<BaseMenuProps> = ({
               type="button"
               disabled={item.disabled}
               {...commonProps}
+              onFocus={closeChildSubmenus}
               onClick={(event) => handleItemSelect(event, item)}
             >
               {renderItemContent(item, false)}

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useEffect } from "react";
+import React, { useState, useMemo, useRef, useEffect, useId } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import {
   getDefaultVariant,
@@ -56,6 +56,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
   getExpandButtonAriaDescription,
   ...rest
 }) => {
+  const generatedId = useId();
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
 
   const idsRef = useRef<Record<string, string>>({});
@@ -68,7 +69,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
         .replace(/\s+/g, "-")
         .replace(/[^a-z0-9_-]/g, "");
 
-      idsRef.current[label] = `${testId}-section-${slug}-${seqRef.current++}`;
+      idsRef.current[label] = `${generatedId}-section-${slug}-${seqRef.current++}`;
     }
 
     return idsRef.current[label];

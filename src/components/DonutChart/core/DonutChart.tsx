@@ -25,6 +25,7 @@ const classes = {
   info: "donutChart_info",
   warning: "donutChart_warning",
   error: "donutChart_error",
+  disabled: "donutChart_disabled",
   loading: "donutChart_loading",
 };
 

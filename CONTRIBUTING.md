@@ -35,6 +35,20 @@ npm run audit:package-quality
 
 `npm run audit` runs the complete quality suite. `npm run sbom` generates a local CycloneDX software bill of materials.
 
+### Compiled CSS equivalence
+
+For a source-only SCSS refactor that is expected to preserve output, compare the working tree with a known-good Git revision:
+
+```bash
+npm run styles:equivalence -- -- --base HEAD --component Button
+npm run styles:equivalence -- -- --base <revision> --component Button --component Spinner
+npm run styles:equivalence -- -- --base <revision>
+```
+
+The first `--` ends npm options and the second ends Node options, which preserves named arguments consistently on Windows and Linux. Omitting `--component` checks the aggregate Core and Next stylesheet set. The command compiles expanded CSS without source maps and requires exact byte equality; a failure reports the affected surface, SHA-256 hashes, and a bounded first-difference excerpt. Exit code `1` means CSS changed, while `2` means the comparison could not run. Use the revision immediately before the refactor, or the branch point when every intervening style change is intended to be output-neutral.
+
+This is a selective migration/review tool, not a universal style gate: it proves output identity, not visual quality, semantic Core/Next parity, or whether an intentional style change is correct. `checkSync` and Chromatic continue to cover those separate concerns. The command reads the baseline through Git objects in an isolated temporary directory; it never checks out, resets, or stashes the active working tree.
+
 ## Pull request requirements
 
 Every pull request must:

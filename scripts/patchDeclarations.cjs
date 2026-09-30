@@ -2,6 +2,11 @@ const fs = require("fs");
 const path = require("path");
 
 const typesDir = path.resolve(__dirname, "../dist/types");
+const sharedTypesSource = path.resolve(__dirname, "../src/types/types.d.ts");
+const sharedTypesOutput = path.join(typesDir, "types", "types.d.ts");
+
+fs.mkdirSync(path.dirname(sharedTypesOutput), { recursive: true });
+fs.copyFileSync(sharedTypesSource, sharedTypesOutput);
 
 function walk(dir) {
   if (!fs.existsSync(dir)) return [];
@@ -30,7 +35,7 @@ function patchDeclaration(filePath) {
   const originalSource = source;
   const sharedTypes = relativeTypeSpecifier(
     filePath,
-    path.join(typesDir, "types", "types.d.ts"),
+    sharedTypesOutput,
   );
   const sharedTypesIndex = relativeTypeSpecifier(
     filePath,
@@ -40,8 +45,9 @@ function patchDeclaration(filePath) {
   source = source
     .replace(/^import\s+["'][^"']+\.(?:module\.)?s?css["'];\r?\n/gm, "")
     .replace(/^\/\/# sourceMappingURL=.*\r?\n?/gm, "")
-    .replace(/from\s+["']@\/types\/types["']/g, `from "${sharedTypes}"`)
-    .replace(/from\s+["']@\/types["']/g, `from "${sharedTypesIndex}"`);
+    .replace(/from\s+["']\.\/types\.d["']/g, 'from "./types"')
+    .replace(/(["'])@\/types\/types\1/g, `"${sharedTypes}"`)
+    .replace(/(["'])@\/types\1/g, `"${sharedTypesIndex}"`);
 
   if (source !== originalSource) {
     fs.writeFileSync(filePath, source);

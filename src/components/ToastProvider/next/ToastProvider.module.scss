@@ -2,7 +2,7 @@
 
 .viewport {
   position: fixed;
-  z-index: 1100;
+  z-index: var(--z-index-notification, 1100);
   display: grid;
   gap: var(--spacing-sm);
   width: min(100% - 2rem, 24rem);
@@ -158,6 +158,11 @@
   .shadow#{$key} {
     box-shadow: $value;
   }
+}
+
+.disabled {
+  opacity: 0.55;
+  pointer-events: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

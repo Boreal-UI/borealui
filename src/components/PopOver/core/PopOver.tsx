@@ -24,6 +24,7 @@ const classes = {
   info: "popover_info",
   error: "popover_error",
   warning: "popover_warning",
+  disabled: "popover_disabled",
 
   clear: "popover_clear",
 

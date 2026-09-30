@@ -45,15 +45,15 @@ export const normalizeData = (data: ChartDatum[] | number[] = []) =>
   });
 
 export const getValueRange = (values: number[], includeZero = true) => {
-  const finiteValues = values.map(getFiniteValue);
-  const rawMin = Math.min(
-    ...finiteValues,
-    includeZero ? 0 : (finiteValues[0] ?? 0),
-  );
-  const rawMax = Math.max(
-    ...finiteValues,
-    includeZero ? 0 : (finiteValues[0] ?? 0),
-  );
+  const initialValue = includeZero ? 0 : getFiniteValue(values[0] ?? 0);
+  let rawMin = initialValue;
+  let rawMax = initialValue;
+
+  for (const value of values) {
+    const finiteValue = getFiniteValue(value);
+    if (finiteValue < rawMin) rawMin = finiteValue;
+    if (finiteValue > rawMax) rawMax = finiteValue;
+  }
 
   if (rawMin === rawMax) {
     return {

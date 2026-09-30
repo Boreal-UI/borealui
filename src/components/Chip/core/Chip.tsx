@@ -34,6 +34,7 @@ const classes = {
   warning: "chip_warning",
 
   clear: "chip_clear",
+  disabled: "chip_disabled",
 
   xs: "chip_xs",
   small: "chip_small",

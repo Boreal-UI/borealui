@@ -473,6 +473,48 @@ describe("BaseModal", () => {
     expect(opener).toHaveFocus();
   });
 
+  it("registers the opener before autofocus when creating its portal", async () => {
+    portal.remove();
+
+    const { rerender } = render(
+      <BaseModal
+        open
+        onClose={onClose}
+        IconButton={DummyIconButton}
+        classMap={classMap}
+      >
+        <p>Modal content</p>
+      </BaseModal>,
+    );
+
+    const closeButton = await screen.findByRole("button", {
+      name: "Close modal",
+    });
+    await waitFor(() => {
+      expect(closeButton).toHaveFocus();
+    });
+
+    rerender(
+      <BaseModal
+        open={false}
+        onClose={onClose}
+        IconButton={DummyIconButton}
+        classMap={classMap}
+      >
+        <p>Modal content</p>
+      </BaseModal>,
+    );
+
+    act(() => {
+      jest.advanceTimersByTime(200);
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+      expect(opener).toHaveFocus();
+    });
+  });
+
   it("adds noScroll to the body while open and removes it on unmount", async () => {
     const { unmount } = renderModal();
 

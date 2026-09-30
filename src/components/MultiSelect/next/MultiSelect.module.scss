@@ -14,7 +14,10 @@
   );
 
   .container {
+    @include mixins.contained-root;
+
     display: inline-flex;
+    flex-wrap: wrap;
     gap: var(--spacing-xs);
     align-items: flex-start;
     max-width: 100%;
@@ -48,6 +51,8 @@
   }
 
   .root {
+    @include mixins.contained-root;
+
     --multiSelect-glass-bg: rgba(255, 255, 255, 0.18);
     --multiSelect-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --multiSelect-glass-border: rgba(255, 255, 255, 0.28);
@@ -57,8 +62,7 @@
     display: inline-flex;
     align-items: center;
     gap: var(--spacing-xs);
-    min-width: min(100%, 16rem);
-    max-width: 100%;
+    width: min(100%, 16rem);
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
@@ -267,6 +271,11 @@
     display: grid;
     gap: 0.125rem;
     min-width: 0;
+  }
+
+  .optionLabel {
+    min-width: 0;
+    overflow-wrap: anywhere;
   }
 
   .description {

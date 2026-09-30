@@ -1,6 +1,9 @@
 import { defineConfig } from "cypress";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { fileURLToPath } from "node:url";
+
+const configDirectory = fileURLToPath(new URL(".", import.meta.url));
 
 export default defineConfig({
   allowCypressEnv: false,
@@ -23,14 +26,18 @@ export default defineConfig({
         plugins: [react()],
         resolve: {
           alias: {
-            "@": path.resolve(__dirname, "src"),
+            "@": path.resolve(configDirectory, "src"),
+            "next/image": path.resolve(
+              configDirectory,
+              "cypress/support/next-image.ts",
+            ),
           },
         },
         css: {
           preprocessorOptions: {
             scss: {
               api: "modern",
-              loadPaths: [path.resolve(__dirname, "node_modules")],
+              loadPaths: [path.resolve(configDirectory, "node_modules")],
             },
           },
         },

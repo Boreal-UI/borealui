@@ -3,6 +3,7 @@
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 @use "../../../styles/_animations";
+@use "../PageHeader.shared" as page-header-shared;
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 
@@ -12,23 +13,7 @@
     --pageHeader-glass-border: rgba(255, 255, 255, 0.28);
     --pageHeader-glass-text: inherit;
 
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    max-width: 100%;
-    min-width: 0;
-    overflow: hidden;
-    border: 1px solid var(--border-color);
-    border-radius: var(--border-radius-xl, var(--border-radius-md));
-    color: inherit;
-    box-shadow: var(--box-shadow-sm);
-    font-family: var(--font-family-ui);
-    transition:
-      background-color var(--transition-default),
-      border-color var(--transition-default),
-      box-shadow var(--transition-default),
-      color var(--transition-default);
+    @include page-header-shared.root;
   }
 
   .root *,
@@ -48,16 +33,7 @@
   }
 
   .main {
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    grid-template-areas:
-      "icon content"
-      "actions actions";
-    align-items: start;
-    gap: var(--spacing-md);
-    width: 100%;
-    min-width: 0;
-    padding: var(--spacing-lg);
+    @include page-header-shared.main;
   }
 
   .before + .main {
@@ -65,17 +41,7 @@
   }
 
   .icon {
-    grid-area: icon;
-    display: inline-flex;
-    flex: 0 0 auto;
-    align-items: center;
-    justify-content: center;
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: var(--border-radius-lg, 0.75rem);
-    background: transparent;
-    color: inherit;
-    margin-top: 1.35rem;
+    @include page-header-shared.icon;
   }
 
   .icon svg {
@@ -84,13 +50,7 @@
   }
 
   .content {
-    grid-area: content;
-    display: grid;
-    gap: var(--spacing-xs);
-    align-items: start;
-    min-width: 0;
-    max-width: 100%;
-    color: inherit;
+    @include page-header-shared.content;
   }
 
   .content > .icon {
@@ -98,54 +58,19 @@
   }
 
   .eyebrow {
-    margin: 0;
-    max-width: 100%;
-    color: inherit;
-    font-family: var(--font-family-ui);
-    font-size: var(--font-size-caption, 0.75rem);
-    font-weight: var(--font-weight-bold);
-    line-height: 1.25;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    opacity: 0.72;
-    overflow-wrap: normal;
-    word-break: normal;
+    @include page-header-shared.eyebrow;
   }
 
   .title {
-    margin: 0;
-    max-width: 100%;
-    color: inherit;
-    font-family: var(--font-family-heading);
-    font-size: clamp(1.6rem, 7cqw, 2.5rem);
-    font-weight: var(--font-weight-bold);
-    line-height: 1.08;
-    letter-spacing: -0.035em;
-    overflow-wrap: normal;
-    word-break: normal;
+    @include page-header-shared.title;
   }
 
   .subtitle {
-    margin: 0;
-    max-width: 60ch;
-    color: inherit;
-    font-family: var(--font-family-body);
-    font-size: clamp(0.95rem, 3cqw, 1.125rem);
-    line-height: 1.55;
-    overflow-wrap: normal;
-    word-break: normal;
+    @include page-header-shared.subtitle;
   }
 
   .meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: var(--spacing-sm);
-    margin-top: var(--spacing-xs);
-    color: inherit;
-    font-family: var(--font-family-body);
-    font-size: var(--font-size-body-sm, 0.875rem);
-    line-height: 1.4;
+    @include page-header-shared.meta;
   }
 
   .bodyContent {
@@ -156,15 +81,7 @@
   }
 
   .actions {
-    grid-area: actions;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: flex-start;
-    gap: var(--spacing-sm);
-    min-width: 0;
-    max-width: 100%;
-    padding-top: var(--spacing-sm);
+    @include page-header-shared.actions;
   }
 
   .actions > * {
@@ -172,15 +89,7 @@
   }
 
   .footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--spacing-md);
-    min-width: 0;
-    max-width: 100%;
-    padding: var(--spacing-xs) var(--spacing-lg);
-    border-top: 1px solid var(--border-color);
-    overflow-x: auto;
+    @include page-header-shared.footer;
   }
 
   .footer > * {
@@ -188,17 +97,7 @@
   }
 
   .loader {
-    position: absolute;
-    inset-block-start: var(--spacing-sm);
-    inset-inline-end: var(--spacing-sm);
-    display: inline-block;
-    width: 1rem;
-    height: 1rem;
-    border: 2px solid currentcolor;
-    border-right-color: transparent;
-    border-radius: 50%;
-    opacity: 0.72;
-    animation: spin 700ms linear infinite;
+    @include page-header-shared.loader;
   }
 
   .clear {
@@ -263,15 +162,10 @@
       --pageHeader-glass-text: #{map.get($vals, text)};
       --pageHeader-accent: #{map.get($vals, border)};
 
-      background-color: map.get($vals, bg);
-      color: map.get($vals, text);
-      border-color: map.get($vals, border);
+      @include page-header-shared.theme-colors($vals);
 
       &.outline {
-        background-color: transparent;
-        color: inherit;
-        box-shadow: none;
-        border: 2px solid map.get($vals, border);
+        @include page-header-shared.outline(map.get($vals, border));
       }
     }
   }
@@ -283,14 +177,10 @@
       --pageHeader-glass-text: #{map.get($vals, text)};
       --pageHeader-accent: #{map.get($vals, border)};
 
-      border-width: 2px;
-      border-color: map.get($vals, border);
+      @include page-header-shared.state-border($vals);
 
       &.outline {
-        background-color: transparent;
-        color: inherit;
-        box-shadow: none;
-        border: 2px solid map.get($vals, border);
+        @include page-header-shared.outline(map.get($vals, border));
       }
     }
   }

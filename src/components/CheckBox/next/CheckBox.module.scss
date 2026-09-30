@@ -5,6 +5,11 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .left,
+  .right {
+    min-width: 0;
+  }
+
   $checkbox-sizes: (
     xs: 1rem,
     small: 1.125rem,

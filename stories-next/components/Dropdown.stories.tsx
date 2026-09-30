@@ -16,15 +16,10 @@ import {
   renderStateVariants,
   renderThemeVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-
-const roundingOptions: RoundingType[] = ["none", "small", "medium", "large"];
-const shadowOptions: ShadowType[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const meta: Meta<DropdownProps> = {
   title: "Components/Dropdown",

@@ -1,9 +1,11 @@
 import React, { useMemo } from "react";
+import { ElementType, parseDocument } from "htmlparser2";
 import { marked } from "marked";
 import sanitize from "sanitize-html";
 import { BaseMarkdownRendererProps } from "./MarkdownRenderer.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
+import { mergeSafeRel } from "../../utils/navigationSecurity";
 import {
   getDefaultRounding,
   getDefaultShadow,
@@ -96,6 +98,33 @@ const allowedHtmlTags = new Set([
 
 const voidHtmlTags = new Set(["br", "hr", "img"]);
 
+type MarkedRendererContext = {
+  parser?: {
+    parseInline?: (tokens: unknown[]) => string;
+  };
+};
+
+type MarkedRendererToken = {
+  href?: unknown;
+  text?: unknown;
+  title?: unknown;
+  tokens?: unknown[];
+};
+
+const getTokenString = (value: unknown): string =>
+  typeof value === "string" ? value : "";
+
+const getInlineTokenText = (
+  context: MarkedRendererContext,
+  token: MarkedRendererToken,
+): string => {
+  if (token.tokens && typeof context.parser?.parseInline === "function") {
+    return context.parser.parseInline(token.tokens);
+  }
+
+  return getTokenString(token.text);
+};
+
 const safeSanitize = (html: string): string =>
   sanitize(html, {
     allowedTags: [...allowedHtmlTags],
@@ -122,12 +151,18 @@ const safeSanitize = (html: string): string =>
     parseStyleAttributes: false,
   });
 
-const getSafeElementProps = (element: Element) => {
+type ParsedHtmlNode = ReturnType<typeof parseDocument>["children"][number];
+
+type ParsedHtmlElement = {
+  name: string;
+  attribs: Record<string, string>;
+};
+
+const getSafeElementProps = (element: ParsedHtmlElement) => {
   const props: Record<string, string | number | boolean> = {};
 
-  [...element.attributes].forEach((attr) => {
-    const name = attr.name.toLowerCase();
-    const value = attr.value;
+  Object.entries(element.attribs).forEach(([attributeName, value]) => {
+    const name = attributeName.toLowerCase();
 
     if (name.startsWith("on") || name === "style" || name === "srcdoc") return;
 
@@ -145,12 +180,20 @@ const getSafeElementProps = (element: Element) => {
 
     if (name === "target") {
       props.target = value;
-      if (value === "_blank") props.rel = "noopener noreferrer";
       return;
     }
 
     props[attributeNameMap[name] ?? name] = value;
   });
+
+  if (element.name.toLowerCase() === "a") {
+    const target = typeof props.target === "string" ? props.target : undefined;
+    const rel = typeof props.rel === "string" ? props.rel : undefined;
+    const safeRel = mergeSafeRel(target, rel);
+
+    if (safeRel) props.rel = safeRel;
+    else delete props.rel;
+  }
 
   return props;
 };
@@ -159,39 +202,69 @@ const htmlToReactNodes = (
   html: string,
   keyPrefix: string,
 ): React.ReactNode[] => {
-  if (typeof window === "undefined" || typeof window.DOMParser !== "function") {
-    return [html];
-  }
+  const doc = parseDocument(html, { decodeEntities: true });
 
-  const doc = new DOMParser().parseFromString(html, "text/html");
+  const convertNode = (node: ParsedHtmlNode, key: string): React.ReactNode => {
+    if (node.type === ElementType.Text) return node.data;
+    if (node.type !== ElementType.Tag) return null;
 
-  const convertNode = (node: ChildNode, key: string): React.ReactNode => {
-    if (node.nodeType === Node.TEXT_NODE) return node.textContent ?? "";
-    if (node.nodeType !== Node.ELEMENT_NODE) return null;
+    const tagName = node.name.toLowerCase();
+    const children: React.ReactNode[] = [];
+    let pendingTableRows: ParsedHtmlNode[] = [];
 
-    const element = node as Element;
-    const tagName = element.tagName.toLowerCase();
-    const children = [...element.childNodes].map((child, index) =>
-      convertNode(child, `${key}-${index}`),
-    );
+    const flushTableRows = () => {
+      if (pendingTableRows.length === 0) return;
+
+      const rowKey = `${key}-tbody-${children.length}`;
+      children.push(
+        React.createElement(
+          "tbody",
+          { key: rowKey },
+          pendingTableRows.map((child, index) =>
+            convertNode(child, `${rowKey}-${index}`),
+          ),
+        ),
+      );
+      pendingTableRows = [];
+    };
+
+    node.children.forEach((child, index) => {
+      const isDirectTableRow =
+        tagName === "table" &&
+        child.type === ElementType.Tag &&
+        child.name.toLowerCase() === "tr";
+      const isWhitespaceBetweenRows =
+        pendingTableRows.length > 0 &&
+        child.type === ElementType.Text &&
+        child.data.trim() === "";
+
+      if (isDirectTableRow || isWhitespaceBetweenRows) {
+        pendingTableRows.push(child);
+        return;
+      }
+
+      flushTableRows();
+      children.push(convertNode(child, `${key}-${index}`));
+    });
+    flushTableRows();
 
     if (!allowedHtmlTags.has(tagName)) return children;
 
     if (voidHtmlTags.has(tagName)) {
       return React.createElement(tagName, {
         key,
-        ...getSafeElementProps(element),
+        ...getSafeElementProps(node),
       });
     }
 
     return React.createElement(
       tagName,
-      { key, ...getSafeElementProps(element) },
+      { key, ...getSafeElementProps(node) },
       children,
     );
   };
 
-  return [...doc.body.childNodes].map((node, index) =>
+  return doc.children.map((node, index) =>
     convertNode(node, `${keyPrefix}-${index}`),
   );
 };
@@ -217,24 +290,62 @@ const BaseMarkdownRenderer: React.FC<BaseMarkdownRendererProps> = ({
     const r = new marked.Renderer();
 
     if (!allowHtml) {
-      r.html = (html: string) => escapeHtml(html);
+      r.html = (function (
+        this: MarkedRendererContext,
+        htmlOrToken: string | MarkedRendererToken,
+      ) {
+        const html =
+          typeof htmlOrToken === "string"
+            ? htmlOrToken
+            : getTokenString(htmlOrToken.text);
+        return escapeHtml(html);
+      });
     }
 
-    r.link = (href: string, title: string | null | undefined, text: string) => {
-      const url = href ?? "#";
+    r.link = (function (
+      this: MarkedRendererContext,
+      hrefOrToken: string | MarkedRendererToken,
+      legacyTitle?: string | null,
+      legacyText?: string,
+    ) {
+      const isToken = typeof hrefOrToken !== "string";
+      const href = isToken ? getTokenString(hrefOrToken.href) : hrefOrToken;
+      const title = isToken
+        ? getTokenString(hrefOrToken.title)
+        : getTokenString(legacyTitle);
+      const text = isToken
+        ? getInlineTokenText(this, hrefOrToken)
+        : getTokenString(legacyText);
+      const url = href || "#";
       const isExternal = /^https?:\/\//i.test(url);
-      const t = title ? ` title="${escapeHtml(title)}"` : "";
+      const titleAttribute = title
+        ? ` title="${escapeHtml(title)}"`
+        : "";
       const target = isExternal ? ` target="_blank"` : "";
       const rel = isExternal ? ` rel="noopener noreferrer"` : "";
-      return `<a href="${escapeHtml(url)}"${t}${target}${rel}>${text}</a>`;
-    };
+      return `<a href="${escapeHtml(url)}"${titleAttribute}${target}${rel}>${text}</a>`;
+    });
 
-    r.image = (href: string, title: string | null, text: string) => {
-      const url = href ?? "";
-      const t = title ? ` title="${escapeHtml(title)}"` : "";
-      const alt = escapeHtml(text || "");
-      return `<img src="${escapeHtml(url)}"${t} alt="${alt}" loading="lazy" decoding="async" />`;
-    };
+    r.image = (function (
+      this: MarkedRendererContext,
+      hrefOrToken: string | MarkedRendererToken,
+      legacyTitle?: string | null,
+      legacyText?: string,
+    ) {
+      const isToken = typeof hrefOrToken !== "string";
+      const href = isToken ? getTokenString(hrefOrToken.href) : hrefOrToken;
+      const title = isToken
+        ? getTokenString(hrefOrToken.title)
+        : getTokenString(legacyTitle);
+      const text = isToken
+        ? getTokenString(hrefOrToken.text)
+        : getTokenString(legacyText);
+      const titleAttribute = title
+        ? ` title="${escapeHtml(title)}"`
+        : "";
+      const alt = escapeHtml(text);
+      return `<img src="${escapeHtml(href)}"${titleAttribute} alt="${alt}" loading="lazy" decoding="async" />`;
+    });
 
     return r;
   }, [allowHtml]);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useId } from "react";
 import { ArrowLeftIcon, ArrowRightIcon } from "../../Icons";
 import {
   getDefaultVariant,
@@ -41,6 +41,7 @@ const BasePager: React.FC<BasePagerProps> = ({
   IconButton,
   classMap,
 }) => {
+  const generatedId = useId();
   const perPage = Math.max(1, itemsPerPage || 1);
   const totalPages = Math.max(1, Math.ceil(totalItems / perPage));
   const page = Math.min(Math.max(1, currentPage || 1), totalPages);
@@ -68,7 +69,8 @@ const BasePager: React.FC<BasePagerProps> = ({
     size && classMap[size],
   );
 
-  const liveRegionId = `${testId}-status`;
+  const liveRegionId = `${generatedId}-status`;
+  const pageListId = `${generatedId}-page-list`;
 
   return (
     <nav
@@ -102,14 +104,14 @@ const BasePager: React.FC<BasePagerProps> = ({
           aria-label={previousButtonAriaLabel}
           title="Previous page"
           onClick={() => goTo(page - 1)}
-          aria-controls={pageListAriaLabel ? `${testId}-page-list` : undefined}
+          aria-controls={pageListAriaLabel ? pageListId : undefined}
           data-testid={`${testId}-prev`}
           type="button"
         />
       </div>
 
       <ul
-        id={`${testId}-page-list`}
+        id={pageListId}
         className={classMap.controls}
         aria-label={pageListAriaLabel}
         data-testid={`${testId}-page-list`}
@@ -189,7 +191,7 @@ const BasePager: React.FC<BasePagerProps> = ({
           aria-label={nextButtonAriaLabel}
           title="Next page"
           onClick={() => goTo(page + 1)}
-          aria-controls={pageListAriaLabel ? `${testId}-page-list` : undefined}
+          aria-controls={pageListAriaLabel ? pageListId : undefined}
           data-testid={`${testId}-next`}
           type="button"
         />

@@ -110,6 +110,11 @@
       text-align: right;
     }
 
+    &_center {
+      align-items: center;
+      text-align: center;
+    }
+
     $size-variations: (
       "xs": (
         icon-size: 1.5rem,
@@ -249,6 +254,11 @@
   .metricBox_clear {
     border: none;
     box-shadow: none;
+  }
+
+  .metricBox_disabled {
+    opacity: 0.55;
+    pointer-events: none;
   }
 
   .metricBox_glass {

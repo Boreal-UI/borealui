@@ -21,6 +21,13 @@ const classes = {
   info: "circular_progress_info",
   error: "circular_progress_error",
   warning: "circular_progress_warning",
+  disabled: "circular_progress_disabled",
+
+  state_success: "circular_progress_state_success",
+  state_info: "circular_progress_state_info",
+  state_error: "circular_progress_state_error",
+  state_warning: "circular_progress_state_warning",
+  state_disabled: "circular_progress_state_disabled",
 
   clear: "circular_progress_clear",
 

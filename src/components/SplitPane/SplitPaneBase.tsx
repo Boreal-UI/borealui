@@ -153,13 +153,13 @@ const SplitPaneBase = forwardRef<HTMLDivElement, SplitPaneBaseProps>(
 
     return (
       <div
+        {...rest}
         ref={setRefs}
         className={rootClass}
         style={rootStyle}
         aria-busy={loading || undefined}
         aria-disabled={disabled || undefined}
         data-testid={testId}
-        {...rest}
       >
         {loading ? (
           <span

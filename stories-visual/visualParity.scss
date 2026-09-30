@@ -1,0 +1,80 @@
+.visualParityCanvas {
+  min-height: 100vh;
+  box-sizing: border-box;
+  padding: 2rem;
+  color: var(--text-color);
+  background: var(--background-color);
+  font-family: var(--font-family-ui);
+}
+
+.visualParityHeading {
+  margin: 0 0 1.5rem;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.visualParityGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+  gap: 1.25rem;
+  align-items: start;
+  min-width: 0;
+}
+
+.visualParityStack {
+  display: grid;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.visualParityInput {
+  box-sizing: border-box;
+  width: min(100%, 24rem);
+  min-width: 0;
+  padding: var(--spacing-sm);
+  color: var(--text-color);
+  background: var(--background-color-lighter);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
+  font: inherit;
+}
+
+.visualParityChart {
+  width: 100%;
+  max-width: 32rem;
+}
+
+.visualParityFloatingEdge {
+  display: flex;
+  min-height: 24rem;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.visualParityFloatingCenter {
+  display: grid;
+  min-height: 24rem;
+  place-items: center;
+}
+
+.visualParityPopOverEdge {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+[data-visual-case="navigation-narrow"] {
+  padding-inline-start: 7rem;
+}
+
+@media (width < 500px) {
+  .visualParityCanvas {
+    padding: 1rem;
+  }
+
+  .visualParityGrid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

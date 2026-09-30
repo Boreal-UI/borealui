@@ -9,19 +9,13 @@ import {
   StateType,
   ThemeType,
 } from "../../src/types/types";
-
-const themeOptions = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions = ["success", "errorMessage", "warning"];
-const roundingOptions = ["none", "small", "medium", "large"];
-const sizeOptions = ["xs", "small", "medium", "large", "xl"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+  sizeOptions,
+  stateOptions,
+  themeOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const meta: Meta<typeof CheckBox> = {
   title: "Components/CheckBox",

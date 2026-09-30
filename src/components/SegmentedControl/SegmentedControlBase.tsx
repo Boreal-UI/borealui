@@ -155,7 +155,23 @@ const SegmentedControlBase = forwardRef<
     );
 
     const focusOption = useCallback((index: number) => {
-      optionRefs.current[index]?.focus();
+      const option = optionRefs.current[index];
+      option?.focus();
+      option?.scrollIntoView?.({ block: "nearest", inline: "nearest" });
+
+      const scroller = option?.parentElement;
+      if (option && scroller) {
+        const optionStart = option.offsetLeft;
+        const optionEnd = optionStart + option.offsetWidth;
+        const visibleStart = scroller.scrollLeft;
+        const visibleEnd = visibleStart + scroller.clientWidth;
+
+        if (optionStart < visibleStart) {
+          scroller.scrollLeft = optionStart;
+        } else if (optionEnd > visibleEnd) {
+          scroller.scrollLeft = optionEnd - scroller.clientWidth;
+        }
+      }
     }, []);
 
     const selectOption = useCallback(
@@ -251,6 +267,7 @@ const SegmentedControlBase = forwardRef<
 
         {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
         <div
+          {...restRoot}
           ref={ref}
           id={rootId}
           role={roleProp ?? "radiogroup"}
@@ -264,7 +281,6 @@ const SegmentedControlBase = forwardRef<
           tabIndex={-1}
           data-testid={`${testId}-root`}
           onKeyDown={handleKeyDown}
-          {...restRoot}
         >
           {loading ? (
             <span

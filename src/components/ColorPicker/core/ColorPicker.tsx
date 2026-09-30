@@ -14,6 +14,9 @@ const classes = {
   radio_input: "color_picker_radio_input",
   custom_input: "color_picker_custom_input",
   value: "color_picker_selected",
+  invalid: "color_picker_invalid",
+  helperText: "color_picker_helper_text",
+  errorText: "color_picker_error_text",
 
   xs: "color_picker_xs",
   small: "color_picker_small",

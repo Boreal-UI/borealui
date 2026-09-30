@@ -336,7 +336,7 @@ function writeTypeProxy(filePath, packageSpecifier, originalTypesPath) {
     ? fs.readFileSync(originalTypesPath, "utf8")
     : "";
   const shouldReExportDefault =
-    /export\s+\{\s*default\b/.test(originalSource) ||
+    /export\s*\{\s*default\s*\}\s*from/.test(originalSource) ||
     /export\s+default\b/.test(originalSource);
   const lines = [];
 

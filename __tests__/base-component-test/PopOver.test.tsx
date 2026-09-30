@@ -1,4 +1,10 @@
-import { act, render, screen, fireEvent } from "@testing-library/react";
+import {
+  act,
+  render,
+  screen,
+  fireEvent,
+} from "@testing-library/react";
+import { StrictMode } from "react";
 import BasePopOver from "@/components/PopOver/PopOverBase";
 import { axe, toHaveNoViolations } from "jest-axe";
 
@@ -377,6 +383,269 @@ describe("BasePopOver", () => {
       "shadowMedium",
       "stateSuccess",
     );
+  });
+
+  const installGeometry = ({
+    triggerRect,
+    panelRects,
+    panelWidth = 160,
+    panelHeight = 120,
+    onPanelMeasure,
+  }: {
+    triggerRect: () => DOMRect;
+    panelRects: Record<string, DOMRect>;
+    panelWidth?: number;
+    panelHeight?: number;
+    onPanelMeasure?: () => void;
+  }) => {
+    const originalWidth = window.innerWidth;
+    const originalHeight = window.innerHeight;
+
+    Object.defineProperty(window, "innerWidth", {
+      configurable: true,
+      writable: true,
+      value: 320,
+    });
+    Object.defineProperty(window, "innerHeight", {
+      configurable: true,
+      writable: true,
+      value: 240,
+    });
+    const heightSpy = jest
+      .spyOn(HTMLElement.prototype, "offsetHeight", "get")
+      .mockReturnValue(panelHeight);
+    const widthSpy = jest
+      .spyOn(HTMLElement.prototype, "offsetWidth", "get")
+      .mockReturnValue(panelWidth);
+    const rectSpy = jest
+      .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+      .mockImplementation(function getRect(this: HTMLElement) {
+        if (this.dataset.testid === "popover-trigger") {
+          return triggerRect();
+        }
+
+        if (this.dataset.testid === "popover-content") onPanelMeasure?.();
+
+        const placement = Object.keys(panelRects).find((candidate) =>
+          this.classList.contains(`placement${candidate}`),
+        );
+
+        return panelRects[placement ?? ""] ?? panelRects.default;
+      });
+
+    return () => {
+      rectSpy.mockRestore();
+      widthSpy.mockRestore();
+      heightSpy.mockRestore();
+      Object.defineProperty(window, "innerWidth", {
+        configurable: true,
+        value: originalWidth,
+      });
+      Object.defineProperty(window, "innerHeight", {
+        configurable: true,
+        value: originalHeight,
+      });
+    };
+  };
+
+  const rect = (
+    left: number,
+    top: number,
+    width: number,
+    height: number,
+  ): DOMRect => ({
+    x: left,
+    y: top,
+    width,
+    height,
+    top,
+    right: left + width,
+    bottom: top + height,
+    left,
+    toJSON: () => ({}),
+  });
+
+  it.each([
+    {
+      requested: "bottom",
+      resolved: "Top",
+      trigger: rect(120, 200, 40, 20),
+      panel: rect(60, 70, 160, 120),
+    },
+    {
+      requested: "top",
+      resolved: "Bottom",
+      trigger: rect(120, 10, 40, 20),
+      panel: rect(60, 40, 160, 120),
+    },
+    {
+      requested: "left",
+      resolved: "Right",
+      trigger: rect(10, 100, 40, 20),
+      panel: rect(60, 50, 160, 120),
+    },
+    {
+      requested: "right",
+      resolved: "Left",
+      trigger: rect(270, 100, 40, 20),
+      panel: rect(100, 50, 160, 120),
+    },
+  ] as const)(
+    "resolves requested $requested placement within the viewport on initial open",
+    ({ requested, resolved, trigger, panel }) => {
+      const restoreGeometry = installGeometry({
+        triggerRect: () => trigger,
+        panelRects: { [resolved]: panel, default: panel },
+      });
+
+      renderPopOver({ placement: requested });
+      fireEvent.click(screen.getByTestId("popover-trigger"));
+
+      const content = screen.getByTestId("popover-content");
+      const contentRect = content.getBoundingClientRect();
+
+      expect(content).toHaveClass(`placement${resolved}`);
+      expect(contentRect.left).toBeGreaterThanOrEqual(8);
+      expect(contentRect.top).toBeGreaterThanOrEqual(8);
+      expect(contentRect.right).toBeLessThanOrEqual(312);
+      expect(contentRect.bottom).toBeLessThanOrEqual(232);
+
+      restoreGeometry();
+    },
+  );
+
+  it("measures after the panel mounts instead of losing the initial update", () => {
+    let panelMeasurements = 0;
+    const restoreGeometry = installGeometry({
+      triggerRect: () => rect(120, 200, 40, 20),
+      panelRects: {
+        Top: rect(60, 70, 160, 120),
+        default: rect(60, 230, 160, 120),
+      },
+      onPanelMeasure: () => {
+        panelMeasurements += 1;
+      },
+    });
+
+    renderPopOver({ placement: "bottom" });
+    expect(panelMeasurements).toBe(0);
+
+    fireEvent.click(screen.getByTestId("popover-trigger"));
+
+    expect(panelMeasurements).toBeGreaterThan(0);
+    expect(screen.getByTestId("popover-content")).toHaveClass("placementTop");
+
+    restoreGeometry();
+  });
+
+  it("repositions after resize and scroll without duplicating initial measurement", () => {
+    let triggerTop = 100;
+    let pendingFrame: FrameRequestCallback | null = null;
+    const animationFrameSpy = jest
+      .spyOn(window, "requestAnimationFrame")
+      .mockImplementation((callback: FrameRequestCallback) => {
+        pendingFrame = callback;
+        return 1;
+      });
+    const restoreGeometry = installGeometry({
+      triggerRect: () => rect(120, triggerTop, 40, 20),
+      panelRects: {
+        Bottom: rect(60, 130, 160, 100),
+        Top: rect(60, 90, 160, 100),
+        default: rect(60, 130, 160, 100),
+      },
+      panelHeight: 100,
+    });
+
+    renderPopOver({ placement: "bottom" });
+    fireEvent.click(screen.getByTestId("popover-trigger"));
+    expect(screen.getByTestId("popover-content")).toHaveClass(
+      "placementBottom",
+    );
+
+    triggerTop = 210;
+    fireEvent(window, new Event("resize"));
+    act(() => pendingFrame?.(0));
+    expect(screen.getByTestId("popover-content")).toHaveClass("placementTop");
+
+    triggerTop = 100;
+    fireEvent(window, new Event("scroll"));
+    act(() => pendingFrame?.(1));
+    expect(screen.getByTestId("popover-content")).toHaveClass(
+      "placementBottom",
+    );
+
+    restoreGeometry();
+    animationFrameSpy.mockRestore();
+  });
+
+  it("ignores a pending reflow after close and remeasures on reopen", () => {
+    jest.useFakeTimers();
+    let pendingFrame: FrameRequestCallback | null = null;
+    const animationFrameSpy = jest
+      .spyOn(window, "requestAnimationFrame")
+      .mockImplementation((callback: FrameRequestCallback) => {
+        pendingFrame = callback;
+        return 1;
+      });
+    const restoreGeometry = installGeometry({
+      triggerRect: () => rect(120, 200, 40, 20),
+      panelRects: {
+        Top: rect(60, 70, 160, 120),
+        default: rect(60, 230, 160, 120),
+      },
+    });
+
+    renderPopOver({ placement: "bottom" });
+    const trigger = screen.getByTestId("popover-trigger");
+    fireEvent.click(trigger);
+    expect(screen.getByTestId("popover-content")).toHaveClass("placementTop");
+
+    fireEvent(window, new Event("resize"));
+    fireEvent.click(trigger);
+    act(() => pendingFrame?.(0));
+    act(() => jest.advanceTimersByTime(160));
+    expect(screen.queryByTestId("popover-content")).not.toBeInTheDocument();
+
+    fireEvent.click(trigger);
+    expect(screen.getByTestId("popover-content")).toHaveClass("placementTop");
+
+    restoreGeometry();
+    animationFrameSpy.mockRestore();
+    jest.useRealTimers();
+  });
+
+  it("balances positioning listeners under Strict Mode effect replay", () => {
+    const addSpy = jest.spyOn(window, "addEventListener");
+    const removeSpy = jest.spyOn(window, "removeEventListener");
+    const { unmount } = render(
+      <StrictMode>
+        <BasePopOver
+          trigger="Open PopOver"
+          content="PopOver Content"
+          classMap={classNames}
+          data-testid="popover"
+        />
+      </StrictMode>,
+    );
+
+    fireEvent.click(screen.getByTestId("popover-trigger"));
+    unmount();
+
+    for (const eventName of ["resize", "scroll"]) {
+      const additions = addSpy.mock.calls.filter(
+        ([type]) => type === eventName,
+      ).length;
+      const removals = removeSpy.mock.calls.filter(
+        ([type]) => type === eventName,
+      ).length;
+
+      expect(additions).toBeGreaterThan(0);
+      expect(removals).toBe(additions);
+    }
+
+    addSpy.mockRestore();
+    removeSpy.mockRestore();
   });
 
   it("keeps the popover open when clicking the trigger again only if toggled intentionally", () => {

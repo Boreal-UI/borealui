@@ -2,6 +2,7 @@ import {
   BorderType,
   RoundingType,
   ShadowType,
+  ShapeType,
   SizeType,
   StateType,
   ThemeType,
@@ -43,4 +44,10 @@ export const borderOptions: BorderType[] = [
   "medium",
   "large",
   "xl",
+] as const;
+
+export const shapeOptions: ShapeType[] = [
+  "square",
+  "rounded",
+  "circle",
 ] as const;

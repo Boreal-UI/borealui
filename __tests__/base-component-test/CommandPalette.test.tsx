@@ -89,6 +89,7 @@ type RenderPaletteOptions = {
   modal?: boolean;
   trapFocus?: boolean;
   restoreFocusOnClose?: boolean;
+  onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
 };
 
 const setupPortal = (): HTMLDivElement => {
@@ -128,6 +129,7 @@ const renderPalette = ({
   modal,
   trapFocus,
   restoreFocusOnClose,
+  onKeyDown,
 }: RenderPaletteOptions = {}) => {
   return {
     ...render(
@@ -162,6 +164,7 @@ const renderPalette = ({
         modal={modal}
         trapFocus={trapFocus}
         restoreFocusOnClose={restoreFocusOnClose}
+        onKeyDown={onKeyDown}
         variant={variant}
       />,
     ),
@@ -274,6 +277,26 @@ describe("CommandPaletteBase", () => {
     renderPalette();
 
     expect(document.body).toHaveClass("noScroll");
+  });
+
+  it("makes the default modal configuration isolate and contain focus", () => {
+    const background = document.createElement("button");
+    background.textContent = "Background action";
+    document.body.insertBefore(
+      background,
+      document.getElementById("widget-portal"),
+    );
+
+    renderPalette({ trapFocus: false });
+
+    const dialog = screen.getByRole("dialog");
+    const input = screen.getByRole("combobox");
+    expect(dialog).toHaveAttribute("aria-modal", "true");
+    expect(background).toHaveAttribute("aria-hidden", "true");
+    expect(background).toHaveAttribute("inert");
+
+    background.focus();
+    expect(input).toHaveFocus();
   });
 
   it("filters commands based on input value", () => {
@@ -427,6 +450,62 @@ describe("CommandPaletteBase", () => {
     expect(options[2]).toHaveAttribute("aria-selected", "true");
   });
 
+  it("keeps a single enabled command active at both arrow boundaries", () => {
+    renderPalette({
+      commands: [{ label: "Only command", action: jest.fn() }],
+    });
+
+    const input = screen.getByRole("combobox");
+    fireEvent.keyDown(input, { key: "ArrowDown" });
+    expect(screen.getByRole("option")).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+
+    fireEvent.keyDown(input, { key: "ArrowUp" });
+    expect(screen.getByRole("option")).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+  });
+
+  it("skips a disabled final command when End is pressed", () => {
+    renderPalette({
+      commands: [
+        { label: "First", action: jest.fn() },
+        { label: "Last enabled", action: jest.fn() },
+        { label: "Disabled final", action: jest.fn(), disabled: true },
+      ],
+    });
+
+    fireEvent.keyDown(screen.getByRole("combobox"), { key: "End" });
+
+    const options = screen.getAllByRole("option");
+    expect(options[1]).toHaveAttribute("aria-selected", "true");
+    expect(options[2]).toHaveAttribute("aria-selected", "false");
+  });
+
+  it("leaves no active command when every visible command is disabled", () => {
+    const commands: CommandItem[] = [
+      { label: "Disabled first", action: jest.fn(), disabled: true },
+      { label: "Disabled last", action: jest.fn(), disabled: true },
+    ];
+    const onClose = jest.fn();
+    renderPalette({ commands, onClose });
+
+    const input = screen.getByRole("combobox");
+    ["ArrowDown", "ArrowUp", "Home", "End", "Enter"].forEach((key) => {
+      fireEvent.keyDown(input, { key });
+    });
+
+    screen.getAllByRole("option").forEach((option) => {
+      expect(option).toHaveAttribute("aria-selected", "false");
+    });
+    expect(input).not.toHaveAttribute("aria-activedescendant");
+    commands.forEach((command) => expect(command.action).not.toHaveBeenCalled());
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
   it("does not change selection with arrow keys when there are no matches", () => {
     renderPalette();
 
@@ -443,6 +522,69 @@ describe("CommandPaletteBase", () => {
     expect(option).toHaveAttribute("aria-selected", "false");
   });
 
+  it("preserves the numeric active index when filtering keeps it valid", () => {
+    renderPalette({
+      commands: [
+        { label: "Alpha", action: jest.fn() },
+        { label: "Beta", action: jest.fn() },
+        { label: "Theta", action: jest.fn() },
+      ],
+    });
+
+    const input = screen.getByRole("combobox");
+    fireEvent.keyDown(input, { key: "ArrowDown" });
+    expect(screen.getByText("Beta").closest('[role="option"]')).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+
+    fireEvent.change(input, { target: { value: "ta" } });
+
+    expect(screen.getByText("Beta").closest('[role="option"]')).toHaveAttribute(
+      "aria-selected",
+      "false",
+    );
+    expect(
+      screen.getByText("Theta").closest('[role="option"]'),
+    ).toHaveAttribute("aria-selected", "true");
+  });
+
+  it("recovers to the first enabled result when filtering invalidates the index", () => {
+    renderPalette({
+      commands: [
+        { label: "Alpha", action: jest.fn() },
+        { label: "Beta", action: jest.fn() },
+        { label: "Gamma", action: jest.fn() },
+      ],
+    });
+
+    const input = screen.getByRole("combobox");
+    fireEvent.keyDown(input, { key: "End" });
+    fireEvent.change(input, { target: { value: "Alpha" } });
+
+    expect(screen.getByRole("option", { name: "Alpha" })).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
+  });
+
+  it("leaves a disabled-only filtered result visible but inactive", () => {
+    renderPalette({
+      commands: [
+        { label: "Enabled", action: jest.fn() },
+        { label: "Disabled match", action: jest.fn(), disabled: true },
+      ],
+    });
+
+    const input = screen.getByRole("combobox");
+    fireEvent.change(input, { target: { value: "Disabled" } });
+
+    const option = screen.getByRole("option", { name: "Disabled match" });
+    expect(option).toHaveAttribute("aria-disabled", "true");
+    expect(option).toHaveAttribute("aria-selected", "false");
+    expect(input).not.toHaveAttribute("aria-activedescendant");
+  });
+
   it("calls the active command action and closes on Enter", () => {
     const commands = createMockCommands();
     const onClose = jest.fn();
@@ -454,6 +596,61 @@ describe("CommandPaletteBase", () => {
 
     expect(commands[0].action).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("executes the command before requesting close", () => {
+    const order: string[] = [];
+    renderPalette({
+      commands: [
+        {
+          label: "Ordered command",
+          action: jest.fn(() => order.push("action")),
+        },
+      ],
+      onClose: jest.fn(() => order.push("close")),
+    });
+
+    fireEvent.keyDown(screen.getByRole("combobox"), { key: "Enter" });
+
+    expect(order).toEqual(["action", "close"]);
+  });
+
+  it("keeps Space as search input rather than command activation", () => {
+    const commands = createMockCommands();
+    const onClose = jest.fn();
+    renderPalette({ commands, onClose });
+
+    const input = screen.getByRole("combobox");
+    expect(fireEvent.keyDown(input, { key: " " })).toBe(true);
+    fireEvent.change(input, { target: { value: " " } });
+
+    expect(input).toHaveValue(" ");
+    commands.forEach((command) => expect(command.action).not.toHaveBeenCalled());
+    expect(onClose).not.toHaveBeenCalled();
+  });
+
+  it("preserves native Tab behavior for a non-modal palette without a trap", () => {
+    renderPalette({ modal: false, trapFocus: false });
+
+    expect(
+      fireEvent.keyDown(screen.getByRole("combobox"), { key: "Tab" }),
+    ).toBe(true);
+  });
+
+  it("lets a consumer cancel keyboard navigation", () => {
+    const onKeyDown = jest.fn((event: React.KeyboardEvent<HTMLDivElement>) => {
+      event.preventDefault();
+    });
+    renderPalette({ onKeyDown });
+
+    const input = screen.getByRole("combobox");
+    fireEvent.keyDown(input, { key: "ArrowDown" });
+
+    expect(onKeyDown).toHaveBeenCalledTimes(1);
+    expect(screen.getAllByRole("option")[0]).toHaveAttribute(
+      "aria-selected",
+      "true",
+    );
   });
 
   it("calls the currently selected command on Enter after keyboard navigation", () => {
@@ -510,6 +707,19 @@ describe("CommandPaletteBase", () => {
     renderPalette({ commands, onClose });
 
     fireEvent.click(screen.getByText("Quit"));
+
+    expect(commands[2].action).toHaveBeenCalledTimes(1);
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("keeps command-item keyboard activation through root delegation", () => {
+    const commands = createMockCommands();
+    const onClose = jest.fn();
+    renderPalette({ commands, onClose });
+
+    fireEvent.keyDown(screen.getByTestId("command-palette-option-2"), {
+      key: "Enter",
+    });
 
     expect(commands[2].action).toHaveBeenCalledTimes(1);
     expect(onClose).toHaveBeenCalledTimes(1);
@@ -585,7 +795,7 @@ describe("CommandPaletteBase", () => {
 
     fireEvent.keyDown(screen.getByRole("combobox"), { key: "Escape" });
 
-    expect(onClose).toHaveBeenCalledTimes(2);
+    expect(onClose).toHaveBeenCalledTimes(1);
   });
 
   it("closes when Escape is pressed on the dialog container", () => {
@@ -594,6 +804,15 @@ describe("CommandPaletteBase", () => {
     renderPalette({ onClose });
 
     fireEvent.keyDown(screen.getByRole("dialog"), { key: "Escape" });
+
+    expect(onClose).toHaveBeenCalledTimes(1);
+  });
+
+  it("closes a non-modal palette once when Escape is pressed on the input", () => {
+    const onClose = jest.fn();
+
+    renderPalette({ modal: false, onClose });
+    fireEvent.keyDown(screen.getByRole("combobox"), { key: "Escape" });
 
     expect(onClose).toHaveBeenCalledTimes(1);
   });
@@ -1031,7 +1250,7 @@ describe("CommandPaletteBase", () => {
     );
   });
 
-  it("restores focus to the previously focused element when closed", () => {
+  it("restores focus to the previously focused element when closed", async () => {
     const trigger = document.createElement("button");
     trigger.textContent = "Open palette";
     document.body.appendChild(trigger);
@@ -1041,7 +1260,7 @@ describe("CommandPaletteBase", () => {
 
     unmount();
 
-    expect(trigger).toHaveFocus();
+    await waitFor(() => expect(trigger).toHaveFocus());
   });
 
   it("does not restore focus when restoreFocusOnClose is false", () => {
@@ -1058,10 +1277,23 @@ describe("CommandPaletteBase", () => {
   });
 
   it("uses region role instead of dialog when modal is false", () => {
+    const background = document.createElement("button");
+    background.textContent = "Background action";
+    document.body.insertBefore(
+      background,
+      document.getElementById("widget-portal"),
+    );
+
     renderPalette({ modal: false, ariaLabel: "Command palette region" });
 
-    expect(screen.getByRole("region")).toBeInTheDocument();
+    expect(screen.getByRole("region")).not.toHaveAttribute("aria-modal");
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(document.body).not.toHaveClass("noScroll");
+    expect(background).not.toHaveAttribute("aria-hidden");
+    expect(background).not.toHaveAttribute("inert");
+
+    background.focus();
+    expect(background).toHaveFocus();
   });
 
   it("traps focus with Tab when trapFocus is true", () => {

@@ -256,6 +256,17 @@
     }
   }
 
+  .icon_button_button_label {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .icon_button_link {
+    text-decoration: none;
+  }
+
   @media (hover: hover) and (pointer: fine) {
     .icon_button:hover {
       transform: scale(1.03);

@@ -71,6 +71,12 @@
     }
   }
 
+  .input {
+    flex: 1 1 8rem;
+    min-width: 0;
+    max-width: 100%;
+  }
+
   .tagContainer {
     display: flex;
     width: fit-content;
@@ -142,6 +148,20 @@
       width: 0.75em;
       height: 0.75em;
     }
+  }
+
+  .removeButtonIcon {
+    display: block;
+    width: 0.75em;
+    height: 0.75em;
+    line-height: 1;
+  }
+
+  .disabled {
+    color: var(--disabled-color);
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
   }
 
   .tag {

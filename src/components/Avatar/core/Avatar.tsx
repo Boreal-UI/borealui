@@ -38,7 +38,7 @@ const classes = {
   image: "avatar_image",
   initials: "avatar_initials",
   fallback_icon: "avatar_fallback_icon",
-  icon_only: "avatar_icon_only",
+  icon_only: "avatar_status_icon_only",
   status: "avatar_status",
   online: "avatar_status_online",
   offline: "avatar_status_offline",

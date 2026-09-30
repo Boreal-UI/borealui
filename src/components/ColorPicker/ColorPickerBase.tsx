@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useId, useMemo } from "react";
 import { combineClassNames } from "../../utils/classNames";
 import type { ColorPickerBaseProps } from "./ColorPicker.types";
 import { capitalize } from "../../utils/capitalize";
@@ -32,9 +32,12 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
   "data-testid": dataTestId,
   testId = dataTestId ?? "color-picker",
 }) => {
-  const legendId = `${testId}-legend`;
-  const helperTextId = helperText ? `${testId}-helper-text` : undefined;
-  const errorTextId = errorMessage ? `${testId}-errorMessage-text` : undefined;
+  const generatedId = useId();
+  const legendId = `${generatedId}-legend`;
+  const helperTextId = helperText ? `${generatedId}-helper-text` : undefined;
+  const errorTextId = errorMessage
+    ? `${generatedId}-errorMessage-text`
+    : undefined;
 
   const describedBy =
     [ariaDescribedBy, helperTextId, invalid ? errorTextId : undefined]
@@ -77,9 +80,9 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
         {label}
       </legend>
 
-      <div className={classMap.color_picker_grid} role="radiogroup">
+      <div className={classMap.grid} role="radiogroup">
         {colors.map((color, i) => {
-          const id = `${testId}-color-${i}`;
+          const id = `${generatedId}-color-${i}`;
           const optionLabelId = `${id}-label`;
           const isSelected = value === color.value;
           const optionDisabled = disabled || color.disabled;
@@ -132,7 +135,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
       {helperText && (
         <div
           id={helperTextId}
-          className={classMap.helper_text}
+          className={classMap.helperText}
           data-testid={`${testId}-helper-text`}
         >
           {helperText}
@@ -142,7 +145,7 @@ const ColorPickerBase: React.FC<ColorPickerBaseProps> = ({
       {invalid && errorMessage && (
         <div
           id={errorTextId}
-          className={classMap.error_text}
+          className={classMap.errorText}
           data-testid={`${testId}-errorMessage-text`}
           aria-live="polite"
         >

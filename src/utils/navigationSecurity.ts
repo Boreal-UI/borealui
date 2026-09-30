@@ -32,20 +32,25 @@ export function mergeSafeRel(
   target?: string,
   rel?: string,
 ): string | undefined {
-  const opensNewContext = target?.toLowerCase() === "_blank";
+  const normalizedTarget = target?.toLowerCase();
+  const staysInCurrentContext =
+    normalizedTarget === "_self" ||
+    normalizedTarget === "_parent" ||
+    normalizedTarget === "_top";
+  const requiresOpenerIsolation = Boolean(target) && !staysInCurrentContext;
   const tokens = (rel ?? "").split(/\s+/).filter(Boolean);
   const uniqueTokens: string[] = [];
   const seen = new Set<string>();
 
   for (const token of tokens) {
     const normalized = token.toLowerCase();
-    if (opensNewContext && normalized === "opener") continue;
+    if (requiresOpenerIsolation && normalized === "opener") continue;
     if (seen.has(normalized)) continue;
     seen.add(normalized);
     uniqueTokens.push(token);
   }
 
-  if (opensNewContext) {
+  if (requiresOpenerIsolation) {
     for (const token of ["noopener", "noreferrer"]) {
       if (!seen.has(token)) uniqueTokens.push(token);
     }

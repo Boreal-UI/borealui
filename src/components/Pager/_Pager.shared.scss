@@ -1,0 +1,140 @@
+@use "sass:map";
+
+$small-gap: var(--spacing-xxs);
+$medium-gap: var(--spacing-sm);
+$large-gap: var(--spacing-lg);
+$sizes: (
+  "xs": (
+    size: 1.75rem,
+    font-size: var(--font-size-caption),
+    gap: var(--spacing-xxs),
+  ),
+  "small": (
+    size: 2rem,
+    font-size: var(--font-size-caption),
+    gap: var(--spacing-xs),
+  ),
+  "medium": (
+    size: 2.25rem,
+    font-size: var(--font-size-label),
+    gap: var(--spacing-xs),
+  ),
+  "large": (
+    size: 2.75rem,
+    font-size: var(--font-size-body),
+    gap: var(--spacing-sm),
+  ),
+  "xl": (
+    size: 3.25rem,
+    font-size: var(--font-size-body),
+    gap: var(--spacing-sm),
+  ),
+);
+
+@mixin root {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  margin-inline: auto;
+  gap: $medium-gap;
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-label);
+  font-weight: var(--font-weight-body);
+  line-height: var(--line-height-label);
+  letter-spacing: var(--letter-spacing-label);
+}
+
+@mixin page-list-compact {
+  flex-basis: 100%;
+  flex-wrap: wrap;
+  order: 1;
+  width: 100%;
+}
+
+@mixin list-reset {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@mixin controls {
+  gap: $small-gap;
+}
+
+@mixin button-wrapper {
+  flex-wrap: wrap;
+  gap: $small-gap;
+}
+
+@mixin button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  aspect-ratio: 1;
+  margin: 0;
+  padding: 0;
+  min-width: var(--pagination-button-size, 2.25rem);
+  width: var(--pagination-button-size, 2.25rem);
+  height: var(--pagination-button-size, 2.25rem);
+  min-height: var(--pagination-button-size, 2.25rem);
+  font-size: var(--pagination-button-font-size, var(--font-size-label));
+  line-height: 1;
+  white-space: nowrap;
+}
+
+@mixin button-focus-visible {
+  outline: 2px solid var(--focus-outline-color, var(--primary-color));
+  outline-offset: 2px;
+  border-radius: var(--border-radius-sm, 4px);
+}
+
+@mixin active {
+  font-weight: var(--font-weight-bold);
+}
+
+@mixin size($values) {
+  --pagination-button-size: #{map.get($values, size)};
+  --pagination-button-font-size: #{map.get($values, font-size)};
+
+  gap: map.get($values, gap);
+}
+
+@mixin variant-color($value) {
+  color: $value;
+}
+
+@mixin disabled {
+  color: var(--disabled-color);
+  opacity: 0.6;
+}
+
+@mixin reduced-motion {
+  transition: none !important;
+  animation: none !important;
+}
+
+@mixin forced-control {
+  color: ButtonText;
+  border: 1px solid ButtonText;
+  background: Canvas;
+}
+
+@mixin forced-focus {
+  outline: 2px solid Highlight;
+  outline-offset: 2px;
+}
+
+@mixin forced-glass {
+  background: Canvas !important;
+  border: 1px solid ButtonText !important;
+  box-shadow: none !important;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}

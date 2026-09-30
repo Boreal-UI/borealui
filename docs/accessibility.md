@@ -183,6 +183,12 @@ For interactive rows, provide labels that explain the action.
 
 `Modal` should have a visible `title`, `aria-label`, or `aria-labelledby`. Add `aria-describedby` when supporting text explains the decision.
 
+When a Modal opens, Boreal moves focus into the dialog after its portal and
+modal layer are ready. Focus remains inside the topmost modal layer. On close,
+Boreal restores focus to the connected opener when it is still valid; stacked
+dialogs otherwise keep focus within the newly exposed modal. Consumers should
+not add competing mount-time focus effects around the dialog.
+
 ```tsx
 import { Button, Modal } from "@boreal-ui/core";
 
@@ -213,6 +219,20 @@ export function DeleteProjectDialog({
 ```
 
 For `Dropdown`, `PopOver`, `Tooltip`, `Tabs`, `Accordion`, and `CommandPalette`, prefer the component's public props for labels and state. Avoid adding custom roles to wrapper elements unless the component API asks for them.
+
+### Tabs and trees
+
+`Tabs` uses one sequential tab stop and skips disabled tabs. Horizontal lists
+use Left/Right Arrow; vertical lists use Up/Down Arrow. Home and End move to
+the first and last enabled tab. Automatic activation changes the panel as focus
+moves; manual activation waits for Enter or Space.
+
+`TreeView` also uses roving focus across visible, enabled nodes. Up/Down Arrow
+moves between visible nodes, Right Arrow expands a branch or enters its first
+enabled child, Left Arrow collapses a branch or returns to its parent, and Home
+and End move to the first and last visible enabled nodes. Enter and Space select
+the focused node. When a controlled collapse hides the focused descendant,
+focus recovers to the nearest visible ancestor.
 
 ## Loading and Async States
 

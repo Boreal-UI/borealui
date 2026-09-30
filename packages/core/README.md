@@ -13,6 +13,9 @@ import "@boreal-ui/core/globals.css";
 
 Use this package when you do not need Next.js-specific components or `next` peer dependencies.
 
+React, ReactDOM, and Node verification boundaries are documented in the
+[published compatibility matrix](https://github.com/DaveC6662/borealui/blob/main/docs/compatibility.md).
+
 Generated prop metadata is available separately from the optional
 `@boreal-ui/docs` package.
 

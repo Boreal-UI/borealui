@@ -1,3 +1,4 @@
+import { useId } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { sanitizeNavigationHref } from "@/utils/navigationSecurity";
 import { capitalize } from "@/utils/capitalize";
@@ -47,9 +48,10 @@ export default function EmptyState({
 }: ServerEmptyStateProps) {
   const safeActionHref = sanitizeNavigationHref(actionHref);
   const classMap = expandClassMap(styles);
-  const titleId = title && !ariaLabelledBy ? `${testId}-title` : undefined;
+  const generatedId = useId();
+  const titleId = title && !ariaLabelledBy ? `${generatedId}-title` : undefined;
   const messageId =
-    message && !ariaDescribedBy ? `${testId}-message` : undefined;
+    message && !ariaDescribedBy ? `${generatedId}-message` : undefined;
   const classes = combineClassNames(
     classMap.empty_state,
     classMap[theme],

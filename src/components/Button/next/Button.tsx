@@ -5,9 +5,9 @@ import { forwardRef } from "react";
 import Link from "next/link";
 import styles from "./Button.module.scss";
 import ButtonBase from "../ButtonBase";
-import { ButtonProps } from "../Button.types";
+import { ButtonElement, ButtonProps } from "../Button.types";
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => (
+const Button = forwardRef<ButtonElement, ButtonProps>((props, ref) => (
   <ButtonBase
     {...props}
     classMap={expandClassMap(styles)}

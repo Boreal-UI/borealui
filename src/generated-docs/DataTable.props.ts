@@ -547,7 +547,7 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
     {
       "name": "rowKey",
       "type": "((row: T) => string | number)",
-      "description": "Function to derive a unique key for each row.",
+      "description": "Function that returns a stable, unique identity for each logical row. Strongly recommended for selection, expansion, editing, virtualization, and server pagination. When omitted, Boreal uses the row's source index; that fallback survives local view transforms but cannot identify immutable replacements or records across server-provided pages.",
       "required": false,
       "inherited": false,
       "category": "events"

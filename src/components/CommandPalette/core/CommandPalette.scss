@@ -9,7 +9,9 @@
     position: fixed;
     inset: 0;
     background: rgb(0 0 0 / 60%);
-    z-index: 9999;
+    z-index: calc(
+      var(--z-index-modal, 9999) + var(--boreal-modal-layer-index, 0)
+    );
     display: flex;
     justify-content: center;
     align-items: flex-start;

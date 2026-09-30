@@ -1,21 +1,14 @@
 import { useState } from "react";
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { StateType, TagInput, ThemeType } from "../../src/index.next";
+import { TagInput } from "../../src/index.next";
 import type { TagInputProps } from "../../src/components/TagInput/TagInput.types";
 import { withVariants } from "../../.storybook-core/helpers/withVariants";
-
-const themeOptions: ThemeType[] = [
-  "primary",
-  "secondary",
-  "tertiary",
-  "quaternary",
-  "clear",
-];
-
-const stateOptions: StateType[] = ["success", "error", "warning"];
-
-const roundingOptions = ["none", "small", "medium", "large"];
-const shadowOptions = ["none", "light", "medium", "strong", "intense"];
+import {
+  roundingOptions,
+  shadowOptions,
+  stateOptions,
+  themeOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const meta: Meta<TagInputProps> = {
   title: "Components/TagInput",

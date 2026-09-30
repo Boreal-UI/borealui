@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useId, useMemo, useRef } from "react";
 import { CloseIcon } from "../../Icons";
 import { BaseNotificationCenterProps } from "./NotificationCenter.types";
 import { themeIcons } from "./NotificationCenter.constants";
@@ -55,7 +55,8 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   const prevIds = useRef<Set<string>>(new Set());
   const onRemoveRef = useRef(onRemove);
   onRemoveRef.current = onRemove;
-  const internalTitleId = `${testId}-title`;
+  const generatedId = useId();
+  const internalTitleId = `${generatedId}-title`;
   const resolvedLabelledBy = ariaLabelledBy || internalTitleId;
 
   useEffect(() => {
@@ -194,10 +195,11 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
             {notifications.map((note, index) => {
               const Icon = themeIcons[note.type || "info"];
               const noteTestId = `${testId}-item-${note.id}`;
-              const messageId = `${noteTestId}-message`;
-              const timestampId = `${noteTestId}-timestamp`;
+              const noteDomId = `${generatedId}-item-${note.id}`;
+              const messageId = `${noteDomId}-message`;
+              const timestampId = `${noteDomId}-timestamp`;
               const descriptionId = note.ariaDescription
-                ? `${noteTestId}-description`
+                ? `${noteDomId}-description`
                 : undefined;
 
               const describedByIds = [

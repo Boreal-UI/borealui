@@ -104,6 +104,7 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
 
   return (
     <div
+      {...rest}
       className={combinedClassName}
       data-testid={testId}
       {...(!decorative && {
@@ -118,7 +119,6 @@ const CircularProgressBase: React.FC<CircularProgressBaseProps> = ({
       {...(decorative && {
         "aria-hidden": true,
       })}
-      {...rest}
     >
       <div
         className={combineClassNames(

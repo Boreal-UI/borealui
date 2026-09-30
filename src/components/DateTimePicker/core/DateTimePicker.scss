@@ -10,7 +10,10 @@
   @include control-sizes.variants(".dateTimePicker", (".dateTimePicker_input"));
 
   .dateTimePicker_container {
+    @include mixins.contained-root;
+
     display: inline-flex;
+    flex-wrap: wrap;
     gap: var(--spacing-xs);
     align-items: flex-start;
     max-width: 100%;
@@ -44,6 +47,8 @@
   }
 
   .dateTimePicker {
+    @include mixins.contained-root;
+
     --dateTimePicker-glass-bg: rgba(255, 255, 255, 0.18);
     --dateTimePicker-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --dateTimePicker-glass-border: rgba(255, 255, 255, 0.28);

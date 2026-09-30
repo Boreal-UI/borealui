@@ -1,4 +1,6 @@
 @use "../../../styles/_animations";
+@use "../../../styles/theme" as theme;
+@use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 
@@ -131,6 +133,23 @@
 
   .loading {
     cursor: progress;
+  }
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  .disabled {
+    color: var(--disabled-color);
+    opacity: 0.6;
   }
 
   @media (max-width: 420px) {

@@ -24,6 +24,7 @@ const classes = {
   info: "tooltip_info",
   error: "tooltip_error",
   warning: "tooltip_warning",
+  disabled: "tooltip_disabled",
 
   clear: "tooltip_clear",
 

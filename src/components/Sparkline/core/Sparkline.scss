@@ -1,4 +1,6 @@
 @use "../../../styles/_animations";
+@use "../../../styles/theme" as theme;
+@use "sass:map";
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 
@@ -104,6 +106,23 @@
 
   .sparkline_loading {
     cursor: progress;
+  }
+
+  @each $name, $values in theme.$themes {
+    .sparkline_#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .sparkline_#{$name} {
+      color: map.get($values, border);
+    }
+  }
+
+  .sparkline_disabled {
+    color: var(--disabled-color);
+    opacity: 0.6;
   }
 
   @media (max-width: 420px) {

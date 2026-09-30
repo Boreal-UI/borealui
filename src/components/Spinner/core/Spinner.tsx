@@ -18,6 +18,7 @@ const classes = {
   info: "spinner_info",
   warning: "spinner_warning",
   error: "spinner_error",
+  disabled: "spinner_disabled",
 
   clear: "spinner_clear",
 

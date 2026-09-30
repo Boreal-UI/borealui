@@ -5,11 +5,14 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-  @include control-sizes.variants(
-    ".comboBox",
-    (".input", ".option"),
-    "."
-  );
+  .toggleIcon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  @include control-sizes.variants(".comboBox", (".input", ".option"), ".");
 
   .layout {
     display: grid;

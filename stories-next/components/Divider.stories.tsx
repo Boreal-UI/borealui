@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Divider, ThemeType } from "../../src/index.next";
+import { Divider, StateType, ThemeType } from "../../src/index.next";
 import type { DividerProps } from "../../src/components/Divider/Divider.types";
 
 const meta: Meta<DividerProps> = {
@@ -99,9 +99,10 @@ export const GlassThemes: Story = {
 export const States: Story = {
   render: () => (
     <div style={{ padding: "1rem", display: "grid", gap: "1rem" }}>
-      <Divider theme={"success" as ThemeType} />
-      <Divider theme={"error" as ThemeType} />
-      <Divider theme={"warning" as ThemeType} />
+      <Divider state={"success"} />
+      <Divider state={"error"} />
+      <Divider state={"warning"} />
+      <Divider state={"info"} />
     </div>
   ),
 };
@@ -112,6 +113,7 @@ export const GlassStates: Story = {
       <Divider state="success" thickness="4px" variant="glass" />
       <Divider state="error" thickness="4px" variant="glass" />
       <Divider state="warning" thickness="4px" variant="glass" />
+      <Divider state="info" thickness="4px" variant="glass" />
     </div>
   ),
 };

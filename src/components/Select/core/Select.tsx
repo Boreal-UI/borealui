@@ -15,6 +15,7 @@ const classes = {
 
   layout: "select_layout",
   label: "select_label",
+  labelOverlay: "select_label_overlay",
   labelTop: "select_label_top",
   labelBottom: "select_label_bottom",
   labelLeft: "select_label_left",
@@ -33,6 +34,7 @@ const classes = {
   clear: "select_clear",
 
   icon: "select_icon",
+  loading: "select_loading",
   disabled: "select_disabled",
 
   shadowNone: "select_shadow-None",

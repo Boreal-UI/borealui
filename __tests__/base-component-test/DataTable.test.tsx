@@ -1,5 +1,12 @@
 import React from "react";
-import { render, screen, fireEvent, within } from "@testing-library/react";
+import {
+  render,
+  screen,
+  fireEvent,
+  waitFor,
+  within,
+} from "@testing-library/react";
+import { renderToString } from "react-dom/server";
 import "@testing-library/jest-dom";
 import { axe, toHaveNoViolations } from "jest-axe";
 import DataTableBase from "@/components/DataTable/DataTableBase";
@@ -453,11 +460,11 @@ describe("DataTableBase", () => {
     const caption = screen.getByText("User records");
 
     expect(caption).toBeInTheDocument();
-    expect(caption).toHaveAttribute("id", "users-table-caption");
+    expect(caption.id).not.toBe("");
     expect(caption).toHaveClass("sr_only");
     expect(table).toHaveAttribute(
       "aria-describedby",
-      expect.stringContaining("users-table-caption"),
+      expect.stringContaining(caption.id),
     );
   });
 
@@ -480,17 +487,22 @@ describe("DataTableBase", () => {
     });
 
     const table = screen.getByRole("table");
+    const caption = screen.getByText("User records");
+    const liveRegion = screen
+      .getByTestId("users-table")
+      .querySelector<HTMLElement>("[aria-live]");
+    expect(liveRegion).not.toBeNull();
     expect(table).toHaveAttribute(
       "aria-describedby",
       expect.stringContaining("external-description"),
     );
     expect(table).toHaveAttribute(
       "aria-describedby",
-      expect.stringContaining("users-table-caption"),
+      expect.stringContaining(caption.id),
     );
     expect(table).toHaveAttribute(
       "aria-describedby",
-      expect.stringContaining("users-table-live-region"),
+      expect.stringContaining(liveRegion?.id ?? ""),
     );
   });
 
@@ -657,9 +669,9 @@ describe("DataTableBase", () => {
       "data-testid": "users-table",
     });
 
-    const liveRegion = screen.getByText("", {
-      selector: "#users-table-live-region",
-    });
+    const liveRegion = screen
+      .getByTestId("users-table")
+      .querySelector<HTMLElement>("[aria-live]");
     const nameHeader = screen.getByRole("columnheader", { name: /name/i });
     const nameButton = within(nameHeader).getByRole("button");
 
@@ -675,9 +687,9 @@ describe("DataTableBase", () => {
         `Sorted ${column.label} in ${order} order`,
     });
 
-    const liveRegion = screen.getByText("", {
-      selector: "#users-table-live-region",
-    });
+    const liveRegion = screen
+      .getByTestId("users-table")
+      .querySelector<HTMLElement>("[aria-live]");
     const ageHeader = screen.getByRole("columnheader", { name: /age/i });
     const ageButton = within(ageHeader).getByRole("button");
 
@@ -820,7 +832,9 @@ describe("DataTableBase", () => {
   it("renders a loading row when loading is true", () => {
     renderTable({ loading: true, loadingMessage: "Loading users" });
 
-    const liveRegion = document.getElementById("data-table-live-region");
+    const liveRegion = screen
+      .getByTestId("data-table")
+      .querySelector<HTMLElement>("[aria-live]");
     const loadingCell = screen.getByRole("cell", { name: "Loading users" });
 
     expect(liveRegion).toBeInTheDocument();
@@ -1043,6 +1057,46 @@ describe("DataTableBase", () => {
     expect(rows[3]).toHaveTextContent("Charlie");
   });
 
+  it("preserves source order when sorted values compare equally", () => {
+    renderTable({
+      data: [
+        { name: "Charlie", age: 30 },
+        { name: "Alice", age: 30 },
+        { name: "Bob", age: 30 },
+      ],
+      defaultSortKey: "age",
+    });
+
+    const rows = screen.getAllByRole("row");
+    expect(rows[1]).toHaveTextContent("Charlie");
+    expect(rows[2]).toHaveTextContent("Alice");
+    expect(rows[3]).toHaveTextContent("Bob");
+  });
+
+  it("filters case-insensitively across columns and treats whitespace-only input as empty", () => {
+    renderTable({
+      data: [
+        { name: "Alice", age: null, status: "Ready" },
+        { name: "Bob", age: 34, status: "Draft" },
+      ],
+      columns: [
+        { key: "name", label: "Name" },
+        { key: "age", label: "Age" },
+        { key: "status", label: "Status" },
+      ],
+      filterable: true,
+    });
+
+    const filter = screen.getByRole("searchbox", { name: /filter table/i });
+    fireEvent.change(filter, { target: { value: "READY" } });
+    expect(screen.getByText("Alice")).toBeInTheDocument();
+    expect(screen.queryByText("Bob")).not.toBeInTheDocument();
+
+    fireEvent.change(filter, { target: { value: "   " } });
+    expect(screen.getByText("Alice")).toBeInTheDocument();
+    expect(screen.getByText("Bob")).toBeInTheDocument();
+  });
+
   it("accepts a rowKey prop and uses it in the row test id", () => {
     const rowKey = jest.fn((row: Row) => row.id ?? row.name);
 
@@ -1061,6 +1115,431 @@ describe("DataTableBase", () => {
 
     expect(screen.getByTestId("data-table-row-a1")).toBeInTheDocument();
     expect(screen.getByTestId("data-table-row-b2")).toBeInTheDocument();
+  });
+
+  it("keeps explicit rowKey authoritative across sorting and filtering", () => {
+    const rows: Row[] = [
+      { id: "charlie", name: "Charlie", age: 30 },
+      { id: "alice", name: "Alice", age: 10 },
+      { id: "bob", name: "Bob", age: 20 },
+    ];
+    renderTable({
+      data: rows,
+      rowKey: (row) => row.id!,
+      selectableRows: true,
+      filterable: true,
+      renderExpandedRow: (row) => <div>{row.name} details</div>,
+    });
+
+    fireEvent.click(screen.getByTestId("data-table-select-row-charlie"));
+    fireEvent.click(screen.getByTestId("data-table-expand-row-charlie"));
+    fireEvent.click(screen.getByTestId("data-table-sort-name"));
+    fireEvent.change(screen.getByRole("searchbox", { name: /filter table/i }), {
+      target: { value: "Charlie" },
+    });
+
+    expect(screen.getByTestId("data-table-select-row-charlie")).toBeChecked();
+    expect(
+      screen.getByTestId("data-table-expanded-row-charlie"),
+    ).toHaveTextContent("Charlie details");
+  });
+
+  it("keeps fallback selection attached to the source row after sorting", () => {
+    const rows = [
+      { name: "Charlie", age: 30 },
+      { name: "Alice", age: 10 },
+      { name: "Bob", age: 20 },
+    ];
+    renderTable({ data: rows, selectableRows: true });
+
+    fireEvent.click(screen.getByTestId("data-table-select-row-0"));
+    fireEvent.click(screen.getByTestId("data-table-sort-name"));
+
+    expect(
+      within(screen.getByText("Charlie").closest("tr")!).getByRole("checkbox"),
+    ).toBeChecked();
+    expect(
+      within(screen.getByText("Alice").closest("tr")!).getByRole("checkbox"),
+    ).not.toBeChecked();
+  });
+
+  it("keeps controlled fallback selection attached after sorting", () => {
+    renderTable({
+      data: [
+        { name: "Charlie", age: 30 },
+        { name: "Alice", age: 10 },
+        { name: "Bob", age: 20 },
+      ],
+      selectableRows: true,
+      selectedRowKeys: [0],
+    });
+
+    fireEvent.click(screen.getByTestId("data-table-sort-name"));
+
+    expect(
+      within(screen.getByText("Charlie").closest("tr")!).getByRole("checkbox"),
+    ).toBeChecked();
+  });
+
+  it("keeps fallback selection attached when filtering changes view positions", () => {
+    renderTable({
+      data: [
+        { name: "Charlie", age: 30 },
+        { name: "Alice", age: 10 },
+        { name: "Bob", age: 20 },
+      ],
+      selectableRows: true,
+      filterable: true,
+    });
+
+    fireEvent.click(screen.getByTestId("data-table-select-row-2"));
+    fireEvent.change(screen.getByRole("searchbox", { name: /filter table/i }), {
+      target: { value: "Bob" },
+    });
+
+    expect(screen.getByTestId("data-table-select-row-2")).toBeChecked();
+    expect(screen.getByText("Bob")).toBeInTheDocument();
+  });
+
+  it("keeps fallback expansion attached to the source row after sorting", () => {
+    renderTable({
+      data: [
+        { name: "Charlie", age: 30 },
+        { name: "Alice", age: 10 },
+      ],
+      renderExpandedRow: (row) => <div>{row.name} details</div>,
+    });
+
+    fireEvent.click(screen.getByTestId("data-table-expand-row-0"));
+    fireEvent.click(screen.getByTestId("data-table-sort-name"));
+
+    expect(screen.getByTestId("data-table-expanded-row-0")).toHaveTextContent(
+      "Charlie details",
+    );
+  });
+
+  it("keeps fallback editing attached to the source row after sorting", () => {
+    renderTable({
+      data: [
+        { name: "Charlie", age: 30 },
+        { name: "Alice", age: 10 },
+      ],
+      columns: [
+        { key: "name", label: "Name", sortable: true, editable: true },
+        { key: "age", label: "Age" },
+      ],
+    });
+
+    fireEvent.click(screen.getByTestId("data-table-edit-0-name"));
+    fireEvent.click(screen.getByTestId("data-table-sort-name"));
+
+    expect(screen.getByTestId("data-table-editor-0-name")).toHaveValue(
+      "Charlie",
+    );
+    expect(
+      within(screen.getByText("Alice").closest("tr")!).queryByRole("textbox"),
+    ).not.toBeInTheDocument();
+  });
+
+  it("resolves bulk rows from stable fallback identities after sorting", () => {
+    renderTable({
+      data: [
+        { name: "Charlie", age: 30 },
+        { name: "Alice", age: 10 },
+      ],
+      selectableRows: true,
+      bulkActions: (_keys, rows) => (
+        <span data-testid="selected-row-names">
+          {rows.map((row) => row.name).join(",")}
+        </span>
+      ),
+    });
+
+    fireEvent.click(screen.getByTestId("data-table-select-row-0"));
+    fireEvent.click(screen.getByTestId("data-table-sort-name"));
+
+    expect(screen.getByTestId("selected-row-names")).toHaveTextContent(
+      "Charlie",
+    );
+  });
+
+  it("clears uncontrolled fallback row state when records are replaced", () => {
+    const { rerender } = render(
+      <DataTableBase<Row>
+        columns={baseColumns}
+        data={baseData}
+        classMap={classMap}
+        selectableRows
+      />,
+    );
+    fireEvent.click(screen.getByTestId("data-table-select-row-0"));
+
+    rerender(
+      <DataTableBase<Row>
+        columns={baseColumns}
+        data={[
+          { name: "Charlie", age: 30 },
+          { name: "Dana", age: 40 },
+        ]}
+        classMap={classMap}
+        selectableRows
+      />,
+    );
+
+    expect(screen.getByTestId("data-table-select-row-0")).not.toBeChecked();
+  });
+
+  it("preserves fallback row state for a new array containing the same records", () => {
+    const { rerender } = render(
+      <DataTableBase<Row>
+        columns={baseColumns}
+        data={baseData}
+        classMap={classMap}
+        selectableRows
+      />,
+    );
+    fireEvent.click(screen.getByTestId("data-table-select-row-0"));
+
+    rerender(
+      <DataTableBase<Row>
+        columns={baseColumns}
+        data={[...baseData]}
+        classMap={classMap}
+        selectableRows
+      />,
+    );
+
+    expect(screen.getByTestId("data-table-select-row-0")).toBeChecked();
+  });
+
+  it("preserves fallback row state when the same source array is reused", () => {
+    const rows = [...baseData];
+    const { rerender } = render(
+      <DataTableBase<Row>
+        columns={baseColumns}
+        data={rows}
+        classMap={classMap}
+        selectableRows
+      />,
+    );
+    fireEvent.click(screen.getByTestId("data-table-select-row-0"));
+
+    rerender(
+      <DataTableBase<Row>
+        columns={baseColumns}
+        data={rows}
+        classMap={classMap}
+        selectableRows
+      />,
+    );
+
+    expect(screen.getByTestId("data-table-select-row-0")).toBeChecked();
+  });
+
+  it("clears fallback row state after immutable replacement with equivalent values", () => {
+    const { rerender } = render(
+      <DataTableBase<Row>
+        columns={baseColumns}
+        data={baseData}
+        classMap={classMap}
+        selectableRows
+      />,
+    );
+    fireEvent.click(screen.getByTestId("data-table-select-row-0"));
+
+    rerender(
+      <DataTableBase<Row>
+        columns={baseColumns}
+        data={baseData.map((row) => ({ ...row }))}
+        classMap={classMap}
+        selectableRows
+      />,
+    );
+
+    expect(screen.getByTestId("data-table-select-row-0")).not.toBeChecked();
+  });
+
+  it("clears uncontrolled fallback state when source records are reordered", () => {
+    const rows: Row[] = [
+      { name: "Charlie", age: 30 },
+      { name: "Alice", age: 10 },
+    ];
+    const { rerender } = render(
+      <DataTableBase<Row>
+        columns={[
+          { key: "name", label: "Name", editable: true },
+          { key: "age", label: "Age" },
+        ]}
+        data={rows}
+        classMap={classMap}
+        selectableRows
+        renderExpandedRow={(row) => <div>{row.name} details</div>}
+      />,
+    );
+
+    fireEvent.click(screen.getByTestId("data-table-select-row-0"));
+    fireEvent.click(screen.getByTestId("data-table-expand-row-0"));
+    fireEvent.click(screen.getByTestId("data-table-edit-0-name"));
+
+    rerender(
+      <DataTableBase<Row>
+        columns={[
+          { key: "name", label: "Name", editable: true },
+          { key: "age", label: "Age" },
+        ]}
+        data={[rows[1], rows[0]]}
+        classMap={classMap}
+        selectableRows
+        renderExpandedRow={(row) => <div>{row.name} details</div>}
+      />,
+    );
+
+    expect(screen.getByTestId("data-table-select-row-0")).not.toBeChecked();
+    expect(screen.queryByTestId("data-table-expanded-row-0")).not.toBeInTheDocument();
+    expect(screen.queryByTestId("data-table-editor-0-name")).not.toBeInTheDocument();
+  });
+
+  it("preserves logical row state across immutable replacement when rowKey is provided", () => {
+    const rows: Row[] = [
+      { id: "charlie", name: "Charlie", age: 30 },
+      { id: "alice", name: "Alice", age: 10 },
+    ];
+    const sharedProps = {
+      columns: baseColumns,
+      classMap,
+      selectableRows: true,
+      rowKey: (row: Row) => row.id!,
+      renderExpandedRow: (row: Row) => <div>{row.name} details</div>,
+    };
+    const { rerender } = render(
+      <DataTableBase<Row> {...sharedProps} data={rows} />,
+    );
+
+    fireEvent.click(screen.getByTestId("data-table-select-row-charlie"));
+    fireEvent.click(screen.getByTestId("data-table-expand-row-charlie"));
+
+    rerender(
+      <DataTableBase<Row>
+        {...sharedProps}
+        data={[
+          { id: "alice", name: "Alice updated", age: 11 },
+          { id: "charlie", name: "Charlie updated", age: 31 },
+        ]}
+      />,
+    );
+
+    expect(screen.getByTestId("data-table-select-row-charlie")).toBeChecked();
+    expect(screen.getByTestId("data-table-expanded-row-charlie")).toHaveTextContent(
+      "Charlie updated details",
+    );
+  });
+
+  it("keeps editing attached to a logical row while filtering hides and restores it", () => {
+    renderTable({
+      data: [
+        { id: "charlie", name: "Charlie", age: 30 },
+        { id: "alice", name: "Alice", age: 10 },
+      ],
+      columns: [
+        { key: "name", label: "Name", editable: true },
+        { key: "age", label: "Age" },
+      ],
+      rowKey: (row) => row.id!,
+      filterable: true,
+    });
+
+    fireEvent.click(screen.getByTestId("data-table-edit-charlie-name"));
+    const filter = screen.getByRole("searchbox", { name: /filter table/i });
+    fireEvent.change(filter, { target: { value: "Alice" } });
+    expect(screen.queryByTestId("data-table-editor-charlie-name")).not.toBeInTheDocument();
+
+    fireEvent.change(filter, { target: { value: "" } });
+    expect(screen.getByTestId("data-table-editor-charlie-name")).toHaveValue(
+      "Charlie",
+    );
+  });
+
+  it("warns once in development for stateful features without rowKey", () => {
+    const originalEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = "development";
+    const warn = jest.spyOn(console, "warn").mockImplementation(() => {});
+
+    const { rerender } = renderTable({ selectableRows: true });
+    rerender(
+      <DataTableBase<Row>
+        columns={baseColumns}
+        data={baseData}
+        classMap={classMap}
+        selectableRows
+        filterable
+      />,
+    );
+
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("stateful row features"),
+    );
+
+    warn.mockRestore();
+    process.env.NODE_ENV = originalEnv;
+  });
+
+  it("does not warn for a read-only table without rowKey", () => {
+    const originalEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = "development";
+    const warn = jest.spyOn(console, "warn").mockImplementation(() => {});
+
+    renderTable();
+
+    expect(warn).not.toHaveBeenCalled();
+
+    warn.mockRestore();
+    process.env.NODE_ENV = originalEnv;
+  });
+
+  it("warns once in development when rowKey values are duplicated", () => {
+    const originalEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = "development";
+    const warn = jest.spyOn(console, "warn").mockImplementation(() => {});
+    const error = jest.spyOn(console, "error").mockImplementation(() => {});
+
+    renderTable({ rowKey: () => "duplicate" });
+
+    expect(warn).toHaveBeenCalledTimes(1);
+    expect(warn).toHaveBeenCalledWith(
+      expect.stringContaining("duplicate values (duplicate)"),
+    );
+
+    error.mockRestore();
+    warn.mockRestore();
+    process.env.NODE_ENV = originalEnv;
+  });
+
+  it("does not emit row identity warnings in production", () => {
+    const originalEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = "production";
+    const warn = jest.spyOn(console, "warn").mockImplementation(() => {});
+
+    renderTable({ selectableRows: true });
+
+    expect(warn).not.toHaveBeenCalled();
+
+    warn.mockRestore();
+    process.env.NODE_ENV = originalEnv;
+  });
+
+  it("renders deterministic fallback row identities during SSR", () => {
+    const markup = renderToString(
+      <DataTableBase<Row>
+        columns={baseColumns}
+        data={baseData}
+        classMap={classMap}
+        selectableRows
+      />,
+    );
+
+    expect(markup).toContain('data-testid="data-table-row-0"');
+    expect(markup).toContain('data-testid="data-table-row-1"');
   });
 
   it("paginates rows and reports page metadata", () => {
@@ -1101,6 +1580,20 @@ describe("DataTableBase", () => {
     fireEvent.click(screen.getByRole("checkbox", { name: "Select row 2" }));
 
     expect(onSelectionChange).toHaveBeenLastCalledWith([0, 1], baseData);
+  });
+
+  it("select all targets only the currently rendered client page", () => {
+    const onSelectionChange = jest.fn();
+    renderTable({
+      pagination: true,
+      itemsPerPage: 1,
+      selectableRows: true,
+      onSelectionChange,
+    });
+
+    fireEvent.click(screen.getByRole("checkbox", { name: "Select all rows" }));
+
+    expect(onSelectionChange).toHaveBeenLastCalledWith([0], [baseData[0]]);
   });
 
   it("supports server pagination without slicing provided data", () => {
@@ -1281,6 +1774,43 @@ describe("DataTableBase", () => {
     expect(screen.getByText("User 0")).toBeInTheDocument();
     expect(screen.queryByText("User 99")).not.toBeInTheDocument();
     expect(screen.getByTestId("data-table-virtual-bottom")).toBeInTheDocument();
+  });
+
+  it("keeps selected identity stable as virtualized rows are recycled", async () => {
+    const rows = Array.from({ length: 100 }, (_, index) => ({
+      id: `row-${index}`,
+      name: `User ${index}`,
+      age: index,
+    }));
+
+    renderTable({
+      data: rows,
+      selectableRows: true,
+      defaultSelectedRowKeys: ["row-0"],
+      rowKey: (row) => row.id!,
+      virtualized: true,
+      virtualRowHeight: 40,
+      virtualViewportHeight: 120,
+      virtualOverscan: 0,
+    });
+
+    expect(screen.getByRole("checkbox", { name: "Select row 1" })).toBeChecked();
+
+    fireEvent.scroll(screen.getByTestId("data-table-virtual-viewport"), {
+      target: { scrollTop: 400 },
+    });
+
+    await waitFor(() => expect(screen.getByText("User 10")).toBeInTheDocument());
+    expect(
+      screen.getByRole("checkbox", { name: "Select row 11" }),
+    ).not.toBeChecked();
+
+    fireEvent.scroll(screen.getByTestId("data-table-virtual-viewport"), {
+      target: { scrollTop: 0 },
+    });
+
+    await waitFor(() => expect(screen.getByText("User 0")).toBeInTheDocument());
+    expect(screen.getByRole("checkbox", { name: "Select row 1" })).toBeChecked();
   });
 
   it("has no accessibility violations", async () => {

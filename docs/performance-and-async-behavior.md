@@ -59,6 +59,13 @@ addToast({
 
 `Modal` coalesces repeated overlay, Escape, and close-button requests while its 200-millisecond exit transition runs. `onClose` is called once after the transition. The pending callback and animation-frame work are canceled if the Modal unmounts.
 
+After the portal exists and the modal layer is registered, focus moves on the
+next animation frame to the first focusable element, falling back to the close
+button and then the dialog itself. While open, the topmost modal layer contains
+focus. When a layer closes, focus returns to its connected opener when that
+opener is valid for the newly exposed layer; otherwise the layer manager uses a
+safe focus target inside the remaining modal scope.
+
 ## Polling
 
 ### NotificationCenter

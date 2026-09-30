@@ -7,9 +7,16 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .disabled {
+    color: var(--disabled-color);
+    cursor: not-allowed;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
   .chip {
     position: relative;
-    z-index: 9999;
+    z-index: var(--z-index-notification, 1100);
     display: flex;
     align-items: center;
     justify-content: space-between;

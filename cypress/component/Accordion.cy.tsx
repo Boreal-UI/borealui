@@ -363,6 +363,96 @@ const runAccordionTests = (
       cy.get('[data-testid="accordion-child"]').should("exist");
     });
 
+    it("uses consumer-controlled loading without an artificial completion delay", () => {
+      cy.clock();
+
+      const ControlledLoadingAccordion = (): React.ReactElement => {
+        const [expanded, setExpanded] = useState(false);
+        const [loading, setLoading] = useState(true);
+
+        return (
+          <div data-cy="accordion-test-root">
+            <button
+              type="button"
+              data-testid="complete-request"
+              onClick={() => setLoading(false)}
+            >
+              Complete request
+            </button>
+            <Accordion
+              title="Controlled loading"
+              data-testid="accordion"
+              expanded={expanded}
+              onExpandedChange={setExpanded}
+              loading={loading}
+            >
+              <p data-testid="accordion-child">Loaded content</p>
+            </Accordion>
+          </div>
+        );
+      };
+
+      cy.mount(<ControlledLoadingAccordion />);
+
+      getToggle().focus().trigger("keydown", { key: "Enter" });
+      getToggle()
+        .should("be.focused")
+        .and("have.attr", "aria-expanded", "true");
+      getContent().should("have.attr", "aria-busy", "true");
+      cy.get('[data-testid="accordion-loading"]').should("exist");
+
+      cy.tick(1000);
+      cy.get('[data-testid="accordion-loading"]').should("exist");
+      cy.get('[data-testid="accordion-child"]').should("not.exist");
+
+      cy.get('[data-testid="complete-request"]').click();
+      cy.get('[data-testid="accordion-loading"]').should("not.exist");
+      getContent().should("not.have.attr", "aria-busy");
+      cy.get('[data-testid="accordion-child"]')
+        .should("exist")
+        .and("have.text", "Loaded content");
+    });
+
+    it("keeps controlled loading independent across accordion instances", () => {
+      cy.mount(
+        <div data-cy="accordion-test-root">
+          <Accordion title="First" data-testid="first" defaultExpanded loading>
+            First content
+          </Accordion>
+          <Accordion
+            title="Second"
+            data-testid="second"
+            defaultExpanded
+            loading={false}
+          >
+            Second content
+          </Accordion>
+          <Accordion title="Third" data-testid="third" defaultExpanded loading>
+            Third content
+          </Accordion>
+        </div>,
+      );
+
+      cy.get('[data-testid="first-loading"]').should("exist");
+      cy.get('[data-testid="second-content"]').should(
+        "not.have.attr",
+        "aria-busy",
+      );
+      cy.get('[data-testid="second-content"]').should(
+        "contain.text",
+        "Second content",
+      );
+      cy.get('[data-testid="third-loading"]').should("exist");
+
+      getToggle("first").click();
+      getContent("first").should("have.attr", "data-state", "collapsed");
+      cy.get('[data-testid="second-content"]').should(
+        "contain.text",
+        "Second content",
+      );
+      cy.get('[data-testid="third-loading"]').should("exist");
+    });
+
     it("renders async loading state before showing content when initially expanded", () => {
       cy.clock();
 

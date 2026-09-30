@@ -5,244 +5,248 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
-
-.typography {
-  margin: 0;
-  color: var(--text-color);
-}
-
-.typography_display {
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-display, var(--font-size-xxl));
-  font-weight: var(--font-weight-heading, var(--font-weight-bolder));
-  line-height: var(--line-height-heading, 1.1);
-  letter-spacing: var(--letter-spacing-display, -0.02em);
-}
-
-.typography_h1 {
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-h1, var(--font-size-xxl));
-  font-weight: var(--font-weight-heading, var(--font-weight-bolder));
-  line-height: var(--line-height-heading, 1.15);
-  letter-spacing: var(--letter-spacing-heading, -0.01em);
-}
-
-.typography_h2 {
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-h2, var(--font-size-xl));
-  font-weight: var(--font-weight-heading, var(--font-weight-bolder));
-  line-height: var(--line-height-heading, 1.2);
-  letter-spacing: var(--letter-spacing-heading, -0.01em);
-}
-
-.typography_h3 {
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-h3, var(--font-size-lg));
-  font-weight: var(--font-weight-heading, var(--font-weight-bold));
-  line-height: var(--line-height-heading, 1.25);
-  letter-spacing: var(--letter-spacing-heading, 0);
-}
-
-.typography_h4 {
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-h4, var(--font-size-base));
-  font-weight: var(--font-weight-heading, var(--font-weight-bold));
-  line-height: var(--line-height-heading, 1.3);
-}
-
-.typography_h5 {
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-h5, var(--font-size-md));
-  font-weight: var(--font-weight-heading, var(--font-weight-bold));
-  line-height: var(--line-height-heading, 1.35);
-}
-
-.typography_h6 {
-  font-family: var(--font-family-heading);
-  font-size: var(--font-size-h6, var(--font-size-sm));
-  font-weight: var(--font-weight-heading, var(--font-weight-bold));
-  line-height: var(--line-height-heading, 1.4);
-}
-
-.typography_body-lg {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body-lg, var(--font-size-lg));
-  font-weight: var(--font-weight-body, var(--font-weight-normal));
-  line-height: var(--line-height-body, 1.6);
-  letter-spacing: var(--letter-spacing-body, 0);
-}
-
-.typography_body {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body, var(--font-size-base));
-  font-weight: var(--font-weight-body, var(--font-weight-normal));
-  line-height: var(--line-height-body, 1.6);
-  letter-spacing: var(--letter-spacing-body, 0);
-}
-
-.typography_body-sm {
-  font-family: var(--font-family-body);
-  font-size: var(--font-size-body-sm, var(--font-size-sm));
-  font-weight: var(--font-weight-body, var(--font-weight-normal));
-  line-height: var(--line-height-body, 1.55);
-  letter-spacing: var(--letter-spacing-body, 0);
-}
-
-.typography_label {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-label, var(--font-size-sm));
-  font-weight: var(--font-weight-label, var(--font-weight-bold));
-  line-height: var(--line-height-label, 1.4);
-  letter-spacing: var(--letter-spacing-label, 0.01em);
-}
-
-.typography_caption {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-caption, var(--font-size-xs));
-  font-weight: var(--font-weight-label, var(--font-weight-normal));
-  line-height: var(--line-height-label, 1.35);
-  letter-spacing: var(--letter-spacing-label, 0.01em);
-}
-
-.typography_overline {
-  font-family: var(--font-family-ui);
-  font-size: var(--font-size-caption, var(--font-size-xs));
-  font-weight: var(--font-weight-label, var(--font-weight-bold));
-  line-height: var(--line-height-label, 1.2);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.typography_code {
-  font-family: var(
-    --font-family-mono,
-    ui-monospace,
-    SFMono-Regular,
-    Menlo,
-    Consolas,
-    monospace
-  );
-  font-size: 0.95em;
-  line-height: 1.5;
-}
-
-.typography_align-left {
-  text-align: left;
-}
-
-.typography_align-center {
-  text-align: center;
-}
-
-.typography_align-right {
-  text-align: right;
-}
-
-.typography_align-inherit {
-  text-align: inherit;
-}
-
-.typography_weight-light {
-  font-weight: var(--font-weight-light);
-}
-
-.typography_weight-normal {
-  font-weight: var(--font-weight-normal);
-}
-
-.typography_weight-medium {
-  font-weight: var(--font-weight-medium, 500);
-}
-
-.typography_weight-bold {
-  font-weight: var(--font-weight-bold);
-}
-
-.typography_weight-bolder {
-  font-weight: var(--font-weight-bolder);
-}
-
-.typography_weight-inherit {
-  font-weight: inherit;
-}
-
-.typography_primary {
-  color: var(--primary-color);
-}
-
-.typography_secondary {
-  color: var(--secondary-color);
-}
-
-.typography_tertiary {
-  color: var(--tertiary-color);
-}
-
-.typography_quaternary {
-  color: var(--quaternary-color);
-}
-
-.typography_success {
-  color: var(--success-color);
-}
-
-.typography_warning {
-  color: var(--warning-color);
-}
-
-.typography_info {
-  color: var(--info-color);
-}
-
-.typography_error {
-  color: var(--error-color);
-}
-
-.typography_clear {
-  color: inherit;
-}
-
-.typography_theme-inherit {
-  color: var(--text-color);
-}
-
-.typography_italic {
-  font-style: italic;
-}
-
-.typography_underline {
-  text-decoration: underline;
-  text-underline-offset: 0.15em;
-}
-
-.typography_truncate {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.typography_no-wrap {
-  white-space: nowrap;
-}
-
-@media (prefers-reduced-motion: reduce) {
   .typography {
-    transition: none !important;
-    animation: none !important;
-  }
-}
-
-@media (forced-colors: active) {
-  .typography {
-    color: CanvasText;
+    margin: 0;
+    color: var(--text-color);
   }
 
-  .typography_glass {
-    background: Canvas !important;
-    border: 1px solid ButtonText !important;
-    box-shadow: none !important;
-    -webkit-backdrop-filter: none !important;
-    backdrop-filter: none !important;
+  .typography_display {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-display, var(--font-size-xxl));
+    font-weight: var(--font-weight-heading, var(--font-weight-bolder));
+    line-height: var(--line-height-heading, 1.1);
+    letter-spacing: var(--letter-spacing-display, -0.02em);
   }
-}
+
+  .typography_h1 {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h1, var(--font-size-xxl));
+    font-weight: var(--font-weight-heading, var(--font-weight-bolder));
+    line-height: var(--line-height-heading, 1.15);
+    letter-spacing: var(--letter-spacing-heading, -0.01em);
+  }
+
+  .typography_h2 {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h2, var(--font-size-xl));
+    font-weight: var(--font-weight-heading, var(--font-weight-bolder));
+    line-height: var(--line-height-heading, 1.2);
+    letter-spacing: var(--letter-spacing-heading, -0.01em);
+  }
+
+  .typography_h3 {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h3, var(--font-size-lg));
+    font-weight: var(--font-weight-heading, var(--font-weight-bold));
+    line-height: var(--line-height-heading, 1.25);
+    letter-spacing: var(--letter-spacing-heading, 0);
+  }
+
+  .typography_h4 {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h4, var(--font-size-base));
+    font-weight: var(--font-weight-heading, var(--font-weight-bold));
+    line-height: var(--line-height-heading, 1.3);
+  }
+
+  .typography_h5 {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h5, var(--font-size-md));
+    font-weight: var(--font-weight-heading, var(--font-weight-bold));
+    line-height: var(--line-height-heading, 1.35);
+  }
+
+  .typography_h6 {
+    font-family: var(--font-family-heading);
+    font-size: var(--font-size-h6, var(--font-size-sm));
+    font-weight: var(--font-weight-heading, var(--font-weight-bold));
+    line-height: var(--line-height-heading, 1.4);
+  }
+
+  .typography_body-lg {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-lg, var(--font-size-lg));
+    font-weight: var(--font-weight-body, var(--font-weight-normal));
+    line-height: var(--line-height-body, 1.6);
+    letter-spacing: var(--letter-spacing-body, 0);
+  }
+
+  .typography_body {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body, var(--font-size-base));
+    font-weight: var(--font-weight-body, var(--font-weight-normal));
+    line-height: var(--line-height-body, 1.6);
+    letter-spacing: var(--letter-spacing-body, 0);
+  }
+
+  .typography_body-sm {
+    font-family: var(--font-family-body);
+    font-size: var(--font-size-body-sm, var(--font-size-sm));
+    font-weight: var(--font-weight-body, var(--font-weight-normal));
+    line-height: var(--line-height-body, 1.55);
+    letter-spacing: var(--letter-spacing-body, 0);
+  }
+
+  .typography_label {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label, var(--font-size-sm));
+    font-weight: var(--font-weight-label, var(--font-weight-bold));
+    line-height: var(--line-height-label, 1.4);
+    letter-spacing: var(--letter-spacing-label, 0.01em);
+  }
+
+  .typography_caption {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-caption, var(--font-size-xs));
+    font-weight: var(--font-weight-label, var(--font-weight-normal));
+    line-height: var(--line-height-label, 1.35);
+    letter-spacing: var(--letter-spacing-label, 0.01em);
+  }
+
+  .typography_overline {
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-caption, var(--font-size-xs));
+    font-weight: var(--font-weight-label, var(--font-weight-bold));
+    line-height: var(--line-height-label, 1.2);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .typography_code {
+    font-family: var(
+      --font-family-mono,
+      ui-monospace,
+      SFMono-Regular,
+      Menlo,
+      Consolas,
+      monospace
+    );
+    font-size: 0.95em;
+    line-height: 1.5;
+  }
+
+  .typography_align-left {
+    text-align: left;
+  }
+
+  .typography_align-center {
+    text-align: center;
+  }
+
+  .typography_align-right {
+    text-align: right;
+  }
+
+  .typography_align-inherit {
+    text-align: inherit;
+  }
+
+  .typography_weight-light {
+    font-weight: var(--font-weight-light);
+  }
+
+  .typography_weight-normal {
+    font-weight: var(--font-weight-normal);
+  }
+
+  .typography_weight-medium {
+    font-weight: var(--font-weight-medium, 500);
+  }
+
+  .typography_weight-bold {
+    font-weight: var(--font-weight-bold);
+  }
+
+  .typography_weight-bolder {
+    font-weight: var(--font-weight-bolder);
+  }
+
+  .typography_weight-inherit {
+    font-weight: inherit;
+  }
+
+  .typography_primary {
+    color: var(--primary-color);
+  }
+
+  .typography_secondary {
+    color: var(--secondary-color);
+  }
+
+  .typography_tertiary {
+    color: var(--tertiary-color);
+  }
+
+  .typography_quaternary {
+    color: var(--quaternary-color);
+  }
+
+  .typography_success {
+    color: var(--success-color);
+  }
+
+  .typography_warning {
+    color: var(--warning-color);
+  }
+
+  .typography_info {
+    color: var(--info-color);
+  }
+
+  .typography_error {
+    color: var(--error-color);
+  }
+
+  .typography_clear {
+    color: inherit;
+  }
+
+  .typography_theme-inherit {
+    color: var(--text-color);
+  }
+
+  .typography_italic {
+    font-style: italic;
+  }
+
+  .typography_underline {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .typography_truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .typography_no-wrap {
+    white-space: nowrap;
+  }
+
+  .typography_outline {
+    -webkit-text-stroke: 1px currentcolor;
+    paint-order: stroke fill;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .typography {
+      transition: none !important;
+      animation: none !important;
+    }
+  }
+
+  @media (forced-colors: active) {
+    .typography {
+      color: CanvasText;
+    }
+
+    .typography_glass {
+      background: Canvas !important;
+      border: 1px solid ButtonText !important;
+      box-shadow: none !important;
+      -webkit-backdrop-filter: none !important;
+      backdrop-filter: none !important;
+    }
+  }
 }

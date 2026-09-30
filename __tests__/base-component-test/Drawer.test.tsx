@@ -1,5 +1,5 @@
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import DrawerBase from "../../src/components/Drawer/DrawerBase";
 
@@ -231,7 +231,30 @@ describe("DrawerBase", () => {
     expect(screen.getByTestId("drawer-close")).toHaveFocus();
   });
 
-  it("restores focus to the previously focused element when closed", () => {
+  it("contains focus and isolates background content while open", () => {
+    const background = document.createElement("button");
+    background.textContent = "Background action";
+    document.body.appendChild(background);
+
+    renderDrawer({
+      children: <button type="button">Drawer action</button>,
+    });
+
+    const close = screen.getByTestId("drawer-close");
+    const action = screen.getByRole("button", { name: "Drawer action" });
+    expect(document.body).toHaveClass("noScroll");
+    expect(background).toHaveAttribute("aria-hidden", "true");
+    expect(background).toHaveAttribute("inert");
+
+    action.focus();
+    fireEvent.keyDown(action, { key: "Tab" });
+    expect(close).toHaveFocus();
+
+    background.focus();
+    expect(close).toHaveFocus();
+  });
+
+  it("restores focus to the previously focused element when closed", async () => {
     const onClose = jest.fn();
 
     const { rerender } = render(
@@ -274,7 +297,7 @@ describe("DrawerBase", () => {
       </>,
     );
 
-    expect(screen.getByTestId("trigger")).toHaveFocus();
+    await waitFor(() => expect(screen.getByTestId("trigger")).toHaveFocus());
   });
 
   it("uses testId before data-testid", () => {

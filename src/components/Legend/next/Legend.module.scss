@@ -1,72 +1,66 @@
 @use "../../../styles/_animations";
+@use "../../../styles/theme" as theme;
+@use "sass:map";
+@use "../Legend.shared" as shared;
 
 @layer boreal-ui.components {
   .root,
   .root {
-    display: inline-flex;
-    flex-direction: column;
-    gap: var(--spacing-xs);
-    max-width: 100%;
-    color: inherit;
-    font-family: var(--font-family-ui);
+    @include shared.root;
   }
   .label,
   .label {
-    font-size: var(--font-size-body-sm);
-    font-weight: var(--font-weight-ui);
-    color: inherit;
+    @include shared.label;
   }
   .list,
   .list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--spacing-xs) var(--spacing-md);
-    padding: 0;
-    margin: 0;
-    list-style: none;
+    @include shared.list;
   }
   .vertical .list,
   .vertical .list {
-    flex-direction: column;
+    @include shared.vertical;
+  }
+  .horizontal .list {
+    @include shared.horizontal;
   }
   .item,
   .item {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--spacing-xs);
-    min-width: 0;
-    font-size: var(--font-size-body-sm);
+    @include shared.item;
   }
   .swatch,
   .swatch {
-    width: 0.75rem;
-    height: 0.75rem;
-    flex: 0 0 auto;
-    border-radius: var(--border-radius-full);
+    @include shared.swatch;
   }
   .text,
   .text {
-    min-width: 0;
-    overflow-wrap: anywhere;
-    color: inherit;
+    @include shared.text;
   }
   .value,
   .value {
-    font-variant-numeric: tabular-nums;
-    opacity: 0.76;
-    color: inherit;
+    @include shared.value;
   }
   .loader,
   .loader {
-    width: 1rem;
-    height: 1rem;
-    border: 2px solid currentcolor;
-    border-right-color: transparent;
-    border-radius: 50%;
-    animation: spin 700ms linear infinite;
+    @include shared.loader;
   }
   .loading,
   .loading {
-    cursor: progress;
+    @include shared.loading;
+  }
+
+  @each $name, $values in theme.$themes {
+    .#{$name} {
+      @include shared.theme(map.get($values, border));
+    }
+  }
+
+  @each $name, $values in theme.$states {
+    .#{$name} {
+      @include shared.theme(map.get($values, border));
+    }
+  }
+
+  .disabled {
+    @include shared.disabled;
   }
 }

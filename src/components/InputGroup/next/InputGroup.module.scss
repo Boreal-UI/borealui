@@ -6,6 +6,14 @@
 
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
+  .withAddons {
+    gap: 0;
+  }
+
+  .withInlineAddons .frame {
+    flex-wrap: nowrap;
+  }
+
   .container {
     display: inline-grid;
     gap: var(--spacing-xs);

@@ -13,21 +13,10 @@ import {
   renderGlassOutlineVariants,
   renderStateOutlineVariants,
 } from "../../shared-story-assets/VisualVariantStories";
-
-const roundingOptions: NonNullable<TextInputProps["rounding"]>[] = [
-  "none",
-  "small",
-  "medium",
-  "large",
-];
-
-const shadowOptions: NonNullable<TextInputProps["shadow"]>[] = [
-  "none",
-  "light",
-  "medium",
-  "strong",
-  "intense",
-];
+import {
+  roundingOptions,
+  shadowOptions,
+} from "../../shared-story-assets/OptionTypes";
 
 const labelPositionOptions: NonNullable<TextInputProps["labelPosition"]>[] = [
   "top",
