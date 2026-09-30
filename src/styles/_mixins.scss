@@ -31,6 +31,24 @@
   }
 }
 
+/// Gives a reusable component root a safe intrinsic sizing boundary.
+/// This is the default responsiveness tool when descendants do not need to
+/// switch layout modes based on the component's allocated width.
+@mixin contained-root {
+  box-sizing: border-box;
+  min-inline-size: 0;
+  max-inline-size: 100%;
+}
+
+/// Establishes an explicitly named inline-size query container.
+/// Use this only on a component whose descendants need to change layout based
+/// on the inline size allocated to that component. Named containers prevent a
+/// query from accidentally binding to a consumer-owned ancestor.
+@mixin inline-query-container($name) {
+  container-name: $name;
+  container-type: inline-size;
+}
+
 @mixin visually-hidden {
   position: absolute;
   width: 1px;

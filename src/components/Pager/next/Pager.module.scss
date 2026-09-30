@@ -1,5 +1,4 @@
 @use "../../../styles/theme" as theme;
-@use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
 @use "../Pager.shared" as pager-shared;
@@ -8,15 +7,9 @@
 
 @layer boreal-ui.components {
   .wrapper {
+    @include mixins.contained-root;
+    @include mixins.inline-query-container(boreal-pager);
     @include pager-shared.root;
-
-    @include bp.down(md) {
-      @include pager-shared.root-wrap;
-    }
-
-    @include bp.down(xs) {
-      @include pager-shared.root-narrow;
-    }
   }
 
   .controls,
@@ -27,16 +20,16 @@
   .controls {
     @include pager-shared.controls;
 
-    @include bp.down(xs) {
-      @include pager-shared.controls-narrow;
-    }
   }
 
   .buttonWrapper {
     @include pager-shared.button-wrapper;
 
-    @include bp.down(xs) {
-      @include pager-shared.button-wrapper-narrow;
+  }
+
+  @container boreal-pager (inline-size < 30rem) {
+    ul.controls {
+      @include pager-shared.page-list-compact;
     }
   }
 

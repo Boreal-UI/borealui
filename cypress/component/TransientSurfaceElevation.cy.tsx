@@ -25,7 +25,7 @@ const elementAtCenter = ($element: JQuery<HTMLElement>) => {
 };
 
 const expectModalAtSurfaceCenter = (selector: string) => {
-  cy.get(selector).should("exist").then(($surface) => {
+  cy.get(selector).should(($surface) => {
     expect(
       elementAtCenter($surface)?.closest('[data-testid="policy-modal"]'),
       "the active modal should own the surface overlap point",
