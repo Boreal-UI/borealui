@@ -3,7 +3,7 @@
 import * as Core from "../../src/index.core";
 import * as Next from "../../src/index.next";
 
-type ComponentLibrary = typeof Core;
+type ComponentLibrary = typeof Core | typeof Next;
 
 const implementations: Array<{
   name: "core" | "next";
