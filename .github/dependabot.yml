@@ -1,4 +1,5 @@
 version: 2
+
 updates:
   - package-ecosystem: npm
     directory: /
@@ -7,23 +8,30 @@ updates:
       day: monday
       time: "09:00"
       timezone: America/Toronto
+
+    target-branch: "Dev"
+
     open-pull-requests-limit: 10
     versioning-strategy: increase-if-necessary
+
     groups:
       vite-toolchain:
         patterns:
           - vite
           - "@vitejs/plugin-react"
+
       development-dependencies:
         dependency-type: development
         update-types:
           - minor
           - patch
+
       production-dependencies:
         dependency-type: production
         update-types:
           - minor
           - patch
+
     labels:
       - dependencies
       - security
@@ -35,7 +43,11 @@ updates:
       day: monday
       time: "09:30"
       timezone: America/Toronto
+
+    target-branch: "Dev"
+
     open-pull-requests-limit: 10
+
     labels:
       - dependencies
       - github-actions
