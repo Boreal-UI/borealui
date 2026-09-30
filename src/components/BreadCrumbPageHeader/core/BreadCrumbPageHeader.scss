@@ -41,6 +41,9 @@
   }
 
   .breadCrumbPageHeader {
+    @include mixins.contained-root;
+    @include mixins.inline-query-container(boreal-breadcrumb-page-header);
+
     --breadCrumbPageHeader-glass-bg: rgba(255, 255, 255, 0.18);
     --breadCrumbPageHeader-glass-border: rgba(255, 255, 255, 0.28);
     --breadCrumbPageHeader-glass-text: var(--text-color-primary);
@@ -62,6 +65,9 @@
   .breadCrumbPageHeader_breadcrumbs {
     min-width: 0;
     max-width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    scrollbar-width: thin;
   }
 
   .breadCrumbPageHeader_content {
@@ -216,7 +222,9 @@
 
   .breadCrumbPageHeader_breadcrumbList {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    width: max-content;
+    min-width: 100%;
     gap: var(--spacing-xs);
     align-items: center;
     padding: 0;
@@ -272,5 +280,15 @@
     display: inline-flex;
     flex-wrap: wrap;
     gap: var(--spacing-xs);
+  }
+
+  @container boreal-breadcrumb-page-header (inline-size < 32rem) {
+    .breadCrumbPageHeader_main {
+      flex-wrap: wrap;
+    }
+
+    .breadCrumbPageHeader_actions {
+      width: 100%;
+    }
   }
 }

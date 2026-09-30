@@ -14,9 +14,13 @@
   );
 
   .stepper {
+    @include mixins.contained-root;
+    @include mixins.inline-query-container(boreal-stepper);
+
     margin: var(--spacing-xxs);
     display: flex;
-    width: fit-content;
+    flex-wrap: wrap;
+    width: calc(100% - (2 * var(--spacing-xxs)));
     align-items: center;
     justify-content: space-evenly;
     position: relative;
@@ -183,6 +187,17 @@
 
     &.clear .active .stepButton {
       background-color: var(--background-color-darker);
+    }
+  }
+
+  @container boreal-stepper (inline-size < 32rem) {
+    .stepper.horizontal .step {
+      width: 100%;
+    }
+
+    .stepLabel {
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
   }
 

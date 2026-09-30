@@ -6,6 +6,8 @@
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
   .empty_state {
+    @include mixins.contained-root;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,19 +17,13 @@
     padding: var(--spacing-sm);
     background-color: var(--background-color-light);
     transition: var(--transition-default);
-    width: 400px;
-    max-width: 100%;
-    min-width: 100px;
+    width: min(100%, 26.25rem);
     font-family: var(--font-family-body);
 
     @include bp.down(md) {
-      width: 100%;
       padding: var(--spacing-md);
     }
 
-    @include bp.up(lg) {
-      width: 420px;
-    }
   }
 
   .icon {
@@ -48,7 +44,9 @@
 
   .title,
   .message {
+    max-width: 100%;
     margin: var(--spacing-sm);
+    overflow-wrap: anywhere;
   }
 
   .title {

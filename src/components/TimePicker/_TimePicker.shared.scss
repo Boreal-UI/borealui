@@ -1,10 +1,13 @@
 @use "sass:map";
 
 @mixin container {
+  box-sizing: border-box;
   display: inline-flex;
+  flex-wrap: wrap;
   gap: var(--spacing-xs);
   align-items: flex-start;
   max-width: 100%;
+  min-inline-size: 0;
   font-family: var(--font-family-body);
 }
 
@@ -17,6 +20,7 @@
 }
 
 @mixin root {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   gap: var(--spacing-sm);

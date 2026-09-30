@@ -14,9 +14,13 @@
   );
 
   .stepper {
+    @include mixins.contained-root;
+    @include mixins.inline-query-container(boreal-stepper);
+
     margin: var(--spacing-xxs);
     display: flex;
-    width: fit-content;
+    flex-wrap: wrap;
+    width: calc(100% - (2 * var(--spacing-xxs)));
     align-items: center;
     justify-content: space-evenly;
     position: relative;
@@ -145,6 +149,17 @@
       .stepper_step_label {
         color: var(--disabled-color);
       }
+    }
+  }
+
+  @container boreal-stepper (inline-size < 32rem) {
+    .stepper_horizontal .stepper_step {
+      width: 100%;
+    }
+
+    .stepper_step_label {
+      min-width: 0;
+      overflow-wrap: anywhere;
     }
   }
 

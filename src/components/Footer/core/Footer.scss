@@ -6,6 +6,9 @@
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
   .footer {
+    @include mixins.contained-root;
+    @include mixins.inline-query-container(boreal-footer);
+
     display: flex;
     justify-content: center;
     width: 100%;
@@ -403,6 +406,42 @@
 
     @include bp.down(sm) {
       order: 2;
+    }
+  }
+
+  @container boreal-footer (inline-size < 48rem) {
+    .footer_content,
+    .footer_left {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .footer_links {
+      padding-left: 0;
+    }
+
+    .footer_layout-columns .footer_content {
+      grid-template-columns: 1fr 1fr;
+      text-align: left;
+    }
+
+    .footer_brand {
+      grid-column: 1 / -1;
+      max-width: none;
+    }
+  }
+
+  @container boreal-footer (inline-size < 32rem) {
+    .footer_layout-columns .footer_content,
+    .footer_sections {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .footer_bottom {
+      flex-direction: column;
+      align-items: flex-start;
     }
   }
 
