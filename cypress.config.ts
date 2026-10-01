@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 const configDirectory = fileURLToPath(new URL(".", import.meta.url));
 
 export default defineConfig({
+  allowCypressEnv: false,
   component: {
     specPattern: "cypress/component/**/*.cy.{ts,tsx}",
     supportFile: "cypress/support/component.ts",
