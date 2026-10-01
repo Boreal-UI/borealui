@@ -256,18 +256,18 @@
       --textInput-glass-text: #{map.get($vals, text)};
       background-color: map.get($vals, bg);
       color: map.get($vals, text);
-      box-shadow: if(
-        map.has-key($vals, shadow),
-        map.get($vals, shadow),
-        var(--box-shadow-medium)
-      );
+      @if map.has-key($vals, shadow) {
+        box-shadow: map.get($vals, shadow);
+      } @else {
+        box-shadow: var(--box-shadow-medium);
+      }
 
       &:hover {
-        background-color: if(
-          map.has-key($vals, hover),
-          map.get($vals, hover),
-          map.get($vals, bg)
-        );
+        @if map.has-key($vals, hover) {
+          background-color: map.get($vals, hover);
+        } @else {
+          background-color: map.get($vals, bg);
+        }
       }
 
       .textInput_icon_container svg {

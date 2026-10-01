@@ -10,8 +10,13 @@
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
   :where(.card) {
+    @include mixins.contained-root;
+
+    --card-outer-margin: var(--spacing-sm);
+
     overflow: hidden;
-    margin: var(--spacing-sm);
+    margin: var(--card-outer-margin);
+    max-inline-size: calc(100% - (2 * var(--card-outer-margin)));
     position: relative;
     background-color: var(--background-color-surface);
     display: flex;
@@ -24,11 +29,11 @@
     transition: transform var(--transition-default);
 
     @include bp.down(sm) {
-      margin: var(--spacing-xs);
+      --card-outer-margin: var(--spacing-xs);
     }
 
     @include bp.up(lg) {
-      margin: var(--spacing-md);
+      --card-outer-margin: var(--spacing-md);
     }
   }
 
@@ -338,6 +343,12 @@
       display: flex;
       flex-direction: column;
       width: 100%;
+    }
+
+    &_children {
+      min-width: 0;
+      max-width: 100%;
+      overflow-wrap: anywhere;
     }
 
     &_header {

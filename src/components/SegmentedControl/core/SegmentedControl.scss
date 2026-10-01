@@ -7,7 +7,10 @@
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
   .segmentedControl_container {
+    @include mixins.contained-root;
+
     display: inline-flex;
+    flex-wrap: wrap;
     gap: var(--spacing-xs);
     align-items: flex-start;
     max-width: 100%;
@@ -41,6 +44,8 @@
   }
 
   .segmentedControl {
+    @include mixins.contained-root;
+
     --segmentedControl-glass-bg: rgba(255, 255, 255, 0.18);
     --segmentedControl-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --segmentedControl-glass-border: rgba(255, 255, 255, 0.28);
@@ -69,7 +74,10 @@
     gap: var(--spacing-xxs);
     min-width: 0;
     max-width: 100%;
-    overflow-wrap: anywhere;
+    overflow-x: auto;
+    overflow-y: visible;
+    overscroll-behavior-inline: contain;
+    scrollbar-width: thin;
   }
 
   .segmentedControl_option {
@@ -153,11 +161,11 @@
       border-color: map.get($vals, border);
 
       &:hover {
-        background-color: if(
-          map.has-key($vals, hover),
-          map.get($vals, hover),
-          map.get($vals, bg)
-        );
+        @if map.has-key($vals, hover) {
+          background-color: map.get($vals, hover);
+        } @else {
+          background-color: map.get($vals, bg);
+        }
       }
 
       &.segmentedControl_outline {

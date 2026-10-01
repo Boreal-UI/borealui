@@ -6,12 +6,14 @@
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 @layer boreal-ui.components {
   .toolbar {
+    @include mixins.contained-root;
+    @include mixins.inline-query-container(boreal-toolbar);
+
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     width: 100%;
-    min-width: 200px;
     padding: var(--spacing-sm) var(--spacing-md);
     background-color: var(--background-color-light);
     color: inherit;
@@ -155,6 +157,18 @@
         margin-left: 0;
         margin-top: var(--spacing-xs);
       }
+    }
+  }
+
+  @container boreal-toolbar (inline-size < 33rem) {
+    .toolbar_section {
+      flex: 1 1 100%;
+      width: 100%;
+      justify-content: space-between;
+    }
+
+    .toolbar_sectionContent {
+      width: 100%;
     }
   }
 

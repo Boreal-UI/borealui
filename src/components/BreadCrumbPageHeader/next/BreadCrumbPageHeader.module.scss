@@ -41,6 +41,9 @@
   }
 
   .root {
+    @include mixins.contained-root;
+    @include mixins.inline-query-container(boreal-breadcrumb-page-header);
+
     --breadCrumbPageHeader-glass-bg: rgba(255, 255, 255, 0.18);
     --breadCrumbPageHeader-glass-hover-bg: rgba(255, 255, 255, 0.24);
     --breadCrumbPageHeader-glass-border: rgba(255, 255, 255, 0.28);
@@ -63,6 +66,9 @@
   .breadcrumbs {
     min-width: 0;
     max-width: 100%;
+    overflow-x: auto;
+    overflow-y: visible;
+    scrollbar-width: thin;
   }
 
   .content {
@@ -99,11 +105,11 @@
       border-color: map.get($vals, border);
 
       &:hover {
-        background-color: if(
-          map.has-key($vals, hover),
-          map.get($vals, hover),
-          map.get($vals, bg)
-        );
+        @if map.has-key($vals, hover) {
+          background-color: map.get($vals, hover);
+        } @else {
+          background-color: map.get($vals, bg);
+        }
       }
 
       &.outline {
@@ -225,7 +231,9 @@
 
   .breadcrumbList {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    width: max-content;
+    min-width: 100%;
     gap: var(--spacing-xs);
     align-items: center;
     padding: 0;
@@ -281,5 +289,15 @@
     display: inline-flex;
     flex-wrap: wrap;
     gap: var(--spacing-xs);
+  }
+
+  @container boreal-breadcrumb-page-header (inline-size < 32rem) {
+    .main {
+      flex-wrap: wrap;
+    }
+
+    .actions {
+      width: 100%;
+    }
   }
 }
