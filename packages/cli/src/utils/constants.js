@@ -1,4 +1,4 @@
-export const VERSION = "0.2.1";
+export const VERSION = "0.2.11";
 
 export const FRAMEWORKS = new Set(["react", "next"]);
 
