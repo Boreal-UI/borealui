@@ -39,6 +39,7 @@ const classes = {
   roundMedium: "tooltip_round-Medium",
   roundLarge: "tooltip_round-Large",
   glass: "tooltip_glass",
+  outline: "tooltip_outline",
 };
 
 const Tooltip = forwardRef<HTMLDivElement, TooltipProps>((props, ref) => (
