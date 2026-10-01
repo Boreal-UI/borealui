@@ -97,7 +97,7 @@
     "build-storybook": "storybook build",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"src/**/*.{ts,tsx}\" \"cypress/**/*.{ts,tsx}\" \"stories-visual/**/*.{ts,tsx}\" \"visual-regression/**/*.{ts,tsx}\" \".storybook-visual/**/*.{ts,tsx}\" \"*.config.ts\" --max-warnings=0",
-    "sbom": "cyclonedx-npm --output-format JSON --output-file bom.cdx.json --validate --mc-type library"
+    "sbom": "cyclonedx-npm --package-lock-only --output-format JSON --output-file bom.cdx.json --validate --mc-type library"
   },
   "keywords": [
     "react",
@@ -114,7 +114,7 @@
   ],
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.18.3",
-    "@babel/core": "^8.0.1",
+    "@babel/core": "^7.29.7",
     "@chromatic-com/storybook": "^5.2.1",
     "@cyclonedx/cyclonedx-npm": "6.0.1",
     "@eslint/js": "9.39.5",
@@ -133,7 +133,7 @@
     "@vitejs/plugin-react": "^6.0.5",
     "axe-core": "^4.11.4",
     "chromatic": "16.10.0",
-    "cypress": "^16.1.0",
+    "cypress": "^15.21.1",
     "cypress-axe": "^1.7.0",
     "esbuild": "^0.28.2",
     "eslint": "9.39.5",

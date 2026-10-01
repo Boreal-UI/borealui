@@ -18,6 +18,11 @@ updates:
     ignore:
       - dependency-name: eslint
       - dependency-name: "@eslint/js"
+      # cypress-axe currently supports Cypress through 15; Babel syntax plugins require 7.
+      - dependency-name: cypress
+        update-types: [version-update:semver-major]
+      - dependency-name: "@babel/core"
+        update-types: [version-update:semver-major]
 
     groups:
       vite-toolchain:
