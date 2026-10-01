@@ -133,7 +133,7 @@
     "@vitejs/plugin-react": "^6.0.5",
     "axe-core": "^4.11.4",
     "chromatic": "16.10.0",
-    "cypress": "^15.21.1",
+    "cypress": "^16.1.0",
     "cypress-axe": "^1.7.0",
     "esbuild": "^0.28.2",
     "eslint": "^9.39.5",
