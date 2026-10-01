@@ -172,18 +172,18 @@
         --textArea-glass-text: #{map.get($props, text)};
         background-color: map.get($props, bg);
         color: map.get($props, text);
-        box-shadow: if(
-          map.has-key($props, shadow),
-          map.get($props, shadow),
-          var(--box-shadow-medium)
-        );
+        @if map.has-key($props, shadow) {
+          box-shadow: map.get($props, shadow);
+        } @else {
+          box-shadow: var(--box-shadow-medium);
+        }
 
         &:hover {
-          background-color: if(
-            map.has-key($props, hover),
-            map.get($props, hover),
-            map.get($props, bg)
-          );
+          @if map.has-key($props, hover) {
+            background-color: map.get($props, hover);
+          } @else {
+            background-color: map.get($props, bg);
+          }
         }
 
         &.textArea_outline {
@@ -207,11 +207,11 @@
         --textArea-glass-border: #{map.get($props, glass-border)};
         --textArea-glass-text: #{map.get($props, text)};
         border: 2px solid map.get($props, border);
-        box-shadow: if(
-          map.has-key($props, shadow),
-          map.get($props, shadow),
-          var(--box-shadow-medium)
-        );
+        @if map.has-key($props, shadow) {
+          box-shadow: map.get($props, shadow);
+        } @else {
+          box-shadow: var(--box-shadow-medium);
+        }
 
         &.textArea_outline {
           background-color: transparent;

@@ -12,8 +12,11 @@ const config: Config = {
     "^@utils/(.*)$": "<rootDir>/src/utils/$1",
     "\\.(scss|sass|css)$": "identity-obj-proxy",
   },
-  transformIgnorePatterns: ["/node_modules/(?!(marked)/)"],
+  transformIgnorePatterns: [
+    "/node_modules/(?!(marked|htmlparser2|domelementtype|domhandler|domutils|dom-serializer|entities)/)",
+  ],
   transform: {
+    "^.+\\.m?js$": "<rootDir>/scripts/jestTransform.cjs",
     "^.+\\.(ts|tsx)$": ["ts-jest", { useESM: true }],
   },
   extensionsToTreatAsEsm: [".ts", ".tsx"],

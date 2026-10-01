@@ -5,7 +5,7 @@ describe("CI Cypress component-test gate", () => {
   const workflow = readFileSync(
     path.join(process.cwd(), ".github", "workflows", "ci.yml"),
     "utf8",
-  );
+  ).replace(/\r\n/g, "\n");
   const cypressJob = workflow.match(
     /\n  cypress-component:\n([\s\S]*?)(?=\n  [a-z][a-z-]+:\n|$)/,
   )?.[1];

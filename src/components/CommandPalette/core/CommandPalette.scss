@@ -226,11 +226,11 @@
     }
 
     .command_palette_item.command_palette_#{$name}.command_palette_active {
-      color: if(
-        $name == "primary",
-        var(--text-color-primary),
-        var(--text-color-secondary)
-      );
+      @if $name == "primary" {
+        color: var(--text-color-primary);
+      } @else {
+        color: var(--text-color-secondary);
+      }
     }
 
     .command_palette_item.command_palette_#{$name}:hover {

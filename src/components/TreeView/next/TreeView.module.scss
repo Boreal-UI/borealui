@@ -115,11 +115,11 @@
 
       .node {
         &:hover {
-          background-color: if(
-            map.has-key($vals, hover),
-            map.get($vals, hover),
-            map.get($vals, bg)
-          );
+          @if map.has-key($vals, hover) {
+            background-color: map.get($vals, hover);
+          } @else {
+            background-color: map.get($vals, bg);
+          }
         }
       }
 
