@@ -174,13 +174,14 @@
 
       .circular_progress_inner_circle {
         background-color: map.get($values, bg);
+        color: map.get($values, text);
       }
 
       &.circular_progress_glass .circular_progress_inner_circle,
       .circular_progress_inner_circle.circular_progress_glass {
         background-color: var(--circular-progress-glass-bg);
         border: 1px solid var(--circular-progress-glass-border);
-        color: inherit;
+        color: var(--circular-progress-glass-text);
       }
     }
   }
@@ -193,12 +194,14 @@
 
       .circular_progress_inner_circle {
         background-color: map.get($values, bg);
+        color: map.get($values, text);
       }
 
       &.circular_progress_glass .circular_progress_inner_circle,
       .circular_progress_inner_circle.circular_progress_glass {
         background-color: var(--circular-progress-glass-bg);
         border: 1px solid var(--circular-progress-glass-border);
+        color: var(--circular-progress-glass-text);
       }
     }
   }

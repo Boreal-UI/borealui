@@ -45,6 +45,14 @@ export const Default: Story = {
   },
 };
 
+export const Outline: Story = {
+  args: { ...defaultArgs, variant: "outline" },
+};
+
+export const GlassOutline: Story = {
+  args: { ...defaultArgs, variant: "glassOutline" },
+};
+
 export const Positions: Story = {
   name: "Tooltip Positions",
   render: (args) => (

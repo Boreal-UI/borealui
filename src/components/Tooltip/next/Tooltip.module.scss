@@ -160,6 +160,7 @@
 
   @each $name, $vals in theme.$themes {
     .#{$name} {
+      --tooltip-outline-color: #{map.get($vals, border)};
       --tooltip-glass-bg: #{map.get($vals, glass-bg)};
       --tooltip-glass-hover-bg: #{map.get($vals, glass-hover)};
       --tooltip-glass-border: #{map.get($vals, glass-border)};
@@ -188,6 +189,7 @@
 
   @each $name, $vals in theme.$states {
     .#{$name} {
+      --tooltip-outline-color: #{map.get($vals, border)};
       --tooltip-glass-bg: #{map.get($vals, glass-bg)};
       --tooltip-glass-hover-bg: #{map.get($vals, glass-hover)};
       --tooltip-glass-border: #{map.get($vals, glass-border)};
@@ -242,6 +244,32 @@
   .right.glass::after {
     border-color: transparent transparent transparent
       var(--tooltip-glass-bg, var(--glass-background));
+  }
+
+  .tooltip.outline {
+    background-color: var(--background-color);
+    color: var(--tooltip-outline-color, var(--primary-color));
+    border: 1px solid currentcolor;
+  }
+
+  .tooltip.outline::after {
+    border-color: currentcolor transparent transparent;
+  }
+
+  .tooltip.bottom.outline::after {
+    border-color: transparent transparent currentcolor;
+  }
+
+  .tooltip.left.outline::after {
+    border-color: transparent transparent transparent currentcolor;
+  }
+
+  .tooltip.right.outline::after {
+    border-color: transparent currentcolor transparent transparent;
+  }
+
+  .tooltip.glass.outline {
+    background-color: var(--tooltip-glass-bg, var(--glass-background));
   }
 
   .clear {

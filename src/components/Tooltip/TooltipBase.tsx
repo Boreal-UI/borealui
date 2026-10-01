@@ -78,6 +78,7 @@ const TooltipBase = forwardRef<
         classMap[theme],
         state && classMap[state],
         (variant === "glass" || variant === "glassOutline") && classMap.glass,
+        (variant === "outline" || variant === "glassOutline") && classMap.outline,
         visible && classMap.visible,
         getShadowClassName(classMap, theme, shadow),
         rounding && classMap[`round${capitalize(rounding)}`],

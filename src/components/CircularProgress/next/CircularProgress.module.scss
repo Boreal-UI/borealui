@@ -105,12 +105,14 @@
 
         .inner_circle {
           background-color: map.get($values, bg);
+          color: map.get($values, text);
         }
 
         &.glass .inner_circle,
         .inner_circle.glass {
           background-color: var(--circular-progress-glass-bg);
           border: 1px solid var(--circular-progress-glass-border);
+          color: var(--circular-progress-glass-text);
         }
       }
     }
@@ -123,12 +125,14 @@
 
         .inner_circle {
           background-color: map.get($values, bg);
+          color: map.get($values, text);
         }
 
         &.glass .inner_circle,
         .inner_circle.glass {
           background-color: var(--circular-progress-glass-bg);
           border: 1px solid var(--circular-progress-glass-border);
+          color: var(--circular-progress-glass-text);
         }
       }
     }

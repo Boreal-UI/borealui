@@ -82,11 +82,12 @@
 
   .segmentedControl_option {
     appearance: none;
+    flex-shrink: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: var(--spacing-xs);
-    min-width: 0;
+    min-width: max-content;
     border: 1px solid transparent;
     border-radius: calc(var(--border-radius-md) - 2px);
     background: var(--segmentedControl-option-bg);
@@ -280,7 +281,7 @@
   }
 
   .segmentedControl_equalWidth .segmentedControl_option {
-    flex: 1 1 0;
+    flex: 1 0 0;
   }
 
   @each $key, $value in theme.$rounding {

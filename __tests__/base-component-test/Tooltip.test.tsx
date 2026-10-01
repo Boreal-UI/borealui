@@ -36,9 +36,27 @@ const mockStyles = {
   shadowMedium: "shadowMedium",
   shadowStrong: "shadowStrong",
   glass: "glass",
+  outline: "outline",
 };
 
 describe("TooltipBase", () => {
+  it.each(["outline", "glassOutline"] as const)(
+    "applies the outline surface for %s",
+    (variant) => {
+      render(
+        <TooltipBase content="Details" variant={variant} classMap={mockStyles}>
+          <button type="button">Details</button>
+        </TooltipBase>,
+      );
+      expect(screen.getByTestId("tooltip")).toHaveClass("outline");
+      if (variant === "glassOutline") {
+        expect(screen.getByTestId("tooltip")).toHaveClass("glass");
+      } else {
+        expect(screen.getByTestId("tooltip")).not.toHaveClass("glass");
+      }
+    },
+  );
+
   it("renders the trigger and tooltip with the expected default attributes", () => {
     render(
       <TooltipBase content="Tooltip content" classMap={mockStyles}>

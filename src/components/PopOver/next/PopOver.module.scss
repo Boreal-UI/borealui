@@ -38,6 +38,8 @@
     align-items: center;
     justify-content: center;
     width: max-content;
+    box-sizing: border-box;
+    padding: var(--spacing-md);
     background-color: var(--background-color-light);
     color: var(--text-color-secondary);
     border: 1px solid var(--text-color-secondary);
