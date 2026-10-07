@@ -35,6 +35,9 @@ const exportStatements = files
   })
   .join("\n");
 
-fs.writeFileSync(outputPath, exportStatements + "\n");
+fs.writeFileSync(
+  outputPath,
+  'export type * from "./types/types.js";\n' + exportStatements + "\n",
+);
 
 console.log(`Generated ${outputPath} with ${files.length} exports.`);

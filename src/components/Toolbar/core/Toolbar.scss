@@ -72,11 +72,11 @@
       align-items: center;
       justify-content: center;
 
-      &:first-child {
+      &:where(:first-child) {
         justify-content: flex-start;
       }
 
-      &:last-child {
+      &:where(:last-child) {
         justify-content: flex-end;
       }
 
