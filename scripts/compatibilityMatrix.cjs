@@ -48,7 +48,7 @@ const MATRIX = Object.freeze({
     reactDom: "19.2.1",
     reactTypes: "19.1.1",
     reactDomTypes: "19.1.2",
-    next: "16.3.6",
+    next: "16.4.3",
   },
   "next-16-node-22": {
     kind: "next",
@@ -57,7 +57,7 @@ const MATRIX = Object.freeze({
     reactDom: "19.2.1",
     reactTypes: "19.1.1",
     reactDomTypes: "19.1.2",
-    next: "16.3.6",
+    next: "16.4.3",
   },
   "cli-node-18": { kind: "cli", node: "18" },
   "cli-node-22": { kind: "cli", node: "22" },
