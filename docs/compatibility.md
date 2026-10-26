@@ -28,7 +28,7 @@ CI exercises these representative boundaries:
 
 The framework lanes respect Next's own published constraints. Next 13.5.11
 requires React 18.2 and Node 16.14 or newer; Next 15.5.26 accepts React 18.2 or
-19 and Node 18.18 or newer; Next 16.3.6 accepts React 18.2 or 19 and requires
+19 and Node 18.18 or newer; Next 16.4.3 accepts React 18.2 or 19 and requires
 Node 20.9 or newer. Boreal tests only combinations that satisfy both the
 framework and Boreal ranges.
 
