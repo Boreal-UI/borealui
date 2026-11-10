@@ -1,4 +1,5 @@
 @use "../../../styles/theme" as theme;
+@use "../../../styles/control-sizes" as control-sizes;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
 @use "sass:map";
@@ -202,4 +203,28 @@
       transform: scale(1.03);
     }
   }
+}
+
+@layer boreal-ui.components {
+  @include control-sizes.button(".button", ".button_label", ".button_");
+  .button { box-sizing: border-box; min-width: 0; max-width: 100%; }
+  .button > .button_label {
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .button.button_wrapLabel > .button_label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    white-space: normal;
+    overflow-wrap: anywhere;
+    overflow: visible;
+    text-overflow: clip;
+  }
+  .button.button_wrapLabel:hover { transform: none; }
+  .button > .button_label > .button_loader { flex: 0 0 auto; }
+  .button > .button_button_icon { flex-shrink: 0; }
 }

@@ -3,6 +3,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { TextAreaProps } from "./TextArea.types";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
+import { resolveFieldPresentation } from "../../utils/fieldPresentation";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -35,6 +36,12 @@ const TextAreaBase = forwardRef<
       "aria-description": ariaDescription,
       helperText,
       errorMessage,
+      fullWidth = false,
+      rootClassName,
+      controlClassName,
+      descriptionClassName,
+      errorClassName,
+      errorLive = "off",
       describedBy,
       disabled = false,
       height,
@@ -56,6 +63,8 @@ const TextAreaBase = forwardRef<
       "aria-labelledby": ariaLabelledBy,
       "aria-describedby": ariaDescribedByProp,
       "aria-errormessage": ariaErrorMessageProp,
+      "aria-invalid": ariaInvalid,
+      style,
 
       ...props
     },
@@ -67,8 +76,11 @@ const TextAreaBase = forwardRef<
 
     const labelId = label ? `${id}-label` : undefined;
     const descriptionId = ariaDescription ? `${id}-description` : undefined;
-    const helperTextId = helperText ? `${id}-helper-text` : undefined;
-    const internalErrorId = errorMessage ? `${id}-error-message` : undefined;
+    const presentation = resolveFieldPresentation({
+      id, helperText, errorMessage, invalid, state, ariaInvalid,
+      describedBy: [ariaDescribedByProp, describedBy, descriptionId],
+    });
+    const { helperTextId, errorMessageId: internalErrorId } = presentation;
 
     const wrapperClass = useMemo(
       () =>
@@ -76,7 +88,7 @@ const TextAreaBase = forwardRef<
           classMap.textArea,
           classMap[theme],
           size && classMap[size],
-          state && classMap[state],
+          presentation.state && classMap[presentation.state],
           (variant === "outline" || variant === "glassOutline") &&
             classMap.outline,
           (variant === "glass" || variant === "glassOutline") && classMap.glass,
@@ -89,7 +101,7 @@ const TextAreaBase = forwardRef<
         classMap,
         theme,
         size,
-        state,
+        presentation.state,
         variant,
         disabled,
         shadow,
@@ -98,21 +110,12 @@ const TextAreaBase = forwardRef<
       ],
     );
 
-    const isError = invalid || state === "error";
+    const isError = presentation.state === "error";
 
     const computedAriaLabel =
       !ariaLabelledBy && !label ? ariaLabel || placeholder : undefined;
 
-    const describedByIds =
-      [
-        ariaDescribedByProp,
-        describedBy,
-        descriptionId,
-        helperTextId,
-        isError ? internalErrorId : undefined,
-      ]
-        .filter(Boolean)
-        .join(" ") || undefined;
+    const describedByIds = presentation.describedBy;
 
     const errorMessageId =
       isError && (ariaErrorMessageProp || internalErrorId)
@@ -125,6 +128,8 @@ const TextAreaBase = forwardRef<
           classMap.container,
           classMap[`label${capitalize(resolvedLabelPosition)}`],
           containerClassName,
+          rootClassName,
+          fullWidth && classMap.fullWidth,
         )}
         data-testid={testId}
       >
@@ -162,7 +167,7 @@ const TextAreaBase = forwardRef<
             aria-labelledby={ariaLabelledBy || (label ? labelId : undefined)}
             aria-describedby={describedByIds}
             aria-errormessage={errorMessageId}
-            aria-invalid={isError || undefined}
+            aria-invalid={presentation.ariaInvalid}
             aria-required={required || undefined}
             aria-readonly={readOnly || undefined}
             aria-disabled={disabled || undefined}
@@ -172,10 +177,11 @@ const TextAreaBase = forwardRef<
             disabled={disabled}
             required={required}
             style={{
-              height,
-              resize: resizable ? undefined : "none",
+              ...style,
+              height: height ?? style?.height,
+              resize: resizable ? style?.resize : "none",
             }}
-            className={combineClassNames(classMap.textInput, inputClassName)}
+            className={combineClassNames(classMap.textInput, inputClassName, controlClassName)}
             data-testid={`${testId}-input`}
         />
 
@@ -205,6 +211,7 @@ const TextAreaBase = forwardRef<
             className={combineClassNames(
               classMap.helperText,
               helperTextClassName,
+              descriptionClassName,
             )}
             data-testid={`${testId}-helper-text`}
           >
@@ -218,8 +225,9 @@ const TextAreaBase = forwardRef<
             className={combineClassNames(
               classMap.errorMessage,
               errorMessageClassName,
+              errorClassName,
             )}
-            role={isError ? "alert" : undefined}
+            aria-live={errorLive === "off" ? undefined : errorLive}
             data-testid={`${testId}-error-message`}
           >
             {errorMessage}

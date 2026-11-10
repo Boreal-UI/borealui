@@ -5,6 +5,9 @@ import "./Select.scss";
 import { SelectProps } from "../Select.types";
 
 const classes = {
+  fullWidth: "select_fullWidth",
+  helperText: "select_helperText",
+  errorMessage: "select_errorMessage",
   xs: "select_xs",
   small: "select_small",
   medium: "select_medium",

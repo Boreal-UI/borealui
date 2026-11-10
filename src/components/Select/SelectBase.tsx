@@ -13,6 +13,7 @@ import { ChevronDownIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
+import { resolveFieldPresentation } from "../../utils/fieldPresentation";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -65,6 +66,14 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       helperText,
       errorMessage,
       invalid,
+      fullWidth = false,
+      rootClassName,
+      controlClassName,
+      descriptionClassName,
+      errorClassName,
+      helperTextClassName,
+      errorMessageClassName,
+      errorLive = "off",
       labelPosition = "top",
       id,
       form,
@@ -81,6 +90,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       "aria-live": ariaLive = "polite",
       "data-testid": dataTestId,
       testId = dataTestId ?? "select",
+      ...nativeProps
     },
     ref,
   ) => {
@@ -104,8 +114,8 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         ? classMap[`label${capitalize(resolvedLabelPosition)}`]
         : undefined;
 
-      return combineClassNames(classMap.layout, posClass, layoutClassName);
-    }, [classMap, hasLabel, resolvedLabelPosition, layoutClassName]);
+      return combineClassNames(classMap.layout, posClass, fullWidth && classMap.fullWidth, layoutClassName, rootClassName);
+    }, [classMap, hasLabel, resolvedLabelPosition, layoutClassName, rootClassName, fullWidth]);
 
     const labelClasses = useMemo(
       () =>
@@ -117,15 +127,10 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       [classMap, labelClassName],
     );
 
-    const computedDescribedBy = useMemo(() => {
-      const ids = [
-        ariaDescribedBy,
-        internalDescriptionId,
-        helperText ? `${selectId}-helper` : undefined,
-        errorMessage ? `${selectId}-error` : undefined,
-      ].filter(Boolean);
-      return ids.length > 0 ? ids.join(" ") : undefined;
-    }, [ariaDescribedBy, internalDescriptionId, helperText, errorMessage, selectId]);
+    const presentation = resolveFieldPresentation({
+      id: selectId, helperText, errorMessage, invalid, state, ariaInvalid,
+      describedBy: [ariaDescribedBy, internalDescriptionId],
+    });
 
     const computedAriaLabel = ariaLabelledBy
       ? undefined
@@ -195,7 +200,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           classMap.wrapper,
           classMap[size],
           classMap[theme],
-          state && classMap[state],
+          presentation.state && classMap[presentation.state],
           (variant === "glass" || variant === "glassOutline") && classMap.glass,
           className,
           getShadowClassName(classMap, theme, shadow),
@@ -208,7 +213,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         classMap,
         size,
         theme,
-        state,
+        presentation.state,
         variant,
         className,
         shadow,
@@ -224,8 +229,9 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           (variant === "outline" || variant === "glassOutline") &&
             classMap.outline,
           selectClassName,
+          controlClassName,
         ),
-      [classMap, variant, selectClassName],
+      [classMap, variant, selectClassName, controlClassName],
     );
 
     const iconClasses = useMemo(
@@ -274,6 +280,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           onMouseDown={handleWrapperMouseDown}
         >
           <select
+            {...nativeProps}
             ref={selectRef}
             id={selectId}
             name={name}
@@ -292,9 +299,9 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
             aria-label={computedAriaLabel}
             aria-labelledby={ariaLabelledBy}
             aria-description={ariaDescription}
-            aria-describedby={computedDescribedBy}
+            aria-describedby={presentation.describedBy}
             aria-disabled={disabled || undefined}
-            aria-invalid={ariaInvalid ?? (invalid || state === "error" || undefined)}
+            aria-invalid={presentation.ariaInvalid}
             aria-required={ariaRequired ?? (required || undefined)}
             aria-busy={ariaBusy ?? (loading || undefined)}
             disabled={disabled}
@@ -351,9 +358,16 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         {(resolvedLabelPosition === "bottom" ||
           resolvedLabelPosition === "right") &&
           labelNode}
-        {helperText && <div id={`${selectId}-helper`}>{helperText}</div>}
+        {helperText && (
+          <div id={presentation.helperTextId}
+            className={combineClassNames(classMap.helperText, helperTextClassName, descriptionClassName)}
+            data-testid={`${testId}-helper-text`}>{helperText}</div>
+        )}
         {errorMessage && (
-          <div id={`${selectId}-error`} role="alert">
+          <div id={presentation.errorMessageId}
+            className={combineClassNames(classMap.errorMessage, errorMessageClassName, errorClassName)}
+            aria-live={errorLive === "off" ? undefined : errorLive}
+            data-testid={`${testId}-error-message`}>
             {errorMessage}
           </div>
         )}

@@ -399,6 +399,14 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"Loading data\""
     },
     {
+      "name": "minWidth",
+      "type": "string | number",
+      "description": "Minimum table width (CSS length or numeric pixels). Use 0 for a table that may fit its panel; omit to retain the responsive default minimum.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "onCellEdit",
       "type": "((value: unknown, meta: DataTableCellEditMeta<T>) => void)",
       "description": "Callback fired when an editable cell commits a value.",
@@ -628,6 +636,15 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "tableLayout",
+      "type": "\"auto\" | \"fixed\"",
+      "description": "Native table layout algorithm. Auto treats column widths as hints; fixed uses first-row widths and shares remaining space among flexible columns.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"auto\""
     },
     {
       "name": "tbodyClassName",

@@ -51,7 +51,7 @@
 
     .scrollArea {
       display: grid;
-      width: max-content;
+      width: 100%;
       min-width: 100%;
     }
 
@@ -195,7 +195,7 @@
     }
 
     .table {
-      width: max-content;
+      width: 100%;
       min-width: max(100%, var(--data-table-min-width));
       border-collapse: separate;
       border-spacing: 0;
@@ -461,93 +461,7 @@
       }
     }
 
-    @include bp.down(xs) {
-      overflow-x: auto;
 
-      .scrollArea,
-      .table {
-        width: 100%;
-        min-width: 0;
-      }
-
-      .viewport {
-        width: 100%;
-        min-width: 0;
-      }
-
-      .table {
-        font-size: var(--font-size-caption);
-      }
-
-      .table thead {
-        display: none;
-      }
-
-      .table tbody {
-        display: block;
-      }
-
-      .table tbody tr {
-        display: block;
-        margin-bottom: var(--spacing-sm);
-        background-color: var(--background-color-dark);
-        border-radius: var(--border-radius-md);
-        overflow: hidden;
-      }
-
-      .headerCell,
-      .cell,
-      .selectionCell {
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-        text-align: left;
-        padding: var(--spacing-xs);
-        border-bottom: 1px solid var(--text-color-primary);
-        white-space: normal;
-        overflow-wrap: anywhere;
-      }
-
-      .selectionCell {
-        text-align: left;
-      }
-
-      .selectionCell::before {
-        content: "Select";
-        display: inline-block;
-        margin-right: var(--spacing-xs);
-        font-family: var(--font-family-ui);
-        font-size: var(--font-size-label);
-        font-weight: var(--font-weight-label);
-        line-height: var(--line-height-label);
-        letter-spacing: var(--letter-spacing-label);
-        color: var(--text-color-secondary);
-      }
-
-      .cell::before {
-        content: attr(data-label);
-        display: block;
-        font-family: var(--font-family-ui);
-        font-size: var(--font-size-label);
-        font-weight: var(--font-weight-label);
-        line-height: var(--line-height-label);
-        letter-spacing: var(--letter-spacing-label);
-        margin-bottom: 2px;
-        color: var(--text-color-secondary);
-      }
-
-      tbody tr:last-child .cell,
-      tbody tr:last-child th.cell,
-      tbody tr:last-child .selectionCell {
-        border-bottom: 1px solid var(--text-color-primary);
-      }
-
-      tbody tr .cell:last-child,
-      tbody tr th.cell:last-child,
-      tbody tr .selectionCell:last-child {
-        border-bottom: none;
-      }
-    }
   }
 
   @each $name, $values in theme.$themes {

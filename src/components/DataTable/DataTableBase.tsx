@@ -87,6 +87,8 @@ function DataTableBase<T extends object>({
   variant = getDefaultVariant(),
   className,
   tableClassName,
+  minWidth,
+  tableLayout = "auto",
   theadClassName,
   tbodyClassName,
   rowClassName,
@@ -788,7 +790,10 @@ function DataTableBase<T extends object>({
         (caption || ariaLabelledBy ? undefined : ariaLabel ?? "Data table")
       }
     >
-      <div className={classMap.scrollArea}>
+      <div
+        className={classMap.scrollArea}
+        style={virtualized && tableLayout === "auto" ? { width: "max-content" } : undefined}
+      >
         {hasToolbar ? (
           <div
             className={combineClassNames(classMap.toolbar, toolbarClassName)}
@@ -898,6 +903,7 @@ function DataTableBase<T extends object>({
         >
           <table
             className={tableClass}
+            style={{ minWidth, tableLayout }}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledBy}
             aria-describedby={computedAriaDescribedBy || undefined}

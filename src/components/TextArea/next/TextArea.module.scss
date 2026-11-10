@@ -1,4 +1,5 @@
 @use "../../../styles/control-sizes" as control-sizes;
+@use "../../../styles/field-layout" as field;
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
@@ -318,5 +319,20 @@
       outline: 2px solid Highlight !important;
       outline-offset: 2px !important;
     }
+  }
+}
+
+@layer boreal-ui.components {
+  @include field.layout(".container", ".textArea", ".label", ".helperText", ".errorMessage", ".fullWidth", ".labelTop", ".labelBottom", ".labelLeft", ".labelRight");
+  .container > .textArea { align-items: flex-start; padding: 0; }
+  .textArea > .textInput {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    min-height: 0;
+    height: auto;
+    margin: 0;
+    padding: var(--spacing-sm);
   }
 }

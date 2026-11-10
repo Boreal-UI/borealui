@@ -64,12 +64,9 @@
 
 @mixin full-width {
   width: 100%;
-  max-width: none;
+  max-width: 100%;
   display: flex;
-
-  @include bp.up(xl) {
-    max-width: 640px;
-  }
+  &:hover { transform: none; }
 }
 
 @mixin auto-full {
@@ -80,6 +77,8 @@
 }
 
 @mixin loader {
+  display: inline-block;
+  vertical-align: middle;
   width: 1.2rem;
   height: 1.2rem;
   border: 2px solid transparent;
@@ -90,6 +89,7 @@
 
 @mixin button-icon($line-height: null) {
   display: flex;
+  flex-shrink: 0;
   align-items: center;
   line-height: $line-height;
 }

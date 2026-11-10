@@ -1,0 +1,81 @@
+// Only explicit slots are styled: nested consumer controls retain their own styles.
+@mixin layout($root, $wrapper, $label, $helper, $error, $full, $top, $bottom, $left, $right) {
+  #{$root} {
+    display: inline-grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "label" "control" "helper" "error";
+    align-items: start;
+    align-content: start;
+    gap: 0 var(--spacing-xs);
+    box-sizing: border-box;
+    width: fit-content;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  #{$root}#{$full} { width: 100%; }
+  #{$root}#{$bottom} { grid-template-areas: "control" "label" "helper" "error"; }
+
+  #{$root}#{$left} {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    grid-template-areas: "label control" ". helper" ". error";
+  }
+
+  #{$root}#{$right} {
+    grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+    grid-template-areas: "control label" "helper ." "error .";
+  }
+
+  #{$root} > #{$wrapper} {
+    grid-area: control;
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+    margin: 0;
+  }
+
+  #{$root} > #{$label} {
+    grid-area: label;
+    margin: 0;
+    margin-block-end: var(--spacing-xs);
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-label);
+    font-weight: var(--font-weight-label);
+    line-height: var(--line-height-label);
+  }
+
+  #{$root} > #{$helper},
+  #{$root} > #{$error} {
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    margin-block-start: var(--spacing-xs);
+    white-space: normal;
+    overflow-wrap: anywhere;
+    font-family: var(--font-family-ui);
+    font-size: var(--font-size-caption);
+    line-height: var(--line-height-caption);
+  }
+
+  #{$root} > #{$helper} {
+    grid-area: helper;
+    color: var(--text-color);
+  }
+  #{$root} > #{$error} {
+    grid-area: error;
+    color: var(--error-text-color, var(--text-color));
+    font-weight: var(--font-weight-label);
+  }
+  #{$root}#{$bottom} > #{$label} {
+    margin-block: var(--spacing-xs) 0;
+  }
+  #{$root}#{$left} > #{$label},
+  #{$root}#{$right} > #{$label} { margin-block-end: 0; }
+}

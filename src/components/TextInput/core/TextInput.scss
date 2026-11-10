@@ -1,4 +1,5 @@
 @use "../../../styles/control-sizes" as control-sizes;
+@use "../../../styles/field-layout" as field;
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
@@ -390,4 +391,10 @@
       outline-offset: 2px !important;
     }
   }
+}
+
+@layer boreal-ui.components {
+  @include field.layout(".textInput_container", ".textInput", ".textInput_label", ".textInput_helperText", ".textInput_errorMessage", ".textInput_fullWidth", ".textInput_labelTop", ".textInput_labelBottom", ".textInput_labelLeft", ".textInput_labelRight");
+  @include control-sizes.single-line(".textInput", ".textInput_input", ".textInput_");
+  .textInput > .textInput_togglePassword { min-height: 0; height: 100%; margin: 0; padding: 0; flex-shrink: 0; }
 }

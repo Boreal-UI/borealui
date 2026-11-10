@@ -59,6 +59,7 @@ const ButtonBase = forwardRef<
       loading = false,
       loadingLabel = "Loading",
       fullWidth = false,
+      wrapLabel = false,
       "data-testid": dataTestId,
       testId = dataTestId ?? "button",
       classMap,
@@ -103,6 +104,7 @@ const ButtonBase = forwardRef<
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
           fullWidth && classMap.fullWidth,
+          wrapLabel && classMap.wrapLabel,
           iconPosition === "left" && classMap.iconLeft,
           iconPosition === "right" && classMap.iconRight,
           className,
@@ -115,6 +117,7 @@ const ButtonBase = forwardRef<
         shadow,
         rounding,
         fullWidth,
+        wrapLabel,
         disabled,
         iconPosition,
         className,
@@ -145,11 +148,11 @@ const ButtonBase = forwardRef<
       >
         {loading ? (
           <>
-            <div
+            <span
               className={combineClassNames(classMap.loader, loaderClassName)}
               aria-hidden="true"
             />
-            <span className="sr_only">{loadingLabel}</span>
+            <span>{loadingLabel}</span>
           </>
         ) : (
           <>

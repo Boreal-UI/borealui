@@ -2,8 +2,10 @@ import { useId } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { expandClassMap, resolvePropAlias } from "@/utils/propAliases";
 import { capitalize } from "@/utils/capitalize";
+import { resolveFieldPresentation } from "@/utils/fieldPresentation";
 import {
   getDefaultVariant,
+  getDefaultSize,
   getDefaultRounding,
   getDefaultTheme,
   getShadowClassName,
@@ -27,6 +29,19 @@ export default function TextArea({
   resizable = true,
   helperText,
   errorMessage,
+  invalid,
+  size = getDefaultSize(),
+  fullWidth = false,
+  rootClassName,
+  controlClassName,
+  descriptionClassName,
+  errorClassName,
+  errorLive = "off",
+  describedBy,
+  srOnlyClassName,
+  "aria-description": ariaDescription,
+  "aria-describedby": ariaDescribedBy,
+  style,
   height,
   className,
   containerClassName,
@@ -45,6 +60,12 @@ export default function TextArea({
   const resolvedTestId = testId ?? dataTestId ?? "text-area";
   const generatedId = useId();
   const inputId = id ?? `${generatedId}-input`;
+  const descriptionId = ariaDescription ? `${inputId}-description` : undefined;
+  const presentation = resolveFieldPresentation({
+    id: inputId, helperText, errorMessage, invalid, state,
+    ariaInvalid: rest["aria-invalid"],
+    describedBy: [ariaDescribedBy, describedBy, descriptionId],
+  });
   const position = resolvePropAlias(labelPosition);
   return (
     <div
@@ -52,6 +73,8 @@ export default function TextArea({
         classMap.container,
         classMap[`label${capitalize(position)}`],
         containerClassName,
+        rootClassName,
+        fullWidth && classMap.fullWidth,
       )}
       data-testid={resolvedTestId}
     >
@@ -67,7 +90,8 @@ export default function TextArea({
         className={combineClassNames(
           classMap.textArea,
           classMap[theme],
-          state && classMap[state],
+          presentation.state && classMap[presentation.state],
+          classMap[size],
           (variant === "outline" || variant === "glassOutline") &&
             classMap.outline,
           (variant === "glass" || variant === "glassOutline") && classMap.glass,
@@ -91,16 +115,22 @@ export default function TextArea({
           placeholder={placeholder}
           readOnly={readOnly}
           disabled={disabled}
-          style={{ height, resize: resizable ? undefined : "none" }}
-          className={combineClassNames(classMap.textInput, inputClassName)}
+          style={{ ...style, height: height ?? style?.height, resize: resizable ? style?.resize : "none" }}
+          aria-invalid={presentation.ariaInvalid}
+          aria-describedby={presentation.describedBy}
+          aria-errormessage={presentation.state === "error" ? rest["aria-errormessage"] || presentation.errorMessageId : undefined}
+          className={combineClassNames(classMap.textInput, inputClassName, controlClassName)}
           data-testid={`${resolvedTestId}-input`}
         />
       </div>
+      {ariaDescription && <span id={descriptionId} className={combineClassNames("sr_only", srOnlyClassName)}>{ariaDescription}</span>}
       {helperText ? (
         <div
+          id={presentation.helperTextId}
           className={combineClassNames(
             classMap.helperText,
             helperTextClassName,
+            descriptionClassName,
           )}
         >
           {helperText}
@@ -108,11 +138,13 @@ export default function TextArea({
       ) : null}
       {errorMessage ? (
         <div
+          id={presentation.errorMessageId}
           className={combineClassNames(
             classMap.errorMessage,
             errorMessageClassName,
+            errorClassName,
           )}
-          role={state === "error" ? "alert" : undefined}
+          aria-live={errorLive === "off" ? undefined : errorLive}
         >
           {errorMessage}
         </div>

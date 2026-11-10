@@ -2,9 +2,11 @@ import { useId } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { expandClassMap, resolvePropAlias } from "@/utils/propAliases";
 import { capitalize } from "@/utils/capitalize";
+import { resolveFieldPresentation } from "@/utils/fieldPresentation";
 import { ChevronDownIcon } from "@/Icons";
 import {
   getDefaultVariant,
+  getDefaultSize,
   getDefaultRounding,
   getDefaultTheme,
   getShadowClassName,
@@ -41,22 +43,34 @@ export default function Select({
   testId,
   "data-testid": dataTestId,
   id,
-  size,
+  size = getDefaultSize(),
   invalid,
   helperText,
   errorMessage,
+  rootClassName,
+  controlClassName,
+  descriptionClassName,
+  errorClassName,
+  helperTextClassName,
+  errorMessageClassName,
+  fullWidth = false,
+  errorLive = "off",
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Accepted for compatibility; the server variant has no async loading UI.
+  loadingClassName: _loadingClassName,
+  srOnlyClassName,
+  "aria-description": ariaDescription,
   ...rest
 }: ServerSelectProps) {
   const classMap = expandClassMap(styles);
   const resolvedTestId = testId ?? dataTestId ?? "select";
   const generatedId = useId();
   const selectId = id ?? `${generatedId}-input`;
-  const helperTextId = helperText ? `${selectId}-helper-text` : undefined;
-  const errorMessageId = errorMessage ? `${selectId}-error-message` : undefined;
-  const describedBy =
-    [rest["aria-describedby"], helperTextId, errorMessageId]
-      .filter(Boolean)
-      .join(" ") || undefined;
+  const descriptionId = ariaDescription ? `${selectId}-description` : undefined;
+  const presentation = resolveFieldPresentation({
+    id: selectId, helperText, errorMessage, invalid, state,
+    ariaInvalid: rest["aria-invalid"], describedBy: [rest["aria-describedby"], descriptionId],
+  });
+  const { helperTextId, errorMessageId } = presentation;
   const position = resolvePropAlias(labelPosition);
   const labelNode = label ? (
     <label
@@ -76,6 +90,8 @@ export default function Select({
         classMap.layout,
         classMap[`label${capitalize(position)}`],
         layoutClassName,
+        rootClassName,
+        fullWidth && classMap.fullWidth,
       )}
       data-testid={`${resolvedTestId}-layout`}
     >
@@ -85,8 +101,7 @@ export default function Select({
           classMap.wrapper,
           classMap[theme],
           size && classMap[size],
-          state && classMap[state],
-          invalid && classMap.error,
+          presentation.state && classMap[presentation.state],
           (variant === "glass" || variant === "glassOutline") && classMap.glass,
           getShadowClassName(classMap, theme, shadow),
           rounding && classMap[`round${capitalize(rounding)}`],
@@ -104,13 +119,14 @@ export default function Select({
             value ?? defaultValue ?? (placeholder !== null ? "" : undefined)
           }
           disabled={disabled}
-          aria-invalid={rest["aria-invalid"] ?? (invalid || state === "error" || undefined)}
-          aria-describedby={describedBy}
+          aria-invalid={presentation.ariaInvalid}
+          aria-describedby={presentation.describedBy}
           className={combineClassNames(
             classMap.select,
             (variant === "outline" || variant === "glassOutline") &&
               classMap.outline,
             selectClassName,
+            controlClassName,
           )}
           data-testid={`${resolvedTestId}-input`}
         >
@@ -141,13 +157,14 @@ export default function Select({
         </div>
       </div>
       {(position === "bottom" || position === "right") && labelNode}
+      {ariaDescription && <span id={descriptionId} className={combineClassNames("sr_only", srOnlyClassName)}>{ariaDescription}</span>}
       {helperText ? (
-        <div id={helperTextId} className={classMap.helperText}>
+        <div id={helperTextId} className={combineClassNames(classMap.helperText, helperTextClassName, descriptionClassName)}>
           {helperText}
         </div>
       ) : null}
       {errorMessage ? (
-        <div id={errorMessageId} className={classMap.errorMessage} role="alert">
+        <div id={errorMessageId} className={combineClassNames(classMap.errorMessage, errorMessageClassName, errorClassName)} aria-live={errorLive === "off" ? undefined : errorLive}>
           {errorMessage}
         </div>
       ) : null}

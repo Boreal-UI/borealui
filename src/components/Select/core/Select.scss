@@ -1,4 +1,5 @@
 @use "../../../styles/control-sizes" as control-sizes;
+@use "../../../styles/field-layout" as field;
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
@@ -326,4 +327,10 @@
       outline-offset: 3px;
     }
   }
+}
+
+@layer boreal-ui.components {
+  @include field.layout(".select_layout", ".select_wrapper", ".select_label", ".select_helperText", ".select_errorMessage", ".select_fullWidth", ".select_label_top", ".select_label_bottom", ".select_label_left", ".select_label_right");
+  @include control-sizes.single-line(".select_wrapper", ".select", ".select_");
+  .select_wrapper > .select { padding-inline-end: var(--spacing-lg); }
 }

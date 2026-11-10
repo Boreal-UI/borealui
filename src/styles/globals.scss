@@ -46,6 +46,7 @@
 @use "_breakpoints" as breakpoints;
 @use "_mixins" as mixins;
 @use "_reset" as reset;
+@use "control-sizes";
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 
 @layer boreal-ui.reset {
@@ -54,6 +55,7 @@
 
 @layer boreal-ui.base {
   :root {
+    @include control-sizes.height-tokens;
     /* ================================
      PRIMARY COLOR PALETTE
   ================================== */

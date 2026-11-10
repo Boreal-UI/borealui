@@ -7,6 +7,7 @@ import {
 } from "@/types/types";
 import { ComponentType, InputHTMLAttributes, ReactNode } from "react";
 import { IconButtonProps } from "../IconButton/IconButton.types";
+import type { FieldPresentationProps } from "../../types/fieldPresentation";
 
 /**
  * Native input props that we want to inherit while still controlling
@@ -20,7 +21,7 @@ type NativeInputProps = Omit<
 /**
  * Props for the TextInput component.
  */
-export interface TextInputProps extends NativeInputProps {
+export interface TextInputProps extends NativeInputProps, FieldPresentationProps {
   /**
    * Called when the input value changes.
    * Returns both the current value and the original change event.
@@ -246,7 +247,7 @@ export interface TextInputProps extends NativeInputProps {
   /** Supporting text associated with the input through aria-describedby. */
   helperText?: ReactNode;
 
-  /** Validation message associated with the input and announced as an alert. */
+  /** Validation message associated with the input. Static unless errorLive is set. */
   errorMessage?: ReactNode;
   size?: import("@/types/types").SizeType;
   autoComplete?: string;

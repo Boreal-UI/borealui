@@ -6,6 +6,8 @@ import {
   ThemeType,
 } from "@/types/types";
 import type { AriaRole, ReactNode } from "react";
+import type { SelectHTMLAttributes } from "react";
+import type { FieldPresentationProps } from "../../types/fieldPresentation";
 
 /**
  * Represents a single option in the Select component.
@@ -25,7 +27,10 @@ export interface Option {
 /**
  * Props for the Select component.
  */
-export interface SelectProps {
+export interface SelectProps extends Omit<
+  SelectHTMLAttributes<HTMLSelectElement>,
+  "value" | "defaultValue" | "onChange" | "size" | "children" | "multiple"
+>, FieldPresentationProps {
   /**
    * Theme for styling.
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
@@ -222,6 +227,11 @@ export interface SelectProps {
 
   /** Additional class names for screen-reader-only description text. */
   srOnlyClassName?: string;
+
+  /** Additional classes for helperText; descriptionClassName also merges. */
+  helperTextClassName?: string;
+  /** Additional classes for errorMessage; errorClassName also merges. */
+  errorMessageClassName?: string;
 
   /**
    * Optional test ID for testing frameworks.

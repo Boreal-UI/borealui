@@ -51,7 +51,7 @@
 
     .data_table_scroll_area {
       display: grid;
-      width: max-content;
+      width: 100%;
       min-width: 100%;
     }
 
@@ -198,7 +198,7 @@
     }
 
     .data_table {
-      width: max-content;
+      width: 100%;
       min-width: max(100%, var(--data-table-min-width));
       border-collapse: separate;
       border-spacing: 0;
@@ -473,95 +473,7 @@
       }
     }
 
-    @include bp.down(xs) {
-      --data-table-min-width: 520px;
 
-      overflow-x: auto;
-
-      .data_table_scroll_area,
-      .data_table {
-        width: 100%;
-        min-width: 0;
-      }
-
-      .data_table_viewport {
-        width: 100%;
-        min-width: 0;
-      }
-
-      .data_table {
-        font-size: var(--font-size-caption);
-      }
-
-      .data_table thead {
-        display: none;
-      }
-
-      .data_table tbody {
-        display: block;
-      }
-
-      .data_table tbody tr {
-        display: block;
-        margin-bottom: var(--spacing-sm);
-        background-color: var(--background-color-dark);
-        border-radius: var(--border-radius-md);
-        overflow: hidden;
-      }
-
-      .data_table_header_cell,
-      .data_table_cell,
-      .data_table_selection_cell {
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-        text-align: left;
-        padding: var(--spacing-xs);
-        border-bottom: 1px solid var(--text-color-primary);
-        white-space: normal;
-        overflow-wrap: anywhere;
-      }
-
-      .data_table_selection_cell {
-        text-align: left;
-      }
-
-      .data_table_selection_cell::before {
-        content: "Select";
-        display: inline-block;
-        margin-right: var(--spacing-xs);
-        font-family: var(--font-family-ui);
-        font-size: var(--font-size-label);
-        font-weight: var(--font-weight-label);
-        line-height: var(--line-height-label);
-        letter-spacing: var(--letter-spacing-label);
-        color: var(--text-color-secondary);
-      }
-
-      .data_table_cell::before {
-        content: attr(data-label);
-        display: block;
-        font-family: var(--font-family-ui);
-        font-size: var(--font-size-label);
-        font-weight: var(--font-weight-label);
-        line-height: var(--line-height-label);
-        letter-spacing: var(--letter-spacing-label);
-        margin-bottom: 2px;
-        color: var(--text-color-secondary);
-      }
-
-      tbody tr:last-child .data_table_cell,
-      tbody tr:last-child th.data_table_cell,
-      tbody tr:last-child .data_table_selection_cell {
-        border-bottom: 1px solid var(--text-color-primary);
-      }
-
-      tbody tr .data_table_cell:last-child,
-      tbody tr th.data_table_cell:last-child,
-      tbody tr .data_table_selection_cell:last-child {
-        border-bottom: none;
-      }
-    }
   }
 
   @each $name, $values in theme.$themes {

@@ -5,21 +5,22 @@ import type { TextAreaProps } from "../TextArea.types";
 import "./TextArea.scss";
 
 const classes = {
+  fullWidth: "textArea_fullWidth",
   xs: "textArea_xs",
   small: "textArea_small",
   medium: "textArea_medium",
   large: "textArea_large",
   xl: "textArea_xl",
-  container: "container",
+  container: "textArea_container",
   textArea: "textArea",
   textInput: "textArea_text_input",
   icon: "textArea_icon",
 
-  label: "label",
-  labelTop: "labelTop",
-  labelBottom: "labelBottom",
-  labelLeft: "labelLeft",
-  labelRight: "labelRight",
+  label: "textArea_label",
+  labelTop: "textArea_labelTop",
+  labelBottom: "textArea_labelBottom",
+  labelLeft: "textArea_labelLeft",
+  labelRight: "textArea_labelRight",
 
   primary: "textArea_primary",
   secondary: "textArea_secondary",

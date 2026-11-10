@@ -12,6 +12,8 @@ Start here:
 - [Public API Reference](./public-api-reference.md)
 - [Select Forms and DataTable Scrolling](./select-and-datatable-native-behavior.md)
 - [Select and DataTable Release Notes](./release-notes-select-datatable.md)
+- [Field Layout, Validation and Responsive Content](./field-layout-validation-responsive-content.md)
+- [P1 Composition Release Notes](./release-notes-p1-composition.md)
 - [Styling and Theming](./styling-and-theming.md)
 - [Component API Patterns](./component-api-patterns.md)
 - [Performance and Async Behavior](./performance-and-async-behavior.md)

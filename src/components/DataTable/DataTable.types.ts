@@ -223,6 +223,14 @@ export interface DataTableProps<T> {
    */
   tableClassName?: string;
 
+  /** Minimum table width (CSS length or numeric pixels). Use 0 for a table
+   * that may fit its panel; omit to retain the responsive default minimum. */
+  minWidth?: string | number;
+
+  /** Native table layout algorithm. Auto treats column widths as hints;
+   * fixed uses first-row widths and shares remaining space among flexible columns. */
+  tableLayout?: "auto" | "fixed";
+
   /**
    * Optional class name applied to the table head.
    */

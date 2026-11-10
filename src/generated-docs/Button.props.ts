@@ -235,7 +235,7 @@ export const buttonPropDocs: GeneratedComponentDoc = {
     {
       "name": "loadingLabel",
       "type": "string",
-      "description": "Optional accessible text announced while loading. Defaults to \"Loading\" in the component if not provided.",
+      "description": "Visible, accessible label while loading. It follows wrapLabel and replaces children. Defaults to \"Loading\" in the component if not provided.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -342,6 +342,15 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "getDefaultVariant()"
+    },
+    {
+      "name": "wrapLabel",
+      "type": "boolean",
+      "description": "Allow labels (including unbroken text) to wrap and grow the button vertically. Default false preserves single-line labels.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "false"
     }
   ]
 };
