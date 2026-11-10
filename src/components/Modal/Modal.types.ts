@@ -1,5 +1,5 @@
 import { RoundingType, ShadowType } from "@/types/types";
-import { ReactElement, ReactNode } from "react";
+import { ReactNode } from "react";
 import { IconButtonProps } from "../IconButton/IconButton.types";
 
 /**
@@ -34,7 +34,10 @@ export interface ModalProps {
   footerClassName?: string;
 
   /** The content to be rendered inside the modal. Expected to be a single React element. */
-  children?: ReactElement;
+  children?: ReactNode;
+
+  /** Internal section padding; existing section class overrides still merge. */
+  padding?: "default" | "none";
 
   /**
    * Optional modal title used for accessible labelling and default header content.

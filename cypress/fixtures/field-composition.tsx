@@ -10,10 +10,19 @@ import NextArea from "../../src/components/TextArea/next/TextArea";
 import NextSelect from "../../src/components/Select/next/Select";
 import NextButton from "../../src/components/Button/next/Button";
 import NextTable from "../../src/components/DataTable/next/DataTable";
+import CoreSegmented from "../../src/components/SegmentedControl/core/SegmentedControl";
+import NextSegmented from "../../src/components/SegmentedControl/next/SegmentedControl";
 import "../../src/styles/globals.scss";
 
 const isNext = new URLSearchParams(location.search).get("implementation") === "next";
+const Segmented = isNext ? NextSegmented : CoreSegmented;
+const Button = isNext ? NextButton : CoreButton;
 createRoot(document.getElementById("root")!).render(
-  <FieldCompositionExamples TextInput={isNext ? NextInput : CoreInput} TextArea={isNext ? NextArea : CoreArea}
-    Select={isNext ? NextSelect : CoreSelect} Button={isNext ? NextButton : CoreButton} DataTable={isNext ? NextTable : CoreTable} />,
+  <><FieldCompositionExamples TextInput={isNext ? NextInput : CoreInput} TextArea={isNext ? NextArea : CoreArea}
+    Select={isNext ? NextSelect : CoreSelect} Button={isNext ? NextButton : CoreButton} DataTable={isNext ? NextTable : CoreTable} />
+    <Segmented label="Range" defaultValue="day" options={[{ value: "day", label: "Day" }, { value: "week", label: "Week" }, { value: "month", label: "Month" }]} />
+    <div data-testid="standalone-button-sizes" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 10rem), 1fr))", gap: "1rem" }}>
+      {(["xs", "small", "medium", "large", "xl"] as const).map((size) => <Button key={size} size={size}>Button {size}</Button>)}
+    </div>
+  </>,
 );

@@ -1150,6 +1150,7 @@ function DataTableBase<T extends object>({
                             onRowClick ? rowAriaDescription : undefined
                           }
                           data-testid={`${testId}-row-${key}`}
+                          data-selected={selectableRows && selectedKeySet.has(key) ? "true" : undefined}
                         >
                           {renderExpandedRow ? (
                             <td className={classMap.selectionCell}>

@@ -2,6 +2,7 @@ import { forwardRef, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { PortalBaseProps } from "./Portal.types";
 import { combineClassNames } from "../../utils/classNames";
+import { useThemeScope } from "../../context/ThemeScopeContext";
 
 const getContainer = (
   container: PortalBaseProps["container"],
@@ -25,10 +26,12 @@ const PortalBase = forwardRef<HTMLDivElement, PortalBaseProps>(
       srOnlyClassName,
       "data-testid": dataTestId,
       testId = dataTestId ?? "portal",
+      style,
       ...rest
     },
     ref,
   ) => {
+    const scope = useThemeScope();
     const [target, setTarget] = useState<Element | DocumentFragment | null>(
       null,
     );
@@ -43,7 +46,8 @@ const PortalBase = forwardRef<HTMLDivElement, PortalBaseProps>(
     );
 
     const node = (
-      <div ref={ref} className={portalClassName} data-testid={testId} {...rest}>
+      <div ref={ref} className={portalClassName} data-testid={testId}
+        {...scope} style={scope ? { ...scope.style, color: "var(--text-color)", ...style } : style} {...rest}>
         {children}
         {srOnlyText ? (
           <span

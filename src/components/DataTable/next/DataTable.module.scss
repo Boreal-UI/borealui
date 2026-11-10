@@ -692,3 +692,13 @@
     }
   }
 }
+
+@layer boreal-ui.components {
+  .wrapper tbody { background: var(--background-color); color: var(--text-color); }
+  .wrapper .striped:nth-child(even) { background: var(--background-color-subtle); }
+  .wrapper .clickable:hover,
+  .wrapper .clickable:hover:nth-child(even) { background: var(--hover-background); }
+  .wrapper tbody tr:active { background: var(--active-background); }
+  .wrapper tbody tr[data-selected="true"] { background: var(--selected-background); color: var(--selected-text-color); }
+  .wrapper tbody td, .wrapper tbody th { border-color: var(--border-color); }
+}

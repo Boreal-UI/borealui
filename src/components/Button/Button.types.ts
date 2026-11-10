@@ -35,6 +35,9 @@ export interface ButtonProps extends Pick<
   /** Allow labels (including unbroken text) to wrap and grow the button vertically.
    * Default false preserves single-line labels. */
   wrapLabel?: boolean;
+  /** Native submitter name and value, included in FormData for the activated button. */
+  name?: string;
+  value?: string;
   /**
    * Optional target attribute for link rendering.
    * Example: "_blank", "_self", "_parent", "_top"

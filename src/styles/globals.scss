@@ -55,7 +55,16 @@
 
 @layer boreal-ui.base {
   :root {
+    --background-color-subtle: var(--background-color-surface);
+    --hover-background: var(--background-color-light);
+    --active-background: var(--background-color-dark);
+    --selected-background: var(--background-color-light);
+    --selected-text-color: var(--text-color);
+    --disabled-text-color: var(--text-color);
+    --disabled-background: var(--background-color-surface);
+
     @include control-sizes.height-tokens;
+
     /* ================================
      PRIMARY COLOR PALETTE
   ================================== */

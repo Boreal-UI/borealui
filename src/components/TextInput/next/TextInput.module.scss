@@ -182,8 +182,8 @@
     }
   }
 
-  input::placeholder {
-    color: var(--text-color-placeholder);
+  .input::placeholder {
+    color: inherit;
     font: inherit;
     opacity: 1;
   }
@@ -352,7 +352,7 @@
   }
 
   .container[data-disabled="true"] {
-    opacity: 0.6;
+    opacity: 1;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -399,4 +399,14 @@
   @include field.layout(".container", ".textInput", ".label", ".helperText", ".errorMessage", ".fullWidth", ".labelTop", ".labelBottom", ".labelLeft", ".labelRight");
   @include control-sizes.single-line(".textInput", ".input", ".");
   .textInput > .togglePassword { min-height: 0; height: 100%; margin: 0; padding: 0; flex-shrink: 0; }
+}
+
+@layer boreal-ui.components {
+  .textInput.disabled {
+    color: var(--disabled-text-color, var(--text-color));
+    background: var(--disabled-background, var(--disabled-color));
+    border: 1px dashed var(--border-color);
+    opacity: 1;
+  }
+  .textInput.disabled .iconContainer svg { color: inherit; }
 }

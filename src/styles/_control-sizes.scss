@@ -69,7 +69,7 @@ $control-sizes: (
   }
 }
 
-@mixin single-line($root, $native, $size-prefix) {
+@mixin single-line($root, $native, $size-prefix, $end-space: null) {
   @each $size, $values in $control-sizes {
     #{$root}#{$size-prefix}#{$size} {
       --boreal-control-height: var(--control-height-#{$size}, #{map.get($values, min-height)});
@@ -91,6 +91,11 @@ $control-sizes: (
       width: 100%;
       margin: 0;
       padding: 0;
+
+      @if $end-space {
+        padding-inline-end: $end-space;
+      }
+
       font: inherit;
       line-height: inherit;
     }

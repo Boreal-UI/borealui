@@ -15,6 +15,11 @@
   wrapping props. Wide content scrolls within the region; mobile tables retain
   native rows and visible headers. P0 naming, keyboard access and nested controls
   remain supported.
+- Follow-up regression review: Select reserves chevron padding in every size and
+  constrains its SVG while preserving the native pointer hit area, preventing overlap in
+  LTR/RTL layouts. Button keeps its own size in mixed-size grid/flex rows instead of
+  stretching to the tallest neighbor. SegmentedControl's keyboard focus outline
+  is inset on the active button, so its scrolling container cannot clip it.
 
 Compatibility changes: errors are static by default instead of automatic alert
 regions (`errorLive` opts into announcements); TextArea errorMessage now implies

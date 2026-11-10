@@ -66,7 +66,7 @@
 
   #{$root} > #{$helper} {
     grid-area: helper;
-    color: var(--text-color);
+    color: var(--text-color-light, var(--text-color));
   }
   #{$root} > #{$error} {
     grid-area: error;

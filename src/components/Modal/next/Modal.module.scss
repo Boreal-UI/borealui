@@ -206,3 +206,12 @@
     }
   }
 }
+
+@layer boreal-ui.components {
+  .content { background: var(--background-color-surface); color: var(--text-color); max-height: 85dvh; }
+  .footer { flex-wrap: wrap; }
+  .body { min-width: 0; overflow-wrap: anywhere; }
+  .content[data-padding="none"] > .header,
+  .content[data-padding="none"] > .body,
+  .content[data-padding="none"] > .footer { padding: 0; }
+}

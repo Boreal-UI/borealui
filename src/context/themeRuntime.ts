@@ -204,7 +204,7 @@ export function dispatchThemeChange(
 
 function normalizeHex(hex: string): string | null {
   const trimmed = hex.trim();
-  const expanded = /^#([\da-f])([\da-f])([\da-f])$/i.exec(trimmed);
+  const expanded = /^#([\da-f])([\da-f])([\da-f])(?:[\da-f])?$/i.exec(trimmed);
 
   if (expanded) {
     return `#${expanded[1]}${expanded[1]}${expanded[2]}${expanded[2]}${expanded[3]}${expanded[3]}`.toLowerCase();
@@ -386,17 +386,18 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     secondaryColor,
     tertiaryColor,
     quaternaryColor,
-    backgroundColor,
+    backgroundColor: paletteBackground,
     forceTextColor,
   } = scheme;
-  const pageTextColor = getReadableColor(backgroundColor, forceTextColor);
+  const backgroundColor = scheme.semanticTokens?.["--background-color"] ?? paletteBackground;
+  const pageTextColor = scheme.semanticTokens?.["--text-color"] ?? getReadableColor(backgroundColor, forceTextColor);
   const mutedTextColor = getReadableMutedColor(backgroundColor, pageTextColor);
   const primaryTextColor = getReadableColor(primaryColor, forceTextColor);
   const secondaryTextColor = getReadableColor(secondaryColor);
   const tertiaryTextColor = getReadableColor(tertiaryColor);
   const quaternaryTextColor = getReadableColor(quaternaryColor);
 
-  return {
+  const variables = {
     "--primary-color": primaryColor,
     "--primary-color-light": adjustLightness(primaryColor, 10),
     "--primary-color-hover": getAccessibleInteractiveColor(
@@ -475,6 +476,66 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     "--border-color-subtle": getAdaptiveBorderColor(backgroundColor, 10, 10),
     "--border-color-strong": getAdaptiveBorderColor(backgroundColor, 20, 20),
   };
+  const blend = (amount: number) => {
+    const bg = normalizeHex(backgroundColor)!;
+    const fg = normalizeHex(pageTextColor)!;
+    return `#${[1, 3, 5].map((index) => Math.round(
+      parseInt(bg.slice(index, index + 2), 16) * (1 - amount) +
+      parseInt(fg.slice(index, index + 2), 16) * amount,
+    ).toString(16).padStart(2, "0")).join("")}`;
+  };
+  const surface = (amount: number) => {
+    for (let weight = amount; weight > 0; weight -= 0.01) {
+      const candidate = blend(weight);
+      if (contrastRatio(candidate, pageTextColor) >= MIN_TEXT_CONTRAST) return candidate;
+    }
+    return backgroundColor;
+  };
+  const roles = {
+    ...variables,
+    "--background-color-surface": surface(0.04),
+    "--background-color-subtle": surface(0.02),
+    "--hover-background": surface(0.08),
+    "--active-background": surface(0.16),
+    "--selected-background": surface(0.12),
+    "--selected-text-color": pageTextColor,
+    "--disabled-background": surface(0.06),
+    "--disabled-text-color": pageTextColor,
+    ...scheme.semanticTokens,
+  };
+  const surfaces = [roles["--background-color"], roles["--background-color-surface"], roles["--background-color-subtle"], roles["--hover-background"], roles["--active-background"], roles["--selected-background"]];
+  for (const token of ["--border-color", "--border-color-strong", "--focus-outline-color"] as const) {
+    if (!scheme.semanticTokens?.[token] && surfaces.some((bg) => contrastRatio(bg, roles[token]) < MIN_UI_CONTRAST)) roles[token] = pageTextColor;
+  }
+  if (!scheme.semanticTokens?.["--text-color-light"]) {
+    roles["--text-color-light"] = surfaces.every((bg) => contrastRatio(bg, mutedTextColor) >= MIN_TEXT_CONTRAST) ? mutedTextColor : pageTextColor;
+  }
+  // Compatibility aliases resolve centrally rather than in consumer CSS.
+  roles["--text-color-lighter"] = roles["--text-color-light"];
+  roles["--text-color-placeholder"] = roles["--text-color-light"];
+  roles["--divider-color"] = roles["--border-color"];
+  return roles;
+}
+
+/** Audit supported neutral-surface pairs. Explicit overrides are preserved, not
+ * silently repaired; applications can check their custom definitions in CI. */
+export function getThemeContrastIssues(scheme: ColorScheme) {
+  const vars = buildThemeVariables(scheme);
+  const issues: Array<{ foreground: string; background: string; ratio: number; minimum: number }> = [];
+  const check = (foreground: string, background: string, minimum: number) => {
+    const ratio = contrastRatio(vars[foreground], vars[background]);
+    if (ratio < minimum) issues.push({ foreground, background, ratio, minimum });
+  };
+  for (const surface of ["--background-color", "--background-color-surface", "--background-color-subtle", "--hover-background", "--active-background"]) {
+    check("--text-color", surface, MIN_TEXT_CONTRAST);
+    check("--text-color-light", surface, MIN_TEXT_CONTRAST);
+    check("--focus-outline-color", surface, MIN_UI_CONTRAST);
+    check("--border-color", surface, MIN_UI_CONTRAST);
+    check("--border-color-strong", surface, MIN_UI_CONTRAST);
+  }
+  check("--selected-text-color", "--selected-background", MIN_TEXT_CONTRAST);
+  check("--disabled-text-color", "--disabled-background", MIN_TEXT_CONTRAST);
+  return issues;
 }
 
 export function applyThemeVariables(

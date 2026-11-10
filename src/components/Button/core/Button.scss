@@ -228,3 +228,16 @@
   .button > .button_label > .button_loader { flex: 0 0 auto; }
   .button > .button_button_icon { flex-shrink: 0; }
 }
+
+@layer boreal-ui.components {
+  .button:disabled,
+  .button.button_disabled,
+  .button[aria-disabled="true"] {
+    &, &.button_glass, &.button_outline {
+      color: var(--disabled-text-color, var(--text-color));
+      background: var(--disabled-background, var(--disabled-color));
+      border: 1px dashed var(--border-color);
+      opacity: 1;
+    }
+  }
+}

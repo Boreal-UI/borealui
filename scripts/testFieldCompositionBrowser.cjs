@@ -8,10 +8,56 @@ const { chromium, expect } = require("@playwright/test");
 async function verify(page, implementation, outputDir, label) {
   const errors = [];
   page.on("pageerror", (error) => { errors.push(error.message); console.error(error.stack); });
-  await page.goto(`http://127.0.0.1:4181/cypress/fixtures/field-composition.html?implementation=${implementation}`);
+  await page.goto(`http://127.0.0.1:4181/cypress/fixtures/field-composition.html?implementation=${implementation}`, { timeout: 60000 });
   await expect(page.getByRole("heading", { name: "Aligned single-line controls" })).toBeVisible();
   await page.mouse.move(-10, -10);
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1)).toBe(true);
+
+  // Reserved native padding keeps text clear of the chevron at every size and
+  // in RTL. The select still receives pointer hits directly over the SVG.
+  for (const select of await page.getByRole("combobox").all()) {
+    await select.scrollIntoViewIfNeeded();
+    for (const direction of ["ltr", "rtl"]) {
+      const fits = await select.evaluate((node, dir) => {
+        const wrapper = node.parentElement;
+        wrapper.dir = dir;
+        const icon = wrapper.querySelector('[aria-hidden="true"]');
+        const nativeBounds = node.getBoundingClientRect();
+        const iconBounds = icon.getBoundingClientRect();
+        const svgBounds = icon.querySelector("svg").getBoundingClientRect();
+        const wrapperBounds = wrapper.getBoundingClientRect();
+        const css = getComputedStyle(node);
+        const textStart = nativeBounds.left + parseFloat(css.paddingLeft);
+        const textEnd = nativeBounds.right - parseFloat(css.paddingRight);
+        const hit = document.elementFromPoint(svgBounds.left + svgBounds.width / 2, svgBounds.top + svgBounds.height / 2);
+        return iconBounds.width > 0 && svgBounds.left >= iconBounds.left - 1 && svgBounds.right <= iconBounds.right + 1 &&
+          iconBounds.left >= wrapperBounds.left && iconBounds.right <= wrapperBounds.right + 1 &&
+          (dir === "rtl" ? iconBounds.right <= textStart + 1 : textEnd <= iconBounds.left + 1) && hit === node;
+      }, direction);
+      expect(fits).toBe(true);
+    }
+    await select.evaluate((node) => { node.parentElement.removeAttribute("dir"); });
+  }
+
+  const range = page.getByRole("radiogroup", { name: "Range", exact: true });
+  await range.getByRole("radio", { name: "Day", exact: true }).focus();
+  await page.keyboard.press("ArrowRight");
+  const week = range.getByRole("radio", { name: "Week", exact: true });
+  await expect(week).toBeFocused();
+  await expect(week).toHaveAttribute("aria-checked", "true");
+  await expect(week).toHaveCSS("outline-style", "solid");
+  await expect(week).toHaveCSS("outline-width", "2px");
+  await expect(week).toHaveCSS("outline-offset", "-2px");
+  await page.screenshot({ path: path.join(outputDir, `${implementation}-${label}-segmented-focus.png`) });
+
+  const sizeButtons = page.getByTestId("standalone-button-sizes").getByRole("button");
+  const sizes = await sizeButtons.evaluateAll((buttons) => buttons.map((button) => ({
+    height: button.getBoundingClientRect().height,
+    padding: Number.parseFloat(getComputedStyle(button).paddingInlineStart),
+  })));
+  expect(sizes.map((size) => size.height)).toEqual([28, 32, 40, 48, 56]);
+  for (let index = 1; index < sizes.length; index++) expect(sizes[index].padding).toBeGreaterThan(sizes[index - 1].padding);
+  await page.getByTestId("standalone-button-sizes").screenshot({ path: path.join(outputDir, `${implementation}-${label}-button-sizes.png`) });
 
   for (const [size, height] of [["xs", 28], ["small", 32], ["medium", 40], ["large", 48], ["xl", 56]]) {
     const toolbar = page.getByTestId(`toolbar-${size}`);

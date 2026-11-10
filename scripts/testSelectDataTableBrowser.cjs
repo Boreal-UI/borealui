@@ -31,7 +31,7 @@ async function main() {
       const errors = [];
       page.on("pageerror", (error) => errors.push(error.message));
       const url = `${base}/cypress/fixtures/select-datatable-native.html?implementation=${implementation}`;
-      await page.goto(url);
+      await page.goto(url, { timeout: 60000 });
       await page.getByRole("button", { name: "Before table" }).focus();
       await page.keyboard.press("Tab");
       const region = page.getByRole("region", { name: "Publications", exact: true });

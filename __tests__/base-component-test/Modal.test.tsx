@@ -111,7 +111,7 @@ describe("BaseModal", () => {
 
     const srHeading = screen.getByRole("heading", { name: "Modal Dialog" });
     expect(srHeading).toBeInTheDocument();
-    expect(srHeading).toHaveClass("sr_only");
+    expect(srHeading).toHaveClass("modalTitle");
 
     expect(screen.getByText("Modal content")).toBeInTheDocument();
     expect(screen.getByTestId("modal")).toBeInTheDocument();
@@ -131,7 +131,7 @@ describe("BaseModal", () => {
 
     const srHeading = screen.getByRole("heading", { name: "Delete Project" });
     expect(srHeading).toBeInTheDocument();
-    expect(srHeading).toHaveClass("sr_only");
+    expect(srHeading).toHaveClass("modalTitle");
   });
 
   it("renders one floating close button when the header is omitted", async () => {
@@ -159,7 +159,7 @@ describe("BaseModal", () => {
     expect(dialog).not.toHaveAttribute("aria-labelledby");
     expect(
       screen.queryByRole("heading", { name: "Modal Dialog" }),
-    ).not.toBeInTheDocument();
+    ).not.toHaveAttribute("id");
 
     expect(screen.getByTestId("modal-header")).toBeInTheDocument();
     expect(screen.getByText("Modal Dialog")).toBeInTheDocument();

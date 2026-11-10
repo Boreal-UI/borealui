@@ -208,6 +208,14 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
+      "name": "footer",
+      "type": "ReactNode",
+      "description": "Simple footer content; renderFooter takes precedence when supplied.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "footerClassName",
       "type": "string",
       "description": "Custom class name for the footer section.",
@@ -354,6 +362,15 @@ export const cardPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "events"
+    },
+    {
+      "name": "padding",
+      "type": "\"none\" | \"default\"",
+      "description": "Opt out of section padding and imposed child layout for ordinary composition.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"default\""
     },
     {
       "name": "renderContent",

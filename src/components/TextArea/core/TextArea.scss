@@ -265,8 +265,8 @@
     }
   }
 
-  textarea::placeholder {
-    color: var(--text-color-placeholder);
+  .textArea_text_input::placeholder {
+    color: inherit;
     font: inherit;
     opacity: 1;
   }
@@ -325,4 +325,17 @@
     margin: 0;
     padding: var(--spacing-sm);
   }
+}
+
+@layer boreal-ui.components {
+  .textArea.textArea_disabled,
+  .textArea.textArea_disabled.textArea_glass,
+  .textArea.textArea_disabled.textArea_outline,
+  .textArea.textArea_disabled:hover {
+    color: var(--disabled-text-color, var(--text-color));
+    background: var(--disabled-background, var(--disabled-color));
+    border: 1px dashed var(--border-color);
+    opacity: 1;
+  }
+  .textArea.textArea_disabled .textArea_icon_container svg { color: inherit; }
 }

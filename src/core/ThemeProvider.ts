@@ -6,3 +6,4 @@ export {
 } from "../context/ThemeContext";
 
 export * from "../context/ThemeContext.types";
+export { getThemeContrastIssues } from "../context/themeRuntime";

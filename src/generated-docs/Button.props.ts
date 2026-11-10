@@ -242,6 +242,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"Loading\""
     },
     {
+      "name": "name",
+      "type": "string",
+      "description": "Native submitter name and value, included in FormData for the activated button.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "onClick",
       "type": "((e: React.MouseEvent<HTMLElement>) => void)",
       "description": "Click event handler for the button.",
@@ -333,6 +341,14 @@ export const buttonPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"button\""
+    },
+    {
+      "name": "value",
+      "type": "string",
+      "description": "",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "variant",

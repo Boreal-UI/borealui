@@ -30,6 +30,7 @@ export type ServerCardProps = Omit<
 
 export default function Card({
   title,
+  padding = "default",
   description,
   cardIcon: Icon,
   children,
@@ -103,6 +104,7 @@ export default function Card({
       aria-disabled={disabled || undefined}
       aria-busy={loading || undefined}
       data-testid={resolvedTestId}
+      data-padding={padding}
     >
       {loading ? (
         <Skeleton

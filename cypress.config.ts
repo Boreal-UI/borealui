@@ -23,6 +23,16 @@ export default defineConfig({
       framework: "react",
       bundler: "vite",
       viteConfig: {
+        // Standalone/browser fixtures use different Vite configurations. Sharing
+        // their optimizer cache can invalidate Cypress's initial support import.
+        cacheDir: path.resolve(configDirectory, "node_modules/.vite-cypress"),
+        optimizeDeps: {
+          entries: [
+            "cypress/support/component.ts",
+            "cypress/component/**/*.cy.ts",
+            "cypress/component/**/*.cy.tsx",
+          ],
+        },
         plugins: [react()],
         resolve: {
           alias: {

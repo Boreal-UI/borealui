@@ -704,3 +704,13 @@
     }
   }
 }
+
+@layer boreal-ui.components {
+  .data_table_wrapper tbody { background: var(--background-color); color: var(--text-color); }
+  .data_table_wrapper .data_table_row_striped:nth-child(even) { background: var(--background-color-subtle); }
+  .data_table_wrapper .data_table_row_clickable:hover,
+  .data_table_wrapper .data_table_row_clickable:hover:nth-child(even) { background: var(--hover-background); }
+  .data_table_wrapper tbody tr:active { background: var(--active-background); }
+  .data_table_wrapper tbody tr[data-selected="true"] { background: var(--selected-background); color: var(--selected-text-color); }
+  .data_table_wrapper tbody td, .data_table_wrapper tbody th { border-color: var(--border-color); }
+}

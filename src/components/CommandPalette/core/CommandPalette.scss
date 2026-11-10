@@ -350,3 +350,9 @@
     }
   }
 }
+
+@layer boreal-ui.components {
+  .command_palette:not(.command_palette_glass) { background: var(--background-color-surface); color: var(--text-color); }
+  .command_palette .command_palette_item:hover { background: var(--hover-background); color: var(--text-color); }
+  .command_palette .command_palette_item.command_palette_active { background: var(--selected-background); color: var(--selected-text-color); }
+}

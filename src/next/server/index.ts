@@ -37,6 +37,7 @@ export { default as Typography } from "./Typography";
 export { default as ValidationSummary } from "./ValidationSummary";
 export {
   getThemeAttributes,
+  getThemeContrastIssues,
   getThemeStyle,
   readSavedSchemeCookie,
   resolveThemeScheme,
