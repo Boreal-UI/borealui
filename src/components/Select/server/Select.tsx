@@ -54,7 +54,9 @@ export default function Select({
   const helperTextId = helperText ? `${selectId}-helper-text` : undefined;
   const errorMessageId = errorMessage ? `${selectId}-error-message` : undefined;
   const describedBy =
-    [helperTextId, errorMessageId].filter(Boolean).join(" ") || undefined;
+    [rest["aria-describedby"], helperTextId, errorMessageId]
+      .filter(Boolean)
+      .join(" ") || undefined;
   const position = resolvePropAlias(labelPosition);
   const labelNode = label ? (
     <label
@@ -98,9 +100,11 @@ export default function Select({
         <select
           {...rest}
           id={selectId}
-          defaultValue={value ?? defaultValue ?? ""}
+          defaultValue={
+            value ?? defaultValue ?? (placeholder !== null ? "" : undefined)
+          }
           disabled={disabled}
-          aria-invalid={invalid || state === "error" || undefined}
+          aria-invalid={rest["aria-invalid"] ?? (invalid || state === "error" || undefined)}
           aria-describedby={describedBy}
           className={combineClassNames(
             classMap.select,
@@ -110,9 +114,11 @@ export default function Select({
           )}
           data-testid={`${resolvedTestId}-input`}
         >
-          <option value="" disabled hidden>
-            {placeholder}
-          </option>
+          {placeholder !== null && !options.some((option) => option.value === "") && (
+            <option value="" disabled hidden>
+              {placeholder}
+            </option>
+          )}
           {options.map((option) => (
             <option
               key={option.value}

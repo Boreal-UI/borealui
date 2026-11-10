@@ -134,6 +134,11 @@ export interface DataTableProps<T> {
   /** Optional callback when a row is clicked. */
   onRowClick?: (row: T) => void;
 
+  /** Native attributes for the outer horizontal scroll region. Explicit naming
+   * overrides caption-derived naming; className merges with internal styles.
+   * Always tabbable by default, including when content fits. */
+  scrollRegionProps?: React.HTMLAttributes<HTMLDivElement>;
+
   /**
    * Enables checkbox row selection.
    *

@@ -1,4 +1,7 @@
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
+import { DataTableScrollExamples } from "../../shared-story-assets/DataTableScrollExamples";
+
+export const AccessibleScrolling = { render: () => <DataTableScrollExamples DataTable={DataTable} /> };
 import { DataTable } from "../../src/index.next";
 import type { DataTableProps } from "../../src/components/DataTable/DataTable.types";
 import { StoryGrid } from "../../.storybook-core/helpers/StoryGrid";

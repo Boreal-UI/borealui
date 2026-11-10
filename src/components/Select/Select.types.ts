@@ -51,15 +51,18 @@ export interface SelectProps {
   options: Option[];
 
   /**
-   * The current selected value.
+   * Controlled selected value. Pair with onChange; omit for uncontrolled usage.
    */
-  value: string;
+  value?: string;
+
+  /** Initial native selection for uncontrolled usage. Do not combine with value. */
+  defaultValue?: string;
 
   /**
    * Callback fired when the selected option changes.
    * Receives the new value as an argument.
    */
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
 
   /**
    * If provided, the select element will render options asynchronously.
@@ -75,11 +78,12 @@ export interface SelectProps {
   pollInterval?: number;
 
   /**
-   * Placeholder text to display when no option is selected.
+   * Disabled, hidden empty placeholder, separate from options. Omitted when
+   * options includes value=""; null disables the placeholder explicitly.
    *
    * @default "Select an option"
    */
-  placeholder?: string;
+  placeholder?: string | null;
 
   /**
    * Rounding style of the select element.

@@ -35,10 +35,30 @@ const parsePixelWidth = (value: string | undefined, fallback = 160): number => {
   return Number.isFinite(parsed) ? parsed : fallback;
 };
 
+const interactiveSelector = [
+  "a[href]", "button", "input", "select", "textarea", "label", "summary",
+  "iframe", "object", "embed", "audio[controls]", "video[controls]",
+  '[contenteditable]:not([contenteditable="false"])', "[tabindex]",
+  ...[
+    "button", "link", "checkbox", "radio", "switch", "textbox", "searchbox",
+    "combobox", "listbox", "slider", "spinbutton", "menuitem",
+    "menuitemcheckbox", "menuitemradio", "option", "treeitem", "tab",
+  ].map((role) => `[role="${role}"]`),
+].join(",");
+
+const isNestedInteractive = (target: EventTarget, row: HTMLTableRowElement) => {
+  if (!(target instanceof Element) || target === row) return false;
+  // Match ancestors too: icons/spans inside controls are interactive targets.
+  // A row's own tabIndex must not turn ordinary cell content into a control.
+  const interactive = target.closest(interactiveSelector);
+  return Boolean(interactive && interactive !== row && row.contains(interactive));
+};
+
 function DataTableBase<T extends object>({
   columns,
   data,
   onRowClick,
+  scrollRegionProps,
   selectableRows = false,
   selectedRowKeys,
   defaultSelectedRowKeys = [],
@@ -485,7 +505,7 @@ function DataTableBase<T extends object>({
   const handleRowKeyDown =
     (row: T) =>
     (e: KeyboardEvent<HTMLTableRowElement>): void => {
-      if (!onRowClick) return;
+      if (!onRowClick || e.defaultPrevented || e.target !== e.currentTarget) return;
 
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
@@ -752,10 +772,21 @@ function DataTableBase<T extends object>({
 
   return (
     <div
-      className={wrapperClass}
+      {...scrollRegionProps}
+      className={combineClassNames(wrapperClass, scrollRegionProps?.className)}
       data-testid={testId}
-      role="region"
-      aria-label="Data table"
+      role={scrollRegionProps?.role ?? "region"}
+      tabIndex={scrollRegionProps?.tabIndex ?? 0}
+      aria-labelledby={
+        scrollRegionProps?.["aria-labelledby"] ??
+        (scrollRegionProps?.["aria-label"] !== undefined
+          ? undefined
+          : caption ? captionId : ariaLabelledBy)
+      }
+      aria-label={
+        scrollRegionProps?.["aria-label"] ??
+        (caption || ariaLabelledBy ? undefined : ariaLabel ?? "Data table")
+      }
     >
       <div className={classMap.scrollArea}>
         {hasToolbar ? (
@@ -1098,7 +1129,14 @@ function DataTableBase<T extends object>({
                               classMap.striped,
                             getRowClassName(row, absoluteIndex),
                           )}
-                          onClick={() => onRowClick?.(row)}
+                          onClick={(event) => {
+                            if (
+                              !event.defaultPrevented &&
+                              !isNestedInteractive(event.target, event.currentTarget)
+                            ) {
+                              onRowClick?.(row);
+                            }
+                          }}
                           onKeyDown={handleRowKeyDown(row)}
                           tabIndex={onRowClick ? 0 : undefined}
                           aria-label={onRowClick ? rowAriaLabel : undefined}

@@ -1,4 +1,7 @@
 import { useCallback, useRef, useState } from "react";
+import { SelectNativeExamples } from "../../shared-story-assets/SelectNativeExamples";
+
+export const NativeForms = { render: () => <SelectNativeExamples Select={Select} /> };
 import { Meta, StoryObj } from "@storybook/nextjs-vite";
 import {
   RoundingType,

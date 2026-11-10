@@ -45,6 +45,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       size = getDefaultSize(),
       options,
       value,
+      defaultValue,
       onChange,
       placeholder = "Select an option",
       disabled = false,
@@ -61,6 +62,9 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       required,
       name,
       label,
+      helperText,
+      errorMessage,
+      invalid,
       labelPosition = "top",
       id,
       form,
@@ -114,18 +118,27 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     );
 
     const computedDescribedBy = useMemo(() => {
-      const ids = [ariaDescribedBy, internalDescriptionId].filter(Boolean);
+      const ids = [
+        ariaDescribedBy,
+        internalDescriptionId,
+        helperText ? `${selectId}-helper` : undefined,
+        errorMessage ? `${selectId}-error` : undefined,
+      ].filter(Boolean);
       return ids.length > 0 ? ids.join(" ") : undefined;
-    }, [ariaDescribedBy, internalDescriptionId]);
+    }, [ariaDescribedBy, internalDescriptionId, helperText, errorMessage, selectId]);
 
     const computedAriaLabel = ariaLabelledBy
       ? undefined
-      : ariaLabel || placeholder;
+      : ariaLabel || (hasLabel ? undefined : placeholder ?? undefined);
 
     const labelNode = hasLabel ? (
-      <div className={labelClasses} data-testid={`${testId}-label`}>
+      <label
+        htmlFor={selectId}
+        className={labelClasses}
+        data-testid={`${testId}-label`}
+      >
         {label}
-      </div>
+      </label>
     ) : null;
 
     useEffect(() => {
@@ -166,7 +179,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     }, [asyncOptions, pollInterval]);
 
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-      onChange(event.target.value);
+      onChange?.(event.target.value);
     };
 
     const handleWrapperMouseDown = (event: MouseEvent<HTMLDivElement>) => {
@@ -227,6 +240,26 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     );
 
     const opts = asyncOptions ? internalOptions : options;
+    // A real empty option owns the empty value. Never render two empty options.
+    const showPlaceholder =
+      placeholder !== null && !opts.some((option) => option.value === "");
+
+    useEffect(() => {
+      if (value === undefined || !selectRef.current) return;
+      // Native reset (including React action resets) restores defaultSelected.
+      // Keep that baseline aligned with the controlled value without cancelling reset
+      // or emitting a synthetic change. Uncontrolled defaults remain browser-owned.
+      const select = selectRef.current;
+      const nativeOptions = Array.from(select.options);
+      const valueIndex = nativeOptions.findIndex((option) => option.value === value);
+      // Derive from props: an action may have reset the DOM before effects flush.
+      const selectedIndex = valueIndex >= 0
+        ? valueIndex
+        : nativeOptions.findIndex((option) => !option.disabled);
+      nativeOptions.forEach((option, index) => {
+        option.defaultSelected = index === selectedIndex;
+      });
+    }, [value, opts, showPlaceholder]);
 
     return (
       <div className={layoutClasses} data-testid={`${testId}-layout`}>
@@ -248,7 +281,12 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
             autoComplete={autoComplete}
             role={role}
             tabIndex={tabIndex}
-            value={value ?? ""}
+            value={value}
+            defaultValue={
+              value === undefined
+                ? defaultValue ?? (showPlaceholder ? "" : undefined)
+                : undefined
+            }
             onChange={handleChange}
             className={selectClasses}
             aria-label={computedAriaLabel}
@@ -256,16 +294,18 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
             aria-description={ariaDescription}
             aria-describedby={computedDescribedBy}
             aria-disabled={disabled || undefined}
-            aria-invalid={ariaInvalid ?? (state === "error" || undefined)}
+            aria-invalid={ariaInvalid ?? (invalid || state === "error" || undefined)}
             aria-required={ariaRequired ?? (required || undefined)}
             aria-busy={ariaBusy ?? (loading || undefined)}
             disabled={disabled}
             required={required}
             data-testid={`${testId}-input`}
           >
-            <option value="" disabled hidden>
-              {placeholder}
-            </option>
+            {showPlaceholder && (
+              <option value="" disabled hidden>
+                {placeholder}
+              </option>
+            )}
 
             {opts.map((option) => (
               <option
@@ -311,6 +351,12 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         {(resolvedLabelPosition === "bottom" ||
           resolvedLabelPosition === "right") &&
           labelNode}
+        {helperText && <div id={`${selectId}-helper`}>{helperText}</div>}
+        {errorMessage && (
+          <div id={`${selectId}-error`} role="alert">
+            {errorMessage}
+          </div>
+        )}
       </div>
     );
   },

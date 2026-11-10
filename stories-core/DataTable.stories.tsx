@@ -1,4 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { DataTableScrollExamples } from "../shared-story-assets/DataTableScrollExamples";
+
+export const AccessibleScrolling = { render: () => <DataTableScrollExamples DataTable={DataTable} /> };
 import { DataTable } from "../src/index.core";
 import type { DataTableProps } from "../src/components/DataTable/DataTable.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";

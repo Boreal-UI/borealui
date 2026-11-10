@@ -36,6 +36,11 @@
     -webkit-overflow-scrolling: touch;
     min-width: 0;
 
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: -2px;
+    }
+
     @include bp.down(md) {
       --data-table-min-width: 520px;
     }

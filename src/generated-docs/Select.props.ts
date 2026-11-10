@@ -109,6 +109,14 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "category": "testing"
     },
     {
+      "name": "defaultValue",
+      "type": "string",
+      "description": "Initial native selection for uncontrolled usage. Do not combine with value.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "disabled",
       "type": "boolean",
       "description": "Whether the select element is disabled.",
@@ -216,9 +224,9 @@ export const selectPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "onChange",
-      "type": "(value: string) => void",
+      "type": "((value: string) => void)",
       "description": "Callback fired when the selected option changes. Receives the new value as an argument.",
-      "required": true,
+      "required": false,
       "inherited": false,
       "category": "events"
     },
@@ -232,8 +240,8 @@ export const selectPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "placeholder",
-      "type": "string",
-      "description": "Placeholder text to display when no option is selected.",
+      "type": "string | null",
+      "description": "Disabled, hidden empty placeholder, separate from options. Omitted when options includes value=\"\"; null disables the placeholder explicitly.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -343,8 +351,8 @@ export const selectPropDocs: GeneratedComponentDoc = {
     {
       "name": "value",
       "type": "string",
-      "description": "The current selected value.",
-      "required": true,
+      "description": "Controlled selected value. Pair with onChange; omit for uncontrolled usage.",
+      "required": false,
       "inherited": false,
       "category": "props"
     },
