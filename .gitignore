@@ -73,3 +73,8 @@ bom.cdx.json
 
 #Ignore local dev guide
 docs/development-workflow-local.md
+
+# generated Docs
+release-notes-p1-composition.md
+release-notes-p2-themes-composition.md
+p0-p2-regression-review.md

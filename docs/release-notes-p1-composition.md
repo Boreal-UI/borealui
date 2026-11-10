@@ -30,5 +30,5 @@ Server Select continues accepting the client-only `loadingClassName` slot for
 source compatibility; it has no async loading UI.
 
 See [the full API, runnable recipes and migration guide](field-layout-validation-responsive-content.md)
-for precedence, sizing constraints, browser verification and the Cedarweave
+for precedence, sizing constraints, browser verification and the consumer
 workaround-removal checklist. Business validation and page layout remain consumer-owned.

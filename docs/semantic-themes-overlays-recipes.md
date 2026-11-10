@@ -5,7 +5,7 @@
 The existing runtime (`src/context/themeRuntime.ts`) already resolves palettes,
 text-on-palette colors, page text, muted text, borders, focus colors, initialization
 scripts, cookies and server HTML attributes. This change extends that resolver;
-it does not replace scheme definitions or the Cedarweave palette.
+it preserves existing scheme definitions and application palettes.
 
 | Existing variables | Meaning and consumers |
 | --- | --- |
@@ -177,7 +177,7 @@ npm --prefix examples/theme-app run dev
 It uses the installed Next.js 16 integration and `await cookies()`; the installed
 cookies and Server/Client Components documentation was consulted before writing
 it. One immutable `theme.ts` is shared by server layout and client components.
-The sample palettes are illustrative; retain Cedarweave's real palette values.
+The sample palettes are illustrative; use your application's own palette values.
 
 The server layout resolves the request, writes the exact initial HTML attributes,
 and passes the resolved **name** to the client provider:
@@ -281,7 +281,7 @@ Unit/integration tests cover all built-in resolutions, overrides, request
 isolation, explicit containers, cleanup, SSR IDs, Card/Modal composition and
 existing dismissal behavior. P0/P1 regression suites remain applicable.
 
-Map each Cedarweave removal to its replacement:
+Map each application workaround to its supported replacement:
 
 - Local neutral surface/border/muted-text mixes and aliases → the semantic tokens
   above, or explicit matching values once in the real custom scheme.
@@ -292,7 +292,7 @@ Map each Cedarweave removal to its replacement:
 - Modal internal-body scrolling overrides → existing scrolling body + footer;
   placeholder headers → real title or headerless aria-label composition.
 
-Keep Cedarweave's palette, the shared SSR/client configuration, application grids
+Keep your application's palette, the shared SSR/client configuration, application grids
 and visual choices, business validation, content limits, open/close orchestration,
 imperative adapters still used by application code, and useful convention wrappers.
 Do not delete complete theme scopes or adapters without checking equivalence.

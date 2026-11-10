@@ -28,4 +28,4 @@ documented contract; palette identity is retained. Arbitrary ancestor CSS variab
 and selectors do not cross portals automatically. Explicit semantic values must
 be opaque hex colors; application-specific/translucent contrast remains consumer-owned.
 
-See [the token/API contract, recipes, limitations and Cedarweave migration map](semantic-themes-overlays-recipes.md).
+See [the token/API contract, recipes, limitations and migration guide](semantic-themes-overlays-recipes.md).

@@ -43,7 +43,7 @@ const projectItems = [
         label: "Active",
         children: [
           { id: "boreal", label: "Boreal UI" },
-          { id: "cedarweave", label: "Cedarweave" },
+          { id: "example-app", label: "Example App" },
         ],
       },
       { id: "archived", label: "Archived" },

@@ -61,7 +61,7 @@ interrupting the support-module import.
 
 These fixes introduce no new component props. The P0/P1 migration guides and P2
 [token/scope contract](semantic-themes-overlays-recipes.md) still apply. Keep the
-Cedarweave palette, business validation, page layouts and useful adapters. The
+application's palette, business validation, page layouts and useful adapters. The
 example Server Action demonstrates transport without persistence. Browser coverage
 uses Chrome and Cypress Electron; arbitrary ancestor CSS and translucent
 compositing remain outside the portal/opaque-token guarantee.

@@ -19,4 +19,4 @@ No package import paths change. Server Select remains an initial-value native
 field rather than a controlled client component.
 
 See [behavior, examples, and migration](select-and-datatable-native-behavior.md)
-for final APIs and the Cedarweave workaround removal checklist.
+for final APIs and the consumer migration checklist.

@@ -106,7 +106,7 @@ The standalone page avoids Cypress iframe limitations on native scroll defaults.
 Cypress component specs additionally cover Core/Next focus, layout, interactions
 and forms; Jest covers SSR/hydration, FormData, reset, and accessibility.
 
-## Cedarweave migration
+## Migration guide
 
 Remove Select empty-value sentinels and hidden inputs; use an enabled empty
 option. Remove controlled publication Select remount keys and form reset

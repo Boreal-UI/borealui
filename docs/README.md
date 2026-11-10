@@ -4,6 +4,7 @@ These guides cover the public APIs consumers use when installing, importing, sty
 
 Start here:
 
+- [Consumer Changelog](../CHANGELOG.md)
 - [Installation and Imports](./installation-and-imports.md)
 - [Next.js Server Components](./server-components.md)
 - [Published Compatibility](./compatibility.md)
