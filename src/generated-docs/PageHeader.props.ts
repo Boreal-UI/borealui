@@ -236,6 +236,15 @@ export const pageHeaderPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "titleAs",
+      "type": "\"h1\" | \"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\"",
+      "description": "Semantic title heading; visual styling is unchanged. Independent of root `as`.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"h1\""
+    },
+    {
       "name": "titleClassName",
       "type": "string",
       "description": "Additional class name for the title.",

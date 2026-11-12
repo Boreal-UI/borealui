@@ -34,6 +34,18 @@ Actors include maintainers, contributors, consumers, dependency maintainers, Git
 
 ## Abuse cases reviewers must consider
 
+### Breadcrumb metadata review (November 12, 2026)
+
+Consumer breadcrumb labels and destinations also enter hidden microdata in Core,
+Next and server output. The shared metadata renderer uses React escaping and
+`sanitizeNavigationHref`, with no raw HTML or script serialization. Unsafe
+intermediate destinations suppress the complete schema; unsafe final destinations
+are omitted. Disabled navigation never bypasses URL validation. Regression tests
+cover unsafe URLs in server-rendered and hydrated component paths. No new
+dependency, privileged API or publishing boundary is introduced. Heading tags are
+limited by the public type to h1–h6; accessible button names follow explicit
+label precedence across native and framework render paths.
+
 - A consumer passes crafted Markdown, a URL, a filename, an ID, or storage data that becomes executable markup or changes navigation.
 - A dependency or GitHub Action update runs code during installation/build and attempts to steal a token or alter package output.
 - A forked pull request obtains write permissions, secrets, or a trusted publishing identity.

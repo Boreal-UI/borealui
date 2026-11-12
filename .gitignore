@@ -78,3 +78,5 @@ docs/development-workflow-local.md
 release-notes-p1-composition.md
 release-notes-p2-themes-composition.md
 p0-p2-regression-review.md
+docs/semrush-site-upgrade.md
+__tests__/semrush-regressions.test.tsx

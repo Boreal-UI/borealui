@@ -77,7 +77,7 @@ const ButtonBase = forwardRef<
       (typeof children !== "string" && React.Children.count(children) === 0);
 
     const computedAriaLabel =
-      iconOnly && !ariaLabelledBy ? ariaLabel : undefined;
+      ariaLabelledBy ? undefined : ariaLabel;
 
     if (
       process.env.NODE_ENV === "development" &&

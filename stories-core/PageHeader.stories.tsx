@@ -136,6 +136,11 @@ type Story = StoryObj<PageHeaderProps>;
 
 export const Default: Story = {};
 
+export const EmbeddedHeading: Story = {
+  args: { titleAs: "h2" },
+  render: (args) => <main><h1>Workspace</h1><PageHeader {...args} /></main>,
+};
+
 export const SectionBreakdown: Story = {
   args: {
     before: (

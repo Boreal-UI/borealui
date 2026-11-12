@@ -343,6 +343,47 @@ Automated checks are not enough on their own. Also test:
 - Loading and empty states.
 - Custom themes and contrast.
 
+## Header titles and button names
+
+PageHeader and BreadCrumbPageHeader accept `titleAs="h1"` through `"h6"`.
+The default remains `"h1"`; select the appropriate level when embedding a header
+inside an existing page. This changes the semantic heading only: title classes
+and typography remain the same. PageHeader's `as` still controls its root.
+
+```tsx
+<main>
+  <h1>Workspace</h1>
+  <PageHeader as="section" titleAs="h2" title="Team activity" />
+  <BreadCrumbPageHeader titleAs="h2" title="Project" breadcrumbs={items} />
+</main>
+```
+
+Button preserves an explicitly supplied `aria-label` even when it has text.
+Use labels that include the visible text where possible. When `aria-labelledby`
+is supplied, Boreal forwards that reference and omits `aria-label`, giving the
+referenced text precedence. Without either prop, text provides the name;
+icon-only buttons still require an explicit accessible name.
+
+## Breadcrumb structured data
+
+Core, Next and static server Breadcrumbs emit one hidden microdata hierarchy
+separate from the visible navigation list. The full hierarchy and original
+one-based positions stay unchanged during collapse and expansion. The disclosure
+is a button named “Show all breadcrumbs”, never a structured-data ListItem.
+Only the final visible crumb receives `aria-current="page"`.
+
+Every metadata entry needs a nonempty label and each intermediate entry needs a
+destination accepted by the navigation URL sanitizer. Disabled crumbs retain
+their supplied safe destinations in metadata while remaining noninteractive.
+The final crumb may omit its URL. If any intermediate destination or label is
+missing or unsafe, or fewer than two crumbs exist, the entire metadata hierarchy
+is omitted. Supply real destinations to enable metadata; Boreal never invents
+URLs or removes intermediate hierarchy levels. Avoid adding a second breadcrumb
+schema for the same trail in the consuming page.
+
+Visual collapse requires `maxVisible >= 3`. Static server Breadcrumbs continues
+to render the full trail without a disclosure or `maxVisible` support.
+
 ## Quick Checklist
 
 Before shipping a page that uses Boreal UI:

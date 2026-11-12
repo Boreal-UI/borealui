@@ -61,6 +61,16 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
+export const EmbeddedHeadings: Story = {
+  render: () => (
+    <main>
+      <h1>Workspace</h1>
+      <PageHeader as="section" titleAs="h2" title="Team activity" />
+      <BreadCrumbPageHeader titleAs="h2" title="Project" />
+    </main>
+  ),
+};
+
 export const StaticPageComposition: Story = {
   render: () => (
     <Section tone="muted" padded>

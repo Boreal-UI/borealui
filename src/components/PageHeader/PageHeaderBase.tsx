@@ -13,6 +13,7 @@ const PageHeaderBase = forwardRef<HTMLElement, PageHeaderBaseProps>(
   (
     {
       title,
+      titleAs: Title = "h1",
       label,
       subtitle,
       eyebrow,
@@ -100,12 +101,12 @@ const PageHeaderBase = forwardRef<HTMLElement, PageHeaderBaseProps>(
               </div>
             ) : null}
             {title || label ? (
-              <h1
+              <Title
                 className={combineClassNames(classMap.title, titleClassName)}
                 data-testid={`${testId}-title`}
               >
                 {title ?? label}
-              </h1>
+              </Title>
             ) : null}
             {subtitle ? (
               <p
