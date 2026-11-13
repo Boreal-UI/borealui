@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Breadcrumb metadata and heading semantics
+
+- Breadcrumbs now emits one complete BreadcrumbList independently of visual
+  truncation, including original positions and safe destinations for disabled
+  crumbs. The disclosure is never a ListItem. Incomplete hierarchies (missing
+  intermediate destinations or labels) omit structured data rather than fabricate
+  URLs. Core, Next, and static server entries use the same metadata renderer.
+- Button preserves explicit `aria-label` on text buttons, including the
+  “Show all breadcrumbs” disclosure. `aria-labelledby` takes precedence.
+- PageHeader and BreadCrumbPageHeader accept `titleAs` (`h1` through `h6`),
+  defaulting to `h1`. Title styling and PageHeader root `as` are unchanged.
+- Affects `@boreal-ui/core`, `@boreal-ui/next`, `@boreal-ui/types`, and
+  `@boreal-ui/docs`.
+
 This release improves native forms, responsive layouts, accessible tables and
 custom themes across Boreal UI's React Core and Next.js components.
 

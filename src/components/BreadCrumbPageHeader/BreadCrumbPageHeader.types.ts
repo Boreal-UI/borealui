@@ -33,6 +33,12 @@ export interface BreadCrumbPageHeaderProps extends NativeBreadCrumbPageHeaderPro
   title?: ReactNode;
 
   /**
+   * Semantic title heading; visual styling is unchanged.
+   * @default "h1"
+   */
+  titleAs?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+  /**
    * Supporting subtitle or description.
    */
   subtitle?: ReactNode;

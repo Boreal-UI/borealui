@@ -10,6 +10,7 @@ import {
   getShadowClassName,
 } from "@/config/boreal-style-config";
 import { BreadcrumbsProps } from "../Breadcrumbs.types";
+import BreadcrumbsStructuredData from "../BreadcrumbsStructuredData";
 import styles from "../next/Breadcrumbs.module.scss";
 
 export type ServerBreadcrumbsProps = Omit<BreadcrumbsProps, "maxVisible">;
@@ -93,6 +94,7 @@ export default function Breadcrumbs({
           );
         })}
       </ol>
+      <BreadcrumbsStructuredData items={items} />
     </nav>
   );
 }

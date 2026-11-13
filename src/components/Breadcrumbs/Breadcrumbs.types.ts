@@ -59,7 +59,9 @@ export interface BreadcrumbsProps extends Omit<
   "children" | "aria-label"
 > {
   /**
-   * An array of breadcrumb items.
+   * An array of breadcrumb items. Structured data preserves the complete hierarchy
+   * independently of visual collapse. It is omitted if fewer than two items exist,
+   * any label is empty, or an intermediate item lacks a safe destination.
    */
   items: Breadcrumb[];
 
@@ -145,7 +147,8 @@ export interface BreadcrumbsProps extends Omit<
    */
   variant?: import("@/types/types").VariantType;
   /**
-   * Maximum number of visible items before collapsing into an ellipsis.
+   * Maximum number of visible items before collapsing into a disclosure.
+   * Values below three leave the trail expanded. Structured data is unchanged.
    */
   maxVisible?: number;
 

@@ -18,6 +18,12 @@ export interface PageHeaderProps extends NativePageHeaderProps {
   title?: ReactNode;
 
   /**
+   * Semantic title heading; visual styling is unchanged. Independent of root `as`.
+   * @default "h1"
+   */
+  titleAs?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+
+  /**
    * Legacy alias for title retained for scaffold compatibility.
    */
   label?: ReactNode;

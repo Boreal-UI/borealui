@@ -17,6 +17,7 @@ const BreadCrumbPageHeaderBase = forwardRef<
     {
       breadcrumbs = [],
       title,
+      titleAs: Title = "h1",
       subtitle,
       actions,
       children,
@@ -85,9 +86,9 @@ const BreadCrumbPageHeaderBase = forwardRef<
         <div className={classMap.main} data-testid={`${testId}-main`}>
           <div className={classMap.content} data-testid={`${testId}-content`}>
             {title ? (
-              <h1 className={classMap.title} data-testid={`${testId}-title`}>
+              <Title className={classMap.title} data-testid={`${testId}-title`}>
                 {title}
-              </h1>
+              </Title>
             ) : null}
             {subtitle ? (
               <p

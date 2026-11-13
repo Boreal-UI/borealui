@@ -41,6 +41,11 @@ type Story = StoryObj<BreadCrumbPageHeaderProps>;
 
 export const Default: Story = {};
 
+export const EmbeddedHeading: Story = {
+  args: { titleAs: "h2" },
+  render: (args) => <main><h1>Workspace</h1><BreadCrumbPageHeader {...args} /></main>,
+};
+
 export const CollapsedBreadcrumbs: Story = {
   args: {
     breadcrumbs: [

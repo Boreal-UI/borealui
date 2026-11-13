@@ -507,11 +507,11 @@ describe("ButtonBase", () => {
     expect(button).not.toHaveAttribute("aria-label");
   });
 
-  it("does not set aria-label for text buttons unless needed", () => {
+  it("preserves explicit aria-label for text buttons", () => {
     renderButton({ "aria-label": "Favorite button" }, "Favorite");
 
     const button = screen.getByTestId("button-test");
-    expect(button).not.toHaveAttribute("aria-label");
+    expect(button).toHaveAttribute("aria-label", "Favorite button");
   });
 
   it("warns in development for icon-only buttons without aria-label or aria-labelledby", () => {
