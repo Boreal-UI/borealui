@@ -183,10 +183,6 @@
         background-color: map.get($values, hover);
       }
 
-      &.content {
-        background: var(--accordion-glass-bg);
-      }
-
       &.glass.header {
         background: var(--accordion-glass-bg);
         color: inherit;
@@ -226,6 +222,7 @@
   @each $name, $values in theme.$states {
     .#{$name} {
       background-color: map.get($values, bg);
+        color: map.get($values, text);
       --accordion-glass-bg: #{map.get($values, glass-bg)};
       --accordion-glass-hover-bg: #{map.get($values, glass-hover)};
       --accordion-glass-border: #{map.get($values, glass-border)};
@@ -233,6 +230,7 @@
 
       &.header:hover {
         background-color: map.get($values, hover);
+        color: map.get($values, text);
       }
 
       &.glass.header {
@@ -283,8 +281,8 @@
     overflow: hidden;
     box-sizing: border-box;
     padding: 0 var(--spacing-md);
-    background-color: var(--background-color-lighter);
-    color: inherit;
+    background-color: var(--background-color-surface);
+    color: var(--text-color);
     font-family: var(--font-family-body);
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-body);
@@ -299,6 +297,11 @@
     @include bp.up(lg) {
       padding: 0 var(--spacing-lg);
     }
+  }
+
+  .content:not(.glass) {
+    background: var(--background-color-surface);
+    color: var(--text-color);
   }
 
   .contentInner {

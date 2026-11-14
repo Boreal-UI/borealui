@@ -80,3 +80,14 @@ release-notes-p2-themes-composition.md
 p0-p2-regression-review.md
 docs/semrush-site-upgrade.md
 __tests__/semrush-regressions.test.tsx
+__tests__/browser/contrast.spec.ts
+__tests__/browser/fixture.tsx
+__tests__/browser/hydration.spec.ts
+__tests__/browser/index.html
+__tests__/browser/link.tsx
+__tests__/browser/navigation.ts
+__tests__/browser/notification.client.tsx
+__tests__/browser/notification.data.ts
+__tests__/browser/notification.server.tsx
+__tests__/browser/playwright.config.ts
+__tests__/browser/vite.config.ts

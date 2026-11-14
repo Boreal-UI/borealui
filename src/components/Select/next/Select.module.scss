@@ -177,9 +177,11 @@
       --select-glass-border: #{map.get($vals, glass-border)};
       --select-glass-text: #{map.get($vals, text)};
       background-color: map.get($vals, bg);
+        color: map.get($vals, text);
 
       &:hover {
         background-color: map.get($vals, hover);
+        color: map.get($vals, text);
       }
     }
 

@@ -164,6 +164,7 @@
 
         .tabs_tab.tabs_active {
           background-color: map.get($color, bg);
+        color: map.get($color, text);
           border-bottom-color: map.get($color, border);
         }
 

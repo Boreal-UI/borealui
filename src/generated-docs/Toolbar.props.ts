@@ -127,6 +127,15 @@ export const toolbarPropDocs: GeneratedComponentDoc = {
       "category": "testing"
     },
     {
+      "name": "headingLevel",
+      "type": "1 | 2 | 3 | 4 | 5 | 6",
+      "description": "Semantic heading level for the title, independent of title styling and toolbar container semantics. Has no effect when no title is provided.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "1"
+    },
+    {
       "name": "left",
       "type": "ReactNode",
       "description": "Content to render in the left section of the toolbar.",

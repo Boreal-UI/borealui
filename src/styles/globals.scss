@@ -126,23 +126,20 @@
      FEEDBACK COLORS
   ================================== */
     --success-color: #{theme.$success-color};
-    --success-color-hover: #{color.adjust(
-        theme.$success-color,
-        $lightness: -10%
-      )};
-    --success-text-color: var(--text-color);
+    --success-color-hover: #039b44;
+    --success-text-color: #000;
     --warning-color: #{theme.$warning-color};
     --warning-color-hover: #{color.adjust(
         theme.$warning-color,
         $lightness: -10%
       )};
-    --warning-text-color: var(--text-color);
+    --warning-text-color: #000;
     --info-color: #{theme.$info-color};
     --info-color-hover: #{color.adjust(theme.$info-color, $lightness: -10%)};
-    --info-text-color: var(--text-color);
+    --info-text-color: #fff;
     --error-color: #{theme.$error-color};
     --error-color-hover: #{color.adjust(theme.$error-color, $lightness: -10%)};
-    --error-text-color: var(--text-color);
+    --error-text-color: #fff;
     --disabled-color: #{theme.$disabled-color};
 
     /* ================================

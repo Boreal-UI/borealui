@@ -34,6 +34,20 @@ Actors include maintainers, contributors, consumers, dependency maintainers, Git
 
 ## Abuse cases reviewers must consider
 
+### Published component regression review (November 13, 2026)
+
+Sidebar identity accepts optional sibling-unique IDs, encoded only for internal
+tree keys; ARIA IDs remain generated and no ID becomes raw markup or navigation.
+Disabled parent activation is guarded for pointer and native keyboard clicks.
+NumberInput forwards actual typed events and clamps committed numbers without
+introducing synthetic event casts. Notification localization uses Intl after
+hydration; initial timestamps use deterministic ISO-derived UTC text. React
+escapes these strings. No new dependency, raw HTML, privileged API, network access,
+or publication boundary is introduced. Regression tests cover identity collisions,
+disabled activation, numeric bounds, callback delivery, hydration, and rendered
+text contrast. Custom CSS overrides and differing server/client Date inputs
+remain consumer responsibilities.
+
 ### Breadcrumb metadata review (November 12, 2026)
 
 Consumer breadcrumb labels and destinations also enter hidden microdata in Core,

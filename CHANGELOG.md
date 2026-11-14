@@ -2,6 +2,38 @@
 
 ## Unreleased
 
+### Published 0.3.1 component regressions
+
+- NumberInput delivers both supported callbacks for edits, stepper changes, and
+  changed blur clamps. Its event argument is now the actual input change,
+  button click, or input blur event (`NumberInputChangeEvent`). Value-only
+  handlers remain compatible; input-only event annotations must widen.
+- NumberInput preserves fractional values on blur and clamps final numeric
+  commits, including fractional bounds with integer or exponent-form steps.
+- Sidebar groups use optional sibling-unique `id` keys or tree-position identity,
+  allowing duplicate labels and independent expansion. Disabled groups remain
+  focusable but reject pointer/Enter/Space activation.
+- Semantic feedback and selected/hover brand color pairs are derived for text
+  contrast. Consumers pair state backgrounds with state foregrounds; nested
+  DatePicker and Accordion content are included. MultiSelect chips use opaque
+  selected-surface tokens rather than unsafe translucent inherited text.
+- NotificationCenter renders deterministic UTC timestamps for SSR/initial
+  hydration, then localizes after mount with optional `locale` and `timeZone`.
+  Semantic time elements preserve ISO values and accessible relationships.
+- Affects Core, Next, Types, and Docs. See
+  [contracts and site handoff](docs/release-review-0.3.1-fixes.md) for compatibility
+  details and post-release verification. No standalone server entries are added.
+
+
+### Toolbar public heading level
+
+- Expose `headingLevel?: 1 | 2 | 3 | 4 | 5 | 6` on public `ToolbarProps`
+  for Core, Next, and server entries. H1 remains the default; typography,
+  classes, IDs, accessible naming, and container semantics are unchanged.
+- Includes regenerated `@boreal-ui/docs` metadata and declarations for
+  `@boreal-ui/core`, `@boreal-ui/next`, and `@boreal-ui/types`.
+
+
 ### Breadcrumb metadata and heading semantics
 
 - Breadcrumbs now emits one complete BreadcrumbList independently of visual

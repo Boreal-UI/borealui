@@ -92,3 +92,11 @@ export const GlassOutlineVariants: Story = {
 export const StateOutlineVariants: Story = {
   render: (args) => renderStateOutlineVariants({ component: Sidebar, args }),
 };
+
+export const RepeatedAndDisabledGroups: Story = {
+  args: { links: [
+    { id: "first", label: "Reports", children: [{ label: "First report", href: "/first" }] },
+    { id: "second", label: "Reports", children: [{ label: "Second report", href: "/second" }] },
+    { id: "disabled", label: "Unavailable reports", "aria-disabled": true, children: [{ label: "Unavailable", href: "/disabled" }] },
+  ] },
+};

@@ -399,7 +399,7 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
 
   const variables = {
     "--primary-color": primaryColor,
-    "--primary-color-light": adjustLightness(primaryColor, 10),
+    "--primary-color-light": getAccessibleInteractiveColor(primaryColor, primaryTextColor, 10),
     "--primary-color-hover": getAccessibleInteractiveColor(
       primaryColor,
       primaryTextColor,
@@ -412,7 +412,7 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     "--text-color-lighter": mutedTextColor,
     "--text-color-placeholder": mutedTextColor,
     "--secondary-color": secondaryColor,
-    "--secondary-color-light": adjustLightness(secondaryColor, 10),
+    "--secondary-color-light": getAccessibleInteractiveColor(secondaryColor, secondaryTextColor, 10),
     "--secondary-color-hover": getAccessibleInteractiveColor(
       secondaryColor,
       secondaryTextColor,
@@ -420,7 +420,7 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     ),
     "--text-color-secondary": secondaryTextColor,
     "--tertiary-color": tertiaryColor,
-    "--tertiary-color-light": adjustLightness(tertiaryColor, 10),
+    "--tertiary-color-light": getAccessibleInteractiveColor(tertiaryColor, tertiaryTextColor, 10),
     "--tertiary-color-hover": getAccessibleInteractiveColor(
       tertiaryColor,
       tertiaryTextColor,
@@ -428,7 +428,7 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     ),
     "--text-color-tertiary": tertiaryTextColor,
     "--quaternary-color": quaternaryColor,
-    "--quaternary-color-light": adjustLightness(quaternaryColor, 10),
+    "--quaternary-color-light": getAccessibleInteractiveColor(quaternaryColor, quaternaryTextColor, 10),
     "--quaternary-color-hover": getAccessibleInteractiveColor(
       quaternaryColor,
       quaternaryTextColor,
@@ -467,9 +467,18 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
       quaternaryTextColor,
       -10,
     ),
-    "--success-text-color": pageTextColor,
-    "--warning-text-color": pageTextColor,
-    "--error-text-color": pageTextColor,
+    "--success-color": "#04b34f",
+    "--success-text-color": getReadableColor("#04b34f"),
+    "--success-color-hover": getAccessibleInteractiveColor("#04b34f", getReadableColor("#04b34f"), -10),
+    "--warning-color": "#ff9900",
+    "--warning-text-color": getReadableColor("#ff9900"),
+    "--warning-color-hover": getAccessibleInteractiveColor("#ff9900", getReadableColor("#ff9900"), -10),
+    "--error-color": "#a6192e",
+    "--error-text-color": getReadableColor("#a6192e"),
+    "--error-color-hover": getAccessibleInteractiveColor("#a6192e", getReadableColor("#a6192e"), -10),
+    "--info-color": "#1d5ea8",
+    "--info-text-color": getReadableColor("#1d5ea8"),
+    "--info-color-hover": getAccessibleInteractiveColor("#1d5ea8", getReadableColor("#1d5ea8"), -10),
     "--focus-outline-color": pageTextColor,
     "--divider-color": getAdaptiveBorderColor(backgroundColor),
     "--border-color": getAdaptiveBorderColor(backgroundColor),
@@ -532,6 +541,10 @@ export function getThemeContrastIssues(scheme: ColorScheme) {
     check("--focus-outline-color", surface, MIN_UI_CONTRAST);
     check("--border-color", surface, MIN_UI_CONTRAST);
     check("--border-color-strong", surface, MIN_UI_CONTRAST);
+  }
+  for (const state of ["success", "warning", "error", "info"]) {
+    check(`--${state}-text-color`, `--${state}-color`, MIN_TEXT_CONTRAST);
+    check(`--${state}-text-color`, `--${state}-color-hover`, MIN_TEXT_CONTRAST);
   }
   check("--selected-text-color", "--selected-background", MIN_TEXT_CONTRAST);
   check("--disabled-text-color", "--disabled-background", MIN_TEXT_CONTRAST);

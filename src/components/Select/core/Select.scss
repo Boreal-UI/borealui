@@ -203,9 +203,11 @@
       --select-glass-border: #{map.get($values, glass-border)};
       --select-glass-text: #{map.get($values, text)};
       background-color: map.get($values, bg);
+        color: map.get($values, text);
 
       &:hover {
         background-color: map.get($values, hover);
+        color: map.get($values, text);
       }
 
       &.select_#{$stateName}.select_outline {

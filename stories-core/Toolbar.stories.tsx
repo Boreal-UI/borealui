@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react-vite";
 import { AttachmentType, IconButton, Toolbar } from "../src/index.core";
 import { FaBell, FaArrowLeft } from "../shared-story-assets/icons";
-import type { ToolbarBaseProps } from "../src/components/Toolbar/Toolbar.types";
+import type { ToolbarProps } from "../src/components/Toolbar/Toolbar.types";
 import { withVariants } from "../.storybook-core/helpers/withVariants";
 import {
   roundingOptions,
@@ -11,7 +11,7 @@ import {
 
 const attachmentOptions: AttachmentType[] = ["static", "fixed", "sticky"];
 
-const meta: Meta<ToolbarBaseProps> = {
+const meta: Meta<ToolbarProps> = {
   title: "Components/Toolbar",
   component: Toolbar,
   tags: ["autodocs"],
@@ -23,7 +23,7 @@ const meta: Meta<ToolbarBaseProps> = {
 };
 
 export default meta;
-type Story = StoryObj<ToolbarBaseProps>;
+type Story = StoryObj<ToolbarProps>;
 
 const leftIcon = (
   <IconButton
@@ -145,12 +145,22 @@ export const AttachmentVariants: Story = {
   },
 };
 
-export const RoundingVariants = (args: ToolbarBaseProps) =>
+export const RoundingVariants = (args: ToolbarProps) =>
   withVariants(Toolbar, { ...args }, [
     { propName: "rounding", values: roundingOptions },
   ]);
 
-export const ShadowVariants = (args: ToolbarBaseProps) =>
+export const ShadowVariants = (args: ToolbarProps) =>
   withVariants(Toolbar, { ...args }, [
     { propName: "shadow", values: shadowOptions },
   ]);
+
+/** Keep one page H1 while preserving the toolbar title typography. */
+export const PageHeadingHierarchy: Story = {
+  render: (args) => (
+    <main>
+      <h1>Admin Dashboard</h1>
+      <Toolbar {...args} title="Boreal Admin" headingLevel={2} />
+    </main>
+  ),
+};

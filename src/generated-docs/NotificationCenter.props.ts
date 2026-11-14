@@ -214,6 +214,14 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"additions text\""
     },
     {
+      "name": "locale",
+      "type": "string",
+      "description": "Locale used after hydration. Server and initial hydration show HH:mm UTC from the same Date; default after mount is the browser locale.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "maxNotifications",
       "type": "number",
       "description": "Maximum number of notifications to display.",
@@ -314,6 +322,14 @@ export const notificationCenterPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "dataTestId ?? \"notification-center\""
+    },
+    {
+      "name": "timeZone",
+      "type": "string",
+      "description": "IANA time zone used after hydration; defaults to the browser time zone. Does not change the deterministic UTC server/initial hydration fallback.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "timestampClassName",

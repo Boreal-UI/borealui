@@ -27,6 +27,16 @@ it.each([...defaultColorSchemes])("$name resolves readable semantic combinations
   }
   expect(contrastRatio(vars["--disabled-background"], vars["--disabled-text-color"])).toBeGreaterThanOrEqual(4.5);
   expect(contrastRatio(vars["--background-color"], vars["--border-color"])).toBeGreaterThanOrEqual(3);
+  for (const state of ["success", "warning", "error", "info"]) {
+    for (const background of [`--${state}-color`, `--${state}-color-hover`]) {
+      expect(contrastRatio(vars[background], vars[`--${state}-text-color`])).toBeGreaterThanOrEqual(4.5);
+    }
+  }
+  for (const brand of ["primary", "secondary", "tertiary", "quaternary"]) {
+    for (const suffix of ["", "-light", "-hover"]) {
+      expect(contrastRatio(vars[`--${brand}-color${suffix}`], vars[`--text-color-${brand}`])).toBeGreaterThanOrEqual(4.5);
+    }
+  }
 });
 
 it("keeps palette-only themes compatible and gives explicit roles precedence", () => {

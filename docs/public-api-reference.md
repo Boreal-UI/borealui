@@ -200,3 +200,39 @@ Prop-doc exports:
 `accordionPropDocs`, `alertPropDocs`, `appShellPropDocs`, `avatarPropDocs`, `badgePropDocs`, `barChartPropDocs`, `bentoBoxPropDocs`, `bentoBoxItemPropDocs`, `breadCrumbPageHeaderPropDocs`, `breadcrumbsPropDocs`, `buttonPropDocs`, `cardPropDocs`, `checkBoxPropDocs`, `chipGroupPropDocs`, `chipPropDocs`, `circularProgressPropDocs`, `colorPickerPropDocs`, `comboBoxPropDocs`, `commandPalettePropDocs`, `containerPropDocs`, `dataTablePropDocs`, `datePickerPropDocs`, `dateRangePickerPropDocs`, `dateTimePickerPropDocs`, `dividerPropDocs`, `donutChartPropDocs`, `drawerPropDocs`, `dropdownPropDocs`, `emptyStatePropDocs`, `fieldSetPropDocs`, `fileUploadPropDocs`, `footerPropDocs`, `formFieldPropDocs`, `formGroupPropDocs`, `gridPropDocs`, `iconButtonPropDocs`, `inlinePropDocs`, `inputGroupPropDocs`, `legendPropDocs`, `lineChartPropDocs`, `markdownRendererPropDocs`, `menuPropDocs`, `messagePopupPropDocs`, `metricBoxPropDocs`, `modalPropDocs`, `multiSelectPropDocs`, `navBarPropDocs`, `notificationCenterPropDocs`, `numberInputPropDocs`, `pageHeaderPropDocs`, `pagerPropDocs`, `popOverPropDocs`, `portalPropDocs`, `progressBarPropDocs`, `radioButtonPropDocs`, `radioGroupPropDocs`, `ratingPropDocs`, `scrollToTopPropDocs`, `searchInputPropDocs`, `sectionPropDocs`, `segmentedControlPropDocs`, `selectPropDocs`, `sidebarPropDocs`, `skeletonPropDocs`, `sliderPropDocs`, `sparklinePropDocs`, `spinnerPropDocs`, `splitPanePropDocs`, `stackPropDocs`, `stepperPropDocs`, `tabsPropDocs`, `tagInputPropDocs`, `textAreaPropDocs`, `textInputPropDocs`, `themeSelectPropDocs`, `timePickerPropDocs`, `timelinePropDocs`, `toastProviderPropDocs`, `togglePropDocs`, `toolbarPropDocs`, `tooltipPropDocs`, `treeViewPropDocs`, `typographyPropDocs`, and `validationSummaryPropDocs`.
 
 Use the generated prop docs for component-specific prop tables. Native HTML passthrough attributes remain documented by the published TypeScript declarations rather than being expanded into the metadata. Use this markdown guide for import paths and usage-level orientation.
+
+## Toolbar title heading level
+
+Core, Next, and server Toolbar entries accept
+`headingLevel?: 1 | 2 | 3 | 4 | 5 | 6` (default `1`). Choose the semantic level
+for the surrounding page. Only the title tag changes: typography,
+`titleClassName`, `titleId`, accessible naming, and the `div` with `role="toolbar"`
+remain independent. Without a title, no heading is rendered. The prop never
+appears as a DOM attribute.
+
+```tsx
+import Toolbar from "@boreal-ui/next/Toolbar";
+
+<main>
+  <h1>Admin Dashboard</h1>
+  <Toolbar title="Boreal Admin" headingLevel={2} />
+</main>
+```
+
+Root named imports and Core imports support the same option.
+
+## Published 0.3.1 regression contracts
+
+NumberInput `onChange` covers typing, stepper clicks, and changed blur clamps.
+Its exported `NumberInputChangeEvent` union describes the actual change/click/blur
+source; `onValueChange` remains numeric-only. Fractional values are preserved and
+final step/clamp commits respect numeric bounds.
+
+Sidebar links accept an optional sibling-unique `id` for stable state across
+reordering. Unkeyed items use tree positions. Disabled parent groups are focusable
+but cannot activate.
+
+NotificationCenter accepts `locale` and `timeZone` for post-hydration formatting.
+Server/initial hydration output is deterministic `HH:mm UTC`; identical input
+Dates are still required. See [full contracts, examples, validation commands,
+and site handoff](release-review-0.3.1-fixes.md).

@@ -142,3 +142,7 @@ export const StateOutlineVariants: Story = {
   render: (args) =>
     renderStateOutlineVariants({ component: NumberInput, args }),
 };
+
+export const FractionalBounds: Story = {
+  args: { defaultValue: 1.25, min: -1.5, max: 1.5, step: 1 },
+};

@@ -82,9 +82,11 @@
 
       &.#{$stateName} .active {
         background-color: map.get($values, bg);
+        color: map.get($values, text);
 
         &:hover {
           background-color: map.get($values, hover);
+        color: map.get($values, text);
         }
       }
 
@@ -94,6 +96,7 @@
 
         &:hover {
           background-color: map.get($values, hover);
+        color: map.get($values, text);
         }
 
         @include bp.down(sm) {

@@ -222,6 +222,11 @@
       border-width: 2px;
       border-color: map.get($vals, border);
       color: map.get($vals, text);
+      background-color: map.get($vals, bg);
+
+      &:hover {
+        background-color: map.get($vals, hover);
+      }
 
       .datePicker_button {
         border-color: map.get($vals, border);
