@@ -221,7 +221,7 @@ import Toolbar from "@boreal-ui/next/Toolbar";
 
 Root named imports and Core imports support the same option.
 
-## Published 0.3.1 regression contracts
+## NumberInput, Sidebar and NotificationCenter behavior
 
 NumberInput `onChange` covers typing, stepper clicks, and changed blur clamps.
 Its exported `NumberInputChangeEvent` union describes the actual change/click/blur
@@ -234,5 +234,4 @@ but cannot activate.
 
 NotificationCenter accepts `locale` and `timeZone` for post-hydration formatting.
 Server/initial hydration output is deterministic `HH:mm UTC`; identical input
-Dates are still required. See [full contracts, examples, validation commands,
-and site handoff](release-review-0.3.1-fixes.md).
+Dates are still required.

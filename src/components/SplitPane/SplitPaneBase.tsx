@@ -75,12 +75,18 @@ const SplitPaneBase = forwardRef<HTMLDivElement, SplitPaneBaseProps>(
       onSizeChange?.(next);
     };
 
+    const isRtl = () =>
+      rootRef.current !== null &&
+      getComputedStyle(rootRef.current).direction === "rtl";
+
     const updateFromPointer = (event: PointerEvent<HTMLDivElement>) => {
       if (!isResizable || !rootRef.current) return;
       const rect = rootRef.current.getBoundingClientRect();
       const next =
         orientation === "horizontal"
-          ? ((event.clientX - rect.left) / rect.width) * 100
+          ? ((isRtl() ? rect.right - event.clientX : event.clientX - rect.left) /
+              rect.width) *
+            100
           : ((event.clientY - rect.top) / rect.height) * 100;
       commitSize(next);
     };
@@ -88,18 +94,17 @@ const SplitPaneBase = forwardRef<HTMLDivElement, SplitPaneBaseProps>(
     const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
       if (!isResizable) return;
       event.currentTarget.setPointerCapture(event.pointerId);
-      updateFromPointer(event);
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       if (!isResizable) return;
       const decrement =
         orientation === "horizontal"
-          ? event.key === "ArrowLeft"
+          ? event.key === (isRtl() ? "ArrowRight" : "ArrowLeft")
           : event.key === "ArrowUp";
       const increment =
         orientation === "horizontal"
-          ? event.key === "ArrowRight"
+          ? event.key === (isRtl() ? "ArrowLeft" : "ArrowRight")
           : event.key === "ArrowDown";
 
       if (decrement || increment) {

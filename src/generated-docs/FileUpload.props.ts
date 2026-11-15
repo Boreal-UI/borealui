@@ -247,7 +247,7 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
     {
       "name": "multiple",
       "type": "boolean",
-      "description": "Allows multiple file selection if true.",
+      "description": "Appends accepted files when true. When false, replaces selection with the first valid file and announces additional valid files as rejected.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -263,9 +263,9 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "onSubmit",
-      "type": "(files: File[]) => void | Promise<void>",
-      "description": "Called after upload completes.",
-      "required": true,
+      "type": "((files: File[]) => void | Promise<void>)",
+      "description": "Upload callback invoked with the current accepted selection. Optional for native form submission.",
+      "required": false,
       "inherited": false,
       "category": "events"
     },

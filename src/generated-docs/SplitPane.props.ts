@@ -107,7 +107,7 @@ export const splitPanePropDocs: GeneratedComponentDoc = {
     {
       "name": "orientation",
       "type": "\"horizontal\" | \"vertical\"",
-      "description": "Split orientation.",
+      "description": "Split orientation. Horizontal pointer coordinates follow computed direction, including inherited RTL. Arrow keys move the divider physically; Home/End choose minimum/maximum start-pane size. Vertical mapping is top to bottom.",
       "required": false,
       "inherited": false,
       "category": "props",

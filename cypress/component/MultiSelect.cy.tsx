@@ -82,8 +82,13 @@ implementations.forEach(({ name, MultiSelect }) => {
       cy.get('[data-testid="choices-option-button"]').should("not.be.disabled");
     });
 
-    it("keeps input focus and clamps navigation across the filtered sequence", () => {
-      const onChange = cy.stub();
+    it("keeps input focus, skips disabled options, and clamps at enabled boundaries", () => {
+      const onChange = cy.stub().as("keyboardChange");
+      const expectActive = (value: string) => {
+        cy.get(`[data-testid="keyboard-option-${value}"]`).invoke("attr", "id").then((id) => {
+          cy.get('[data-testid="keyboard-search"]').should("have.attr", "aria-activedescendant", id);
+        });
+      };
       cy.mount(
         <MultiSelect
           label="Components"
@@ -97,27 +102,44 @@ implementations.forEach(({ name, MultiSelect }) => {
       cy.get('[data-testid="keyboard-search"]').should("be.focused");
 
       cy.get('[data-testid="keyboard-search"]').type("{upArrow}{enter}");
-      cy.then(() => {
-        expect(onChange).to.have.been.calledWith(["button"]);
-      });
+      expectActive("button");
+      cy.get("@keyboardChange").should("have.been.calledWith", ["button"]);
 
-      cy.get('[data-testid="keyboard-search"]').type(
-        "{downArrow}{downArrow}{enter}",
-      );
-      cy.then(() => {
-        expect(onChange).to.have.callCount(1);
-      });
-
-      cy.get('[data-testid="keyboard-search"]').type("{downArrow}{enter}");
-      cy.then(() => {
-        expect(onChange).to.have.been.calledWith(["button", "tabs"]);
-      });
+      cy.get('[data-testid="keyboard-search"]').type("{downArrow}");
+      expectActive("card");
+      cy.get('[data-testid="keyboard-search"]').type("{downArrow}");
+      expectActive("tabs");
+      cy.get('[data-testid="keyboard-option-modal"]').should("be.disabled");
+      cy.get("@keyboardChange").should("have.callCount", 1);
 
       cy.get('[data-testid="keyboard-search"]').type("{downArrow}{enter}");
-      cy.then(() => {
-        expect(onChange).to.have.been.calledWith(["button"]);
-      });
+      expectActive("tabs");
+      cy.get("@keyboardChange").should("have.been.calledWith", ["button", "tabs"]);
+      cy.get("@keyboardChange").should("have.callCount", 2);
+
+      cy.get('[data-testid="keyboard-search"]').type("{downArrow}{enter}");
+      expectActive("tabs");
+      cy.get("@keyboardChange").should("have.been.calledWith", ["button"]);
+      cy.get("@keyboardChange").should("have.callCount", 3);
       cy.get('[data-testid="keyboard-search"]').should("be.focused");
+    });
+
+    it("navigates without search, skips disabled options, and restores trigger focus", () => {
+      const onChange = cy.stub().as("selectOnlyChange");
+      cy.mount(<MultiSelect label="Components" searchable={false} options={options}
+        onChange={onChange} data-testid="select-only" />);
+
+      cy.get('[data-testid="select-only-trigger"]').focus().type("{downArrow}");
+      cy.get('[data-testid="select-only-search"]').should("not.exist");
+      cy.get('[data-testid="select-only-trigger"]').should("be.focused")
+        .and("have.attr", "role", "combobox").type("{downArrow}{downArrow}{enter}");
+      cy.get("@selectOnlyChange").should("have.been.calledWith", ["tabs"]);
+      cy.get("@selectOnlyChange").should("have.callCount", 1);
+      cy.get('[data-testid="select-only-trigger"]').type("{home}{enter}");
+      cy.get("@selectOnlyChange").should("have.been.calledWith", ["tabs", "button"]);
+      cy.get('[data-testid="select-only-trigger"]').type("{esc}").should("be.focused");
+      cy.get('[data-testid="select-only-popover"]').should("not.exist");
+      cy.get('[data-testid="select-only-trigger"]').should("not.have.attr", "aria-activedescendant");
     });
 
     it("resets the active option when filtering removes it", () => {

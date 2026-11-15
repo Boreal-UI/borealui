@@ -110,6 +110,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   const [uploadMessage, setUploadMessage] = useState<string | null>(null);
 
   const fileInput = useRef<HTMLInputElement | null>(null);
+  const pickerInput = useRef<HTMLInputElement | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isMountedRef = useRef(true);
   const uploadResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
@@ -158,7 +159,36 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       : `${nextRejectedFiles.length} files were rejected.`;
   };
 
+  const syncNativeFiles = (selection: File[]) => {
+    const input = fileInput.current;
+    if (!input) return;
+    if (selection.length === 0) {
+      input.value = "";
+    } else if (typeof DataTransfer !== "undefined") {
+      const transfer = new DataTransfer();
+      selection.forEach((file) => transfer.items.add(file));
+      input.files = transfer.files;
+    }
+  };
+
+  useEffect(() => {
+    const form = fileInput.current?.form;
+    const reset = (event: Event) => {
+      queueMicrotask(() => {
+        if (event.defaultPrevented || !isMountedRef.current) return;
+        syncNativeFiles([]);
+        setFiles([]);
+        setRejectedFiles([]);
+        setUploadMessage(null);
+        onFilesChange?.([]);
+      });
+    };
+    form?.addEventListener("reset", reset);
+    return () => form?.removeEventListener("reset", reset);
+  }, [onFilesChange, inputProps?.form]);
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (disabled || uploading) return;
     const selected = e.target.files;
     if (!selected || selected.length === 0) return;
 
@@ -166,7 +196,17 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
       allowedFileTypes,
       maxFileSizeBytes,
     });
-    const updatedFiles = multiple ? [...files, ...valid] : valid;
+    const accepted = multiple ? valid : valid.slice(0, 1);
+    if (!multiple) {
+      rejected.push(
+        ...valid.slice(1).map((file) => ({
+          name: file.name,
+          reason: "Only one file can be selected",
+        })),
+      );
+    }
+    const updatedFiles = multiple ? [...files, ...accepted] : accepted;
+    syncNativeFiles(updatedFiles);
 
     setFiles(updatedFiles);
     setRejectedFiles(rejected);
@@ -179,14 +219,14 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
     announce(
       [selectedMessage, rejectedMessage].filter(Boolean).join(" ") || null,
     );
-
-    if (fileInput.current) fileInput.current.value = "";
   };
 
   const removeFile = (index: number) => {
+    if (disabled || uploading) return;
     const removedFile = files[index];
     const updatedFiles = files.filter((_, i) => i !== index);
     setFiles(updatedFiles);
+    syncNativeFiles(updatedFiles);
     onFilesChange?.(updatedFiles);
 
     if (removedFile) {
@@ -401,6 +441,19 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
           data-testid={`${testId}-input`}
         />
 
+        {/* An unnamed picker permits reselection without clearing the successful control. */}
+        <input
+          ref={pickerInput}
+          type="file"
+          hidden
+          tabIndex={-1}
+          aria-label="Select files"
+          multiple={multiple}
+          accept={accept}
+          disabled={disabled || uploading}
+          onChange={handleFileChange}
+        />
+
         <div
           className={combineClassNames(
             classMap.uploadActions,
@@ -409,6 +462,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
         >
           <Button
             {...selectButtonProps}
+            type="button"
             icon={FileIcon}
             size={selectButtonProps?.size ?? "small"}
             theme={theme}
@@ -423,7 +477,10 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             rounding={controlRounding}
             shadow={controlShadow}
             onClick={() => {
-              fileInput.current?.click();
+              if (pickerInput.current) {
+                pickerInput.current.value = "";
+                pickerInput.current.click();
+              }
             }}
             aria-label={
               selectButtonProps?.["aria-label"] ||
@@ -522,6 +579,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
                       removeFileAriaLabel?.(name, index) || `Remove ${name}`
                     }
                     onClick={() => removeFile(index)}
+                    disabled={disabled || uploading}
                     className={combineClassNames(
                       classMap.removeButton,
                       removeButtonClassName,
@@ -551,9 +609,10 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
               />
             )}
 
-            {!uploading && (
+            {!uploading && onSubmit && (
               <Button
                 {...uploadButtonProps}
+                type="button"
                 theme={theme}
                 variant={variant}
                 state={errorMessage ? "error" : state}

@@ -70,8 +70,6 @@ Phase 4A identified an initial-mount race in which the positioning effect could
 run before the content ref existed and never receive a meaningful retry.
 Phase 4A-R resolves that defect locally with a state-backed callback ref and a
 layout-timed measurement while preserving PopOver's distinct placement policy.
-See [PopOver initial positioning remediation](popover-positioning-remediation.md)
-for the lifecycle trace and verification record.
 
 ## Cost and lifecycle accounting
 

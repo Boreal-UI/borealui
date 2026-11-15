@@ -77,6 +77,17 @@ label precedence across native and framework render paths.
 
 ## Change template
 
+### Native file selection reconciliation
+
+FileUpload picker/drop files are untrusted browser input. The accepted selection
+is validated before being copied via DataTransfer into the successful native form
+control, including after append/removal. Single mode limits accepted files to one;
+additional files are rejected with text-only feedback. Disabled handlers ignore
+selection. Browser regressions inspect FormData names and bytes and required/reset
+behavior. This prevents UI/form payload divergence, not malicious uploads: consumer
+servers must enforce content, size and authorization independently. No new network,
+storage, dependency or publishing boundary is introduced. Owner: library maintainers.
+
 For a medium- or high-risk pull request, add or update a row above and record:
 
 1. assets and security objective affected;
