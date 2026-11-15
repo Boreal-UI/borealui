@@ -9,7 +9,8 @@ export function DataTableScrollExamples({ DataTable }: { DataTable: typeof CoreD
     { key: "description" as const, label: "Description", minWidth: "30rem" },
   ];
   return <div style={{ maxWidth: "24rem" }}>
-    <DataTable data={data} columns={columns} caption="Publications" hideCaption={false} />
+    <DataTable data={data} columns={columns} caption="Publications" hideCaption={false}
+      toolbarTitle="Publications" filterable pagination itemsPerPage={5} />
     <DataTable data={data} caption="Members" hideCaption={false}
       onRowClick={(row) => setAction(`Open ${row.name}`)}
       columns={[

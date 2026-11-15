@@ -273,6 +273,12 @@
       --inputGroup-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
+      background-color: map.get($vals, bg);
+      color: map.get($vals, text);
+
+      &:hover {
+        background-color: map.get($vals, hover);
+      }
 
       &.inputGroup_outline {
         background-color: transparent;
@@ -285,8 +291,14 @@
 
   .inputGroup_clear {
     background: transparent;
+    color: inherit;
     border-color: transparent;
     box-shadow: none;
+  }
+
+  .inputGroup_clear:hover {
+    background: map.get(map.get(theme.$themes, "clear"), hover);
+    color: inherit;
   }
 
   .inputGroup_glass {

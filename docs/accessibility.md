@@ -72,6 +72,29 @@ Use `aria-labelledby` when a visible element outside the control should provide 
 
 ## Forms
 
+MultiSelect keeps focus on its search combobox (`searchable`) or trigger
+combobox (`searchable={false}`). Arrow keys skip disabled options and stop at
+the first/last enabled option; Home/End jump to either end. Enter toggles the
+active selection without closing. Space also toggles in non-searchable mode,
+and remains text input in searchable mode. Escape closes and returns focus to
+the trigger. `aria-activedescendant` identifies the active rendered option.
+Options are not separate Tab stops. Disabled fields and fields inside disabled
+fieldsets do not submit or block required validation. `loading` blocks interaction
+and closes the popup, but deliberately keeps the value's form participation.
+
+ComboBox hides stale options during loading and announces its loading status.
+Typing remains available. Arrows and Enter cannot select hidden options. Its
+listbox is ARIA-collapsed while loading or empty; `aria-controls` and
+`aria-activedescendant` are emitted only for rendered targets. Ready results start
+at the first enabled match. Disabling closes the popup without changing the value.
+
+Rating follows the [WAI radio-group keyboard pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/):
+Right/Down select and focus the next star, Left/Up the previous, wrapping at the
+ends. Home/End select and focus the first/last; Space/Enter select the focused
+star. An initial zero value has its first star in the Tab order. External value
+changes update the checked/tabbable star without moving focus. Read-only,
+disabled and noninteractive ratings do not accept input or enter the Tab order.
+
 Prefer visible labels. Do not rely on placeholder text as the only label.
 
 ```tsx

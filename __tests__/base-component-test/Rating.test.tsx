@@ -293,7 +293,7 @@ describe("BaseRating", () => {
     expect(handleChange).toHaveBeenCalledWith(4);
   });
 
-  it("calls onChange with the next value on ArrowUp", () => {
+  it("calls onChange with the previous value on ArrowUp", () => {
     const handleChange = jest.fn();
 
     render(<BaseRating {...defaultProps} value={3} onChange={handleChange} />);
@@ -302,7 +302,7 @@ describe("BaseRating", () => {
       key: "ArrowUp",
     });
 
-    expect(handleChange).toHaveBeenCalledWith(4);
+    expect(handleChange).toHaveBeenCalledWith(2);
   });
 
   it("calls onChange with the previous value on ArrowLeft", () => {
@@ -317,7 +317,7 @@ describe("BaseRating", () => {
     expect(handleChange).toHaveBeenCalledWith(2);
   });
 
-  it("calls onChange with the previous value on ArrowDown", () => {
+  it("calls onChange with the next value on ArrowDown", () => {
     const handleChange = jest.fn();
 
     render(<BaseRating {...defaultProps} value={3} onChange={handleChange} />);
@@ -326,7 +326,7 @@ describe("BaseRating", () => {
       key: "ArrowDown",
     });
 
-    expect(handleChange).toHaveBeenCalledWith(2);
+    expect(handleChange).toHaveBeenCalledWith(4);
   });
 
   it("calls onChange with 1 when Home is pressed", () => {
@@ -372,7 +372,7 @@ describe("BaseRating", () => {
     expect(handleChange).not.toHaveBeenCalled();
   });
 
-  it("does not go past the max value on ArrowRight", () => {
+  it("wraps to the first value on ArrowRight at the end", () => {
     const handleChange = jest.fn();
 
     render(
@@ -388,10 +388,10 @@ describe("BaseRating", () => {
       key: "ArrowRight",
     });
 
-    expect(handleChange).toHaveBeenCalledWith(5);
+    expect(handleChange).toHaveBeenCalledWith(1);
   });
 
-  it("does not go below 1 on ArrowLeft", () => {
+  it("wraps to the last value on ArrowLeft at the start", () => {
     const handleChange = jest.fn();
 
     render(<BaseRating {...defaultProps} value={1} onChange={handleChange} />);
@@ -400,7 +400,7 @@ describe("BaseRating", () => {
       key: "ArrowLeft",
     });
 
-    expect(handleChange).toHaveBeenCalledWith(1);
+    expect(handleChange).toHaveBeenCalledWith(5);
   });
 
   it("makes only the selected star tabbable when value is greater than 0", () => {

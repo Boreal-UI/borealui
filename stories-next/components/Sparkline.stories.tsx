@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { Sparkline } from "../../src/index.core";
+import { Sparkline } from "../../src/index.next";
 import type { SparklineProps } from "../../src/components/Sparkline/Sparkline.types";
 
 const data = [4, 8, 6, 12, 10, 16];

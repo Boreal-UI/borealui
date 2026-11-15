@@ -107,7 +107,7 @@
     cursor: pointer;
     border: 0;
     outline: 0;
-    color-scheme: dark;
+    color-scheme: normal;
   }
 
   .input::-webkit-calendar-picker-indicator {
@@ -222,7 +222,12 @@
       --dateTimePicker-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
+      background-color: map.get($vals, bg);
       color: map.get($vals, text);
+
+      &:hover {
+        background-color: map.get($vals, hover);
+      }
 
       .button {
         border-color: map.get($vals, border);
@@ -243,8 +248,14 @@
 
   .clear {
     background: transparent;
+    color: inherit;
     border-color: transparent;
     box-shadow: none;
+  }
+
+  .clear:hover {
+    background: map.get(map.get(theme.$themes, "clear"), hover);
+    color: inherit;
   }
 
   .glass {

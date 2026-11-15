@@ -5,6 +5,7 @@ import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { composeEventHandlers } from "../../utils/eventHandlers";
 import { resolvePropAlias } from "../../utils/propAliases";
+import { scrollActiveOptionIntoView } from "../../utils/scrollActiveOptionIntoView";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -78,9 +79,11 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
     const [internalValue, setInternalValue] = useState(defaultValue);
     const [open, setOpen] = useState(false);
     const [query, setQuery] = useState("");
-    const [activeIndex, setActiveIndex] = useState(0);
+    const [activeValue, setActiveValue] = useState<string | undefined>(undefined);
     const rootRef = useRef<HTMLDivElement>(null);
     const searchRef = useRef<HTMLInputElement>(null);
+    const triggerRef = useRef<HTMLButtonElement>(null);
+    const popupOpen = open && !disabled && !loading;
 
     const selectedValues = isControlled ? value : internalValue;
     const selectedSet = useMemo(
@@ -102,11 +105,12 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
     const rootId = id ?? `${testId}-${generatedId}`;
     const labelId = label ? `${rootId}-label` : undefined;
     const listboxId = `${rootId}-listbox`;
+    const valueListId = `${rootId}-displayed-value`;
     const srDescriptionId = srOnlyText ? `${rootId}-sr-description` : undefined;
     const computedAriaDescribedBy =
       [ariaDescribedBy, srDescriptionId].filter(Boolean).join(" ") || undefined;
-    const computedAriaLabelledBy =
-      [ariaLabelledBy, labelId].filter(Boolean).join(" ") || undefined;
+    const computedAriaLabelledBy = ariaLabelledBy ||
+      (!toggleAriaLabel && !ariaLabel ? labelId : undefined);
     const computedAriaLabel = computedAriaLabelledBy
       ? undefined
       : toggleAriaLabel || ariaLabel || placeholder;
@@ -124,17 +128,39 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
     const selectableFilteredOptions = filteredOptions.filter(
       (option) => !option.disabled,
     );
-    const activeOption = filteredOptions[activeIndex];
     const reachedMax =
       typeof maxSelected === "number" && selectedValues.length >= maxSelected;
+    const enabledIndices = filteredOptions.flatMap((option, index) =>
+      option.disabled || (reachedMax && !selectedSet.has(option.value)) ? [] : [index],
+    );
+    const activeIndex = filteredOptions.findIndex(option => option.value === activeValue);
+    const resolvedActiveIndex = enabledIndices.includes(activeIndex)
+      ? activeIndex : enabledIndices[0] ?? -1;
+    const activeOption = filteredOptions[resolvedActiveIndex];
+    const resolvedActiveValue = activeOption?.value;
+    // Retain identity when controlled parents recreate or reorder the options.
+    const setActiveIndex = (index: number) => {
+      setActiveValue(filteredOptions[index]?.value);
+      scrollActiveOptionIntoView(document.getElementById(`${rootId}-option-${index}`));
+    };
+    const activeOptionId = popupOpen && activeOption
+      ? `${rootId}-option-${resolvedActiveIndex}` : undefined;
     const summary =
       selectedOptions.length > 0
         ? selectedOptions.map(getOptionText).join(", ")
         : placeholder;
+    const hasCustomTriggerName = Boolean(toggleAriaLabel || ariaLabel || ariaLabelledBy);
+    const triggerLabelledBy = searchable && !hasCustomTriggerName
+      ? [computedAriaLabelledBy, valueListId].filter(Boolean).join(" ")
+      : computedAriaLabelledBy;
 
     useEffect(() => {
-      setActiveIndex(0);
-    }, [query, options]);
+      if (activeOptionId) scrollActiveOptionIntoView(document.getElementById(activeOptionId));
+    }, [activeOptionId]);
+
+    useEffect(() => {
+      setActiveValue(resolvedActiveValue);
+    }, [resolvedActiveValue]);
 
     useEffect(() => {
       if (!open) return;
@@ -167,10 +193,14 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
     }, [open]);
 
     useEffect(() => {
-      if (open && searchable) {
-        window.requestAnimationFrame(() => searchRef.current?.focus());
-      }
-    }, [open, searchable]);
+      if (!popupOpen || !searchable) return;
+      const frame = window.requestAnimationFrame(() => searchRef.current?.focus());
+      return () => window.cancelAnimationFrame(frame);
+    }, [popupOpen, searchable]);
+
+    useEffect(() => {
+      if (disabled || loading) setOpen(false);
+    }, [disabled, loading]);
 
     const emitChange = (nextValues: string[]) => {
       if (!isControlled) setInternalValue(nextValues);
@@ -201,10 +231,15 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
       if (disabled || loading || selectedValues.length === 0) return;
       emitChange([]);
       setQuery("");
+      setActiveValue(undefined);
     };
 
     const handleTriggerKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
       if (disabled || loading) return;
+      if (popupOpen) {
+        handleListKeyDown(event);
+        return;
+      }
 
       if (
         event.key === "ArrowDown" ||
@@ -215,27 +250,30 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
         event.preventDefault();
         setOpen(true);
         setActiveIndex(
-          event.key === "ArrowUp" ? filteredOptions.length - 1 : 0,
+          (event.key === "ArrowUp" ? enabledIndices.at(-1) : enabledIndices[0]) ?? -1,
         );
       }
     };
 
     const handleListKeyDown = (event: React.KeyboardEvent<HTMLElement>) => {
+      if (disabled || loading) return;
       if (event.key === "Escape") {
         event.preventDefault();
         setOpen(false);
-      } else if (event.key === "ArrowDown") {
+        triggerRef.current?.focus();
+      } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
         event.preventDefault();
         setOpen(true);
-        setActiveIndex((index) =>
-          Math.min(index + 1, Math.max(filteredOptions.length - 1, 0)),
-        );
-      } else if (event.key === "ArrowUp") {
+        const position = enabledIndices.indexOf(resolvedActiveIndex);
+        const next = Math.max(0, Math.min(enabledIndices.length - 1,
+          position + (event.key === "ArrowDown" ? 1 : -1)));
+        setActiveIndex(enabledIndices[next] ?? -1);
+      } else if (event.key === "Home" || event.key === "End") {
         event.preventDefault();
-        setActiveIndex((index) => Math.max(index - 1, 0));
-      } else if (event.key === "Enter" && activeOption) {
+        setActiveIndex((event.key === "Home" ? enabledIndices[0] : enabledIndices.at(-1)) ?? -1);
+      } else if (event.key === "Enter" || (event.key === " " && event.target !== searchRef.current)) {
         event.preventDefault();
-        toggleOption(activeOption);
+        if (activeOption) toggleOption(activeOption);
       }
     };
 
@@ -328,13 +366,16 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
           data-testid={`${testId}-root`}
         >
           <button
+            ref={triggerRef}
             type="button"
+            role={searchable ? undefined : "combobox"}
             className={combineClassNames(classMap.trigger, triggerClassName)}
-            aria-label={computedAriaLabel}
-            aria-labelledby={computedAriaLabelledBy}
+            aria-label={triggerLabelledBy ? undefined : computedAriaLabel}
+            aria-labelledby={triggerLabelledBy}
             aria-describedby={computedAriaDescribedBy}
-            aria-controls={listboxId}
-            aria-expanded={open}
+            aria-controls={popupOpen ? listboxId : undefined}
+            aria-expanded={popupOpen}
+            aria-activedescendant={!searchable ? activeOptionId : undefined}
             aria-haspopup="listbox"
             data-invalid={isInvalid || undefined}
             data-required={isRequired || undefined}
@@ -344,6 +385,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
             data-testid={`${testId}-trigger`}
           >
             <span
+              id={valueListId}
               className={combineClassNames(
                 classMap.valueList,
                 valueListClassName,
@@ -390,14 +432,17 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
           ) : null}
 
           {loading ? (
-            <span
-              className={classMap.loader}
-              aria-hidden="true"
-              data-testid={`${testId}-loader`}
-            />
+            <>
+              <span
+                className={classMap.loader}
+                aria-hidden="true"
+                data-testid={`${testId}-loader`}
+              />
+              <span role="status" className="sr_only">{loadingMessage}</span>
+            </>
           ) : null}
 
-          {open ? (
+          {popupOpen ? (
             <div
               className={combineClassNames(classMap.popover, popoverClassName)}
               data-testid={`${testId}-popover`}
@@ -406,8 +451,16 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
                 <input
                   ref={searchRef}
                   type="text"
+                  role="combobox"
+                  aria-expanded={popupOpen}
+                  aria-controls={listboxId}
+                  aria-activedescendant={activeOptionId}
+                  aria-autocomplete="list"
                   value={query}
-                  onChange={(event) => setQuery(event.currentTarget.value)}
+                  onChange={(event) => {
+                    setQuery(event.currentTarget.value);
+                    setActiveValue(undefined);
+                  }}
                   className={combineClassNames(
                     classMap.searchInput,
                     searchInputClassName,
@@ -418,28 +471,23 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
                 />
               ) : null}
 
-              {loading ? (
-                <div
-                  className={classMap.status}
-                  role="status"
-                  aria-live="polite"
-                  data-testid={`${testId}-status`}
-                >
-                  {loadingMessage}
-                </div>
-              ) : filteredOptions.length === 0 ? (
-                <div
-                  className={classMap.status}
-                  role="status"
-                  aria-live="polite"
-                  data-testid={`${testId}-empty`}
-                >
-                  {emptyMessage}
-                </div>
+              {filteredOptions.length === 0 ? (
+                <>
+                  <div
+                    className={classMap.status}
+                    role="status"
+                    aria-live="polite"
+                    data-testid={`${testId}-empty`}
+                  >
+                    {emptyMessage}
+                  </div>
+                  <div id={listboxId} role="listbox" aria-label="Options" aria-multiselectable="true" />
+                </>
               ) : (
                 <div
                   id={listboxId}
                   role="listbox"
+                  aria-label={typeof label === "string" ? label : computedAriaLabel ?? "Options"}
                   title="Options"
                   aria-multiselectable="true"
                   className={combineClassNames(
@@ -460,16 +508,18 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
                         id={`${rootId}-option-${index}`}
                         type="button"
                         role="option"
+                        tabIndex={-1}
                         aria-selected={selected}
                         disabled={disabledOption}
                         className={combineClassNames(
                           classMap.option,
                           selected && classMap.selected,
-                          index === activeIndex && classMap.active,
+                          index === resolvedActiveIndex && classMap.active,
                           disabledOption && classMap.optionDisabled,
                           optionClassName,
                         )}
-                        onMouseEnter={() => setActiveIndex(index)}
+                        onMouseEnter={() => { if (!disabledOption) setActiveIndex(index); }}
+                        onMouseDown={(event) => event.preventDefault()}
                         onClick={() => toggleOption(option)}
                         data-testid={`${testId}-option-${option.value}`}
                       >
@@ -499,6 +549,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
                 <input
                   key={selectedValue}
                   type="hidden"
+                  disabled={disabled}
                   name={name}
                   value={selectedValue}
                   data-testid={`${testId}-hidden-${selectedValue}`}
@@ -512,6 +563,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
               tabIndex={-1}
               aria-hidden="true"
               required
+              disabled={disabled}
               value=""
               onChange={() => undefined}
               data-testid={`${testId}-required-input`}

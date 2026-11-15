@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
 import React from "react";
-import { MultiSelect } from "../../src/index.next";
+import { MultiSelect, Rating, ComboBox } from "../../src/index.next";
+import { InteractionRegressionExamples } from "../../shared-story-assets/InteractionRegressionExamples";
 import type {
   MultiSelectOption,
   MultiSelectProps,
@@ -157,3 +158,5 @@ export const StateOutlineVariants: Story = {
   render: (args) =>
     renderStateOutlineVariants({ component: MultiSelect, args }),
 };
+
+export const InteractionRegressions = () => <InteractionRegressionExamples MultiSelect={MultiSelect} Rating={Rating} ComboBox={ComboBox} />;

@@ -115,6 +115,7 @@
 
       .treeView_node {
         &:hover {
+          color: map.get($vals, text);
           @if map.has-key($vals, hover) {
             background-color: map.get($vals, hover);
           } @else {
@@ -282,7 +283,8 @@
   }
 
   .treeView_selected {
-    background: rgb(255 255 255 / 16%);
+    background: var(--selected-background);
+    color: var(--selected-text-color);
   }
 
   .treeView_disclosure {

@@ -111,7 +111,7 @@ describe("ComboBoxBase", () => {
     expect(input).toHaveAttribute("id", "technology");
     expect(input).toHaveAttribute("aria-autocomplete", "list");
     expect(input).toHaveAttribute("aria-expanded", "false");
-    expect(input).toHaveAttribute("aria-controls", "technology-listbox");
+    expect(input).not.toHaveAttribute("aria-controls");
     expect(input).toHaveAttribute("autocomplete", "off");
     expect(screen.getByTestId("combo")).toHaveClass("layout", "labelTop");
 
@@ -363,7 +363,7 @@ describe("ComboBoxBase", () => {
 
     expect(input).toHaveAttribute(
       "aria-activedescendant",
-      "technology-option-3",
+      "technology-option-2",
     );
   });
 

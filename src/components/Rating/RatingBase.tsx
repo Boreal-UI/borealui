@@ -1,4 +1,4 @@
-import React, { useState, KeyboardEvent, useMemo, useId } from "react";
+import React, { useState, KeyboardEvent, useMemo, useId, useRef } from "react";
 import { StarIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import {
@@ -34,6 +34,7 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   const safeMax = Math.max(1, Math.floor(max || 1));
   const clampedValue = Math.min(safeMax, Math.max(0, Math.floor(value || 0)));
   const [hover, setHover] = useState<number | null>(null);
+  const starRefs = useRef<(HTMLSpanElement | null)[]>([]);
 
   const ratingId = id || `${uid}-rating`;
   const labelId = label ? `${ratingId}-label` : undefined;
@@ -47,7 +48,9 @@ const BaseRating: React.FC<BaseRatingProps> = ({
     : undefined;
 
   const handleClick = (index: number) => {
-    if (canInteract && onChange) onChange(index + 1);
+    if (!canInteract) return;
+    starRefs.current[index]?.focus();
+    onChange?.(index + 1);
   };
 
   const handleKeyDown = (
@@ -56,7 +59,10 @@ const BaseRating: React.FC<BaseRatingProps> = ({
   ) => {
     if (!canInteract) return;
 
-    const commit = (v: number) => onChange?.(v);
+    const commit = (v: number) => {
+      starRefs.current[v - 1]?.focus();
+      onChange?.(v);
+    };
 
     switch (event.key) {
       case "Enter":
@@ -65,16 +71,16 @@ const BaseRating: React.FC<BaseRatingProps> = ({
         commit(index + 1);
         break;
       case "ArrowRight":
-      case "ArrowUp": {
+      case "ArrowDown": {
         event.preventDefault();
-        const next = Math.min(safeMax, clampedValue + 1) || 1;
+        const next = (index + 1) % safeMax + 1;
         commit(next);
         break;
       }
       case "ArrowLeft":
-      case "ArrowDown": {
+      case "ArrowUp": {
         event.preventDefault();
-        const prev = Math.max(1, clampedValue - 1);
+        const prev = (index - 1 + safeMax) % safeMax + 1;
         commit(prev);
         break;
       }
@@ -138,6 +144,7 @@ const BaseRating: React.FC<BaseRatingProps> = ({
           return (
             <span
               key={starValue}
+              ref={(node) => { starRefs.current[index] = node; }}
               id={`${ratingId}-star-${starValue}`}
               className={combineClassNames(
                 classMap.star,

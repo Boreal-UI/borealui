@@ -56,6 +56,7 @@
 
   .donutChart_track,
   .track {
+    color: var(--donut-chart-accent, inherit);
     stroke: currentcolor;
     opacity: 0.14;
     vector-effect: non-scaling-stroke;
@@ -63,6 +64,7 @@
 
   .donutChart_segment,
   .segment {
+    color: var(--donut-chart-accent, inherit);
     stroke-linecap: round;
     transform-box: fill-box;
     transform-origin: center;
@@ -131,11 +133,11 @@
   .donutChart_value,
   .value {
     font-variant-numeric: tabular-nums;
-    opacity: 0.76;
   }
 
   .donutChart_loader,
   .loader {
+    color: var(--donut-chart-accent, inherit);
     width: 1rem;
     height: 1rem;
     border: 2px solid currentcolor;
@@ -151,13 +153,13 @@
 
   @each $name, $values in theme.$themes {
     .donutChart_#{$name} {
-      color: map.get($values, border);
+      --donut-chart-accent: #{map.get($values, border)};
     }
   }
 
   @each $name, $values in theme.$states {
     .donutChart_#{$name} {
-      color: map.get($values, border);
+      --donut-chart-accent: #{map.get($values, border)};
     }
   }
 

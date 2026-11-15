@@ -17,6 +17,7 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 import { ComboBoxBaseProps, ComboBoxOption } from "./ComboBox.types";
+import { scrollActiveOptionIntoView } from "../../utils/scrollActiveOptionIntoView";
 
 export default function ComboBoxBase({
   options,
@@ -85,10 +86,26 @@ export default function ComboBoxBase({
     );
   }, [options, textValue]);
 
-  const activeOption = filteredOptions[activeIndex];
+  const popupOpen = open && !disabled;
+  const listboxOpen = popupOpen && !loading && filteredOptions.length > 0;
+  const activeOption = listboxOpen && !filteredOptions[activeIndex]?.disabled
+    ? filteredOptions[activeIndex] : undefined;
+  const activeOptionId = activeOption ? `${resolvedId}-option-${activeIndex}` : undefined;
   const describedBy = [ariaDescribedBy, helperId, errorId]
     .filter(Boolean)
     .join(" ");
+
+  useEffect(() => {
+    if (activeOptionId) scrollActiveOptionIntoView(document.getElementById(activeOptionId));
+  }, [activeOptionId]);
+
+  useEffect(() => {
+    setActiveIndex(filteredOptions.findIndex(option => !option.disabled));
+  }, [filteredOptions, loading]);
+
+  useEffect(() => {
+    if (disabled) setOpen(false);
+  }, [disabled]);
 
   useEffect(() => {
     if (!open) return;
@@ -152,7 +169,7 @@ export default function ComboBoxBase({
   };
 
   const selectOption = (option: ComboBoxOption) => {
-    if (option.disabled) return;
+    if (disabled || loading || !listboxOpen || option.disabled) return;
     setInput(option.label);
     setOpen(false);
     onChange?.(option.value, option);
@@ -166,21 +183,37 @@ export default function ComboBoxBase({
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (disabled) return;
+    if (event.key === "Escape") {
+      event.preventDefault();
+      setOpen(false);
+      return;
+    }
+    if (loading) {
+      if (["ArrowDown", "ArrowUp", "Enter"].includes(event.key)) {
+        event.preventDefault();
+        setOpen(true);
+      }
+      return;
+    }
+    const move = (direction: 1 | -1) => {
+      const enabled = filteredOptions.flatMap((option, index) => option.disabled ? [] : [index]);
+      const position = enabled.indexOf(activeIndex);
+      const next = !listboxOpen || position < 0
+        ? direction === 1 ? 0 : enabled.length - 1
+        : Math.max(0, Math.min(enabled.length - 1, position + direction));
+      setActiveIndex(enabled[next] ?? -1);
+      scrollActiveOptionIntoView(document.getElementById(`${resolvedId}-option-${enabled[next]}`));
+      setOpen(true);
+    };
     if (event.key === "ArrowDown") {
       event.preventDefault();
-      setOpen(true);
-      setActiveIndex((index) =>
-        Math.min(index + 1, Math.max(filteredOptions.length - 1, 0)),
-      );
+      move(1);
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
-      setOpen(true);
-      setActiveIndex((index) => Math.max(index - 1, 0));
+      move(-1);
     } else if (event.key === "Enter" && open && activeOption) {
       event.preventDefault();
       selectOption(activeOption);
-    } else if (event.key === "Escape") {
-      setOpen(false);
     }
   };
 
@@ -211,13 +244,10 @@ export default function ComboBoxBase({
           role="combobox"
           autoComplete="off"
           aria-autocomplete="list"
-          aria-expanded={open}
-          aria-controls={listboxId}
-          aria-activedescendant={
-            open && activeOption
-              ? `${resolvedId}-option-${activeIndex}`
-              : undefined
-          }
+          aria-expanded={listboxOpen}
+          aria-controls={listboxOpen ? listboxId : undefined}
+          aria-busy={loading || undefined}
+          aria-activedescendant={activeOptionId}
           aria-label={ariaLabel}
           aria-labelledby={ariaLabelledBy}
           aria-describedby={describedBy || undefined}
@@ -235,19 +265,19 @@ export default function ComboBoxBase({
         <button
           type="button"
           className={classMap.toggle}
-          aria-label={open ? "Close options" : "Open options"}
-          aria-controls={listboxId}
-          aria-expanded={open}
+          aria-label={popupOpen ? "Close options" : "Open options"}
+          aria-controls={listboxOpen ? listboxId : undefined}
+          aria-expanded={listboxOpen}
           disabled={disabled}
           onClick={() => {
-            setOpen((isOpen) => !isOpen);
             inputRef.current?.focus();
+            setOpen(!popupOpen);
           }}
           data-testid={`${resolvedTestId}-toggle`}
         >
           <span className={classMap.toggleIcon}>▾</span>
         </button>
-        {open ? (
+        {popupOpen ? (
           <>
             {loading ? (
               <div

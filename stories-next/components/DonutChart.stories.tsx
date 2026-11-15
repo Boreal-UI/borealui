@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { DonutChart } from "../../src/index.core";
+import { DonutChart } from "../../src/index.next";
 import type { DonutChartProps } from "../../src/components/DonutChart/DonutChart.types";
 const data = [
   { label: "Desktop", value: 60 },

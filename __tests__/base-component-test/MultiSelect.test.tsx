@@ -84,7 +84,7 @@ describe("MultiSelectBase", () => {
     expect(screen.getByTestId("multi-select-label")).toHaveTextContent(
       "Components",
     );
-    expect(screen.getByRole("button", { name: "Components" })).toHaveAttribute(
+    expect(screen.getByRole("button", { name: "Components Select options" })).toHaveAttribute(
       "aria-expanded",
       "false",
     );
@@ -228,10 +228,10 @@ describe("MultiSelectBase", () => {
     expect(screen.getByTestId("multi-select-option-card")).toHaveClass(
       "active",
     );
-    expect(search).not.toHaveAttribute("aria-activedescendant");
+    expect(search).toHaveAttribute("aria-activedescendant", screen.getByTestId("multi-select-option-card").id);
   });
 
-  it("clamps at boundaries and preserves disabled options in the active sequence", () => {
+  it("clamps at boundaries and skips disabled options in the active sequence", () => {
     const onChange = jest.fn();
     renderMultiSelect({ onChange });
 
@@ -245,11 +245,11 @@ describe("MultiSelectBase", () => {
 
     fireEvent.keyDown(search, { key: "ArrowDown" });
     fireEvent.keyDown(search, { key: "ArrowDown" });
-    expect(screen.getByTestId("multi-select-option-modal")).toHaveClass(
+    expect(screen.getByTestId("multi-select-option-modal")).not.toHaveClass(
       "active",
     );
     fireEvent.keyDown(search, { key: "Enter" });
-    expect(onChange).not.toHaveBeenCalled();
+    expect(onChange).toHaveBeenLastCalledWith(["tabs"], [expect.objectContaining({value:"tabs"})]);
 
     fireEvent.keyDown(search, { key: "ArrowDown" });
     fireEvent.keyDown(search, { key: "ArrowDown" });
@@ -257,10 +257,7 @@ describe("MultiSelectBase", () => {
       "active",
     );
     fireEvent.keyDown(search, { key: "Enter" });
-    expect(onChange).toHaveBeenCalledWith(
-      ["tabs"],
-      [expect.objectContaining({ value: "tabs" })],
-    );
+    expect(onChange).toHaveBeenLastCalledWith([], []);
   });
 
   it("resets the active option when filtering removes it", () => {
@@ -309,7 +306,7 @@ describe("MultiSelectBase", () => {
     const disabledSearch = screen.getByTestId("multi-select-search");
     fireEvent.change(disabledSearch, { target: { value: "" } });
     fireEvent.keyDown(disabledSearch, { key: "ArrowDown" });
-    expect(screen.getByTestId("multi-select-option-second")).toHaveClass(
+    expect(screen.getByTestId("multi-select-option-second")).not.toHaveClass(
       "active",
     );
     fireEvent.keyDown(disabledSearch, { key: "Enter" });
@@ -415,11 +412,8 @@ describe("MultiSelectBase", () => {
     const [firstTrigger, secondTrigger] = screen.getAllByTestId(
       "multi-select-trigger",
     );
-    expect(firstTrigger.getAttribute("aria-controls")).toBeTruthy();
-    expect(firstTrigger).not.toHaveAttribute(
-      "aria-controls",
-      secondTrigger.getAttribute("aria-controls"),
-    );
+    expect(firstTrigger).not.toHaveAttribute("aria-controls");
+    expect(secondTrigger).not.toHaveAttribute("aria-controls");
 
     fireEvent.click(firstTrigger);
     fireEvent.click(secondTrigger);

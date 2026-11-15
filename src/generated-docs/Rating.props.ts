@@ -62,7 +62,7 @@ export const ratingPropDocs: GeneratedComponentDoc = {
     {
       "name": "interactive",
       "type": "boolean",
-      "description": "If true, the user can interact with the rating (hover, click, keyboard navigation).",
+      "description": "Enables hover, click and keyboard interaction. Right/Down select and focus the next radio; Left/Up select and focus the previous, wrapping at boundaries. Home/End select and focus the first/last. External value changes do not move focus.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -114,7 +114,7 @@ export const ratingPropDocs: GeneratedComponentDoc = {
     {
       "name": "size",
       "type": "SizeType",
-      "description": "The size of the rating component. One of: \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
+      "description": "The size of the rating component. Star targets remain at least 24 by 24 CSS pixels at every size. One of: \"xs\" | \"small\" | \"medium\" | \"large\" | \"xl\"",
       "required": false,
       "inherited": false,
       "category": "styling",

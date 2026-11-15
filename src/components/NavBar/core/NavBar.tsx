@@ -61,6 +61,7 @@ const NavBar: React.FC<NavBarProps> = ({
         children,
         className,
         isActive,
+        "aria-label": itemAriaLabel,
         "data-testid": dataTestId,
         testId = dataTestId,
       }) => (
@@ -70,6 +71,7 @@ const NavBar: React.FC<NavBarProps> = ({
           rel={rel}
           className={className}
           aria-current={isActive ? "page" : undefined}
+          aria-label={href ? itemAriaLabel : undefined}
           data-testid={testId}
         >
           {children}

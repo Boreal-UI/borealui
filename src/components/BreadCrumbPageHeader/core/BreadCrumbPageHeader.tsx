@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 import "./BreadCrumbPageHeader.scss";
 import BreadCrumbPageHeaderBase from "../BreadCrumbPageHeaderBase";
 import { BreadCrumbPageHeaderProps } from "../BreadCrumbPageHeader.types";
-import { Breadcrumbs } from "@/index.core";
+import Breadcrumbs from "../../Breadcrumbs/core/Breadcrumbs";
 
 const classes = {
   container: "breadCrumbPageHeader_container",

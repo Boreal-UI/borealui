@@ -72,6 +72,7 @@ export interface RatingProps {
 
   /**
    * The size of the rating component.
+   * Star targets remain at least 24 by 24 CSS pixels at every size.
    * One of: "xs" | "small" | "medium" | "large" | "xl"
    *
    * @default configured default size (fallback: "medium")
@@ -79,7 +80,9 @@ export interface RatingProps {
   size?: SizeType;
 
   /**
-   * If true, the user can interact with the rating (hover, click, keyboard navigation).
+   * Enables hover, click and keyboard interaction. Right/Down select and focus
+   * the next radio; Left/Up select and focus the previous, wrapping at boundaries.
+   * Home/End select and focus the first/last. External value changes do not move focus.
    *
    * @default true
    */

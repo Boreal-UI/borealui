@@ -5,7 +5,7 @@ import { forwardRef } from "react";
 import styles from "./BreadCrumbPageHeader.module.scss";
 import BreadCrumbPageHeaderBase from "../BreadCrumbPageHeaderBase";
 import { BreadCrumbPageHeaderProps } from "../BreadCrumbPageHeader.types";
-import { Breadcrumbs } from "@/index.next";
+import Breadcrumbs from "../../Breadcrumbs/next/Breadcrumbs";
 
 const BreadCrumbPageHeader = forwardRef<HTMLElement, BreadCrumbPageHeaderProps>(
   (props, ref) => (

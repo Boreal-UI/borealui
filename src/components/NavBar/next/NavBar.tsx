@@ -33,6 +33,7 @@ const NavBar: React.FC<NavBarProps & { mockPath?: string }> = ({
         children,
         className,
         isActive,
+        "aria-label": itemAriaLabel,
         "data-testid": dataTestId,
         testId = dataTestId,
       }) => href ? (
@@ -42,6 +43,7 @@ const NavBar: React.FC<NavBarProps & { mockPath?: string }> = ({
           rel={rel}
           className={className}
           aria-current={isActive ? "page" : undefined}
+          aria-label={itemAriaLabel}
           data-testid={testId}
         >
           {children}

@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { LineChart } from "../../src/index.core";
+import { LineChart } from "../../src/index.next";
 import type { LineChartProps } from "../../src/components/LineChart/LineChart.types";
 const data = [
   { label: "Mon", value: 4 },

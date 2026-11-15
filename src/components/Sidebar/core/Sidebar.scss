@@ -80,7 +80,7 @@
         --sidebar-glass-text: #{map.get($values, text)};
       }
 
-      &_#{$stateName} .sidebar_active {
+      &_#{$stateName} .sidebar_link.sidebar_active {
         background-color: map.get($values, bg);
         color: map.get($values, text);
 

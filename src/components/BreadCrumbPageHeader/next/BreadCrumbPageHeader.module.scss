@@ -129,7 +129,6 @@
       --breadCrumbPageHeader-glass-text: #{map.get($vals, text)};
       border-width: 2px;
       border-color: map.get($vals, border);
-      color: map.get($vals, text);
     }
   }
 

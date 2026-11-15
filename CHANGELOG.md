@@ -2,6 +2,41 @@
 
 ## Unreleased
 
+### Chrome DevTools audit fixes
+
+- Keep keyboard-active MultiSelect and ComboBox options visible within long lists.
+- Preserve mobile NavBar link names in Core and Next wrappers.
+- Separate chart accents from readable chart/legend text; restore contrast for
+  Breadcrumbs, PageHeader eyebrows, Timeline dates and selected TreeView items.
+- Give every Rating size a minimum 24px target and include displayed values in
+  default searchable MultiSelect trigger names. Explicit naming overrides remain supported.
+- Correct PopOver story trigger composition and use Next chart imports in Next stories.
+- Add unit, SSR, story-boundary and browser regressions. See
+  [audit fix verification](docs/chrome-devtools-fixes-2026-11-15.md).
+
+### Interaction follow-up to 0.3.2
+
+- MultiSelect supports Arrow/Enter navigation without search, exposes its active
+  option, skips disabled options and restores trigger focus on Escape. Disabled
+  native form controls no longer submit values or block required validation.
+- Rating moves actual focus with radio selection. Right/Down advance, Left/Up
+  go back, and arrows wrap at boundaries; external updates never steal focus.
+- ComboBox cannot activate hidden stale options while loading and emits popup
+  ARIA references only while their targets exist.
+- Core and Next share the fixes. Public prop shapes remain unchanged; updated
+  keyboard/loading contracts are included in Types and generated Docs metadata.
+- See [interaction verification and site handoff](docs/release-review-0.3.2-interactions.md).
+
+### Follow-up contrast and table scrolling fixes
+
+- Pair InputGroup and DateTimePicker semantic text with matching solid and hover
+  surfaces in Core and Next; stop forcing dark native date/time controls.
+- Keep Sidebar active semantic foregrounds paired with their surfaces across
+  glass and outline variants.
+- Keep DataTable toolbar, bulk actions, and pagination visible while scrolling
+  horizontally; column headings remain aligned with body columns.
+- Public APIs are unchanged. See [verification and site handoff](docs/release-review-0.3.2-fixes.md).
+
 ### Published 0.3.1 component regressions
 
 - NumberInput delivers both supported callbacks for edits, stepper changes, and

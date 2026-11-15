@@ -319,7 +319,7 @@
 
   .breadcrumbs_item_active {
     font-weight: var(--font-weight-semibold);
-    color: var(--disabled-color);
+    color: inherit;
   }
 
   .breadcrumbs_link {
@@ -341,7 +341,7 @@
 
   .breadcrumbs_current {
     font-weight: var(--font-weight-bold);
-    color: var(--disabled-color);
+    color: inherit;
   }
 
   .breadcrumbs_separator {

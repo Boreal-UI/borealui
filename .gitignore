@@ -32,6 +32,10 @@ pnpm-debug.log*
 # Testing
 coverage/
 jest-test-results.json
+output/playwright/
+output/*-check.log
+output/*-jest.log
+output/browser-install.log
 
 # Lint/formatter
 .eslintcache
@@ -80,14 +84,7 @@ release-notes-p2-themes-composition.md
 p0-p2-regression-review.md
 docs/semrush-site-upgrade.md
 __tests__/semrush-regressions.test.tsx
-__tests__/browser/contrast.spec.ts
-__tests__/browser/fixture.tsx
-__tests__/browser/hydration.spec.ts
-__tests__/browser/index.html
-__tests__/browser/link.tsx
-__tests__/browser/navigation.ts
-__tests__/browser/notification.client.tsx
-__tests__/browser/notification.data.ts
-__tests__/browser/notification.server.tsx
-__tests__/browser/playwright.config.ts
-__tests__/browser/vite.config.ts
+docs/chrome-devtools-audit-2026-11-14.md
+docs/chrome-devtools-fixes-2026-11-15.md
+docs/release-review-0.3.2-fixes.md
+docs/release-review-0.3.2-interactions.md

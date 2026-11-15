@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/nextjs-vite";
-import { BarChart } from "../../src/index.core";
+import { BarChart } from "../../src/index.next";
 import type { BarChartProps } from "../../src/components/BarChart/BarChart.types";
 const data = [
   { label: "Jan", value: 12 },

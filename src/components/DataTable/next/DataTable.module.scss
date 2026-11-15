@@ -22,6 +22,7 @@
 
   .wrapper {
     --data-table-min-width: 600px;
+    container-type: inline-size;
 
     width: 100%;
     max-width: 100%;
@@ -51,17 +52,19 @@
 
     .scrollArea {
       display: grid;
-      width: 100%;
+      width: max-content;
       min-width: 100%;
     }
 
     .toolbar {
+      position: sticky;
+      left: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--spacing-sm);
       flex-wrap: wrap;
-      width: 100%;
+      width: 100cqi;
       min-width: 0;
       padding: var(--spacing-sm);
       box-sizing: border-box;
@@ -99,12 +102,14 @@
 
     .bulkToolbar,
     .pagination {
+      position: sticky;
+      left: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--spacing-sm);
       flex-wrap: wrap;
-      width: 100%;
+      width: 100cqi;
       min-width: 0;
       padding: var(--spacing-sm);
       border-top: 1px solid var(--border-color);

@@ -45,6 +45,7 @@ const meta: Meta<SidebarProps> = {
     rounding: "medium",
     shadow: "light",
     showFooter: false,
+    isLinkActive: (link) => link.href === "/Settings",
   },
 };
 
