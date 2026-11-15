@@ -407,6 +407,35 @@ schema for the same trail in the consuming page.
 Visual collapse requires `maxVisible >= 3`. Static server Breadcrumbs continues
 to render the full trail without a disclosure or `maxVisible` support.
 
+## FileUpload Native Forms
+
+Set `inputProps={{ name: "document" }}` to include accepted files in native
+`FormData`. `required` validates the accepted selection; removing all files or
+resetting the form restores the empty required state. Disabled controls are
+excluded from submission.
+
+`multiple` appends accepted files. Single-file mode replaces the selection with
+the first valid file and announces additional files as rejected. Picker activation
+preserves the current selection and allows choosing the same file again.
+Native synchronization requires browser support for `DataTransfer` and writable
+`input.files`. Always validate uploaded files on the server as well.
+
+Supply a separate submit button for native forms. `onSubmit` is optional; providing
+it displays an Upload action that sends the accepted selection to your callback.
+Choose and Upload actions do not submit the surrounding form.
+
+## Tooltip Dismissal and SplitPane Direction
+
+Tooltip opens on hover or focus. Escape dismisses it until a new hover entry or
+focus, and leaving the pointer does not close a focused trigger's tooltip.
+`keepMountedWhenHidden` controls DOM mounting; hidden content is always
+`aria-hidden`.
+
+Horizontal SplitPane dragging follows computed direction, including inherited
+RTL. Arrow keys move the divider in their physical direction; Home and End choose
+the minimum and maximum start-pane sizes. Vertical resizing proceeds from top to
+bottom.
+
 ## Quick Checklist
 
 Before shipping a page that uses Boreal UI:

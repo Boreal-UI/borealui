@@ -209,3 +209,10 @@ export const GlassOutlineVariants: Story = {
 export const StateOutlineVariants: Story = {
   render: (args) => renderStateOutlineVariants({ component: FileUpload, args }),
 };
+
+export const NativeRequiredForm: Story = {
+  render: (args) => <form onSubmit={(event) => { event.preventDefault(); alert(new FormData(event.currentTarget).getAll("document").map(file => (file as File).name).join(", ")); }}>
+    <FileUpload {...args} required inputProps={{ name: "document" }} />
+    <button type="submit">Submit form</button><button type="reset">Reset</button>
+  </form>,
+};

@@ -64,11 +64,6 @@
     position: relative;
     display: inline-block;
 
-    &:hover .tooltip {
-      opacity: 1;
-      visibility: visible;
-      scale: 1;
-    }
   }
 
   .tooltip {

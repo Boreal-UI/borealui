@@ -2,7 +2,15 @@
 
 ## Unreleased
 
-### Chrome DevTools audit fixes
+### FileUpload, Tooltip and SplitPane regressions
+
+- Synchronize accepted FileUpload selections, removals and native form reset with the named file input for required validation and FormData submission. Upload callbacks remain supported; onSubmit is optional for native forms.
+- Single-file picker/drop selections retain the first valid file and reject additional valid files with accessible feedback. Multiple mode continues appending accepted files.
+- Tooltip Escape dismissal now controls both visual and accessibility state while hovered; hover and focus remain independent.
+- Horizontal SplitPane pointer and physical arrow-key direction now follow computed RTL, including inherited direction. Drag start no longer changes size.
+
+
+### Component accessibility and styling fixes
 
 - Keep keyboard-active MultiSelect and ComboBox options visible within long lists.
 - Preserve mobile NavBar link names in Core and Next wrappers.
@@ -11,8 +19,7 @@
 - Give every Rating size a minimum 24px target and include displayed values in
   default searchable MultiSelect trigger names. Explicit naming overrides remain supported.
 - Correct PopOver story trigger composition and use Next chart imports in Next stories.
-- Add unit, SSR, story-boundary and browser regressions. See
-  [audit fix verification](docs/chrome-devtools-fixes-2026-11-15.md).
+- Add unit, SSR, story-boundary and browser regressions.
 
 ### Interaction follow-up to 0.3.2
 
@@ -25,7 +32,6 @@
   ARIA references only while their targets exist.
 - Core and Next share the fixes. Public prop shapes remain unchanged; updated
   keyboard/loading contracts are included in Types and generated Docs metadata.
-- See [interaction verification and site handoff](docs/release-review-0.3.2-interactions.md).
 
 ### Follow-up contrast and table scrolling fixes
 
@@ -35,7 +41,7 @@
   glass and outline variants.
 - Keep DataTable toolbar, bulk actions, and pagination visible while scrolling
   horizontally; column headings remain aligned with body columns.
-- Public APIs are unchanged. See [verification and site handoff](docs/release-review-0.3.2-fixes.md).
+- Public APIs are unchanged.
 
 ### Published 0.3.1 component regressions
 
@@ -55,9 +61,7 @@
 - NotificationCenter renders deterministic UTC timestamps for SSR/initial
   hydration, then localizes after mount with optional `locale` and `timeZone`.
   Semantic time elements preserve ISO values and accessible relationships.
-- Affects Core, Next, Types, and Docs. See
-  [contracts and site handoff](docs/release-review-0.3.1-fixes.md) for compatibility
-  details and post-release verification. No standalone server entries are added.
+- Affects Core, Next, Types, and Docs. No standalone server entries are added.
 
 
 ### Toolbar public heading level

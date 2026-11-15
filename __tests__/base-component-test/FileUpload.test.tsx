@@ -546,6 +546,15 @@ describe("BaseFileUpload", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("omits the Upload action for native-only submission", () => {
+    const { input } = renderFileUpload({ onSubmit: undefined });
+    fireEvent.change(input, {
+      target: { files: [createFile("native.txt", "text/plain", 10)] },
+    });
+    expect(screen.getByText("native.txt")).toBeInTheDocument();
+    expect(screen.queryByTestId("upload-upload-button")).not.toBeInTheDocument();
+  });
+
   it("disables the choose file button and applies disabled class when disabled", () => {
     const { wrapper, fileButton, input } = renderFileUpload({
       disabled: true,
@@ -556,7 +565,7 @@ describe("BaseFileUpload", () => {
     expect(input).toBeDisabled();
   });
 
-  it("disables the upload button when component is disabled even if files exist", () => {
+  it("ignores synthetic selection while disabled", () => {
     const file = createFile("good.txt", "text/plain", 1000);
 
     renderFileUpload({ disabled: true });
@@ -565,7 +574,7 @@ describe("BaseFileUpload", () => {
       target: { files: [file] },
     });
 
-    expect(screen.getByTestId("upload-upload-button")).toBeDisabled();
+    expect(screen.queryByTestId("upload-upload-button")).not.toBeInTheDocument();
   });
 
   it("applies errorMessage class when errorMessage is provided", () => {

@@ -1,3 +1,4 @@
+import { ReleaseDefects } from "./release-defects.fixture";
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { defaultColorSchemes } from "../../src/styles/Themes";
@@ -77,7 +78,9 @@ function Fixture() {
   </main>;
 }
 createRoot(document.getElementById("root")!).render(
-  new URLSearchParams(location.search).get("mode") === "audit-fixes"
+  new URLSearchParams(location.search).get("mode") === "release-defects"
+    ? <ReleaseDefects />
+    : new URLSearchParams(location.search).get("mode") === "audit-fixes"
     ? <AuditFixFixture variant={new URLSearchParams(location.search).get("variant")==="server"?"server":next?"next":"core"} />
     : new URLSearchParams(location.search).get("mode") === "interactions"
     ? <InteractionRegressionExamples MultiSelect={MultiSelect} ComboBox={ComboBox} Rating={next ? NextRating : CoreRating} />

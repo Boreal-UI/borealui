@@ -12,7 +12,6 @@ Start here:
 - [CLI](./cli.md)
 - [Public API Reference](./public-api-reference.md)
 - [Select Forms and DataTable Scrolling](./select-and-datatable-native-behavior.md)
-- [Select and DataTable Release Notes](./release-notes-select-datatable.md)
 - [Field Layout, Validation and Responsive Content](./field-layout-validation-responsive-content.md)
 - [Semantic Themes, Overlays and Recipes](./semantic-themes-overlays-recipes.md)
 - [Styling and Theming](./styling-and-theming.md)

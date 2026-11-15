@@ -87,3 +87,7 @@ export const GlassOutlineVariants: Story = {
 export const StateOutlineVariants: Story = {
   render: (args) => renderStateOutlineVariants({ component: SplitPane, args }),
 };
+
+export const RightToLeft: Story = {
+  render: (args) => <div dir="rtl"><SplitPane {...args} startPane="Start" endPane="End" /></div>,
+};
