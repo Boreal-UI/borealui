@@ -12,6 +12,54 @@ export const timePickerPropDocs: GeneratedComponentDoc = {
   "sourcePath": "src/components/TimePicker/TimePicker.types.ts",
   "props": [
     {
+      "name": "aria-describedby",
+      "type": "string",
+      "description": "Accessible description reference merged with inputProps, helper and error descriptions.",
+      "required": false,
+      "inherited": false,
+      "category": "aria"
+    },
+    {
+      "name": "aria-errormessage",
+      "type": "string",
+      "description": "Accessible external error message reference forwarded to the input.",
+      "required": false,
+      "inherited": false,
+      "category": "aria"
+    },
+    {
+      "name": "aria-invalid",
+      "type": "boolean | \"true\" | \"false\" | \"grammar\" | \"spelling\"",
+      "description": "External validation state forwarded to the input; overrides derived validation.",
+      "required": false,
+      "inherited": false,
+      "category": "aria"
+    },
+    {
+      "name": "aria-label",
+      "type": "string",
+      "description": "Accessible name forwarded to the native input; takes precedence over inputProps.",
+      "required": false,
+      "inherited": false,
+      "category": "aria"
+    },
+    {
+      "name": "aria-labelledby",
+      "type": "string",
+      "description": "Accessible name reference forwarded to the native input.",
+      "required": false,
+      "inherited": false,
+      "category": "aria"
+    },
+    {
+      "name": "aria-required",
+      "type": "boolean | \"true\" | \"false\"",
+      "description": "Accessible required state forwarded to the input; use required for native validation.",
+      "required": false,
+      "inherited": false,
+      "category": "aria"
+    },
+    {
       "name": "autoComplete",
       "type": "React.HTMLInputAutoCompleteAttribute",
       "description": "Optional autocomplete value.",

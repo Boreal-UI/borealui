@@ -60,6 +60,9 @@ export default function DateRangePickerBase({
   const describedBy = [ariaDescribedBy, helperId, errorId]
     .filter(Boolean)
     .join(" ");
+  // Endpoint ordering narrows the consumer's bounds; it must never relax them.
+  const startMax = max && value.end ? (max < value.end ? max : value.end) : max || value.end;
+  const endMin = min && value.start ? (min > value.start ? min : value.start) : min || value.start;
 
   const getDateInputValue = (next: DateInputChange): string => {
     if (typeof next === "string") return next;
@@ -133,7 +136,7 @@ export default function DateRangePickerBase({
               name={name ? `${name}-start` : undefined}
               type="date"
               min={min}
-              max={value.end || max}
+              max={startMax || undefined}
               value={value.start}
               shadow="none"
               size={size}
@@ -144,6 +147,7 @@ export default function DateRangePickerBase({
               aria-invalid={
                 Boolean(errorMessage) || state === "error" || undefined
               }
+              aria-errormessage={errorId}
               onChange={(next: DateInputChange) => {
                 onChange?.({
                   ...value,
@@ -171,7 +175,7 @@ export default function DateRangePickerBase({
               id={`${resolvedId}-end`}
               name={name ? `${name}-end` : undefined}
               type="date"
-              min={value.start || min}
+              min={endMin || undefined}
               max={max}
               variant={variant}
               shadow="none"
@@ -183,6 +187,7 @@ export default function DateRangePickerBase({
               aria-invalid={
                 Boolean(errorMessage) || state === "error" || undefined
               }
+              aria-errormessage={errorId}
               onChange={(next: DateInputChange) => {
                 onChange?.({
                   ...value,

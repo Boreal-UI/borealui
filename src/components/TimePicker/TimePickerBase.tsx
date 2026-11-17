@@ -71,6 +71,11 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
       role: roleProp,
       "aria-describedby": ariaDescribedBy,
       "aria-disabled": ariaDisabled,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-invalid": ariaInvalid,
+      "aria-required": ariaRequired,
+      "aria-errormessage": ariaErrorMessage,
       ...restRoot
     } = rest;
 
@@ -81,7 +86,7 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
     const errorId = errorMessage ? `${rootId}-errorMessage` : undefined;
     const srDescriptionId = srOnlyText ? `${rootId}-sr-helperText` : undefined;
     const describedBy =
-      [ariaDescribedBy, helperId, errorId, srDescriptionId]
+      [ariaDescribedBy, inputProps?.["aria-describedby"], helperId, errorId, srDescriptionId]
         .filter(Boolean)
         .join(" ") || undefined;
     const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue ?? "");
@@ -89,6 +94,7 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
       (!(disabled || loading || readOnly) && isInvalidTime(value ?? uncontrolledValue, min, max, step,
         value ?? defaultValue, required)));
     const computedAriaDisabled = ariaDisabled ?? (disabled || undefined);
+    const resolvedAriaInvalid = ariaInvalid ?? inputProps?.["aria-invalid"] ?? (invalid || undefined);
     const isControlled = value !== undefined;
     useEffect(() => {
       const input = inputRef.current;
@@ -232,19 +238,19 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
               autoComplete={autoComplete}
               title={title}
               aria-label={
-                inputProps?.["aria-label"] ??
-                (!label && !inputProps?.["aria-labelledby"]
+                ariaLabel ?? inputProps?.["aria-label"] ??
+                (!label && !ariaLabelledBy && !inputProps?.["aria-labelledby"]
                   ? "Time"
                   : undefined)
               }
               aria-labelledby={
-                inputProps?.["aria-labelledby"] ??
-                (!inputProps?.["aria-label"] ? labelId : undefined)
+                ariaLabelledBy ?? inputProps?.["aria-labelledby"] ??
+                (!ariaLabel && !inputProps?.["aria-label"] ? labelId : undefined)
               }
               aria-describedby={describedBy}
-              aria-invalid={invalid || undefined}
-              aria-errormessage={errorMessage ? errorId : undefined}
-              aria-required={required || undefined}
+              aria-invalid={resolvedAriaInvalid}
+              aria-errormessage={ariaErrorMessage ?? inputProps?.["aria-errormessage"] ?? (errorMessage ? errorId : undefined)}
+              aria-required={ariaRequired ?? inputProps?.["aria-required"] ?? (required || undefined)}
               data-testid={`${testId}-input`}
             />
 

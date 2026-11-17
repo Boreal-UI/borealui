@@ -87,6 +87,10 @@ const meta: Meta<DateRangePickerProps> = {
 };
 
 export default meta;
+
+export const GlobalBoundsWithInvalidValue: Story = {
+  args: { label: "Trip dates", min: "2026-11-01", max: "2026-11-30", value: { start: "2026-10-20", end: "2026-12-20" }, errorMessage: "Keep both dates within November." },
+};
 export const DistinctEndpointNames: Story = {
   args: { label: "Trip dates", startLabel: "Departure", endLabel: "Return", value: { start: "2026-11-01", end: "2026-11-15" } },
 };

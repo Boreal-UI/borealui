@@ -29,6 +29,10 @@ const meta: Meta<TimePickerProps> = {
 };
 
 export default meta;
+
+export const ExternalAccessibleName: Story = {
+  args: { label: undefined, "aria-label": "Reservation time", "aria-invalid": true, errorMessage: "Choose an available reservation." },
+};
 export const Overnight: Story = {
   args: { label: "Overnight time", defaultValue: "23:00", min: "22:00", max: "02:00", helperText: "Available from 22:00 through 02:00, across midnight." },
 };

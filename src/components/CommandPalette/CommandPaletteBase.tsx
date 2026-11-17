@@ -160,7 +160,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
 
     setIsLoading(true);
     debounceRef.current = setTimeout(() => {
-      asyncSearch(q)
+      Promise.resolve().then(() => asyncSearch(q))
         .then((results) => {
           if (searchRequestRef.current !== requestId) return;
           setAsyncResults(results);
@@ -358,12 +358,12 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   if (!open || !mounted || !portalElement) return null;
 
   const activeItem =
-    activeIndex >= 0 && filtered[activeIndex]
+    activeIndex >= 0 && filtered[activeIndex] && !filtered[activeIndex].disabled
       ? filtered[activeIndex]
       : undefined;
 
   const computedActiveDescendant =
-    (filtered.some((item, index) => !item.disabled && getItemId(item, index) === ariaActiveDescendant)
+    (activeItem && getItemId(activeItem, activeIndex) === ariaActiveDescendant
       ? ariaActiveDescendant : undefined) ??
     (activeItem ? getItemId(activeItem, activeIndex) : undefined);
 

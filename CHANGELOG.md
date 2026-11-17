@@ -2,6 +2,20 @@
 
 ## Unreleased
 
+### Development dependency security
+
+- Patch root Next.js and the Next 16 compatibility fixtures to 16.4.6; refresh qs to 6.17.1 and systeminformation to 5.33.23.
+- Keep Jest 30.5.2. Scope dependency overrides to vulnerable glob (14.0.6) and minimatch (11.0.9) ranges while leaving unaffected minimatch 3 consumers unchanged.
+- Add cancellation, pattern-amplification, query-serialization and coverage/glob compatibility regressions. These updates affect development tooling; consumer applications must patch their own Next.js installations.
+
+- Upgrade the Chromatic CLI from 16.10.0 to 18.14.5 and run visual CI on Node 22 to match its engine requirement. Local Chromatic uploads also require Node 22+; published library consumer compatibility is unchanged.
+
+### Pre-release validation follow-up
+
+- Forward DatePicker/TimePicker public ARIA names, validation state, required state and error references to their native inputs. Preserve explicit overrides and nested input descriptions; DateRangePicker errors now reach both endpoints.
+- Intersect DateRangePicker ordering constraints with global min/max so invalid controlled values cannot relax the allowed range.
+- Keep CommandPalette active-descendant metadata aligned with its selected command. Treat synchronous search-provider throws like rejected requests instead of leaving loading stuck.
+
 ### Advanced controls follow-up to 0.3.4
 
 - DateRangePicker inputs and calendar actions now use distinct endpoint labels, including rich labels. Group legends and descriptions remain intact. Add optional endpoint naming overrides.

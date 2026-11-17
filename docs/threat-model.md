@@ -77,7 +77,44 @@ label precedence across native and framework render paths.
 
 ## Change template
 
+### Development dependency advisories, November 2026
+
+The root lockfile's reported glob cancellation, minimatch pattern amplification,
+Next cache-isolation, qs serialization and systeminformation advisories are
+addressed through upstream patched releases. Next is pinned to 16.4.6 in the
+workspace and the Next 16 compatibility fixtures. qs/systeminformation stay in
+their parents' compatible ranges. Overrides replace only glob >=9 <14.0.2 and
+minimatch >=7 <11.0.1; unaffected minimatch 3 consumers remain on their existing
+API. Jest stays at 30.5.2.
+
+The overrides cross transitive major ranges, so the regression gate exercises
+CommonJS aliases, sync/async globbing, coverage inclusion/exclusion, stream and
+Promise cancellation, bounded adversarial preprocessing, and malformed comma
+serialization. Node 20.19 is explicitly exercised in addition to the local runtime.
+Full coverage, docs generation, lint, build, Storybook and package checks validate
+the direct callers. Remove the overrides once every affected parent natively
+accepts patched versions, after rerunning these checks and npm audit.
+
+These are development-tool dependency paths, not a claim that all advisory
+preconditions were reachable through a published Boreal component. Root Next
+patching does not enforce consumer framework versions, and npm's graph audit does
+not inspect separately downloaded Cypress browser binaries. No audit thresholds
+or integrity checks are weakened. Owner: library maintainers.
+
 ### Current-query command activation and time constraints
+
+Chromatic tooling is pinned to 18.14.5 with npm lockfile integrity. Its visual CI
+lane uses Node 22 to meet the CLI's runtime requirement. The existing conditional
+secret-gated upload, ignored install scripts and review of visual changes remain
+in place; this introduces no new upload destination or credentials. Local
+Storybook compilation, CLI version/help and workflow tests cover the upgrade;
+no Chromatic cloud build was started.
+
+The November 17 follow-up also normalizes synchronous provider throws into the
+existing rejected-request path, preserving sequencing and avoiding uncaught timer
+errors/stuck loading. Active-descendant overrides cannot advertise a different
+command from the selected action. Regression cases verify both contracts through
+Core and Next; no new capability or trust boundary is introduced.
 
 Async command providers and consumer constraints remain existing input boundaries.
 Only enabled, rendered current-query commands can execute; pending and superseded

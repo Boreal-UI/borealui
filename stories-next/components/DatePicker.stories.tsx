@@ -30,6 +30,10 @@ const meta: Meta<DatePickerProps> = {
 
 export default meta;
 
+export const ExternalAccessibleName: Story = {
+  args: { label: undefined, "aria-label": "Reservation date", "aria-invalid": true, errorMessage: "Choose an available reservation." },
+};
+
 type Story = StoryObj<DatePickerProps>;
 
 export const Sizes: Story = {

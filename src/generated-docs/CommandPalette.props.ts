@@ -14,7 +14,7 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
     {
       "name": "aria-activedescendant",
       "type": "string",
-      "description": "Optional active option ID. Used only when it identifies an enabled, currently rendered result; omitted while loading.",
+      "description": "Optional active option ID. Used only when it identifies the enabled, currently selected result; omitted while loading. Does not control selection.",
       "required": false,
       "inherited": false,
       "category": "aria"
@@ -22,7 +22,7 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
     {
       "name": "asyncSearch",
       "type": "((query: string) => Promise<CommandItem[]>)",
-      "description": "Search the current query asynchronously. Previous results are hidden and cannot activate during debounce/loading; stale responses are ignored. Keyboard navigation reveals active results while focus stays in the input.",
+      "description": "Search the current query asynchronously. Previous results are hidden and cannot activate during debounce/loading; stale responses are ignored. Synchronous throws and rejected promises both resolve to the empty state. Keyboard navigation reveals active results while focus stays in the input.",
       "required": false,
       "inherited": false,
       "category": "events"

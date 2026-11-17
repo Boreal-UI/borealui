@@ -33,6 +33,7 @@
     "audit:attw": "npm run stage:split-packages && node scripts/auditAttw.cjs",
     "audit:package-quality": "npm run audit:package && npm run audit:docs-separation && npm run audit:publint && npm run audit:attw && npm run test:package-consumers",
     "test:toolbar:consumer": "node scripts/checkToolbarConsumer.cjs",
+    "test:dependency-security": "node scripts/checkDependencySecurity.cjs",
     "test:package-consumers": "node scripts/checkToolbarConsumer.cjs && node scripts/checkReleaseConsumer.cjs",
     "test:browser:regressions": "playwright test --config __tests__/browser/playwright.config.ts",
     "audit:dependencies": "npm run audit:dependencies:runtime && npm run audit:dependencies:all",
@@ -135,7 +136,7 @@
     "@types/sanitize-html": "^2.16.1",
     "@vitejs/plugin-react": "^6.0.5",
     "axe-core": "^4.11.4",
-    "chromatic": "16.10.0",
+    "chromatic": "18.14.5",
     "cypress": "^15.21.1",
     "cypress-axe": "^1.7.0",
     "esbuild": "^0.28.2",
@@ -153,7 +154,7 @@
     "jest-axe": "^10.0.0",
     "jest-environment-jsdom": "^30.5.2",
     "marked": "^18.0.7",
-    "next": "16.4.3",
+    "next": "16.4.6",
     "publint": "^0.3.21",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
@@ -173,7 +174,9 @@
     "vite-plugin-lib-inject-css": "^2.2.2"
   },
   "overrides": {
-    "storybook": "$storybook"
+    "storybook": "$storybook",
+    "glob@>=9.0.0 <14.0.2": "14.0.6",
+    "minimatch@>=7.0.0 <11.0.1": "11.0.9"
   },
   "private": true
 }

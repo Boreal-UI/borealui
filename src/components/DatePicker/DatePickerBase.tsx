@@ -69,6 +69,11 @@ const DatePickerBase = forwardRef<HTMLDivElement, DatePickerBaseProps>(
       role: roleProp,
       "aria-describedby": ariaDescribedBy,
       "aria-disabled": ariaDisabled,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-invalid": ariaInvalid,
+      "aria-required": ariaRequired,
+      "aria-errormessage": ariaErrorMessage,
       ...restRoot
     } = rest;
 
@@ -79,15 +84,16 @@ const DatePickerBase = forwardRef<HTMLDivElement, DatePickerBaseProps>(
     const errorId = errorMessage ? `${rootId}-errorMessage` : undefined;
     const srDescriptionId = srOnlyText ? `${rootId}-sr-helperText` : undefined;
     const describedBy =
-      [ariaDescribedBy, helperId, errorId, srDescriptionId]
+      [ariaDescribedBy, inputProps?.["aria-describedby"], helperId, errorId, srDescriptionId]
         .filter(Boolean)
         .join(" ") || undefined;
     const invalidRange = min && max ? min > max : false;
     const outOfBounds = value
       ? (min ? value < min : false) || (max ? value > max : false)
       : false;
-    const invalid = Boolean(errorMessage || invalidRange || outOfBounds);
+    const invalid = Boolean(errorMessage || state === "error" || invalidRange || outOfBounds);
     const computedAriaDisabled = ariaDisabled ?? (disabled || undefined);
+    const resolvedAriaInvalid = ariaInvalid ?? inputProps?.["aria-invalid"] ?? (invalid || undefined);
 
     const containerClass = useMemo(
       () =>
@@ -210,19 +216,19 @@ const DatePickerBase = forwardRef<HTMLDivElement, DatePickerBaseProps>(
               autoComplete={autoComplete}
               title={title}
               aria-label={
-                inputProps?.["aria-label"] ??
-                (!label && !inputProps?.["aria-labelledby"]
+                ariaLabel ?? inputProps?.["aria-label"] ??
+                (!label && !ariaLabelledBy && !inputProps?.["aria-labelledby"]
                   ? "Date"
                   : undefined)
               }
               aria-labelledby={
-                inputProps?.["aria-labelledby"] ??
-                (!inputProps?.["aria-label"] ? labelId : undefined)
+                ariaLabelledBy ?? inputProps?.["aria-labelledby"] ??
+                (!ariaLabel && !inputProps?.["aria-label"] ? labelId : undefined)
               }
               aria-describedby={describedBy}
-              aria-invalid={invalid || undefined}
-              aria-errormessage={errorMessage ? errorId : undefined}
-              aria-required={required || undefined}
+              aria-invalid={resolvedAriaInvalid}
+              aria-errormessage={ariaErrorMessage ?? inputProps?.["aria-errormessage"] ?? (errorMessage ? errorId : undefined)}
+              aria-required={ariaRequired ?? inputProps?.["aria-required"] ?? (required || undefined)}
               data-testid={`${testId}-input`}
             />
 

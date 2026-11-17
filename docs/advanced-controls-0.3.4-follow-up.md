@@ -98,6 +98,68 @@ was read as evidence; its post-release rerun remains a site handoff step.
 
 ## Post-release site checklist
 
+### November 17 pre-release review
+
+A targeted follow-up found and fixed four additional defects on `Dev`:
+
+- DatePicker and TimePicker forwarded public ARIA names/validation attributes to
+  their wrapper instead of the native input. Input naming, required/invalid state,
+  error references, and nested input descriptions now reach the input. DatePicker
+  also honors `state="error"`; DateRangePicker errors reach both real endpoints.
+  Explicit top-level ARIA overrides take precedence over `inputProps` and derived
+  state. Native constraints still require `required`, `min`, and `max`.
+- DateRangePicker replaced global max/min with the other endpoint even when that
+  endpoint was outside the allowed range. Endpoint ordering now intersects with
+  global bounds, including invalid controlled values.
+- CommandPalette accepted an active-descendant override for a different enabled
+  result, so assistive technology could announce a different command from the one
+  Enter executed. Overrides are now accepted only for the current selected result;
+  ARIA metadata is not a selection-control prop.
+- A synchronous throw from an async search provider escaped its timer callback
+  and left loading stuck. Synchronous errors now use the same empty-state/recovery
+  path as rejected promises, while request sequencing remains intact.
+
+These are behavior corrections to existing props; no dependency or package-version
+changes are required. Core and Next share the fixes. Public declarations, generated
+Docs metadata, stories and built-package SSR consumer regressions are updated.
+
+The new `ReleaseReadiness.test.tsx` reproduced 12 failures before implementation
+(six cases per wrapper). Evidence for this review is separate from the November
+15 results, under `output/library-review/2026-11-17-release-readiness/`.
+
+Verification for the November 17 follow-up:
+
+| Check | Result |
+| --- | --- |
+| Full Jest suite | 134 suites, 2,799 tests passed |
+| Focused picker/palette tests | 168 passed; new review cases separately passed all 12 |
+| Accessibility selection | 145 passed; new public-ARIA axe checks also pass in the focused suite |
+| Browser regressions | 12 each passed in Chrome, Firefox and Windows WebKit (36 executions) |
+| Types and Cypress types | Passed |
+| Lint and SCSS/parity | Passed; existing style parity warnings remain |
+| Generated Docs | All 84 files reproducible |
+| Build/output audits | Passed |
+| Package quality and consumer SSR/types | Passed |
+
+Windows WebKit's text fallback for native date/time controls is feature-detected:
+library ARIA/error presentation passes, but native range/step validation is only
+asserted when the engine implements that input type. No dedicated server entries
+exist for these controls; Core/Next SSR attributes are checked in built-package
+consumers. Live screen readers, production-site deployment, exhaustive component
+coverage and CI-only security/release gates remain outside this targeted pass.
+
+The initial fresh dependency audit was blocked by automatic approval review
+because npm audit sends dependency names/versions to the external npm registry.
+After the user explicitly authorized it, the November 17 remediation reduced
+the full npm audit from 38 findings to zero while retaining Jest 30.5.2. The
+November 15 dependency results above are historical. See the dependency security
+entry in the changelog and the threat model for override scope and validation.
+The site-wide overflow audit also remains unverified: its initial invocation
+could not launch bundled Chromium, and the audit targets a running documentation
+site rather than the local component fixture. The site checkout is unchanged.
+
+### After the reviewed packages are released
+
 Target checkout: `C:\Users\davin\OneDrive\Documents\Web Design\boreal-ui-site`.
 Do not apply these steps until the reviewed packages have been released.
 

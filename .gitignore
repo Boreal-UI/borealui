@@ -81,6 +81,7 @@ docs/development-workflow-local.md
 # generated Docs
 release-notes-p1-composition.md
 release-notes-p2-themes-composition.md
+advanced-controls-0.3.4-follow-up.md
 p0-p2-regression-review.md
 docs/semrush-site-upgrade.md
 __tests__/semrush-regressions.test.tsx
@@ -139,3 +140,28 @@ output/library-review/0.3.4-advanced-controls-follow-up/advanced-controls-types.
 output/library-review/0.3.4-advanced-controls-follow-up/advanced-controls-unit-final.log
 output/library-review/0.3.4-advanced-controls-follow-up/advanced-controls-unit.log
 output/library-review/0.3.4-advanced-controls-follow-up/advanced-controls-webkit.log
+output/chromatic-upgrade-install.log
+output/release-readiness-dependency-tree.log
+output/release-readiness-packages.log
+output/library-review/2026-11-17-release-readiness/release-readiness-a11y.log
+output/library-review/2026-11-17-release-readiness/release-readiness-build.log
+output/library-review/2026-11-17-release-readiness/release-readiness-chrome.log
+output/library-review/2026-11-17-release-readiness/release-readiness-docs.log
+output/library-review/2026-11-17-release-readiness/release-readiness-firefox.log
+output/library-review/2026-11-17-release-readiness/release-readiness-focused.log
+output/library-review/2026-11-17-release-readiness/release-readiness-lint.log
+output/library-review/2026-11-17-release-readiness/release-readiness-new-tests.log
+output/library-review/2026-11-17-release-readiness/release-readiness-overflow.log
+output/library-review/2026-11-17-release-readiness/release-readiness-reproduction.log
+output/library-review/2026-11-17-release-readiness/release-readiness-styles.log
+output/library-review/2026-11-17-release-readiness/release-readiness-types.log
+output/library-review/2026-11-17-release-readiness/release-readiness-unit.log
+output/library-review/2026-11-17-release-readiness/release-readiness-webkit.log
+output/chromatic-upgrade-help.log
+output/chromatic-upgrade-storybook.log
+output/chromatic-upgrade-types.log
+docs/advanced-controls-0.3.4-follow-up.md
+docs/advanced-controls-0.3.4-follow-up.md
+output/chromatic-upgrade-workflows.log
+docs/advanced-controls-0.3.4-follow-up.md
+docs/advanced-controls-0.3.4-follow-up.md
