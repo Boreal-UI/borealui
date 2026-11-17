@@ -43,7 +43,7 @@ export interface TimePickerProps extends NativeTimePickerProps {
   name?: string;
 
   /**
-   * Minimum selectable time.
+   * Minimum selectable time. A min later than max defines a range crossing midnight.
    */
   min?: string;
 
@@ -53,9 +53,9 @@ export interface TimePickerProps extends NativeTimePickerProps {
   max?: string;
 
   /**
-   * Time step in seconds.
+   * Time step in seconds, including fractional seconds; "any" disables step validation.
    */
-  step?: number;
+  step?: number | "any";
 
   /**
    * Whether the input is required.

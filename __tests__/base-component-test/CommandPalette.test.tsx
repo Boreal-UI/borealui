@@ -945,7 +945,7 @@ describe("CommandPaletteBase", () => {
     );
   });
 
-  it("respects a provided aria-activedescendant override", () => {
+  it("ignores an aria-activedescendant override without a rendered target", () => {
     render(
       <CommandPaletteBase
         open
@@ -953,6 +953,7 @@ describe("CommandPaletteBase", () => {
         onClose={jest.fn()}
         TextInputComponent={DummyTextInput}
         classMap={classMap}
+        listboxId="palette-listbox"
         aria-activedescendant="custom-active-descendant"
         data-testid="command-palette"
       />,
@@ -960,7 +961,7 @@ describe("CommandPaletteBase", () => {
 
     expect(screen.getByRole("combobox")).toHaveAttribute(
       "aria-activedescendant",
-      "custom-active-descendant",
+      "palette-listbox-option-settings",
     );
   });
 

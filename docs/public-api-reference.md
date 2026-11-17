@@ -235,3 +235,9 @@ but cannot activate.
 NotificationCenter accepts `locale` and `timeZone` for post-hydration formatting.
 Server/initial hydration output is deterministic `HH:mm UTC`; identical input
 Dates are still required.
+
+## Advanced control naming, validation and navigation
+
+See [the advanced controls follow-up](./advanced-controls-0.3.4-follow-up.md)
+for DateRangePicker endpoint naming overrides, periodic TimePicker constraints,
+and CommandPalette loading and keyboard visibility contracts.

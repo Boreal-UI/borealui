@@ -87,6 +87,9 @@ const meta: Meta<DateRangePickerProps> = {
 };
 
 export default meta;
+export const DistinctEndpointNames: Story = {
+  args: { label: "Trip dates", startLabel: "Departure", endLabel: "Return", value: { start: "2026-11-01", end: "2026-11-15" } },
+};
 type Story = StoryObj<DateRangePickerProps>;
 
 export const Sizes: Story = {

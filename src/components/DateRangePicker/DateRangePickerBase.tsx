@@ -19,6 +19,10 @@ export default function DateRangePickerBase({
   label,
   startLabel = "Start date",
   endLabel = "End date",
+  startInputProps,
+  endInputProps,
+  startPickerButtonAriaLabel,
+  endPickerButtonAriaLabel,
   labelPosition = "top",
   min,
   max,
@@ -114,9 +118,14 @@ export default function DateRangePickerBase({
           </span>
         ) : null}
         <div className={groupClass}>
-          <label className={classMap.field}>
-            <span className={classMap.fieldLabel}>{startLabel}</span>
+          <div className={classMap.field}>
+            <label id={`${resolvedId}-start-label`} htmlFor={`${resolvedId}-start-input`} className={classMap.fieldLabel}>{startLabel}</label>
+            <span id={`${resolvedId}-start-action`} className="sr_only">Open date picker for</span>
             <DatePickerComponent
+              inputProps={{ "aria-labelledby": startInputProps?.["aria-label"] ? undefined : `${resolvedId}-start-label`, ...startInputProps }}
+              buttonProps={{ "aria-labelledby": startPickerButtonAriaLabel ? undefined : `${resolvedId}-start-action ${resolvedId}-start-label` }}
+              pickerButtonAriaLabel={startPickerButtonAriaLabel}
+              aria-describedby={describedBy || undefined}
               theme={theme}
               state={state}
               fullWidth
@@ -144,13 +153,18 @@ export default function DateRangePickerBase({
               className={combineClassNames(classMap.input, inputClassName)}
               data-testid={`${resolvedTestId}-start`}
             />
-          </label>
+          </div>
           <span className={classMap.separator} aria-hidden="true">
             –
           </span>
-          <label className={classMap.field}>
-            <span className={classMap.fieldLabel}>{endLabel}</span>
+          <div className={classMap.field}>
+            <label id={`${resolvedId}-end-label`} htmlFor={`${resolvedId}-end-input`} className={classMap.fieldLabel}>{endLabel}</label>
+            <span id={`${resolvedId}-end-action`} className="sr_only">Open date picker for</span>
             <DatePickerComponent
+              inputProps={{ "aria-labelledby": endInputProps?.["aria-label"] ? undefined : `${resolvedId}-end-label`, ...endInputProps }}
+              buttonProps={{ "aria-labelledby": endPickerButtonAriaLabel ? undefined : `${resolvedId}-end-action ${resolvedId}-end-label` }}
+              pickerButtonAriaLabel={endPickerButtonAriaLabel}
+              aria-describedby={describedBy || undefined}
               theme={theme}
               state={state}
               fullWidth
@@ -178,7 +192,7 @@ export default function DateRangePickerBase({
               className={combineClassNames(classMap.input, inputClassName)}
               data-testid={`${resolvedTestId}-end`}
             />
-          </label>
+          </div>
         </div>
         {helperText ? (
           <div

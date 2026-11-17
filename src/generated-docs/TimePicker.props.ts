@@ -179,7 +179,7 @@ export const timePickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "min",
       "type": "string",
-      "description": "Minimum selectable time.",
+      "description": "Minimum selectable time. A min later than max defines a range crossing midnight.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -295,8 +295,8 @@ export const timePickerPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "step",
-      "type": "number",
-      "description": "Time step in seconds.",
+      "type": "number | \"any\"",
+      "description": "Time step in seconds, including fractional seconds; \"any\" disables step validation.",
       "required": false,
       "inherited": false,
       "category": "props"

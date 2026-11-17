@@ -77,6 +77,18 @@ label precedence across native and framework render paths.
 
 ## Change template
 
+### Current-query command activation and time constraints
+
+Async command providers and consumer constraints remain existing input boundaries.
+Only enabled, rendered current-query commands can execute; pending and superseded
+results cannot activate through keyboard handlers or absent ARIA targets. Deferred
+promise regressions exercise query changes, out-of-order replies, rejection and
+close/reopen. This does not make provider-supplied actions trusted: consumers still
+authorize actions. Time parsing is bounded to native time syntax and normalizes
+precision before periodic/step comparisons; it is UI validation, not server-side
+enforcement. No new network, HTML, storage, dependency or publication capability
+is introduced. Owner: library maintainers.
+
 ### Native file selection reconciliation
 
 FileUpload picker/drop files are untrusted browser input. The accepted selection

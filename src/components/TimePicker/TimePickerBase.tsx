@@ -1,4 +1,5 @@
-import { ChangeEvent, forwardRef, useId, useMemo, useRef } from "react";
+import { ChangeEvent, forwardRef, useEffect, useId, useMemo, useRef, useState } from "react";
+import { isInvalidTime } from "./timeValidity";
 import { TimePickerBaseProps } from "./TimePicker.types";
 import { combineClassNames } from "../../utils/classNames";
 import { CalendarIcon } from "../../Icons";
@@ -83,13 +84,30 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
       [ariaDescribedBy, helperId, errorId, srDescriptionId]
         .filter(Boolean)
         .join(" ") || undefined;
-    const invalidRange = min && max ? min > max : false;
-    const outOfBounds = value
-      ? (min ? value < min : false) || (max ? value > max : false)
-      : false;
-    const invalid = Boolean(errorMessage || invalidRange || outOfBounds);
+    const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue ?? "");
+    const invalid = Boolean(errorMessage || state === "error" ||
+      (!(disabled || loading || readOnly) && isInvalidTime(value ?? uncontrolledValue, min, max, step,
+        value ?? defaultValue, required)));
     const computedAriaDisabled = ariaDisabled ?? (disabled || undefined);
     const isControlled = value !== undefined;
+    useEffect(() => {
+      const input = inputRef.current;
+      if (!input || isControlled) return;
+      setUncontrolledValue(input.value);
+      const form = input.form;
+      if (!form) return;
+      let resetTimer: ReturnType<typeof setTimeout> | undefined;
+      const reset = (event: Event) => {
+        resetTimer = setTimeout(() => {
+          if (!event.defaultPrevented) setUncontrolledValue(input.value);
+        }, 0);
+      };
+      form.addEventListener("reset", reset);
+      return () => {
+        form.removeEventListener("reset", reset);
+        clearTimeout(resetTimer);
+      };
+    }, [isControlled, defaultValue]);
 
     const containerClass = useMemo(
       () =>
@@ -151,6 +169,7 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
     };
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      setUncontrolledValue(event.target.value);
       onChange?.(event.target.value);
     };
 

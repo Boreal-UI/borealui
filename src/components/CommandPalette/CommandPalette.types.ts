@@ -45,6 +45,8 @@ export interface CommandPaletteProps
       | "aria-expanded"
       | "aria-activedescendant"
     > {
+  /** Optional active option ID. Used only when it identifies an enabled, currently rendered result; omitted while loading. */
+  "aria-activedescendant"?: string;
   /** Array of available command options. */
   commands: CommandItem[];
 
@@ -99,7 +101,7 @@ export interface CommandPaletteProps
   /** Callback to close the command palette. */
   onClose: () => void;
 
-  /** Callback to handle the search input asynchronously. */
+  /** Search the current query asynchronously. Previous results are hidden and cannot activate during debounce/loading; stale responses are ignored. Keyboard navigation reveals active results while focus stays in the input. */
   asyncSearch?: (query: string) => Promise<CommandItem[]>;
 
   /**

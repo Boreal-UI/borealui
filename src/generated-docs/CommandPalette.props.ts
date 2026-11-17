@@ -12,9 +12,17 @@ export const commandPalettePropDocs: GeneratedComponentDoc = {
   "sourcePath": "src/components/CommandPalette/CommandPalette.types.ts",
   "props": [
     {
+      "name": "aria-activedescendant",
+      "type": "string",
+      "description": "Optional active option ID. Used only when it identifies an enabled, currently rendered result; omitted while loading.",
+      "required": false,
+      "inherited": false,
+      "category": "aria"
+    },
+    {
       "name": "asyncSearch",
       "type": "((query: string) => Promise<CommandItem[]>)",
-      "description": "Callback to handle the search input asynchronously.",
+      "description": "Search the current query asynchronously. Previous results are hidden and cannot activate during debounce/loading; stale responses are ignored. Keyboard navigation reveals active results while focus stays in the input.",
       "required": false,
       "inherited": false,
       "category": "events"

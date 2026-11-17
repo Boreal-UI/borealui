@@ -5,6 +5,7 @@ import React, {
   useState,
   useCallback,
   useMemo,
+  useLayoutEffect,
   KeyboardEvent,
 } from "react";
 import ReactDOM from "react-dom";
@@ -80,12 +81,17 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   const portalElement = usePortalHost("widget-portal", open);
   const [asyncResults, setAsyncResults] = useState<CommandItem[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [resultQuery, setResultQuery] = useState<string | null>(null);
+  const listRef = useRef<HTMLDivElement>(null);
+  const revealActiveRef = useRef(true);
+  const [navigationRevision, setNavigationRevision] = useState(0);
+  const pending = Boolean(asyncSearch && query.trim() && (isLoading || resultQuery !== query));
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const searchRequestRef = useRef(0);
   const prevFocusRef = useRef<HTMLElement | null>(null);
 
   const filtered = useMemo(() => {
-    if (asyncSearch) return asyncResults;
+    if (asyncSearch) return pending || !query.trim() ? [] : asyncResults;
 
     const q = query.toLowerCase();
     if (!q) return commands;
@@ -98,7 +104,32 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
 
       return labelMatch || Boolean(keywordMatch);
     });
-  }, [asyncResults, asyncSearch, commands, query]);
+  }, [asyncResults, asyncSearch, commands, query, pending]);
+  const resultLayoutKey = JSON.stringify(filtered.map(item => [item.id, item.label, item.disabled]));
+
+  useLayoutEffect(() => {
+    revealActiveRef.current = true;
+  }, [resultLayoutKey]);
+
+  useLayoutEffect(() => {
+    const list = listRef.current;
+    if (!list || !open || !mounted) return;
+    const reveal = () => {
+      if (!revealActiveRef.current) return;
+      const option = list.querySelector<HTMLElement>(`[data-command-palette-option-index="${activeIndex}"]`);
+      if (!option) return;
+      const viewport = list.getBoundingClientRect();
+      const bounds = option.getBoundingClientRect();
+      const top = viewport.top + list.clientTop;
+      const bottom = top + list.clientHeight;
+      if (bounds.top < top) list.scrollTop -= top - bounds.top;
+      else if (bounds.bottom > bottom) list.scrollTop += bounds.bottom - bottom;
+    };
+    reveal();
+    const observer = typeof ResizeObserver === "undefined" ? undefined : new ResizeObserver(reveal);
+    observer?.observe(list);
+    return () => observer?.disconnect();
+  }, [activeIndex, resultLayoutKey, open, mounted, portalElement, navigationRevision]);
 
   useEffect(() => {
     if (filtered.length === 0) {
@@ -114,7 +145,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
   }, [filtered, activeIndex]);
 
   useEffect(() => {
-    if (!asyncSearch) return;
+    if (!asyncSearch || !open) return;
 
     const requestId = ++searchRequestRef.current;
 
@@ -133,11 +164,13 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
         .then((results) => {
           if (searchRequestRef.current !== requestId) return;
           setAsyncResults(results);
+          setResultQuery(query);
           setIsLoading(false);
         })
         .catch(() => {
           if (searchRequestRef.current !== requestId) return;
           setAsyncResults([]);
+          setResultQuery(query);
           setIsLoading(false);
         });
     }, debounceMs);
@@ -146,7 +179,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
       searchRequestRef.current += 1;
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
-  }, [query, asyncSearch, debounceMs]);
+  }, [query, asyncSearch, debounceMs, open]);
 
   useEffect(() => {
     if (!open) return;
@@ -216,6 +249,10 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
 
   const handleInputKeyDown = useCallback(
     (e: KeyboardEvent<HTMLElement>) => {
+      if (["ArrowDown", "ArrowUp", "Home", "End"].includes(e.key)) {
+        revealActiveRef.current = true;
+        setNavigationRevision(revision => revision + 1);
+      }
       if (e.key === "ArrowDown") {
         if (filtered.length === 0) return true;
         e.preventDefault();
@@ -326,7 +363,8 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
       : undefined;
 
   const computedActiveDescendant =
-    ariaActiveDescendant ??
+    (filtered.some((item, index) => !item.disabled && getItemId(item, index) === ariaActiveDescendant)
+      ? ariaActiveDescendant : undefined) ??
     (activeItem ? getItemId(activeItem, activeIndex) : undefined);
 
   const computedAriaExpanded =
@@ -334,7 +372,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
 
   const dialogRole = modal ? "dialog" : "region";
 
-  const liveMessage = isLoading
+  const liveMessage = pending
     ? "Searching commands"
     : filtered.length === 0
       ? emptyMessage
@@ -432,15 +470,16 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
         </div>
 
         <div
+          ref={listRef}
           id={resolvedListboxId}
           className={classMap.list}
           role="listbox"
           aria-label={!ariaLabelledBy ? listAriaLabel : undefined}
           aria-labelledby={ariaLabelledBy}
-          aria-busy={isLoading || undefined}
+          aria-busy={pending || undefined}
           data-testid={`${testId}-listbox`}
         >
-          {isLoading ? (
+          {pending ? (
             <div
               className={combineClassNames(classMap.item, classMap.empty)}
               role="option"
@@ -478,6 +517,7 @@ const CommandPaletteBase: React.FC<CommandPaletteBaseProps> = ({
                   )}
                   onClick={() => activateCommand(cmd)}
                   onMouseEnter={() => {
+                    revealActiveRef.current = false;
                     if (!isDisabled) setActiveIndex(index);
                   }}
                   tabIndex={-1}

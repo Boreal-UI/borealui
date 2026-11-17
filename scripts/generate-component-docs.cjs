@@ -222,6 +222,8 @@ function isInternalPropName(name) {
 
 function shouldExcludeProp(name, typeText) {
   if (isInternalPropName(name)) return true;
+  // These are intentionally narrow public naming APIs, not native prop passthroughs.
+  if (["startInputProps", "endInputProps"].includes(name)) return false;
 
   // Exclude nested prop bags like buttonProps, inputProps, menuProps, etc.
   if (/Props$/.test(name)) return true;
