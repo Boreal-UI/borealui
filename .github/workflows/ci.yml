@@ -205,5 +205,9 @@ jobs:
           PACKAGE_RESULT: ${{ needs.compatibility-packages.result }}
           MATRIX_RESULT: ${{ needs.compatibility.result }}
         run: |
-          test "$PACKAGE_RESULT" = "success"
-          test "$MATRIX_RESULT" = "success"
+          echo "Compatibility package artifacts: $PACKAGE_RESULT"
+          echo "Compatibility fixture matrix: $MATRIX_RESULT"
+          if [ "$PACKAGE_RESULT" != "success" ] || [ "$MATRIX_RESULT" != "success" ]; then
+            echo "::error::Published compatibility requires successful package artifacts and every compatibility fixture. See the failed prerequisite jobs above."
+            exit 1
+          fi

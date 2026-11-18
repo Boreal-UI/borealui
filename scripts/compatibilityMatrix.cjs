@@ -64,6 +64,7 @@ const MATRIX = Object.freeze({
 });
 
 const TOOL_VERSIONS = Object.freeze({
+  baselineBrowserMapping: "2.11.26",
   typescript: "5.9.2",
   typesNode: "20.19.1",
   vite: "8.2.1",
