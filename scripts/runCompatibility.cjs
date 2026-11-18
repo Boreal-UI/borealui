@@ -74,8 +74,8 @@ function verifyVersions(fixtureDir, fixture) {
   console.log(`RESOLVED_VERSIONS=${JSON.stringify(resolved)}`);
 }
 
-function commonManifest(dependencies, devDependencies = {}) {
-  return `${JSON.stringify({ private: true, type: "module", dependencies, devDependencies }, null, 2)}\n`;
+function commonManifest(dependencies, devDependencies = {}, overrides = {}) {
+  return `${JSON.stringify({ private: true, type: "module", dependencies, devDependencies, overrides }, null, 2)}\n`;
 }
 
 function createCoreFixture(fixtureDir, fixture, tarballDir) {
@@ -162,6 +162,9 @@ function createNextFixture(fixtureDir, fixture, tarballDir) {
         "@types/react-dom": fixture.reactDomTypes,
         typescript: TOOL_VERSIONS.typescript,
       },
+      // Fixtures install outside the workspace and do not use its lockfile.
+      // Keep Next's transitive browser data off the unavailable 2.11.27 tarball.
+      { "baseline-browser-mapping": TOOL_VERSIONS.baselineBrowserMapping },
     ),
   );
   write(

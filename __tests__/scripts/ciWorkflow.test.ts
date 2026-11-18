@@ -15,7 +15,7 @@ describe("CI Cypress component-test gate", () => {
     expect(cypressJob).toBeDefined();
     expect(cypressJob).toContain("name: Cypress Component Tests");
     expect(cypressJob).toContain("runs-on: ubuntu-latest");
-    expect(cypressJob).toContain("node-version: 20");
+    expect(cypressJob).toContain("node-version: 24");
     expect(cypressJob).toContain("- run: npm ci");
     expect(cypressJob).not.toContain("npm ci --ignore-scripts");
     expect(cypressJob).toContain("- run: npm run cypress:run");
@@ -43,6 +43,21 @@ describe("CI Cypress component-test gate", () => {
     expect(workflow).toContain("fixture: cli-node-18");
     expect(workflow).toContain("name: Published compatibility");
     expect(workflow).toContain("npm run compat:test");
+  });
+
+  it("uses Node 24 tooling while preserving consumer runtime coverage", () => {
+    const securityWorkflow = readFileSync(
+      path.join(process.cwd(), ".github", "workflows", "security.yml"), "utf8",
+    );
+    for (const source of [workflow, securityWorkflow]) {
+      const fixedRuntimes = [...source.matchAll(/node-version: (\d[^\r\n]*)/g)];
+      expect(fixedRuntimes.length).toBeGreaterThan(0);
+      expect(fixedRuntimes.every((match) => match[1] === "24")).toBe(true);
+    }
+    expect(workflow).toContain("node-version: ${{ matrix.node }}");
+    expect(workflow).toContain("node: 18.20.8");
+    expect(workflow).toContain("node: 20.19.0");
+    expect(workflow).toContain("node: 22.12.0");
   });
 
   it("keeps Storybook builds separate from curated visual regression", () => {
