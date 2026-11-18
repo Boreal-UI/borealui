@@ -192,3 +192,7 @@ export const Shadow: Story = {
     </div>
   ),
 };
+
+export const EscapeDismissal: Story = {
+  render: (args) => <Tooltip {...args} content="Press Escape while hovering; leave and reenter to reopen."><button>Tooltip target</button></Tooltip>,
+};

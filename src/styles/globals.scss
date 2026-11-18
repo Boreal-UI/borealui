@@ -46,6 +46,7 @@
 @use "_breakpoints" as breakpoints;
 @use "_mixins" as mixins;
 @use "_reset" as reset;
+@use "control-sizes";
 @layer boreal-ui.reset, boreal-ui.base, boreal-ui.components, boreal-ui.overrides;
 
 @layer boreal-ui.reset {
@@ -54,6 +55,16 @@
 
 @layer boreal-ui.base {
   :root {
+    --background-color-subtle: var(--background-color-surface);
+    --hover-background: var(--background-color-light);
+    --active-background: var(--background-color-dark);
+    --selected-background: var(--background-color-light);
+    --selected-text-color: var(--text-color);
+    --disabled-text-color: var(--text-color);
+    --disabled-background: var(--background-color-surface);
+
+    @include control-sizes.height-tokens;
+
     /* ================================
      PRIMARY COLOR PALETTE
   ================================== */
@@ -115,23 +126,20 @@
      FEEDBACK COLORS
   ================================== */
     --success-color: #{theme.$success-color};
-    --success-color-hover: #{color.adjust(
-        theme.$success-color,
-        $lightness: -10%
-      )};
-    --success-text-color: var(--text-color);
+    --success-color-hover: #039b44;
+    --success-text-color: #000;
     --warning-color: #{theme.$warning-color};
     --warning-color-hover: #{color.adjust(
         theme.$warning-color,
         $lightness: -10%
       )};
-    --warning-text-color: var(--text-color);
+    --warning-text-color: #000;
     --info-color: #{theme.$info-color};
     --info-color-hover: #{color.adjust(theme.$info-color, $lightness: -10%)};
-    --info-text-color: var(--text-color);
+    --info-text-color: #fff;
     --error-color: #{theme.$error-color};
     --error-color-hover: #{color.adjust(theme.$error-color, $lightness: -10%)};
-    --error-text-color: var(--text-color);
+    --error-text-color: #fff;
     --disabled-color: #{theme.$disabled-color};
 
     /* ================================

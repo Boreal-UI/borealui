@@ -26,6 +26,12 @@ const meta: Meta<CommandPaletteProps> = {
 };
 
 export default meta;
+export const LongKeyboardList: Story = {
+  render: function LongKeyboardListExample() {
+    const [open, setOpen] = useState(false);
+    return <><button onClick={() => setOpen(true)}>Open long command list</button><CommandPalette open={open} onClose={() => setOpen(false)} aria-label="Commands" inputAriaLabel="Search commands" commands={Array.from({ length: 40 }, (_, index) => ({ id: String(index), label: `Command ${index + 1}`, action: () => {} }))} /></>;
+  },
+};
 type Story = StoryObj<CommandPaletteProps>;
 
 const sampleCommands = [

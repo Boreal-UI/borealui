@@ -22,6 +22,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
   bodyClassName,
   footerClassName,
   children,
+  padding = "default",
   title = "Modal Dialog",
   header,
   footer,
@@ -117,6 +118,7 @@ const BaseModal: React.FC<BaseModalProps> = ({
   );
 
   const hasHeader = Boolean(header) || Boolean(title);
+  const TitleTag = typeof title === "string" || typeof title === "number" ? "h2" : "div";
   const hasFooter = Boolean(footer);
 
   const resolvedAriaLabelledBy =
@@ -170,8 +172,9 @@ const BaseModal: React.FC<BaseModalProps> = ({
         aria-describedby={ariaDescribedBy}
         tabIndex={-1}
         data-testid={`${testId}-content`}
+        data-padding={padding}
       >
-        {shouldRenderFallbackLabel && (
+        {shouldRenderFallbackLabel && Boolean(header) && (
           <h2 id={fallbackLabelId} className="sr_only">
             {typeof title === "string" ? title : "Modal Dialog"}
           </h2>
@@ -189,11 +192,12 @@ const BaseModal: React.FC<BaseModalProps> = ({
               )}
             >
               {header ?? (
-                <div
+                <TitleTag
+                  id={shouldRenderFallbackLabel ? fallbackLabelId : undefined}
                   className={combineClassNames(classMap.title, titleClassName)}
                 >
                   {title}
-                </div>
+                </TitleTag>
               )}
             </div>
 

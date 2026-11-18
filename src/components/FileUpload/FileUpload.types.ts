@@ -97,7 +97,7 @@ export interface FileUploadProps
    */
   outlineShadow?: ShadowType;
   /**
-   * Allows multiple file selection if true.
+   * Appends accepted files when true. When false, replaces selection with the first valid file and announces additional valid files as rejected.
    *
    * @default false
    */
@@ -110,8 +110,8 @@ export interface FileUploadProps
    */
   disabled?: boolean;
 
-  /** Called after upload completes. */
-  onSubmit: (files: File[]) => void | Promise<void>;
+  /** Upload callback invoked with the current accepted selection. Optional for native form submission. */
+  onSubmit?: (files: File[]) => void | Promise<void>;
 
   /** Called whenever selected files change. */
   onFilesChange?: (files: File[]) => void;
@@ -268,7 +268,7 @@ export interface FileUploadProps
    */
   enableDragAndDrop?: boolean;
 
-  /** Props passed directly to the native file input. */
+  /** Props passed directly to the native file input. Set name for native FormData submission. Accepted files, removals and form resets are synchronized with this control in browsers supporting DataTransfer. */
   inputProps?: Omit<
     InputHTMLAttributes<HTMLInputElement>,
     | "type"

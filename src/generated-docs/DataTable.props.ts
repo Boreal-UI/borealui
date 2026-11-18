@@ -399,6 +399,14 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"Loading data\""
     },
     {
+      "name": "minWidth",
+      "type": "string | number",
+      "description": "Minimum table width (CSS length or numeric pixels). Use 0 for a table that may fit its panel; omit to retain the responsive default minimum.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "onCellEdit",
       "type": "((value: unknown, meta: DataTableCellEditMeta<T>) => void)",
       "description": "Callback fired when an editable cell commits a value.",
@@ -564,7 +572,7 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
     {
       "name": "selectableRows",
       "type": "boolean",
-      "description": "Enables checkbox row selection.",
+      "description": "Enables checkbox row selection. Select all covers the current logical page, or all filtered rows without pagination, independently of virtualization. Server pagination selects only the supplied rows, never unloaded records.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -628,6 +636,15 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "tableLayout",
+      "type": "\"auto\" | \"fixed\"",
+      "description": "Native table layout algorithm. Auto treats column widths as hints; fixed uses first-row widths and shares remaining space among flexible columns.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"auto\""
     },
     {
       "name": "tbodyClassName",
@@ -734,7 +751,7 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
     {
       "name": "virtualized",
       "type": "boolean",
-      "description": "Enables row virtualization for large client-side data sets.",
+      "description": "Enables row virtualization. Filtering, page and page-size changes reset the viewport to the top. Data replacement preserves valid offsets and clamps offsets that exceed the new logical range. Selection scope is unchanged.",
       "required": false,
       "inherited": false,
       "category": "props",

@@ -30,11 +30,6 @@ export interface ToolbarBaseProps extends ToolbarProps {
    */
   "aria-label"?: string;
 
-  /**
-   * Optional heading level for the toolbar title.
-   * Must be an integer from 1 to 6.
-   */
-  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 /**
@@ -45,6 +40,13 @@ export interface ToolbarProps {
    * Optional title displayed in the center section.
    */
   title?: string;
+
+  /**
+   * Semantic heading level for the title, independent of title styling and
+   * toolbar container semantics. Has no effect when no title is provided.
+   * @default 1
+   */
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
 
   /**
    * Optional id used for the rendered title element.

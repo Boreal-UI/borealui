@@ -30,6 +30,14 @@ export interface DateRangeValue {
 }
 
 export interface DateRangePickerProps {
+  /** Accessible naming overrides for the start input; group naming remains on the fieldset. */
+  startInputProps?: Pick<React.InputHTMLAttributes<HTMLInputElement>, "aria-label" | "aria-labelledby">;
+  /** Accessible naming overrides for the end input. */
+  endInputProps?: Pick<React.InputHTMLAttributes<HTMLInputElement>, "aria-label" | "aria-labelledby">;
+  /** Overrides the start calendar action name. Defaults to Open date picker for plus startLabel. */
+  startPickerButtonAriaLabel?: string;
+  /** Overrides the end calendar action name. Defaults to Open date picker for plus endLabel. */
+  endPickerButtonAriaLabel?: string;
   /**
    * Current value for the component.
    */

@@ -1,4 +1,5 @@
 @use "../../../styles/control-sizes" as control-sizes;
+@use "../../../styles/field-layout" as field;
 @use "../../../styles/theme" as theme;
 @use "../../../styles/_breakpoints" as bp;
 @use "../../../styles/_mixins" as mixins;
@@ -226,8 +227,8 @@
     }
   }
 
-  input::placeholder {
-    color: var(--text-color-placeholder);
+  .textInput_input::placeholder {
+    color: inherit;
     font: inherit;
     opacity: 1;
   }
@@ -245,7 +246,7 @@
   }
 
   .textInput_container[data-disabled="true"] {
-    opacity: 0.6;
+    opacity: 1;
   }
 
   @each $themeName, $vals in theme.$themes {
@@ -390,4 +391,20 @@
       outline-offset: 2px !important;
     }
   }
+}
+
+@layer boreal-ui.components {
+  @include field.layout(".textInput_container", ".textInput", ".textInput_label", ".textInput_helperText", ".textInput_errorMessage", ".textInput_fullWidth", ".textInput_labelTop", ".textInput_labelBottom", ".textInput_labelLeft", ".textInput_labelRight");
+  @include control-sizes.single-line(".textInput", ".textInput_input", ".textInput_");
+  .textInput > .textInput_togglePassword { min-height: 0; height: 100%; margin: 0; padding: 0; flex-shrink: 0; }
+}
+
+@layer boreal-ui.components {
+  .textInput.textInput_disabled {
+    color: var(--disabled-text-color, var(--text-color));
+    background: var(--disabled-background, var(--disabled-color));
+    border: 1px dashed var(--border-color);
+    opacity: 1;
+  }
+  .textInput.textInput_disabled .textInput_icon_container svg { color: inherit; }
 }

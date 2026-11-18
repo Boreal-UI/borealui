@@ -1,4 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { useThemeScope } from "../context/ThemeScopeContext";
+import { applyThemeVariables } from "../context/themeRuntime";
 
 interface PortalHostLease {
   element: HTMLElement;
@@ -69,6 +71,8 @@ const createLease = (id: string, host: ManagedPortalHost): PortalHostLease => {
  * are reference counted and removed after the final user releases them.
  */
 export const usePortalHost = (id: string, active = true) => {
+  const scope = useThemeScope();
+  const scoped = Boolean(scope);
   const [host, setHost] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -78,13 +82,24 @@ export const usePortalHost = (id: string, active = true) => {
     }
 
     const lease = acquirePortalHost(id);
-    setHost(lease.element);
+    const target = scoped ? document.createElement("div") : lease.element;
+    if (scoped) lease.element.appendChild(target);
+    setHost(target);
 
     return () => {
-      setHost((current) => (current === lease.element ? null : current));
+      setHost((current) => (current === target ? null : current));
+      if (scoped) target.remove();
       lease.release();
     };
-  }, [active, id]);
+  }, [active, id, scoped]);
+
+  const useBrowserLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
+  useBrowserLayoutEffect(() => {
+    if (!host || !scope) return;
+    applyThemeVariables(host.style, scope.style);
+    host.style.color = "var(--text-color)";
+    host.dataset.borealTheme = scope["data-boreal-theme"];
+  }, [host, scope]);
 
   return host;
 };

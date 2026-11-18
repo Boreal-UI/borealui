@@ -109,8 +109,8 @@
   }
 
   .segmentedControl_option:focus-visible {
-    outline: 2px solid var(--focus-outline-color);
-    outline-offset: 2px;
+    outline: 2px solid currentcolor;
+    outline-offset: -2px;
   }
 
   .segmentedControl_optionSelected {

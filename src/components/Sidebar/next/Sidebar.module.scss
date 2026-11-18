@@ -80,20 +80,24 @@
         --sidebar-glass-text: #{map.get($values, text)};
       }
 
-      &.#{$stateName} .active {
+      &.#{$stateName} .link.active {
         background-color: map.get($values, bg);
+        color: map.get($values, text);
 
         &:hover {
           background-color: map.get($values, hover);
+        color: map.get($values, text);
         }
       }
 
       &.#{$stateName}.outline .active {
         border: 2px solid map.get($values, bg);
         background-color: transparent;
+        color: inherit;
 
         &:hover {
           background-color: map.get($values, hover);
+        color: map.get($values, text);
         }
 
         @include bp.down(sm) {

@@ -830,3 +830,12 @@
     }
   }
 }
+
+@layer boreal-ui.components {
+  .card[data-padding="none"] > .content > div > .header,
+  .card[data-padding="none"] > .content > div > .body,
+  .card[data-padding="none"] > .content > div > .footer { padding: 0; }
+  .card[data-padding="none"] > .content > div > .body { display: block; }
+  .card[data-padding="none"] > .content > div > .body > .children { margin: 0; padding: 0; width: 100%; }
+  .clear { color: var(--text-color); }
+}

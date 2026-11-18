@@ -10,6 +10,7 @@ import { TextInputBaseProps } from "./TextInput.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
+import { resolveFieldPresentation } from "../../utils/fieldPresentation";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -40,6 +41,11 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
       invalid = false,
       helperText,
       errorMessage,
+      rootClassName,
+      controlClassName,
+      descriptionClassName,
+      errorClassName,
+      errorLive = "off",
       classMap,
       IconButton,
       className,
@@ -111,15 +117,11 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
     const generatedDescriptionId = srOnlyText
       ? `${inputId}-sr-description`
       : undefined;
-    const helperTextId = helperText ? `${inputId}-helper-text` : undefined;
-    const errorMessageId = errorMessage
-      ? `${inputId}-error-message`
-      : undefined;
-
-    const computedAriaDescribedBy =
-      [ariaDescribedBy, generatedDescriptionId, helperTextId, errorMessageId]
-        .filter(Boolean)
-        .join(" ") || undefined;
+    const presentation = resolveFieldPresentation({
+      id: inputId, helperText, errorMessage, invalid, state, ariaInvalid,
+      describedBy: [ariaDescribedBy, generatedDescriptionId],
+    });
+    const { helperTextId, errorMessageId } = presentation;
 
     const computedAriaLabel = hasLabel
       ? undefined
@@ -133,12 +135,12 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         : "password"
       : typeProp || "text";
 
-    const isError = state === "error" || Boolean(errorMessage);
+    const isError = presentation.state === "error";
 
     const computedAutoComplete = autoComplete;
 
     const computedAriaInvalid =
-      ariaInvalid ?? (invalid || isError || undefined);
+      presentation.ariaInvalid;
     const computedAriaRequired = ariaRequired ?? (required || undefined);
     const computedAriaReadOnly = ariaReadOnly ?? (readOnly || undefined);
     const computedAriaDisabled = ariaDisabled ?? (disabled || undefined);
@@ -154,8 +156,9 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
           classMap[`label${capitalize(resolvedLabelPosition)}`],
           fullWidth && classMap.fullWidth,
           containerClassName,
+          rootClassName,
         ),
-      [classMap, resolvedLabelPosition, fullWidth, containerClassName],
+      [classMap, resolvedLabelPosition, fullWidth, containerClassName, rootClassName],
     );
 
     const wrapperClass = useMemo(
@@ -164,7 +167,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
           classMap.textInput,
           classMap[theme],
           size && classMap[size],
-          state && classMap[state],
+          presentation.state && classMap[presentation.state],
           (variant === "outline" || variant === "glassOutline") &&
             classMap.outline,
           (variant === "glass" || variant === "glassOutline") && classMap.glass,
@@ -178,7 +181,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
         classMap,
         theme,
         size,
-        state,
+        presentation.state,
         variant,
         disabled,
         shadow,
@@ -233,12 +236,12 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             ref={ref}
             id={inputId}
             type={inputType}
-            className={combineClassNames(inputClasses, inputClassName)}
+            className={combineClassNames(inputClasses, inputClassName, controlClassName)}
             placeholder={computedPlaceholder}
             role={role}
             aria-label={computedAriaLabel}
             aria-labelledby={ariaLabelledBy}
-            aria-describedby={computedAriaDescribedBy}
+            aria-describedby={presentation.describedBy}
             aria-invalid={computedAriaInvalid}
             aria-required={computedAriaRequired}
             aria-readonly={computedAriaReadOnly}
@@ -292,6 +295,7 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             className={combineClassNames(
               classMap.helperText,
               helperTextClassName,
+              descriptionClassName,
             )}
             data-testid={`${testId}-helper-text`}
           >
@@ -304,8 +308,9 @@ const TextInputBase = forwardRef<HTMLInputElement, TextInputBaseProps>(
             className={combineClassNames(
               classMap.errorMessage,
               errorMessageClassName,
+              errorClassName,
             )}
-            role="alert"
+            aria-live={errorLive === "off" ? undefined : errorLive}
             data-testid={`${testId}-error-message`}
           >
             {errorMessage}

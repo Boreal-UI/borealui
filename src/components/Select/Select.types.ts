@@ -6,6 +6,8 @@ import {
   ThemeType,
 } from "@/types/types";
 import type { AriaRole, ReactNode } from "react";
+import type { SelectHTMLAttributes } from "react";
+import type { FieldPresentationProps } from "../../types/fieldPresentation";
 
 /**
  * Represents a single option in the Select component.
@@ -25,7 +27,10 @@ export interface Option {
 /**
  * Props for the Select component.
  */
-export interface SelectProps {
+export interface SelectProps extends Omit<
+  SelectHTMLAttributes<HTMLSelectElement>,
+  "value" | "defaultValue" | "onChange" | "size" | "children" | "multiple"
+>, FieldPresentationProps {
   /**
    * Theme for styling.
    * "primary" | "secondary" | "tertiary" | "quaternary" | "clear"
@@ -51,15 +56,18 @@ export interface SelectProps {
   options: Option[];
 
   /**
-   * The current selected value.
+   * Controlled selected value. Pair with onChange; omit for uncontrolled usage.
    */
-  value: string;
+  value?: string;
+
+  /** Initial native selection for uncontrolled usage. Do not combine with value. */
+  defaultValue?: string;
 
   /**
    * Callback fired when the selected option changes.
    * Receives the new value as an argument.
    */
-  onChange: (value: string) => void;
+  onChange?: (value: string) => void;
 
   /**
    * If provided, the select element will render options asynchronously.
@@ -75,11 +83,12 @@ export interface SelectProps {
   pollInterval?: number;
 
   /**
-   * Placeholder text to display when no option is selected.
+   * Disabled, hidden empty placeholder, separate from options. Omitted when
+   * options includes value=""; null disables the placeholder explicitly.
    *
    * @default "Select an option"
    */
-  placeholder?: string;
+  placeholder?: string | null;
 
   /**
    * Rounding style of the select element.
@@ -218,6 +227,11 @@ export interface SelectProps {
 
   /** Additional class names for screen-reader-only description text. */
   srOnlyClassName?: string;
+
+  /** Additional classes for helperText; descriptionClassName also merges. */
+  helperTextClassName?: string;
+  /** Additional classes for errorMessage; errorClassName also merges. */
+  errorMessageClassName?: string;
 
   /**
    * Optional test ID for testing frameworks.

@@ -64,7 +64,7 @@ export const breadcrumbsPropDocs: GeneratedComponentDoc = {
     {
       "name": "items",
       "type": "Breadcrumb[]",
-      "description": "An array of breadcrumb items.",
+      "description": "An array of breadcrumb items. Structured data preserves the complete hierarchy independently of visual collapse. It is omitted if fewer than two items exist, any label is empty, or an intermediate item lacks a safe destination.",
       "required": true,
       "inherited": false,
       "category": "props"
@@ -72,7 +72,7 @@ export const breadcrumbsPropDocs: GeneratedComponentDoc = {
     {
       "name": "maxVisible",
       "type": "number",
-      "description": "Maximum number of visible items before collapsing into an ellipsis.",
+      "description": "Maximum number of visible items before collapsing into a disclosure. Values below three leave the trail expanded. Structured data is unchanged.",
       "required": false,
       "inherited": false,
       "category": "props"

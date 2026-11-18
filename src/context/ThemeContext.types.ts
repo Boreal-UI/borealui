@@ -29,6 +29,9 @@ import { ReactNode } from "react";
  * </ThemeProvider>
  */
 export interface ThemeProviderProps {
+  /** Root providers default to document scope; nested providers default to local.
+   * Local scope renders an SSR-styled div and never persists or changes the document. */
+  scope?: "document" | "local";
   children: ReactNode;
   customSchemes?: ColorScheme[];
   enableThemeScript?: boolean;

@@ -1,4 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { DataTableScrollExamples } from "../shared-story-assets/DataTableScrollExamples";
+
+export const AccessibleScrolling = { render: () => <DataTableScrollExamples DataTable={DataTable} /> };
 import { DataTable } from "../src/index.core";
 import type { DataTableProps } from "../src/components/DataTable/DataTable.types";
 import { StoryGrid } from "../.storybook-core/helpers/StoryGrid";
@@ -249,6 +252,12 @@ const meta: Meta<DataTableProps<SampleRow>> = {
 };
 
 export default meta;
+
+export const VirtualSelection: Story = {
+  args: { data: Array.from({ length: 200 }, (_, id) => ({ id, name: `Row ${String(id).padStart(3, "0")}`, score: id, passed: true })),
+    columns: [{ key: "name", label: "Name" }], rowKey: row => row.id, caption: "Records",
+    filterable: true, selectableRows: true, virtualized: true, virtualRowHeight: 48, virtualViewportHeight: 192, virtualOverscan: 2 },
+};
 
 type Story = StoryObj<DataTableProps<SampleRow>>;
 

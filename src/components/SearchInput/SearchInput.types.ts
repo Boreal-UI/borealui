@@ -22,6 +22,11 @@ export type SearchInputIconComponent = React.ComponentType<{
   focusable?: boolean;
 }>;
 
+/** The actual event that edited the input or activated its clear button. */
+export type SearchInputChangeEvent =
+  | React.ChangeEvent<HTMLInputElement>
+  | React.MouseEvent<HTMLButtonElement>;
+
 /**
  * Props for the SearchInput component.
  */
@@ -37,11 +42,12 @@ export interface SearchInputProps extends NativeSearchInputProps {
   defaultValue?: string;
 
   /**
-   * Callback fired whenever the search query changes.
+   * Fires once per edit or clear, before onClear. Use the first argument as the
+   * new query; the event is the actual input change or clear-button click.
    */
   onChange?: (
     value: string,
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: SearchInputChangeEvent,
   ) => void;
 
   /**
@@ -56,7 +62,8 @@ export interface SearchInputProps extends NativeSearchInputProps {
   ) => void;
 
   /**
-   * Callback fired when the clear button is activated.
+   * Optional clear notification, fired after onChange("", event). A state update
+   * here is unnecessary when onChange already controls the value.
    */
   onClear?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 

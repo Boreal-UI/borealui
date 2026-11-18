@@ -340,3 +340,9 @@
     }
   }
 }
+
+@layer boreal-ui.components {
+  .command_palette:not(.glass) { background: var(--background-color-surface); color: var(--text-color); }
+  .command_palette .item:hover { background: var(--hover-background); color: var(--text-color); }
+  .command_palette .item.active { background: var(--selected-background); color: var(--selected-text-color); }
+}

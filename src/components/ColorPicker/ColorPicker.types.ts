@@ -36,16 +36,21 @@ export interface ColorPickerProps {
   /** Array of color options to choose from. */
   colors: ColorOption[];
 
-  /** Currently value color value. */
-  value: string;
+  /** Current controlled selection. Do not combine with defaultValue. */
+  value?: string;
+
+  /** Initial uncontrolled selection. Native form reset restores this value. */
+  defaultValue?: string;
 
   /** Callback triggered when a color is value. */
-  onValueChange: (color: string) => void;
+  onValueChange?: (color: string) => void;
 
   /**
-   * Optional name attribute for the radio group.
+   * Native radio group and FormData key. Omit for an instance-specific,
+   * SSR-safe name. Supply a stable name for a predictable submission key;
+   * identical explicit names in the same form owner share one native group.
    *
-   * @default "color-picker"
+   * @default generated per instance
    */
   name?: string;
 
@@ -72,7 +77,9 @@ export interface ColorPickerProps {
   shadow?: ShadowType;
 
   /**
-   * If true, allows picking a custom color via a color input.
+   * Adds a custom radio selection and native color input. Custom selections use
+   * six-digit hexadecimal colors and submit through the same native radio group
+   * as presets, so required validation and FormData have one current value.
    *
    * @default false
    */
@@ -122,6 +129,9 @@ export interface ColorPickerProps {
    * @default "Custom color picker"
    */
   customInputAriaLabel?: string;
+
+  /** Accessible label for the custom selection radio. @default "Custom color" */
+  customOptionLabel?: string;
 
   /**
    * Hide the visible legend visually while preserving it for screen readers.

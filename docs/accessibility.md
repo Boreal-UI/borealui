@@ -72,6 +72,29 @@ Use `aria-labelledby` when a visible element outside the control should provide 
 
 ## Forms
 
+MultiSelect keeps focus on its search combobox (`searchable`) or trigger
+combobox (`searchable={false}`). Arrow keys skip disabled options and stop at
+the first/last enabled option; Home/End jump to either end. Enter toggles the
+active selection without closing. Space also toggles in non-searchable mode,
+and remains text input in searchable mode. Escape closes and returns focus to
+the trigger. `aria-activedescendant` identifies the active rendered option.
+Options are not separate Tab stops. Disabled fields and fields inside disabled
+fieldsets do not submit or block required validation. `loading` blocks interaction
+and closes the popup, but deliberately keeps the value's form participation.
+
+ComboBox hides stale options during loading and announces its loading status.
+Typing remains available. Arrows and Enter cannot select hidden options. Its
+listbox is ARIA-collapsed while loading or empty; `aria-controls` and
+`aria-activedescendant` are emitted only for rendered targets. Ready results start
+at the first enabled match. Disabling closes the popup without changing the value.
+
+Rating follows the [WAI radio-group keyboard pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/):
+Right/Down select and focus the next star, Left/Up the previous, wrapping at the
+ends. Home/End select and focus the first/last; Space/Enter select the focused
+star. An initial zero value has its first star in the Tab order. External value
+changes update the checked/tabbable star without moving focus. Read-only,
+disabled and noninteractive ratings do not accept input or enter the Tab order.
+
 Prefer visible labels. Do not rely on placeholder text as the only label.
 
 ```tsx
@@ -342,6 +365,76 @@ Automated checks are not enough on their own. Also test:
 - Error messages and helper text.
 - Loading and empty states.
 - Custom themes and contrast.
+
+## Header titles and button names
+
+PageHeader and BreadCrumbPageHeader accept `titleAs="h1"` through `"h6"`.
+The default remains `"h1"`; select the appropriate level when embedding a header
+inside an existing page. This changes the semantic heading only: title classes
+and typography remain the same. PageHeader's `as` still controls its root.
+
+```tsx
+<main>
+  <h1>Workspace</h1>
+  <PageHeader as="section" titleAs="h2" title="Team activity" />
+  <BreadCrumbPageHeader titleAs="h2" title="Project" breadcrumbs={items} />
+</main>
+```
+
+Button preserves an explicitly supplied `aria-label` even when it has text.
+Use labels that include the visible text where possible. When `aria-labelledby`
+is supplied, Boreal forwards that reference and omits `aria-label`, giving the
+referenced text precedence. Without either prop, text provides the name;
+icon-only buttons still require an explicit accessible name.
+
+## Breadcrumb structured data
+
+Core, Next and static server Breadcrumbs emit one hidden microdata hierarchy
+separate from the visible navigation list. The full hierarchy and original
+one-based positions stay unchanged during collapse and expansion. The disclosure
+is a button named “Show all breadcrumbs”, never a structured-data ListItem.
+Only the final visible crumb receives `aria-current="page"`.
+
+Every metadata entry needs a nonempty label and each intermediate entry needs a
+destination accepted by the navigation URL sanitizer. Disabled crumbs retain
+their supplied safe destinations in metadata while remaining noninteractive.
+The final crumb may omit its URL. If any intermediate destination or label is
+missing or unsafe, or fewer than two crumbs exist, the entire metadata hierarchy
+is omitted. Supply real destinations to enable metadata; Boreal never invents
+URLs or removes intermediate hierarchy levels. Avoid adding a second breadcrumb
+schema for the same trail in the consuming page.
+
+Visual collapse requires `maxVisible >= 3`. Static server Breadcrumbs continues
+to render the full trail without a disclosure or `maxVisible` support.
+
+## FileUpload Native Forms
+
+Set `inputProps={{ name: "document" }}` to include accepted files in native
+`FormData`. `required` validates the accepted selection; removing all files or
+resetting the form restores the empty required state. Disabled controls are
+excluded from submission.
+
+`multiple` appends accepted files. Single-file mode replaces the selection with
+the first valid file and announces additional files as rejected. Picker activation
+preserves the current selection and allows choosing the same file again.
+Native synchronization requires browser support for `DataTransfer` and writable
+`input.files`. Always validate uploaded files on the server as well.
+
+Supply a separate submit button for native forms. `onSubmit` is optional; providing
+it displays an Upload action that sends the accepted selection to your callback.
+Choose and Upload actions do not submit the surrounding form.
+
+## Tooltip Dismissal and SplitPane Direction
+
+Tooltip opens on hover or focus. Escape dismisses it until a new hover entry or
+focus, and leaving the pointer does not close a focused trigger's tooltip.
+`keepMountedWhenHidden` controls DOM mounting; hidden content is always
+`aria-hidden`.
+
+Horizontal SplitPane dragging follows computed direction, including inherited
+RTL. Arrow keys move the divider in their physical direction; Home and End choose
+the minimum and maximum start-pane sizes. Vertical resizing proceeds from top to
+bottom.
 
 ## Quick Checklist
 

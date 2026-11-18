@@ -132,12 +132,28 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "controlClassName",
+      "type": "string",
+      "description": "Class on the native input, textarea or select.",
+      "required": false,
+      "inherited": true,
+      "category": "props"
+    },
+    {
       "name": "data-testid",
       "type": "string",
       "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
+    },
+    {
+      "name": "descriptionClassName",
+      "type": "string",
+      "description": "Class on visible helperText.",
+      "required": false,
+      "inherited": true,
+      "category": "props"
     },
     {
       "name": "disabled",
@@ -149,9 +165,26 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
+      "name": "errorClassName",
+      "type": "string",
+      "description": "Class on errorMessage.",
+      "required": false,
+      "inherited": true,
+      "category": "props"
+    },
+    {
+      "name": "errorLive",
+      "type": "\"off\" | \"polite\" | \"assertive\"",
+      "description": "Feedback is static by default. Opt into polite/assertive announcements deliberately.",
+      "required": false,
+      "inherited": true,
+      "category": "props",
+      "defaultValue": "\"off\""
+    },
+    {
       "name": "errorMessage",
       "type": "ReactNode",
-      "description": "Validation message associated with the input and announced as an alert.",
+      "description": "Validation message associated with the input. Static unless errorLive is set.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -297,6 +330,14 @@ export const textInputPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "aria"
+    },
+    {
+      "name": "rootClassName",
+      "type": "string",
+      "description": "Class on the outer field layout, including label and feedback.",
+      "required": false,
+      "inherited": true,
+      "category": "props"
     },
     {
       "name": "rounding",

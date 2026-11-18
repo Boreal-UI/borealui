@@ -61,3 +61,60 @@ $control-sizes: (
     }
   }
 }
+
+// Shared public tokens; fallbacks keep component sidecars usable in isolation.
+@mixin height-tokens {
+  @each $size, $values in $control-sizes {
+    --control-height-#{$size}: #{map.get($values, min-height)};
+  }
+}
+
+@mixin single-line($root, $native, $size-prefix, $end-space: null) {
+  @each $size, $values in $control-sizes {
+    #{$root}#{$size-prefix}#{$size} {
+      --boreal-control-height: var(--control-height-#{$size}, #{map.get($values, min-height)});
+
+      box-sizing: border-box;
+      height: var(--boreal-control-height);
+      min-height: var(--boreal-control-height);
+      padding-block: 0;
+      padding-inline: #{map.get($values, padding-inline)};
+      font-size: #{map.get($values, font-size)};
+      line-height: 1.25;
+    }
+
+    #{$root}#{$size-prefix}#{$size} > #{$native} {
+      box-sizing: border-box;
+      min-width: 0;
+      min-height: 0;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+
+      @if $end-space {
+        padding-inline-end: $end-space;
+      }
+
+      font: inherit;
+      line-height: inherit;
+    }
+  }
+}
+
+@mixin button($root, $label, $size-prefix) {
+  @each $size, $values in $control-sizes {
+    #{$root}#{$size-prefix}#{$size} {
+      min-height: var(--control-height-#{$size}, #{map.get($values, min-height)});
+      height: auto;
+      padding-block: var(--spacing-xxs);
+      padding-inline: #{map.get($values, padding-inline)};
+      line-height: 1.25;
+    }
+
+    #{$root}#{$size-prefix}#{$size} > #{$label} {
+      font-size: #{map.get($values, font-size)};
+      line-height: inherit;
+    }
+  }
+}

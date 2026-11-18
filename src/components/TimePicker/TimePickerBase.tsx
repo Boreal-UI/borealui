@@ -1,4 +1,5 @@
-import { ChangeEvent, forwardRef, useId, useMemo, useRef } from "react";
+import { ChangeEvent, forwardRef, useEffect, useId, useMemo, useRef, useState } from "react";
+import { isInvalidTime } from "./timeValidity";
 import { TimePickerBaseProps } from "./TimePicker.types";
 import { combineClassNames } from "../../utils/classNames";
 import { CalendarIcon } from "../../Icons";
@@ -70,6 +71,11 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
       role: roleProp,
       "aria-describedby": ariaDescribedBy,
       "aria-disabled": ariaDisabled,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-invalid": ariaInvalid,
+      "aria-required": ariaRequired,
+      "aria-errormessage": ariaErrorMessage,
       ...restRoot
     } = rest;
 
@@ -80,16 +86,34 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
     const errorId = errorMessage ? `${rootId}-errorMessage` : undefined;
     const srDescriptionId = srOnlyText ? `${rootId}-sr-helperText` : undefined;
     const describedBy =
-      [ariaDescribedBy, helperId, errorId, srDescriptionId]
+      [ariaDescribedBy, inputProps?.["aria-describedby"], helperId, errorId, srDescriptionId]
         .filter(Boolean)
         .join(" ") || undefined;
-    const invalidRange = min && max ? min > max : false;
-    const outOfBounds = value
-      ? (min ? value < min : false) || (max ? value > max : false)
-      : false;
-    const invalid = Boolean(errorMessage || invalidRange || outOfBounds);
+    const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue ?? "");
+    const invalid = Boolean(errorMessage || state === "error" ||
+      (!(disabled || loading || readOnly) && isInvalidTime(value ?? uncontrolledValue, min, max, step,
+        value ?? defaultValue, required)));
     const computedAriaDisabled = ariaDisabled ?? (disabled || undefined);
+    const resolvedAriaInvalid = ariaInvalid ?? inputProps?.["aria-invalid"] ?? (invalid || undefined);
     const isControlled = value !== undefined;
+    useEffect(() => {
+      const input = inputRef.current;
+      if (!input || isControlled) return;
+      setUncontrolledValue(input.value);
+      const form = input.form;
+      if (!form) return;
+      let resetTimer: ReturnType<typeof setTimeout> | undefined;
+      const reset = (event: Event) => {
+        resetTimer = setTimeout(() => {
+          if (!event.defaultPrevented) setUncontrolledValue(input.value);
+        }, 0);
+      };
+      form.addEventListener("reset", reset);
+      return () => {
+        form.removeEventListener("reset", reset);
+        clearTimeout(resetTimer);
+      };
+    }, [isControlled, defaultValue]);
 
     const containerClass = useMemo(
       () =>
@@ -151,6 +175,7 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
     };
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+      setUncontrolledValue(event.target.value);
       onChange?.(event.target.value);
     };
 
@@ -213,19 +238,19 @@ const TimePickerBase = forwardRef<HTMLDivElement, TimePickerBaseProps>(
               autoComplete={autoComplete}
               title={title}
               aria-label={
-                inputProps?.["aria-label"] ??
-                (!label && !inputProps?.["aria-labelledby"]
+                ariaLabel ?? inputProps?.["aria-label"] ??
+                (!label && !ariaLabelledBy && !inputProps?.["aria-labelledby"]
                   ? "Time"
                   : undefined)
               }
               aria-labelledby={
-                inputProps?.["aria-labelledby"] ??
-                (!inputProps?.["aria-label"] ? labelId : undefined)
+                ariaLabelledBy ?? inputProps?.["aria-labelledby"] ??
+                (!ariaLabel && !inputProps?.["aria-label"] ? labelId : undefined)
               }
               aria-describedby={describedBy}
-              aria-invalid={invalid || undefined}
-              aria-errormessage={errorMessage ? errorId : undefined}
-              aria-required={required || undefined}
+              aria-invalid={resolvedAriaInvalid}
+              aria-errormessage={ariaErrorMessage ?? inputProps?.["aria-errormessage"] ?? (errorMessage ? errorId : undefined)}
+              aria-required={ariaRequired ?? inputProps?.["aria-required"] ?? (required || undefined)}
               data-testid={`${testId}-input`}
             />
 

@@ -170,8 +170,8 @@ export const numberInputPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "onChange",
-      "type": "((value: number | \"\", event: React.ChangeEvent<HTMLInputElement>) => void)",
-      "description": "Callback fired when the numeric value changes. The first argument is `\"\"` when the input is empty.",
+      "type": "((value: number | \"\", event: NumberInputChangeEvent) => void)",
+      "description": "Callback fired when the numeric value changes. The first argument is `\"\"` when the input is empty. Fires once per edit, step, or changed blur clamp. The event is the actual input change, stepper click, or input blur event; narrow it before using target-specific APIs.",
       "required": false,
       "inherited": false,
       "category": "events"

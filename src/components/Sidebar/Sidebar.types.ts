@@ -2,6 +2,10 @@ import { RoundingType, ShadowType, StateType, ThemeType } from "@/types";
 import type { AnchorHTMLAttributes } from "react";
 
 export interface SidebarLink {
+  /** Stable identity, unique among siblings. Supply for reorderable items;
+   * otherwise identity follows the item tree position. Never rendered as a DOM ID. */
+  id?: string;
+
   /**
    * Display label for the link.
    * @default "Sidebar navigation"
@@ -44,7 +48,8 @@ export interface SidebarLink {
 
   /**
    * Whether this item should be announced as disabled.
-   * Useful for non-interactive or temporarily unavailable items.
+   * Disabled parents remain focusable for discovery, but cannot toggle.
+   * Disabled leaves are non-navigable labels.
    */
   "aria-disabled"?: boolean;
 }

@@ -18,12 +18,14 @@ describe("MultiSelect SSR", () => {
         />
       </>,
     );
-    const controls = Array.from(
-      html.matchAll(/aria-controls="([^"]+)"/g),
+    const ids = Array.from(
+      html.matchAll(/ id="([^"]+)"/g),
       (match) => match[1],
     );
 
-    expect(controls).toHaveLength(2);
-    expect(new Set(controls).size).toBe(2);
+    expect(ids.filter(id => !id.endsWith("-displayed-value"))).toHaveLength(2);
+    expect(new Set(ids).size).toBe(ids.length);
+    expect(html).not.toContain("aria-controls=");
+    expect(html.match(/aria-expanded="false"/g)).toHaveLength(2);
   });
 });

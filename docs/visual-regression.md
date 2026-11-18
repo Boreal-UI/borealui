@@ -25,6 +25,12 @@ or accidental expansion of the initial baseline.
 
 ## Local workflow
 
+Chromatic CLI 18 requires Node 22 or newer. Use Node 22+ for
+`npm run chromatic:visual`; the Visual Regression CI job uses Node 22.
+This tooling requirement does not change the published library's consumer
+compatibility matrix. Node 20 installations may warn about Chromatic's engine
+requirement; run the upload command with Node 22+.
+
 Build or inspect the curated Storybook without publishing anything:
 
 ```bash

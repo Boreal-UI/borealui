@@ -28,7 +28,9 @@ export interface SplitPaneProps extends NativeSplitPaneProps {
   children?: ReactNode;
 
   /**
-   * Split orientation.
+   * Split orientation. Horizontal pointer coordinates follow computed direction,
+   * including inherited RTL. Arrow keys move the divider physically; Home/End
+   * choose minimum/maximum start-pane size. Vertical mapping is top to bottom.
    *
    * @default "horizontal"
    */

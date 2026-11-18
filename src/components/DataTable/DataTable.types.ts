@@ -134,8 +134,15 @@ export interface DataTableProps<T> {
   /** Optional callback when a row is clicked. */
   onRowClick?: (row: T) => void;
 
+  /** Native attributes for the outer horizontal scroll region. Explicit naming
+   * overrides caption-derived naming; className merges with internal styles.
+   * Always tabbable by default, including when content fits. */
+  scrollRegionProps?: React.HTMLAttributes<HTMLDivElement>;
+
   /**
-   * Enables checkbox row selection.
+   * Enables checkbox row selection. Select all covers the current logical page,
+   * or all filtered rows without pagination, independently of virtualization.
+   * Server pagination selects only the supplied rows, never unloaded records.
    *
    * @default false
    */
@@ -217,6 +224,14 @@ export interface DataTableProps<T> {
    * Optional class name applied directly to the table element.
    */
   tableClassName?: string;
+
+  /** Minimum table width (CSS length or numeric pixels). Use 0 for a table
+   * that may fit its panel; omit to retain the responsive default minimum. */
+  minWidth?: string | number;
+
+  /** Native table layout algorithm. Auto treats column widths as hints;
+   * fixed uses first-row widths and shares remaining space among flexible columns. */
+  tableLayout?: "auto" | "fixed";
 
   /**
    * Optional class name applied to the table head.
@@ -549,7 +564,9 @@ export interface DataTableProps<T> {
   onCellEdit?: (value: unknown, meta: DataTableCellEditMeta<T>) => void;
 
   /**
-   * Enables row virtualization for large client-side data sets.
+   * Enables row virtualization. Filtering, page and page-size changes reset the
+   * viewport to the top. Data replacement preserves valid offsets and clamps
+   * offsets that exceed the new logical range. Selection scope is unchanged.
    *
    * @default false
    */

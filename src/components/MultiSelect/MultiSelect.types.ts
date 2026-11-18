@@ -106,7 +106,10 @@ export interface MultiSelectProps extends NativeMultiSelectProps {
   loadingMessage?: ReactNode;
 
   /**
-   * Whether users can filter options by typing.
+   * Whether users can filter options by typing. When open, focus stays on the
+   * search combobox, or on the trigger combobox when false. Arrows skip disabled
+   * options; Enter toggles the active option. Escape closes and restores trigger focus.
+   * Keyboard navigation scrolls the active option into view within the list.
    *
    * @default true
    */
@@ -135,6 +138,8 @@ export interface MultiSelectProps extends NativeMultiSelectProps {
 
   /**
    * Accessible label for the popup toggle.
+   * By default searchable triggers combine the field label with displayed values.
+   * Custom labels should include the visible placeholder or selected text.
    */
   toggleAriaLabel?: string;
 
@@ -187,14 +192,16 @@ export interface MultiSelectProps extends NativeMultiSelectProps {
   shadow?: ShadowType;
 
   /**
-   * Whether the component is disabled.
+   * Disables interaction, native form submission and required validation without
+   * clearing the selected values. Native disabled fieldsets are also respected.
    *
    * @default false
    */
   disabled?: boolean;
 
   /**
-   * Whether the component should display a loading state.
+   * Shows loading status and closes the popup, blocking interaction. Unlike
+   * disabled, loading preserves submission and required validation of the value.
    *
    * @default false
    */

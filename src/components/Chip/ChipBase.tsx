@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { usePortalHost } from "../../hooks/usePortalHost";
 import { ChipBaseProps } from "./Chip.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -49,6 +50,7 @@ const ChipBase: React.FC<ChipBaseProps> = ({
   ...rest
 }) => {
   const [closing, setClosing] = useState(false);
+  const portalEl = usePortalHost("widget-portal", usePortal && (visible || closing));
   const closeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const generatedId = useId();
   const resolvedMessageId = messageId ?? `${id ?? generatedId}-message`;
@@ -114,11 +116,6 @@ const ChipBase: React.FC<ChipBaseProps> = ({
     usePortal && classMap.fixed,
     className,
   );
-
-  const portalEl =
-    typeof window !== "undefined"
-      ? document.getElementById("widget-portal")
-      : null;
 
   const chipElement = (
     <div

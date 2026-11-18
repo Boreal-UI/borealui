@@ -62,46 +62,27 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
   const idsRef = useRef<Record<string, string>>({});
   const seqRef = useRef(0);
 
-  const idFor = (label: string) => {
-    if (!idsRef.current[label]) {
-      const slug = label
-        .toLowerCase()
-        .replace(/\s+/g, "-")
-        .replace(/[^a-z0-9_-]/g, "");
+  const itemKey = (node: SidebarLink, index: number, parent: string) =>
+    `${parent}/${node.id === undefined ? `index:${index}` : `id:${encodeURIComponent(node.id)}`}`;
 
-      idsRef.current[label] = `${generatedId}-section-${slug}-${seqRef.current++}`;
-    }
-
-    return idsRef.current[label];
+  const idFor = (key: string) => {
+    if (!idsRef.current[key]) idsRef.current[key] = `${generatedId}-section-${seqRef.current++}`;
+    return idsRef.current[key];
   };
 
   useEffect(() => {
     const next: Record<string, boolean> = {};
-
-    const walk = (nodes: SidebarLink[]): boolean => {
-      for (const node of nodes) {
-        if (node.children?.length) {
-          const childIsActive =
-            hasActiveChild?.(node) ??
-            node.children.some(
-              (child) =>
-                (isLinkActive?.(child) ?? false) ||
-                (!!child.children?.length && walk(child.children)),
-            );
-
-          if (childIsActive) {
-            next[node.label] = true;
-          }
-        }
-      }
-
-      return nodes.some(
-        (node) =>
-          (isLinkActive?.(node) ?? false) ||
-          (!!node.children?.length && walk(node.children)),
-      );
+    const walk = (nodes: SidebarLink[], parent = ""): boolean => {
+      let active = false;
+      nodes.forEach((node, index) => {
+        const key = itemKey(node, index, parent);
+        const descendantActive = node.children?.length ? walk(node.children, key) : false;
+        const childActive = hasActiveChild?.(node) ?? descendantActive;
+        if (childActive && !node["aria-disabled"]) next[key] = true;
+        active = active || childActive || (isLinkActive?.(node) ?? false);
+      });
+      return active;
     };
-
     walk(links);
     setOpenItems((prev) => ({ ...prev, ...next }));
   }, [links, isLinkActive, hasActiveChild]);
@@ -125,7 +106,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
     [classMap, className, theme, state, variant, rounding, shadow],
   );
 
-  const renderLinks = (items: SidebarLink[], isChild = false) => (
+  const renderLinks = (items: SidebarLink[], isChild = false, parent = "") => (
     <ul
       className={combineClassNames(
         classMap.list,
@@ -148,7 +129,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
           "aria-disabled": linkAriaDisabled,
         } = link;
 
-        const key = `${label}-${idx}`;
+        const key = itemKey(link, idx, parent);
 
         const isActive = isLinkActive?.(link) ?? false;
 
@@ -160,8 +141,8 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
               (child.children?.length && (hasActiveChild?.(child) ?? false)),
           );
 
-        const isOpen = !!openItems[label];
-        const sectionId = idFor(label);
+        const isOpen = !!openItems[key];
+        const sectionId = idFor(key);
         const buttonId = `${sectionId}-button`;
         const panelId = `${sectionId}-panel`;
 
@@ -188,7 +169,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                     (isActive || isOpen || containsActiveChild) &&
                       activeClassName,
                   )}
-                  onClick={() => toggleItem(label)}
+                  onClick={() => { if (!linkAriaDisabled) toggleItem(key); }}
                   aria-expanded={isOpen}
                   aria-controls={panelId}
                   aria-label={
@@ -245,7 +226,7 @@ const SidebarBase: React.FC<BaseSidebarProps> = ({
                   hidden={!isOpen}
                   data-testid={`${testId}-subMenu`}
                 >
-                  {renderLinks(children, true)}
+                  {renderLinks(children, true, key)}
                 </div>
               </>
             ) : safeHref && !linkAriaDisabled ? (

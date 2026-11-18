@@ -1,5 +1,6 @@
 export {
   getThemeAttributes,
+  getThemeContrastIssues,
   getThemeStyle,
   readSavedSchemeCookie,
   resolveThemeScheme,

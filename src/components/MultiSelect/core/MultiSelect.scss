@@ -65,7 +65,7 @@
     border: 1px solid transparent;
     border-radius: var(--border-radius-md);
     background: var(--background-color);
-    color: inherit;
+    color: var(--text-color);
     box-shadow: var(--box-shadow-sm);
     transition: var(--transition-default);
   }
@@ -115,7 +115,8 @@
     padding: 0.125rem var(--spacing-xs);
     font-size: var(--font-size-body-xs);
     line-height: var(--line-height-body);
-    background: rgba(255, 255, 255, 0.12);
+    background: var(--selected-background);
+    color: var(--selected-text-color);
   }
 
   .multiSelect_chipLabel {
@@ -188,7 +189,7 @@
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-md);
     background: var(--background-color);
-    color: inherit;
+    color: var(--text-color);
     box-shadow: var(--box-shadow-lg);
     padding: var(--spacing-xs);
   }
@@ -199,7 +200,7 @@
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius-sm);
     background: var(--background-color);
-    color: inherit;
+    color: var(--text-color);
     padding: var(--spacing-xs) var(--spacing-sm);
     font: inherit;
   }

@@ -7,6 +7,8 @@ export type IconComponent = ComponentType<SVGProps<SVGSVGElement>>;
  * Represents a named color scheme used for theming components.
  */
 export interface ColorScheme {
+  /** Optional semantic role overrides. Values must be hexadecimal colors. */
+  semanticTokens?: Partial<Record<SemanticThemeToken, string>>;
   /** The unique name of the color scheme. */
   name: string;
   /** The primary brand or accent color. */
@@ -22,6 +24,12 @@ export interface ColorScheme {
   /** Optional override for text color to ensure contrast (e.g., force white text on dark themes). */
   forceTextColor?: string;
 }
+
+export type SemanticThemeToken =
+  | "--background-color" | "--background-color-surface" | "--background-color-subtle"
+  | "--text-color" | "--text-color-light" | "--border-color" | "--border-color-strong"
+  | "--focus-outline-color" | "--hover-background" | "--active-background"
+  | "--selected-background" | "--selected-text-color" | "--disabled-background" | "--disabled-text-color";
 
 /**
  * Visual theme options used to style components.

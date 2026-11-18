@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { Breadcrumb, BreadcrumbsBaseProps } from "./Breadcrumbs.types";
+import BreadcrumbsStructuredData from "./BreadcrumbsStructuredData";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { mergeSafeRel, sanitizeNavigationHref } from "../../utils/navigationSecurity";
@@ -12,6 +13,7 @@ import {
 } from "../../config/boreal-style-config";
 
 export const ELLIPSIS_LABEL = "…";
+const DISCLOSURE = { label: ELLIPSIS_LABEL };
 
 export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   items,
@@ -42,12 +44,17 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
   };
 
   const visibleItems: Breadcrumb[] = useMemo(() => {
-    if (isExpanded || !maxVisible || items.length <= maxVisible) return items;
+    if (
+      isExpanded ||
+      !maxVisible ||
+      maxVisible < 3 ||
+      items.length <= maxVisible
+    ) return items;
 
     const first = items[0];
     const lastItems = items.slice(items.length - (maxVisible - 2));
 
-    return [first, { label: ELLIPSIS_LABEL }, ...lastItems];
+    return [first, DISCLOSURE, ...lastItems];
   }, [items, isExpanded, maxVisible]);
 
   const breadcrumbsClass = useMemo(
@@ -92,12 +99,10 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
       <ol
         className={classMap.list}
         data-testid={testId ? `${testId}-nav-list` : undefined}
-        itemScope
-        itemType="https://schema.org/BreadcrumbList"
       >
         {visibleItems.map((item, index) => {
           const isLast = index === visibleItems.length - 1;
-          const isEllipsis = item.label === ELLIPSIS_LABEL;
+          const isEllipsis = item === DISCLOSURE;
           const isItemDisabled = disabled || item.disabled;
 
           const itemClassName = combineClassNames(
@@ -117,9 +122,6 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
               data-testid={testId ? `${testId}-nav-item` : undefined}
               key={`${item.label}-${item.href ?? index}`}
               className={itemClassName}
-              itemProp="itemListElement"
-              itemScope
-              itemType="https://schema.org/ListItem"
             >
               {isEllipsis ? (
                 <ButtonComponent
@@ -146,7 +148,6 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                     title={itemTitle}
                     aria-label={item["aria-label"]}
                     aria-disabled="true"
-                    itemProp="name"
                     data-testid={
                       testId ? `${testId}-nav-item-label` : undefined
                     }
@@ -161,12 +162,11 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                     className={classMap.link}
                     title={itemTitle}
                     aria-label={item["aria-label"]}
-                    itemProp="item"
                     data-testid={
                       testId ? `${testId}-nav-item-label` : undefined
                     }
                   >
-                    <span itemProp="name" className={classMap.link_label}>
+                    <span className={classMap.link_label}>
                       {item.label}
                     </span>
                   </LinkComponent>
@@ -174,8 +174,7 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
               ) : (
                 <span
                   className={classMap.current}
-                  itemProp="name"
-                  aria-current="page"
+                  aria-current={isLast ? "page" : undefined}
                   aria-label={item["aria-label"]}
                   title={itemTitle}
                   data-testid={
@@ -191,12 +190,11 @@ export const BreadcrumbsBase: React.FC<BreadcrumbsBaseProps> = ({
                   {separator ?? "/"}
                 </span>
               )}
-
-              <meta itemProp="position" content={`${index + 1}`} />
             </li>
           );
         })}
       </ol>
+      <BreadcrumbsStructuredData items={items} />
     </nav>
   );
 };

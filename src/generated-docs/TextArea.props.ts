@@ -52,6 +52,14 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "controlClassName",
+      "type": "string",
+      "description": "Class on the native input, textarea or select.",
+      "required": false,
+      "inherited": true,
+      "category": "props"
+    },
+    {
       "name": "data-testid",
       "type": "string",
       "description": "Backward-compatible alias for test ID attributes.",
@@ -68,6 +76,14 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "descriptionClassName",
+      "type": "string",
+      "description": "Class on visible helperText.",
+      "required": false,
+      "inherited": true,
+      "category": "props"
+    },
+    {
       "name": "disabled",
       "type": "boolean",
       "description": "If true, the textarea is disabled.",
@@ -75,6 +91,23 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "false"
+    },
+    {
+      "name": "errorClassName",
+      "type": "string",
+      "description": "Class on errorMessage.",
+      "required": false,
+      "inherited": true,
+      "category": "props"
+    },
+    {
+      "name": "errorLive",
+      "type": "\"off\" | \"polite\" | \"assertive\"",
+      "description": "Feedback is static by default. Opt into polite/assertive announcements deliberately.",
+      "required": false,
+      "inherited": true,
+      "category": "props",
+      "defaultValue": "\"off\""
     },
     {
       "name": "errorMessage",
@@ -91,6 +124,15 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "fullWidth",
+      "type": "boolean",
+      "description": "Fill the parent through both the layout and control wrappers.",
+      "required": false,
+      "inherited": true,
+      "category": "props",
+      "defaultValue": "false"
     },
     {
       "name": "height",
@@ -215,6 +257,14 @@ export const textAreaPropDocs: GeneratedComponentDoc = {
       "description": "Additional class names for the resize handle.",
       "required": false,
       "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "rootClassName",
+      "type": "string",
+      "description": "Class on the outer field layout, including label and feedback.",
+      "required": false,
+      "inherited": true,
       "category": "props"
     },
     {

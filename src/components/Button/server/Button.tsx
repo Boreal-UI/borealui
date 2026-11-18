@@ -35,6 +35,7 @@ export default function Button({
   loading = false,
   loadingLabel = "Loading",
   fullWidth = false,
+  wrapLabel = false,
   className,
   iconWrapperClassName,
   iconClassName,
@@ -59,6 +60,7 @@ export default function Button({
     getShadowClassName(classMap, theme, shadow),
     rounding && classMap[`round${capitalize(rounding)}`],
     fullWidth && classMap.fullWidth,
+    wrapLabel && classMap.wrapLabel,
     classMap[`icon${capitalize(iconPosition)}`],
     className,
   );
@@ -78,10 +80,10 @@ export default function Button({
       {iconPosition === "left" && icon}
       <span className={combineClassNames(classMap.buttonLabel, labelClassName)}>
         {loading ? (
-          <span
-            className={combineClassNames(classMap.loader, loaderClassName)}
-            aria-label={loadingLabel}
-          />
+          <>
+            <span className={combineClassNames(classMap.loader, loaderClassName)} aria-hidden="true" />
+            <span>{loadingLabel}</span>
+          </>
         ) : (
           children
         )}
@@ -102,6 +104,7 @@ export default function Button({
         rel={mergeSafeRel(resolvedTarget, rel)}
         className={combineClassNames(classes, classMap.link)}
         aria-disabled={disabled || loading || undefined}
+        aria-busy={loading || rest["aria-busy"] || undefined}
         data-testid={resolvedTestId}
       >
         {content}
@@ -115,6 +118,7 @@ export default function Button({
       type={type}
       className={classes}
       disabled={disabled || loading}
+      aria-busy={loading || rest["aria-busy"] || undefined}
       data-testid={resolvedTestId}
     >
       {content}

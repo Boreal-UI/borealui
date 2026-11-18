@@ -61,6 +61,14 @@ export const dateRangePickerPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
+      "name": "endInputProps",
+      "type": "Pick<React.InputHTMLAttributes<HTMLInputElement>, \"aria-label\" | \"aria-labelledby\">",
+      "description": "Accessible naming overrides for the end input.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "endLabel",
       "type": "ReactNode",
       "description": "End Label.",
@@ -68,6 +76,14 @@ export const dateRangePickerPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"End date\""
+    },
+    {
+      "name": "endPickerButtonAriaLabel",
+      "type": "string",
+      "description": "Overrides the end calendar action name. Defaults to Open date picker for plus endLabel.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "errorClassName",
@@ -226,6 +242,14 @@ export const dateRangePickerPropDocs: GeneratedComponentDoc = {
       "defaultValue": "configured default size (fallback: \"medium\")"
     },
     {
+      "name": "startInputProps",
+      "type": "Pick<React.InputHTMLAttributes<HTMLInputElement>, \"aria-label\" | \"aria-labelledby\">",
+      "description": "Accessible naming overrides for the start input; group naming remains on the fieldset.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
       "name": "startLabel",
       "type": "ReactNode",
       "description": "Start Label.",
@@ -233,6 +257,14 @@ export const dateRangePickerPropDocs: GeneratedComponentDoc = {
       "inherited": false,
       "category": "props",
       "defaultValue": "\"Start date\""
+    },
+    {
+      "name": "startPickerButtonAriaLabel",
+      "type": "string",
+      "description": "Overrides the start calendar action name. Defaults to Open date picker for plus startLabel.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
     },
     {
       "name": "state",

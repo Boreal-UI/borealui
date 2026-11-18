@@ -70,7 +70,7 @@ export const tooltipPropDocs: GeneratedComponentDoc = {
     {
       "name": "keepMountedWhenHidden",
       "type": "boolean",
-      "description": "Whether the tooltip should remain in the accessibility tree when hidden. Defaults to false behavior via aria-hidden.",
+      "description": "Whether hidden content stays mounted in the DOM (always aria-hidden). Hover or focus opens the tooltip. Escape dismisses it until a new hover entry or focus; pointer leave preserves display while focused.",
       "required": false,
       "inherited": false,
       "category": "props",

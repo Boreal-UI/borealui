@@ -113,7 +113,7 @@ export const multiSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "disabled",
       "type": "boolean",
-      "description": "Whether the component is disabled.",
+      "description": "Disables interaction, native form submission and required validation without clearing the selected values. Native disabled fieldsets are also respected.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -188,7 +188,7 @@ export const multiSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "loading",
       "type": "boolean",
-      "description": "Whether the component should display a loading state.",
+      "description": "Shows loading status and closes the popup, blocking interaction. Unlike disabled, loading preserves submission and required validation of the value.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -298,7 +298,7 @@ export const multiSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "searchable",
       "type": "boolean",
-      "description": "Whether users can filter options by typing.",
+      "description": "Whether users can filter options by typing. When open, focus stays on the search combobox, or on the trigger combobox when false. Arrows skip disabled options; Enter toggles the active option. Escape closes and restores trigger focus. Keyboard navigation scrolls the active option into view within the list.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -366,7 +366,7 @@ export const multiSelectPropDocs: GeneratedComponentDoc = {
     {
       "name": "toggleAriaLabel",
       "type": "string",
-      "description": "Accessible label for the popup toggle.",
+      "description": "Accessible label for the popup toggle. By default searchable triggers combine the field label with displayed values. Custom labels should include the visible placeholder or selected text.",
       "required": false,
       "inherited": false,
       "category": "props"

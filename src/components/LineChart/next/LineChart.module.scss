@@ -26,12 +26,14 @@
   }
   .gridLine,
   .gridLine {
+    color: var(--line-chart-accent, inherit);
     stroke: currentcolor;
     stroke-width: 1;
     opacity: 0.16;
   }
   .line,
   .line {
+    color: var(--line-chart-accent, inherit);
     vector-effect: non-scaling-stroke;
     animation: line-chart-draw 520ms ease-out both;
     transition:
@@ -40,6 +42,7 @@
   }
   .point,
   .point {
+    color: var(--line-chart-accent, inherit);
     stroke: var(--background-color);
     stroke-width: 2;
     transform-box: fill-box;
@@ -54,10 +57,10 @@
   .axisLabel {
     fill: currentcolor;
     font-size: 0.7rem;
-    opacity: 0.72;
   }
   .loader,
   .loader {
+    color: var(--line-chart-accent, inherit);
     width: 1rem;
     height: 1rem;
     border: 2px solid currentcolor;
@@ -72,13 +75,13 @@
 
   @each $name, $values in theme.$themes {
     .#{$name} {
-      color: map.get($values, border);
+      --line-chart-accent: #{map.get($values, border)};
     }
   }
 
   @each $name, $values in theme.$states {
     .#{$name} {
-      color: map.get($values, border);
+      --line-chart-accent: #{map.get($values, border)};
     }
   }
 

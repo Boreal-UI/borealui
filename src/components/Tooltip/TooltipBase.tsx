@@ -54,16 +54,25 @@ const TooltipBase = forwardRef<
   const generatedId = useId();
   const tooltipId = id ?? generatedId;
 
-  const [visible, setVisible] = useState(false);
-
-  const show = () => setVisible(true);
-  const hide = () => setVisible(false);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
+  const visible = (hovered || focused) && !dismissed;
+  const show = () => {
+    setFocused(true);
+    setDismissed(false);
+  };
+  const hide = () => setFocused(false);
 
   useEffect(() => {
     if (!visible) return;
 
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") hide();
+      if (e.key === "Escape") {
+        setDismissed(true);
+        // Unmounted content may disappear before the browser emits mouseleave.
+        setHovered(false);
+      }
     };
 
     document.addEventListener("keydown", onKey);
@@ -114,14 +123,6 @@ const TooltipBase = forwardRef<
       "aria-labelledby": triggerAriaLabelledBy ?? childProps["aria-labelledby"],
       "aria-describedby": mergedAriaDescribedBy,
       "data-testid": `${testId}-trigger`,
-      onMouseEnter: composeEventHandlers<React.MouseEvent<HTMLElement>>(
-        childProps.onMouseEnter,
-        show,
-      ),
-      onMouseLeave: composeEventHandlers<React.MouseEvent<HTMLElement>>(
-        childProps.onMouseLeave,
-        hide,
-      ),
       onFocus: composeEventHandlers<React.FocusEvent<HTMLElement>>(
         childProps.onFocus,
         show,
@@ -145,8 +146,6 @@ const TooltipBase = forwardRef<
           visible ? tooltipId : undefined,
         )}
         data-testid={`${testId}-trigger`}
-        onMouseEnter={show}
-        onMouseLeave={hide}
         onFocus={show}
         onBlur={hide}
       >
@@ -159,8 +158,14 @@ const TooltipBase = forwardRef<
   const shouldRenderTooltip = keepMountedWhenHidden || visible;
 
   return (
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- Hover containment keeps tooltip content reachable; the child owns keyboard semantics.
     <div
       className={combineClassNames(classMap.container, className)}
+      onMouseEnter={() => {
+        setHovered(true);
+        setDismissed(false);
+      }}
+      onMouseLeave={() => setHovered(false)}
       data-testid={`${testId}-container`}
     >
       {trigger}

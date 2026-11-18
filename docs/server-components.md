@@ -161,3 +161,12 @@ export default function DashboardPage() {
 
 Server component examples are also available in Storybook under
 `Server Components/Overview`.
+
+Server PageHeader and BreadCrumbPageHeader support `titleAs="h1"` through `"h6"`,
+defaulting to `"h1"`. Choose a lower level when embedding either component under
+an existing page heading. PageHeader's root `as` remains independent.
+
+Server Breadcrumbs uses the same complete structured-data hierarchy as Core and
+Next. It renders all visual crumbs and does not support collapse. Missing or
+unsafe intermediate destinations suppress metadata; a final URL is optional.
+See [accessibility](accessibility.md#breadcrumb-structured-data) for the contract.

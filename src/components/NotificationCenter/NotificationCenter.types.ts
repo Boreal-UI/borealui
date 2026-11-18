@@ -35,6 +35,14 @@ export interface Notification {
  * Props for the NotificationCenter component.
  */
 export interface NotificationCenterProps {
+  /** Locale used after hydration. Server and initial hydration show HH:mm UTC
+   * from the same Date; default after mount is the browser locale. */
+  locale?: string;
+
+  /** IANA time zone used after hydration; defaults to the browser time zone.
+   * Does not change the deterministic UTC server/initial hydration fallback. */
+  timeZone?: string;
+
   /** Array of notifications to display. */
   notifications: Notification[];
 

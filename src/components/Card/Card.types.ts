@@ -191,6 +191,10 @@ export interface ActionButton {
  * Props for the customizable Card component.
  */
 export interface CardProps {
+  /** Simple footer content; renderFooter takes precedence when supplied. */
+  footer?: ReactNode;
+  /** Opt out of section padding and imposed child layout for ordinary composition. */
+  padding?: "default" | "none";
   /**
    * Theme style to apply to the card
    * ('primary' | 'secondary' | 'tertiary' | 'quaternary' | 'clear').

@@ -784,3 +784,12 @@
     }
   }
 }
+
+@layer boreal-ui.components {
+  .card[data-padding="none"] > .card_content > div > .card_header,
+  .card[data-padding="none"] > .card_content > div > .card_body,
+  .card[data-padding="none"] > .card_content > div > .card_footer { padding: 0; }
+  .card[data-padding="none"] > .card_content > div > .card_body { display: block; }
+  .card[data-padding="none"] > .card_content > div > .card_body > .card_children { margin: 0; padding: 0; width: 100%; }
+  .card_clear { color: var(--text-color); }
+}

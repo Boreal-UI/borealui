@@ -185,7 +185,7 @@ export const comboBoxPropDocs: GeneratedComponentDoc = {
     {
       "name": "loading",
       "type": "boolean",
-      "description": "Loading.",
+      "description": "Shows loading status while allowing input edits. Stale options are hidden and cannot be activated. The listbox is collapsed in ARIA until ready with results; no controls or active-descendant references are emitted while absent. Ready results reset the active option to the first enabled match.",
       "required": false,
       "inherited": false,
       "category": "props",

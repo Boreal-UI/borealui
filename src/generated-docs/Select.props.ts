@@ -101,12 +101,36 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "category": "styling"
     },
     {
+      "name": "controlClassName",
+      "type": "string",
+      "description": "Class on the native input, textarea or select.",
+      "required": false,
+      "inherited": true,
+      "category": "props"
+    },
+    {
       "name": "data-testid",
       "type": "string",
       "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "description": "Initial native selection for uncontrolled usage. Do not combine with value.",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "descriptionClassName",
+      "type": "string",
+      "description": "Class on visible helperText.",
+      "required": false,
+      "inherited": true,
+      "category": "props"
     },
     {
       "name": "disabled",
@@ -118,9 +142,34 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "defaultValue": "false"
     },
     {
+      "name": "errorClassName",
+      "type": "string",
+      "description": "Class on errorMessage.",
+      "required": false,
+      "inherited": true,
+      "category": "props"
+    },
+    {
+      "name": "errorLive",
+      "type": "\"off\" | \"polite\" | \"assertive\"",
+      "description": "Feedback is static by default. Opt into polite/assertive announcements deliberately.",
+      "required": false,
+      "inherited": true,
+      "category": "props",
+      "defaultValue": "\"off\""
+    },
+    {
       "name": "errorMessage",
       "type": "ReactNode",
       "description": "",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "errorMessageClassName",
+      "type": "string",
+      "description": "Additional classes for errorMessage; errorClassName also merges.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -134,9 +183,26 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "fullWidth",
+      "type": "boolean",
+      "description": "Fill the parent through both the layout and control wrappers.",
+      "required": false,
+      "inherited": true,
+      "category": "props",
+      "defaultValue": "false"
+    },
+    {
       "name": "helperText",
       "type": "ReactNode",
       "description": "",
+      "required": false,
+      "inherited": false,
+      "category": "props"
+    },
+    {
+      "name": "helperTextClassName",
+      "type": "string",
+      "description": "Additional classes for helperText; descriptionClassName also merges.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -216,9 +282,9 @@ export const selectPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "onChange",
-      "type": "(value: string) => void",
+      "type": "((value: string) => void)",
       "description": "Callback fired when the selected option changes. Receives the new value as an argument.",
-      "required": true,
+      "required": false,
       "inherited": false,
       "category": "events"
     },
@@ -232,8 +298,8 @@ export const selectPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "placeholder",
-      "type": "string",
-      "description": "Placeholder text to display when no option is selected.",
+      "type": "string | null",
+      "description": "Disabled, hidden empty placeholder, separate from options. Omitted when options includes value=\"\"; null disables the placeholder explicitly.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -263,6 +329,14 @@ export const selectPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "aria"
+    },
+    {
+      "name": "rootClassName",
+      "type": "string",
+      "description": "Class on the outer field layout, including label and feedback.",
+      "required": false,
+      "inherited": true,
+      "category": "props"
     },
     {
       "name": "rounding",
@@ -343,8 +417,8 @@ export const selectPropDocs: GeneratedComponentDoc = {
     {
       "name": "value",
       "type": "string",
-      "description": "The current selected value.",
-      "required": true,
+      "description": "Controlled selected value. Pair with onChange; omit for uncontrolled usage.",
+      "required": false,
       "inherited": false,
       "category": "props"
     },

@@ -160,3 +160,10 @@ export const WithPolling: Story = {
     );
   },
 };
+
+export const LocalizedTimestamps: Story = {
+  args: {
+    notifications: [{ id: "fixed", message: "Fixed timestamp", timestamp: new Date("2026-11-13T12:00:00.000Z") }],
+    locale: "en-US", timeZone: "America/Toronto", onRemove: () => {},
+  },
+};

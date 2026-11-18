@@ -5,7 +5,7 @@ import {
   useState,
   InputHTMLAttributes,
 } from "react";
-import { NumberInputBaseProps } from "./NumberInput.types";
+import { NumberInputBaseProps, NumberInputChangeEvent } from "./NumberInput.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
@@ -17,15 +17,14 @@ import {
   getDefaultTheme,
 } from "../../config/boreal-style-config";
 
-const getStepPrecision = (step: number): number => {
-  const [, decimal = ""] = String(step).split(".");
-  return decimal.length;
+// Preserve input/bound precision; step controls increments, not a rounding grid.
+const precisionOf = (value: number): number => {
+  const [coefficient, exponent = "0"] = String(value).toLowerCase().split("e");
+  return Math.max(0, (coefficient.split(".")[1]?.length ?? 0) - Number(exponent));
 };
 
-const normalizeValue = (value: number, step: number): number => {
-  const precision = getStepPrecision(step);
-  return Number(value.toFixed(precision));
-};
+const normalizeValue = (value: number, step: number, base: number): number =>
+  Number(value.toFixed(Math.min(100, Math.max(precisionOf(step), precisionOf(base)))));
 
 const parseInputValue = (value: string): number | "" => {
   if (value.trim() === "") return "";
@@ -88,7 +87,7 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
   ) => {
     const generatedId = useId();
     const resolvedLabelPosition = resolvePropAlias(labelPosition);
-    const safeStep = step > 0 ? step : 1;
+    const safeStep = Number.isFinite(step) && step > 0 ? step : 1;
     const isControlled = value !== undefined;
     const [internalValue, setInternalValue] = useState<number | "">(
       defaultValue,
@@ -134,49 +133,30 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
 
     const emitChange = (
       nextValue: number | "",
-      event: React.ChangeEvent<HTMLInputElement>,
+      event: NumberInputChangeEvent,
     ) => {
       if (!isControlled) setInternalValue(nextValue);
       onChange?.(nextValue, event);
       if (typeof nextValue === "number") onValueChange?.(nextValue);
     };
 
-    const updateFromNumber = (nextValue: number) => {
-      const normalized = normalizeValue(
-        clampValue(nextValue, min, max),
-        safeStep,
-      );
-      if (!isControlled) setInternalValue(normalized);
-      onValueChange?.(normalized);
-    };
-
-    const stepBy = (direction: -1 | 1) => {
+    const stepBy = (direction: -1 | 1, event: React.MouseEvent<HTMLButtonElement>) => {
       if (disabled || readOnly) return;
-      const base =
-        typeof currentValue === "number"
-          ? currentValue
-          : typeof min === "number"
-            ? min
-            : 0;
-      updateFromNumber(base + safeStep * direction);
+      const base = typeof currentValue === "number" ? currentValue : min ?? 0;
+      const next = clampValue(normalizeValue(base + safeStep * direction, safeStep, base), min, max);
+      if (next !== currentValue) emitChange(next, event);
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      emitChange(parseInputValue(event.currentTarget.value), event);
+      if (!disabled && !readOnly) emitChange(parseInputValue(event.currentTarget.value), event);
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       const parsed = parseInputValue(event.currentTarget.value);
 
-      if (clampOnBlur && typeof parsed === "number") {
-        const nextValue = normalizeValue(
-          clampValue(parsed, min, max),
-          safeStep,
-        );
-        if (!isControlled) setInternalValue(nextValue);
-        if (nextValue !== parsed) {
-          onValueChange?.(nextValue);
-        }
+      if (!disabled && !readOnly && clampOnBlur && typeof parsed === "number") {
+        const nextValue = clampValue(parsed, min, max);
+        if (nextValue !== parsed) emitChange(nextValue, event);
       }
 
       onBlur?.(event);
@@ -288,7 +268,7 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
                   classMap.controlButton,
                   decrementButtonClassName,
                 )}
-                onClick={() => stepBy(-1)}
+                onClick={(event) => stepBy(-1, event)}
                 disabled={!canDecrement}
                 aria-label={decrementAriaLabel}
                 data-testid={`${testId}-decrement`}
@@ -301,7 +281,7 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
                   classMap.controlButton,
                   incrementButtonClassName,
                 )}
-                onClick={() => stepBy(1)}
+                onClick={(event) => stepBy(1, event)}
                 disabled={!canIncrement}
                 aria-label={incrementAriaLabel}
                 data-testid={`${testId}-increment`}

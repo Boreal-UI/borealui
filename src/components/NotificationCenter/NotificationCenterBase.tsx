@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useMemo, useRef } from "react";
+import React, { useEffect, useId, useMemo, useRef, useSyncExternalStore } from "react";
 import { CloseIcon } from "../../Icons";
 import { BaseNotificationCenterProps } from "./NotificationCenter.types";
 import { themeIcons } from "./NotificationCenter.constants";
@@ -9,8 +9,14 @@ import {
   getDefaultShadow,
 } from "../../config/boreal-style-config";
 
+const subscribeToHydration = () => () => {};
+const clientSnapshot = () => true;
+const serverSnapshot = () => false;
+
 const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   notifications,
+  locale,
+  timeZone,
   onRemove,
   onClearAll,
   fetchNotifications,
@@ -51,6 +57,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
   "data-testid": dataTestId,
   testId = dataTestId ?? "notification-center",
 }) => {
+  const hydrated = useSyncExternalStore(subscribeToHydration, clientSnapshot, serverSnapshot);
   const timers = useRef<Record<string, ReturnType<typeof setTimeout>>>({});
   const prevIds = useRef<Set<string>>(new Set());
   const onRemoveRef = useRef(onRemove);
@@ -209,10 +216,11 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                 .filter(Boolean)
                 .join(" ");
 
-              const timestampStr = note.timestamp?.toLocaleTimeString([], {
-                hour: "2-digit",
-                minute: "2-digit",
-              });
+              const timestampStr = note.timestamp && (
+                hydrated
+                  ? note.timestamp.toLocaleTimeString(locale, { hour: "2-digit", minute: "2-digit", timeZone })
+                  : `${note.timestamp.toISOString().slice(11, 16)} UTC`
+              );
 
               return (
                 <li
@@ -250,7 +258,8 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                     </span>
 
                     {note.timestamp && (
-                      <span
+                      <time
+                        dateTime={note.timestamp.toISOString()}
                         id={timestampId}
                         className={combineClassNames(
                           classMap.timestamp,
@@ -259,7 +268,7 @@ const BaseNotificationCenter: React.FC<BaseNotificationCenterProps> = ({
                         data-testid={`${noteTestId}-timestamp`}
                       >
                         {timestampStr}
-                      </span>
+                      </time>
                     )}
 
                     {note.ariaDescription && (

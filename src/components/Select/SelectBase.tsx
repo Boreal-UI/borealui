@@ -13,6 +13,7 @@ import { ChevronDownIcon } from "../../Icons";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
+import { resolveFieldPresentation } from "../../utils/fieldPresentation";
 import {
   getDefaultVariant,
   getDefaultRounding,
@@ -45,6 +46,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       size = getDefaultSize(),
       options,
       value,
+      defaultValue,
       onChange,
       placeholder = "Select an option",
       disabled = false,
@@ -61,6 +63,17 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       required,
       name,
       label,
+      helperText,
+      errorMessage,
+      invalid,
+      fullWidth = false,
+      rootClassName,
+      controlClassName,
+      descriptionClassName,
+      errorClassName,
+      helperTextClassName,
+      errorMessageClassName,
+      errorLive = "off",
       labelPosition = "top",
       id,
       form,
@@ -77,6 +90,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       "aria-live": ariaLive = "polite",
       "data-testid": dataTestId,
       testId = dataTestId ?? "select",
+      ...nativeProps
     },
     ref,
   ) => {
@@ -100,8 +114,8 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         ? classMap[`label${capitalize(resolvedLabelPosition)}`]
         : undefined;
 
-      return combineClassNames(classMap.layout, posClass, layoutClassName);
-    }, [classMap, hasLabel, resolvedLabelPosition, layoutClassName]);
+      return combineClassNames(classMap.layout, posClass, fullWidth && classMap.fullWidth, layoutClassName, rootClassName);
+    }, [classMap, hasLabel, resolvedLabelPosition, layoutClassName, rootClassName, fullWidth]);
 
     const labelClasses = useMemo(
       () =>
@@ -113,19 +127,23 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
       [classMap, labelClassName],
     );
 
-    const computedDescribedBy = useMemo(() => {
-      const ids = [ariaDescribedBy, internalDescriptionId].filter(Boolean);
-      return ids.length > 0 ? ids.join(" ") : undefined;
-    }, [ariaDescribedBy, internalDescriptionId]);
+    const presentation = resolveFieldPresentation({
+      id: selectId, helperText, errorMessage, invalid, state, ariaInvalid,
+      describedBy: [ariaDescribedBy, internalDescriptionId],
+    });
 
     const computedAriaLabel = ariaLabelledBy
       ? undefined
-      : ariaLabel || placeholder;
+      : ariaLabel || (hasLabel ? undefined : placeholder ?? undefined);
 
     const labelNode = hasLabel ? (
-      <div className={labelClasses} data-testid={`${testId}-label`}>
+      <label
+        htmlFor={selectId}
+        className={labelClasses}
+        data-testid={`${testId}-label`}
+      >
         {label}
-      </div>
+      </label>
     ) : null;
 
     useEffect(() => {
@@ -166,7 +184,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     }, [asyncOptions, pollInterval]);
 
     const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
-      onChange(event.target.value);
+      onChange?.(event.target.value);
     };
 
     const handleWrapperMouseDown = (event: MouseEvent<HTMLDivElement>) => {
@@ -182,7 +200,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           classMap.wrapper,
           classMap[size],
           classMap[theme],
-          state && classMap[state],
+          presentation.state && classMap[presentation.state],
           (variant === "glass" || variant === "glassOutline") && classMap.glass,
           className,
           getShadowClassName(classMap, theme, shadow),
@@ -195,7 +213,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         classMap,
         size,
         theme,
-        state,
+        presentation.state,
         variant,
         className,
         shadow,
@@ -211,8 +229,9 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           (variant === "outline" || variant === "glassOutline") &&
             classMap.outline,
           selectClassName,
+          controlClassName,
         ),
-      [classMap, variant, selectClassName],
+      [classMap, variant, selectClassName, controlClassName],
     );
 
     const iconClasses = useMemo(
@@ -227,6 +246,26 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
     );
 
     const opts = asyncOptions ? internalOptions : options;
+    // A real empty option owns the empty value. Never render two empty options.
+    const showPlaceholder =
+      placeholder !== null && !opts.some((option) => option.value === "");
+
+    useEffect(() => {
+      if (value === undefined || !selectRef.current) return;
+      // Native reset (including React action resets) restores defaultSelected.
+      // Keep that baseline aligned with the controlled value without cancelling reset
+      // or emitting a synthetic change. Uncontrolled defaults remain browser-owned.
+      const select = selectRef.current;
+      const nativeOptions = Array.from(select.options);
+      const valueIndex = nativeOptions.findIndex((option) => option.value === value);
+      // Derive from props: an action may have reset the DOM before effects flush.
+      const selectedIndex = valueIndex >= 0
+        ? valueIndex
+        : nativeOptions.findIndex((option) => !option.disabled);
+      nativeOptions.forEach((option, index) => {
+        option.defaultSelected = index === selectedIndex;
+      });
+    }, [value, opts, showPlaceholder]);
 
     return (
       <div className={layoutClasses} data-testid={`${testId}-layout`}>
@@ -241,6 +280,7 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
           onMouseDown={handleWrapperMouseDown}
         >
           <select
+            {...nativeProps}
             ref={selectRef}
             id={selectId}
             name={name}
@@ -248,24 +288,31 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
             autoComplete={autoComplete}
             role={role}
             tabIndex={tabIndex}
-            value={value ?? ""}
+            value={value}
+            defaultValue={
+              value === undefined
+                ? defaultValue ?? (showPlaceholder ? "" : undefined)
+                : undefined
+            }
             onChange={handleChange}
             className={selectClasses}
             aria-label={computedAriaLabel}
             aria-labelledby={ariaLabelledBy}
             aria-description={ariaDescription}
-            aria-describedby={computedDescribedBy}
+            aria-describedby={presentation.describedBy}
             aria-disabled={disabled || undefined}
-            aria-invalid={ariaInvalid ?? (state === "error" || undefined)}
+            aria-invalid={presentation.ariaInvalid}
             aria-required={ariaRequired ?? (required || undefined)}
             aria-busy={ariaBusy ?? (loading || undefined)}
             disabled={disabled}
             required={required}
             data-testid={`${testId}-input`}
           >
-            <option value="" disabled hidden>
-              {placeholder}
-            </option>
+            {showPlaceholder && (
+              <option value="" disabled hidden>
+                {placeholder}
+              </option>
+            )}
 
             {opts.map((option) => (
               <option
@@ -311,6 +358,19 @@ const BaseSelect = forwardRef<HTMLSelectElement, BaseSelectProps>(
         {(resolvedLabelPosition === "bottom" ||
           resolvedLabelPosition === "right") &&
           labelNode}
+        {helperText && (
+          <div id={presentation.helperTextId}
+            className={combineClassNames(classMap.helperText, helperTextClassName, descriptionClassName)}
+            data-testid={`${testId}-helper-text`}>{helperText}</div>
+        )}
+        {errorMessage && (
+          <div id={presentation.errorMessageId}
+            className={combineClassNames(classMap.errorMessage, errorMessageClassName, errorClassName)}
+            aria-live={errorLive === "off" ? undefined : errorLive}
+            data-testid={`${testId}-error-message`}>
+            {errorMessage}
+          </div>
+        )}
       </div>
     );
   },

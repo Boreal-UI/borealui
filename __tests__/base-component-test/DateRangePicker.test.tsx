@@ -56,6 +56,9 @@ const defaultValue = {
 };
 
 type DummyDatePickerProps = React.InputHTMLAttributes<HTMLInputElement> & {
+  inputProps?: React.InputHTMLAttributes<HTMLInputElement>;
+  buttonProps?: React.ButtonHTMLAttributes<HTMLButtonElement>;
+  pickerButtonAriaLabel?: string;
   theme?: string;
   state?: string;
   fullWidth?: boolean;
@@ -70,7 +73,7 @@ const DummyDatePicker = React.forwardRef<
   HTMLInputElement,
   DummyDatePickerProps
 >((props, ref) => {
-  const inputProps = { ...props };
+  const { inputProps: nativeProps, buttonProps: _buttonProps, pickerButtonAriaLabel: _buttonLabel, ...inputProps } = props;
   delete inputProps.theme;
   delete inputProps.state;
   delete inputProps.fullWidth;
@@ -80,7 +83,7 @@ const DummyDatePicker = React.forwardRef<
   delete inputProps.rounding;
   delete inputProps.size;
 
-  return <input ref={ref} {...inputProps} />;
+  return <input ref={ref} {...inputProps} {...nativeProps} />;
 });
 
 DummyDatePicker.displayName = "DummyDatePicker";

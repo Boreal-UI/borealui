@@ -87,12 +87,13 @@ describe("ColorPickerBase", () => {
     ).toBeInTheDocument();
   });
 
-  it("renders radio inputs with the correct shared name by default", () => {
+  it("shares an instance-specific name across the picker radios", () => {
     renderColorPicker();
 
     const radios = screen.getAllByRole("radio");
     radios.forEach((radio) => {
-      expect(radio).toHaveAttribute("name", "color-picker");
+      expect(radio.getAttribute("name")).toBe(radios[0].getAttribute("name"));
+      expect(radio.getAttribute("name")).toMatch(/^color-picker-/);
     });
   });
 

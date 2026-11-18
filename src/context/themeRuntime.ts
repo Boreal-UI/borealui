@@ -204,7 +204,7 @@ export function dispatchThemeChange(
 
 function normalizeHex(hex: string): string | null {
   const trimmed = hex.trim();
-  const expanded = /^#([\da-f])([\da-f])([\da-f])$/i.exec(trimmed);
+  const expanded = /^#([\da-f])([\da-f])([\da-f])(?:[\da-f])?$/i.exec(trimmed);
 
   if (expanded) {
     return `#${expanded[1]}${expanded[1]}${expanded[2]}${expanded[2]}${expanded[3]}${expanded[3]}`.toLowerCase();
@@ -386,19 +386,20 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     secondaryColor,
     tertiaryColor,
     quaternaryColor,
-    backgroundColor,
+    backgroundColor: paletteBackground,
     forceTextColor,
   } = scheme;
-  const pageTextColor = getReadableColor(backgroundColor, forceTextColor);
+  const backgroundColor = scheme.semanticTokens?.["--background-color"] ?? paletteBackground;
+  const pageTextColor = scheme.semanticTokens?.["--text-color"] ?? getReadableColor(backgroundColor, forceTextColor);
   const mutedTextColor = getReadableMutedColor(backgroundColor, pageTextColor);
   const primaryTextColor = getReadableColor(primaryColor, forceTextColor);
   const secondaryTextColor = getReadableColor(secondaryColor);
   const tertiaryTextColor = getReadableColor(tertiaryColor);
   const quaternaryTextColor = getReadableColor(quaternaryColor);
 
-  return {
+  const variables = {
     "--primary-color": primaryColor,
-    "--primary-color-light": adjustLightness(primaryColor, 10),
+    "--primary-color-light": getAccessibleInteractiveColor(primaryColor, primaryTextColor, 10),
     "--primary-color-hover": getAccessibleInteractiveColor(
       primaryColor,
       primaryTextColor,
@@ -411,7 +412,7 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     "--text-color-lighter": mutedTextColor,
     "--text-color-placeholder": mutedTextColor,
     "--secondary-color": secondaryColor,
-    "--secondary-color-light": adjustLightness(secondaryColor, 10),
+    "--secondary-color-light": getAccessibleInteractiveColor(secondaryColor, secondaryTextColor, 10),
     "--secondary-color-hover": getAccessibleInteractiveColor(
       secondaryColor,
       secondaryTextColor,
@@ -419,7 +420,7 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     ),
     "--text-color-secondary": secondaryTextColor,
     "--tertiary-color": tertiaryColor,
-    "--tertiary-color-light": adjustLightness(tertiaryColor, 10),
+    "--tertiary-color-light": getAccessibleInteractiveColor(tertiaryColor, tertiaryTextColor, 10),
     "--tertiary-color-hover": getAccessibleInteractiveColor(
       tertiaryColor,
       tertiaryTextColor,
@@ -427,7 +428,7 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     ),
     "--text-color-tertiary": tertiaryTextColor,
     "--quaternary-color": quaternaryColor,
-    "--quaternary-color-light": adjustLightness(quaternaryColor, 10),
+    "--quaternary-color-light": getAccessibleInteractiveColor(quaternaryColor, quaternaryTextColor, 10),
     "--quaternary-color-hover": getAccessibleInteractiveColor(
       quaternaryColor,
       quaternaryTextColor,
@@ -466,15 +467,88 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
       quaternaryTextColor,
       -10,
     ),
-    "--success-text-color": pageTextColor,
-    "--warning-text-color": pageTextColor,
-    "--error-text-color": pageTextColor,
+    "--success-color": "#04b34f",
+    "--success-text-color": getReadableColor("#04b34f"),
+    "--success-color-hover": getAccessibleInteractiveColor("#04b34f", getReadableColor("#04b34f"), -10),
+    "--warning-color": "#ff9900",
+    "--warning-text-color": getReadableColor("#ff9900"),
+    "--warning-color-hover": getAccessibleInteractiveColor("#ff9900", getReadableColor("#ff9900"), -10),
+    "--error-color": "#a6192e",
+    "--error-text-color": getReadableColor("#a6192e"),
+    "--error-color-hover": getAccessibleInteractiveColor("#a6192e", getReadableColor("#a6192e"), -10),
+    "--info-color": "#1d5ea8",
+    "--info-text-color": getReadableColor("#1d5ea8"),
+    "--info-color-hover": getAccessibleInteractiveColor("#1d5ea8", getReadableColor("#1d5ea8"), -10),
     "--focus-outline-color": pageTextColor,
     "--divider-color": getAdaptiveBorderColor(backgroundColor),
     "--border-color": getAdaptiveBorderColor(backgroundColor),
     "--border-color-subtle": getAdaptiveBorderColor(backgroundColor, 10, 10),
     "--border-color-strong": getAdaptiveBorderColor(backgroundColor, 20, 20),
   };
+  const blend = (amount: number) => {
+    const bg = normalizeHex(backgroundColor)!;
+    const fg = normalizeHex(pageTextColor)!;
+    return `#${[1, 3, 5].map((index) => Math.round(
+      parseInt(bg.slice(index, index + 2), 16) * (1 - amount) +
+      parseInt(fg.slice(index, index + 2), 16) * amount,
+    ).toString(16).padStart(2, "0")).join("")}`;
+  };
+  const surface = (amount: number) => {
+    for (let weight = amount; weight > 0; weight -= 0.01) {
+      const candidate = blend(weight);
+      if (contrastRatio(candidate, pageTextColor) >= MIN_TEXT_CONTRAST) return candidate;
+    }
+    return backgroundColor;
+  };
+  const roles = {
+    ...variables,
+    "--background-color-surface": surface(0.04),
+    "--background-color-subtle": surface(0.02),
+    "--hover-background": surface(0.08),
+    "--active-background": surface(0.16),
+    "--selected-background": surface(0.12),
+    "--selected-text-color": pageTextColor,
+    "--disabled-background": surface(0.06),
+    "--disabled-text-color": pageTextColor,
+    ...scheme.semanticTokens,
+  };
+  const surfaces = [roles["--background-color"], roles["--background-color-surface"], roles["--background-color-subtle"], roles["--hover-background"], roles["--active-background"], roles["--selected-background"]];
+  for (const token of ["--border-color", "--border-color-strong", "--focus-outline-color"] as const) {
+    if (!scheme.semanticTokens?.[token] && surfaces.some((bg) => contrastRatio(bg, roles[token]) < MIN_UI_CONTRAST)) roles[token] = pageTextColor;
+  }
+  if (!scheme.semanticTokens?.["--text-color-light"]) {
+    roles["--text-color-light"] = surfaces.every((bg) => contrastRatio(bg, mutedTextColor) >= MIN_TEXT_CONTRAST) ? mutedTextColor : pageTextColor;
+  }
+  // Compatibility aliases resolve centrally rather than in consumer CSS.
+  roles["--text-color-lighter"] = roles["--text-color-light"];
+  roles["--text-color-placeholder"] = roles["--text-color-light"];
+  roles["--divider-color"] = roles["--border-color"];
+  return roles;
+}
+
+/** Audit supported neutral-surface pairs. Explicit overrides are preserved, not
+ * silently repaired; applications can check their custom definitions in CI. */
+export function getThemeContrastIssues(scheme: ColorScheme) {
+  const vars = buildThemeVariables(scheme);
+  const issues: Array<{ foreground: string; background: string; ratio: number; minimum: number }> = [];
+  const check = (foreground: string, background: string, minimum: number) => {
+    const ratio = contrastRatio(vars[foreground], vars[background]);
+    if (ratio < minimum) issues.push({ foreground, background, ratio, minimum });
+  };
+  for (const surface of ["--background-color", "--background-color-surface", "--background-color-subtle", "--hover-background", "--active-background"]) {
+    check("--text-color", surface, MIN_TEXT_CONTRAST);
+    check("--text-color-light", surface, MIN_TEXT_CONTRAST);
+    check("--focus-outline-color", surface, MIN_UI_CONTRAST);
+    check("--border-color", surface, MIN_UI_CONTRAST);
+    check("--border-color-strong", surface, MIN_UI_CONTRAST);
+  }
+  for (const state of ["success", "warning", "error", "info"]) {
+    check(`--${state}-text-color`, `--${state}-color`, MIN_TEXT_CONTRAST);
+    check(`--${state}-text-color`, `--${state}-color-hover`, MIN_TEXT_CONTRAST);
+  }
+  check("--selected-text-color", "--selected-background", MIN_TEXT_CONTRAST);
+  check("--disabled-text-color", "--disabled-background", MIN_TEXT_CONTRAST);
+  return issues;
 }
 
 export function applyThemeVariables(

@@ -17,6 +17,10 @@ The Boreal workspace itself requires Node `^20.19.0 || >=22.12.0`. This is a
 build/development constraint, not a peer requirement imposed by the runtime
 packages.
 
+The optional Chromatic CLI upload workflow requires Node 22+ with Chromatic 18.
+Its Visual Regression CI lane uses Node 22; this does not narrow the library's
+React/Next consumer support or the other Node compatibility lanes.
+
 ## Verified matrix
 
 CI exercises these representative boundaries:
@@ -28,7 +32,7 @@ CI exercises these representative boundaries:
 
 The framework lanes respect Next's own published constraints. Next 13.5.11
 requires React 18.2 and Node 16.14 or newer; Next 15.5.26 accepts React 18.2 or
-19 and Node 18.18 or newer; Next 16.4.3 accepts React 18.2 or 19 and requires
+19 and Node 18.18 or newer; Next 16.4.6 accepts React 18.2 or 19 and requires
 Node 20.9 or newer. Boreal tests only combinations that satisfy both the
 framework and Boreal ranges.
 

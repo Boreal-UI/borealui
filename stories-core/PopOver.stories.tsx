@@ -13,6 +13,7 @@ const meta: Meta<PopOverProps> = {
   tags: ["autodocs"],
   args: {
     placement: "bottom",
+    asChild: true,
     theme: "primary",
   },
 };
@@ -46,6 +47,7 @@ export const ThemedVariants: Story = {
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         {themes.map((theme) => (
           <PopOver
+            asChild
             key={theme}
             theme={theme}
             trigger={<Button theme={theme}>{theme}</Button>}
@@ -67,6 +69,7 @@ export const StateVariants: Story = {
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         {stateOptions.map((state) => (
           <PopOver
+            asChild
             key={state}
             state={state}
             trigger={<Button state={state}>{state}</Button>}
@@ -96,6 +99,7 @@ export const GlassThemeVariants: Story = {
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         {themes.map((theme) => (
           <PopOver
+            asChild
             key={theme}
             theme={theme}
             variant="glass"
@@ -120,6 +124,7 @@ export const GlassStateVariants: Story = {
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         {stateOptions.map((state) => (
           <PopOver
+            asChild
             key={state}
             state={state}
             variant="glass"
@@ -160,6 +165,7 @@ export const PlacementVariants: Story = {
       >
         <div style={{ gridArea: "top" }}>
           <PopOver
+            asChild
             placement="top"
             trigger={<Button>Top</Button>}
             content={<div style={{ padding: "0.5rem" }}>Top popover</div>}
@@ -167,6 +173,7 @@ export const PlacementVariants: Story = {
         </div>
         <div style={{ gridArea: "right" }}>
           <PopOver
+            asChild
             placement="right"
             trigger={<Button>Right</Button>}
             content={<div style={{ padding: "0.5rem" }}>Right popover</div>}
@@ -174,6 +181,7 @@ export const PlacementVariants: Story = {
         </div>
         <div style={{ gridArea: "bottom" }}>
           <PopOver
+            asChild
             placement="bottom"
             trigger={<Button>Bottom</Button>}
             content={<div style={{ padding: "0.5rem" }}>Bottom popover</div>}
@@ -181,6 +189,7 @@ export const PlacementVariants: Story = {
         </div>
         <div style={{ gridArea: "left" }}>
           <PopOver
+            asChild
             placement="left"
             trigger={<Button>Left</Button>}
             content={<div style={{ padding: "0.5rem" }}>Left popover</div>}
@@ -228,6 +237,7 @@ export const RoundingVariants: Story = {
         {roundingOptions.map((rounding) => (
           <PopOver
             key={rounding}
+            asChild
             rounding={rounding}
             trigger={<Button>{rounding}</Button>}
             content={
@@ -249,6 +259,7 @@ export const ShadowVariants: Story = {
         {shadowOptions.map((shadow) => (
           <PopOver
             key={shadow}
+            asChild
             shadow={shadow}
             trigger={<Button>{shadow}</Button>}
             content={

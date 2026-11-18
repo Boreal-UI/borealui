@@ -8,7 +8,10 @@ import React, {
   useCallback,
   useLayoutEffect,
   useRef,
+  useContext,
 } from "react";
+import { ThemeScopeContext } from "./ThemeScopeContext";
+import { getThemeAttributes, resolveThemeScheme } from "./themeRuntime";
 import { ThemeContextType, ThemeProviderProps } from "./ThemeContext.types";
 import {
   applyThemeScheme,
@@ -60,7 +63,10 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   syncThemeCookie = false,
   themeCookieName = THEME_COOKIE_NAME,
   useOnlyCustomSchemes = false,
+  scope,
 }) => {
+  const parentScope = useContext(ThemeScopeContext);
+  const isLocal = (scope ?? (parentScope ? "local" : "document")) === "local";
   const [hasResolvedInitialScheme, setHasResolvedInitialScheme] =
     useState(false);
 
@@ -90,7 +96,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
   const [selectedSchemeName, setSelectedSchemeNameState] = useState<string>(
     () => {
       const savedSchemeName =
-        typeof window === "undefined"
+        isLocal || typeof window === "undefined"
           ? null
           : readSavedSchemeName(window.localStorage);
 
@@ -150,9 +156,10 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
       setSelectedSchemeName,
     ],
   );
+  const scopeAttributes = useMemo(() => getThemeAttributes(schemes[selectedScheme] ?? resolveThemeScheme(undefined)), [schemes, selectedScheme]);
 
   const themeInitializationScript = useMemo(() => {
-    if (!enableThemeScript) return "";
+    if (!enableThemeScript || isLocal) return "";
 
     return getThemeInitializationScript({
       customSchemes: stableCustomSchemes,
@@ -166,11 +173,12 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     stableCustomSchemes,
     themeCookieName,
     useOnlyCustomSchemes,
+    isLocal,
   ]);
 
   useBrowserLayoutEffect(() => {
     const savedSchemeName =
-      typeof window === "undefined"
+        isLocal || typeof window === "undefined"
         ? null
         : readSavedSchemeName(window.localStorage);
 
@@ -189,18 +197,18 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     });
 
     setHasResolvedInitialScheme(true);
-  }, [initialSchemeName, resolveSelectedSchemeName, schemes]);
+  }, [initialSchemeName, resolveSelectedSchemeName, schemes, isLocal]);
 
   useInsertionEffect(() => {
     const scheme = schemes[selectedScheme] ?? schemes[0];
 
-    if (!scheme || typeof document === "undefined") return;
+    if (isLocal || !scheme || typeof document === "undefined") return;
 
     applyThemeScheme(scheme, document);
-  }, [selectedScheme, schemes]);
+  }, [selectedScheme, schemes, isLocal]);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
+    if (isLocal || typeof window === "undefined") return;
 
     const syncSchemeName = (schemeName?: string | null) => {
       if (getSchemeIndexByName(schemes, schemeName) === -1) return;
@@ -230,10 +238,10 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
       window.removeEventListener(THEME_CHANGE_EVENT, handleThemeChange);
       window.removeEventListener("storage", handleStorageChange);
     };
-  }, [initialSchemeName, schemes]);
+  }, [initialSchemeName, schemes, isLocal]);
 
   useEffect(() => {
-    if (!hasResolvedInitialScheme) return;
+    if (isLocal || !hasResolvedInitialScheme) return;
 
     const scheme = schemes[selectedScheme] ?? schemes[0];
 
@@ -259,15 +267,18 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({
     schemes,
     syncThemeCookie,
     themeCookieName,
+    isLocal,
   ]);
 
   return (
-    <ThemeContext.Provider value={contextValue}>
-      {enableThemeScript ? (
-        <script suppressHydrationWarning>{themeInitializationScript}</script>
-      ) : null}
-      {children}
-    </ThemeContext.Provider>
+    <ThemeScopeContext.Provider value={scopeAttributes}>
+      <ThemeContext.Provider value={contextValue}>
+        {enableThemeScript && !isLocal ? (
+          <script suppressHydrationWarning>{themeInitializationScript}</script>
+        ) : null}
+        {isLocal ? <div {...scopeAttributes} style={{ ...scopeAttributes.style, color: "var(--text-color)", background: "var(--background-color)", minWidth: 0 }}>{children}</div> : children}
+      </ThemeContext.Provider>
+    </ThemeScopeContext.Provider>
   );
 };
 

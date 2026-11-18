@@ -170,8 +170,8 @@ export const searchInputPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "onChange",
-      "type": "((value: string, event: React.ChangeEvent<HTMLInputElement>) => void)",
-      "description": "Callback fired whenever the search query changes.",
+      "type": "((value: string, event: SearchInputChangeEvent) => void)",
+      "description": "Fires once per edit or clear, before onClear. Use the first argument as the new query; the event is the actual input change or clear-button click.",
       "required": false,
       "inherited": false,
       "category": "events"
@@ -179,7 +179,7 @@ export const searchInputPropDocs: GeneratedComponentDoc = {
     {
       "name": "onClear",
       "type": "((event: React.MouseEvent<HTMLButtonElement>) => void)",
-      "description": "Callback fired when the clear button is activated.",
+      "description": "Optional clear notification, fired after onChange(\"\", event). A state update here is unnecessary when onChange already controls the value.",
       "required": false,
       "inherited": false,
       "category": "events"

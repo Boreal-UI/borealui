@@ -2,8 +2,10 @@ import { useId } from "react";
 import { combineClassNames } from "@/utils/classNames";
 import { expandClassMap, resolvePropAlias } from "@/utils/propAliases";
 import { capitalize } from "@/utils/capitalize";
+import { resolveFieldPresentation } from "@/utils/fieldPresentation";
 import {
   getDefaultVariant,
+  getDefaultSize,
   getDefaultRounding,
   getDefaultTheme,
   getShadowClassName,
@@ -39,10 +41,17 @@ export default function TextInput({
   "data-testid": dataTestId,
   id,
   readOnly = true,
-  size,
+  size = getDefaultSize(),
   invalid,
   helperText,
   errorMessage,
+  rootClassName,
+  controlClassName,
+  descriptionClassName,
+  errorClassName,
+  errorLive = "off",
+  srOnlyText,
+  srOnlyClassName,
   "aria-describedby": ariaDescribedBy,
   ...rest
 }: ServerTextInputProps) {
@@ -50,12 +59,12 @@ export default function TextInput({
   const resolvedTestId = testId ?? dataTestId ?? "text-input";
   const generatedId = useId();
   const inputId = id ?? `${generatedId}-input`;
-  const helperTextId = helperText ? `${inputId}-helper-text` : undefined;
-  const errorMessageId = errorMessage ? `${inputId}-error-message` : undefined;
-  const describedBy =
-    [ariaDescribedBy, helperTextId, errorMessageId]
-      .filter(Boolean)
-      .join(" ") || undefined;
+  const srDescriptionId = srOnlyText ? `${inputId}-sr-description` : undefined;
+  const presentation = resolveFieldPresentation({
+    id: inputId, helperText, errorMessage, invalid, state,
+    ariaInvalid: rest["aria-invalid"], describedBy: [ariaDescribedBy, srDescriptionId],
+  });
+  const { helperTextId, errorMessageId } = presentation;
   const position = resolvePropAlias(labelPosition);
   return (
     <div
@@ -64,8 +73,9 @@ export default function TextInput({
         classMap[`label${capitalize(position)}`],
         fullWidth && classMap.fullWidth,
         containerClassName,
+        rootClassName,
       )}
-      data-state={errorMessage ? "error" : state || undefined}
+      data-state={presentation.state || undefined}
       data-disabled={disabled || undefined}
       data-testid={resolvedTestId}
     >
@@ -82,8 +92,7 @@ export default function TextInput({
           classMap.textInput,
           classMap[theme],
           size && classMap[size],
-          state && classMap[state],
-          invalid && classMap.error,
+          presentation.state && classMap[presentation.state],
           (variant === "outline" || variant === "glassOutline") &&
             classMap.outline,
           (variant === "glass" || variant === "glassOutline") && classMap.glass,
@@ -112,20 +121,20 @@ export default function TextInput({
           placeholder={label ? " " : placeholder}
           readOnly={readOnly}
           disabled={disabled}
-          aria-invalid={
-            invalid || state === "error" || Boolean(errorMessage) || undefined
-          }
-          aria-describedby={describedBy}
-          className={combineClassNames(classMap.input, inputClassName)}
+          aria-invalid={presentation.ariaInvalid}
+          aria-describedby={presentation.describedBy}
+          className={combineClassNames(classMap.input, inputClassName, controlClassName)}
           data-testid={`${resolvedTestId}-input`}
         />
       </div>
+      {srOnlyText && <span id={srDescriptionId} className={combineClassNames("sr_only", srOnlyClassName)}>{srOnlyText}</span>}
       {helperText ? (
         <div
           id={helperTextId}
           className={combineClassNames(
             classMap.helperText,
             helperTextClassName,
+            descriptionClassName,
           )}
         >
           {helperText}
@@ -137,8 +146,9 @@ export default function TextInput({
           className={combineClassNames(
             classMap.errorMessage,
             errorMessageClassName,
+            errorClassName,
           )}
-          role="alert"
+          aria-live={errorLive === "off" ? undefined : errorLive}
         >
           {errorMessage}
         </div>

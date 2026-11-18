@@ -173,6 +173,7 @@
 
       .tab.active {
         background-color: map.get($vals, bg);
+        color: map.get($vals, text);
         border-bottom-color: map.get($vals, border);
       }
 

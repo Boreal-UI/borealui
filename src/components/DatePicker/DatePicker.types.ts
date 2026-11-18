@@ -22,6 +22,18 @@ type NativeDatePickerProps = Omit<
  * Props for the DatePicker component.
  */
 export interface DatePickerProps extends NativeDatePickerProps {
+  /** Accessible name forwarded to the native input; takes precedence over inputProps. */
+  "aria-label"?: string;
+  /** Accessible name reference forwarded to the native input. */
+  "aria-labelledby"?: string;
+  /** Accessible description reference merged with inputProps, helper and error descriptions. */
+  "aria-describedby"?: string;
+  /** External validation state forwarded to the input; overrides derived validation. */
+  "aria-invalid"?: boolean | "true" | "false" | "grammar" | "spelling";
+  /** Accessible required state forwarded to the input; use required for native validation. */
+  "aria-required"?: boolean | "true" | "false";
+  /** Accessible external error message reference forwarded to the input. */
+  "aria-errormessage"?: string;
   /**
    * Current date value in YYYY-MM-DD format.
    */

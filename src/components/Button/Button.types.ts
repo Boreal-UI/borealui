@@ -32,6 +32,12 @@ export interface ButtonProps extends Pick<
   | "aria-busy"
   | "aria-disabled"
 > {
+  /** Allow labels (including unbroken text) to wrap and grow the button vertically.
+   * Default false preserves single-line labels. */
+  wrapLabel?: boolean;
+  /** Native submitter name and value, included in FormData for the activated button. */
+  name?: string;
+  value?: string;
   /**
    * Optional target attribute for link rendering.
    * Example: "_blank", "_self", "_parent", "_top"
@@ -243,7 +249,7 @@ export interface ButtonProps extends Pick<
   loading?: boolean;
 
   /**
-   * Optional accessible text announced while loading.
+   * Visible, accessible label while loading. It follows wrapLabel and replaces children.
    * Defaults to "Loading" in the component if not provided.
    *
    * @default "Loading"

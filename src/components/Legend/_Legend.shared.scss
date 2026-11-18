@@ -53,11 +53,11 @@
 
 @mixin value {
   font-variant-numeric: tabular-nums;
-  opacity: 0.76;
   color: inherit;
 }
 
 @mixin loader {
+  color: var(--legend-accent, inherit);
   width: 1rem;
   height: 1rem;
   border: 2px solid currentcolor;
@@ -71,7 +71,7 @@
 }
 
 @mixin theme($color) {
-  color: $color;
+  --legend-accent: #{$color};
 }
 
 @mixin disabled {

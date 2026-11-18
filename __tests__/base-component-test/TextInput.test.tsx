@@ -535,7 +535,7 @@ describe("TextInputBase", () => {
 
     expect(helper).toHaveClass("helperText", "custom-helper");
     expect(error).toHaveClass("errorMessage", "custom-error");
-    expect(error).toHaveAttribute("role", "alert");
+    expect(error).not.toHaveAttribute("role", "alert");
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toHaveAttribute(
       "aria-describedby",

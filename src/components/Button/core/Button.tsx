@@ -15,6 +15,7 @@ const classes = {
   link: "button_link",
 
   fullWidth: "button_full_width",
+  wrapLabel: "button_wrapLabel",
   disabled: "button_disabled",
 
   primary: "button_primary",

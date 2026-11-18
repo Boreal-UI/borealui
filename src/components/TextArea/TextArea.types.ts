@@ -11,6 +11,7 @@ import {
   ReactNode,
   TextareaHTMLAttributes,
 } from "react";
+import type { FieldPresentationProps } from "../../types/fieldPresentation";
 
 /**
  * Props for the TextArea component.
@@ -18,7 +19,7 @@ import {
 export interface TextAreaProps extends Omit<
   TextareaHTMLAttributes<HTMLTextAreaElement>,
   "onChange"
-> {
+>, FieldPresentationProps {
   /**
    * Optional visible label for the textarea.
    */

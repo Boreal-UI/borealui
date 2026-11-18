@@ -14,7 +14,7 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "allowCustom",
       "type": "boolean",
-      "description": "If true, allows picking a custom color via a color input.",
+      "description": "Adds a custom radio selection and native color input. Custom selections use six-digit hexadecimal colors and submit through the same native radio group as presets, so required validation and FormData have one current value.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -70,12 +70,30 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
       "defaultValue": "\"Custom color picker\""
     },
     {
+      "name": "customOptionLabel",
+      "type": "string",
+      "description": "Accessible label for the custom selection radio.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"Custom color\""
+    },
+    {
       "name": "data-testid",
       "type": "string",
       "description": "Backward-compatible alias for test ID attributes.",
       "required": false,
       "inherited": false,
       "category": "testing"
+    },
+    {
+      "name": "defaultValue",
+      "type": "string",
+      "description": "Initial uncontrolled selection. Native form reset restores this value.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"\""
     },
     {
       "name": "disabled",
@@ -132,17 +150,16 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "name",
       "type": "string",
-      "description": "Optional name attribute for the radio group.",
+      "description": "Native radio group and FormData key. Omit for an instance-specific, SSR-safe name. Supply a stable name for a predictable submission key; identical explicit names in the same form owner share one native group.",
       "required": false,
       "inherited": false,
-      "category": "props",
-      "defaultValue": "\"color-picker\""
+      "category": "props"
     },
     {
       "name": "onValueChange",
-      "type": "(color: string) => void",
+      "type": "((color: string) => void)",
       "description": "Callback triggered when a color is value.",
-      "required": true,
+      "required": false,
       "inherited": false,
       "category": "events"
     },
@@ -194,8 +211,8 @@ export const colorPickerPropDocs: GeneratedComponentDoc = {
     {
       "name": "value",
       "type": "string",
-      "description": "Currently value color value.",
-      "required": true,
+      "description": "Current controlled selection. Do not combine with defaultValue.",
+      "required": false,
       "inherited": false,
       "category": "props"
     }

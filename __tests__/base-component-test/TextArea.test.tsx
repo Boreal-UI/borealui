@@ -225,17 +225,17 @@ describe("TextAreaBase", () => {
 
     expect(error).toBeInTheDocument();
     expect(error).toHaveTextContent("Feedback is required");
-    expect(error).toHaveAttribute("role", "alert");
+    expect(error).not.toHaveAttribute("role", "alert");
     expect(input).toHaveAttribute("aria-invalid", "true");
     expect(input).toHaveAttribute("aria-errormessage", error.id);
   });
 
-  it("does not apply aria-errormessage when not in error state", () => {
+  it("infers error state from an error message without requiring a separate state prop", () => {
     render(
       <TextAreaBase
         classMap={mockStyles}
         placeholder="Enter feedback"
-        errorMessage="This exists but is not an active error"
+        errorMessage="This is an active error"
       />,
     );
 
@@ -244,8 +244,8 @@ describe("TextAreaBase", () => {
 
     expect(error).toBeInTheDocument();
     expect(error).not.toHaveAttribute("role", "alert");
-    expect(input).not.toHaveAttribute("aria-errormessage");
-    expect(input).not.toHaveAttribute("aria-invalid");
+    expect(input).toHaveAttribute("aria-errormessage", error.id);
+    expect(input).toHaveAttribute("aria-invalid", "true");
   });
 
   it("uses an external aria-errormessage id when provided in error state", () => {

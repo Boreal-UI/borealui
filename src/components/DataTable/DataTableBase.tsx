@@ -1,5 +1,6 @@
 import {
   useEffect,
+  useLayoutEffect,
   useId,
   useMemo,
   useCallback,
@@ -27,7 +28,9 @@ import {
   resolveRows,
   sortRows,
 } from "./dataTableRows";
-import { resolveVirtualWindow } from "./dataTableVirtualization";
+import { clampVirtualScrollTop, resolveVirtualWindow } from "./dataTableVirtualization";
+
+const useClientLayoutEffect = typeof window === "undefined" ? useEffect : useLayoutEffect;
 
 const parsePixelWidth = (value: string | undefined, fallback = 160): number => {
   if (!value) return fallback;
@@ -35,10 +38,30 @@ const parsePixelWidth = (value: string | undefined, fallback = 160): number => {
   return Number.isFinite(parsed) ? parsed : fallback;
 };
 
+const interactiveSelector = [
+  "a[href]", "button", "input", "select", "textarea", "label", "summary",
+  "iframe", "object", "embed", "audio[controls]", "video[controls]",
+  '[contenteditable]:not([contenteditable="false"])', "[tabindex]",
+  ...[
+    "button", "link", "checkbox", "radio", "switch", "textbox", "searchbox",
+    "combobox", "listbox", "slider", "spinbutton", "menuitem",
+    "menuitemcheckbox", "menuitemradio", "option", "treeitem", "tab",
+  ].map((role) => `[role="${role}"]`),
+].join(",");
+
+const isNestedInteractive = (target: EventTarget, row: HTMLTableRowElement) => {
+  if (!(target instanceof Element) || target === row) return false;
+  // Match ancestors too: icons/spans inside controls are interactive targets.
+  // A row's own tabIndex must not turn ordinary cell content into a control.
+  const interactive = target.closest(interactiveSelector);
+  return Boolean(interactive && interactive !== row && row.contains(interactive));
+};
+
 function DataTableBase<T extends object>({
   columns,
   data,
   onRowClick,
+  scrollRegionProps,
   selectableRows = false,
   selectedRowKeys,
   defaultSelectedRowKeys = [],
@@ -67,6 +90,8 @@ function DataTableBase<T extends object>({
   variant = getDefaultVariant(),
   className,
   tableClassName,
+  minWidth,
+  tableLayout = "auto",
   theadClassName,
   tbodyClassName,
   rowClassName,
@@ -157,6 +182,9 @@ function DataTableBase<T extends object>({
     columnKey: keyof T;
   } | null>(null);
   const [scrollTop, setScrollTop] = useState(0);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const selectAllRef = useRef<HTMLInputElement>(null);
+  const previousVirtualScopeRef = useRef({ filter: "", page: 1, size: itemsPerPage });
   const scrollFrameRef = useRef<number | null>(null);
   const pendingScrollTopRef = useRef(0);
   const previousDataRef = useRef(data);
@@ -366,6 +394,22 @@ function DataTableBase<T extends object>({
     ? paginatedData.slice(virtualStartIndex, virtualEndIndex)
     : paginatedData;
 
+  useClientLayoutEffect(() => {
+    const previous = previousVirtualScopeRef.current;
+    previousVirtualScopeRef.current = { filter: filterQuery, page: clampedPage, size: perPage };
+    const viewport = viewportRef.current;
+    if (!virtualized || !viewport) return;
+    const reset = previous.filter !== filterQuery || previous.page !== clampedPage || previous.size !== perPage;
+    const next = reset ? 0 : clampVirtualScrollTop(paginatedData.length, viewport.scrollTop, virtualRowHeight, virtualViewportHeight);
+    if (scrollFrameRef.current !== null) {
+      window.cancelAnimationFrame(scrollFrameRef.current);
+      scrollFrameRef.current = null;
+    }
+    viewport.scrollTop = next;
+    pendingScrollTopRef.current = next;
+    setScrollTop(next);
+  }, [clampedPage, filterQuery, paginatedData.length, perPage, virtualRowHeight, virtualViewportHeight, virtualized]);
+
   const selectedRows = useMemo(
     () =>
       !bulkActions || selectedKeySet.size === 0
@@ -410,12 +454,16 @@ function DataTableBase<T extends object>({
   };
 
   const allVisibleKeys = selectableRows
-    ? renderedData.map(({ key }) => key)
+    ? paginatedData.map(({ key }) => key)
     : [];
   const allVisibleKeySet = new Set(allVisibleKeys);
   const allVisibleSelected =
     allVisibleKeys.length > 0 &&
     allVisibleKeys.every((key) => selectedKeySet.has(key));
+  const someVisibleSelected = !allVisibleSelected && allVisibleKeys.some(key => selectedKeySet.has(key));
+  useEffect(() => {
+    if (selectAllRef.current) selectAllRef.current.indeterminate = someVisibleSelected;
+  }, [someVisibleSelected]);
 
   const toggleAllRows = () => {
     if (allVisibleSelected) {
@@ -485,7 +533,7 @@ function DataTableBase<T extends object>({
   const handleRowKeyDown =
     (row: T) =>
     (e: KeyboardEvent<HTMLTableRowElement>): void => {
-      if (!onRowClick) return;
+      if (!onRowClick || e.defaultPrevented || e.target !== e.currentTarget) return;
 
       if (e.key === "Enter" || e.key === " ") {
         e.preventDefault();
@@ -752,12 +800,26 @@ function DataTableBase<T extends object>({
 
   return (
     <div
-      className={wrapperClass}
+      {...scrollRegionProps}
+      className={combineClassNames(wrapperClass, scrollRegionProps?.className)}
       data-testid={testId}
-      role="region"
-      aria-label="Data table"
+      role={scrollRegionProps?.role ?? "region"}
+      tabIndex={scrollRegionProps?.tabIndex ?? 0}
+      aria-labelledby={
+        scrollRegionProps?.["aria-labelledby"] ??
+        (scrollRegionProps?.["aria-label"] !== undefined
+          ? undefined
+          : caption ? captionId : ariaLabelledBy)
+      }
+      aria-label={
+        scrollRegionProps?.["aria-label"] ??
+        (caption || ariaLabelledBy ? undefined : ariaLabel ?? "Data table")
+      }
     >
-      <div className={classMap.scrollArea}>
+      <div
+        className={classMap.scrollArea}
+        style={virtualized && tableLayout === "auto" ? { width: "max-content" } : undefined}
+      >
         {hasToolbar ? (
           <div
             className={combineClassNames(classMap.toolbar, toolbarClassName)}
@@ -857,6 +919,7 @@ function DataTableBase<T extends object>({
 
         <div
           className={classMap.viewport}
+          ref={viewportRef}
           style={
             virtualized
               ? { maxHeight: virtualViewportHeight, overflowY: "auto" }
@@ -867,6 +930,7 @@ function DataTableBase<T extends object>({
         >
           <table
             className={tableClass}
+            style={{ minWidth, tableLayout }}
             aria-label={ariaLabel}
             aria-labelledby={ariaLabelledBy}
             aria-describedby={computedAriaDescribedBy || undefined}
@@ -897,7 +961,9 @@ function DataTableBase<T extends object>({
                   <th scope="col" className={classMap.selectionCell}>
                     <input
                       type="checkbox"
+                      ref={selectAllRef}
                       aria-label={selectAllAriaLabel}
+                      aria-checked={someVisibleSelected ? "mixed" : allVisibleSelected}
                       checked={allVisibleSelected}
                       onChange={toggleAllRows}
                       data-testid={`${testId}-select-all`}
@@ -1098,7 +1164,14 @@ function DataTableBase<T extends object>({
                               classMap.striped,
                             getRowClassName(row, absoluteIndex),
                           )}
-                          onClick={() => onRowClick?.(row)}
+                          onClick={(event) => {
+                            if (
+                              !event.defaultPrevented &&
+                              !isNestedInteractive(event.target, event.currentTarget)
+                            ) {
+                              onRowClick?.(row);
+                            }
+                          }}
                           onKeyDown={handleRowKeyDown(row)}
                           tabIndex={onRowClick ? 0 : undefined}
                           aria-label={onRowClick ? rowAriaLabel : undefined}
@@ -1106,6 +1179,7 @@ function DataTableBase<T extends object>({
                             onRowClick ? rowAriaDescription : undefined
                           }
                           data-testid={`${testId}-row-${key}`}
+                          data-selected={selectableRows && selectedKeySet.has(key) ? "true" : undefined}
                         >
                           {renderExpandedRow ? (
                             <td className={classMap.selectionCell}>

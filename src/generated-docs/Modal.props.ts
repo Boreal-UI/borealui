@@ -45,7 +45,7 @@ export const modalPropDocs: GeneratedComponentDoc = {
     },
     {
       "name": "children",
-      "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
+      "type": "ReactNode",
       "description": "The content to be rendered inside the modal. Expected to be a single React element.",
       "required": false,
       "inherited": false,
@@ -147,6 +147,15 @@ export const modalPropDocs: GeneratedComponentDoc = {
       "required": false,
       "inherited": false,
       "category": "props"
+    },
+    {
+      "name": "padding",
+      "type": "\"none\" | \"default\"",
+      "description": "Internal section padding; existing section class overrides still merge.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"default\""
     },
     {
       "name": "rounding",

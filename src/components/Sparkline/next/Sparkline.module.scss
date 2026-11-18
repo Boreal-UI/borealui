@@ -48,6 +48,7 @@
   }
 
   .line {
+    color: var(--sparkline-accent, inherit);
     fill: none;
     stroke-width: 3;
     stroke-linecap: round;
@@ -60,12 +61,14 @@
   }
 
   .area {
+    color: var(--sparkline-accent, inherit);
     pointer-events: none;
     opacity: 0.18;
     transition: opacity var(--transition-default);
   }
 
   .point {
+    color: var(--sparkline-accent, inherit);
     stroke: var(--background-color);
     stroke-width: 4;
     vector-effect: non-scaling-stroke;
@@ -96,6 +99,7 @@
   }
 
   .loader {
+    color: var(--sparkline-accent, inherit);
     width: 1rem;
     height: 1rem;
     border: 2px solid currentcolor;
@@ -110,13 +114,13 @@
 
   @each $name, $values in theme.$themes {
     .#{$name} {
-      color: map.get($values, border);
+      --sparkline-accent: #{map.get($values, border)};
     }
   }
 
   @each $name, $values in theme.$states {
     .#{$name} {
-      color: map.get($values, border);
+      --sparkline-accent: #{map.get($values, border)};
     }
   }
 

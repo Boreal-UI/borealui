@@ -614,14 +614,14 @@ describe("BreadcrumbsBase", () => {
   it("renders schema.org BreadcrumbList metadata", () => {
     renderBreadcrumbs();
 
-    const list = screen.getByTestId("breadcrumbs-nav-list");
+    const list = document.querySelector('[itemtype="https://schema.org/BreadcrumbList"]');
     expect(list).toHaveAttribute("itemscope");
     expect(list).toHaveAttribute(
       "itemtype",
       "https://schema.org/BreadcrumbList",
     );
 
-    const items = screen.getAllByTestId("breadcrumbs-nav-item");
+    const items = document.querySelectorAll('[itemprop="itemListElement"]');
     expect(items[0]).toHaveAttribute("itemprop", "itemListElement");
     expect(items[0]).toHaveAttribute("itemscope");
     expect(items[0]).toHaveAttribute("itemtype", "https://schema.org/ListItem");

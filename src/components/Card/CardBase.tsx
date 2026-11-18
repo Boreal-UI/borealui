@@ -13,6 +13,7 @@ import {
 
 const CardBase: React.FC<CardBaseProps> = ({
   theme = getDefaultTheme(),
+  padding = "default",
   state,
   cardIcon,
   title,
@@ -46,6 +47,7 @@ const CardBase: React.FC<CardBaseProps> = ({
   renderHeader,
   renderContent,
   renderFooter,
+  footer,
   actionButtons = [],
   useIconButtons = false,
   layout = "vertical",
@@ -218,6 +220,7 @@ const CardBase: React.FC<CardBaseProps> = ({
     <div
       id={id}
       data-testid={testId}
+      data-padding={padding}
       className={cardClassName}
       role={resolvedRole}
       tabIndex={disabled ? -1 : isInteractive ? (tabIndex ?? 0) : tabIndex}
@@ -333,7 +336,7 @@ const CardBase: React.FC<CardBaseProps> = ({
               )}
             </div>
 
-            {(actionButtons.length > 0 || renderFooter) && (
+            {(actionButtons.length > 0 || renderFooter || footer) && (
               <div
                 className={combineClassNames(classMap.footer, footerClassName)}
               >
@@ -397,7 +400,7 @@ const CardBase: React.FC<CardBaseProps> = ({
                     })}
                   </div>
                 )}
-                {renderFooter && renderFooter()}
+                {renderFooter ? renderFooter() : footer}
               </div>
             )}
           </div>

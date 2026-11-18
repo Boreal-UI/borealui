@@ -4,12 +4,16 @@ These guides cover the public APIs consumers use when installing, importing, sty
 
 Start here:
 
+- [Consumer Changelog](../CHANGELOG.md)
 - [Installation and Imports](./installation-and-imports.md)
 - [Next.js Server Components](./server-components.md)
 - [Published Compatibility](./compatibility.md)
 - [Visual Regression and Core/Next Parity](./visual-regression.md)
 - [CLI](./cli.md)
 - [Public API Reference](./public-api-reference.md)
+- [Select Forms and DataTable Scrolling](./select-and-datatable-native-behavior.md)
+- [Field Layout, Validation and Responsive Content](./field-layout-validation-responsive-content.md)
+- [Semantic Themes, Overlays and Recipes](./semantic-themes-overlays-recipes.md)
 - [Styling and Theming](./styling-and-theming.md)
 - [Component API Patterns](./component-api-patterns.md)
 - [Performance and Async Behavior](./performance-and-async-behavior.md)

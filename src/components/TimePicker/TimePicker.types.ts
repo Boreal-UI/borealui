@@ -22,6 +22,18 @@ type NativeTimePickerProps = Omit<
  * Props for the TimePicker component.
  */
 export interface TimePickerProps extends NativeTimePickerProps {
+  /** Accessible name forwarded to the native input; takes precedence over inputProps. */
+  "aria-label"?: string;
+  /** Accessible name reference forwarded to the native input. */
+  "aria-labelledby"?: string;
+  /** Accessible description reference merged with inputProps, helper and error descriptions. */
+  "aria-describedby"?: string;
+  /** External validation state forwarded to the input; overrides derived validation. */
+  "aria-invalid"?: boolean | "true" | "false" | "grammar" | "spelling";
+  /** Accessible required state forwarded to the input; use required for native validation. */
+  "aria-required"?: boolean | "true" | "false";
+  /** Accessible external error message reference forwarded to the input. */
+  "aria-errormessage"?: string;
   /**
    * Current time value in HH:mm or HH:mm:ss format.
    */
@@ -43,7 +55,7 @@ export interface TimePickerProps extends NativeTimePickerProps {
   name?: string;
 
   /**
-   * Minimum selectable time.
+   * Minimum selectable time. A min later than max defines a range crossing midnight.
    */
   min?: string;
 
@@ -53,9 +65,9 @@ export interface TimePickerProps extends NativeTimePickerProps {
   max?: string;
 
   /**
-   * Time step in seconds.
+   * Time step in seconds, including fractional seconds; "any" disables step validation.
    */
-  step?: number;
+  step?: number | "any";
 
   /**
    * Whether the input is required.

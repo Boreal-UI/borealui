@@ -22,6 +22,7 @@
 
   .wrapper {
     --data-table-min-width: 600px;
+    container-type: inline-size;
 
     width: 100%;
     max-width: 100%;
@@ -35,6 +36,11 @@
     border-radius: inherit;
     -webkit-overflow-scrolling: touch;
     min-width: 0;
+
+    &:focus-visible {
+      outline: 2px solid var(--focus-outline-color, var(--primary-color));
+      outline-offset: -2px;
+    }
 
     @include bp.down(md) {
       --data-table-min-width: 520px;
@@ -51,12 +57,14 @@
     }
 
     .toolbar {
+      position: sticky;
+      left: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--spacing-sm);
       flex-wrap: wrap;
-      width: 100%;
+      width: 100cqi;
       min-width: 0;
       padding: var(--spacing-sm);
       box-sizing: border-box;
@@ -94,12 +102,14 @@
 
     .bulkToolbar,
     .pagination {
+      position: sticky;
+      left: 0;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: var(--spacing-sm);
       flex-wrap: wrap;
-      width: 100%;
+      width: 100cqi;
       min-width: 0;
       padding: var(--spacing-sm);
       border-top: 1px solid var(--border-color);
@@ -190,7 +200,7 @@
     }
 
     .table {
-      width: max-content;
+      width: 100%;
       min-width: max(100%, var(--data-table-min-width));
       border-collapse: separate;
       border-spacing: 0;
@@ -456,93 +466,7 @@
       }
     }
 
-    @include bp.down(xs) {
-      overflow-x: auto;
 
-      .scrollArea,
-      .table {
-        width: 100%;
-        min-width: 0;
-      }
-
-      .viewport {
-        width: 100%;
-        min-width: 0;
-      }
-
-      .table {
-        font-size: var(--font-size-caption);
-      }
-
-      .table thead {
-        display: none;
-      }
-
-      .table tbody {
-        display: block;
-      }
-
-      .table tbody tr {
-        display: block;
-        margin-bottom: var(--spacing-sm);
-        background-color: var(--background-color-dark);
-        border-radius: var(--border-radius-md);
-        overflow: hidden;
-      }
-
-      .headerCell,
-      .cell,
-      .selectionCell {
-        display: block;
-        width: 100%;
-        box-sizing: border-box;
-        text-align: left;
-        padding: var(--spacing-xs);
-        border-bottom: 1px solid var(--text-color-primary);
-        white-space: normal;
-        overflow-wrap: anywhere;
-      }
-
-      .selectionCell {
-        text-align: left;
-      }
-
-      .selectionCell::before {
-        content: "Select";
-        display: inline-block;
-        margin-right: var(--spacing-xs);
-        font-family: var(--font-family-ui);
-        font-size: var(--font-size-label);
-        font-weight: var(--font-weight-label);
-        line-height: var(--line-height-label);
-        letter-spacing: var(--letter-spacing-label);
-        color: var(--text-color-secondary);
-      }
-
-      .cell::before {
-        content: attr(data-label);
-        display: block;
-        font-family: var(--font-family-ui);
-        font-size: var(--font-size-label);
-        font-weight: var(--font-weight-label);
-        line-height: var(--line-height-label);
-        letter-spacing: var(--letter-spacing-label);
-        margin-bottom: 2px;
-        color: var(--text-color-secondary);
-      }
-
-      tbody tr:last-child .cell,
-      tbody tr:last-child th.cell,
-      tbody tr:last-child .selectionCell {
-        border-bottom: 1px solid var(--text-color-primary);
-      }
-
-      tbody tr .cell:last-child,
-      tbody tr th.cell:last-child,
-      tbody tr .selectionCell:last-child {
-        border-bottom: none;
-      }
-    }
   }
 
   @each $name, $values in theme.$themes {
@@ -772,4 +696,14 @@
       outline-offset: 2px;
     }
   }
+}
+
+@layer boreal-ui.components {
+  .wrapper tbody { background: var(--background-color); color: var(--text-color); }
+  .wrapper .striped:nth-child(even) { background: var(--background-color-subtle); }
+  .wrapper .clickable:hover,
+  .wrapper .clickable:hover:nth-child(even) { background: var(--hover-background); }
+  .wrapper tbody tr:active { background: var(--active-background); }
+  .wrapper tbody tr[data-selected="true"] { background: var(--selected-background); color: var(--selected-text-color); }
+  .wrapper tbody td, .wrapper tbody th { border-color: var(--border-color); }
 }

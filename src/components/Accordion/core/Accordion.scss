@@ -179,10 +179,6 @@
       background-color: map.get($values, hover);
     }
 
-    .accordion_#{$name}.accordion_content {
-      background-color: (var(--accordion-glass-bg));
-    }
-
     .accordion_#{$name}.accordion_glass {
       background: var(--accordion-glass-bg);
       border: 1px solid var(--accordion-glass-border);
@@ -222,6 +218,7 @@
   @each $name, $values in theme.$states {
     .accordion_#{$name} {
       background-color: map.get($values, bg);
+        color: map.get($values, text);
       --accordion-glass-bg: #{map.get($values, glass-bg)};
       --accordion-glass-hover-bg: #{map.get($values, glass-hover)};
       --accordion-glass-border: #{map.get($values, glass-border)};
@@ -230,6 +227,7 @@
 
     .accordion_#{$name}.accordion_header:hover {
       background-color: map.get($values, hover);
+        color: map.get($values, text);
     }
 
     .accordion_#{$name}.accordion_glass {
@@ -279,8 +277,8 @@
     overflow: hidden;
     box-sizing: border-box;
     padding: 0 var(--spacing-md);
-    background-color: var(--background-color-lighter);
-    color: inherit;
+    background-color: var(--background-color-surface);
+    color: var(--text-color);
     font-family: var(--font-family-body);
     font-size: var(--font-size-body);
     font-weight: var(--font-weight-body);
@@ -297,6 +295,11 @@
     }
   }
 
+  .accordion_content:not(.accordion_glass) {
+    background: var(--background-color-surface);
+    color: var(--text-color);
+  }
+
   .accordion_contentInner {
     min-height: 0;
     overflow: hidden;
@@ -308,7 +311,6 @@
     padding: var(--spacing-xl);
     border-bottom-left-radius: var(--border-radius-md);
     border-bottom-right-radius: var(--border-radius-md);
-    color: inherit;
     @include bp.down(sm) {
       padding: var(--spacing-md);
     }

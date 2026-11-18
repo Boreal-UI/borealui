@@ -17,6 +17,12 @@ type NativeNumberInputProps = Omit<
   "onChange" | "size" | "type" | "value" | "defaultValue"
 >;
 
+/** Actual event that caused a numeric edit, step, or blur commit. */
+export type NumberInputChangeEvent =
+  | React.ChangeEvent<HTMLInputElement>
+  | React.MouseEvent<HTMLButtonElement>
+  | React.FocusEvent<HTMLInputElement>;
+
 /**
  * Props for the NumberInput component.
  */
@@ -33,11 +39,13 @@ export interface NumberInputProps extends NativeNumberInputProps {
 
   /**
    * Callback fired when the numeric value changes.
-   * The first argument is `""` when the input is empty.
+   * The first argument is `""` when the input is empty. Fires once per edit,
+   * step, or changed blur clamp. The event is the actual input change,
+   * stepper click, or input blur event; narrow it before using target-specific APIs.
    */
   onChange?: (
     value: number | "",
-    event: React.ChangeEvent<HTMLInputElement>,
+    event: NumberInputChangeEvent,
   ) => void;
 
   /**

@@ -154,6 +154,15 @@ export const breadCrumbPageHeaderPropDocs: GeneratedComponentDoc = {
       "category": "props"
     },
     {
+      "name": "titleAs",
+      "type": "\"h1\" | \"h2\" | \"h3\" | \"h4\" | \"h5\" | \"h6\"",
+      "description": "Semantic title heading; visual styling is unchanged.",
+      "required": false,
+      "inherited": false,
+      "category": "props",
+      "defaultValue": "\"h1\""
+    },
+    {
       "name": "variant",
       "type": "VariantType",
       "description": "Surface treatment; glassOutline combines glass and outline.",
