@@ -14,7 +14,7 @@ export const fileUploadPropDocs: GeneratedComponentDoc = {
     {
       "name": "allowedFileTypes",
       "type": "string[]",
-      "description": "Allowed file MIME types or file extensions (e.g. \".pdf\", \"image/png\").",
+      "description": "Allowed MIME types, extensions, or standard media wildcards (image/*, audio/*, video/*). Matching is case-insensitive; comma-separated tokens are accepted. Files without MIME metadata can match an extension.",
       "required": false,
       "inherited": false,
       "category": "props",

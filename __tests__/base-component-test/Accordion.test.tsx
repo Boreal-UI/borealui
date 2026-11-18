@@ -320,6 +320,7 @@ describe("AccordionBase (Jest)", () => {
 
   it("applies regionAriaLabel to the content region", () => {
     renderAccordion({
+      defaultExpanded: true,
       regionAriaLabel: "Accordion panel details",
     });
 
@@ -341,6 +342,7 @@ describe("AccordionBase (Jest)", () => {
           classMap={styles}
           data-testid="test"
           regionAriaLabelledBy="external-region-label"
+          defaultExpanded
         >
           <div>Accordion content</div>
         </AccordionBase>

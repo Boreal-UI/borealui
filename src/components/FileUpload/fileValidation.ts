@@ -16,9 +16,8 @@ export interface FileValidationResult {
 /**
  * Applies FileUpload's synchronous, per-file validation contract.
  *
- * This intentionally mirrors the component's established accept semantics:
- * exact MIME strings and case-insensitive filename extensions are supported.
- * MIME wildcards and comma-delimited entries are not expanded here.
+ * Accepts MIME types, image/audio/video wildcards and filename extensions.
+ * File metadata is not a substitute for server-side content validation.
  */
 export function validateFiles(
   files: readonly File[],
@@ -26,9 +25,8 @@ export function validateFiles(
 ): FileValidationResult {
   const valid: File[] = [];
   const rejected: RejectedFile[] = [];
-  const exactAllowedTypes = new Set(allowedFileTypes);
   const normalizedAllowedTypes = new Set(
-    allowedFileTypes.map((type) => type.toLowerCase()),
+    allowedFileTypes.flatMap((type) => type.split(",").map(token => token.trim().toLowerCase())),
   );
 
   files.forEach((file) => {
@@ -38,7 +36,9 @@ export function validateFiles(
       : "";
     const typeAllowed =
       allowedFileTypes.length === 0 ||
-      exactAllowedTypes.has(file.type) ||
+      normalizedAllowedTypes.has(file.type.toLowerCase()) ||
+      (["image", "audio", "video"].some(type =>
+        normalizedAllowedTypes.has(`${type}/*`) && file.type.toLowerCase().startsWith(`${type}/`))) ||
       (extension !== "" && normalizedAllowedTypes.has(extension));
 
     if (isSizeOk && typeAllowed) {

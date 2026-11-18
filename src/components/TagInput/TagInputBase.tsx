@@ -67,6 +67,7 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const suggestionRequestRef = useRef(0);
+  const composingRef = useRef(false);
 
   useEffect(() => {
     setInternalTags((prev) => {
@@ -151,13 +152,21 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
   };
 
   const clearSuggestions = (): void => {
+    suggestionRequestRef.current += 1;
+    if (debounceRef.current) clearTimeout(debounceRef.current);
     setSuggestions([]);
     setOpen(false);
     setActiveIndex(-1);
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (composingRef.current || event.nativeEvent.isComposing || event.nativeEvent.keyCode === 229) return;
     const { key } = event;
+    if (key === "Escape") {
+      event.preventDefault();
+      clearSuggestions();
+      return;
+    }
 
     if (open && suggestions.length > 0) {
       if (key === "ArrowDown") {
@@ -184,11 +193,6 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
         return;
       }
 
-      if (key === "Escape") {
-        event.preventDefault();
-        clearSuggestions();
-        return;
-      }
     }
 
     if (key === "Enter" || key === ",") {
@@ -304,7 +308,13 @@ const TagInputBase: React.FC<TagInputBaseProps> = ({
           className={classMap.input}
           value={inputValue}
           placeholder={tagList.length === 0 ? placeholder : ""}
-          onChange={(val: string) => setInputValue(val)}
+          onChange={(val: string) => {
+            clearSuggestions();
+            setInputValue(val);
+          }}
+          onBlur={clearSuggestions}
+          onCompositionStart={() => { composingRef.current = true; }}
+          onCompositionEnd={() => { composingRef.current = false; }}
           onKeyDown={handleKeyDown}
           autoComplete="off"
           role="combobox"

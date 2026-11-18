@@ -436,6 +436,36 @@ RTL. Arrow keys move the divider in their physical direction; Home and End choos
 the minimum and maximum start-pane sizes. Vertical resizing proceeds from top to
 bottom.
 
+## Native Form and Keyboard Behavior
+
+Uncontrolled NumberInput, SearchInput, SegmentedControl and MultiSelect restore
+their current default props after a native reset button or `form.reset()`.
+Canceling reset preserves edits. Reset does not emit change callbacks; controlled
+values remain owned by the parent. NumberInput, SearchInput and MultiSelect also support
+external form association through `form`.
+
+SegmentedControl submits one value under `name`. With `required`, the value
+must match an option and be nonempty. An empty-string option represents an empty
+selection. Invalid submission focuses an enabled segment, or the group if none
+are enabled. Disabling the selected option preserves its value and makes another
+enabled option the keyboard entry point without firing a selection callback.
+
+NumberInput step buttons follow the native step grid, including a nonzero
+`min` and fractional steps. Off-grid typed values remain editable; stepping
+moves them onto the grid. Slider displays, announces and submits the same bounded,
+step-aligned value, with ties rounded upward. Explicit ARIA value props can
+customize announcements.
+
+FileUpload accepts exact MIME types, case-insensitive extensions and the
+`image/*`, `audio/*`, and `video/*` wildcards. With a type allowlist, files
+without MIME metadata must match an allowed extension. Picker and drop validation use the same rules.
+A disabled fieldset prevents drop, removal and upload actions, except within its
+first legend as defined by native HTML behavior.
+
+Collapsed Accordion content is excluded from keyboard and accessibility
+navigation. Already mounted content stays mounted for animation. Collapsing a panel containing
+focus returns focus to its header.
+
 ## Quick Checklist
 
 Before shipping a page that uses Boreal UI:

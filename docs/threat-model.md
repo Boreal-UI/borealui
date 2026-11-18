@@ -34,6 +34,12 @@ Actors include maintainers, contributors, consumers, dependency maintainers, Git
 
 ## Abuse cases reviewers must consider
 
+FileUpload applies the same MIME, media-wildcard, extension and size constraints
+to picker and dropped files. Native disabled state gates custom actions, including
+inherited fieldset state and its first-legend exception. MIME metadata and file
+extensions remain untrusted: applications must validate uploaded content and
+enforce size limits on the server.
+
 ### Published component regression review (November 13, 2026)
 
 Sidebar identity accepts optional sibling-unique IDs, encoded only for internal

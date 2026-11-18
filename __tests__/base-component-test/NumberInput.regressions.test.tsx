@@ -50,7 +50,7 @@ describe.each([["Core", Core], ["Next", Next]] as const)("%s NumberInput commits
     render(<Input label="Amount" defaultValue={0.15} step={0.1} min={0} max={0.3} />);
     const input = screen.getByRole("spinbutton");
     fireEvent.blur(input); expect(input).toHaveValue(0.15);
-    fireEvent.click(screen.getByRole("button", { name: "Increase value" })); expect(input).toHaveValue(0.25);
+    fireEvent.click(screen.getByRole("button", { name: "Increase value" })); expect(input).toHaveValue(0.2);
     fireEvent.click(screen.getByRole("button", { name: "Increase value" })); expect(input).toHaveValue(0.3);
     expect(screen.getByRole("button", { name: "Increase value" })).toBeDisabled();
   });

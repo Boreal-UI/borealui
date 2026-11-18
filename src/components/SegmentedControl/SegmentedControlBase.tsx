@@ -6,12 +6,14 @@ import {
   useMemo,
   useRef,
   useState,
+  useLayoutEffect,
 } from "react";
 import {
   SegmentedControlBaseProps,
   SegmentedControlOption,
 } from "./SegmentedControl.types";
 import { combineClassNames } from "../../utils/classNames";
+import { useFormReset } from "../../hooks/useFormReset";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
 import {
@@ -73,6 +75,8 @@ const SegmentedControlBase = forwardRef<
     const generatedId = useId();
     const resolvedLabelPosition = resolvePropAlias(labelPosition);
     const optionRefs = useRef<Array<HTMLButtonElement | null>>([]);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const focusedOptionRef = useRef<HTMLButtonElement | null>(null);
     const enabledOptionIndexes = useMemo(
       () => getEnabledOptionIndexes(options),
       [options],
@@ -86,7 +90,21 @@ const SegmentedControlBase = forwardRef<
       (option) => option.value === selectedValue,
     );
     const focusIndex =
-      selectedIndex >= 0 ? selectedIndex : enabledOptionIndexes[0];
+      enabledOptionIndexes.includes(selectedIndex) ? selectedIndex : enabledOptionIndexes[0];
+    const submittedValue = selectedIndex >= 0 ? selectedValue ?? "" : "";
+    useFormReset(inputRef, () => {
+      if (value === undefined) setUncontrolledValue(defaultValue ?? fallbackValue);
+      if (inputRef.current) inputRef.current.value = value === undefined
+        ? defaultValue ?? fallbackValue ?? "" : submittedValue;
+    });
+    useLayoutEffect(() => {
+      const focused = focusedOptionRef.current;
+      if (focused && (!focused.isConnected || focused.matches(":disabled"))) {
+        const target = !disabled && !loading ? optionRefs.current[focusIndex] : null;
+        (target ?? inputRef.current?.parentElement)?.focus();
+        focusedOptionRef.current = target ?? null;
+      }
+    });
 
     const {
       id: idProp,
@@ -176,7 +194,7 @@ const SegmentedControlBase = forwardRef<
 
     const selectOption = useCallback(
       (option: SegmentedControlOption) => {
-        if (isInteractionDisabled || option.disabled) return;
+        if (isInteractionDisabled || option.disabled || inputRef.current?.matches(":disabled")) return;
 
         if (value === undefined) {
           setUncontrolledValue(option.value);
@@ -325,6 +343,13 @@ const SegmentedControlBase = forwardRef<
                         option.className,
                       )}
                       onClick={() => selectOption(option)}
+                      onFocus={(event) => { focusedOptionRef.current = event.currentTarget; }}
+                      onBlur={(event) => {
+                        if (event.relatedTarget ||
+                          (event.currentTarget.isConnected && !event.currentTarget.matches(":disabled"))) {
+                          focusedOptionRef.current = null;
+                        }
+                      }}
                     >
                       {option.icon ? (
                         <span
@@ -352,16 +377,27 @@ const SegmentedControlBase = forwardRef<
               : children}
           </div>
 
-          {name ? (
+          {(
             <input
-              type="hidden"
+              ref={inputRef}
+              type="text"
+              className="sr_only"
+              tabIndex={-1}
+              aria-label={ariaLabel ?? (typeof label === "string" ? label : "Selection")}
+              aria-labelledby={computedAriaLabelledBy}
+              aria-describedby={computedAriaDescribedBy}
               name={name}
-              value={selectedValue ?? ""}
+              value={submittedValue}
+              onChange={() => undefined}
+              onInvalid={(event) => {
+                event.preventDefault();
+                (optionRefs.current[focusIndex] ?? event.currentTarget.parentElement)?.focus();
+              }}
               required={required}
               disabled={disabled}
               data-testid={`${testId}-input`}
             />
-          ) : null}
+          )}
 
           {srOnlyText ? (
             <span

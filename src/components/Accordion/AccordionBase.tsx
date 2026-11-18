@@ -4,6 +4,8 @@ import React, {
   useState,
   KeyboardEvent,
   useEffect,
+  useRef,
+  useLayoutEffect,
 } from "react";
 import { AccordionProps } from "./Accordion.types";
 import { combineClassNames } from "../../utils/classNames";
@@ -65,6 +67,13 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
     : internalExpanded;
 
   const isExpanded = controlledOrInternalExpanded;
+  const contentRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  useLayoutEffect(() => {
+    if (!isExpanded && contentRef.current?.contains(document.activeElement)) {
+      buttonRef.current?.focus();
+    }
+  }, [isExpanded]);
 
   const [hasBeenExpanded, setHasBeenExpanded] = useState(isExpanded);
   const [legacyLoading, setLegacyLoading] = useState(
@@ -216,6 +225,7 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
   return (
     <div {...rest} className={wrapperClassName}>
       <button
+        ref={buttonRef}
         id={buttonId}
         className={headerClassName}
         onClick={toggleAccordion}
@@ -255,6 +265,9 @@ export const AccordionBase: React.FC<AccordionBaseProps> = ({
 
       <div
         id={contentId}
+        ref={contentRef}
+        inert={!isExpanded}
+        aria-hidden={!isExpanded || undefined}
         role="region"
         aria-label={regionAriaLabel}
         aria-labelledby={regionLabelledBy}

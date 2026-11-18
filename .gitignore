@@ -201,3 +201,12 @@ output/prerelease-0.3.6-storybook-core.log
 output/prerelease-0.3.6-storybook-next.log
 output/prerelease-0.3.6-types-final.log
 output/prerelease-0.3.6-webkit-final.log
+output/patch-audit.log
+output/patch-browser.log
+output/patch-chrome-full.log
+output/patch-chrome.log
+output/patch-docs.log
+output/patch-lint.log
+output/patch-reset-unit.log
+output/patch-types.log
+output/patch-unit.log

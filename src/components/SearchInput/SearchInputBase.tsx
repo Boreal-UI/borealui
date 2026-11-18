@@ -8,6 +8,7 @@ import {
   InputHTMLAttributes,
 } from "react";
 import { CloseIcon, SearchIcon } from "../../Icons";
+import { useFormReset } from "../../hooks/useFormReset";
 import { SearchInputBaseProps, SearchInputChangeEvent } from "./SearchInput.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -72,6 +73,10 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
     const isControlled = value !== undefined;
     const [internalValue, setInternalValue] = useState(defaultValue);
     const currentValue = isControlled ? value : internalValue;
+    useFormReset(inputRef, () => {
+      if (!isControlled) setInternalValue(defaultValue);
+      if (inputRef.current) inputRef.current.value = isControlled ? value : defaultValue;
+    });
 
     const {
       id: idProp,

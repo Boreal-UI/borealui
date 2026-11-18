@@ -58,8 +58,15 @@ const SliderBase: React.FC<
 
   const safeMin = Number.isFinite(min) ? Number(min) : 0;
   const safeMax = Number.isFinite(max) ? Number(max) : 100;
-  const safeStep = step > 0 ? step : 1;
-  const clamped = Math.min(safeMax, Math.max(safeMin, Number(value)));
+  const safeStep = Number.isFinite(step) && step > 0 ? step : 1;
+  const upper = Math.max(safeMin, safeMax);
+  const numeric = Number.isFinite(value) ? Number(value) : (safeMin + upper) / 2;
+  const bounded = Math.min(upper, Math.max(safeMin, numeric));
+  const steps = Math.min(
+    Math.floor(Number(((upper - safeMin) / safeStep).toPrecision(15))),
+    Math.round(Number(((bounded - safeMin) / safeStep).toPrecision(15))),
+  );
+  const clamped = Number((safeMin + steps * safeStep).toPrecision(15));
   const showMetaRow =
     (resolvedLabelPosition === "top" || resolvedLabelPosition === "bottom") &&
     (label || showValue);
