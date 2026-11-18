@@ -31,6 +31,12 @@ const meta: Meta<ColorPickerProps> = {
 
 export default meta;
 
+export const NativeRequiredForm: Story = {
+  render: () => <form><ColorPicker label="Color" name="chosen-color" required allowCustom defaultValue="#123456"
+    colors={[{ label: "Red", value: "#ff0000" }, { label: "Blue", value: "#0000ff" }]} />
+    <button type="submit">Submit color</button><button type="reset">Reset color</button></form>,
+};
+
 type Story = StoryObj<ColorPickerProps>;
 
 const defaultArgs: ColorPickerProps = {

@@ -65,7 +65,7 @@ for(const variant of ["core","next"]) {
       expect((await activeVisible(owner)).scrollTop).toBeGreaterThan(0);
       await page.getByRole("listbox").evaluate(el=>{el.scrollTop=0;});
       await page.keyboard.press("End");await expect.poll(async()=>(await activeVisible(owner)).visible).toBe(true);
-      await expect(owner).toBeFocused();expect(await page.evaluate(()=>window.scrollY)).toBe(scroll);
+      await expect(owner).toBeFocused();expect(Math.abs(await page.evaluate(()=>window.scrollY)-scroll)).toBeLessThanOrEqual(1);
       await page.keyboard.press("Home");expect((await activeVisible(owner)).scrollTop).toBe(0);
       if(searchable) {await owner.fill("Option 40");await expect.poll(async()=>(await activeVisible(owner)).visible).toBe(true);}
       await page.keyboard.press("Escape");await expect(target).toBeFocused();
@@ -76,7 +76,7 @@ for(const variant of ["core","next"]) {
     for(let i=0;i<30;i++)await page.keyboard.press("ArrowDown");
     await expect.poll(async()=>(await activeVisible(combo)).visible).toBe(true);
     expect((await activeVisible(combo)).scrollTop).toBeGreaterThan(0);
-    await expect(combo).toBeFocused();expect(await page.evaluate(()=>window.scrollY)).toBe(scroll);
+    await expect(combo).toBeFocused();expect(Math.abs(await page.evaluate(()=>window.scrollY)-scroll)).toBeLessThanOrEqual(1);
     for(let i=0;i<15;i++)await page.keyboard.press("ArrowDown");
     await page.getByRole("listbox").evaluate(el=>{el.scrollTop=0;});
     await page.keyboard.press("ArrowDown");

@@ -1,5 +1,6 @@
 import { ReleaseDefects } from "./release-defects.fixture";
 import { AdvancedControls } from "./advanced-controls.fixture";
+import { TableForms } from "./table-forms.fixture";
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { defaultColorSchemes } from "../../src/styles/Themes";
@@ -79,7 +80,9 @@ function Fixture() {
   </main>;
 }
 createRoot(document.getElementById("root")!).render(
-  new URLSearchParams(location.search).get("mode") === "advanced-controls"
+  new URLSearchParams(location.search).get("mode") === "table-forms"
+    ? <TableForms />
+    : new URLSearchParams(location.search).get("mode") === "advanced-controls"
     ? <AdvancedControls />
     : new URLSearchParams(location.search).get("mode") === "release-defects"
     ? <ReleaseDefects />

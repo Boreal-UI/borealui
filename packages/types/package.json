@@ -1,6 +1,6 @@
 {
   "name": "@boreal-ui/types",
-  "version": "0.3.5",
+  "version": "0.3.6",
   "readme": "README.md",
   "description": "Shared TypeScript declarations for Boreal UI core and Next.js packages.",
   "keywords": [

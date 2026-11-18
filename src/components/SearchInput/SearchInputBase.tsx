@@ -3,10 +3,12 @@ import {
   useId,
   useMemo,
   useState,
+  useRef,
+  useImperativeHandle,
   InputHTMLAttributes,
 } from "react";
 import { CloseIcon, SearchIcon } from "../../Icons";
-import { SearchInputBaseProps } from "./SearchInput.types";
+import { SearchInputBaseProps, SearchInputChangeEvent } from "./SearchInput.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
@@ -64,6 +66,8 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
     ref,
   ) => {
     const generatedId = useId();
+    const inputRef = useRef<HTMLInputElement>(null);
+    useImperativeHandle(ref, () => inputRef.current!, []);
     const resolvedLabelPosition = resolvePropAlias(labelPosition);
     const isControlled = value !== undefined;
     const [internalValue, setInternalValue] = useState(defaultValue);
@@ -128,10 +132,10 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
 
     const setNextValue = (
       nextValue: string,
-      event?: React.ChangeEvent<HTMLInputElement>,
+      event: SearchInputChangeEvent,
     ) => {
       if (!isControlled) setInternalValue(nextValue);
-      if (event) onChange?.(nextValue, event);
+      onChange?.(nextValue, event);
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -139,9 +143,10 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
     };
 
     const handleClear = (event: React.MouseEvent<HTMLButtonElement>) => {
-      if (!canInteract) return;
-      if (!isControlled) setInternalValue("");
+      if (!canInteract || event.currentTarget.matches(":disabled")) return;
+      setNextValue("", event);
       onClear?.(event);
+      inputRef.current?.focus({ preventScroll: true });
     };
 
     const handleSearch = (
@@ -238,7 +243,7 @@ const SearchInputBase = forwardRef<HTMLInputElement, SearchInputBaseProps>(
           {iconPosition === "left" ? iconElement : null}
           <input
             {...restInput}
-            ref={ref}
+            ref={inputRef}
             id={inputId}
             type="search"
             className={combineClassNames(classMap.input, inputClassName)}

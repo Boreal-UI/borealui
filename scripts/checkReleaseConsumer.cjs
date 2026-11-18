@@ -16,6 +16,9 @@ for (const pkg of ["core", "next", "types"]) {
 const entries = ["core", "next"];
 for (const pkg of entries) {
   for (const [name, props] of [
+    ["SearchInput", 'value="query" onChange={(value, event) => { const next: string = value; void next; if (event.currentTarget instanceof HTMLInputElement) { event.currentTarget.select(); } }}'],
+    ["ColorPicker", 'name="chosen-color" defaultValue="#123456" required allowCustom colors={[{ label: "Red", value: "#ff0000" }]}'],
+    ["DataTable", 'data={[{ id: 1, name: "One" }]} columns={[{ key: "name", label: "Name" }]} rowKey={row => row.id} selectableRows virtualized onSelectionChange={(keys, rows) => { const id: number = rows[0].id; void id; void keys; }}'],
     ["DatePicker", 'aria-label="Reservation date" aria-invalid="true" aria-errormessage="external-error"'],
     ["DateRangePicker", 'value={{ start: "", end: "" }} onChange={() => {}} startInputProps={{ "aria-label": "Departure" }} endInputProps={{ "aria-labelledby": "return-label" }} startPickerButtonAriaLabel="Choose departure"'],
     ["TimePicker", 'defaultValue="23:00" min="22:00" max="02:00" step="any" aria-label="Reservation time" aria-invalid="true"'],
@@ -27,6 +30,8 @@ for (const pkg of entries) {
       imports.push(`<${local} ${props} />;`);
     }
   }
+  imports.push(`import Search${pkg} from "@boreal-ui/${pkg}/SearchInput";`);
+  imports.push(`// @ts-expect-error Input-only events cannot represent clear-button activation.\n<Search${pkg} onChange={(value: string, event: import("react").ChangeEvent<HTMLInputElement>) => { void value; void event; }} />;`);
   for (const subpath of ["", "/NumberInput"]) {
     const component = `Number${imports.length}`;
     imports.push(`import { ${subpath ? "default" : "NumberInput"} as ${component} } from "@boreal-ui/${pkg}${subpath}";`);
@@ -39,6 +44,7 @@ for (const pkg of entries) {
   imports.push(`<Notes${pkg} notifications={[]} onRemove={() => {}} locale="en-US" timeZone="America/Toronto" />;`);
 }
 imports.push('import type { NumberInputChangeEvent, SidebarLink, NotificationCenterProps } from "@boreal-ui/types";');
+imports.push('import type { SearchInputChangeEvent } from "@boreal-ui/types"; const searchEventType = (event: SearchInputChangeEvent) => event.type; void searchEventType;');
 imports.push('const item: SidebarLink = { id: "stable", label: "Reports" }; void item;');
 imports.push('const eventType = (event: NumberInputChangeEvent) => event.type; void eventType;');
 imports.push('const notes: NotificationCenterProps = { notifications: [], onRemove: () => {}, locale: "en-US", timeZone: "UTC" }; void notes;');
@@ -63,7 +69,7 @@ try {
     const dir = path.join(root, "packages", pkg);
     const manifest = JSON.parse(fs.readFileSync(path.join(dir, "package.json"), "utf8"));
     const runtime = path.join(root, `.advanced-controls-${pkg}-consumer.cjs`);
-    const sources = ["DatePicker", "DateRangePicker", "TimePicker", "CommandPalette"].map(name =>
+    const sources = ["DatePicker", "DateRangePicker", "TimePicker", "CommandPalette", "ColorPicker", "SearchInput", "DataTable"].map(name =>
       `import ${name} from ${JSON.stringify(path.resolve(dir, manifest.exports[`./${name}`].import))};`);
     try {
       require("esbuild").buildSync({
@@ -74,6 +80,9 @@ try {
           export const dateAria = renderToStaticMarkup(React.createElement(DatePicker, {"aria-label":"Reservation date", "aria-invalid":true, "aria-errormessage":"external-error"}));
           export const time = renderToStaticMarkup(React.createElement(TimePicker, {label:"Night", defaultValue:"23:00", min:"22:00", max:"02:00"}));
           export const invalidTime = renderToStaticMarkup(React.createElement(TimePicker, {label:"Night", defaultValue:"12:00", min:"22:00", max:"02:00"}));
+          export const color = renderToStaticMarkup(React.createElement(ColorPicker, {name:"chosen-color", required:true, allowCustom:true, defaultValue:"#123456", colors:[{label:"Red",value:"#ff0000"}]}));
+          export const search = renderToStaticMarkup(React.createElement(SearchInput, {label:"Search", defaultValue:"query"}));
+          export const table = renderToStaticMarkup(React.createElement(DataTable, {data:Array.from({length:200},(_,id)=>({id,name:String(id)})), columns:[{key:"name",label:"Name"}], rowKey:row=>row.id, selectableRows:true, selectedRowKeys:[0,1,2,3,4,5,6,7], virtualized:true, virtualRowHeight:48, virtualViewportHeight:192, virtualOverscan:2}));
           export const palette = renderToStaticMarkup(React.createElement(CommandPalette, {open:true, commands:[], onClose:()=>{}}));`, resolveDir: root },
         bundle: true, platform: "node", format: "cjs", outfile: runtime,
         external: ["react", "react-dom", "react-dom/server"], loader: { ".css": "empty" },
@@ -89,6 +98,9 @@ try {
       assert.doesNotMatch(html.time, /aria-invalid="true"/);
       assert.match(html.invalidTime, /aria-invalid="true"/);
       assert.equal(html.palette, "");
+      assert.match(html.color, /<input(?=[^>]*type="radio")(?=[^>]*name="chosen-color")(?=[^>]*checked="")(?=[^>]*value="#123456")[^>]*>/);
+      assert.match(html.search, /aria-label="Clear search"/);
+      assert.match(html.table, /<input(?=[^>]*aria-label="Select all rows")(?=[^>]*aria-checked="mixed")[^>]*>/);
     } finally {
       delete require.cache[runtime];
       if (fs.existsSync(runtime)) fs.unlinkSync(runtime);

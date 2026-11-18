@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Search, color forms and virtualized tables
+
+- SearchInput clear now emits one empty-value `onChange` before optional `onClear` and returns focus to the input. `SearchInputChangeEvent` represents the actual input change or clear-button click; input-event-only handler annotations need widening.
+- ColorPicker preset/custom selections participate in native required validation and submit one value. Unnamed instances have unique SSR-safe names; set an explicit name to retain a stable FormData key. Uncontrolled `defaultValue`, native reset, and keyboard-focusable radio choices are supported.
+- DataTable select-all uses logical filtered/page rows rather than the virtual slice, with consistent checked and indeterminate state. Virtual windows and scroll positions reset or clamp as filters, pages and available rows change.
+
 ### Development dependency security
 
 - Patch root Next.js and the Next 16 compatibility fixtures to 16.4.6; refresh qs to 6.17.1 and systeminformation to 5.33.23.

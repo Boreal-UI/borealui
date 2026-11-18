@@ -1,4 +1,4 @@
-# Select forms and DataTable scrolling
+# Native forms and DataTable interaction
 
 Runnable examples are in **Components/Select → Native Forms** and
 **Components/DataTable → Accessible Scrolling** in both Storybooks. Start with
@@ -50,6 +50,26 @@ The shared `SelectNativeExamples.tsx` contains complete controlled publication
 action and uncontrolled reset forms, including observable submitted values.
 
 ## DataTable
+
+### Selection and virtualization
+
+The header checkbox selects the current logical page when client pagination is
+enabled, or all filtered rows when it is disabled. Virtualization changes only
+which rows are mounted; scrolling does not change selection scope or the header's
+checked/indeterminate state. With server pagination, selection covers the rows
+supplied in `data`, not the unloaded records counted by `totalItems`.
+
+Use a stable `rowKey`. Controlled selection uses `selectedRowKeys` and
+`onSelectionChange(keys, rows)`. Keys may span pages; row payloads and bulk-action
+row metadata contain matching records available in the current processed data.
+
+Filtering, page changes and page-size changes reset a virtual viewport to the
+top. Data replacement preserves its scroll position when valid and clamps it
+when the new logical row set is shorter. Zero matches have no row spacers.
+Set `virtualRowHeight` to the expected row height and `virtualViewportHeight` to
+the desired viewport size; fixed-height rows give the most accurate estimates.
+
+### Accessible scrolling
 
 `scrollRegionProps?: React.HTMLAttributes<HTMLDivElement>` configures the outer
 horizontal scroller, retaining the existing table/toolbar/pagination layout.
@@ -107,6 +127,56 @@ Cypress component specs additionally cover Core/Next focus, layout, interactions
 and forms; Jest covers SSR/hydration, FormData, reset, and accessibility.
 
 ## Migration guide
+
+### SearchInput
+
+Use `onChange` for every value update, including clearing:
+
+```tsx
+<SearchInput value={query} onChange={setQuery} />
+```
+
+The callback runs once with the next string and the actual event:
+`SearchInputChangeEvent` is an input `ChangeEvent` or a clear-button `MouseEvent`.
+Import this type from `@boreal-ui/types` if annotating a handler. Use the string
+argument as the query; narrow the event target before input-specific operations.
+Handlers previously annotated with only `ChangeEvent<HTMLInputElement>` need the
+union type or inferred parameters. Value-only handlers need no changes.
+
+`onClear` remains an optional notification after `onChange("", event)`. Remove
+state-update workarounds from `onClear` when `onChange` already controls the query;
+keeping both can duplicate application work. Clear returns focus to the search
+input and respects disabled/read-only state. Required empty searches remain invalid.
+
+### ColorPicker
+
+Pass `name` for a stable submission key:
+
+```tsx
+<ColorPicker name="chosen-color" label="Color" required allowCustom
+  value={color} onValueChange={setColor}
+  colors={[{ label: "Red", value: "#ff0000" }]} />
+```
+
+Presets and valid custom colors share a native radio group and submit exactly
+one current value. Custom choices use `#rrggbb`. The native color input is an
+editor for the custom option; its fallback black preview does not select a value.
+An empty/invalid selection fails `required` validation when enabled choices exist.
+Disabled controls and disabled fieldsets follow native submission/validation rules.
+Radios support native arrow-key selection and visible keyboard focus.
+
+When `name` is omitted, each instance gets a unique, SSR-safe radio-group name.
+To retain the former default FormData key, pass `name="color-picker"` explicitly.
+Use different names for independent fields; identical explicit names in the same
+form owner intentionally share native radio-group behavior. Separate forms have
+separate native groups even when their names match.
+
+Use `value`/`onValueChange` for controlled state, or `defaultValue` for uncontrolled
+state. Do not switch modes. Native reset restores the uncontrolled default without
+calling `onValueChange`; controlled pickers retain their supplied value. Reset
+controlled application state explicitly when the form should return to initial values.
+
+### Select and DataTable
 
 Remove Select empty-value sentinels and hidden inputs; use an enabled empty
 option. Remove controlled publication Select remount keys and form reset

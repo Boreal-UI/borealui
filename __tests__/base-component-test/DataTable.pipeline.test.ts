@@ -140,6 +140,17 @@ describe("DataTable pure row pipeline", () => {
 });
 
 describe("DataTable pure virtualization math", () => {
+  it.each([0, 1, 3, 50])("keeps every window within %s logical rows", count => {
+    for (const offset of [-100, 0, 4000, Number.POSITIVE_INFINITY]) {
+      const window = resolveVirtualWindow(count, true, offset, 48, 192, 2);
+      expect(window.startIndex).toBeGreaterThanOrEqual(0);
+      expect(window.startIndex).toBeLessThanOrEqual(window.endIndex);
+      expect(window.endIndex).toBeLessThanOrEqual(count);
+      expect(window.topSpacer).toBeGreaterThanOrEqual(0);
+      expect(window.bottomSpacer).toBeGreaterThanOrEqual(0);
+      expect(window.topSpacer + (window.endIndex - window.startIndex) * 48 + window.bottomSpacer).toBe(count * 48);
+    }
+  });
   it("uses the complete range when virtualization is disabled", () => {
     expect(resolveVirtualWindow(100, false, 400, 40, 120, 2)).toEqual({
       startIndex: 0,
@@ -160,9 +171,9 @@ describe("DataTable pure virtualization math", () => {
 
   it("clamps the ending window to the available row count", () => {
     expect(resolveVirtualWindow(3, true, 400, 40, 120, 1)).toEqual({
-      startIndex: 9,
+      startIndex: 0,
       endIndex: 3,
-      topSpacer: 360,
+      topSpacer: 0,
       bottomSpacer: 0,
     });
   });

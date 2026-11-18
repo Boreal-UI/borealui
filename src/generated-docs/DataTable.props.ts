@@ -572,7 +572,7 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
     {
       "name": "selectableRows",
       "type": "boolean",
-      "description": "Enables checkbox row selection.",
+      "description": "Enables checkbox row selection. Select all covers the current logical page, or all filtered rows without pagination, independently of virtualization. Server pagination selects only the supplied rows, never unloaded records.",
       "required": false,
       "inherited": false,
       "category": "props",
@@ -751,7 +751,7 @@ export const dataTablePropDocs: GeneratedComponentDoc = {
     {
       "name": "virtualized",
       "type": "boolean",
-      "description": "Enables row virtualization for large client-side data sets.",
+      "description": "Enables row virtualization. Filtering, page and page-size changes reset the viewport to the top. Data replacement preserves valid offsets and clamps offsets that exceed the new logical range. Selection scope is unchanged.",
       "required": false,
       "inherited": false,
       "category": "props",

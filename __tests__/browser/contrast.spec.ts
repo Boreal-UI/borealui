@@ -68,7 +68,8 @@ for (const variant of ["core", "next"]) {
     expect(Math.abs(header!.x - cell!.x)).toBeLessThan(1);
     await expect(region.getByRole("columnheader", {name:"Details"})).toBeInViewport();
   });
-  test(`${variant}: rendered text across built-in themes, states, focus and hover`, async ({ page }, testInfo) => {
+  test(`${variant}: rendered text across built-in themes, states, focus and hover`, async ({ page, browserName }, testInfo) => {
+    test.skip(browserName !== "chromium", "Forced pseudo-state measurement requires the Chromium DevTools Protocol.");
     const errors: string[] = [];
     page.on("pageerror", e => errors.push(e.message));
     await page.goto(`/__tests__/browser/index.html?variant=${variant}`);
