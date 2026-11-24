@@ -73,7 +73,8 @@ export interface SegmentedControlProps extends NativeSegmentedControlProps {
   value?: string;
 
   /**
-   * Initial selected value for uncontrolled usage.
+   * Initial selection and native form-reset default for uncontrolled usage.
+   * When omitted, the first enabled option is used. Reset does not emit onValueChange.
    */
   defaultValue?: string;
 
@@ -83,12 +84,13 @@ export interface SegmentedControlProps extends NativeSegmentedControlProps {
   onValueChange?: (value: string, option: SegmentedControlOption) => void;
 
   /**
-   * Name submitted by the hidden form input.
+   * Name of the single submitted selection.
    */
   name?: string;
 
   /**
-   * Whether the hidden form input should be required.
+   * Requires a matching option with a nonempty value for native form submission.
+   * An empty-string option represents an empty selection and does not satisfy required.
    *
    * @default false
    */

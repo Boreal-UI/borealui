@@ -73,6 +73,7 @@ $sizes: (
 }
 
 @mixin button {
+  box-sizing: border-box;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -85,7 +86,7 @@ $sizes: (
   height: var(--pagination-button-size, 2.25rem);
   min-height: var(--pagination-button-size, 2.25rem);
   font-size: var(--pagination-button-font-size, var(--font-size-label));
-  line-height: 1;
+  line-height: var(--line-height-label);
   white-space: nowrap;
 }
 

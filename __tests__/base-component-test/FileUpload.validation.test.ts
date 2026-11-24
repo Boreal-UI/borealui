@@ -22,14 +22,12 @@ describe("FileUpload file validation", () => {
     expect(validate([file])).toEqual({ valid: [file], rejected: [] });
   });
 
-  it("matches exact MIME types without making MIME comparison case-insensitive", () => {
+  it("matches MIME types case-insensitively", () => {
     const matching = createFile("image.bin", "image/png", 512);
     const mismatching = createFile("other.bin", "image/png", 512);
 
     expect(validate([matching], ["image/png"]).valid).toEqual([matching]);
-    expect(validate([mismatching], ["IMAGE/PNG"]).rejected).toEqual([
-      { name: "other.bin", reason: "Invalid type (image/png)" },
-    ]);
+    expect(validate([mismatching], ["IMAGE/PNG"]).valid).toEqual([mismatching]);
   });
 
   it("matches filename extensions case-insensitively", () => {
@@ -38,12 +36,20 @@ describe("FileUpload file validation", () => {
     expect(validate([file], [".pDf"]).valid).toEqual([file]);
   });
 
-  it("does not expand MIME wildcards or comma-delimited accept entries", () => {
+  it("expands standard MIME wildcards and comma-delimited accept entries", () => {
     const image = createFile("image.bin", "image/png", 512);
     const document = createFile("document.pdf", "application/pdf", 512);
 
-    expect(validate([image], ["image/*"]).rejected).toHaveLength(1);
-    expect(validate([document], ["image/png,.pdf"]).rejected).toHaveLength(1);
+    expect(validate([image], ["image/*"]).valid).toEqual([image]);
+    expect(validate([document], ["image/png,.pdf"]).valid).toEqual([document]);
+  });
+
+  it.each(["image", "audio", "video"])("matches %s wildcards without accepting missing or unrelated metadata", type => {
+    const matching = createFile("media.bin", type + "/example", 10);
+    const unknown = createFile("media.bin", "", 10);
+    const wrong = createFile("media.bin", "text/plain", 10);
+    expect(validate([matching, unknown, wrong], [type + "/*"]).valid).toEqual([matching]);
+    expect(validate([matching], [type + "/*"], 1).valid).toEqual([]);
   });
 
   it.each([

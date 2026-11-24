@@ -35,6 +35,12 @@ Each Chip owns its own timer. Give rendered elements unique `id` values so HTML 
 
 Toast timers are owned by the nearest `ToastProvider`. Adding a toast with an existing `id` replaces the previous toast and restarts its expiry timer from the replacement's `duration`.
 
+Expiry pauses independently while the pointer is over a toast, focus is inside
+it, the document is hidden, or a swipe is active. It resumes with the remaining
+duration only after every pause reason clears. Moving focus between toast
+controls does not resume expiry. Replacing a paused toast retains its pause state
+and uses the replacement's full duration when it resumes.
+
 Use stable IDs when an event should update an existing toast, such as changing an upload from pending to complete. Omit the ID when every event should create a separate toast.
 
 ```tsx
@@ -54,6 +60,15 @@ addToast({
 ```
 
 `duration: 0` keeps a toast visible until it is removed or replaced.
+
+### TagInput suggestions
+
+Changing the query immediately removes previous suggestions, including during
+debounce. Enter commits the current free text when no current suggestion is
+actionable. Escape or blur dismisses the list and suppresses pending responses;
+typing again starts a new request. Empty, failed and superseded requests do not
+leave actionable options. IME composition does not commit tags or process tag
+shortcuts; a separate Enter after composition ends behaves normally.
 
 ### Modal
 

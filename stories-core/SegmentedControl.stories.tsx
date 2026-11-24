@@ -116,6 +116,19 @@ export const Disabled: Story = {
   },
 };
 
+export const NativeRequiredForm: Story = {
+  render: (args) => (
+    <form onSubmit={(event) => {
+      event.preventDefault();
+      alert(new FormData(event.currentTarget).get("range"));
+    }}>
+      <SegmentedControl {...args} name="range" required defaultValue="" />
+      <button type="submit">Submit selection</button>
+      <button type="reset">Reset selection</button>
+    </form>
+  ),
+};
+
 export const ThemeVariants: Story = {
   render: (args) => renderThemeVariants({ component: SegmentedControl, args }),
 };

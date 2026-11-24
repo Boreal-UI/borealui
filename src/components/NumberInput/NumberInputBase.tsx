@@ -3,9 +3,12 @@ import {
   useId,
   useMemo,
   useState,
+  useRef,
+  useImperativeHandle,
   InputHTMLAttributes,
 } from "react";
 import { NumberInputBaseProps, NumberInputChangeEvent } from "./NumberInput.types";
+import { useFormReset } from "../../hooks/useFormReset";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
 import { resolvePropAlias } from "../../utils/propAliases";
@@ -16,15 +19,6 @@ import {
   getShadowClassName,
   getDefaultTheme,
 } from "../../config/boreal-style-config";
-
-// Preserve input/bound precision; step controls increments, not a rounding grid.
-const precisionOf = (value: number): number => {
-  const [coefficient, exponent = "0"] = String(value).toLowerCase().split("e");
-  return Math.max(0, (coefficient.split(".")[1]?.length ?? 0) - Number(exponent));
-};
-
-const normalizeValue = (value: number, step: number, base: number): number =>
-  Number(value.toFixed(Math.min(100, Math.max(precisionOf(step), precisionOf(base)))));
 
 const parseInputValue = (value: string): number | "" => {
   if (value.trim() === "") return "";
@@ -86,6 +80,8 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
     ref,
   ) => {
     const generatedId = useId();
+    const inputRef = useRef<HTMLInputElement>(null);
+    useImperativeHandle(ref, () => inputRef.current!, []);
     const resolvedLabelPosition = resolvePropAlias(labelPosition);
     const safeStep = Number.isFinite(step) && step > 0 ? step : 1;
     const isControlled = value !== undefined;
@@ -93,6 +89,10 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
       defaultValue,
     );
     const currentValue = isControlled ? value : internalValue;
+    useFormReset(inputRef, () => {
+      if (!isControlled) setInternalValue(defaultValue);
+      if (inputRef.current) inputRef.current.value = String(isControlled ? value : defaultValue);
+    });
 
     const {
       id: idProp,
@@ -141,9 +141,21 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
     };
 
     const stepBy = (direction: -1 | 1, event: React.MouseEvent<HTMLButtonElement>) => {
-      if (disabled || readOnly) return;
-      const base = typeof currentValue === "number" ? currentValue : min ?? 0;
-      const next = clampValue(normalizeValue(base + safeStep * direction, safeStep, base), min, max);
+      const input = inputRef.current;
+      if (disabled || readOnly || !input || input.matches(":disabled")) return;
+      const previous = input.value;
+      if (direction === 1) input.stepUp();
+      else input.stepDown();
+      let next = parseInputValue(input.value);
+      // WebKit can leave an empty field unchanged when stepping toward a bound
+      // that excludes zero. Start on a valid grid point inside those bounds.
+      if (previous === "" && next === "" && (min === undefined || max === undefined || min <= max)) {
+        const base = min ?? 0;
+        const bounded = clampValue(0, min, max);
+        const gridIndex = Math.floor(Number(((bounded - base) / safeStep).toPrecision(15)));
+        next = Number((base + gridIndex * safeStep).toPrecision(15));
+      }
+      input.value = previous;
       if (next !== currentValue) emitChange(next, event);
     };
 
@@ -228,7 +240,7 @@ const NumberInputBase = forwardRef<HTMLInputElement, NumberInputBaseProps>(
         <div className={wrapperClass} data-testid={`${testId}-wrapper`}>
           <input
             {...restInput}
-            ref={ref}
+            ref={inputRef}
             id={inputId}
             type="number"
             className={combineClassNames(classMap.input, inputClassName)}

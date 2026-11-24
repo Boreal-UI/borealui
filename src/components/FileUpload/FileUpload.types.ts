@@ -194,7 +194,9 @@ export interface FileUploadProps
   maxFileSizeBytes?: number;
 
   /**
-   * Allowed file MIME types or file extensions (e.g. ".pdf", "image/png").
+   * Allowed MIME types, extensions, or standard media wildcards (image/*,
+   * audio/*, video/*). Matching is case-insensitive; comma-separated tokens
+   * are accepted. Files without MIME metadata can match an extension.
    *
    * @default []
    */

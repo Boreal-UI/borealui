@@ -1,7 +1,7 @@
 import type {Page} from "@playwright/test";
 
-export async function contrastMeasurements(page: Page) {
-  return page.evaluate(() => {
+export async function contrastMeasurements(page: Page, selector = "main *") {
+  return page.evaluate((selector) => {
     type Color = number[];
     const canvas = document.createElement("canvas"); canvas.width = canvas.height = 1;
     const context = canvas.getContext("2d")!;
@@ -28,13 +28,14 @@ export async function contrastMeasurements(page: Page) {
       return blend(color, [255, 255, 255, 1]);
     };
     const luminance = (c: Color) => c.slice(0, 3).map(v => v / 255).map(v => v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4).reduce((sum, v, i) => sum + v * [0.2126, 0.7152, 0.0722][i], 0);
-    return Array.from(document.querySelectorAll("main *")).flatMap(element => {
+    return Array.from(document.querySelectorAll(selector)).flatMap(element => {
       const style = getComputedStyle(element);
       const hasVisibleValue = element instanceof HTMLInputElement && !["checkbox", "radio", "hidden", "file", "color", "range"].includes(element.type);
       const displayValue = element instanceof HTMLSelectElement
         ? element.selectedOptions[0]?.text ?? ""
         : hasVisibleValue ? (element as HTMLInputElement).value : "";
-      const text = Array.from(element.childNodes).filter(n => n.nodeType === Node.TEXT_NODE).map(n => n.textContent).join("").trim() || displayValue;
+      const graphic = element.hasAttribute("data-contrast-graphic");
+      const text = Array.from(element.childNodes).filter(n => n.nodeType === Node.TEXT_NODE).map(n => n.textContent).join("").trim() || displayValue || (graphic ? "Meaningful graphic" : "");
       if (!text || !element.getClientRects().length || style.visibility === "hidden" || element.closest('[disabled], [aria-disabled="true"], [aria-hidden="true"], [hidden]')) return [];
       // Visually hidden descriptions are tested by semantic assertions, not color.
       if (element.getBoundingClientRect().width <= 1) return [];
@@ -43,8 +44,8 @@ export async function contrastMeasurements(page: Page) {
       const a = luminance(fg), b = luminance(bg);
       const ratio = (Math.max(a, b) + 0.05) / (Math.min(a, b) + 0.05);
       const size = parseFloat(style.fontSize);
-      const minimum = size >= 24 || (size >= 18.6667 && Number(style.fontWeight) >= 700) ? 3 : 4.5;
+      const minimum = graphic || size >= 24 || (size >= 18.6667 && Number(style.fontWeight) >= 700) ? 3 : 4.5;
       return [{ text, className: element.className, variant: element.closest("[data-variant]")?.getAttribute("data-variant"), testId: element.getAttribute("data-testid"), state: element.closest("[data-state]")?.getAttribute("data-state"), ratio, minimum, foreground: style.color, background: bg }];
     });
-  });
+  }, selector);
 }

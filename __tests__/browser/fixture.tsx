@@ -1,4 +1,5 @@
 import { ReleaseDefects } from "./release-defects.fixture";
+import { ControlContracts } from "./control-contracts.fixture";
 import { AdvancedControls } from "./advanced-controls.fixture";
 import { TableForms } from "./table-forms.fixture";
 import React, { useState } from "react";
@@ -80,7 +81,9 @@ function Fixture() {
   </main>;
 }
 createRoot(document.getElementById("root")!).render(
-  new URLSearchParams(location.search).get("mode") === "table-forms"
+  new URLSearchParams(location.search).get("mode") === "control-contracts"
+    ? <ControlContracts />
+    : new URLSearchParams(location.search).get("mode") === "table-forms"
     ? <TableForms />
     : new URLSearchParams(location.search).get("mode") === "advanced-controls"
     ? <AdvancedControls />

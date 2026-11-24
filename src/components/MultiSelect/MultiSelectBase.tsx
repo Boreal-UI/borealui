@@ -1,5 +1,6 @@
 import { forwardRef, useEffect, useId, useMemo, useRef, useState } from "react";
 import { ChevronDownIcon, CloseIcon } from "../../Icons";
+import { useFormReset } from "../../hooks/useFormReset";
 import { MultiSelectBaseProps, MultiSelectOption } from "./MultiSelect.types";
 import { combineClassNames } from "../../utils/classNames";
 import { capitalize } from "../../utils/capitalize";
@@ -38,6 +39,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
       toggleAriaLabel,
       maxSelected,
       name,
+      form,
       required = false,
       theme = getDefaultTheme(),
       state,
@@ -83,6 +85,12 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
     const rootRef = useRef<HTMLDivElement>(null);
     const searchRef = useRef<HTMLInputElement>(null);
     const triggerRef = useRef<HTMLButtonElement>(null);
+    useFormReset(triggerRef, () => {
+      if (!isControlled) setInternalValue(defaultValue);
+      setOpen(false);
+      setQuery("");
+      setActiveValue(undefined);
+    });
     const popupOpen = open && !disabled && !loading;
 
     const selectedValues = isControlled ? value : internalValue;
@@ -367,6 +375,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
         >
           <button
             ref={triggerRef}
+            form={form}
             type="button"
             role={searchable ? undefined : "combobox"}
             className={combineClassNames(classMap.trigger, triggerClassName)}
@@ -549,6 +558,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
                 <input
                   key={selectedValue}
                   type="hidden"
+                  form={form}
                   disabled={disabled}
                   name={name}
                   value={selectedValue}
@@ -560,6 +570,7 @@ const MultiSelectBase = forwardRef<HTMLDivElement, MultiSelectBaseProps>(
           {required && selectedValues.length === 0 ? (
             <input
               className={classMap.nativeRequired}
+              form={form}
               tabIndex={-1}
               aria-hidden="true"
               required

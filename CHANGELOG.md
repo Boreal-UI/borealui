@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### Foregrounds on semantic surfaces
+
+- Typography's default `theme="inherit"` now inherits its parent's computed foreground, including inside Badge, Alert and Button. Explicit palette themes remain available.
+- Alert pairs soft and glass backgrounds with the document foreground in Core, Next and server output. Theme-generated translucent tints account for composition over supported neutral surfaces.
+- MetricBox semantic states now update title, value, subtext and icon foregrounds together. Title and subtext no longer reduce contrast through opacity; outline and glass treatments use the document foreground.
+- Public prop shapes are unchanged. These changes are unreleased; no consumer package upgrade is available from this entry alone.
+
 ### Search, color forms and virtualized tables
 
 - SearchInput clear now emits one empty-value `onChange` before optional `onClear` and returns focus to the input. `SearchInputChangeEvent` represents the actual input change or clear-button click; input-event-only handler annotations need widening.

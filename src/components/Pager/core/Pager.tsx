@@ -12,6 +12,7 @@ const classes = {
   controlButton: "pagination_control_button",
   buttonWrapper: "pagination_button_wrapper",
   button: "pagination_button",
+  label: "pagination_label",
   active: "pagination_active",
   primary: "pagination_primary",
   secondary: "pagination_secondary",

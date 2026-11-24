@@ -33,13 +33,19 @@
     }
   }
 
-  .button,
-  .controlButton {
+  // Beat Button's combined root + size rules in either stylesheet order.
+  .wrapper button.button,
+  .wrapper button.controlButton {
     @include pager-shared.button;
 
     &:focus-visible {
       @include pager-shared.button-focus-visible;
     }
+  }
+
+  .wrapper button.button > .label {
+    font-size: inherit;
+    line-height: inherit;
   }
 
   .active {

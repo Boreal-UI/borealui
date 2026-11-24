@@ -79,7 +79,10 @@ export interface TypographyProps {
   weight?: TypographyWeight;
 
   /**
-   * Visual theme style applied to the typography.
+   * Visual theme style applied to the typography. "inherit" (the default)
+   * uses the actual parent foreground, including inside semantic surfaces.
+   * Explicit themes use their palette color. For document text independent
+   * of the parent, use style={{ color: "var(--text-color)" }}.
    *
    * @default "inherit"
    */

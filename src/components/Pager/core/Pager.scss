@@ -25,13 +25,19 @@
 
     }
 
-    &_button,
-    &_control_button {
+    // Beat Button's combined root + size rules in either stylesheet order.
+    & button.pagination_button,
+    & button.pagination_control_button {
       @include pager-shared.button;
 
       &:focus-visible {
         @include pager-shared.button-focus-visible;
       }
+    }
+
+    & button.pagination_button > .pagination_label {
+      font-size: inherit;
+      line-height: inherit;
     }
 
     &_active {

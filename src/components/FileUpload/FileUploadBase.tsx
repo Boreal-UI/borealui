@@ -111,6 +111,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
 
   const fileInput = useRef<HTMLInputElement | null>(null);
   const pickerInput = useRef<HTMLInputElement | null>(null);
+  const isEffectivelyDisabled = () => disabled || Boolean(fileInput.current?.matches(":disabled"));
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isMountedRef = useRef(true);
   const uploadResetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(
@@ -188,7 +189,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   }, [onFilesChange, inputProps?.form]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (disabled || uploading) return;
+    if (isEffectivelyDisabled() || uploading) return;
     const selected = e.target.files;
     if (!selected || selected.length === 0) return;
 
@@ -222,7 +223,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   };
 
   const removeFile = (index: number) => {
-    if (disabled || uploading) return;
+    if (isEffectivelyDisabled() || uploading) return;
     const removedFile = files[index];
     const updatedFiles = files.filter((_, i) => i !== index);
     setFiles(updatedFiles);
@@ -244,18 +245,18 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   };
 
   const handleDragOver = (e: React.DragEvent) => {
-    if (!enableDragAndDrop || disabled) return;
+    if (!enableDragAndDrop || isEffectivelyDisabled()) return;
     e.preventDefault();
     setIsDragging(true);
   };
 
   const handleDragLeave = () => {
-    if (!enableDragAndDrop || disabled) return;
+    if (!enableDragAndDrop || isEffectivelyDisabled()) return;
     setIsDragging(false);
   };
 
   const handleDrop = (e: React.DragEvent) => {
-    if (!enableDragAndDrop || disabled) return;
+    if (!enableDragAndDrop || isEffectivelyDisabled()) return;
     e.preventDefault();
     setIsDragging(false);
 
@@ -268,7 +269,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
   };
 
   const handleUpload = async () => {
-    if (!files.length || uploading || disabled) return;
+    if (!files.length || uploading || isEffectivelyDisabled()) return;
 
     setUploading(true);
     setInternalProgress(0);
@@ -477,6 +478,7 @@ const BaseFileUpload: React.FC<BaseFileUploadProps> = ({
             rounding={controlRounding}
             shadow={controlShadow}
             onClick={() => {
+              if (isEffectivelyDisabled() || uploading) return;
               if (pickerInput.current) {
                 pickerInput.current.value = "";
                 pickerInput.current.click();

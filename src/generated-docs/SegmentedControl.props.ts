@@ -54,7 +54,7 @@ export const segmentedControlPropDocs: GeneratedComponentDoc = {
     {
       "name": "defaultValue",
       "type": "string",
-      "description": "Initial selected value for uncontrolled usage.",
+      "description": "Initial selection and native form-reset default for uncontrolled usage. When omitted, the first enabled option is used. Reset does not emit onValueChange.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -132,7 +132,7 @@ export const segmentedControlPropDocs: GeneratedComponentDoc = {
     {
       "name": "name",
       "type": "string",
-      "description": "Name submitted by the hidden form input.",
+      "description": "Name of the single submitted selection.",
       "required": false,
       "inherited": false,
       "category": "props"
@@ -190,7 +190,7 @@ export const segmentedControlPropDocs: GeneratedComponentDoc = {
     {
       "name": "required",
       "type": "boolean",
-      "description": "Whether the hidden form input should be required.",
+      "description": "Requires a matching option with a nonempty value for native form submission. An empty-string option represents an empty selection and does not satisfy required.",
       "required": false,
       "inherited": false,
       "category": "props",

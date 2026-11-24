@@ -68,6 +68,7 @@ export default function ToastProviderBase({
   const timersRef = useRef<Map<string, ToastTimer>>(new Map());
   const exitTimersRef = useRef<Map<string, number>>(new Map());
   const dragsRef = useRef<Map<string, ToastDrag>>(new Map());
+  const pausesRef = useRef<Map<string, Set<string>>>(new Map());
   const resolvedTestId = testId ?? dataTestId ?? "toast-provider";
 
   const removeToast = useCallback((id: string) => {
@@ -76,6 +77,8 @@ export default function ToastProviderBase({
       window.clearTimeout(timerState.timer);
     }
     timersRef.current.delete(id);
+    pausesRef.current.delete(id);
+    dragsRef.current.delete(id);
     setToasts((items) => items.filter((toast) => toast.id !== id));
 
     setRenderedToasts((items) => {
@@ -108,7 +111,11 @@ export default function ToastProviderBase({
     (id: string, duration: number) => {
       if (duration <= 0) return;
 
-      const timer = window.setTimeout(() => removeToast(id), duration);
+      const reasons = pausesRef.current.get(id) ?? new Set<string>();
+      if (document.hidden) reasons.add("visibility");
+      else reasons.delete("visibility");
+      pausesRef.current.set(id, reasons);
+      const timer = reasons.size ? undefined : window.setTimeout(() => removeToast(id), duration);
       timersRef.current.set(id, {
         timer,
         remaining: duration,
@@ -118,7 +125,10 @@ export default function ToastProviderBase({
     [removeToast],
   );
 
-  const pauseToast = useCallback((id: string) => {
+  const pauseToast = useCallback((id: string, reason: string) => {
+    const reasons = pausesRef.current.get(id) ?? new Set<string>();
+    reasons.add(reason);
+    pausesRef.current.set(id, reasons);
     const timerState = timersRef.current.get(id);
     if (!timerState || timerState.timer === undefined) return;
 
@@ -131,7 +141,10 @@ export default function ToastProviderBase({
   }, []);
 
   const resumeToast = useCallback(
-    (id: string) => {
+    (id: string, reason: string) => {
+      const reasons = pausesRef.current.get(id);
+      reasons?.delete(reason);
+      if (reasons?.size) return;
       const timerState = timersRef.current.get(id);
       if (!timerState || timerState.timer !== undefined) return;
 
@@ -194,8 +207,8 @@ export default function ToastProviderBase({
     const handleVisibilityChange = () => {
       const ids = Array.from(timersRef.current.keys());
       ids.forEach((id) => {
-        if (document.hidden) pauseToast(id);
-        else resumeToast(id);
+        if (document.hidden) pauseToast(id, "visibility");
+        else resumeToast(id, "visibility");
       });
     };
 
@@ -214,6 +227,8 @@ export default function ToastProviderBase({
       timersRef.current.clear();
       exitTimersRef.current.forEach((timer) => window.clearTimeout(timer));
       exitTimersRef.current.clear();
+      pausesRef.current.clear();
+      dragsRef.current.clear();
     },
     [],
   );
@@ -254,7 +269,7 @@ export default function ToastProviderBase({
             });
             event.currentTarget.setPointerCapture(event.pointerId);
             event.currentTarget.style.transition = "none";
-            pauseToast(toast.id);
+            pauseToast(toast.id, "swipe");
           };
 
           const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -282,7 +297,7 @@ export default function ToastProviderBase({
             ) {
               removeToast(toast.id);
             } else {
-              resumeToast(toast.id);
+              resumeToast(toast.id, "swipe");
             }
           };
 
@@ -302,10 +317,12 @@ export default function ToastProviderBase({
             role={toast.state === "error" ? "alert" : "status"}
             aria-hidden={isExiting || undefined}
             data-testid={`${resolvedTestId}-toast-${toast.id}`}
-            onMouseEnter={() => pauseToast(toast.id)}
-            onMouseLeave={() => resumeToast(toast.id)}
-            onFocusCapture={() => pauseToast(toast.id)}
-            onBlurCapture={() => resumeToast(toast.id)}
+            onMouseEnter={() => pauseToast(toast.id, "hover")}
+            onMouseLeave={() => resumeToast(toast.id, "hover")}
+            onFocusCapture={() => pauseToast(toast.id, "focus")}
+            onBlurCapture={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget)) resumeToast(toast.id, "focus");
+            }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerEnd}

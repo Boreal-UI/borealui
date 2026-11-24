@@ -99,7 +99,10 @@ const BasePager: React.FC<BasePagerProps> = ({
           size={size}
           shadow={shadow}
           rounding={rounding}
-          className={classMap.controlButton}
+          className={combineClassNames(
+            classMap.controlButton,
+            size && classMap[size],
+          )}
           disabled={page <= 1}
           aria-label={previousButtonAriaLabel}
           title="Previous page"
@@ -122,6 +125,7 @@ const BasePager: React.FC<BasePagerProps> = ({
             data-testid={`${testId}-page-${page}`}
           >
             <Button
+              labelClassName={classMap.label}
               theme={theme}
               state={state}
               variant={variant}
@@ -151,6 +155,7 @@ const BasePager: React.FC<BasePagerProps> = ({
                 data-testid={`${testId}-page-${p}`}
               >
                 <Button
+                  labelClassName={classMap.label}
                   theme={theme}
                   state={state}
                   variant={variant}
@@ -186,7 +191,10 @@ const BasePager: React.FC<BasePagerProps> = ({
           rounding={rounding}
           shadow={shadow}
           size={size}
-          className={classMap.controlButton}
+          className={combineClassNames(
+            classMap.controlButton,
+            size && classMap[size],
+          )}
           disabled={page >= totalPages}
           aria-label={nextButtonAriaLabel}
           title="Next page"
