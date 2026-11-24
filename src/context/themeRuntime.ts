@@ -500,7 +500,7 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
     }
     return backgroundColor;
   };
-  const roles = {
+  const roles: ThemeVariableMap = {
     ...variables,
     "--background-color-surface": surface(0.04),
     "--background-color-subtle": surface(0.02),
@@ -523,7 +523,28 @@ export function buildThemeVariables(scheme: ColorScheme): ThemeVariableMap {
   roles["--text-color-lighter"] = roles["--text-color-light"];
   roles["--text-color-placeholder"] = roles["--text-color-light"];
   roles["--divider-color"] = roles["--border-color"];
-  return roles;
+  // A solid state's foreground is not a foreground for its translucent tint.
+  // Bound tint opacity against every supported neutral surface, using the page
+  // foreground. This is deterministic for server rendering and hydration.
+  const translucent: ThemeVariableMap = {};
+  for (const name of ["primary", "secondary", "tertiary", "quaternary", "success", "warning", "error", "info", "clear"]) {
+    const tint = normalizeHex(name === "clear" ? pageTextColor : roles[`--${name}-color`]);
+    for (const [suffix, maximum] of [["", 0.4], ["-hover", 0.48]] as const) {
+      let alpha: number = maximum;
+      const composite = (background: string) => {
+        const base = normalizeHex(background);
+        if (!base || !tint) return background;
+        return `#${[1, 3, 5].map(i => Math.round(parseInt(tint.slice(i, i + 2), 16) * alpha + parseInt(base.slice(i, i + 2), 16) * (1 - alpha)).toString(16).padStart(2, "0")).join("")}`;
+      };
+      while (alpha > 0 && surfaces.some(bg => contrastRatio(composite(bg), pageTextColor) < 4.6)) {
+        alpha = Math.max(0, Math.round((alpha - 0.01) * 100) / 100);
+      }
+      translucent[`--${name}-readable-glass-background${suffix}`] = tint
+        ? `rgb(${[1, 3, 5].map(i => parseInt(tint.slice(i, i + 2), 16)).join(" ")} / ${alpha})`
+        : "transparent";
+    }
+  }
+  return { ...roles, ...translucent };
 }
 
 /** Audit supported neutral-surface pairs. Explicit overrides are preserved, not

@@ -19,6 +19,15 @@ it.each([...defaultColorSchemes])("$name resolves readable semantic combinations
   const vars = buildThemeVariables(scheme);
   expect(getThemeContrastIssues(scheme)).toEqual([]);
   expect(buildThemeVariables(JSON.parse(JSON.stringify(scheme)) as ColorScheme)).toEqual(vars);
+  for (const name of ["primary", "secondary", "tertiary", "quaternary", "clear", "success", "warning", "error", "info"]) {
+    for (const suffix of ["", "-hover"]) {
+      const [r, g, b, alpha] = vars[`--${name}-readable-glass-background${suffix}`].match(/[\d.]+/g)!.map(Number);
+      for (const surface of ["--background-color", "--background-color-surface", "--background-color-subtle", "--hover-background", "--active-background", "--selected-background"]) {
+        const composite = `#${[r, g, b].map((v, i) => Math.round(v * alpha + parseInt(vars[surface].slice(1 + i * 2, 3 + i * 2), 16) * (1 - alpha)).toString(16).padStart(2, "0")).join("")}`;
+        expect(contrastRatio(composite, vars["--text-color"])).toBeGreaterThanOrEqual(4.5);
+      }
+    }
+  }
   for (const token of SEMANTIC_THEME_TOKENS) expect(vars[token]).toMatch(/^#(?:[0-9a-f]{6}|[0-9a-f]{6}ff)$/i);
   for (const surface of ["--background-color", "--background-color-surface", "--background-color-subtle", "--hover-background", "--active-background", "--selected-background"]) {
     expect(contrastRatio(vars[surface], vars["--text-color"])).toBeGreaterThanOrEqual(4.5);

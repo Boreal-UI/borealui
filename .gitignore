@@ -210,3 +210,5 @@ output/patch-lint.log
 output/patch-reset-unit.log
 output/patch-types.log
 output/patch-unit.log
+output/foreground-*
+docs/semantic-foreground-upgrade.md

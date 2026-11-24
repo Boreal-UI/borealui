@@ -329,3 +329,33 @@ Most components accept `className`. Larger components expose section-level class
 ```
 
 Prefer CSS variables for global visual changes and class props for local layout or component-specific polish.
+## Foregrounds inside semantic surfaces
+
+`Typography` defaults to `theme="inherit"`: its text uses the actual parent
+foreground. This also applies to nested Typography and custom elements rendered
+with `as`. Inside a success Badge or Button, for example, text follows that
+surface's foreground rather than the document text token. Explicit themes such
+as `theme="primary"` still select palette colors; choose them only where they
+contrast with the surrounding background. To deliberately select document text
+independent of the parent, use `style={{ color: "var(--text-color)" }}`.
+
+Alert solid variants use the selected theme or semantic state's solid foreground.
+Soft, glass, outline and glass-outline variants use `--text-color`. MetricBox
+uses its semantic foreground throughout title, value, subtext and icons; outline
+and glass treatments use `--text-color`. MetricBox has no trend or action prop.
+Custom content and independently themed controls remain responsible for their
+own color pairing. Plain Alert links inherit the alert foreground and remain
+underlined.
+
+ThemeProvider and server theme attributes generate
+`--{theme-or-state}-readable-glass-background` and its `-hover` counterpart.
+These translucent tints are bounded against the page, surface, subtle, hover,
+active and selected background tokens so that the document foreground retains
+at least 4.5:1 text contrast. Alert and MetricBox use these tokens; without them,
+the background falls back to `--background-color`. Explicit custom neutral
+tokens must themselves have adequate contrast.
+
+This pairing does not guarantee contrast over arbitrary images, gradients,
+stacked tinted surfaces, consumer CSS overrides or independently colored
+ancestors. Check rendered colors in your application's actual ancestry,
+including hover states and translucent backgrounds. No prop migration is needed.

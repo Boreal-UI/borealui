@@ -1,0 +1,59 @@
+@use "sass:map";
+@use "theme";
+
+// Shared by global Core classes and Next/Server module classes.
+@mixin alert($root, $prefix: "") {
+  @each $name, $values in map.merge(theme.$themes, theme.$states) {
+    .#{$root}.#{$prefix}#{$name} {
+      color: map.get($values, text);
+
+      --alert-soft-bg: var(--#{$name}-readable-glass-background, var(--background-color));
+      --alert-glass-bg: var(--#{$name}-readable-glass-background, var(--background-color));
+    }
+
+    .#{$root}.#{$prefix}#{$name}.#{$prefix}soft,
+    .#{$root}.#{$prefix}#{$name}.#{$prefix}glass,
+    .#{$root}.#{$prefix}#{$name}.#{$prefix}outline {
+      color: var(--text-color);
+    }
+  }
+
+  .#{$root} a:not([class]),
+  .#{$root} a:not([class]):hover {
+    color: inherit;
+    text-decoration: underline;
+  }
+}
+
+@mixin metric($root, $prefix: "") {
+  @each $name, $values in map.merge(theme.$themes, theme.$states) {
+    .#{$root}.#{$prefix}#{$name} {
+      color: map.get($values, text);
+
+      --metric-box-glass-bg: var(--#{$name}-readable-glass-background, var(--background-color));
+      --metric-box-glass-hover-bg: var(--#{$name}-readable-glass-background-hover, var(--background-color));
+    }
+  }
+
+  .#{$root}.#{$prefix}glass,
+  .#{$root}.#{$prefix}outline {
+    color: var(--text-color);
+  }
+
+  .#{$root}.#{$prefix}glass.#{$prefix}outline {
+    background: transparent;
+  }
+
+  .#{$root} .#{$prefix}title,
+  .#{$root} .#{$prefix}subtext,
+  .#{$root} .#{$prefix}value,
+  .#{$root} .#{$prefix}icon {
+    color: inherit;
+    opacity: 1;
+  }
+
+  // Match existing outline icon selector specificity in both wrappers.
+  .#{$root}.#{$prefix}outline .#{$prefix}icon {
+    color: inherit;
+  }
+}
