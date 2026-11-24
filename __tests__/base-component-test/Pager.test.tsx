@@ -22,6 +22,17 @@ const classNames = {
 };
 
 describe("BasePager", () => {
+  it.each(["xs", "small", "medium", "large", "xl"] as const)(
+    "applies Pager's %s size to numbered and directional controls",
+    (size) => {
+      render(<BasePager totalItems={120} itemsPerPage={10} currentPage={10}
+        size={size} onPageChange={jest.fn()} Button={DummyButton}
+        IconButton={DummyIconButton} classMap={{ ...classNames, [size]: `pager-${size}` }} />);
+      for (const button of screen.getAllByRole("button")) {
+        expect(button).toHaveClass(`pager-${size}`);
+      }
+    },
+  );
   it("renders the navigation landmark with default accessible labeling", () => {
     render(
       <BasePager
